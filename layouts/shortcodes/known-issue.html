@@ -2,13 +2,13 @@
 
 <blockquote class="known-issue callout card border-warning">
     <div class="row no-gutters">
-      <div class="col-md-2 bg-warning text-white p-2"><strong>Known issue: </strong></div> 
+      <div class="col-md-2 bg-warning text-white p-2"><strong>已知问题: </strong></div>
       <div class="col p-2">  <p>{{ trim .Inner " \n" | markdownify }}</p>
         <!-- Find link <a href="{{.Get "link"}}">here</a>. -->
             {{ if .Get "link" }}
-                You can find information about this issue <a href="{{.Get "link"}}">here</a>.
+                你可以在<a href="{{.Get "link"}}">这里</a>找到关于此问题的信息。
             {{else}}
-                There is no information listed for this issue. Add information by referencing an <a href="https://github.com/o3de/o3de/issues">issue</a>, <a href="https://github.com/o3de/o3de/discussions">discussion</a>, or <a href="https://github.com/o3de/o3de/pulls">pull request</a>.
+                没有列出此问题的信息。通过引用一个 <a href="https://github.com/o3de/o3de/issues">问题</a>、<a href="https://github.com/o3de/o3de/discussions">讨论</a>， 或<a href="https://github.com/o3de/o3de/pulls">拉取请求</a>添加信息。
             {{end}}
       </div>
 

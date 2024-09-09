@@ -2,13 +2,13 @@
 
 <blockquote class="warning callout card border-info">
     <div class="row no-gutters">
-      <div class="col-md-2 bg-info text-white p-2"><strong>To do: </strong></div> 
+      <div class="col-md-2 bg-info text-white p-2"><strong>待办: </strong></div>
       <div class="col p-2">  <p>{{ trim .Inner " \n" | markdownify }}</p>
         <!-- Find GitHub issue <a href="{{.Get "issue"}}">here</a>. -->
             {{ if .Get "issue" }}
-                A GitHub issue has been created for this task <a href="{{.Get "issue"}}">here</a>.
+                在<a href="{{.Get "issue"}}">这里</a>为此任务创建一个GitHub问题。
             {{else}}
-                A GitHub issue has not been created for this task. Create an issue <a href="https://github.com/o3de/o3de.org/issues/new/choose">here</a>.
+                尚未为此任务创建 GitHub 问题。 在<a href="https://github.com/o3de/o3de.org/issues/new/choose">这里</a>创建一个问题。
             {{end}}
       </div>
 

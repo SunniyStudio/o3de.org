@@ -9,11 +9,11 @@ This shortcode takes three quote enclosed parameters in order:
 
 <blockquote class="important callout card border-info">
     <div class="row no-gutters">
-        <div class="col-md-2 bg-info text-white p-2"><strong>Feature in Progess: </strong></div> 
+        <div class="col-md-2 bg-info text-white p-2"><strong>开发中的功能: </strong></div>
         <div class="col p-2">
-            <p> <strong>{{.Get 0}}</strong> {{" is a feature that is currently in development and has known issues. You can help improve "}} {{ .Get 0 }} {{" by filing new issues based on your experience using the feature and by submitting pull requests with improvements." | markdownify }}</p>
-            <p>{{"Refer to " | markdownify}} <a href={{ .Get 1 }}>{{ .Get 0 }} {{" issues"}}</a> {{" to view known issues and to file new issues for this feature." | markdownify}}</p>
-            <p>{{"Refer to " | markdownify}} <a href={{ .Get 2 }}>{{ .Get 0 }} {{" pull requests"}}</a> {{" to view open pull requests and to file new pull requests for this feature." | markdownify}}</p>
+            <p> <strong>{{.Get 0}}</strong> {{" 是当前正在开发且存在已知问题的功能。你可以帮助改进 "}} {{ .Get 0 }} {{" ，通过后根据你使用此功能的经验填写新问题，并提交拉取请求。" | markdownify }}</p>
+            <p>{{"参阅 " | markdownify}} <a href={{ .Get 1 }}>{{ .Get 0 }} {{" 问题"}}</a> {{" 查看已知问题，并为此功能填写新问题。" | markdownify}}</p>
+            <p>{{"参阅 " | markdownify}} <a href={{ .Get 2 }}>{{ .Get 0 }} {{" 拉取请求"}}</a> {{" 查看打开的拉取请求，并为此功能填写新的拉取请求。" | markdownify}}</p>
         </div>
     </div>
 </blockquote>

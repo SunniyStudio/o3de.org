@@ -1,7 +1,7 @@
 baseURL = "https://www.docs.o3de.org"
-title = "Open 3D Engine"
+title = "Open 3D 引擎"
 disableKinds = ["taxonomy", "taxonomyTerm"]
-copyright = "O3DE Open 3D Engine Contributors | Documentation Distributed under CC-BY 4.0"
+copyright = "O3DE Open 3D 引擎贡献者 | 文档以 CC-BY 4.0 协议发布"
 languageCode = "en-us"
 
 [module]

@@ -16,7 +16,7 @@
   </div>
   <div class="row mt-3">
       {{ range $docsSections }}
-        {{ range where .Sections ".Page.LinkTitle" "Get Started" }}
+        {{ range where .Sections ".Page.LinkTitle" "入门" }}
             <div class="col col-12 col-lg-8 pb-3">
             <a href="{{ .RelPermalink }}" class="card doc_card intro">
               <div class="row">
@@ -32,7 +32,7 @@
             </a>
         </div>
       {{ end }}
-      {{ range where .Sections ".Page.LinkTitle" "Release Notes" }}
+      {{ range where .Sections ".Page.LinkTitle" "发布日志" }}
           <div class="col col-12 col-lg-4 pb-3">
           <a href="{{ .RelPermalink }}" class="card doc_card intro">
             <div class="row">
@@ -50,15 +50,15 @@
   </div>
   <div class="row flex">
     <div class="col-12 docs-content">
-      <h1 class="title">Guides</h1>
+      <h1 class="title">指南</h1>
       <div class="content">
-       Jump into the following guides for O3DE based on your needs. 
+       根据您的需求，跳转到以下 O3DE 指南。
       </div>
     </div>
   </div>
   <div class="row mt-3">
       {{ range $docsSections }}
-        {{ range where (where .Sections ".Page.LinkTitle" "!=" "Get Started") ".Page.LinkTitle" "!=" "Release Notes" }}
+        {{ range where (where .Sections ".Page.LinkTitle" "!=" "入门") ".Page.LinkTitle" "!=" "发布日志" }}
         <div class="col-12 col-lg-4 col-md-6 pb-3">
           <a href="{{ .RelPermalink }}" class="card doc_card">
               <img src="{{ .Param "guide_img" }}" class="card-img-top" alt="{{ .Page.Title }}">

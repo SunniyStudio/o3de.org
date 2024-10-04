@@ -1,23 +1,23 @@
 ---
-linkTitle: Project Export
-title: Project Export
-description: High Level Developer Overview for the Project Export command.
+linkTitle: 项目导出
+title: 项目导出
+description: 项目导出命令的高级开发人员概述。
 ---
 
-***The Project Export*** command enables shipping of O3DE projects into distributable games. It is designed to fulfill arbitrary needs in the export process, and comes with standard export scripts for the majority of users.
+***项目导出*** 命令可将 O3DE 项目导出为可发布的游戏。它旨在满足导出过程中的任意需求，并为大多数用户提供了标准导出脚本。
 
 {{< note >}}
-You can find a presentation of the Project Export feature on the official O3DE Youtube: https://www.youtube.com/watch?v=fV1gmxiRHdY
+您可以在 O3DE 官方 Youtube 上找到有关项目导出功能的介绍： https://www.youtube.com/watch?v=fV1gmxiRHdY
 {{< /note >}}
 
 
 
-The development source for the Project Export command can be found here: https://github.com/o3de/o3de/blob/development/scripts/o3de/o3de/export_project.py
+项目导出命令的开发源代码可在此处找到： https://github.com/o3de/o3de/blob/development/scripts/o3de/o3de/export_project.py
 
-Source code for standard export scripts for Windows, Linux, Android, and iOS can be found here: https://github.com/o3de/o3de/tree/development/scripts/o3de/ExportScripts
+有关 Windows、Linux、Android 和 iOS 标准导出脚本的源代码，请点击此处： https://github.com/o3de/o3de/tree/development/scripts/o3de/ExportScripts
 
-## Topics
+## 主题
 
-| Name | Description |
-|-|-|
-| [High Level Overview](./high-level-overview) | This provides the architectural overview of Project Export. |
+| 名称                            | 说明             |
+|-------------------------------|----------------|
+| [高级概述](./high-level-overview) | 这提供了项目导出的架构概览。 |

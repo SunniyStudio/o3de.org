@@ -1,19 +1,19 @@
 ---
-linkTitle: Architecture
-title: Open 3D Engine Architecture
-description: Documentation for developers looking to understand the overall architecture and design of Open 3D Engine.
+linkTitle: 架构
+title: Open 3D Engine 架构
+description: 为希望了解 Open 3D Engine 整体架构和设计的开发人员提供文档。
 weight: 100
 ---
 
-**Open 3D Engine (O3DE)** is a complex library suite designed to work with both reusable libraries (_Gems_) and user-created projects powered by the SDK (_projects_). In this section of the developer guide, you'll learn more about the overall architecture and design of O3DE from the bottom up, allowing core engine developers to take better advantage of the engine under the hood, diagnose tricky issues in debugging and loading, and contribute effectively back to O3DE with the core architecture principles in mind.
+**Open 3D Engine (O3DE)** 是一个复杂的库套件，旨在与可重复使用的库（**Gem**）和由 SDK 支持的用户创建的项目（**projects**）协同工作。在开发人员指南的这一部分，您将自下而上地了解更多有关 O3DE 的整体架构和设计，从而使核心引擎开发人员能够更好地利用引擎罩下的引擎，诊断调试和加载中的棘手问题，并在牢记核心架构原则的基础上有效地为 O3DE 做出贡献。
 
-## Topics
+## 主题
 
 {{< todo >}}
-This is a stub page intended to serve as an example of guide structure. Information will be filled in and changed as the Engine Developer Guide is published.
+这是一个存根页面，旨在作为指南结构的示例。随着《引擎开发者指南》的发布，相关信息将被填充和更改。
 {{< /todo >}}
 
-| Name | Description |
-|-|-|
-| [Project bootstrapping](./bootstrap) | Learn about the execution flow of project launchers and how O3DE loads libraries at project runtime. |
-| [Prefab System](./prefabs) | Learn about the prefab system, which is the default scene authoring system in O3DE. |
+| 名称                  | 说明                               |
+|---------------------|----------------------------------|
+| [项目启动](./bootstrap) | 了解项目启动器的执行流程以及 O3DE 如何在项目运行时加载库。 |
+| [预制件系统](./prefabs)  | 了解 O3DE 中默认的场景制作系统--预制件系统。       |

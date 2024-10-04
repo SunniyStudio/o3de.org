@@ -1,25 +1,25 @@
 ---
-linkTitle: Overview
-title: Project Export Overview
-description: High Level Developer Overview for the Project Export command.
+linkTitle: 概述
+title: 项目导出概述
+description: 项目导出命令的高级开发人员概述。
 ---
 
-## Motivation
+## 动机
 
-Before the 23.10 release of O3DE, exporting game projects for sharing was a very difficult task for new users. There was a lot of cognitive burden to keep track of the tools required to process the game, requiring interaction with multiple independent parts (i.e. CMake, AssetProcessor, AssetBundler, etc.). For experienced users, there was also a lack of unified automation for the most common tasks.
+在 O3DE 23.10 版本发布之前，导出游戏项目以供共享对于新用户来说是一项非常困难的任务。要跟踪处理游戏所需的工具，需要与多个独立部分（如 CMake、AssetProcessor、AssetBundler 等）进行交互，这给用户带来了很大的认知负担。对于经验丰富的用户来说，最常见的任务也缺乏统一的自动化。
 
-This caused the export experience to be highly error prone. 
+这导致导出体验极易出错。
 
-To put this in perspective, back in Q4 2022, an engineer took 1 week to manually package the Newspaper Delivery Game demo project. The same process with the Project Export command takes 2-15 minutes.
+以 2022 年第四季度为例，一位工程师手动打包报纸交付游戏演示项目就花费了 1 周时间。而使用 “项目导出 ”命令完成同样的过程只需 2-15 分钟。
 
-The Project Export command also follows the spirit of modularity found in other parts of the O3DE ecosystem, as diverse needs grow overtime in the open source ecosystem.
+项目导出命令还遵循了 O3DE 生态系统其他部分的模块化精神，因为在开源生态系统中，各种需求会随着时间的推移而增长。
 
-## Command Setup
-The `export-project` command has the following setup:
+## 命令设置
+`export-project` 命令有以下设置：
 
 ![Project Export CLI setup](/images/engine-dev/o3de-cli/project-export/project-export-cli-setup.png)
 
-The central driver of the command is the Export Script. In O3DE, the Export Script is simply any Python script that the user wishes to run using the O3DE Python CLI.
+该命令的核心驱动力是导出脚本。在 O3DE 中，导出脚本是用户希望使用 O3DE Python CLI 运行的任何 Python 脚本。
 
 The way this works is that O3DE CLI (`o3de.bat` on Windows or `o3de.sh` on Linux) [invokes](https://github.com/o3de/o3de/blob/development/scripts/o3de.py#L107-L108) the `export-project` [sub-command argument](https://github.com/o3de/o3de/blob/development/scripts/o3de.py#L79) via a specified [entry-hook](https://github.com/o3de/o3de/blob/development/scripts/o3de/o3de/export_project.py#L484). This system heavily relies on the `argparse` standard library to configure the expected function for the parsed command in a modular fashion.
 

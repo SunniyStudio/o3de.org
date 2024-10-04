@@ -1,15 +1,15 @@
 ---
-linkTitle: Assets
-title: Open 3D Engine Asset System Developer Documentation
-description: Documentation for developers extending or contributing to the asset system as part of Open 3D Engine.
+linkTitle: 资产
+title: Open 3D Engine资产系统开发者文档
+description: 作为Open 3D Engine的一部分，为开发人员扩展或改进资产系统提供文档。
 weight: 400
 ---
 
-**Open 3D Engine (O3DE)** asset system is a key part of managing and loading assets in a project.  This section of the Engine Developer Guide provides details on various asset related systems to help developers extend or modify the systems for their needs.
+**Open 3D Engine (O3DE)** 资产系统是在项目中管理和加载资产的关键部分。 引擎开发人员指南的这一部分提供了各种资产相关系统的详细信息，以帮助开发人员根据自己的需要扩展或修改系统。
 
-## Topics
+## 主题
 
-| Name | Description |
-|-|-|
-| [Metadata Relocation](./metadata) | Learn about how the Metadata Relocation system functions, where the code is, and which file types may or may not be supported. |
-| [File Type Support](./filetypes) | Learn what work is needed to upgrade various file types to fully support metadata relocation. |
+| 名称                     | 说明                                   |
+|------------------------|--------------------------------------|
+| [元数据重定位系统](./metadata) | 了解元数据重定位系统的功能、代码的位置以及可能支持或不支持哪些文件类型。 |
+| [文件类型支持](./filetypes)  | 了解升级各种文件类型以完全支持元数据重置所需的工作。           |

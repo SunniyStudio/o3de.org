@@ -1,14 +1,14 @@
 ---
 linkTitle: Script Canvas
-title: Script Canvas Gem Developer Documentation
-description: Documentation for the Script Canvas 
+title: Script Canvas Gem 开发者文档
+description: Script Canvas 文档
 ---
 
 {{< note >}}
-This information is for developers of the Script Canvas Gem, or for those who are working on low-level Gems which require taking advantage of Script Canvas
-or the infrastructure it uses. If you're a user working with Script Canvas, please refer to the [Script Canvas User Guide](/docs/user-guide/gems/reference/script/script-canvas).
+本信息面向 Script Canvas Gem 的开发人员，或正在开发需要利用 Script Canvas
+或其使用的基础架构。如果您是使用 Script Canvas 的用户，请参阅[Script Canvas 用户指南](/docs/user-guide/gems/reference/script/script-canvas)。
 {{< /note >}}
 
 {{< todo >}}
-This is a stub article intended to serve as an example of guide structure, and is not necessarily content that will be made available in the near future.
+这是一篇存根文章，旨在作为指南结构的范例，不一定是近期内将提供的内容。
 {{< /todo >}}

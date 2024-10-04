@@ -1,50 +1,50 @@
 ---
-linkTitle: Prefab System 
-title: Developer guide to the Prefab System in O3DE
-description: Learn about the prefab system, which is the default scene authoring system in O3DE.
+linkTitle: 预制件系统
+title: O3DE 预制件系统开发人员指南
+description: 了解 O3DE 中默认的场景制作系统--预制件系统。
 weight: 100
 ---
 
-## Glossary
-| Name            | Description |
-| :-              | :-          |
-| Entity          | A collection of components that define the properties and behavior of the entity. |
-| Component       | A grouping of properties that helps define the behavior of the entity. |
-| Prefab Template | An in-memory representation of the prefab. It represents the current state of prefab loaded in memory. This includes the file loaded from disk and any changes you applied on top of it. |
-| Prefab Instance | The actual prefab game object that is instantiated by using the prefab template. A single prefab template can be used to instantiate any number of prefab instances. |
-| Link            | An object used to express the connection between a source template and a target template. It contains a list of patches. |
-| Patch           | Represents a JSON patch that is applied on top of the nested prefab instance to distinguish it from other nested instances that are instantiated from the same template (the source template). |
-| DOM             | Stands for Document Object Model. It is a language agnostic logical model that represents any object data in a tree-like hierarchical structure where each node in the tree holds some relevant information about the data. In prefab system, DOM values are represented by [RapidJSON](https://rapidjson.org/) objects. Prefab DOM types are defined in [`PrefabDomTypes`](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabDomTypes.h). |
+## 术语
+| 名称              | 说明                                                                                                                                                                                                                                                                         |
+|:----------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Entity          | 定义实体属性和行为的组件集合。                                                                                                                                                                                                                                                            |
+| Component       | 有助于定义实体行为的一组属性。                                                                                                                                                                                                                                                            |
+| Prefab Template | 预制件在内存中的表示。它表示加载到内存中的 prefab 的当前状态。这包括从磁盘加载的文件以及在其上应用的任何更改。                                                                                                                                                                                                                |
+| Prefab Instance | 使用预制件模板实例化的实际预制件游戏对象。单个预制件模板可用于实例化任意数量的预制件实例。                                                                                                                                                                                                                              |
+| Link            | 用于表达源模板和目标模板之间连接的对象。它包含一个补丁列表。                                                                                                                                                                                                                                             |
+| Patch           | 代表应用于嵌套预制件实例顶部的 JSON 补丁，以区别于从同一模板（源模板）实例化的其他嵌套实例。                                                                                                                                                                                                                          |
+| DOM             | 即文档对象模型。它是一种与语言无关的逻辑模型，以树状分层结构表示任何对象数据，树中的每个节点都包含数据的一些相关信息。在预制系统中，DOM 值由 [RapidJSON](https://rapidjson.org/) 对象表示。预制 DOM 类型在[`PrefabDomTypes`](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabDomTypes.h)中定义。 |
 
 
 
 
-## Overview
+## 概述
 <!-- <a name="overview"> -->
 
-To get an understanding of what prefabs are, we first need to understand what entities are. Entities are the foundational game objects that encapsulate logic required to build game worlds. An entity is made up of components that define its properties. More information about entities and components can be found in [Guide to Component Development](/docs/user-guide/programming/components). 
+要了解什么是预制件，我们首先需要了解什么是实体。实体是基础游戏对象，封装了构建游戏世界所需的逻辑。实体由定义其属性的组件组成。有关实体和组件的更多信息，请参阅[组件开发指南](/docs/user-guide/programming/components)。
 
-Prefabs serve the purpose of easily building and modifying large and complex worlds for games. Creating large worlds often requires duplicating a lot of entities in the world. While this can be done by simply creating a bunch of entities and duplicating them in the editor, modifying them becomes a pain point since you would have to go into each of those entities and make the same changes. You would also have to come up with custom tracking mechanisms to identify which entities to modify in which areas of the world. In addition, you may also want some entities to retain their old properties and not to change along with other entities. All of these problems are resolved by prefabs.
+预制件的作用是轻松构建和修改大型复杂的游戏世界。创建大型世界通常需要在世界中复制大量实体。虽然只需创建大量实体并在编辑器中进行复制即可实现这一目的，但要对其进行修改却成了一件麻烦事，因为您必须进入每个实体并进行相同的修改。您还必须建立自定义跟踪机制，以确定在世界的哪些区域修改哪些实体。此外，您可能还希望某些实体保留其原有属性，而不与其他实体一起更改。所有这些问题都可以通过预制件来解决。
 
-Simply put, a prefab is a collection of entities and nested prefabs. The further sections will explain how this collection of entities and nested prefabs are used to solve the above problems and many more.
+简单地说，预制件就是实体和嵌套预制件的集合。接下来的章节将介绍如何使用实体和嵌套预制件的集合来解决上述问题以及其他更多问题。
 
 
-### Prefab file format
+### 预制件文件格式
 <!-- <a name="prefab-file-format"> -->
 
-Prefab files use JSON format. A prefab file has the following fields.
+预制件文件使用 JSON 格式。预制文件包含以下字段。
 
-- **Container Entity**  : A wrapper entity, which is the parent of all other entities and nested prefabs contained within a prefab. This is also used to distinguish prefabs from regular entities in the <a href="/docs/user-guide/editor/entity-outliner/">Entity Outliner</a>. A prefab must have a single container entity.
+- **Container Entity**  : 包装实体，是包含在 prefab 中的所有其他实体和嵌套 prefab 的父实体。在<a href="/docs/user-guide/editor/entity-outliner/">Entity Outliner</a>中，这也用于区分 prefab 和普通实体。一个 prefab 必须有一个容器实体。
 
-- **Entities** : A container for entities owned by a prefab. A prefab may contain zero or more nested entities.
+- **Entities** : prefab 拥有的实体的容器。一个 prefab 可能包含零个或多个嵌套实体。
 
-- **Instances** : A container for nested prefabs owned by a prefab. A prefab may contain zero or more nested prefabs.
+- **Instances** : 一个 prefab 拥有的嵌套 prefab 的容器。一个 prefab 可以包含零个或多个嵌套 prefab。
 
-    - **Source** : The relative path to the prefab file that the nested prefab needs to load from.
+    - **Source** : 嵌套的 prefab 需要加载的 prefab 文件的相对路径。
 
-    - **Patches** : A list of changes that get applied on top of the nested prefab.
+    - **Patches** : 应用于嵌套预制件顶部的更改列表。
 
-For example, this is a prefab that contains a single entity and a single nested prefab:
+例如，这是一个包含单个实体和单个嵌套预制件的预制件：
 
 <details>
 <summary>Car.prefab</summary>
@@ -192,84 +192,84 @@ For example, this is a prefab that contains a single entity and a single nested 
 ```
 </details>
 
-To see what prefabs and entities look like in the Entity Outliner, see [Entity and Prefab Basics](/docs/learning-guide/tutorials/entities-and-prefabs/entity-and-prefab-basics/).
+要查看预制件和实体在实体大纲视图中的样子，请参阅 [实体和预制件基础知识](/docs/learning-guide/tutorials/entities-and-prefabs/entity-and-prefab-basics/)。
 
-### Prefab template
+### 预制件模板
 <!-- <a name="prefab-template"> -->
 
-A *prefab template* is an in-memory representation of the prefab. It represents the current state of prefab loaded in memory. This includes the file DOM loaded from disk and additional metadata as needed. When loaded, you can keep making more changes to the template DOM without needing to save the template to file for each edit. In addition, the template object stores a container of link objects which represent the connection between this template and other templates.
+**预制件模板**是预制件在内存中的表示。它代表加载到内存中的预制件的当前状态。这包括从磁盘加载的文件 DOM 和所需的附加元数据。加载后，您可以继续对模板 DOM 进行更多更改，而无需每次编辑都将模板保存到文件中。此外，模板对象还存储了一个链接对象容器，代表此模板与其他模板之间的连接。
 
-Each template has a unique identifier `TemplateId`, which is an unsigned integer assigned by `PrefabSystemComponent`. The mapping of a template id to a a template object is maintained in the system component. A prefab template has a one-to-one relationship with the prefab file.
+每个模板都有一个唯一的标识符 `TemplateId`，它是一个由 `PrefabSystemComponent`分配的无符号整数。模板 ID 与模板对象的映射关系由系统组件维护。预制件模板与预制件文件之间是一对一的关系。
 
-For example, if there is one prefab file called `Bike.prefab`, there will be only one template associated with it. A template will only be created if a prefab is loaded into the editor.
+例如，如果有一个名为`Bike.prefab`的预制件文件，则只有一个模板与之关联。只有将预制件加载到编辑器中，才会创建模板。
 
 ![Template-file relationship](images/PrefabTemplate.png)
 
-| Code | Description |
-| :-   | :-          |
-| [Template](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Template/Template.h) | Class that represents the template objects created while loading prefabs. |
-| [PrefabSystemComponent](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabSystemComponent.h) | Singleton system component that manages prefab objects like templates, links and instances. |
+| 代码                                                                                                                                                     | 说明                       |
+|:-------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------|
+| [Template](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Template/Template.h)                  | 表示加载预制件时创建的模板对象的类。       |
+| [PrefabSystemComponent](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabSystemComponent.h) | 管理模板、链接和实例等预制件对象的单例系统组件。 |
 
 
-### Prefab instance
+### 预制件实例
 <!-- <a name="prefab-instance"> -->
 
-A *prefab instance* defines a prefab object that represents the DOM stored in the prefab templates. Similar to the template DOM, the prefab instance has member variables for the container entity, entities and nested instances. There is a one-to-many relationship between a prefab template and prefab instances.
+**预制件实例**定义了一个预制件对象，它代表了存储在预制件模板中的 DOM。与模板 DOM 类似，预制件实例也有用于容器实体、实体和嵌套实例的成员变量。预制件模板和预制件实例之间是一对多的关系。
 
-For example, if there is a Car prefab on file, there will be one Car template defined. Many instances can be generated using that single car template. Prefab instances can be populated by deserializing DOM into instance objects using `InstanceSerializer::Load()` method. Prefab instances can also be built from the ground up by adding entities to them directly. Similar to templates, prefab instances can be converted into DOM format by using `InstanceSerializer::Store()` method. Prefab serialization and deserialization will be discussed in detail in a following section.
+例如，如果文件中有一个 “Car”预制件，那么就会定义一个 “Car”模板。使用该单一汽车模板可以生成许多实例。可以通过使用 `InstanceSerializer::Load()` 方法将 DOM 反序列化为实例对象来填充预制件实例。预制件实例也可以通过直接添加实体从头开始构建。与模板类似，预制件实例也可以通过使用 `InstanceSerializer::Store()` 方法转换为 DOM 格式。预制件序列化和反序列化将在下一节详细讨论。
 
 ![Prefab-Instance Relationship](images/PrefabInstance.png)
 
-| Code | Description |
-| :-   | :-          |
-| [Instance](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/Instance.h) | Class that represents the instance objects instantiated from prefab templates. |
-| [InstanceSerializer](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/InstanceSerializer.cpp) | Class that loads DOMs into prefab instances and stores prefab instances into DOMs. |
+| 代码                                                                                                                                                          | 说明                                    |
+|:------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------|
+| [Instance](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/Instance.h)                       | 表示从预制件模板实例化的实例对象的类。                   |
+| [InstanceSerializer](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/InstanceSerializer.cpp) | 类，用于将 DOM 加载到预制件实例中，并将预制件实例存储到 DOM 中。 |
 
 
-### Prefab link
+### 预制件链接
 <!-- <a name="prefab-link"> -->
 
-A *prefab link* defines how two templates are connected. A link exists between two templates, identified by a `LinkId` (a unique integer like `TemplateId`) and defined by a source template id and a target template id. The target template is the one which has a nested instance in it that points to a source template.
+**预制件链接**定义了两个模板的连接方式。链接存在于两个模板之间，由 `LinkId`（类似于 `TemplateId`的唯一整数）标识，并由源模板 id 和目标模板 id 定义。目标模板中的嵌套实例指向源模板。
 
 ```
 Bike       (Bike.prefab)
 | Wheel    (Wheel.prefab)
 ```
 
-In the above example of link between Bike and Wheel templates, the target template would be the one corresponding to `Bike.prefab` file and the source template would be the one corresponding to `Wheel.prefab` file. When the target template is loaded, the prefab system component creates a link between the two relevant templates and maintains a mapping of link ids to link objects.
+在上述 “Bike”和 “Wheel”模板之间的链接示例中，目标模板是与 “Bike.prefab ”文件相对应的模板，源模板是与 “Wheel.prefab ”文件相对应的模板。加载目标模板时，预制件系统组件会在两个相关模板之间创建一个链接，并维护链接 id 到链接对象的映射。
 
-One of the key members of a link object is the link DOM, which contains a file path to the source template and a list of patches to be applied on the source template. A link DOM may or may not contain patches in it. In the case where there are no patches, the target template would simply fetch the template DOM of the source template.
+链接对象的关键成员之一是链接 DOM，它包含源模板的文件路径和要应用到源模板上的补丁列表。链接 DOM 可能包含补丁，也可能不包含补丁。在没有补丁的情况下，目标模板只需获取源模板的模板 DOM。
 
 {{< note >}}
-In the latest development branch, a link maintains a `PrefabOverridePrefixTree` rather than a link DOM. The link DOM will be generated from the tree on the fly. This supports the new **Prefab Override** feature.
+在最新的开发分支中，链接会维护一棵`PrefabOverridePrefixTree`树，而不是链接 DOM。链接 DOM 将由链接树即时生成。这支持新的 **Prefab Override** 功能。
 {{< /note >}}
 
 ![Link creation](images/PrefabLink.png)
 
-| Code | Description |
-| :-   | :-          |
-| [Link](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Link/Link.h) | Class that represents the link objects connecting two prefab templates. |
+| 代码                                                                                                                        | 说明                  |
+|:--------------------------------------------------------------------------------------------------------------------------|:--------------------|
+| [Link](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Link/Link.h) | 表示连接两个预制件模板的链接对象的类。 |
 
 
 
 
 
-## Loading and saving prefab
+## 加载和保持预制件
 <!-- <a name="loading-and-saving"> -->
 
-When a prefab file is loaded, we create a prefab template associated with it. Similarly, when a prefab needs to be stored into a file, we take the corresponding template and save it into the file. This process is achieved by `PrefabLoader` and it follows three key steps of processing template DOMs:
+加载预制件文件时，我们会创建一个与之相关的预制件模板。同样，当需要将预制件存储到文件中时，我们会提取相应的模板并将其保存到文件中。这一过程由 `PrefabLoader` 实现，它遵循处理模板 DOM 的三个关键步骤：
 
-1. Create template DOM from JSON string
-1. Unfold nested instances
-1. Sanitize prefab templates
+1. 从JSON字符串创建模板DOM
+1. 展开嵌套实例
+1. 处理预制件模板
 
 
-### Create template DOM from JSON string
+### 从JSON字符串创建模板DOM
 <!-- <a name="create-template-dom-from-json-string"> -->
 
-Given a file path, `PrefabLoader` is able to read the raw JSON string from a prefab file. In order to easily and efficiently manipulate data in the string, the loader converts the string to a `PrefabDom`, which is a RapidJSON document object.
+在给定文件路径的情况下，`PrefabLoader`能够从预制文件中读取原始的JSON字符串。为了方便有效地操作字符串中的数据，加载器将字符串转换为 `PrefabDom`，即 RapidJSON 文档对象。
 
-Below is a simplified DOM example of `Level.prefab`:
+下面是一个简化的 `Level.prefab` DOM 示例：
 
 ```json
 {
@@ -290,43 +290,42 @@ Below is a simplified DOM example of `Level.prefab`:
 }
 ```
 
-After the conversion, the DOM is just a 1-1 representation of the JSON string. The actual content does not change. At this moment, the nested instance DOM is exactly what it looks like in file. The loader will follow the next step to expand the content in each nested instance.
+转换后，DOM 只是 JSON 字符串的 1-1 表示法。实际内容不会改变。此时，嵌套实例 DOM 与文件中的样子一模一样。加载器将按照下一步展开每个嵌套实例中的内容。
 
-
-### Unfold nested instances
+### 展开嵌套实例
 <!-- <a name="unfold-nested-instances"> -->
 
-As seen in the example above, the file only stores the path to the nested prefab file and the patches. However, for a prefab template to be fully loaded, we need to unfold any nested instance DOM and replace the condensed version of the DOM with the fully expanded DOM generated from the source template. The unfolding is required because we need to work with the exact entities and components described in the nested template during editor operations.
+如上例所示，该文件仅存储嵌套预制文件的路径和补丁。但是，要完全加载预制模板，我们需要展开任何嵌套实例 DOM，并用源模板生成的完全展开 DOM 替换压缩版 DOM。之所以需要展开，是因为我们需要在编辑器操作过程中使用嵌套模板中描述的确切实体和组件。
 
-`PrefabLoader::LoadNestedInstances()` method defines how to unfold all the nested instances. If the source template of a nested instance is not loaded yet, it will recursively load the source template before unfolding. To avoid cyclical dependency issue, the loading method maintains a file path set to check if the template file is being processed.
+`PrefabLoader::LoadNestedInstances()` 方法定义了如何展开所有嵌套实例。如果嵌套实例的源模板尚未加载，则会在展开之前递归加载源模板。为避免循环依赖问题，加载方法会维护一个文件路径集，以检查模板文件是否正在处理中。
 
-After a nested instance is unfolded, a link object will be created to represent the connection between the target template and the nested instance of the source template. You can think there is a 1-1 mapping between an instance and a link. A target template may contain multiple nested instances and links.
+嵌套实例展开后，将创建一个链接对象来表示目标模板与源模板嵌套实例之间的连接。你可以认为实例和链接之间有一个 1-1 的映射关系。一个目标模板可能包含多个嵌套实例和链接。
 
-When saving the template to disk, we condense the instance DOM back to the state where it only shows the **Source** and **Patches** fields as they are in the nested template.
+将模板保存到磁盘时，我们会将实例 DOM 压缩回只显示嵌套模板中的 **Source** 和 **Patches** 字段的状态。
 
 ![Conversion between prefab file and template](images/PrefabNestedInstances.png)
 
 
-### Sanitize prefab templates
+### 处理预制件模板
 <!-- <a name="sanitize-prefab-templates"> -->
 
-The default behavior of the JSON serializer will exclude default values of types from being serialized to JSON. For example, if you have a component with a property whose default value is zero, unless the value is non-zero, the property will be stripped out when the component is serialized to produce JSON. The purpose behind this is to keep the serialized JSON string in files compact. Unfortunately, this makes loading JSON strings from files a bit tricky. If a value is not present in a file, it cannot be read at all.
+JSON 序列化器的默认行为是将类型的默认值排除在序列化到 JSON 之外。例如，如果一个组件的属性默认值为零，除非该值不为零，否则在组件序列化生成 JSON 时，该属性将被剔除。这样做的目的是使文件中的序列化 JSON 字符串保持紧凑。遗憾的是，这使得从文件中加载 JSON 字符串变得有点麻烦。如果文件中没有某个值，就根本无法读取。
 
-To prevent this from happening, you can define custom serializers to indicate what default values a certain field should take while loading. However, we cannot expect all components and types to have one custom serializer defined for sure. Therefore, during loading we add a sanitization phase where we temporarily serialize the same file with default values written out in place so that we can read from them. The opposite is done during saving where we temporarily serialize the file to strip out default values.
+为防止这种情况发生，您可以定义自定义序列化器，以指示在加载时某个字段应使用的默认值。不过，我们不能指望所有组件和类型都能确定定义一个自定义序列化器。因此，在加载过程中，我们会添加一个 sanitization 阶段，在此阶段我们会临时序列化同一文件，并将默认值写入其中，以便从中读取。而在保存过程中，我们会暂时序列化文件，删除默认值。
 
 ![Prefab Sanitization](images/PrefabSanitization.png)
 
-| Code | Description |
-| :-   | :-          |
-| [PrefabLoader](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabLoader.h) | Class that does the heavy lifting for loading prefab files to templates and saving templates to prefab files. |
+| 代码                                                                                                                                   | 说明                          |
+|:-------------------------------------------------------------------------------------------------------------------------------------|:----------------------------|
+| [PrefabLoader](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabLoader.h) | 类，用于将预制件文件加载到模板和将模板保存到预制文件。 |
 
 
 
 
-## Level as prefab
+## 关卡预制件
 <!-- <a name="level-as-prefab"> -->
 
-All entities and prefabs are placed under a level. A level is just another prefab. Like other prefabs, the level prefab must have one container entity and can include entities and instances if any.
+所有实体和预制件都放置在关卡之下。关卡只是另一种预制件。与其他预制件一样，关卡预制件必须有一个容器实体，并且可以包含实体和实例（如果有的话）。
 
 ```json
 {
@@ -340,37 +339,36 @@ All entities and prefabs are placed under a level. A level is just another prefa
 }
 ```
 
-Unlike other prefabs, there can be only one instance created from the level template, which is the level instance (or root instance). It is an instance owned and managed by `PrefabEditorEntityOwnershipService` and the name of its container entity is hard coded to "Level".
+与其他 prefab 不同，从关卡模板创建的实例只能有一个，即关卡实例（或根实例）。它是一个由 `PrefabEditorEntityOwnershipService` 拥有和管理的实例，其容器实体的名称被硬编码为 “Level”。
 
-The process of loading and saving a level follows what we have described above about loading and saving templates. Since it is the one that owns everything, it is loaded first and all other nested templates are then recursively loaded.
+加载和保存关卡的过程与我们上面描述的加载和保存模板的过程相同。由于它拥有所有内容，因此首先加载它，然后递归加载所有其他嵌套模板。
 
-
-| Code | Description |
-| :-   | :-          |
-| [PrefabEditorEntityOwnershipService](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Entity/PrefabEditorEntityOwnershipService.h) | Singleton class that owns and manages the level prefab instance. |
-
+| 代码                                                                                                                                                                               | 说明                |
+|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------|
+| [PrefabEditorEntityOwnershipService](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Entity/PrefabEditorEntityOwnershipService.h) | 拥有并管理关卡预制件实例的单例类。 |
 
 
 
 
-## Propagation
+
+## 传播
 <!-- <a name="propagation"> -->
 
-One of the key mechanisms prefabs support is propagation. It means modifying one prefab instance and easily replicating the same changes to all the other prefab instances. For example, modifying the color of one wheel instance and replicating the change to all the wheels in the level. There can be different types of changes we may want to propagate such as modifying entities, removing components, adding nested prefabs, etc. But no matter what the type is, the flow of a propagation event looks like something below:
+预制件支持的关键机制之一是传播。这意味着修改一个预制件实例后，可以轻松地将相同的更改复制到所有其他预制件实例中。例如，修改一个车轮实例的颜色，并将更改复制到关卡中的所有车轮。我们可能想要传播不同类型的更改，如修改实体、删除组件、添加嵌套预制件等。但无论哪种类型，传播事件的流程都如下所示：
 
 ![High-level propagation workflow](images/PrefabPropagation.png)
 
 
-Propagation is an important mechanism that keeps templates, instances and links in sync after changes are applied. We start by making changes to an instance, then bringing the changes to the template it belongs to, and finally propagating the changes to all instances registered by the template. The flow of changes can be divided into three parts:
-1. Patch generation
-1. Template-template propagation
-1. Template-instance propagation
+传播是一种重要机制，可在应用更改后保持模板、实例和链接同步。我们首先对一个实例进行更改，然后把更改带到它所属的模板，最后把更改传播到模板注册的所有实例。更改流程可分为三个部分：
+1. 补丁生成
+1. 模板-模板传播
+1. 模板-实例传播
 
 
-### Patch generation
+### 补丁生成
 <!-- <a name="patch-generation"> -->
 
-After we make changes to an instance, for example, updating its owning entity’s position, we want to bring these changes to its corresponding template. `InstanceToTemplatePropagator` provides a couple of helper functions that generate DOMs from an instance object before and after the changes are applied, create JSON difference patches between the generated DOMs, as well as apply the patches to the template DOM.
+在对实例进行更改（例如更新其拥有实体的位置）后，我们希望将这些更改带到其对应的模板中。`InstanceToTemplatePropagator`提供了几个辅助函数，可在应用更改之前和之后从实例对象生成 DOM，在生成的 DOM 之间创建 JSON 差异补丁，并将补丁应用到模板 DOM。
 
 ```
 Level
@@ -378,73 +376,72 @@ Level
   | Engine   <-- change position
 ```
 
-In the above example, we have a Car prefab instance that contains an Engine entity. We update the position of the engine. Two instance DOMs are generated before and after the changes are applied to the car. A JSON patch is generated that represents the difference between the two DOMs, that is, the position of the engine. The patch will then be applied to the car template DOM so the template will reflect the latest state. Once the template is updated, it should be ready for template-template propagation, which is covered in the next section.
+在上面的示例中，我们有一个包含引擎实体的 Car prefab 实例。我们更新了引擎的位置。在对汽车应用更改之前和之后，会生成两个实例 DOM。生成的 JSON 补丁表示两个 DOM 之间的差异，即引擎的位置。然后，该补丁将应用到汽车模板 DOM，这样模板就能反映最新状态。模板更新后，就可以进行模板-模板传播，这将在下一节中介绍。
 
-The objective here is to generate a patch and there are multiple ways to do that. Over the time, we have worked on multiple optimizations to the patch generation process to make it faster for some operations.
+这里的目标是生成一个补丁，有多种方法可以做到这一点。随着时间的推移，我们对补丁生成过程进行了多次优化，以加快某些操作的速度。
 
-#### By serializing the instance object twice
-1. Serialize the instance before applying changes to generate **before-state instance DOM**.
-1. Apply the changes.
-1. Serialize the instance after applying changes to generate **after-state instance DOM**.
-1. Compare both states and generate patches.
+#### 将实例对象序列化两次
+1. 在应用更改之前序列化实例，以生成 **前状态 实例 DOM**。
+1. 应用更改。
+1. 在应用更改后序列化实例，生成**后状态实例 DOM**。
+1. 比较两种状态并生成补丁。
 
 ![Patch generation by serializing the instance objects twice](images/PrefabPatchGeneration1.png)
 
 
-#### By serializing relevant entities only
+#### 只序列化相关实体
 
-The above approach works but has the downside of taking a lot of time to convert an instance object into a DOM, particularly when we make a small change like modifying a single entity among 1,000 entities in the prefab. To get around that, we can follow these steps:
+上述方法可行，但缺点是需要花费大量时间将实例对象转换为 DOM，尤其是当我们进行小改动时，比如修改预制件中 1,000 个实体中的一个实体。要解决这个问题，我们可以按照以下步骤操作：
 
-1. Serialize the entity before applying the change to generate **before-state entity DOM**.
-1. Apply the changes.
-1. Serialize the entity after applying the change to generate **after-state entity DOM**.
-1. Compare both states and generate patches.
-1. Add required path prefix(s) to make the patches valid.
-    * For example, the patches would be generated with paths like `ComponentA/...` but we also need to add the entity path prefix to it to know which entity within the prefab we are referring to. The path with prefix would become `/Entities/Entity1/Components/ComponentA/...`.
+1. 在应用更改之前序列化实体，生成**前状态实体 DOM**。
+1. 应用更改
+1. 在应用更改后序列化实体，生成**后状态实体 DOM**。
+1. 比较两种状态并生成补丁。
+1. 添加所需的路径前缀，使修补程序有效。
+    * 例如，生成的补丁路径为 `ComponentA/...`，但我们还需要在其中添加实体路径前缀，以便知道我们所指的是预制件中的哪个实体。带有前缀的路径将变成 `/Entities/Entity1/Components/ComponentA/...`。
 
 {{< note >}}
-To be able to do this way though, we need to know that we would be only modifying a single entity or a group of entities. So this is used only for changes like entity updates.
+不过，要做到这一点，我们需要知道，我们将只修改一个实体或一组实体。因此，这种方法只适用于实体更新等变更。
 {{< /note >}}
 
 ![Patch generation by serializing relevant entities only](images/PrefabPatchGeneration2.png)
 
 
-#### By using template DOM as before state
+#### 使用模板 DOM 作为前状态
 
-One interesting observation is that we do not need to serialize the instance or entity to get a before-state DOM because that information should already be present in the corresponding prefab template. So we can skip that serialization step.
+一个有趣的现象是，我们不需要序列化实例或实体来获取前状态 DOM，因为这些信息已经存在于相应的预制模板中。因此，我们可以跳过序列化步骤。
 
-1. Get the **before state of instance or entity DOM** by fetching it from the corresponding template.
-1. Apply the changes.
-1. Serialize the instance or entity after applying the changes to generate the **after-state DOM**.
-1. Compare both states and generate patch.
-1. Add required path prefix(s) to make the patches valid as we do in the previous case.
+1. 从相应模板获取**实例或实体 DOM的前状态**。
+1. 应用更改。
+1. 在应用更改后序列化实例或实体，生成**后状态 DOM**。
+1. 比较两种状态并生成补丁。
+1. 添加所需的路径前缀，使补丁有效，就像我们在前一种情况中所做的那样。
 
+#### 无需序列化即可生成补丁
 
-#### By generating patches without serializing
+如果我们知道要做什么操作，比如添加或删除实体，我们就不需要序列化整个实例或实体来获取 DOM 的后状态。我们可以聪明地自己创建一个补丁。
 
-If we know what operation the you want to do like adding or removing an entity, we do not need to serialize the entire instance or entity to get the after state of DOM. We can be smart about it and create a patch by ourselves.
-
-Based on the operation, we create a patch that has **op**, **path** and **value** fields to match the JSON patch standards.
+我们会根据操作创建一个补丁，其中包含 **op操作**、**path路径**和**value值**字段，以符合 JSON 补丁标准。
 
 {{< note >}}
-This only works for simple operations like adding or removing an entity but may not work for more complex use cases like modifying a particular component. With **Document Property Editor (DPE)** patches, this can change in the future though.
+这只适用于添加或删除实体等简单操作，但可能不适用于修改特定组件等更复杂的用例。不过，有了**Document Property Editor (DPE)** 补丁，这种情况将来会有所改变。
 {{< /note >}}
 
 
-#### Best effort patching
+#### 尽力修补
 
-We use the JSON serializer's default patch application mechanism to apply patches on an instance or entity DOM. If an error occurs while applying an array of patches, the patch application will immediately halt. However, for prefabs, there could be stale patches or the system might have generated an incorrect patch due to a bug. In these cases, to prevent data loss, we implement best effort patching wherein we apply one patch at a time and skip the patches that result in error. At the end of patch application, we send a warning message that indicates what patches could not be applied.
+我们使用 JSON 序列器的默认修补程序机制在实例或实体 DOM 上打补丁。如果在应用补丁数组时发生错误，补丁应用会立即停止。不过，对于预制件来说，可能会有过期的补丁，或者系统可能由于错误而生成了错误的补丁。在这种情况下，为了防止数据丢失，我们会尽力打补丁，一次只打一个补丁，跳过导致错误的补丁。在补丁应用结束时，我们会发送一条警告信息，说明哪些补丁无法应用。
 
-| Code | Description |
-| :-   | :-          |
-| [InstanceToTemplatePropagator](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/InstanceToTemplatePropagator.h) | Class that defines helper functions that generate DOM values from instances and entities. |
+| 代码                                                                                                                                                                            | 说明                       |
+|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------|
+| [InstanceToTemplatePropagator](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/InstanceToTemplatePropagator.h) | 定义从实例和实体生成 DOM 值的辅助函数的类。 |
 
 
 
-### Template-template propagation
+### 模板-模板传播
 <!-- <a name="template-template-propagation"> -->
 
-In template-template propagation, we update all dependent templates with the latest DOM values. Target template DOM includes instance DOMs that are generated from source template DOMs. Source template DOMs have to be up to date in the first place in order to allow target template DOM to pick up the latest changes.
+在模板-模板传播中，我们使用最新的 DOM 值更新所有依赖模板。目标模板 DOM 包括从源模板 DOM 生成的实例 DOM。源模板 DOM 首先必须是最新的，这样目标模板 DOM 才能接收到最新的变化。
 
 ```
 Level
@@ -456,81 +453,81 @@ Level
   | Wheel2    (Wheel.prefab)
 ```
 
-For example, if we have a level like above and we update the DOM of the Wheel prefab instance's template. This is what the template-template propagation process would look like:
+例如，如果我们有一个类似上面的关卡，并且我们更新了 Wheel prefab 实例模板的 DOM。这就是模板-模板传播过程：
 
 ![Template-template propagation](images/PrefabTemplatePropagation.png)
 
-| Code | Description |
-| :-   | :-          |
-| [PrefabSystemComponent](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabSystemComponent.h) | The `PrefabSystemComponent::PropagateTemplateChanges()` method does the work of regenerating all nested instance DOMs by updating the links with latest DOM values. |
+| 代码                                                                                                                                                     | 说明                                                                                      |
+|:-------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------|
+| [PrefabSystemComponent](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabSystemComponent.h) | `PrefabSystemComponent::PropagateTemplateChanges()` 方法使用最新的 DOM 值更新链接，从而重新生成所有嵌套实例 DOM。 |
 
 
 
-### Template-instance propagation
+### 模板-实例传播
 <!-- <a name="template-instance-propagation"> -->
 
-As seen above, when a template gets updated, it will trigger the updates for dependent templates. After that processs ends, we still need to update the actual prefab instances in the scene. This is where template-instance propagation comes into the picture. All the prefab instances that are created from a prefab template will be put into a queue. Upon next system tick, all instances in the queue will be updated by selectively deserializing template DOMs to the prefab instance objects with patches applied.
+如上所述，当一个模板被更新时，它将触发依赖模板的更新。该过程结束后，我们仍需更新场景中的实际预制件实例。这就是模板实例传播的作用所在。由预制件模板创建的所有预制件实例都将被放入一个队列。下一次系统运行时，队列中的所有实例都将通过有选择地反序列化模板 DOM，更新为已应用补丁的预制件实例对象。
 
-Based on the same example above of the level having two Bike prefabs, this is what the template-instance propagation would look like:
+在上面的例子中，关卡有两个 Bike 预制件，这就是模板-实例传播的过程：
 
 ![Template-instance propagation](images/PrefabInstancePropagation.png)
 
-The instance DOM used for deserialization corresponds to the instance as seen from the topmost template (level) in the hierarchy since it accounts for all possible overrides that may be applied to the instance. When the prefab being edited is not the level but some nested prefab within the level, then that prefab will become the topmost template and the DOM used will be the DOM as seen from that template.
+用于反序列化的实例 DOM 与从层次结构中最顶层模板（层）看到的实例相对应，因为它考虑到了可能应用于实例的所有可能覆盖。如果被编辑的预制件不是层级，而是层级中的某个嵌套预制件，那么该预制件将成为最顶层的模板，所使用的 DOM 将是从该模板看到的 DOM。
 
-#### Selective deserialization
+#### 选择性反序列化
 
-The JSON deserializer is additive and does not provide an out-of-the-box solution to selectively deserialize only the modified values. So the contents of a prefab instance used to be cleared out and deserialized from scratch. However, this did not scale well as prefabs grow in size or the number of prefab instances grow in size. Moreover, several other systems listen and respond to changes to entities and recreating them from scratch added more computational cost coming from those systems too. To solve these issues, _selective deserialization_ was introduced to do the following:
+JSON 反序列化器是累加式的，没有提供开箱即用的解决方案来选择性地只反序列化修改过的值。因此，过去需要清除预制件实例的内容并从头开始反序列化。然而，随着预制构件规模的扩大或预制构件实例数量的增加，这种方法并不能很好地扩展。此外，其他几个系统也会监听和响应实体的变化，从头开始重新创建实体也会增加这些系统的计算成本。为了解决这些问题，我们引入了_选择性反序列化_来完成以下工作：
 
-1. We cache the DOM used for deserialization in the instance object. If the instance does not have a cached instance DOM, we will clear and reload everything just like before. But if there was a cached instance DOM, we use it to compare against the current DOM and generate JSON patches.
-1. We then iterate through the patches and identify which entities need to be reloaded by inspecting the patch paths.
-1. The deserializer only clears the contents of those particular entities and deserialize them from the DOM provided.
-1. For adding and deleting entities, it takes advantage of the entity aliases already stored under the instance to modify the related entities without affecting other entities.
-1. Repeat step 3 and 4 for nested instances stored under a prefab instance using instance aliases instead.
-
-
-| Code | Description |
-| :-   | :-          |
-| [InstanceUpdateExecutor](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/InstanceUpdateExecutor.h) | Class that manages template-instance propagation. At the end of `PrefabComponentSystem::PropagateTemplateChanges()` method, it delegates the template-instance propagation job to `InstanceUpdateExecutor`. |
-| [InstanceSerializer](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicInterface.h) | Class that defines how to deserialize DOMs into instance objects. Deserialization happens in the `PrefabDomUtils::LoadInstanceFromPrefabDom()` method and the JSON serializer for prefabs is defined by `InstanceSerializer`. |
+1. 我们会在实例对象中缓存用于反序列化的 DOM。如果实例中没有缓存的实例 DOM，我们就会像以前一样清除并重新加载所有内容。但如果有缓存的实例 DOM，我们就会使用它与当前 DOM 进行比较，并生成 JSON 补丁。
+1. 然后，我们遍历补丁，通过检查补丁路径来确定哪些实体需要重新加载。
+1. 反序列化器只清除这些特定实体的内容，并从提供的 DOM 中反序列化它们。
+1. 在添加和删除实体时，它会利用实例下已存储的实体别名来修改相关实体，而不会影响其他实体。
+1. 对于存储在使用实例别名的预制件实例下的嵌套实例，请重复第 3 和第 4 步。
 
 
+| Code | Description                                                                                                                 |
+| :-   |:----------------------------------------------------------------------------------------------------------------------------|
+| [InstanceUpdateExecutor](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/InstanceUpdateExecutor.h) | 管理模板-实例传播的类。在 `PrefabComponentSystem::PropagateTemplateChanges()` 方法的末尾， 它将模板实例传播任务委托给 `InstanceUpdateExecutor`。            |
+| [InstanceSerializer](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicInterface.h) | 类定义了如何将 DOM 反序列化为实例对象。反序列化在`PrefabDomUtils::LoadInstanceFromPrefabDom()`方法中进行，而 prefab 的 JSON 序列化器由`InstanceSerializer`定义。  |
 
 
 
-## Prefab editor workflows
+
+
+## 预制件编辑器工作流程
 <!-- <a name="prefab-editor-workflows"> -->
 
-The above sections cover core API features of prefabs and give an idea of how the prefab system works. This section will cover how prefabs are integrated into the O3DE editor and how internally to create, modify and delete entities and prefabs.
+以上章节涵盖了预制件的核心 API 功能，并介绍了预制件系统的工作原理。本节将介绍如何将预制件集成到 O3DE 编辑器中，以及如何在内部创建、修改和删除实体和预制件。
 
-In general, all of these below workflows follow this pattern:
+一般来说，以下所有工作流程都遵循这种模式：
 
 ![Prefab editor workflow](images/PrefabGenericEditorWorkflow.png)
 
 {{< note >}}
-The only exceptions to this are the duplicate workflows where instead of updating the prefab instances first, we take a DOM authoritative approach where we let propagation create the duplicate objects.
+唯一的例外是重复工作流，在这种情况下，我们不首先更新预制件实例，而是采用 DOM 授权方式，让传播来创建重复对象。
 {{< /note >}}
 
-| Code | Description |
-| :-   | :-          |
-| [PrefabPublicInterface](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicInterface.h) | Interface that the public handler implements. The publicly exposed functions in PrefabPublicInterface can be called through Python scripting and are used to write automated tests for prefabs. |
-| [PrefabPublicHandler](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicHandler.cpp) | Class that implements the prefab public interface. `PrefabPublicHandler` is the class that implements the prefab editor workflows. Internally, it calls prefab APIs defined in `PrefabEditorEntityOwnershipService` and `PrefabSystemComponent`. |
+| 代码                                                                                                                                                     | 说明                                                                                                                                           |
+|:-------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
+| [PrefabPublicInterface](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicInterface.h) | 公共处理程序实现的接口。PrefabPublicInterface 中公开暴露的函数可通过 Python 脚本调用，并用于编写预制件的自动测试。                                                                     |
+| [PrefabPublicHandler](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicHandler.cpp)   | 实现 prefab 公共接口的类。 `PrefabPublicHandler` 是实现预制件编辑器工作流程的类。在内部，它调用在 `PrefabEditorEntityOwnershipService` 和 `PrefabSystemComponent` 中定义的预制件 API。 |
 
 
 
-### Create entity
+### 创建实体
 <!-- <a name="create-entity"> -->
 
-You can create a new entity owned by a prefab. The prefab is called the owning prefab instance. The new entity is by default created under the container entity of the prefab being edited, otherwise the new entity is created under the entity selected.
+您可以创建一个由 prefab 拥有的新实体。该 prefab 称为拥有的 prefab 实例。默认情况下，新实体将创建在正在编辑的 prefab 的容器实体下，否则新实体将创建在所选实体下。
 
-The following diagram demonstrates how a new Engine entity is added to a Car prefab instance:
+下图演示了如何将新的 “Engine  ”实体添加到 “Car  ”预制件实例中：
 
 ![Editor workflow - Create entity](images/PrefabCreateEntityWorkflow.png)
 
 
-### Create prefab
+### 创建预制件
 <!-- <a name="create-prefab"> -->
 
-You can select a number of entities and prefabs that share a common owning prefab and share a common root parent and put them under a new prefab. In order to do so, the selected entities and prefabs should be removed from the owning template and then moved into the newly created template.
+您可以选择多个实体和预制件，这些实体和预制件共享一个所有的预制件并共享一个根父，然后将它们放在一个新的预制件下。为此，应将所选实体和预制件从所属模板中移除，然后移入新创建的模板中。
 
 ```
 RaceTrack    (RaceTrack.prefab)
@@ -539,31 +536,30 @@ RaceTrack    (RaceTrack.prefab)
 | Road
 ```
 
-In the above example, if you want to select the Wheel prefab and Engine entity and make a prefab out of them, this is what the workflow would look like:
+在上面的示例中，如果您想选择 “Wheel  ”预制件和 “Engine  ”实体，并将它们制作成一个预制件，工作流程如下：
 
 ![Editor workflow - Create prefab](images/PrefabCreatePrefabWorkflow.png)
 
-When a template is removed from another template, we need to remove the link between the two templates too. It means deleting the `Link` object held in `PrefabSystemComponent`. The link between Wheel prefab and RaceTrack is deleted in the process of the above example.
+当一个模板从另一个模板中删除时，我们也需要删除这两个模板之间的链接。这意味着要删除 `PrefabSystemComponent` 中的 `Link` 对象。在上述示例中，Wheel预制件和 RaceTrack 之间的链接已被删除。
 
-Similarly, a new `Link` object must be created between the newly created prefab and the owning prefab it is put under. In the above example, a new link is created between Car prefab and RaceTrack prefab. After propagation, all other instances of RaceTrack prefab will get these changes too. If there are ten RaceTrack instances, inside all of them, a new Car instance will appear.
+同样，必须在新创建的预制件和其所属的预制件之间创建一个新的 `Link` 对象。在上例中，Car prefab 和 RaceTrack prefab 之间创建了一个新链接。传播后，RaceTrack prefab 的所有其他实例也将获得这些更改。如果有十个 RaceTrack 实例，那么在所有这些实例中都会出现一个新的 Car 实例。
 
-
-### Instantiate prefab
+### 实例化预制件
 <!-- <a name="instantiate-prefab"> -->
 
-You can create a new prefab instance from a prefab template on disk. The template can be loaded or not loaded before instantiation; if not loaded, `PrefabLoader` will load the template first. The new prefab instance is by default created under the container entity of the prefab being edited, otherwise the new instance is created under the entity selected.
+您可以从磁盘上的预制件模板创建新的预制件实例。在实例化之前，可以加载或不加载模板；如果不加载，`PrefabLoader` 将首先加载模板。默认情况下，新的预制件实例是在被编辑预制件的容器实体下创建的，否则新实例将在所选实体下创建。
 
-Unlike **Create entity**, this workflow includes extra work on creating a link between the template being instantiated from and the owning prefab it is put under.
+与**创建实体**不同的是，此工作流程包括在模板实例化和所属预制件之间创建链接的额外工作。
 
-The following diagram demonstrates how a Wheel prefab is instantiated and added to a Car prefab as a nested instance:
+下图演示了如何将Wheel预制件实例化并作为嵌套实例添加到Car预制件中：
 
 ![Editor workflow - Instantiate prefab](images/PrefabInstantiatePrefabWorkflow.png)
 
 
-### Delete entities and nested prefabs
+### 删除实体和嵌套的预制件
 <!-- <a name="delete-entities-and-nested-prefabs"> -->
 
-You can select a number of entities and prefabs and remove them from the owning template. The selected items need to share a common owning prefab, otherwise the operation would not succeed. When an entity is deleted, the workflow will also delete all the entity's descendant entities and prefab instances.
+您可以选择多个实体和预制件，并将它们从所属模板中移除。被选中的项目需要共享一个共同的自有预制件，否则操作不会成功。删除实体时，工作流程也会删除该实体的所有后代实体和 prefab 实例。
 
 ```
 Car        (Car.prefab)
@@ -575,26 +571,26 @@ Car        (Car.prefab)
   | Seat   (Seat.prefab)   <-- select this
 ```
 
-In the above example, if you select Engine entity and Seat prefab, two lists will be generated for deletion:
+在上例中，如果您选择了 Engine 实体和 Seat 预制件，就会生成两个供删除的列表：
 1. **Entity List:** Engine, Piston, Distributor
 1. **Nested Prefab List:** Seat
 
-The following diagram demonstrates what the workflow looks like:
+下图展示了工作流程的样子：
 
 ![Editor workflow - Delete entities and nested prefabs](images/PrefabDeleteWorkflow.png)
 
 
-### Detach prefab
+### 分离预制件
 <!-- <a name="detach-prefab"> -->
 
-You can select a prefab instance and detach it in Entity Outliner. By detaching, it means:
+您可以在Entity Outliner中选择一个预制件实例并将其分离。分离的意思是：
 
-1. Converting the container entity of the selected prefab into a regular entity. This entity has the same parent as the container entity has.
-1. Putting all entities and nested prefab instances (owned by the selected prefab) under the entity.
-It is an opposite operation of **Create prefab**.
+1. 将所选预制件的容器实体转换为常规实体。该实体的父实体与容器实体的父实体相同。
+1. 将所有实体和嵌套预制件实例（由所选预制件拥有）置于该实体之下。
+   它与**创建预制件**的操作相反。.
 
 {{< note >}}
-You can detach only one prefab at a time. If multiple prefabs are selected, the **Detach Prefab...** option would not appear in the context menu.
+一次只能分离一个预制件。如果选择了多个预制件，**Detach Prefab...** 选项将不会出现在右键菜单中。
 {{< /note >}}
 
 ```
@@ -606,18 +602,18 @@ Wheel     (Wheel.prefab)
 | Hub
 ```
 
-In the above example, if you select the Wheel prefab under the Car prefab and detach it, all descendants of Wheel prefab will be put under a new Wheel entity under Car prefab instance. The following diagram demonstrates what the workflow looks like:
+在上例中，如果选择 Car prefab 下的 Wheel prefab 并将其分离，Wheel prefab 的所有子实体都将被置于 Car prefab 实例下的新 Wheel 实体中。下图演示了该工作流程：
 
 ![Editor workflow - Detach prefab](images/PrefabDetachWorkflow.png)
 
 
-### Duplicate entities and prefabs
+### 复制实体和预制件
 <!-- <a name="duplicate-entities-and-prefabs"> -->
 
-You can select a number of entities and prefabs and duplicate them in Entity Outliner. All selected should be owned by the same prefab instance, otherwise the operation would not succeed.
+您可以在Entity Outliner中选择多个实体和预制件并复制它们。所有选中的实体和预制件应为同一预制件实例所有，否则操作不会成功。
 
 {{< note >}}
-Duplication of an entity will duplicate all its descendants.
+复制一个实体将复制其所有后代。
 {{< /note >}}
 
 ```
@@ -629,15 +625,15 @@ Garage_Large
 | Car         (Car.prefab)   <-- select this
 ```
 
-In the above example, if you select the Brooms entity and the Car prefab and duplicate them, the duplication will lead to entity and prefab instance creation:
+在上述示例中，如果您选择 “Brooms ”实体和 “Car ”预制件并复制它们，复制将导致实体和预制件实例的创建：
 
-1. A new entity Brooms (with Broom_1 and Broom_2) will be created. Brooms' parent is Garage_Small.
-1. A new nested prefab instance Car will be created. The prefab's parent is Garage_Large.
+1. 将创建一个新实体 Brooms（包含 Broom_1 和 Broom_2）。Brooms 的父实体是 Garage_Small。
+1. 将创建一个新的嵌套 prefab 实例 Car。该预制件的父节点是 Garage_Large。
 
-The following diagram demonstrates what the workflow looks like.
+下图展示了工作流程的样子。
 
 ![Editor workflow - Duplicate entities and prefabs](images/PrefabDuplicateWorkflow.png)
 
 {{< note >}}
-The second step is surrounded with dot lines. As we mentioned above, for this particular operation, we currently generate patches and apply the patches directly on the template DOM. It is a template DOM authoritative approach. The prefab instance object will be updated during propagation.
+第二步用点线包围。如上所述，对于这一特殊操作，我们目前会生成补丁，并直接在模板 DOM 上应用补丁。这是一种模板 DOM 授权方法。在传播过程中，prefab 实例对象将被更新。
 {{< /note >}}

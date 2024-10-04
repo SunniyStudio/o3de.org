@@ -1,93 +1,93 @@
 ---
-linkTitle: Contributing
-title: Contributing to the O3DE Engine Developer Guide
-description: Learn how to contribute to Open 3D Engine's (O3DE's) Engine Developer Guide. Includes tips on what to include and where to put your documentation, plus information on supported tools to help visually present your content.
+linkTitle: 贡献
+title: 贡献O3DE Engine开发者指南
+description: 了解如何为 Open 3D Engine (O3DE) 引擎开发人员指南做出贡献。包括关于文档内容和放置位置的提示，以及有助于直观展示内容的支持工具的信息。
 weight: 1000
 ---
 
-The O3D community needs your help in documenting and explaining the inner workings and intra-workings of the modular, open source, 3D simulation engine that is **Open 3D Engine (O3DE)**. In this topic, you will learn what to include in your contributions to this guide, where to place them in the directory structure, and what tools are supported on the website to help you best visually present your content.
+O3D 社区需要您的帮助，以记录和解释模块化、开源、三维仿真引擎（即**Open 3D Engine (O3DE)**）的内部工作和内部运作。在本专题中，您将了解到向本指南提供的资料应包括哪些内容、在目录结构中的位置，以及网站支持哪些工具来帮助您以最直观的方式展示您的内容。
 
-## What to contribute and where
+## 贡献什么和贡献在哪里
 
-O3DE is a complex software product with many working parts. Just as an automobile comes with a user guide for drivers and a service manual for mechanics, O3DE benefits from having both a user guide for users and an engine guide for engine developers. The **Engine Developer Guide** is a place to document the architectural concepts that are too long or too broad for source code comments, and which might be difficult to represent using words alone.
+O3DE 是一个复杂的软件产品，有许多工作部件。就像汽车有驾驶员使用指南和机械师维修手册一样，O3DE 也有用户使用指南和引擎开发指南。**引擎开发人员指南**是一个记录架构概念的地方，这些概念对于源代码注释来说太长或太宽泛，而且可能难以用语言表达。
 
-The following `engine-dev` subdirectories are home to specific collections of content that would make excellent contributions to this guide:
+以下 `engine-dev` 子目录中包含的特定内容可为本指南做出卓越贡献：
 
-* `architecture` - Conceptual content and diagrams that explain the overall architecture within the engine, explaining design decisions and execution flow.
-* `frameworks` - Deeper dives into the design and usage of core libraries including `AzCore` and `AzFramework`, and specialized libraries such as `AzNetworking`.
-* `gems` - Conceptual content and diagrams that explain the overall architecture of a Gem, explaining design decisions and execution flow.
-* `assets` - A developer's look at the design of the asset system, including anything developers might need to know when extending or modifying the system.
-* `tools` - Conceptual content and diagrams that explain the overall architecture of specific tools, explaining design decisions and execution flow.
+* `architecture` - 概念性内容和图表说明引擎的整体架构，解释设计决策和执行流程。
+* `frameworks` - 深入探讨核心库（包括 `AzCore` 和 `AzFramework`）以及专业库（如 `AzNetworking`）的设计和使用。
+* `gems` - 概念性内容和图表说明 Gem 的整体架构，解释设计决策和执行流程。
+* `assets` - 开发人员了解资产系统的设计，包括开发人员在扩展或修改系统时可能需要了解的任何信息。
+* `tools` - 概念性内容和图表说明特定工具的整体架构，解释设计决策和执行流程。
 
-Conceptual topics often benefit from the following type of coverage and visual aids:
+概念性主题通常得益于以下类型的覆盖面和视觉辅助工具：
 
-* Architectural overviews and explanations of design choices.
-* Execution flow, with flowchart diagrams to help visualize.
-* Code map tables and UML class diagrams to document C++ classes.
-* Debugging tips.
-* Testing tips and examples.
-* Scripts and other command line developer tools, with usage tips and examples.
+* 架构概述和设计选择说明。
+* 执行流程，使用流程图帮助可视化。
+* 代码映射表和 UML 类图，用于记录 C++ 类。
+* 调试技巧。
+* 测试技巧和示例
+* 脚本和其他命令行开发工具，以及使用技巧和示例。
 
 {{< tip >}}
-The [o3de.org](https://o3de.org) website supports the Mermaid diagram tool, which uses text syntax inside of Markdown code blocks to render diagrams and visualizations. To learn more about creating diagrams with Mermaid, refer to [Creating flowcharts and class diagrams in Markdown](#diagramming-tools).
+[o3de.org](https://o3de.org)网站支持Mermaid图表工具，该工具使用Markdown代码块内的文本语法来呈现图表和可视化效果。要了解用美人鱼创建图表的更多信息，请参阅 [用Markdown 创建流程图和类图](#diagramming-tools)。
 {{< /tip >}}
 
-## Linking to source code
+## 链接源代码
 
-When linking to source code on GitHub -- especially when linking to a block of code within a file -- a good best practice is to use permalinks. Documentation is a snapshot in time, and a permalink to a specific commit preserves this concept for linked source code.
+在 GitHub 上链接源代码时，尤其是链接文件中的代码块时，最好使用永久链接。文档是时间的快照，而指向特定提交的永久链接则为链接的源代码保留了这一概念。
 
-#### Creating file permalinks
+#### 创建文件永久链接
 
-To obtain permalinks for a file in a GitHub repo, navigate to the **Code** tab and open the file, then choose **Copy permalink** from the ... menu:
+要为 GitHub 仓库中的文件获取永久链接，请导航至**Code**选项卡并打开文件，然后从...菜单中选择**Copy permalink**：
 
 ![Use the "Copy permalink" menu option](/images/engine-dev/creating-github-permalinks.png)
 
-To embed the link, use the standard Markdown link format.
+要嵌入链接，请使用标准的 Markdown 链接格式。
 
-**Example**
+**示例**
 
-Link: `[SettingsInterface](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h)`
+链接: `[SettingsInterface](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h)`
 
-Output: [SettingsInterface](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h)
+输出: [SettingsInterface](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h)
 
-#### Creating line block permalinks
+#### 创建代码行的永久链接
 
-To obtain permalinks for specific lines of code in a file in a GitHub repo:
+获取 GitHub 仓库文件中特定代码行的永久链接：
 
-1. Navigate to the **Code** tab and open the file.
-1. Click on the first line number in the block.
-1. Shift + click on the last line number in the block.
-1. Choose **Copy permalink** from the ... menu to the left of the first line number:
+1. 导航至 **Code**选项卡并打开文件。
+1. 单击代码块中的第一个行号。
+1. Shift + 单击代码块中的最后一行编号。
+1. 从第一行编号左侧的...菜单中选择 **Copy permalink**：
 
 ![Use the "Copy permalink" menu option](/images/engine-dev/creating-github-block-permalinks.png)
 
-Alternatively, you can just manually add the line number range to the end of the file's permalink URL, using the format: `#Lnnn-Lnnn`, where `nnn` represents a line number.
+或者，您也可以使用格式手动将行号范围添加到文件的永久 URL 末尾：`#Lnnn-Lnnn`，其中 `nnn` 代表行号。
 
-**Example**
+**示例**
 
-Link: `[SettingsInterface::Get](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L31-L44)`
+链接: `[SettingsInterface::Get](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L31-L44)`
 
-Output: [SettingsInterface::Get](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L31-L44)
+输出: [SettingsInterface::Get](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L31-L44)
 
-#### Using simple links
+#### 使用简单链接
 
-If you are linking to an entire file and are reasonably certain its filename will not change, it is acceptable to use a shorter, simple link instead.
+如果您链接的是整个文件，并且有理由确定其文件名不会改变，那么使用一个更短、更简单的链接也是可以接受的。
 
-**Example**
+**示例**
 
-Link: `[EngineInfo.h](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/EngineInfo.h)`
+链接: `[EngineInfo.h](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/EngineInfo.h)`
 
-Output: [EngineInfo.h](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/EngineInfo.h)
+输出: [EngineInfo.h](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/EngineInfo.h)
 
-## Formatting tools
+## 格式化工具
 
-To help visualize your concepts, the following formatting tools are supported on the [o3de.org](https://o3de.org) website.
+为了帮助您直观地理解概念，[o3de.org](https://o3de.org) 网站支持以下格式化工具。
 
-### Creating flowcharts and class diagrams in Markdown {#diagramming-tools}
+### 用 Markdown 创建流程图和类图 {#diagramming-tools}
 
-You can create a variety of diagrams and other visualizations from within Markdown code blocks that will render using the Mermaid diagram tool. Refer to the [Mermaid documentation](https://mermaid-js.github.io/mermaid/) to learn about the various supported diagram types and their usage syntax.
+您可以在 Markdown 代码块中创建各种图表和其他可视化内容，并使用Mermaid图表工具进行渲染。请参阅 [Mermaid文档](https://mermaid-js.github.io/mermaid/) 了解各种受支持的图表类型及其使用语法。
 
-#### Example: Flowchart
+#### 示例: Flowchart
 
 ````
 ```mermaid
@@ -99,7 +99,7 @@ graph TD;
 ```
 ````
 
-**Output**
+**输出**
 
 ```mermaid
 graph TD;
@@ -109,7 +109,7 @@ graph TD;
     C-->D;
 ```
 
-#### Example: UML Class Diagram
+#### 示例: UML 类图
 
 ````
 ```mermaid
@@ -137,7 +137,7 @@ classDiagram
 ```
 ````
 
-**Output**
+**输出**
 
 ```mermaid
 classDiagram
@@ -163,20 +163,20 @@ classDiagram
     }
 ```
 
-### Mathematical formulas
+### 数学公式
 
-You can embed mathematical formulas using TeX and MathML input formats. Refer to the [MathJax documentation](https://docs.mathjax.org/en/latest/index.html) for more information on how to use the MathJax version 3.0 display engine.
+您可以使用 TeX 和 MathML 输入格式嵌入数学公式。有关如何使用 MathJax 3.0 版显示引擎的详细信息，请参阅 [MathJax 文档](https://docs.mathjax.org/en/latest/index.html)。
 
-**Example Usage**
+**示例用法**
 
 ```markdown
 $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
 ```
 
-**Example Output**
+**示例输出**
 
 $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
 
-## General information on contributing
+## 关于贡献的一般信息
 
-For more general information on contributing to documentation, including a detailed style guide, more formatting options, and information on the process of submitting your contribution, refer to the docs section of the [Contributing Guide](/docs/contributing/to-docs/).
+有关文档贡献的更多一般信息，包括详细的样式指南、更多格式化选项以及有关提交贡献过程的信息，请参阅 [贡献指南](/docs/contributing/to-docs/) 的 docs 部分。

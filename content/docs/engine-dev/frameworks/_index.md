@@ -1,18 +1,18 @@
 ---
-linkTitle: Frameworks
-title: Open 3D Engine Framework Documentation
-description: Documentation for developers using or contributing to the Frameworks distributed as the core libraries of Open 3D Engine.
+linkTitle: 框架
+title: Open 3D Engine框架文档
+description: 为使用或协助使用作为Open 3D Engine 核心库发布的框架的开发人员提供的文档。
 weight: 200
 ---
 
-The **Open 3D Engine (O3DE) Frameworks** are the set of libraries shipped as the core elements of O3DE. Frameworks are the low-level libraries responsible for providing support that Gems and project code can build on top of, allowing users to customize their O3DE projects on top of a common SDK for the platform.
+**Open 3D Engine (O3DE) Frameworks** 是作为 O3DE 核心元素发布的一系列库。框架是底层库，负责为 Gem 和项目代码提供支持，允许用户在平台的通用 SDK 基础上定制自己的 O3DE 项目。
 
-## Topics
+## 主题
 
 {{< todo >}}
-This is a stub page intended to serve as an example of guide structure. Information will be filled in and changed as the Engine Developer Guide is published.
+这是一个存根页面，旨在作为指南结构的示例。随着《引擎开发者指南》的发布，相关信息将被填充和更改。
 {{< /todo >}}
 
-| Name | Description |
-|-|-|
-| [AzCore](./azcore) | Learn about the core internals of Open 3D Engine such as memory management and the custom RTTI system. |
+| 名称                 | 说明                                           |
+|--------------------|----------------------------------------------|
+| [AzCore](./azcore) | 了解 Open 3D Engine 的核心内部结构，如内存管理和自定义 RTTI 系统。 |

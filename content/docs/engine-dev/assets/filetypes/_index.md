@@ -1,16 +1,16 @@
 ---
-linkTitle: File Type Support
-title: Open 3D Engine Metadata File Type Support Developer Documentation
-description: Documentation for developers extending or contributing to the metadata system as part of Open 3D Engine.
+linkTitle: 文件类型支持
+title: Open 3D Engine 元数据文件类型支持 开发人员文档
+description: 为扩展元数据系统或为元数据系统做出贡献的开发人员提供文档，该系统是Open 3D Engine的一部分。
 weight: 400
 ---
 
-**Open 3D Engine (O3DE)** metadata system enables moving/renaming assets in a project.  This section of the Engine Developer Guide provides details on the work needed to upgrade various systems to fully support metadata relocation.
+**Open 3D Engine (O3DE)** 元数据系统可在项目中移动/重命名资产。 引擎开发人员指南的这一部分详细介绍了升级各种系统以完全支持元数据重置所需的工作。
 
-## Topics
+## 主题
 
-| Name | Description |
-|-|-|
-| [Scene Files](./fbx-support) | Overview of what work is required for scene files (FBX, etc). |
-| [Texture Files](./texture-support) | Overview of what work is required for texture files (PNG, JPG, etc). |
-| [Prefab Files](./prefab-support) | Overview of what work is required for prefab files. |
+| 名称                        | 说明                     |
+|---------------------------|------------------------|
+| [场景文件](./fbx-support)     | 概述场景文件（FBX 等）所需的工作。    |
+| [纹理文件](./texture-support) | 纹理文件（PNG、JPG 等）所需工作概述。 |
+| [预制件文件](./prefab-support) | 预制件文件所需工作概述。           |

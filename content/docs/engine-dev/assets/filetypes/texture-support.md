@@ -1,133 +1,133 @@
 ---
-linkTitle: Texture Files
-title: Texture File Type Support
-description: Overview of the work required for texture files to fully support the metadata asset relocation
+linkTitle: 纹理文件
+title: 纹理文件类型支持
+description: 纹理文件全面支持元数据资产迁移所需工作概述
 
 weight: 100
 ---
 
-## Overview
+## 概述
 
 
-This page is an investigation into answering the question: "How can we safely support meta data file based asset relocation for image (texture) files?"
+本页旨在回答以下问题： “如何安全地支持基于元数据文件的图像（纹理）文件资产搬迁？
 
-## Image File Product Asset Types
+## 图像文件产品资产类型
 
-* imagemipchain - A mipmap for an image. Generally not used by other systems, they reference the streaming image, the streaming image references the mipmaps to use.
-* streamingimage - the core processed image.
+* imagemipchain - 图像的 mipmap。一般不被其他系统使用，它们引用流媒体图像，而流媒体图像则引用要使用的 mipmap。
+* streamingimage - 经过处理的核心图像。
 
-## What happens right now if you rename an image file with a stable meta file based UUID?
+## 如果使用基于稳定元文件的 UUID 重命名图像文件，现在会发生什么情况？
 
-SubID generation is based on the product asset type, and for mipmaps, the location in the mipmap chain. This means that sub IDs will remain stable when an image is renamed or moved.
+子 ID 的生成基于产品资产类型，对于 mipmap，则基于 mipmap 链中的位置。这意味着当图像重命名或移动时，子 ID 将保持稳定。
 
-This means there are only two concerns with supporting sidecar meta files for images:
+这意味着，支持图像的子卡元文件只有两个问题：
 
-* Primary - Incoming references to the source image or product images via path or file name.
-* Secondary - Files making use of the current feature to only use one source asset per relative scan folder path.
-    * For example, if you have `AutomatedTesting\MyTexture.png` and `MyGem\Assets\MyTexture.png`, right now you will only see one of those. With meta files, both will process.
-    * This isn't a unique problem to images, but historically images made more use of this system than other file types.
+* 主要 - 通过路径或文件名引用源图像或产品图像。
+* 次要 - 利用当前功能的文件，每个相对扫描文件夹路径只能使用一个源资产。
+    * 例如，如果您有 `AutomatedTesting\MyTexture.png` 和 `MyGem\Assets\MyTexture.png`，现在您只能看到其中一个。有了元文件后，两个文件都会被处理。
+    * 这并不是图像独有的问题，但从历史上看，图像比其他文件类型更多地使用了这一系统。
 
-### What breaks if you move an image?
+### 移动图像时会出现什么问题？
 
-* Authored materials using the Material Editor reference images via relative path. So if you move an image referenced by a material, that material will break, even if the UUID is stable.
-    * TODO: With this reference as a job dependency, it will behave differently than it does now, which hasn't been tested yet.
-    * Now: the source asset `sponza_mat_curtainblue.material` has a relative path reference to the source asset `"../Textures/curtain_metallic.png"` via a path and not asset ID. If the file is renamed to `bcurtain_metallic.png`, `sponza_mat_curtainblue.material` is not reprocessed, and the product asset `sponza_mat_curtainblue.azmaterial` remains the same, with the same asset hint to the old image and the asset ID of the old image.
-* FBX files and other 3D scene files reference images via absolute or relative path. The scene builder resolves this down to an asset ID for runtime. If you move an image, the FBX file will continue to point at the old file name or location, and will fail to process.
-    * TODO: There's a small chance that, due to lack of non-product dependencies on images, a relocation wouldn't break until later.
-        * Example: `Car.fbx `references `CarBody.png`. The scene builder resolves this to the UUID + sub ID for `CarBody.streamingimage`. Renaming `CarBody.png` to `CarBody1.png`, the sub ID and UUID are stable. `Car.fbx` does not reprocess after this change because it's not a job or source dependency. `Car.fbx`'s product assets referencing `CarBody.png` appear to just work and continue to reference `CarBody1.png` because the product assets haven't changed. Then, when re-exporting `Car.fbx` with a change, the image stops working. Rolling back the change, the image stays broken because the FBX file can no longer be processed as it was before, it's not able to resolve this path reference.
-* UI referencing images with the SimpleAssetReference will break, because the path no longer resolves.
-* Texture Atlas lists and Material Types with hardcoded path references will break, because the path no longer resolves.
+* 使用材质编辑器制作的材质通过相对路径引用图片。因此，如果移动素材引用的图片，即使 UUID 保持稳定，该素材也会损坏。
+    * 待办：将此引用作为作业依赖项后，其行为将与现在不同，这一点尚未测试。
+    * 现在：源资产 `sponza_mat_curtainblue.material` 通过路径而非资产 ID 对源资产`"../Textures/curtain_metallic.png"`具有相对路径引用。如果文件重命名为 `bcurtain_metallic.png`，则不会重新处理 `sponza_mat_curtainblue.material`，而产品资产 `sponza_mat_curtainblue.azmaterial` 保持不变，与旧图像的资产提示和旧图像的资产 ID 相同。
+* FBX 文件和其他 3D 场景文件通过绝对路径或相对路径引用图像。场景生成器会在运行时将其解析为资产 ID。如果移动图像，FBX 文件将继续指向旧的文件名或位置，并且无法处理。
+    * 待办：由于缺乏对图像的非产品依赖性，有一个很小的可能性是，重新定位直到稍后才会出现问题。
+        * 示例: `Car.fbx `引用了 `CarBody.png`。场景生成器会将其解析为 `CarBody.streamingimage` 的 UUID + 子 ID。将 `CarBody.png` 重命名为 `CarBody1.png`，子 ID 和 UUID 将保持稳定。更改后，`Car.fbx` 不会重新处理，因为它不是作业或源代码依赖项。`Car.fbx` 的产品资产引用了 `CarBody.png`，但由于产品资产未发生变化，因此似乎正常工作并继续引用 `CarBody1.png`。然后，在更改后重新导出 `Car.fbx` 时，图像停止工作。回滚更改后，图像仍然是坏的，因为 FBX 文件无法再像以前那样处理，它无法解决路径引用问题。
+* 使用 SimpleAssetReference 引用图像的 UI 将中断，因为路径不再解析。
+* 带有硬编码路径引用的纹理 Atlas 列表和材质类型将被破解，因为路径不再解析。
 
-## Recommendation
+## 建议
 
-Before enabling image relocation:
+在启用图像重定位之前：
 
-* Source asset materials should be updated to use asset IDs instead of relative paths.
-* Scene files should emit job dependencies on referenced images.
+* 源资产材质应更新为使用资产 ID 而不是相对路径。
+* 场景文件应在引用的图像上发出工作依赖。
 
-There are other potential concerns that are lower priority, and can be worked around:
+还有一些优先级较低的潜在问题可以解决：
 
-* UI references to images via SimpleAssetReference
-* Material Types reference images
+* 用户界面通过 SimpleAssetReference 引用图像
+* 材质类型引用图片
 
-## Asset Relocation Challenges
+## 资产搬迁挑战
 
-### Materials authored in the material editor have path based references to images
-
-
-Materials generally come from two places right now: Material product assets (azmaterials) generated from scene files, and materials authored in the material editor.
-
-This concern is on the authored materials. Asset relocation issues around textures for materials generated from scene files is less of a concern because that same workflow challenge exists in other engines with sidecar based relocation.
-
-Material source assets reference image source assets via relative path.  These are emitted as job dependencies, so we have more hooks available for us to track and manage this.  However, right now, it's not handled. For example, renaming `bcurtain_metallic.png` only the reprocesses the image and not the material.
-
-This means that right now, the product asset remains the same. It continues to have an asset ID based reference to the image asset, with the old incorrect asset hint.
-
-Because there's a job dependency here, the job would re-process in this case, and not just silently point at the old link (see the other concerns with relocation in this document)
-
-Forcing the material to reprocess causes an error to be emitted.
-
-#### So why is this concern?
-
-It means that, when someone renames an image file referenced via material source assets, all of those jobs will fail until each of those material files are individually updated, even with a stable asset ID. So in this case, when renaming `curtain_metallic.png`, all 3 materials that reference `curtain_metallic.png` by relative path will need to be individually updated. I now have to modify 3 additional source assets:
-
-Instead, if the image was referenced via UUID or asset ID then this rename event would mean that the materials could remain unchanged and would limit the scope of work to just that individual image being renamed, and not the incoming dependencies.
-
-#### What can we do to address this?
+### 在素材编辑器中创建的素材具有基于路径的图像引用
 
 
-* Update materials to reference images via source asset UUID, or product asset asset ID.
-* Build a migration tool that users can run that will update all existing materials on their project to the new material format, so they don't have to manually re-open and re-save all materials.
-* In the guidance for enabling meta sidecar files for images, explain this situation to users, and ask them to run this tool before enabling meta files for image types.
+目前，材质通常来自两个地方： 从场景文件生成的材质产品资产（azmaterials），以及在材质编辑器中制作的材质。
 
-This will mean that material references to images will be stable across image renaming, because materials will use stable IDs.
+这个问题主要涉及自制材质。对于从场景文件中生成的材质，与纹理相关的资产重定位问题并不那么令人担忧，因为在其他基于侧卡重定位的引擎中也存在同样的工作流程难题。
 
-### Scene file source assets do not emit job dependencies on images reference by path
+材质源资产通过相对路径引用图像源资产。 这些都是作为工作依赖项发布的，因此我们有更多的钩子可以跟踪和管理这些工作。 不过，现在我们还没有处理这个问题。例如，重命名 `bcurtain_metallic.png` 只会重新处理图像，而不会重新处理材质。
 
+这意味着，现在产品资产保持不变。它仍然有一个基于资产 ID 的图像资产引用，并带有旧的不正确的资产提示。
 
-In the previous section, authored material source assets had relative path references to image source assets, and they emitted job dependencies on those images. This meant that if the image was renamed with ID stabilization, the job dependency would be the same and the job would re-run, causing the product asset reference to instantly become an error. This is good because it doesn't hide an error for later.
+由于这里存在作业依赖关系，因此在这种情况下，作业会重新处理，而不只是默默地指向旧链接（请参阅本文档中与重新定位有关的其他问题）。
 
-FBX and other scene files also reference source image assets via path, and there's nothing we can do about that. It's a known limitation.
+强制素材重新处理会导致出错。
 
-However, the gotcha here is on cache consistency: Right now, without a job dependency, when renaming an image like in the previous section, the FBX file referencing the image will not reprocess. The product asset azmaterial of the FBX file references the product asset via asset ID, but the source asset FBX referenced via path. So now with the rename, the stale azmaterial product asset of the FBX file has a valid asset ID referencing the relocated asset. This means that an asset relocation of an image file may appear to work immediately: rename `CarBody.png` to `CarBody1.png`, and the `Car.azmaterial` product asset of `Car.fbx` appears to render correctly with the asset ID based reference to `CarBody1.streamingimage`. Then, later on someone makes a change to cause `Car.fbx` to reprocess and now the image can't be found and there is an error or warning processing `Car.fbx`. If a user then panics and tries to roll back this change to `Car.fbx`, it will still appear broken, because they had previously been in an unstable state.
+#### 为什么会有这种担忧呢？
 
-#### Why is this concern?
+这意味着，当有人重命名通过素材源资产引用的图像文件时，所有这些工作都会失败，直到每个素材文件都被单独更新，即使有一个稳定的资产 ID。因此，在这种情况下，当重命名 `curtain_metallic.png` 时，通过相对路径引用 `curtain_metallic.png` 的所有 3 个素材都需要单独更新。现在我必须修改 3 个额外的源资产：
 
+相反，如果图片是通过 UUID 或资产 ID 引用的，那么重命名事件将意味着素材可以保持不变，并将工作范围限制在被重命名的单个图片上，而不是传入的依赖项上。
 
-Cache consistency is very important. Situations like this can break user trust in asset processing, create situations where projects work differently on different team members machines, and the time between causing the issue (renaming the texture) and discovering the bug (the reference is broken, the scene builder can't find the texture and the azmaterial product asset no longer has a valid texture) may take a long time. If everyone on the team is working with iterative caches day to day, and someone finally clears their cache or sets up a new project several weeks after the rename, that's a lot of other changes that could have caused the problem.
-
-#### What can we do to address this?
+#### 如何解决这个问题？
 
 
-* Update scene files to emit job dependencies on referenced source asset image files.
-* Make sure job dependencies are using asset IDs instead of paths before being recorded into the asset database, so that renaming an image file will cause the dependency job for the new name to match the old dependency, and cause the scene files to reprocess.
+* 通过源资产 UUID 或产品资产 ID 更新素材以引用图像。
+* 开发一个用户可以运行的迁移工具，将项目中的所有现有素材更新为新的素材格式，这样用户就不必手动重新打开和保存所有素材。
+* 在为图像启用元侧卡文件的指南中，向用户解释这种情况，并要求他们在为图像类型启用元文件之前运行该工具。
 
-This will mean that renaming an image referenced by an FBX file will cause that FBX file to reprocess, due to the job dependency. This will maintain cache consistency for a team, and make it easy to quickly find issues when an image was referenced by an FBX file, so the team can go upstream to adjust the Blender, Maya, or other working asset to point at the new image, and re-export the FBX with the new path.
+这将意味着在重命名图像时，对图像的素材引用将保持稳定，因为素材将使用稳定的 ID。
 
-### Scene file source assets have path based references to images
-
-
-This is a known issue with scene files referencing images, users tend to expect this.
-
-### UI references to images via simple asset reference
+### 场景文件源资产不会对通过路径引用的图像发出作业依赖关系
 
 
-UI components tend to use SimpleAssetReference to reference files, instead of actual asset references. This is because the UI system and components were built before proper asset referencing was available.
+在上一节中，已创建的材质源资产具有对图像源资产的相对路径引用，并且它们会发出对这些图像的作业依赖性。这意味着，如果使用 ID 稳定功能对图像进行重命名，作业依赖性将保持不变，作业将重新运行，导致产品资产引用立即成为错误。这样做很好，因为它不会为以后隐藏错误。
 
-This includes the texture atlas system, because it's primarily used by UI.
+FBX 和其他场景文件也会通过路径引用源图像资产，对此我们无能为力。这是一个已知的限制。
 
-#### Why is this not a major problem?
+不过，这里的问题在于缓存的一致性： 目前，在没有工作依赖的情况下，当重命名图像（如上一节所述）时，引用图像的 FBX 文件不会重新处理。FBX 文件的产品资产 azmaterial 通过资产 ID 引用产品资产，而源资产 FBX 则通过路径引用。因此，重命名后，FBX 文件中陈旧的 azmaterial 产品资产就有了有效的资产 ID，可以引用重新定位的资产。这意味着图像文件的资产重定位可能会立即生效：将 `CarBody.png` 重命名为 `CarBody1.png`，然后 `Car.fbx` 中的 `Car.azmaterial` 产品资产就会通过基于资产 ID 的 `CarBody1.streamingimage` 引用正确呈现。后来，有人进行了更改，导致 `Car.fbx` 重新处理，现在图像找不到了，处理 `Car.fbx` 时出现了错误或警告。如果用户惊慌失措地试图回滚对 `Car.fbx`的更改，由于之前处于不稳定状态，因此仍然会出现故障。
 
-The UI system predates a lot of current systems and ideally it will be overhauled to use modern solutions (asset references instead of simple asset references, prefabs instead of slices, etc), which would automatically handle this problem.
-
-#### Why is this still a concern?
+#### 为什么会有这种担忧？
 
 
-Content will break, if someone relocates an image file referenced from a UI component.
+缓存一致性非常重要。像这样的情况会破坏用户对资产处理的信任，造成项目在不同团队成员的机器上以不同方式运行的情况，而且从造成问题（重命名纹理）到发现错误（引用被破坏，场景构建器找不到纹理，azmaterial 产品资产不再具有有效纹理）之间的时间可能会很长。如果团队中的每个人每天都在使用迭代缓存，而最终有人在重命名几周后清除了缓存或建立了新项目，那么就有很多其他更改可能会导致问题。
 
-### Material Types reference images via relative path, and not asset ID
+#### 我们能做些什么来解决这个问题？
 
 
-Material type files are hand authored and are sort of code-adjacent, they reference a lot of other content and files via relative path instead of asset IDs, because it's expected that people will type these by hand instead of using a tool to build the material type file: https://www.o3de.org/docs/atom-guide/look-dev/materials/material-type-file-spec/
+* 更新场景文件，在引用的源资产图像文件上发出工作依赖。
+* 确保工作依赖关系在记录到资产数据库之前使用资产 ID 而不是路径，这样重命名图像文件将导致新名称的依赖关系工作与旧的依赖关系相匹配，并导致场景文件重新处理。
 
-In other cases of hand-authored content like this: Lua files, C++ files, Python files, shader files, etc, it's an known and expected limitation that path based references won't be stable to asset relocation. Content creators are typically used to this and expect it.
+这意味着重命名 FBX 文件引用的图像将导致 FBX 文件因工作依赖关系而重新处理。这将为团队保持缓存的一致性，并在图像被 FBX 文件引用时便于快速发现问题，因此团队可以到上游调整 Blender、Maya 或其他工作资产，使其指向新图像，并使用新路径重新导出 FBX。
+
+### 场景文件源资产对图像有基于路径的引用
+
+
+这是一个已知的场景文件引用图像的问题，用户往往希望如此。
+
+### 用户界面通过简单资产引用引用图像
+
+
+用户界面组件倾向于使用 SimpleAssetReference 引用文件，而不是实际的资产引用。这是因为用户界面系统和组件是在适当的资产引用可用之前构建的。
+
+这包括纹理图集系统，因为它主要由用户界面使用。
+
+#### 为什么这不是一个大问题？
+
+用户界面系统比当前的许多系统都要早，理想情况下，它将被彻底改造为使用现代解决方案（资产引用代替简单资产引用、预制板代替切片等），从而自动处理这个问题。
+
+#### 为什么这仍然是一个问题？
+
+
+如果有人重新定位用户界面组件引用的图像文件，内容就会被破坏。
+
+### 材质类型通过相对路径而不是资产 ID 引用图片
+
+
+素材类型文件是手工编写的，有点像代码邻接，它们通过相对路径而不是资产 ID 引用了很多其他内容和文件，因为预计人们会手工输入这些内容，而不是使用工具来创建素材类型文件： https://www.o3de.org/docs/atom-guide/look-dev/materials/material-type-file-spec/
+
+在其他类似手工编写内容的情况下： Lua 文件、C++ 文件、Python 文件、着色器文件等，基于路径的引用无法稳定地进行资产重定位，这是众所周知的限制。内容创建者通常已经习惯并期望如此。

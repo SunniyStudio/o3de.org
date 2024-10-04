@@ -1,20 +1,20 @@
 ---
-linkTitle: Tools
-title: Open 3D Engine Tool Developer Documentation
-description: Documentation for developers extending or contributing to the tools bundled as part of Open 3D Engine.
+linkTitle: 工具
+title: Open 3D Engine工具开发者文档
+description: 为开发人员扩展或改进作为Open 3D Engine一部分的工具提供文档。
 weight: 400
 ---
 
-**Open 3D Engine (O3DE)** includes many tools that support project development. Examples include **Asset Processor** (`AssetProcessor.exe`) and **Project Manager** (`o3de.exe`). This section of the Engine Developer Guide is for tools like these that are not part of any Gem. In these pages you will find detailed information and diagrams describing their architecture, for the benefit of developers who want to contribute to the O3DE project, or modify the tools to fit their needs.
+**Open 3D Engine (O3DE)** 包括许多支持项目开发的工具。例如，**资产处理器**（`AssetProcessor.exe`）和**项目管理器**（`o3de.exe`）。引擎开发者指南的这一部分是针对类似工具的，这些工具不属于任何插件的一部分。在这些页面中，您将找到描述其架构的详细信息和图表，以帮助那些希望为 O3DE 项目做出贡献或修改工具以满足其需求的开发者。
 
-## Topics
+## 主题
 
 {{< todo >}}
-This is a stub page intended to serve as an example of guide structure. Information will be filled in and changed as the Engine Developer Guide is published.
+这是一个存根页面，旨在作为指南结构的示例。随着《引擎开发者指南》的发布，相关信息将被填充和更改。
 {{< /todo >}}
 
-| Name | Description |
-|-|-|
-| [Project Manager](./project-manager) | Learn about the internals of **Project Manager**, including an overview of the major classes and data structures that work together to create the UI and implement the project management and Gem library features of this tool. |
-| [Test Impact Analysis Framework](./tiaf) | Learn about the internals of the Test Impact Analysis Framework, including an overview of the major classes and data structures that work together to create the C++ and Python test support of this tool. |
-| [O3DE CLI](./o3de-cli) | Learn about the internals of the **O3DE CLI**. |
+| 名称                         | 说明                                                     |
+|----------------------------|--------------------------------------------------------|
+| [项目管理器](./project-manager) | 了解**项目管理器**的内部结构，包括创建用户界面、实现项目管理和 Gem 库功能的主要类和数据结构概述。  |
+| [测试影响分析框架](./tiaf)         | 了解测试影响分析框架的内部结构，包括创建该工具的 C++ 和 Python 测试支持的主要类和数据结构概述。 |
+| [O3DE CLI](./o3de-cli)     | 了解 **O3DE CLI** 的内部结构。                                 |

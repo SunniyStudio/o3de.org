@@ -1,115 +1,115 @@
 ---
-linkTitle: Scene Files
-title: Scene File Type Support
-description: Overview of the work required for scene files to fully support the metadata asset relocation
+linkTitle: 场景文件
+title: 场景文件类型支持
+description: 场景文件全面支持元数据资产迁移所需工作概述
 
 weight: 100
 ---
 
-## Overview
+## 概述
 
-This page is a investigation into answering the question: "How can we safely support meta data file based asset relocation for scene (FBX) files?"
+本页旨在回答以下问题： “如何安全地支持基于元数据文件的场景 (FBX) 文件资产重定位？”
 
-This is not an exhaustive investigation, it was time boxed to a couple days.
-## Scene File Product Asset Types
+这并不是一项详尽的调查，它的时间限制为几天。
+## 场景文件产品资产类型
 
-* azmodel - defines geometry
-* procprefab - defines a procedural prefab. This is an entity stack that can be instantiated, and is pre-setup to reference other product assets, to reconstruct the source scene as entities.
-* azlod - level of detail information
-* actor - skinned meshes, characters
-* skinmeta - TODO
-* azbuffer - buffer information used by other product assets, defines things like positions of vertices, texture coordinates, etc.
-* motion - animation data
-* pxmesh - physics mesh
-* material - custom properties to pass in to a shader that define how an object looks. Used with models and actors.
-* dbgsg, dbgsg.json, dbgsg.xml, procprefab.json - debug data, not relevant to asset relocation
+* azmodel - 定义几何形状
+* procprefab - 定义了一个程序预制件。这是一个可实例化的实体堆栈，预设为引用其他产品资产，以实体形式重建源场景。
+* azlod - 详细程度的信息
+* actor - 蒙皮网格、角色
+* skinmeta - 待定
+* azbuffer - 其他产品资产使用的缓冲信息，定义顶点位置、纹理坐标等。
+* motion - 动画数据
+* pxmesh - 物理网格
+* material - 自定义属性，用于向着色器传递定义对象外观的属性。与模型和Actor一起使用。
+* dbgsg, dbgsg.json, dbgsg.xml, procprefab.json - 调试数据，与资产迁移无关
 
-## What happens right now if you rename an FBX file with a stable meta file based UUID?
+## 如果使用基于稳定元文件的 UUID 重命名 FBX 文件，现在会发生什么情况？
 
-The UUID will now remain stable, which is good.
+现在 UUID 将保持稳定，这是好事。
 
-If it was just a file move operation, and not a rename, some references will rename stable because product asset file names and sub IDs shuffle only on a rename event, not a relocation event. If a scene file was heavily customized via the asset info file, it may remain more stable, if the product asset file names don't change.
+如果只是文件移动操作，而不是重命名，一些引用的重命名将保持稳定，因为产品资产文件名和子 ID 只在重命名事件而不是重新定位事件时才会洗牌。如果一个场景文件通过资产信息文件进行了大量定制，那么如果产品资产文件名没有改变，它可能会保持更稳定。
 
-Generally, these issues will be encountered:
+一般来说，会遇到这些问题：
 
-* Motion sets with references to motions output from that scene file will break, they have relative path references to the old file names of the product assets.
-* Prefabs that reference procedural prefabs generated from the FBX file will break, because prefab to prefab references are relative paths, and not stable IDs.
-* Many product assets of the scene file will get new file names, and will also get new sub IDs. This means that, even if the UUID portion of the asset ID is stable, references will still break because the sub ID will change.
-    * In many cases, product asset file names are generated based on the source asset file name, and in all cases with scene files, product asset sub IDs are generated based on product asset file name.
+* 引用该场景文件输出的动作的动作集将会中断，因为这些动作集的相对路径引用的是产品资产的旧文件名。
+* 引用由 FBX 文件生成的程序预制板的预制件将被破坏，因为预制件之间的引用是相对路径，而不是稳定的 ID。
+* 场景文件中的许多产品资产将获得新的文件名，也将获得新的子 ID。这就意味着，即使资产 ID 的 UUID 部分是稳定的，引用仍然会因为子 ID 的改变而中断。
+    * 在许多情况下，产品资产文件名是根据源资产文件名生成的，而在所有使用场景文件的情况下，产品资产子 ID 都是根据产品资产文件名生成的。
 
-These issues will also occur, but solving them is generally of lower importance:
-* Material generation may no longer be able to find textures, based on relative paths. Example: If `AutomatedTesting\Objects\MyCar.fbx` references `AutomatedTesting\Objects\MyCarTexture.png` via the relative path `"MyCarTexture.png"`, and MyCar.fbx is moved to `AutomatedTesting\Cars\MyCar.fbx`, then the material will no longer be able to resolve this path to MyCarTexture.png, and the material will appear broken.
-    * Note there is workaround for this: We support relative paths both from the scene file, and from scan folders. If the scene file uses scan folder relative paths, those remain stable and the material will continue to work.
-* If an FBX file is renamed / moved via our tooling, but a content creator uses a workflow in their content creation tool (Blender, Maya, etc) that outputs the FBX file based on some set of rules, the next time they run this, they'll generate an FBX file at the old path / name, if they don't update their scripts.
-    * This can't be handled because the content creation working files are invisible to O3DE.
+这些问题也会出现，但解决这些问题的重要性一般较低：
+* 材质生成可能无法再根据相对路径找到纹理。举例说明： 如果`AutomatedTesting\Objects\MyCar.fbx`通过相对路径 `“MyCarTexture.png”`引用了 `AutomatedTesting\Objects\MyCarTexture.png`，而 MyCar.fbx 被移动到了 `AutomatedTesting\Cars\MyCar.fbx`，那么材质将无法再将此路径解析为 MyCarTexture.png，并且材质将出现破损。
+    * 请注意，有解决这个问题的办法： 我们支持来自场景文件和扫描文件夹的相对路径。如果场景文件使用扫描文件夹相对路径，这些路径将保持稳定，素材也将继续工作。
+* 如果通过我们的工具对 FBX 文件进行了重命名/移动，但内容创建者在其内容创建工具（Blender、Maya 等）中使用了一个工作流程，该流程会根据某些规则输出 FBX 文件，如果他们不更新脚本，下次运行时就会以旧路径/名称生成 FBX 文件。
+    * 由于内容创建工作文件对 O3DE 不可见，因此无法处理。
 
-## Asset Relocation Challenges
-### Incoming path based reference to source asset (FBX file)
+## 资产搬迁挑战
+### 基于路径的源资产（FBX 文件）引用
 
-This challenge type covers anything that references the source asset (FBX file) via a relative path, and would break if the path changed.
+此挑战类型涵盖通过相对路径引用源资产（FBX 文件）的任何内容，如果路径发生变化，则会中断。
 
-Known path based reference to scene source assets:
+基于已知路径的场景源资产引用：
 
-* Sidecar assetinfo file, that defines asset processing rules.
-    * These files are discovered by replacing the extension, and are expected to match the associated scene file.
-    * For manual relocation workflows, these will be at the same location as the source asset and the meta file, so it's expected that content creators will move and rename these at the same time.
-        * These aren't being combined with .meta files currently due to confusion that may occur with existing workflows expecting to delete .assetinfo files as a means of resetting the settings for a scene file.
-* Tooling and python references to FBX files
-    * This is not handled, but it's considered OK because this is a code problem that we aren't solving. If you rename an FBX file, and you have some Python based automation (automated scene settings application, other workflow automation) that references that FBX file, that code automation may break.
-* Working asset (Maya, Blender, Max native files invisible to O3DE) may reference or remember these files by path, and a relocation event may break that reference.
-    * This was always considered out of scope for this feature. If you move an FBX file, go back to Blender, and re-export without updating your Blender workflow to match that move, that is currently considered a content workflow problem and is not something we handle.
+* Sidecar assetinfo 文件，用于定义资产处理规则。
+    * 这些文件是通过替换扩展名发现的，预计会与相关场景文件匹配。
+    * 对于手动重新定位工作流程，这些文件将与源资产和元文件位于同一位置，因此预计内容创建者将同时移动和重命名这些文件。
+        * 这些文件目前没有与 .meta 文件结合在一起，因为现有的工作流程希望删除 .assetinfo 文件来重置场景文件的设置，这可能会造成混乱。
+* FBX 文件的工具和 Python 引用
+    * 这种情况不会被处理，但我们认为是可以的，因为这是一个代码问题，我们并没有解决。如果您重命名了一个 FBX 文件，而您的一些基于 Python 的自动化（自动场景设置应用程序、其他工作流程自动化）引用了该 FBX 文件，则该自动化代码可能会被破坏。
+* 工作资产（O3DE 不可见的 Maya、Blender、Max 本机文件）可能会通过路径引用或记忆这些文件，而重置事件可能会中断这种引用。
+    * 这一直被认为不在此功能的范围之内。如果您移动一个 FBX 文件，然后返回到 Blender，并在没有更新 Blender 工作流程的情况下重新导出，这目前被认为是内容工作流程的问题，我们无法处理。
 
-### Incoming path based references to product assets
+### 基于路径的产品资产输入引用
 
-There are path based references to product assets that should be handled. An asset relocation event will break these references right now, even if the UUID is stable.
+应处理产品资产的路径引用。现在，即使 UUID 保持稳定，资产搬迁事件也会破坏这些引用。
 
-* procedural prefab product assets - Prefabs reference other prefabs by relative path, and not by a stable ID (UUID for prefab → prefab, asset ID for prefab → procedural prefab).
-    * If meta files are enabled for scene files and a procedural prefab is instanced in a game level prefab, when the source FBX for that procedural prefab is moved, the reference from that game level prefab will break.
-* motion product assets - Motion set files reference motions by path.  The field storing this information is labeled assetId, but it is just a string, not an `Asset<T>`.
-    * If a scene file is relocated or renamed, these path references will break, and remain pointed at the old files.
+* 程序预制件产品资产 - 预制件通过相对路径引用其他预制板，而不是通过稳定的 ID（预制件 → 预制件为 UUID，预制件 → 程序预制件为资产 ID）。
+    * 如果场景文件启用了元文件，并且在游戏级预制件中实例化了程序预制件，那么当移动该程序预制件的源 FBX 时，来自该游戏级预制件的引用将中断。
+* 动作产品资产 - 动作集文件按路径引用动作。 存储此信息的字段被标记为 assetId，但它只是一个字符串，而不是一个 `Asset<T>`。
+    * 如果场景文件被重新定位或重命名，这些路径引用就会中断，仍然指向旧文件。
 
-### References to other scene product files
+### 其他场景产品文件的参考
 
 * azmodel
-    * Safe: EditorMeshComponent and MeshComponent reference via asset ID, so paths won't break here (see Sub ID stability section for other details).
-    * Will break, but not a problem: Hardcoded references to azmodels can and do exist in Python scripts, C++, and other code files. This is not something users expect to be handled, so it's OK if these references break.
+    * 安全： 编辑器网格组件（EditorMeshComponent）和网格组件（MeshComponent）通过资产 ID 进行引用，因此路径不会在此处中断（有关其他详细信息，请参阅 “子 ID 稳定性 ”部分）。
+    * 会中断，但不是问题：在 Python 脚本、C++ 和其他代码文件中，可能也确实存在对 azmodels 的硬编码引用。这并不是用户所期望的处理方式，因此即使这些引用被破坏也没有关系。
 * azlod
-    * Safe: Seems to be tracked via `Data::Asset<ModelLodAsset>`. There doesn't appear to be any path construction with swapping extensions to azlod.
+    * 安全: 似乎是通过`Data::Asset<ModelLodAsset>`来跟踪的。交换扩展名到 azlod 似乎没有任何路径构造。
 * actor
-    * TODO
+    * 待定
 * skinmeta
-    * TODO
+    * 待定
 * azbuffer
-    * TODO
+    * 待定
 * pxmesh
-    * Safe: EditorMeshColliderComponent uses a full asset ID to reference pxmesh files.
-    * TODO: Other potential references to pxmesh files
+    * 安全: EditorMeshColliderComponent 使用完整的资产 ID 来引用 pxmesh 文件。
+    * 待定: 对 pxmesh 文件的其他潜在引用
 * material
-    * Safe: EditorMaterialComponent uses a full asset ID to reference materials.
-    * TODO: Other potential references to materials
+    * 安全: EditorMaterialComponent 使用完整的资产 ID 来引用材质。
+    * 待定: 对材质文件的其他潜在引用
 
-### Outgoing path based references to other content
+### 基于路径的其他内容外发引用
 
-* material - Outgoing reference to image files as textures
-    * Will break, but not a problem: Scene processing only supports relative paths to textures from scene files. This means that, if an FBX file is relocated and the texture isn't, the path based reference will break. This is OK as this is not expected to work.
+* 材质 - 将图像文件作为纹理的传出引用
+    * 会中断，但不是问题：场景处理只支持从场景文件到纹理的相对路径。这意味着，如果 FBX 文件被重新定位，而纹理没有被重新定位，那么基于路径的引用就会中断。这并无大碍，因为我们并不希望这样做。
     * https://github.com/o3de/o3de/blob/development/Code/Tools/SceneAPI/SceneBuilder/Importers/AssImpMaterialImporter.cpp#L178
-* Default procedural prefab - Outgoing path based references to other product assets
-    * Will not break: The default procedural prefab uses path based references to the other product assets of the scene file, instead of asset ID based references. However, this will continue to work after a relocation event, because the procedural prefab will be re-generated and use the new file name.
-* Non-default procedural prefabs - Potentially anything, reference-wise
-    * May break, but not a problem: We've setup a boundary for relocation, that code references should be handled by the relevant team and may break. So if an FBX file has a Python based rules processor that generates a non-default prefab, and uses relative paths from that FBX file to find other content to reference, those paths may break in a relocation event.
+* 默认程序预制件 - 基于路径的其他产品资产输出引用
+    * 不会损坏： 默认程序预制板使用基于路径的引用来引用场景文件中的其他产品资产，而不是基于资产 ID 的引用。不过，在重新定位事件后，这将继续有效，因为程序预制件将重新生成并使用新的文件名。
+* 非默认程序预制件 - 任何可能的参照物
+    * 可能中断，但不是问题：我们为重新定位设置了一个边界，即代码引用应由相关团队处理，并可能中断。因此，如果一个 FBX 文件有一个基于 Python 的规则处理器，该处理器会生成一个非默认的预制件，并使用该 FBX 文件中的相对路径来查找其他要引用的内容，那么这些路径可能会在重置事件中中断。
 
-### Product Path & File Name Stability
+### 产品路径和文件名的稳定性
 
-There are two issues with product path and file name generation that cause issues here. This is a problem for incoming path based references to these files. However, the bigger issue here is sub ID stability: Sub IDs are generated based on these file names, or the same input that generates these file names.
+产品路径和文件名的生成有两个问题。对于这些文件的传入路径引用来说，这是一个问题。然而，更大的问题在于子 ID 的稳定性： 子 ID 是根据这些文件名或生成这些文件名的相同输入生成的。
 
-* By default, several groups are created that use the source asset's name as the group name.
-    * This means that if the source asset is renamed, the product name changes. This means that incoming path references break, however it does mean that if we stabilize sub ID generation, we can actually improve the workflow here, if we switch incoming references to use asset IDs instead.
-* The default procedural prefab generates product assets with UUIDs in the file names, based on the source asset's file name.
-    * This means that, if the source asset is renamed, these UUIDs change.
+* 默认情况下，会创建几个使用源资产名称作为组名称的组。
+    * 这意味着如果源资产重命名，产品名称也会随之改变。这意味着传入路径引用会中断，但这也意味着，如果我们稳定子 ID 的生成，并将传入引用改为使用资产 ID，我们实际上可以改进这里的工作流程。
+* 默认程序预制件会根据源资产的文件名生成文件名中包含 UUID 的产品资产。
+    * 这意味着，如果源资产重命名，这些 UUID 也会发生变化。
 
-### Sub ID Stability - Materials
+### 材质子 ID 的稳定性
 
-Material sub ID generation is stable to some degree - renaming an FBX results in the material product asset keeping the same sub ID. Material sub ID generation is based on material properties, which means that changing those properties will result in the sub ID changing. This doesn't effect the asset relocation work here, but content creators may encounter this issue and assume it's a bug with asset relocation or asset ID stability.
+材质子 ID 生成在某种程度上是稳定的--重命名 FBX 会导致材质产品资产保持相同的子 ID。材质子 ID 的生成基于材质属性，这意味着改变这些属性将导致子 ID 的改变。这不会影响此处的资产重定位工作，但内容创建者可能会遇到这个问题，并认为这是资产重定位或资产 ID 稳定性方面的错误。
 ```c++
 uint32_t MaterialAssetBuilderComponent::GetMaterialAssetSubId(uint64_t materialUid)
 {
@@ -123,59 +123,59 @@ uint32_t MaterialAssetBuilderComponent::GetMaterialAssetSubId(uint64_t materialU
 }
 ```
 
-### Sub ID Stability - Models and other non-material products
+### 子 ID 的稳定性 - 模型和其他非材质产品
 
-Most product assets for scene files generate a sub ID based on product asset name. This is done because it's stable to upstream changes to the scene file, however it means this system is not stable if a scene file is renamed.
+大多数场景文件的产品资产都会根据产品资产名称生成一个子 ID。这样做是因为它对场景文件的上游更改是稳定的，但这意味着如果场景文件被重命名，这个系统就不稳定了。
 
-## What can we do to address this?
-### Fixed path based references to scene files and scene file products to instead use stable IDs
+## 我们能做些什么来解决这个问题？
+### 修正了对场景文件和场景文件产品的路径引用，改为使用稳定的 ID
 
-* Update prefabs to reference procedural prefabs and other prefabs by ID (UUID for regular prefabs, asset ID for procedural prefabs), instead of by path.
-    * This will also stabilize prefabs for asset relocation - without this change, prefabs will also break when you attempt to relocate them with stable UUIDs.
-* Update motion sets to reference motions by asset ID and not by path.
-* Double check the remaining product assets of scene files for incoming references.
+* 更新预制件，以便通过 ID（普通预制件为 UUID，程序预制件为资产 ID）而不是路径引用程序预制件和其他预制件。
+    * 这也将稳定资产重置时的预制件--如果不做此更改，当您尝试使用稳定的 UUID 重置预制件时，预制件也会损坏。
+* 更新动作集，以通过资产 ID 而不是路径引用动作。
+* 仔细检查场景文件中剩余的产品资产，以确定是否有引用。
 
-#### What if we don't do this?
+#### 如果我们不这样做呢？
 
-Then renaming an FBX file will cause path based references to products of that FBX to break. Specifically instances of procedural prefabs will reference old location, and motionsets will reference the old location.
-### Build a solution for supporting product asset sub ID changes
+那么重命名 FBX 文件将导致基于路径的 FBX 产品引用中断。具体来说，程序预制板的实例将引用旧位置，而运动集将引用旧位置。
+### 建立支持产品资产子 ID 更改的解决方案
 
-To stabilize sub IDs, we will need to change the logic for how sub IDs are generated at least once.
+为了稳定子 ID，我们至少需要更改一次子 ID 的生成逻辑。
 
-This means we will need to have a system to support changing sub IDs for product assets.
+这意味着我们需要一个系统来支持产品资产子 ID 的更改。
 
-There are a few options here:
-#### Recommended - Opt-In to new sub IDs
+这里有几种选择：
+#### 建议 - 选择加入新的子 ID
 
-Use a new settings registry value to toggle the opt-in to new sub ID generation for scene files. Make this enabled by default for new projects. To support existing projects, also do the following feature.
+使用新的设置注册表值来切换场景文件的新子 ID 生成选项。新项目默认启用此选项。为支持现有项目，也可执行以下功能。
 
-Note that this would be a temporary solution - at some point, the old sub ID generation should be deprecated, removed, and all users migrated to the new sub IDs. We don't have a good process for that, yet.
-#### Recommended - Sub ID Migration Tool
+请注意，这只是一个临时解决方案--在某些时候，旧的子 ID 生成应被淘汰、移除，所有用户都应迁移到新的子 ID。目前我们还没有一个很好的流程。
+#### 推荐 - 子 ID 迁移工具
 
-Build a tool that users who want to use the new sub IDs can run, that will update all sub IDs from the old ones, to the new ones. This would be a tool run once on a project, and it would change all asset ID references to use new sub IDs. This would work best in combination with the previous solution, to let users choose when to opt-in and migrate when they're ready.
-#### Not Recommended - Logic for supporting modified and renamed sub IDs
+建立一个工具，希望使用新子 ID 的用户可以运行该工具，将所有子 ID 从旧的更新为新的。该工具只需在项目上运行一次，就会将所有资产 ID 引用更改为使用新的子 ID。这将与之前的解决方案结合使用，让用户选择何时加入，并在准备就绪时进行迁移。
+#### 不推荐 - 支持修改和重命名子 ID 的逻辑
 
-Build some system to track old and new sub IDs to support renaming.
+建立一些系统来跟踪新旧子 ID，以支持重命名。
 
-This is the most robust solution, but it is the most time consuming to build.
-#### What if we don't build a solution for supporting product asset sub ID changes?
+这是最稳健的解决方案，但也最耗时。
+#### 如果我们不建立支持产品资产子 ID 更改的解决方案怎么办？
 
-Then changing how sub ID generation works for scene files will break all existing references to scene based product assets that are tracked via asset reference. This means that prefabs with entities that have editor mesh components will end up with incorrect. If we can't change how sub IDs are generated, then renaming FBX files will always result in changing sub IDs.
-### Stabilize sub ID generation to not depend on the product asset file name
+如果改变场景文件的子 ID 生成方式，将破坏所有通过资产引用跟踪的基于场景的产品资产的现有引用。这意味着带有编辑器网格组件的实体的预制件最终会出现错误。如果我们不能更改子 ID 的生成方式，那么重命名 FBX 文件将始终导致子 ID 的更改。
+### 稳定子 ID 生成，使其不依赖于产品资产文件名
 
-This sub ID generation should still be done in a predictable, stable way so that renaming and moving groups in the scene settings, as well as making changes to the contents of the scene file, generate stable sub IDs like they do right now.
+子 ID 生成仍应以可预测的稳定方式进行，以便在场景设置中重命名和移动组，以及更改场景文件内容时，都能像现在这样生成稳定的子 ID。
 
-#### What if we don't do this?
+#### 如果我们不这样做呢？
 
-Then renaming FBX files will always cause the sub IDs of FBX product assets to change. Note that moving will work OK, because only the file name is used.
-### Do later - Adjust how UUIDs in product asset filenames are generated for product assets created for default procedural prefabs
+那么重命名 FBX 文件将始终导致 FBX 产品资产的子 ID 发生变化。请注意，移动将正常工作，因为只使用了文件名。
+### 稍后执行 - 调整为默认程序预制件创建的产品资产文件名中 UUID 的生成方式
 
-Stabilize this UUID generation, so renaming a scene file will result in the same UUIDs (or a different output file pattern) for the new files, as the old ones. As part of this work, make sure sub IDs are stabilized.
-#### What if we don't do this?
+稳定 UUID 生成，因此重命名场景文件将导致新文件的 UUID（或不同的输出文件模式）与旧文件的 UUID 相同。作为这项工作的一部分，确保子 ID 得到稳定。
+#### 如果我们不这样做呢？
 
-If we stabilize sub IDs across product asset file names changing, we may be fine skipping this work. I recommend we do the other work first, and then see if this is necessary.
-## What can't / shouldn't we do?
+如果我们能在产品资产文件名更改时稳定子 ID，那么跳过这项工作就可以了。我建议先做其他工作，然后再看是否有必要做这项工作。
+## 我们不能/不应该做什么？
 
-* Change sub ID generation to be index based with an offset for product asset type: The first azmodel is sub ID 1000, the second azmodel gets sub ID 1001. This shouldn't be done because:
-    * That logic would not be stable to changes to the FBX file itself, or the scene settings, which would break references to these product assets.
-    * Most of the complication of stabilizing sub IDs is our lack of sub ID migration tooling, so we would still need to solve that.
+* 将子 ID 生成改为基于索引，并根据产品资产类型进行偏移： 第一个 azmodel 的子 ID 是 1000，第二个 azmodel 的子 ID 是 1001。不应该这样做，因为
+    * 这种逻辑对 FBX 文件本身或场景设置的更改并不稳定，这会破坏对这些产品资产的引用。
+    * 稳定子 ID 的大部分复杂性在于我们缺乏子 ID 迁移工具，因此我们仍需要解决这个问题。

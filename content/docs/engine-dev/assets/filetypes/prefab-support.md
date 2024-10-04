@@ -1,45 +1,45 @@
 ---
-linkTitle: Prefab Files
-title: Prefab File Type Support
-description: Overview of the work required for prefab files to fully support the metadata asset relocation
+linkTitle: 预制件文件
+title: 预制件文件类型支持
+description: 预制件文件全面支持元数据资产搬迁所需工作概述
 
 weight: 100
 ---
-## Overview
-This page is an investigation into answering the question: "How can we safely support meta data file based asset relocation for prefab files?"
+## 概述
+本页旨在回答以下问题： “我们如何才能安全地支持基于元数据文件的预制件文件资产重定位？”
 
-This is not an exhaustive investigation, it was time boxed to a couple days.
-## Prefab Product Asset Type
+这并不是一项详尽的调查，调查时间被限制在几天之内。
+## 预制件产品资产类型
 
-* spawnable - a prefab that can be spawned at runtime. Generally referenced via asset references on components, so stable to asset relocation. In many cases can be referenced from code; in that case, if the code reference is not via asset ID, the code will not handle renaming or moving the prefab that generates the spawnable, but that's considered an acceptable workflow - code references aren't expected to be handled.
-* network spawnable - referenced the same as spawnables.
+* spawnable - 可在运行时生成的预制件。一般通过组件上的资产引用来引用，因此对资产重定位比较稳定。在许多情况下，可以通过代码引用；在这种情况下，如果代码引用不是通过资产 ID 进行的，代码将不会处理生成可生成预制件的预制件的重命名或移动，但这被认为是可以接受的工作流程--代码引用不需要处理。
+* network spawnable - 与spawnable的引用方式相同。
 
-## What happens right now if you rename a prefab file with a stable meta file based UUID?
-### Prefab to Prefab reference
+## 如果使用基于稳定元文件的 UUID 重命名预制件文件，现在会发生什么？
+### Prefab 到 Prefab 引用
 
-Prefabs can reference other prefabs. This is done via a path from the scan folder root.
+预制件可以引用其他预制件。这是通过扫描文件夹根目录的路径实现的。
 
-This means that if a prefab is renamed, any prefabs that reference that prefab via nesting (and not referencing spawnables) will have that reference break.
+这意味着如果一个预制件被重命名，任何通过嵌套引用该预制件（而不是引用可生成预制件）的预制件都会中断引用。
 
-### Prefab to Procedural Prefab reference
+### 预制件程序预制件的引用
 
-Prefabs can also reference procedural prefabs in a similar way to regular prefabs - in the prefab file itself. The slight difference here comes in on the solution, later. For prefab to prefab references, we'll need to track via the source asset's UUID. For prefab to procedural prefab reference, that link will be an asset ID instead, because a procedural prefab is a product asset.
+预制件也可以以与普通预制件类似的方式（在预制件文件中）引用程序预制件。这里的细微差别会在后面的解决方案中出现。对于 prefab 之间的引用，我们需要通过源资产的 UUID 进行跟踪。对于预制件到程序预制件的引用，该链接将由资产 ID 代替，因为程序预制件是一种产品资产。
 
-### References to spawnables from components
+###  组件对spawnable的引用
 
-Spawnables are referenced via asset ID, so they are stable. There is one mild issue here: The asset hint is to the source asset and not the product asset. The workflow also has you select a source asset and not product. This is not an issue currently, but if anything besides prefabs emits spawnables, this will not work well in script canvas.
+spawnable是通过资产 ID 引用的，因此它们是稳定的。这里有一个小问题： 资产提示的是源资产而不是产品资产。工作流程也让你选择源资产而不是产品。目前这还不是一个问题，但如果除了预制件之外还有其他东西可以生成可再生资源，那么在 script canvas 中就不能很好地工作了。
 
-## Recommendation
+## 建议
 
-* Update Prefabs to reference other Prefabs via source asset UUID, and not relative path.
-* Update Prefabs to reference Procedural Prefabs via asset ID, and not relative path.
-* Do both of these updates in a way that old prefabs with path based references can be loaded, and the next time a prefab is saved, it saves the stable ID instead of relative path.
-* Build a tool that can upgrade all prefabs under a given folder (to handle project and Gem upgrades) that can be shipped to users, and they can run on their projects before enabling prefab asset relocation.
+* 更新预制件，以便通过源资产 UUID 而非相对路径引用其他预制件。
+* 更新预制件，使其通过资产 ID 而非相对路径引用程序预制件。
+* 在进行这两项更新时，可以加载基于路径引用的旧预制件，下次保存预制件时，将保存稳定的 ID 而不是相对路径。
+* 构建一个可以升级指定文件夹下所有预制件的工具（处理项目和宝石升级），该工具可以发送给用户，用户可以在启用预制件资产重置之前在自己的项目上运行。
 
-## Related, but not blocking issues
+## 相关但不妨碍的问题
 
-There is a code concept of an AssetID for product assets. This contains the source asset's UUID, the product asset's sub ID, and an asset hint to provide a human readable look at the path.
+产品资产有一个 AssetID 的代码概念。它包含源资产的 UUID、产品资产的子 ID 和一个资产提示，以提供一个人类可读的路径。
 
-There is no such concept for source assets. So swapping to UUIDs only means that it will be difficult for humans to visually inspect prefab files, to see what these relationships are.
+源资产没有这样的概念。因此，改用 UUID 只意味着人类将很难直观地检查预制件文件，以了解这些关系。
 
-This is a noticeable drop in quality of life for merging and hand managing prefab files, when users have to look directly at the contents.
+当用户必须直接查看内容时，这将明显降低合并和手动管理预制件文件的质量。

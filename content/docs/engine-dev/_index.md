@@ -1,9 +1,9 @@
 ---
-linkTitle: Engine Developer Guide
-menuTitle: Developer Guide
-title: Open 3D Engine (O3DE) Engine Developer Guide
+linkTitle: 引擎开发指南
+menuTitle: 开发指南
+title: Open 3D Engine (O3DE) 引擎开发指南
 description: |
-    Learn about the inner workings of O3DE architecture, frameworks, and Gems to perform custom modifications to O3DE and contribute back to source code.
+  了解 O3DE 架构、框架和 Gems 的内部运作，以便对 O3DE 进行自定义修改并回馈源代码。
 weight: 700
 toc: true
 menu_uuid: engine
@@ -11,74 +11,71 @@ guide_img: "/images/engine-dev/guide_img.png"
 primary: true
 ---
 
-Welcome to the **Open 3D Engine (O3DE) Engine Developer Guide**. This guide is for advanced users who are looking for information about the internal
-architecture of O3DE for the purposes of custom engine modifications or contributions back to the O3DE project. For users who are looking for information about how to
-_extend_ the engine, see the [Programming for O3DE](/docs/user-guide/programming) documentation.
+欢迎阅读《**Open 3D Engine (O3DE)引擎开发人员指南**》。本指南适用于高级用户，他们需要了解 O3DE 的内部架构的高级用户，他们需要对 O3DE 引擎进行自定义修改或为 O3DE 项目做出贡献。对于希望了解如何 扩展引擎的用户，请参阅 [O3DE编程](/docs/user-guide/programming)文档。
 
-## Architecture
+## 架构
 
-O3DE is a complicated suite of tools and libraries. In this section of the Engine Developer Guide, you'll discover information about O3DE's overall architecture, design principles, and execution flow.
+O3DE 是一套复杂的工具和库。在《引擎开发人员指南》的这一部分，您将了解到 O3DE 的整体架构、设计原则和执行流程。
 
 {{< todo >}}
-This section is currently incomplete, with a stub example for application bootstrapping. As documentation is added for developers, this section will expand.
+本节目前还不完整，只有一个应用程序引导的存根示例。随着为开发人员添加的文档的增加，本节内容将不断扩展。
 {{< /todo >}}
 
-| Name | Description |
-|-|-|
-| Project bootstrapping | Learn about the execution flow of project launchers and how O3DE loads libraries at project runtime. |
-| [Prefab System](./architecture/prefabs) | Learn about the prefab system, which is the default scene authoring system in O3DE. |
+| 名称                              | 说明                               |
+|---------------------------------|----------------------------------|
+| 项目启动                            | 了解项目启动器的执行流程以及 O3DE 如何在项目运行时加载库。 |
+| [预制件系统](./architecture/prefabs) | 了解 O3DE 中默认的场景制作系统--预制件系统。       |
 
-## O3DE Frameworks
+## O3DE 框架
 
-The core of O3DE is distributed as a series of _frameworks_, required libraries that establish the necessary elements for bootstrapping and running an O3DE project. Frameworks range from core functionality (`AzCore`) all the way to specialized subsystems, such as the networking stack (`AzNetworking`). For developers who want to directly modify the internals of O3DE or connect custom Gems to these low-level frameworks, this information can help you.
+O3DE 的核心以一系列**框架**的形式发布，这些必要的库建立了引导和运行 O3DE 项目的必要元素。框架的范围从核心功能（`AzCore`）一直到专门的子系统，如网络堆栈（`AzNetworking`）。对于想要直接修改 O3DE 内部结构或将自定义 Gem 连接到这些底层框架的开发人员来说，这些信息可以为您提供帮助。
 
 {{< todo >}}
-This section is currently incomplete, with a stub example for AzCore. As documentation is added for developers, this section will expand.
+本部分目前还不完整，只有 AzCore 的存根示例。随着为开发人员添加的文档的增加，本节内容将不断扩展。
 {{< /todo >}}
 
-| Name | Description |
-|-|-|
-| AzCore | Learn about the core internals of O3DE such as memory management and the custom RTTI system. |
+| 名称     | 说明                                |
+|--------|-----------------------------------|
+| AzCore | 了解 O3DE 的核心内部结构，如内存管理和定制 RTTI 系统。 |
 
-## Included Gems
+## 包含的Gem
 
-Functionality that's common to many O3DE projects and are often needed at runtime (such as rendering and scripting) is loaded through _Gems_, external libraries that are linked and loaded as part of an O3DE project. Gems are often specific to a use case or technology, and this section can help you understand how to contribute directly back to included Gems in O3DE or create
-your own Gem as an extension that takes advantage of available functionality.
+许多 O3DE 项目都有的功能，通常在运行时都需要（如渲染和脚本），这些功能是通过**Gem**加载的，它是作为 O3DE 项目的一部分链接和加载的外部库。Gem 通常是特定于使用案例或技术的，本节可以帮助您了解如何直接回馈 O3DE 中包含的 Gem，或创建您自己的 Gem，作为利用可用功能的扩展。
 
 {{< todo >}}
-This section is currently incomplete, with a stub example for the ScriptCanvas Gem. As documentation is added for developers, this section will expand.
+本节目前还不完整，只有 ScriptCanvas Gem 的一个存根示例。随着为开发人员添加文档，本部分将不断扩展。
 {{< /todo >}}
 
-| Name | Description |
-|-|-|
-| [Script Canvas](./gems/scriptcanvas) | Learn about the internals of the Script Canvas system, including how Script Canvas handles types and generates bindings from C++ source code. |
+| 名称                                   | 说明                                                                  |
+|--------------------------------------|---------------------------------------------------------------------|
+| [Script Canvas](./gems/scriptcanvas) | 了解 Script Canvas 系统的内部结构，包括 Script Canvas 如何处理类型以及如何从 C++ 源代码中生成绑定。 |
 
-## Assets
+## 资产
 
-O3DE asset system is a key part of managing and loading assets in a project. This section of the Engine Developer Guide provides details on various asset related systems to help developers extend or modify the systems for their needs.
+O3DE 资产系统是在项目中管理和加载资产的关键部分。引擎开发者指南的这一部分提供了各种资产相关系统的详细信息，以帮助开发者根据自己的需要扩展或修改系统。
 
-| Name | Description |
-|-|-|
-| [Metadata Relocation](./assets/metadata) | Learn about how the Metadata Relocation system functions, where the code is, and which file types may or may not be supported. |
+| 名称                            | 说明                                   |
+|-------------------------------|--------------------------------------|
+| [元数据重定位系统](./assets/metadata) | 了解元数据重定位系统的功能、代码的位置以及可能支持或不支持哪些文件类型。 |
 
-## Scene Pipeline
+## 场景管线
 
-Content in scene files, like `fbx` format files, are core to most O3DE projects. This section of the Engine Developer Guide provides details on the scene pipeline to help developers extend or modify the system for their needs.
+场景文件中的内容，如 `fbx` 格式文件，是大多数 O3DE 项目的核心。引擎开发者指南》的这一部分提供了场景管道的详细信息，以帮助开发者根据自己的需要扩展或修改系统。
 
-| Name | Description |
-|-|-|
-| [Open Asset Importer Library](./scenepipeline/openassetimporter) | Learn about the integration of the external library, Open Asset Importer. This library is used to load content from standard formats like `fbx`. |
-| [Adding New Scene File Formats](./scenepipeline/addingscenefiles) | Learn about extending the engine to support additional scene file formats. |
+| 名称                                                         | 说明                                                      |
+|------------------------------------------------------------|---------------------------------------------------------|
+| [Open Asset Importer 库](./scenepipeline/openassetimporter) | 了解外部库 Open Asset Importer 的集成情况。该库用于从标准格式（如 `fbx`）加载内容。 |
+| [添加新的场景文件格式](./scenepipeline/addingscenefiles)             | 了解如何扩展引擎以支持其他场景文件格式。                                    |
 
-## Included Tools
+## 包含的工具
 
-O3DE includes a handful of tools to support project development. Examples include **Asset Processor** (`AssetProcessor.exe`) and **Project Manager** (`o3de.exe`). This section of the Engine Developer Guide is for tools like these that are not part of any Gem. In these pages you will find detailed information and diagrams describing their architecture, for the benefit of developers who want to modify them.
+O3DE 包括一些支持项目开发的工具。例如**资产处理器** (`AssetProcessor.exe`) 和**项目管理器** (`o3de.exe`)。引擎开发者指南的这一部分是针对类似工具的，这些工具不属于任何宝石的一部分。在这些页面中，您将找到描述其架构的详细信息和图表，以方便想要修改它们的开发人员。
 
 {{< todo >}}
-This section is currently incomplete, with a stub example for Project Manager. As documentation is added for developers, this section will expand.
+本节目前还不完整，只有项目管理器的一个存根示例。随着开发人员文档的添加，本节内容将不断扩展。
 {{< /todo >}}
 
-| Name | Description |
-|-|-|
-| [Project Manager](./tools/project-manager) | Learn about the internals of **Project Manager**, including an overview of the major classes and data structures that work together to create the UI and implement the project management and Gem library features of this tool. |
-| [Test Impact Analysis Framework](./tools/tiaf) | Learn about the Test Impact Analysis Framework, including an overview of the architectural design and how to maintain and extend the framework for new use cases. |
+| 名称                               | 说明                                                    |
+|----------------------------------|-------------------------------------------------------|
+| [项目管理器](./tools/project-manager) | 了解**项目管理器**的内部结构，包括创建用户界面、实现项目管理和 Gem 库功能的主要类和数据结构概述。 |
+| [测试影响分析框架](./tools/tiaf)         | 了解测试影响分析框架，包括架构设计概述以及如何针对新的用例维护和扩展该框架。                |

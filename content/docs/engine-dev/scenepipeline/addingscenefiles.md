@@ -1,43 +1,43 @@
 ---
-linkTitle: Adding Scene Files
-title: Adding Scene Files
-description: Describes the steps to take to add support for additional scene file formats.
+linkTitle: 添加场景文件
+title: 添加场景文件
+description: 说明添加对其他场景文件格式支持的步骤。
 
 weight: 100
 ---
 
-## Overview
+## 概述
 
-O3DE uses the [Open Asset Importer Library](./openassetimporter) to load scene files from a variety of scene formats, including files in the `fbx` format.
+O3DE使用[Open Asset Importer库](./openassetimporter) 来加载各种场景格式的场景文件，包括 `fbx` 格式的文件。
 
-This page covers the steps to take to enable additional scene file formats in the scene pipeline.
+本页介绍在场景管道中启用其他场景文件格式的步骤。
 
-## Enabling a scene format supported by [Open Asset Importer Library](./openassetimporter)
+## 启用由[Open Asset Importer库](./openassetimporter)支持的场景格式
 
-### Understand the feature set of the O3DE scene pipeline, and the file format you are enabling
+### 了解 O3DE 场景管道的功能集和您要启用的文件格式
 
-There is a lot of variance in what information scene files of different formats can support. For example, the `stl` format does not contain information like UVs for texture mapping. You will want to read through the available documentation for the scene file format you are enabling before moving to the next step.
+不同格式的场景文件可以支持的信息有很大差异。例如，`stl`格式不包含纹理贴图的 UV 等信息。在进行下一步之前，您需要通读要启用的场景文件格式的可用文档。
 
-Understanding what the format you are enabling supports and what the scene pipeline supports will help you figure out your approach to enabling the format, especially in relation to testing, both manual and automated, that will be done before finishing this work. You can read more about the scene pipeline in the [Scene Pipeline](../../user-guide/assets/scene-pipeline) and [Scene Settings](../../user-guide/assets/scene-settings) documentation for O3DE.
+了解您要启用的格式支持哪些内容，以及场景管道支持哪些内容，将有助于您确定启用格式的方法，特别是在完成这项工作之前要进行的手动和自动测试。您可以在 O3DE 的[场景管道](../../user-guide/assets/scene-pipeline) 和 [场景设置](../../user-guide/assets/scene-settings)文档中阅读有关场景管道的更多信息。
 
-Finally, you'll want to understand the current support level for the format you are enabling, in the [Open Asset Importer Library](./openassetimporter) itself. Scene files often have many sub versions, for example `fbx` is not a single static file format, but it has been extended and changed throughout the years, and [Open Asset Importer Library](./openassetimporter) officially supports 2011, 2012, and 2013 versions of the `fbx` file format, but by default will attempt to import other versions of `fbx` files.
+最后，您需要了解[Open Asset Importer 库](./openassetimporter)本身对所启用格式的当前支持级别。场景文件通常有许多子版本，例如，`fbx` 并不是一种单一的静态文件格式，而是多年来不断扩展和变化的，[Open Asset Importer 库](./openassetimporter)正式支持 2011、2012 和 2013 版本的`fbx` 文件格式，但默认情况下会尝试导入其他版本的`fbx` 文件。
 
-### Enable the format for importing
+### 启用导入格式
 
-As covered in the [Scene Format Support](../../user-guide/assets/scene-settings/scene-format-support) documentation, the list of enabled scene file formats are managed via the settings registry key `O3DE/SceneAPI/AssetImporter/SupportedFileTypeExtensions`. The first step in enabling a new format is to add that file format to the list here.
+正如[场景格式支持](../../user-guide/assets/scene-settings/scene-format-support)文档中所述，启用的场景文件格式列表通过设置注册表键 `O3DE/SceneAPI/AssetImporter/SupportedFileTypeExtensions`进行管理。启用新格式的第一步是将该文件格式添加到此处的列表中。
 
-O3DE users are encouraged to extend this settings registry key at the project level, and not this global settings level, so they can enable it just for their project. This documentation is for engine contributors, people who want to enable a new scene file format for all O3DE users.
+我们鼓励 O3DE 用户在项目级别而不是全局设置级别扩展此设置注册表键值，这样他们就可以只为自己的项目启用它。本文档面向引擎贡献者，即希望为所有 O3DE 用户启用新场景文件格式的用户。
 
-Enabling the format in this workflow is a data change, no code needs to be recompiled. The Asset Processor should be re-launched to make sure it has loaded the latest settings registry file. You can verify you've enabled your chosen format by going to the `Builders` tab of the Asset Processor, selecting the `Scene Builder` from the list, and checking that the new extensions is added to the pattern list.
+在此工作流程中启用该格式只是数据变更，无需重新编译代码。应重新启动资产处理器，以确保它已加载最新的设置注册表文件。您可以进入 Asset Processor 的`Builders`（构建器）选项卡，从列表中选择`Scene Builder`（场景构建器），并检查新扩展是否已添加到模式列表中，以验证是否已启用所选格式。
 
-### Testing the new file format
+### 测试新文件格式
 
-Once the format is enabled, you will want to test this change. Its recommended that you start with manual testing by adding example files, in the new format, to a local test project.
+启用格式后，您需要对这一更改进行测试。建议从手动测试开始，在本地测试项目中添加新格式的示例文件。
 
-After you've done a few rounds of manual inspection of scene files in this new format, adding automated tests will help with maintaining support of the new format. Automated tests allow others to extend and change the scene pipeline, as well as update the [Open Asset Importer Library](./openassetimporter) safely around the file format added.
+在对这种新格式的场景文件进行了几轮手动检查后，添加自动测试将有助于维持对新格式的支持。通过自动测试，其他人可以扩展和更改场景管道，并围绕添加的文件格式安全地更新 [Open Asset Importer 库](./openassetimporter)。
 
-## FAQ
+## 常见问题
 
-### Why aren't all formats supported by [Open Asset Importer Library](./openassetimporter) enabled by default?
+### 为什么 [Open Asset Importer 库](./openassetimporter) 默认不支持所有格式？
 
-All formats have not been fully tested, and there are not yet automated tests written for many formats. Enabling new formats without automated tests introduces challenges around engine maintenance. Changes to the scene pipeline can effect how these formats are imported. Without automated tests, these issues may be difficult to find before engine consumers discover them, resulting in engine consumers encountering bugs that may impede their project's development.
+尚未对所有格式进行全面测试，也没有为许多格式编写自动测试。在没有自动测试的情况下启用新格式会带来引擎维护方面的挑战。场景管道的更改会影响这些格式的导入。如果没有自动测试，这些问题可能很难在引擎用户发现之前找到，从而导致引擎用户遇到可能会阻碍其项目开发的错误。

@@ -1,19 +1,18 @@
 ---
-linkTitle: Open Asset Importer Library
-title: Open Asset Importer Library
-description: Contains some information on the Open Asset Importer Library, and how O3DE uses it to load scene files.
+linkTitle: Open Asset Importer 库
+title: Open Asset Importer 库
+description: 包含一些有关Open Asset Importer库的信息，以及 O3DE 如何使用该库加载场景文件。
 
 weight: 100
 ---
 
-## Overview
+## 概述
 
-O3DE uses the Open Asset Importer Library to do the heavy lifting of loading scene files from a variety of scene formats, including files in the `fbx` format.
+O3DE 使用 Open Asset Importer 库 来完成从各种场景格式（包括 `fbx` 格式文件）加载场景文件的繁重工作。
 
-## Building and updating the Open Asset Importer Library
+## 构建和更新Open Asset Importer库
 
-The library is managed like all other external libraries for O3DE, via the 3p-package system. The source is available [here](https://github.com/o3de/3p-package-source/tree/main/package-system/assimp).
+该库与 O3DE 的所有其他外部库一样，通过 3p-package 系统管理。可在 [此处](https://github.com/o3de/3p-package-source/tree/main/package-system/assimp)获取源代码。
 
-The general instructions for updating packages are available [here](https://github.com/o3de/3p-package-scripts).
-
+更新软件包的一般说明见 [此处](https://github.com/o3de/3p-package-scripts)。
 

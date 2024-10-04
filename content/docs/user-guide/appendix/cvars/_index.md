@@ -1,56 +1,56 @@
 ---
-title: Console variables (CVARs)
+title: 控制台变量 (CVARs)
 ---
 
-Console variables (CVARs) can be used to set various editor and runtime options in O3DE. O3DE ships with many built-in CVARs but also supports options for configuring and grouping your own.
+控制台变量（CVAR）可用于设置 O3DE 中的各种编辑器和运行时选项。O3DE 随附了许多内置的 CVAR，但也支持配置和分组您自己的 CVAR 的选项。
 
-## Working with CVARs
+## 使用CVAR
 
-You can define your own CVARs in code using the [CVAR macro functions](/docs/user-guide/programming/az-console/#console-variables-cvars). You can also group CVARs together in [console variable groups](/docs/user-guide/editor/console-cvars-commands/#console-variable-groups), which allow you to change multiple CVARs at once. 
+你可以在代码中使用[CVAR 宏函数](/docs/user-guide/programming/az-console/#console-variables-cvars)定义自己的 CVAR。您还可以在[控制台变量组](/docs/user-guide/editor/console-cvars-commands/#console-variable-groups)中将 CVAR 组合在一起，这样就可以一次性更改多个 CVAR。
 
-You can invoke CVARs in the Editor via the [console](/docs/user-guide/editor/console/).
+通过[console](/docs/user-guide/editor/console/)在编辑器中调用CVAR。
 
-You can also pass CVARs on the command line when launching O3DE binaries via `--{cvar name} {value}` or `--{cvar name}={value}`. For example, `ServerLauncher.exe --sv_somebool=true`.
+在启动 O3DE 二进制文件时，通过`--{cvar name} {value}` 或 `--{cvar name}={value}`，您也可以在命令行中传递 CVAR。例如，`ServerLauncher.exe --sv_somebool=true`。
 
-Additionally, you can add CVARs to [configuration files](/docs/user-guide/editor/console/#configuring-console-variables-in-configuration-files).
+此外，您还可以在 [配置文件](/docs/user-guide/editor/console/#configuring-console-variables-in-configuration-files) 中添加 CVAR。
 
-### Discovering CVARs
+### 发现 CVAR
 
-The fastest way to find all the CVARs settable in the current project is via the [console variables window](/docs/user-guide/editor/console/#viewing-the-console-window). Bringing up the console window will list all the CVARs in the current project as well as allow you to set their values.
+查找当前项目中所有可设置 CVAR 的最快方法是通过 [控制台变量窗口](/docs/user-guide/editor/console/#viewing-the-console-window)。调出控制台窗口将列出当前项目中的所有 CVAR，并允许你设置它们的值。
 
-You can also begin to type the start of a CVAR name in the console and then use the **Tab** key to show autocomplete and look at all the potential matches. For example, after typing `ed_` you can use **Tab** to cycle through all the CVARs that impact the editor.
+您也可以开始在控制台中键入 CVAR 名称的开头，然后使用 **Tab** 键显示自动完成并查看所有潜在匹配。例如，键入 `ed_` 后，您可以使用 **Tab** 键循环查看所有影响编辑器的 CVAR。
 
 ![Automatic CVAR expansion in the console](/images/user-guide/appendix/cvars/console_autoexpand.png)
 
-### CVAR console functions
+### CVAR 控制台函数
 
-There are built-in console commands that make working with CVARs easier:
+有了内置的控制台命令，使用 CVAR 就更容易了：
 
-| Name             | Description                                                                                                                                                   |
+| 名称               | 说明                                                                                                                                                            |
 |------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| DumpCommandsVars | (Legacy) Will dump all the CVARs and their values to a file called `consolecommandsandvars.txt`.<br>Prefer to use the console window to see CVARs and values. | 
-| resetcvars       | Resets all CVARs to their initial values.                                                                                                                     |
+| DumpCommandsVars | (遗留）将把所有 CVAR 及其值转储到名为 `consolecommandsandvars.txt` 的文件中。<br>更喜欢使用控制台窗口查看 CVAR 及其值。 | 
+| resetcvars       | 将所有 CVAR 重置为初始值。                                                                                                                     |
 
-## Common CVAR prefixes
+## 常见的CVAR前缀
 
-O3DE uses the following prefixes to make discovering CVARs easier:
+O3DE 使用以下前缀，以方便查找 CVAR：
 
-| Prefix | Usage                                                                            |
-|--------|----------------------------------------------------------------------------------|
-| bg_    | **B**oth **G**ames, for common CVARs that can be used on both client and server. |
-| cl_    | For client only CVARs.                                                           |
-| ed_    | For editor only CVARs.                                                           |
-| net_   | For low-level networking CVARs.                                                  |
-| physx_ | For NVIDIA PhysX related CVARs.                                                  |
-| r_     | For rendering related CVARs.                                                     |
-| s_     | For sound related CVARs.                                                         |
-| sv_    | For server only CVARs.                                                           |
-| sys_   | For low-level core systems CVARs.                                                |
+| 前缀 | 用法                                                 |
+|--------|----------------------------------------------------|
+| bg_    | **B**oth **G**ames， 适用于可在客户端和服务器上使用的通用 CVAR。       |
+| cl_    | 仅适用于客户端的 CVAR。                                     |
+| ed_    | 仅适用于编辑器的 CVAR。                                     |
+| net_   | 仅适用于底层网络的 CVAR。                                    |
+| physx_ | 仅适用于关于NVIDIA PhysX的 CVAR。                          |
+| r_     | 仅适用于关于渲染的 CVAR。                                    |
+| s_     | 仅适用于关于音效的 CVAR。                                    |
+| sv_    | 仅适用于服务器的 CVAR。                                     |
+| sys_   | 仅适用于底层核心系统的 CVAR。 |
 
-## Examples of CVARs in O3DE
+## O3DE中的CVAR的示例
 
-Many O3DE features expose CVARs to aid debugging, troubleshooting and additional visualization. These features include:
+许多 O3DE 功能都暴露了 CVAR，以帮助调试、故障排除和额外的可视化。这些功能包括
 
-* [Networking](/docs/user-guide/networking/settings/)
-* [Navigation](/docs/user-guide/interactivity/navigation-and-pathfinding/recast-navigation/#visualizing-the-navigation-mesh)
-* [Physics](/docs/user-guide/interactivity/physics/debugging/#physx-debug-console-variables)
+* [网络](/docs/user-guide/networking/settings/)
+* [导航](/docs/user-guide/interactivity/navigation-and-pathfinding/recast-navigation/#visualizing-the-navigation-mesh)
+* [物理](/docs/user-guide/interactivity/physics/debugging/#physx-debug-console-variables)

@@ -1,101 +1,102 @@
 ---
-linkTitle: Project Export for Windows and Linux
-title: Project Export for Windows and Linux
-description: Learn how to use the Project Export functionality to automate preparing your project for release.
+linkTitle: Windows和Linux项目导出
+title: Windows和Linux项目导出
+description: 了解如何使用项目导出功能自动准备项目发布。
 toc: true
 weight: 400
 ---
 
-## Prerequisites
-To make best use of the export button in the Project Manager, or the `export-project` CLI command, it is recommended to have a project with at least one starting level, and all necessary seedlist files prepared. AssetProcessor Registry file settings may need to be tweaked. To learn how to set this up, please consult the following page: [Creating a Project Game Release Layout for Windows, section: Set the Starting Level](../windows-release-builds/#set-the-starting-level).
+## 先决条件
+要充分利用 “项目管理器 ”中的 “导出 ”按钮或`export-project`CLI 命令，建议先准备一个至少有一个起始层的项目，并准备好所有必要的种子列表文件。可能需要调整 AssetProcessor 注册表文件设置。要了解如何设置，请参阅以下页面：[为Windows创建项目游戏发布布局：设置起始关卡](../windows-release-builds/#set-the-starting-level).
 
-To learn more about the AssetBundler and Seed Files, please visit the [overview page on the AssetBundler tool](https://docs.o3de.org/docs/user-guide/packaging/asset-bundler/overview/).
+要了解更多有关 AssetBundler 和种子文件的信息，请访问 [AssetBundler 工具概述页面](https://docs.o3de.org/docs/user-guide/packaging/asset-bundler/overview/)。
 
 
 {{< note >}}
-If you wish to learn how to prepare projects manually for Windows, please consult the page [Creating a Project Game Release Layout for Windows](/docs/user-guide/packaging/windows-release-builds).
+如果您想了解如何为 Windows 手动准备项目，请参阅页面 [为 Windows 创建项目游戏发布布局](/docs/user-guide/packaging/windows-release-builds)。
 {{< /note >}}
-## Using Project Manager
+## 使用项目管理器
 
-### Getting Started
-Using the export feature in Project Manager is similar to building projects, in that it only takes a single action to kick off the export process. Click the dropdown for your desired project card to see the export options listed below.
+### 入门
+在 “项目管理器”中使用导出功能与构建项目类似，只需一个操作即可启动导出过程。单击所需项目卡的下拉菜单，即可看到下面列出的导出选项。
 
 {{< image-width "/images/user-guide/packaging/project-export-pc/export-button-dropdown.png" "400">}}
 
-The Export Launcher option shows a sub-menu of platforms to run the export process for. The top-most option always matches the operating system of your development machine.
+导出启动器 选项会显示一个子菜单，其中列出了运行导出过程的平台。最上面的选项总是与开发机器的操作系统相匹配。
 
 {{< image-width "/images/user-guide/packaging/project-export-pc/export-button-platform-submenu.png" "400">}}
 
-Upon clicking one of the platform options, the export process will begin. A confirmation popup will ask if you wish to proceed, and remind you to check the export settings if you have not already.
+点击其中一个平台选项后，导出过程将开始。弹出的确认窗口会询问您是否要继续，并提醒您检查导出设置（如果尚未检查）。
 
 {{< image-width "/images/user-guide/packaging/project-export-pc/export-button-confirmation.png" "400">}}
 
-Once you have confirmed you are ready to proceed, the Project Manager will begin exporting your project. If you picked the Windows/Linux platform, it will create a PC based game launcher based on the export settings. The final output will be located in directory specified by the "Output Path" setting in the [export settings panel](#export-settings-panel).
+确认准备就绪后，项目管理器将开始导出项目。如果您选择的是 Windows/Linux 平台，它将根据导出设置创建一个基于 PC 的游戏启动器。最终输出将位于[导出设置面板](#export-settings-panel)中 “输出路径 ”设置所指定的目录中。
 
 {{< image-width "/images/user-guide/packaging/project-export-pc/export-card-running.png" "200">}}
 
-### Export Settings Panel
+### 导出设置面板
 
-To access the Export Settings Panel, simply click the "Open Export Settings..." button in the dropdown shown in the previous section. Upon clicking it, you should see the following form.
+要访问导出设置面板，只需单击上一节所示下拉菜单中的"Open Export Settings..."按钮。点击后，您将看到以下表格。
 
 {{< image-width "/images/user-guide/packaging/project-export-pc/export-settings-pc.png" "400">}}
 
-The panel is divided into two main sections. The top half of the panel contains settings that are common across all supported platforms for O3DE. The bottom half contains platform specific settings separated by tabs. In this guide we will focus on the "Windows" tab (note: this tab will be appropriately named "Linux" if you are developing from a Linux distro).
+面板分为两个主要部分。面板的上半部分包含 O3DE 所有支持平台的通用设置。下半部分包含由选项卡分隔的特定平台设置。在本指南中，我们将重点介绍 “Windows”选项卡（注：如果您使用 Linux 发行版进行开发，则该选项卡的名称应为 “Linux”）。
 
-To learn more about each setting, you can hover the mouse over the text label of each setting to get a tooltip description. Alternatively, you can consult [this CLI parameter table](#usage) to see the parameters that the Export settings are based on.
+要了解每个设置的更多信息，可以将鼠标悬停在每个设置的文本标签上，以获取工具提示说明。或者，您也可以查阅[CLI参数表](#usage) 查看导出设置所依据的参数。
 
-## Using CLI
-The `export-project` CLI command is used to automatically package game code and assets for a release.
+## 使用 CLI
+`export-project` CLI 命令用于自动打包发布的游戏代码和资产。
 
-### Getting Started with CLI and Scripts
-To use the `export-project` command correctly, it is important to first understand how it works at a high level.
+### CLI 和脚本入门
+要正确使用 `export-project` 命令，首先要了解它的工作原理。
 
-The command operates in 2 stages:
-1. Script Loading
-2. Script Running
+该命令分两个阶段运行：
+1. 脚本加载
+2. 运行脚本
 
-#### Script Loading
-Before the export process can begin, the export-project command does the following pre-processing steps:
-* Parse and validate initial set of arguments, and filters arguments to be processed by desired export script
-* Load the export script as a python module
-* Validate the expected project path
-* Modify the system path with O3DE CLI Python API so that user scripts can easily import API code and modules
-* Prepares the O3DE script context, which contains useful values like project path, engine path, project name, CMake args, etc.
-* Runs the export script with the prepared context injected
+#### 脚本加载
+在导出过程开始之前，export-project命令会执行以下预处理步骤：
+* 解析和验证初始参数集，并筛选参数供所需的导出脚本处理
+* 将导出脚本加载为 python 模块
+* 验证预期项目路径
+* 使用 O3DE CLI Python API 修改系统路径，以便用户脚本可以轻松导入 API 代码和模块
+* 准备 O3DE 脚本上下文，其中包含项目路径、引擎路径、项目名称、CMake 参数等有用值。
+* 注入准备好的上下文运行导出脚本
 
-#### Script Running
-The `export-project` command can run any python script that the user designates as the export script. As a result, the exact behavior entirely depends on the supplied script. O3DE includes a standard script, which is described [further below.](#standard-export-script)
+#### 运行脚本
+`export-project` 命令可以运行用户指定为导出脚本的任何 python 脚本。因此，具体行为完全取决于所提供的脚本。O3DE 包含一个标准脚本，[下文](#standard-export-script)将进一步介绍。 
 
-Any script run by the command has access to the running context of the exporter, along with common APIs.
+通过该命令运行的任何脚本都可以访问出口程序的运行上下文以及常用 API。
 
-### Export CLI Command
-The `export-project` command is accessed via the O3DE CLI that is shipped with the engine. This is found in `<engine>/scripts/o3de.bat`, or on Unix systems as `<engine>/scripts/o3de.sh`. The command has the following arguments:
+### 导出 CLI 命令
+`export-project` 命令可通过引擎随附的 O3DE CLI 访问。这可以在`<engine>/scripts/o3de.bat`中找到，或在Unix系统`<engine>/scripts/o3de.sh`中。此命令具有以下参数：
 
-| Argument Name | Description | Required? |
-| - | - | - |
-| `--export-script` | Choose an external python script to run. The path can be relative or absolute. | yes |
-| `--project-path` | Project to export. The path can be relative or absolute. If not supplied, it will be inferred by the export script location. | no |
-| `--log-level` | Sets the verbosity of the logs emitted from the exporter. INFO means all information will be emitted. ERROR means it will  be silent unless a failure occurs. Choices are `[DEBUG, INFO, WARNING, ERROR, CRITICAL]`, with `ERROR` as the default. | no |
+| 参数名               | 说明                                                                                                          | 是否必须? |
+|-------------------|-------------------------------------------------------------------------------------------------------------|-------|
+| `--export-script` | 选择要运行的外部 python 脚本。路径可以是相对路径或绝对路径。                                                                          | 是     |
+| `--project-path`  | 要导出的项目。路径可以是相对路径，也可以是绝对路径。如果未提供，将由导出脚本位置推断。                                                                 | 否     |
+| `--log-level`     | 设置导出日志的冗长程度。INFO 表示输出所有信息。ERROR 表示除非发生故障，否则将保持沉默。选项有`[DEBUG, INFO, WARNING, ERROR, CRITICAL]`，而`ERROR`是默认值。 | 否     |
 
-You can inspect the code for parsing arguments [here.](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L354)
+您可以查看解析参数的代码 [此处](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L354)。
 
-An example invocation may look like this:
+调用示例如下
 ```cmd
 <engine-folder>\scripts\o3de.bat export-project --export-script C:\..\path\to\export-script --project-path C:\..\path\to\project-folder --log-level INFO
 ```
 
-or in condensed form:
+或浓缩形式：
 ```cmd
 <engine-folder>\scripts\o3de.bat export-project -es C:\..\path\to\export-script -pp C:\..\path\to\project-folder -ll INFO
 ```
 
-#### Project Template
+#### 项目模板
 
-Project Export functionality is also available on a per-project basis. This is because there are helper export scripts that are included in the Project Templates, as can be seen with [`package.bat`](https://github.com/o3de/o3de/blob/f25503785829c3eb75d3f00420d2072985d5ed05/Templates/DefaultProject/Template/package.bat) and [`package.sh` for Unix](https://github.com/o3de/o3de/blob/f25503785829c3eb75d3f00420d2072985d5ed05/Templates/DefaultProject/Template/package.sh). These scripts are included at the root folder of every new Project created with the `DefaultProject` template.
+项目导出功能也可按项目使用。这是因为项目模板中包含了辅助导出脚本，如[`package.bat`](https://github.com/o3de/o3de/blob/f25503785829c3eb75d3f00420d2072985d5ed05/Templates/DefaultProject/Template/package.bat)和[`package.sh` 用于 Unix](https://github.com/o3de/o3de/blob/f25503785829c3eb75d3f00420d2072985d5ed05/Templates/DefaultProject/Template/package.sh)。这些脚本包含在使用 `DefaultProject` 模板创建的每个新项目的根文件夹中。
 
-The package scripts pre-populate the relevant arguments for the given project, and then call `export-project` on the user's behalf.
+软件包脚本会为给定项目预先填充相关参数，然后代表用户调用 `export-project`。
 
-In order to use it, simply run the following command (assuming project has already been created and registered):
+要使用它，只需运行以下命令即可（假设项目已创建并注册）：
+
 ```
 # On Windows
 \path\to\project\package.bat
@@ -104,45 +105,46 @@ In order to use it, simply run the following command (assuming project has alrea
 \path\to\project\package.sh
 ```
 
-### Standard Export Script
-O3DE now ships with a [standard project export script](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py), capable of automating most typical use cases of projects. The code and API are provided so that users with more particular needs can investigate, expand or modify the code as necessary. Currently this script only supports Windows and Linux platforms, and does not handle deployment to external services.
+### 标准导出脚本
+O3DE 现在随附一个[标准项目导出脚本](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py)，能够自动处理大多数典型的项目用例。该脚本提供了代码和应用程序接口，因此有特殊需求的用户可以根据需要研究、扩展或修改代码。目前，该脚本仅支持 Windows 和 Linux 平台，不处理部署到外部服务的问题。
 
-The export script has 2 primary sections: the function [`export_standalone_project`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L19) and the [startup code that only runs if the script is invoked by the CLI](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L187). In-depth discussion on these two sections can be found in the [Developer Guide](/docs/engine-dev/tools/o3de-cli/project-export).
+导出脚本有两个主要部分：函数 [`export_standalone_project`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L19) 和 [仅在 CLI 调用脚本时运行的启动代码](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L187)。 有关这两个部分的深入讨论，请参阅 [开发人员指南](/docs/engine-dev/tools/o3de-cli/project-export)。
 
 
-#### Usage
-To use the export script, first ensure you have the necessary seedlist files for your project (as mentioned in the prerequisites).
+#### 用法
+要使用导出脚本，首先要确保您拥有项目所需的种子列表文件（如前提条件中所述）。
 
-You can issue the arguments for this script at the same time that you are running the `export-project` command, so long as you are using the script as your designated export script. The arguments specific to the script will be deferred until the script begins running.
+只要将该脚本作为指定的导出脚本，就可以在运行 `export-project` 命令的同时发出该脚本的参数。脚本的特定参数将推迟到脚本开始运行时才发布。
 
-The arguments are as follows:
-| Argument Name | Description | Required? |
-| - | - | - |
-| [`--script-help`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L202) | Display the help information specifically for the export script. | no |
-| [`--output-path`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L203) | Defines the location on the system where the release layout directory for the project should be located. For each desired launcher, a separate release folder will be prepared. | yes |
-| [`--config`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L204) | Defines the CMake build configuration when building the project's binaries, such as GameLauncher. Options are either `profile` or `release`. Default is profile | no |
-| [`--archive-output`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L206) | Automatically archive the output release directories as bundled archive files, such as zip files. | no |
-| [`--should-build-assets`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L210) | This will process all assets in the project according to asset processor settings, and run the asset bundler as well for specified seedlist files. Omit this if you do not want to process any assets. If assets are not already present, the release package will not run. As such, it is recommended to include this flag if assets do not already exist. | no |
-| [`--fail-on-asset-errors`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L212) | Forcibly fail the export process should errors with assets be encountered. This is not enabled by default, as asset errors are common, and usually not severe. Use this if stricter validation is required. | no |
-| [`--seedlist`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L214) | Path to a seedlist file for asset bundling. Specify multiple times for each seed list | no |
-| [`--project-file-pattern-to-copy`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L220) | Any additional file patterns located in the project directory. File patterns will be relative to the project path. Use this for any file not traditionally associated with O3DE projects, such as custom config files, metadata, or license files. | no |
-| [`--game-project-file-pattern-to-copy`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L216) | Like `--project-file-pattern-to-copy`, but for files exclusive to Game Launchers.  | no |
-| [`--server-project-file-pattern-to-copy`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L218) | Like `--project-file-pattern-to-copy`, but for files exclusive to Server Launchers.  | no |
-| [`--build-tools`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L222) | Specifies whether to build O3DE toolchain executables. This will build AssetBundlerBatch, AssetProcessorBatch. If asset tools have not been built, then assets cannot be processed. | no |
-| [`--tools-build-path`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L224) | Designates where the build files for the O3DE toolchain are generated. If not specified, default is `<o3de_project_path>/build/tools`.  | no |
-| [`--launcher-build-path`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L226) | Designates where the launcher build files (Game/Server/Unified) are generated. If not specified, default is `<o3de_project_path>/build/launcher`.  | no |
-| [`--allow-registry-overrides`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L228) | When configuring cmake builds, this determines if the script allows for overriding registry settings from external sources. These overrides are used when building the game binaries, specifically for enabling the CMake build flag `DALLOW_SETTINGS_REGISTRY_DEVELOPMENT_OVERRIDES`. For more information, consult the [Settings Registry overview](https://www.docs.o3de.org/docs/user-guide/settings/developer-documentation/) | no |
-| [`--asset-bundling-path`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L230) | Designates where the artifacts from the asset bundling process will be written to before creation of the package. If not specified, default is `<o3de_project_path>/build/asset_bundling`.  | no |
-| [`--max-bundle-size`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L232) | Specify the maximum size of a given asset bundle.  | no |
-| [`--no-game-launcher`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L233) | This flag skips building the Game Launcher on a platform if not needed. | no |
-| [`--no-server-launcher`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L234) | This flag skips building the Server Launcher on a platform if not needed. | no |
-| [`--no-headless-server-launcher`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L235) | This flag skips building the Headless Server Launcher on a platform if not needed. | no |
-| [`--no-unified-launcher`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L236) | This flag skips building the Unified Launcher on a platform if not needed. | no |
-| [`--platform`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L237) | The expected target platform that assets will be processed and built for. If not specified, the user's host platform will be used. | no |
-| [`--engine-centric`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L238) | Use the engine-centric work flow to export the project. | no |
-| [`--quiet`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L239) | Suppresses logging information unless an error occurs. | no |
+参数如下：
 
-An example usage of the entire `export-project` command, including this script, can be seen for the O3DE MultiplayerSample project, with the following example for windows:
+| 参数名                                                                                                                                                                                  | 说明                                                                                                                                                                                                                               | 是否必须? |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
+| [`--script-help`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L202)                         | 显示专门针对导出脚本的帮助信息。                                                                                                                                                                                                                 | 否     |
+| [`--output-path`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L203)                         | 定义项目的发布布局目录在系统中的位置。对于每个所需的启动器，都将准备一个单独的发布文件夹。                                                                                                                                                                                    | 是     |
+| [`--config`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L204)                              | 定义构建项目二进制文件（如 GameLauncher）时的 CMake 构建配置。选项为 `profile` 或 `release`。默认为 `profile`                                                                                                                                                 | 否     |
+| [`--archive-output`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L206)                      | 自动将输出的发布目录归档为捆绑的归档文件，如 zip 文件。                                                                                                                                                                                                   | 否     |
+| [`--should-build-assets`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L210)                 | 这将根据资产处理器设置处理项目中的所有资产，并针对指定的种子列表文件运行资产捆绑程序。如果不想处理任何资产，请省略此项。如果资产尚未存在，发布包将不会运行。因此，如果资产尚未存在，建议加入此标记。                                                                                                                               | 否     |
+| [`--fail-on-asset-errors`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L212)                | 如果遇到资产错误，强制中断导出过程。默认情况下不启用，因为资产错误很常见，通常也不严重。如果需要更严格的验证，请使用此选项。                                                                                                                                                                   | 否     |
+| [`--seedlist`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L214)                            | 用于资产捆绑的种子列表文件的路径。为每个种子列表指定多次                                                                                                                                                                                                     | 否     |
+| [`--project-file-pattern-to-copy`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L220)        | 项目目录中的任何其他文件模式。文件模式将相对于项目路径。对于任何传统上与 O3DE 项目无关的文件，如自定义配置文件、元数据或许可证文件，请使用此选项。                                                                                                                                                     | 否     |
+| [`--game-project-file-pattern-to-copy`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L216)   | 像`--project-file-pattern-to-copy`， 但仅限于游戏启动器的文件。                                                                                                                                                                                 | 否     |
+| [`--server-project-file-pattern-to-copy`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L218) | 像 `--project-file-pattern-to-copy`， 但仅限于服务器启动器的文件。                                                                                                                                                                               | 否     |
+| [`--build-tools`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L222)                         | 指定是否构建 O3DE 工具链可执行文件。这将构建 AssetBundlerBatch 和 AssetProcessorBatch。如果资产工具尚未构建，则无法处理资产。                                                                                                                                            | 否     |
+| [`--tools-build-path`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L224)                    | 指定 O3DE 工具链的构建文件生成位置。如果未指定，默认值为 `<o3de_project_path>/build/tools`。                                                                                                                                                               | 否     |
+| [`--launcher-build-path`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L226)                 | 指定启动器构建文件（Game/Server/Unified）的生成位置。如果未指定，默认值为 `<o3de_project_path>/build/launcher`.                                                                                                                                             | 否     |
+| [`--allow-registry-overrides`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L228)            | 在配置 cmake 联编时，这将决定脚本是否允许覆盖来自外部的注册表设置。这些覆盖设置将在构建游戏二进制文件时使用，特别是在启用 CMake 构建标志时 `DALLOW_SETTINGS_REGISTRY_DEVELOPMENT_OVERRIDES`。要了解更多信息， 请阅读[设置注册表概述](https://www.docs.o3de.org/docs/user-guide/settings/developer-documentation/) | 否     |
+| [`--asset-bundling-path`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L230)                 | 指定在创建软件包之前将资产捆绑过程中的工件写入到何处。如果未指定，默认值为 `<o3de_project_path>/build/asset_bundling`.                                                                                                                                                | 否     |
+| [`--max-bundle-size`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L232)                     | 指定给定资产包的最大尺寸。                                                                                                                                                                                                                    | 否     |
+| [`--no-game-launcher`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L233)                    | 如果不需要，该标记会跳过在平台上构建游戏启动器。                                                                                                                                                                                                         | 否     |
+| [`--no-server-launcher`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L234)                  | 如果不需要，该标记会跳过在平台上构建服务器启动器。                                                                                                                                                                                                        | 否     |
+| [`--no-headless-server-launcher`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L235)         | 如果不需要，该标记会跳过在平台上构建无头服务器启动器。                                                                                                                                                                                                      | 否     |
+| [`--no-unified-launcher`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L236)                 | 如果不需要，该标记会跳过在平台上构建统一启动器。                                                                                                                                                                                                         | 否     |
+| [`--platform`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L237)                            | 处理和构建资产的预期目标平台。如果未指定，将使用用户的主机平台。                                                                                                                                                                                                 | 否     |
+| [`--engine-centric`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L238)                      | 使用以引擎为中心的工作流程导出项目。                                                                                                                                                                                                               | 否     |
+| [`--quiet`](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/ExportScripts/export_source_built_project.py#L239)                               | 除非发生错误，否则禁止记录信息。                                                                                                                                                                                                                 | 否     |
+
+整个 `export-project` 命令（包括本脚本）的使用示例可参见 O3DE MultiplayerSample 项目，以下是用于 Windows 的示例：
 
 ```
 # On Windows
@@ -159,48 +161,48 @@ An example usage of the entire `export-project` command, including this script, 
     --seedlist %O3DE_PROJECT_PATH%\AssetBundling\SeedLists\GameSeedList.seed \
     --seedlist %O3DE_PROJECT_PATH%\AssetBundling\SeedLists\VFXSeedList.seed 
 ```
-Where `O3DE_ENGINE_PATH`, `O3DE_PROJECT_PATH` and `OUTPUT_PATH` are environment variables. This single invocation should be all that is needed to fully export MultiplayerSample into a release directory ready for distribution.
+其中 `O3DE_ENGINE_PATH`、`O3DE_PROJECT_PATH` 和 `OUTPUT_PATH` 是环境变量。只需调用一次即可将 MultiplayerSample 完全导出到发行版目录中。
 
-For more information on how to export the MultiplayerSample project using the CLI, please see [these instructions](https://github.com/o3de/o3de-multiplayersample/blob/f00b3035285b695b2dbd1b1e59912973f4e1a32f/Documentation/O3DEMPSProjectExportTesting.md).
+有关如何使用 CLI 导出 MultiplayerSample 项目的更多信息，请参阅 [这些说明](https://github.com/o3de/o3de-multiplayersample/blob/f00b3035285b695b2dbd1b1e59912973f4e1a32f/Documentation/O3DEMPSProjectExportTesting.md)。
 
-### Custom Scripts
+### 自定义脚本
 
-You can study the standard export script to understand how the `export-project` API works, but this section will help provide a high level overview of what's available.
+您可以学习标准导出脚本以了解 `export-project` API 如何工作，但本节将帮助您对可用内容有一个高层次的概览。
 
-#### O3DE Context and Logger
-All export scripts are automatically injected with 2 global variables when the `export-project` command is run: `o3de_context`, and `o3de_logger`.
+#### O3DE 上下文和记录器
+运行 `export-project` 命令时，所有导出脚本都会自动注入 2 个全局变量： `o3de_context`和 `o3de_logger`。
 
-`o3de_context` is an instance of the [export_project.O3DEScriptExportContext](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L104) class. This context object is used to store parameter values and variables throughout the lifetime of an export script's execution. It also stores convenient properties such as the export script's path, project path, engine path, unprocessed arguments, cmake specific arguments, and the project name from the project.json file.
+`o3de_context` 是[export_project.O3DEScriptExportContext](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L104) 类的一个实例。该上下文对象用于在导出脚本的整个执行过程中存储参数值和变量。它还存储了一些方便的属性，如导出脚本的路径、项目路径、引擎路径、未处理参数、cmake 特定参数以及 project.json 文件中的项目名称。
 
-For any APIs of `export-project` that expect a parameter of type `O3DEScriptExportContext`, you can pass in the `o3de_context` of your running export script.
+对于 `export-project` 的任何期望参数类型为 `O3DEScriptExportContext` 的 API，您可以传入正在运行的导出脚本的 `o3de_context`。
 
 
-`o3de_logger` is an instance of the `logging.Logger` class from the Python standard library, which can be used to track and emit logs over the course of the script's lifetime.
+`o3de_logger` 是 Python 标准库中的 `logging.Logger` 类的实例，可用于跟踪和发布脚本生命周期中的日志。
 
 #### API
-For users wishing to create custom export scripts, the `export-project` command exposes the following APIs (please click the links in the function name to view details on parameters):
+对于希望创建自定义导出脚本的用户，`export-project` 命令提供了以下 API（请单击函数名称中的链接查看参数详情）：
 
-| Function Name | Description |
+| 函数名 | 说明 |
 | - | - | 
-| [get_default_asset_platform](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L192) | Fetches the user's host platform based on O3DE convention. |
-| [process_command](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L198) | Allows the user to run terminal commands as a subprocess, either by supplying the full command as a string, or as a string list. |
-| [execute_python_script](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L214) | Execute a new python script, using new or existing O3DEScriptExportContexts to streamline communication between multiple scripts. |
-| [get_asset_processor_batch_path](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L371) | Get the expected path to the asset processor tool. |
-| [get_asset_bundler_batch_path](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L386) | Get the expected path to the asset bundler tool. |
-| [build_assets](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L402) | Build the assets for the project. |
-| [build_export_toolchain](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L439) | Build (or rebuild) the export tool chain (AssetProcessorBatch and AssetBundlerBatch). |
-| [validate_export_toolchain](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L497) | Validate that the required command line tools are available for the export process. |
-| [build_game_targets](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L512) | Build the launchers for the project (game, server, unified, headless). |
-| [bundle_assets](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L598) | Execute the 'bundle assets' phase of the export. |
-| [setup_launcher_layout_directory](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L699) | Setup the launcher layout directory for a path. |
-| [validate_project_artifact_paths](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L759) | Validate and adjust project artifact paths as necessary. If paths are provide as relative, then check it against the project path for existence. |
+| [get_default_asset_platform](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L192) | 根据 O3DE 约定获取用户的主机平台。 |
+| [process_command](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L198) | 允许用户以子进程的形式运行终端命令，可以是以字符串形式提供完整命令，也可以是以字符串列表形式提供完整命令。 |
+| [execute_python_script](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L214) | 使用新的或现有的 O3DEScriptExportContexts 执行新的 python 脚本，以简化多个脚本之间的通信。 |
+| [get_asset_processor_batch_path](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L371) | 获取资产处理器工具的预期路径。 |
+| [get_asset_bundler_batch_path](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L386) | 获取资产捆绑工具的预期路径。 |
+| [build_assets](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L402) | 为项目构建资产。 |
+| [build_export_toolchain](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L439) | 构建（或重建）导出工具链（AssetProcessorBatch 和 AssetBundlerBatch）。 |
+| [validate_export_toolchain](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L497) | 验证导出过程所需的命令行工具是否可用。 |
+| [build_game_targets](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L512) | 为项目构建启动器（game, server, unified, headless）。 |
+| [bundle_assets](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L598) | 执行导出的 “捆绑资产 ”阶段。 |
+| [setup_launcher_layout_directory](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L699) | 设置启动器布局目录的路径。 |
+| [validate_project_artifact_paths](https://github.com/o3de/o3de/blob/753480ec930e55f3431f92ed7b974ba7f9e73a13/scripts/o3de/o3de/export_project.py#L759) | 根据需要验证和调整项目工件路径。如果提供的路径是相对路径，则对照项目路径检查其是否存在。 |
 
-#### Example Custom Scripts
+#### 自定义脚本示例
 
-To demonstrate the basic functionality of the API, we will look at an example script using 2 functions: `execute_python_script` and `process_command`, which are the building blocks for the rest of the functionality.
+为了演示 API 的基本功能，我们将使用 2 个函数来查看一个示例脚本： `execute_python_script` 和 `process_command`，它们是其余功能的基础模块。
 
 ##### test_export.py
-Here is an example test export script:
+下面是一个测试导出脚本示例：
 ```python
 #test_export.py
 import os
@@ -228,13 +230,13 @@ o3de_logger.info(o3de_context.hello_back)
 o3de_logger.info(o3de_context.message2)
 ```
 
-First thing to notice is that at the top, users can import existing O3DE Python modules such as `export_project`, `manifest`, `utils`, `validation`, etc., just like they normally import other python modules in the standard library. All such modules can be found [here on Github](https://github.com/o3de/o3de/tree/development/scripts/o3de/o3de). This is because the `export-project` tool handles system paths behind the scenes to make the O3DE CLI folder and the export script's folder accessible from the import system.
+首先要注意的是，在顶部，用户可以导入现有的 O3DE Python 模块，如 `export_project`、`manifest`、`utils`、`validation` 等，就像通常导入标准库中的其他 python 模块一样。所有这些模块都可以在 [Github 上找到]((https://github.com/o3de/o3de/tree/development/scripts/o3de/o3de)。这是因为 `export-project` 工具会在幕后处理系统路径，以便从导入系统访问 O3DE CLI 文件夹和导出脚本的文件夹。
 
-The next thing to notice is that `o3de_context` is available as a global context. Along with the standard properties, users can add their own custom values to retain over the lifetime of the script.
+接下来要注意的是，`o3de_context`可作为全局上下文使用。除了标准属性外，用户还可以添加自己的自定义值，以便在脚本的生命周期内保留这些值。
 
-With `process_command`, users can run any terminal command that they wish. This makes it very easy to convert manual processes into a usable script  (and most of the time, you can use `process_command` alone if you so desire). All you would need is to ensure that the process has an equivalent command to run on the terminal. 
+使用 `process_command`，用户可以运行任何他们想要的终端命令。这使得将手动进程转换为可用脚本变得非常容易（大多数情况下，如果你愿意，可以单独使用 `process_command`）。你所需要做的就是确保进程有一个可在终端上运行的等效命令。
 
-The function `export_python_script` does something special here. It's able to run another python script anywhere on the machine, while supplying it the same `o3de_context` the current export script is using. This can allow for very modular scripting abilities. Let us take a closer look at `hello.py` to see what it does.
+在这里，函数 `export_python_script` 做了一些特别的事情。它能在机器上的任何地方运行另一个 python 脚本，同时为其提供与当前导出脚本相同的 `o3de_context`。这可以实现非常模块化的脚本能力。让我们仔细看看 `hello.py` 的功能。
 
 ##### hello.py
 ```python
@@ -258,12 +260,12 @@ o3de_context.hello_back = "Hello to you too!"
 o3de_context.message2 = "hiya!"
 ```
 
-`hello.py` readily takes on the context of the original export script, and is even able to access previously defined variables, such as `hi_there_2`, `hi_there`, `message1`, and `message2`.
+`hello.py` 很容易获取原始导出脚本的上下文，甚至能够访问先前定义的变量，如 `hi_there_2`、`hi_there`、`message1` 和 `message2`。
 
-Not only can it read them, but it can also overwrite an existing variable, such as with `message2`, changing it from `'____'` to `'hiya!'`, or even introduce new variables like `hello_back`, which upon completion of `hello.py` will be visible to the `test_export.py` script.
+它不仅能读取这些变量，还能覆盖现有变量，例如将 `message2` 从 `'____'` 改为 `'hiya!'` ，甚至引入新变量，如 `hello_back` ，在完成 `hello.py` 后，`test_export.py` 脚本就能看到这些变量。
 
-##### The Results
-If you were to run the `test_export.py` script on Windows, this is what the logs would show:
+##### 结果
+如果在 Windows 上运行 `test_export.py` 脚本，日志会显示如下内容：
 ```
 <engine-path>\scripts\o3de.bat export-project -es C:\workspace\projects\NewspaperDeliveryGame\export_rules\test_export.py -ll INFO
 
@@ -299,4 +301,4 @@ hi 9:: 22
 [INFO] o3de: Success!
 ```
 
-This example is based on the [original PR for the Project Export tool](https://github.com/o3de/o3de/pull/15463).
+本例基于 [项目导出工具的原始 PR](https://github.com/o3de/o3de/pull/15463)。

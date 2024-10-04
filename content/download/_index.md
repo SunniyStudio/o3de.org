@@ -1,4 +1,4 @@
 ---
-title: Download Open 3D Engine
+title: 下载 Open 3D Engine
 ---
-O3DE supports Windows 10 and Linux. Download the latest version of the engine for your operating system here.
+O3DE 支持 Windows 10 和 Linux。请在此处为您的操作系统下载最新版本的引擎。

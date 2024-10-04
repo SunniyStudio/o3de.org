@@ -1,308 +1,308 @@
 ---
-linkTitle: Glossary
-title: Glossary
-description: The glossary contains terminology used throughout Open 3D Engine (O3DE) documentation.
+linkTitle: 术语
+title: 术语
+description: 术语表包含整个Open 3D Engine (O3DE)文档中使用的术语。
 weight: 100
 toc: true
 ---
 
-The glossary contains terminology used throughout Open 3D Engine (O3DE) documentation. 
+术语表包含整个Open 3D Engine (O3DE)文档中使用的术语。
 
 ### actor
-A specialized [entity](#entity) that is the basis for characters in a game.
+一种专门的[实体](#entity) ，是游戏中角色的基础。
 
 ### additive animation
-An animation that can be attached to a base animation to extend its behavior.
+可附加到基本动画上以扩展其行为的动画。
 
 ### agent
-An autonomous entity used in artificial intelligence (AI) that uses sensors to observe its environment and directs its activity towards achieving one or more goals.
+人工智能（AI）中使用的自主实体，它利用传感器观察周围环境，并指导自己的活动以实现一个或多个目标。
 
 ### aim pose
-Part of a collection of parametric-blended poses for making a character take aim at specified points in the game.
+参数混合姿势系列的一部分，用于让角色在游戏中的指定点瞄准。
 
 ### alpha channel
-An extension of RGB color values for specifying the opacity of an object. A value of 0.0 indicates fully transparent while a value of 1.0 indicates fully opaque.
+RGB 颜色值的扩展，用于指定对象的不透明度。0.0 表示完全透明，1.0 表示完全不透明。
 
 ### archetype entity
-A special type of [entity](#entity) with linked instances. If a parameter of the archetype entity is changed, all other instances of that entity parameter are automatically updated.
+[entity](#entity)的一种特殊类型，具有链接实例。如果原型实体的某个参数发生变化，该实体参数的所有其他实例都会自动更新。
 
 ### asset
-Any art, texture, 3D model, sound effect, or other digital data that is presented to the user in the game.
+在游戏中呈现给用户的任何艺术、纹理、三维模型、声音效果或其他数字数据。
 
 ### attachment
-A hierarchical object that is attached to characters, respond to real-world physics, and can be attached, detached, or replaced at runtime in the game. Character attachments include clothing, weapons, tools, or entire body parts such as heads or hands.
+附属于角色的分层对象，可对真实世界的物理特性做出反应，并可在游戏运行时附加、分离或替换。角色附件包括衣服、武器、工具或整个身体部位（如头或手）。
 
 ### AzAutoGen
-A Python tool that uses the [Jinja2](https://jinja.palletsprojects.com/) template engine to generate source files, by passing in XML or JSON data into a Jinja template. O3DE uses AzAutoGen as a simple transpiler to create boilerplate code or assets.
+这是一款使用[Jinja2](https://jinja.palletsprojects.com/)模板引擎的 Python 工具，通过将 XML 或 JSON 数据传入 Jinja 模板来生成源文件。O3DE 使用 AzAutoGen 作为简单的转换器来创建模板代码或资产。
 
 ### baked
-Performs and stores all calculations for a scene element so that the element does not need to be processed or rendered in real time in the game. Often used for lighting or physics. Also referred to as *prebaked*.
+执行并存储场景元素的所有计算，使该元素无需在游戏中进行实时处理或渲染。通常用于照明或物理效果。也称为**预烘焙**。
 
 ### behavior context
-The behavior context reflects runtime code and makes it accessible to scripts by providing bindings to C++ classes, methods, properties, constants, and enums. The behavior context also provides bindings for O3DE's [EBus](#ebus) so you can dispatch and handle events through Script Canvas and Lua.
+行为上下文反射了运行时代码，并通过提供与 C++ 类、方法、属性、常量和枚举的绑定，使脚本可以访问这些代码。行为上下文还为 O3DE 的[EBus](#ebus) 提供了绑定，因此您可以通过 Script Canvas 和 Lua 调度和处理事件。
 
 ### bind pose
-The pose that a character has when you bind the mesh (skin) to the skeleton. The skeleton determines the pose.
+将网格（皮肤）绑定到骨架时，角色的姿势。骨骼决定姿势。
 
 ### blend shape
-Method that stores a deformed version of a mesh as a series of vertex positions. In each keyframe of an animation, the vertices are interpolated between these stored positions. Also known as *morph target animation* or *per-vertex animation*.
+将网格的变形版本存储为一系列顶点位置的方法。在动画的每个关键帧中，顶点都会在这些存储位置之间进行插值。也称为**变形目标动画**或**逐顶点动画**。
 
 ### blend space
-Animation blending that is treated as geometry. A character's kinematic, physical, and other high-level motion-related parameters are mapped onto corresponding features that are stored in animation clips. By storing such motion as parameters, controllable interactive animations are possible. Specifically, an animation is associated with a 1D, 2D, or 3D location in the blend space. Also known as a *bspace*.
+作为几何体处理的动画混合。角色的运动学、物理和其他高级运动相关参数被映射到存储在动画片段中的相应特征上。通过将这些运动作为参数存储，可以实现可控的交互式动画。具体来说，动画与混合空间中的一维、二维或三维位置相关联。也称为**bspace**。
 
 ### bloom
-Effect that reproduces an imaging artifact of real-world cameras. The effect appears as fringes or feathers of illumination bleeding from the border of a bright area in an image, which gives the illusion of a bright light overwhelming the camera.
+再现真实世界相机成像伪影的效果。这种效果表现为从图像中明亮区域的边缘渗出的照明条纹或羽毛，给人一种强光压倒相机的错觉。
 
 ### boids
-Entities that mimic living animals and that have simulated group behavior and obstacle avoidance.
+模仿活体动物的实体，具有模拟群体行为和避开障碍物的能力。
 
 ### brush
-A simple 3D shape that is tied to an entity, and that provides a specific appearance. Brushes are used for static objects.
+一种简单的三维形状，与实体绑定，并提供特定的外观。笔刷用于静态对象。
 
 ### bspace
-Refer to [blend space](#blend-space).
+见 [blend space](#blend-space)。
 
 ### bump map
-A grayscale image that allows more realistic rendering of an object by introducing small displacements of its surface without changing its geometry. This is done by perturbing the surface normals of a rendered object during lighting. The amount of perturbation is specified by the values in the bump map.
+一种灰度图像，通过在不改变几何形状的情况下对物体表面进行微小位移，使物体的渲染更加逼真。这是通过在光照过程中扰动渲染物体的表面法线来实现的。扰动量由凹凸贴图中的值指定。
 
 ### collision proxy
-A simplified geometric shape for approximating a more complex piece of geometry for purposes of a fast first-pass collision detection.
+简化的几何形状，用于近似更复杂的几何体，以实现快速的首次碰撞检测。
 
 ### cooking
-Pre-processing step that converts data such as mesh geometry into formats that PhysX can use. Cooking also prepares data structures and computes intermediate results that can be performed offline, which saves computation at runtime.
+预处理步骤，将网格几何图形等数据转换成 PhysX 可以使用的格式。Cooking 还会准备数据结构并计算可离线执行的中间结果，从而节省运行时的计算量。
 
 ### cubemap
-A set of six squares that represent reflections from the environment. The six squares form the faces of an imaginary cube that surrounds an object.
+一组六个正方形，代表来自环境的反射。这六个正方形构成了一个环绕物体的假想立方体的面。
 
 ### cutscene
-A noninteractive cinematic game sequence that is typically used to promote plot during gameplay.
+非交互式电影游戏序列，通常用于在游戏过程中促进情节发展。
 
 ### damping
- The gradual reduction of movement, vibration, or intensity.
+逐渐减少运动、振动或强度。
 
 ### DCC
-Digital content creation; related to a third-party product such as Autodesk 3ds Max or Autodesk Maya for creating digital assets.
+数字内容创建；与用于创建数字资产的 Autodesk 3ds Max 或 Autodesk Maya 等第三方产品有关。
 
 ### decal
-A 2D texture placed on a piece of flat geometry.
+放置在平面几何体上的二维纹理。
 
 ### detail map
-An image for adding up-close surface details to an object.
+用于为物体添加近距离表面细节的图像。
 
 ### diffuse map
-An image for defining the base color and pattern of an object's surface.
+用于定义物体表面基色和图案的图像。
 
 ### displacement map
-A type of [heightmap](#heightmap) that modifies the position of vertices of a surface by a specified amount.
+[heightmap](#heightmap) 的一种类型，可按指定量修改曲面顶点的位置。
 
 ### DOF
-Depth of field. The degree to which distant objects are in focus relative to closer ones.
+景深。远处物体相对于近处物体的对焦程度。
 
 ### EBus
-A modular message dispatch system that enables components, entities, and other types of objects to communicate with one another with few or no interdependencies. Because Ebuses are decoupled from each other, you can more easily build high performing and modular game systems. Also known as *event bus*.
+一种模块化的消息派发系统，可使组件、实体和其他类型的对象在很少或没有相互依赖的情况下相互通信。由于 Ebus 是相互解耦的，因此可以更轻松地构建高性能的模块化游戏系统。也称为**事件总线**。
 
 ### emitter
-An entity that specifies the location from which particles are emitted.
+指定粒子发射位置的实体。
 
 ### entity
-A game object with one or more components that provide some behavior or functionality. An entity consists of a unique ID and a container.
+一个游戏对象，包含一个或多个提供某些行为或功能的组件。实体由一个唯一 ID 和一个容器组成。
 
 ### environment probe
-A technique that uses cube maps to provide a game level or location with realistic ambient lighting.
+一种使用立方体贴图为游戏关卡或地点提供逼真环境照明的技术。
 
 ### Gem
-A package that contains code and assets to provide a single feature or multiple tightly scoped functions.
+包含代码和资产的软件包，可提供单一功能或多个范围紧密的功能。
 
 ### gloss map
-An image that represents the microscale roughness of a surface. The gloss map is located in the alpha channel of the normal map.
+表示表面微观粗糙度的图像。光泽度贴图位于法线贴图的 alpha 通道中。
 
 ### heightmap
-A grayscale image used to modify vertex positions of a surface. O3DE uses heightmaps to store terrain surface height data. White areas represent the high areas while black areas represent the low areas of the terrain.
+用于修改曲面顶点位置的灰度图像。O3DE 使用高度图来存储地形表面高度数据。白色区域代表地形的高区域，黑色区域代表地形的低区域。
 
 ### HDR tone mapping
-The process of converting the tonal values of an image from a high dynamic range (HDR) to a lower range.
+将图像的色调值从高动态范围（HDR）转换为低动态范围的过程。
 
 ### helper
-Visual icons attached to objects in O3DE Editor that provide object-specific functionality.
+O3DE 编辑器中附加到对象上的可视化图标，提供对象的特定功能。
 
 ### IK
-Inverse kinematics. The use of kinematics equations to calculate the positions and orientations of joints of a character's skeleton so that a specific part of the skeleton (the end effector) reaches a defined target point.
+逆运动学。使用运动学方程来计算角色骨骼关节的位置和方向，从而使骨骼的特定部分（末端效应器）到达指定的目标点。
 
 ### IBL
-Image-based lighting. A rendering technique that involves capturing lighting information, storing it in an environment probe, and projecting it onto a scene.
+基于图像的照明。一种渲染技术，包括捕捉照明信息，将其存储在环境探测器中，并投射到场景上。
 
 ### imposter
-Procedurally created 2D sprites that are rendered to look like 3D objects. In essence, imposters are 2.5D objects.
+程序化创建的 2D 精灵，经过渲染后看起来像 3D 物体。从本质上讲，冒牌货就是 2.5D 物体。
 
 ### install layout
-Refer to [SDK engine](#sdk-engine).
+见 [SDK engine](#sdk-engine)。
 
 ### k-means clustering
-Method for partitioning a set of data points into k separate groups. Each group has a mean calculated from the average of the points it contains and each point is assigned to a group based on which group mean the point is closest to. The method usually works iteratively, alternating between updating point assignments and updating mean values until a stable partition is reached.
+将一组数据点分成 k 组的方法。每个组都有一个根据其包含的点的平均值计算出来的平均值，每个点都会根据其最接近的组平均值被分配到一个组中。该方法通常采用迭代法，交替更新点的分配和平均值，直到达到一个稳定的分区。
 
 ### keyframe
-An animation frame that specifies exact positions and orientations of geometry affected by the animation. Animation frames that exist between keyframes are interpolated based on animation curves.
+指定受动画影响的几何体的确切位置和方向的动画帧。关键帧之间的动画帧会根据动画曲线进行插值。
 
 ### legacy
-A designation for O3DE tools that are no longer being advanced and will eventually be removed.
+O3DE 工具的名称，这些工具已不再先进，最终将被移除。
 
 ### level
-A world or map that represents the space or area available to the player during the course of completing a discrete game objective. Most games consist of multiple levels.
+世界或地图，表示玩家在完成一个独立游戏目标的过程中可以利用的空间或区域。大多数游戏都包含多个关卡。
 
 ### locomotion locator
-The Y vector of the character root joint quaternion, which is typically the direction in which the character is facing. The locomotion locator is needed for motions that translate in nonuniform ways, such as stop or start transitions that have changes in acceleration.
+角色根关节四元数的 Y 向量，通常是角色朝向的方向。运动定位器适用于以不均匀方式平移的运动，例如加速度发生变化的停止或开始转换。
 
 ### LOD
-Level of detail. A technique for increasing performance and reducing draw calls by displaying progressively less-detailed objects the farther they are from the camera.
+详细程度。这是一种提高性能和减少绘制调用的技术，显示的对象距离摄像机越远，细节就越少。
 
 ### look pose
-Part of a collection of parametric-blended poses for making a character look at specified points in the game.
+参数混合姿势集合的一部分，用于在游戏中的指定点制作角色的外观。
 
 ### mesh
-A collection of vertices that define the surface of an object.
+定义物体表面的顶点集合。
 
 ### minimap
-A miniature map placed at a screen corner in the game to aid players in orienting themselves in the world.
+放置在游戏屏幕角落的微型地图，用于帮助玩家确定世界的方向。
 
 ### mip map
-A precalculated, optimized sequence of textures, each of which is a progressively lower resolution representation of the same image. Used in conjunction with [LOD](#lod) processing.
+经过预先计算和优化的纹理序列，每种纹理都是同一图像分辨率逐渐降低的表现形式。与 [LOD](#lod) 处理结合使用。
 
 ### morph target
-A snapshot of vertex locations for a specific mesh that have been deformed in some way.
+以某种方式变形的特定网格顶点位置快照。
 
 ### morph target animation
-Refer to [blend shape](#blend_shape).
+见 [blend shape](#blend_shape)。
 
 ### navmesh
-A navigation mesh, or navmesh, defines the areas of an environment in which a character can move freely without obstructions such as trees, lavas, or other environmental barriers.
+导航网格（或 navmesh）定义了角色可以自由移动的环境区域，在这些区域内没有树木、熔岩或其他环境障碍物等阻挡物。
 
 ### nodeable
-Refers to either of the following Script Canvas concepts:
-* A Script Canvas node created as the result of **AzAutoGen** processing.
-* The mechanism by which a compiled Script Canvas graph can invoke C++ functions.
+指以下任一 Script Canvas 概念：
+* 在**AzAutoGen**处理过程中创建的Script Canvas节点。
+* 编译后的 Script Canvas 图形调用 C++ 函数的机制。
 
 ### normal
-The vector that is orthogonal to a surface defined by a set of vertices.
+与一组顶点定义的曲面正交的向量。
 
 ### normal map
-An image whose pixel values are interpreted as the normal vectors for each point on the surface to which the image is mapped.
+一种图像，其像素值被解释为图像所映射表面上每个点的法向量。
 
 ### null bone
-The character bone associated with a null or root object.
+与空对象或根对象相关的角色骨。
 
 ### parallax mapping
-A technique that is used to create detail in a texture adding the illusion of depth. This depth perception changes based on perspective.
+一种用于在纹理中创造细节，增加深度错觉的技术。这种深度感会根据透视变化而改变。
 
 ### PBR
-Physically based rendering. PBR uses real-world physical rules and properties to define how light interacts with the surface of objects. Used by the O3DE rendering system.
+基于物理的渲染。PBR 使用真实世界的物理规则和属性来定义光线与物体表面的相互作用。由 O3DE 渲染系统使用。
 
 ### per-vertex animation
-Refer to [blend shape](#blend_shape).
+见 [blend shape](#blend_shape)。
 
 ### POM
-Parallax occlusion mapping. POM uses a displacement map to encode surface detail information in a texture. In this way self-occlusion and self-shadowing of an object is possible without changing the surface geometry.
+视差闭塞贴图。视差闭塞贴图使用位移贴图将表面细节信息编码到纹理中。这样就可以在不改变物体表面几何形状的情况下实现物体的自闭塞和自阴影效果。
 
 ### prebaked
-Refer to [baked](#baked).
+见 [baked](#baked)。
 
 ### pre-built SDK engine
-Or "pre-built engine SDK". Refer to [SDK engine](#sdk-engine).
+或 "预构建引擎SDK"。见 [SDK engine](#sdk-engine)。
 
 ### prefab
-A game object template that stores an asset or a group of assets and all associated properties.
+游戏对象模板，用于存储一个或一组资产以及所有相关属性。
 
 ### Preview
-A designation for O3DE tools that may be missing key features but are still stable and usable. The user experience is high quality, functional, and consistent where it exists but may be unfinished. APIs are subject to change.
+O3DE 工具可能缺少关键功能，但仍然稳定可用。用户体验是高质量、功能性和一致性的，但可能尚未完成。应用程序接口可能会更改。
 
 ### procedural vegetation
-A technique used to automatically cover a large area of terrain with vegetation objects using texture layers.
+一种利用纹理层自动覆盖大面积地形植被对象的技术。
 
 ### project
-The collection of levels, assets, and code that make up a game.
+构成游戏的关卡、资产和代码的集合。
 
 ### quaternion
-Mathematical notation that represents the orientation and rotation of objects in three dimensions.
+表示物体在三维空间中的方向和旋转的数学符号。
 
 ### ragdoll
-Physical rules used to simulate the realistic movement of a skeletal character.
+用于模拟骨骼人物逼真动作的物理规则。
 
 ### rigging
-The process of building a skeleton hierarchy of bone joints for a character mesh.
+为角色网格建立骨骼关节层次结构的过程。
 
 ### rope
-Used for attaching cloth, hair, or ropes to a character so that the objects can dangle and move realistically against the character.
+用于将布、头发或绳索固定在人物身上，使这些物体能真实地在人物身上悬垂和移动。
 
 ### retargeting
-Applying animations that were created for one model to another.
+将为一个模型创建的动画应用到另一个模型。
 
 ### scripts
-Used for creating logic and behaviors for your game project. You can create scripts with one of the following:
+用于为游戏项目创建逻辑和行为。您可以使用以下方法之一创建脚本：
 
-* Script Canvas is a visual scripting tool that doesn't require you to know how to code. You can use the **Script Canvas Editor** to create Script Canvas graphs. Script Canvas graphs have the file extension, `.scriptcanvas`, such as `myscriptexample.scriptcanvas`. You can add your Script Canvas graph to your game entities with the **Script Canvas** component.
-* Lua is a lightweight and embeddable scripting language. You can use Lua to facilitate quick iteration of your game project. Lua scripts have the file extension `.lua` or `.luac`, such as `myscriptexample.lua`. You can add script functionality to your game entities with the **Lua Script** component and edit your scripts with the **Lua Editor**.
+* Script Canvas 是一款可视化脚本工具，无需了解如何编写代码。您可以使用 **Script Canvas 编辑器** 创建 Script Canvas 图形。脚本画布图形的文件扩展名为`.scriptcanvas`，例如 `myscriptexample.scriptcanvas`。您可以使用 **Script Canvas** 组件将脚本画布图形添加到游戏实体中。
+* Lua 是一种轻量级的可嵌入式脚本语言。您可以使用 Lua 快速迭代游戏项目。Lua 脚本的文件扩展名为 `.lua` 或 `.luac`，如 `myscriptexample.lua`。您可以使用**Lua Script**组件为游戏实体添加脚本功能，并使用**Lua 编辑器**编辑您的脚本。
 
 ### SDK engine
-A redistributable build of O3DE where the core engine, Gem, and tool binaries are pre-built, ready to be used by any O3DE project. When building from source, use either the `ALL_BUILD` or `INSTALL` target to create this layout. Synonyms include "install layout," "pre-built binaries," "pre-built engine SDK," and "pre-built SDK engine." Compare with [source engine](#source-engine).
+O3DE 的可再分发构建版，其中预构建了核心引擎、Gem 和工具二进制文件，可供任何 O3DE 项目使用。从源代码构建时，使用 `ALL_BUILD` 或 `INSTALL` 目标来创建此布局。同义词包括 “安装布局”、“预构建二进制文件”、“预构建引擎 SDK ”和 “预构建 SDK 引擎”。比较 [源代码引擎](#source-engine)。
 
 ### sequence
-The content generated from the Track View for cutscenes or other canned animation triggers.
+从Track View生成的内容，用于剪辑或其他预制动画触发。
 
 ### shadow map
-A technique for controlling how shadows are added to a scene. You can use multiple, cascaded shadow maps to control how sun shadows look at varying distances.
+一种控制场景阴影添加方式的技术。您可以使用多个级联阴影贴图来控制不同距离上的太阳阴影效果。
 
 ### skinning
-The process of binding bone joints to a model's mesh (skin).
+将骨骼关节绑定到模型网格（表皮）的过程。
 
 ### skybox
-A cube without the bottom side that contains the environment around a scene. Usually viewed from the inside of the cube.
+没有底面的立方体，包含场景周围的环境。通常从立方体内部观察。
 
 ### slices
-Cascaded data management system for entities. Similar to the capability of prefabs, slices are reusable component entity templates that you can easily update.
+实体的级联数据管理系统。与预制件的功能类似，切片是可重复使用的组件实体模板，可以轻松更新。
 
 ### socket
-A pivot point on a character where attachments are connected. Attachments dangle or move according to the properties of the socket.
+角色上连接附件的支点。附件根据插槽的属性悬挂或移动。
 
 ### source engine
-The default method of building O3DE from source, where the core engine, Gem, and tool binaries are built with the project, in the same build directory as the project binaries. Compare with [SDK engine](#sdk-engine).
+从源代码构建 O3DE 的默认方法，其中核心引擎、Gem 和工具二进制文件与项目一起构建，与项目二进制文件位于同一构建目录。比较 [SDK engine](#sdk-engine).
 
 ### specular map
-An image that determines the shininess of each area of a surface.
+确定表面各区域光泽度的图像。
 
 ### SPOM
-Silhouette parallax occlusion mapping. SPOM is similar to [POM](#pom), but affects the silhouette of a mesh similar to tessellation, without the object actually being tessellated.
+轮廓视差遮挡贴图。SPOM 类似于 [POM](#pom)，但它对网格轮廓的影响类似于细分，而物体实际上并没有被细分。
 
 ### sprite
-A 2D bitmap image. Multiple sprites can be grouped into a single image known as a sprite sheet.
+二维位图图像。多个精灵可以组合成一个图像，称为精灵表。
 
 ### SSDO
-Screen Space Directional Occlusion is a method for approximating real time global illumination (GI).
+屏幕空间定向遮挡是一种近似实时全局光照（GI）的方法。
 
 ### SSS index
-Subsurface scattering index. SSS is used to simulate the diffusion and scattering of light transmitted through translucent objects.
+表层下散射指数。SSS 用于模拟透过半透明物体的光的扩散和散射。
 
 ### tessellation
-The deformation of a surface using one or more geometric objects with no overlaps or gaps. Tessellation increases the geometry count of the mesh by subdividing polygons into smaller polygons before it gets displaced.
+使用一个或多个无重叠或间隙的几何对象对表面进行变形。在网格发生位移之前，细分网格会将多边形细分为更小的多边形，从而增加网格的几何数量。
 
 ### texture mapping
-The application of an image to a surface.
+将图像应用于物体表面。
 
 ### TOD
-The time of day in a level. TOD is used to simulate the changing lighting conditions as the sun crosses the sky.
+关卡中的时间。TOD 用于模拟太阳划过天空时光照条件的变化。
 
 ### UV mapping
-The projection of texture coordinates onto a 3D surface.
+纹理坐标在三维表面上的投影。
 
 ### vertex color
-A method for adding variety, depth, and color variations to an object surface.
+一种为物体表面增加多样性、深度和色彩变化的方法。
 
 ### virtual reality
-Technology that replicates the gaming environment and simulates a user's presence in it, allowing the player to feel as if they are in the game world as they interact with the environment, characters, and objects.
+复制游戏环境并模拟用户身临其境的技术，让玩家在与环境、角色和物体互动时，感觉自己仿佛置身于游戏世界中。
 
 ### voxel
-A volumetric point in a 3D space, similar to a pixel in a 2D space.
+三维空间中的一个体积点，类似于二维空间中的一个像素点。
 
 ### white point
-The reference value used to indicate true white in an image or level.
+用于指示图像或色阶中真正白色的参考值。
 
 ### z-fighting
-Phenomenon in 3D rendering that occurs when two or more primitives have similar or identical values in the z-buffer. Also called stitching.
+三维渲染中的一种现象，当两个或多个基元在 z 缓冲区中具有相似或相同的值时就会出现。也称为拼接。

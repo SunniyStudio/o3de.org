@@ -1,17 +1,17 @@
 ---
-linkTitle: Project Export
-title: Project Export
+linkTitle: 项目导出
+title: 项目导出
 weight: 1600
-description: Learn how to use the Project Export CLI tooling to automate packaging and release of projects
+description: 了解如何使用项目导出 CLI 工具自动打包和发布项目
 ---
 
-The topics in this section provide information about how to use the **Project Export** tools for release.
+本节的主题介绍了如何使用**项目导出**工具进行发布。
 
-## Section topics
+## 章节主题
 
-| Topic | Description |
-| - | - |
-| [Project Export for Windows and Linux](project-export-pc) | Learn how to use the Project Export tool to automate preparing your project for release on Windows and Linux. |
-| [Project Export for Android](project-export-android) |  Learn how to use the Project Export tool to automate preparing your project for release on Android. |
-| [Project Export for iOS](project-export-ios) | (Experimental) Learn how to use the Project Export tool to automate preparing your project for release on iOS. |
-| [Manual export O3DE Atom Sampleviewer for iOS](manual-export-atom-sampleviewer-ios) | (Experimental) Learn how to manually create an Xcode project to build and deploy for iOS. |
+| 主题                                                                   | 说明                                       |
+|----------------------------------------------------------------------|------------------------------------------|
+| [Windows和Linux项目导出](project-export-pc)                              | 了解如何使用项目导出工具自动准备在 Windows 和 Linux 上发布项目。 |
+| [Android项目导出](project-export-android)                                | 了解如何使用项目导出工具自动准备在 Android 上发布项目。         |
+| [iOS项目导出](project-export-ios)                                        | (实验）学习如何使用项目导出工具自动准备在 iOS 上发布项目。         |
+| [手动为iOS导出O3DE Atom Sampleviewer](manual-export-atom-sampleviewer-ios) | (实验）学习如何手动创建 Xcode 项目以构建和部署 iOS。         |

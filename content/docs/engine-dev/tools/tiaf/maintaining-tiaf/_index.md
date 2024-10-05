@@ -1,35 +1,35 @@
 ---
-linkTitle: Maintaining the Test Impact Analysis Framework
-title: Maintaining the Test Impact Analysis Framework
-description: Information as to how to maintain the test impact analysis framework (TIAF).
+linkTitle: 维护测试影响分析框架
+title: 维护测试影响分析框架
+description: 有关如何维护测试影响分析框架（TIAF）的信息。
 ---
 
-## General Information
+## 一般信息
 
-[How do I turn the TIAF on/off in Automated Review?](./general-information/#how-do-i-turn-the-tiaf-onoff-in-automated-review)
+[如何在自动审核中打开/关闭 TIAF？](./general-information/#how-do-i-turn-the-tiaf-onoff-in-automated-review)
 
-[How do I enroll a test into the TIAF?](./general-information/#how-do-i-enroll-a-test-into-tiaf)
+[如何将测试注册到 TIAF？](./general-information/#how-do-i-enroll-a-test-into-tiaf)
 
-[How do I enroll a native test for test sharding optimization?](./general-information/#how-do-i-enroll-a-native-test-for-test-sharding-optimization)
+[如何注册本机测试以进行测试分片优化？](./general-information/#how-do-i-enroll-a-native-test-for-test-sharding-optimization)
 
-[What are the command line options for the TIAF runtimes?](./general-information/#what-are-the-command-line-options-for-the-tiaf-runtimes)
+[TIAF 运行时的命令行选项有哪些？](./general-information/#what-are-the-command-line-options-for-the-tiaf-runtimes)
 
-[What are the command line options for the TIAF AR scripts?](./general-information#what-are-the-command-line-options-for-the-tiaf-ar-scripts)
+[TIAF AR 脚本的命令行选项是什么？](./general-information#what-are-the-command-line-options-for-the-tiaf-ar-scripts)
 
-## Debugging the TIAF
+## 调试TIAF
 
-[How do I configure and install OpenCppCoverage?](./debugging-tiaf/#how-do-i-configure-and-install-opencppcoverage)
+[如何配置和安装 OpenCppCoverage？](./debugging-tiaf/#how-do-i-configure-and-install-opencppcoverage)
 
-[How do I reproduce a TIAF AR run locally?](./debugging-tiaf/#how-do-i-reproduce-a-tiaf-ar-run-locally)
+[如何在本地重现 TIAF AR 运行？](./debugging-tiaf/#how-do-i-reproduce-a-tiaf-ar-run-locally)
 
-[How do I kill a local test run of the TIAF?](./debugging-tiaf/#how-do-i-kill-a-local-test-run-of-the-tiaf)
+[如何终止 TIAF 的本地测试运行？](./debugging-tiaf/#how-do-i-kill-a-local-test-run-of-the-tiaf)
 
-[How do I debug a flaky sharded test target?](./debugging-tiaf/#how-do-i-debug-a-flaky-sharded-test-target)
+[如何调试不稳定的分片测试目标？](./debugging-tiaf/#how-do-i-debug-a-flaky-sharded-test-target)
 
-[How do I fix regressions with the TIAF Python unit tests?](./debugging-tiaf/#how-do-i-fix-regressions-with-the-tiaf-python-unit-tests)
+[如何使用 TIAF Python 单元测试修复回归？](./debugging-tiaf/#how-do-i-fix-regressions-with-the-tiaf-python-unit-tests)
 
-[How do I disable a problematic test target from being run by the TIAF?](./debugging-tiaf/#how-do-i-disable-a-problematic-test-target-from-being-run-by-the-tiaf)
+[如何禁止 TIAF 运行有问题的测试目标？](./debugging-tiaf/#how-do-i-disable-a-problematic-test-target-from-being-run-by-the-tiaf)
 
-## Storage Query Tool
+## 存储查询工具
 
-[Overview of the storage query tool](./storage-query-tool.md)
+[存储查询工具概述](./storage-query-tool.md)

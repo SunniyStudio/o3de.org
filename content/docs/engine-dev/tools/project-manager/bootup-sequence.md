@@ -1,16 +1,16 @@
 ---
-linkTitle: Bootup Sequence
-title: Bootup Sequence
-description: High Level Developer Overview for the Project Manager tool.
+linkTitle: 启动顺序
+title: 启动顺序
+description: 项目管理器工具的高级开发人员概述。
 ---
 
 {{< note >}}
-This information is for developers of the **Project Manager** tool. If you're a user working with Project Manager, please refer to the [Project Manager User Guide](/docs/user-guide/project-config/project-manager).
+本信息面向**项目管理器**工具的开发人员。如果您是使用项目管理器的用户，请参阅[项目管理器用户指南](/docs/user-guide/project-config/project-manager)。
 {{< /note >}}
 
 
 {{< tip >}}
-Click on a node to open the relevant source code for that node.
+点击节点可打开该节点的相关源代码。
 {{< /tip >}}
 
 ```mermaid

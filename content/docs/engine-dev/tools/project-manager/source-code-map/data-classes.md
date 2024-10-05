@@ -1,58 +1,59 @@
 ---
-linkTitle: Data Classes
-title: Data Classes
-description: Classes that describe various data maintained in Project Manager
+linkTitle: 数据类
+title: 数据类
+description: 描述项目管理器中维护的各种数据的类
 weight: 200
 ---
 
 {{< note >}}
-This information is for developers of the **Project Manager** tool. If you're a user working with Project Manager, please refer to the [Project Manager User Guide](/docs/user-guide/project-config/project-manager).
+本信息面向**项目管理器**工具的开发人员。如果您是使用项目管理器的用户，请参阅[项目管理器用户指南](/docs/user-guide/project-config/project-manager)。
 {{< /note >}}
 
 {{< note >}}
-This contains brief summaries of various class's functionality and role. If available, there are additional links in the table of contents, either with expanded information, or github links. All documentation reflects code as of commit [(b79bd3df1f)](https://github.com/o3de/o3de/tree/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c) 
+其中包含各种类的功能和作用的简要概述。如果有，目录中还会提供其他链接，包括扩展信息或 github 链接。所有文档反映的代码截至提交 [(b79bd3df1f)](https://github.com/o3de/o3de/tree/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c) 
 {{< /note >}}
 
 
 
 
-## Overview
+## 概述
 
-| Class | Source Code | Description |
+| 类                     | 源代码                                                                                                                                                                                                             | 说明                                                                            |
+|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| TemplateInfo          | [头文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/TemplateInfo.h)  [cpp 文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/TemplateInfo.cpp) | 描述封装通用模板的数据字段。                                                                |
+| ProjectTemplateInfo   | [头文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/ProjectTemplateInfo.h)                                                                                                     | 项目专用模板的子类。唯一不同的是，该模板包含Gem。                                                    |
+| SettingsInterface     | [头文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/SettingsInterface.h)                                                                                                       | 与 O3DE 设置注册表交互的界面。                                                            |
+| [Settings](#settings) | [头文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/Settings.h)  [cpp 文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/Settings.cpp)         | 实现与 O3DE 设置注册表交互的`SettingsInterface`。                                         |
+| ProjectInfo           | [头文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/ProjectInfo.h)  [cpp 文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/ProjectInfo.cpp)   | 包含描述项目的数据结构，记录在 `ProjectManager` 内的 project.json 中。还包含远程项目的元数据，或用于检查项目是否需要重建。 |
+| EngineInfo            | [头文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/EngineInfo.h)  [cpp 文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/EngineInfo.cpp)     | 包含描述当前引擎的数据结构，记录在 `ProjectManager` 内的 engine.json 中。还包含引擎注册的元数据。              |
+| ProjectManagerDefs    | [头文件](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/ProjectManagerDefs.h)                                                                                                      | 包含各种常量和预设字符串。                                                                 |
+
+
+
+
+
+
+### 设置
+
+我们指定`SettingsInterface`作为一个契约，以确保我们实现了适当的方法，并能从一个简洁的接口（[一个示例](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Tools/ProjectManager/Source/ExternalLinkDialog.cpp#L88))对设置进行全局访问。它还是访问项目经理设置的单例接口。
+
+`SettingsInterface` 指定以下功能作为与 O3DE 设置注册表交互的合约：
+
+| 函数 | 说明 | 实现 |
 | - | - | - |
-| TemplateInfo | [header](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/TemplateInfo.h)  [cpp file](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/TemplateInfo.cpp) | Describes data fields to encapsulate a generic Template. |
-| ProjectTemplateInfo | [header](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/ProjectTemplateInfo.h) | Subclass of Template specific to Projects. Only difference is that this one includes Gems. |
-| SettingsInterface | [header](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/SettingsInterface.h) | Interface for interacting with the O3DE Settings Registry. |
-| [Settings](#settings) | [header](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/Settings.h)  [cpp file](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/Settings.cpp) | Implementation for `SettingsInterface` to interact with O3DE Settings Registry. |
-| ProjectInfo | [header](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/ProjectInfo.h)  [cpp file](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/ProjectInfo.cpp) | Contains data structure to describe a project, as recorded in project.json, inside `ProjectManager`. Also contains metadata for remote projects, or for checking if a project needs to be rebuilt. |
-| EngineInfo | [header](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/EngineInfo.h)  [cpp file](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/EngineInfo.cpp) | Contains data structure to describe the current engine, as recorded in engine.json, inside `ProjectManager`. Also contains metadata for engine registration. |
-| ProjectManagerDefs | [header](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/ProjectManagerDefs.h) | Contains various constants and preset strings. |
+| [`SettingsInterface::Get`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L31-L44) | 使用 `QString` 键，可以返回字符串或 bool 值。 | [代码](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L65-L79) |
+| [`SettingsInterface::Set`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L46-L59) | 使用 `QString` 键，可以为条目设置字符串或 bool 值。 | [代码](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L81-L99) |
+| [`SettingsInterface::Remove`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L61-L66) | 从注册表中删除带有 `QString` 键的条目。 | [代码](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L101-L109) |
+| [`SettingsInterface::Copy`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L68-L75) | 将数值从一个键复制到另一个键。也可以选择删除原始条目，起到 “移动 ”命令的作用。 | [代码](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L111-L132) |
+| [`SettingsInterface::GetProjectKey`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L77-L82) | 给定一个 `ProjectInfo` 实例，为该项目在设置注册表中的位置提供键前缀。 | [代码](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L134-L137) |
+| [`SettingsInterface::GetProjectBuiltSuccessfully`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L84-L90) | 查询给定项目的最新构建状态（成功与否）。| [代码](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L144-L163) |
+| [`SettingsInterface::SetProjectBuiltSuccessfully`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L91-L97) | 设置给定项目的最新构建状态（成功与否）。 | [代码](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L165-L187) |
 
+所有这些函数都是纯虚函数，需要在基本实现类中实现，否则会导致编译错误，从而强制执行契约。
 
+[`Settings`](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/Settings.h) 类[继承](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/Settings.h#L23-L24)`SettingsInterface`，它在引擎盖下使用 [`AZ::SettingsRegistryInterface`](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Tools/ProjectManager/Source/Settings.h#L48) 与 O3DE 设置注册表交互。
 
-
-
-
-### Settings
-
-We specify the `SettingsInterface` as a contract to ensure we implement the proper methods, and to enable global access to settings from a clean interface ([one example](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Tools/ProjectManager/Source/ExternalLinkDialog.cpp#L88)). It also acts as a singleton interface for accessing Project Manager settings.
-
-`SettingsInterface` specifies the following functions as the contract to interact with O3DE Settings Registry:
-| Function | Description | Implementation |
-| - | - | - |
-| [`SettingsInterface::Get`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L31-L44) | Using a `QString` key, can either return the string or bool value. | [code](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L65-L79) |
-| [`SettingsInterface::Set`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L46-L59) | Using a `QString` key, can either set a string or bool value for an entry. | [code](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L81-L99) |
-| [`SettingsInterface::Remove`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L61-L66) | Removes a entry with `QString` key from the registry. | [code](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L101-L109) |
-| [`SettingsInterface::Copy`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L68-L75) | Copies the value from one key to another. Can also optionally remove the original entry, acting as a "Move" command. | [code](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L111-L132) |
-| [`SettingsInterface::GetProjectKey`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L77-L82) | Given a `ProjectInfo` instance, provides a key prefix for where that project should be in settings registry. | [code](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L134-L137) |
-| [`SettingsInterface::GetProjectBuiltSuccessfully`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L84-L90) | Queries the latest build status of a given project, if successful or not. | [code](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L144-L163) |
-| [`SettingsInterface::SetProjectBuiltSuccessfully`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/SettingsInterface.h#L91-L97) | Sets the latest build status of a given project, if successful or not. | [code](https://github.com/o3de/o3de/blob/7d716a4a21afd217444d91043ea810f6c8a38f21/Code/Tools/ProjectManager/Source/Settings.cpp#L165-L187) |
-
-All of these functions are pure virtual functions, which require implementation in a base implementation class, otherwise it results in a compilation error, thereby enforcing the contract.
-
-The [`Settings`](https://github.com/o3de/o3de/blob/development/Code/Tools/ProjectManager/Source/Settings.h) class [inherits](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/Settings.h#L23-L24) `SettingsInterface` which uses [`AZ::SettingsRegistryInterface`](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Tools/ProjectManager/Source/Settings.h#L48) under the hood to interact with the O3DE Settings Registry.
-
-This mirrors JSON so that values can be retrieved by key paths. For example, take a .setreg like:
+这与 JSON 类似，因此可以通过键路径检索值。例如，以 .setreg 为例：
 ```json
 {
     "key":{
@@ -62,18 +63,19 @@ This mirrors JSON so that values can be retrieved by key paths. For example, tak
     }
 }
 ```
-Then the value can be retrieved using the string key `key/subkey/subsubkey`.
+然后可使用字符串键 `key/subkey/subsubkey` 检索该值。
 
-The `ProjectManager::SettingsInterface` is similar to `AZ::SettingsRegistryInterface`, except it overrides some of the behavior to look for configuration specific to Project Manager, instead of O3DE as a whole. It's also modified to work with `QString`, which the `AZ` counterpart does not handle.
+`ProjectManager::SettingsInterface` 与 `AZ::SettingsRegistryInterface`类似，只是它覆盖了一些行为，以查找 Project Manager 的特定配置，而不是整个 O3DE。此外，它还能与 `QString` 配合使用，而 `AZ` 的对应程序却不能处理这种情况。
 
-The `Settings` class inherits from `SettingsInterface::Registrar`. The [`Registrar`](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Framework/AzCore/AzCore/Interface/Interface.h#L100-L106) is part of the `AZ::Interface` in `AzCore`.
+`Settings` 类继承自`SettingsInterface::Registrar`。 [`Registrar`](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Framework/AzCore/AzCore/Interface/Interface.h#L100-L106) 是`AzCore`中`AZ::Interface`的一部分。
 
-The [implementation](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Framework/AzCore/AzCore/Interface/Interface.h#L202-L212) of `Registrar` registers the interface globally, which indicates the singleton pattern.
+`Registrar` 的[实现](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Framework/AzCore/AzCore/Interface/Interface.h#L202-L212)在全局范围内注册接口，这表明了单例模式。
 
-Here are the remaining functions that `Settings` also provides:
-| Function | Description |
+以下是 `Settings` 也提供的其余功能：
+
+| 函数 | 说明 |
 | - | - |
-| [`Settings::Save`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/Settings.cpp#L25-L55) | Dumps the settings registry into a string stream. Then tries to open the `ProjectManager.setreg` file in the O3DE user path, and write the stream data into that file. |
-| [`Settings::GetBuiltSuccessfullyPaths`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/Settings.cpp#L139-L142) | For each project path requested, fetches the build status. Returns the result as a set. |
+| [`Settings::Save`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/Settings.cpp#L25-L55) | 将设置注册表转为字符串流。然后尝试打开 O3DE 用户路径中的 `ProjectManager.setreg` 文件，并将流数据写入该文件。 |
+| [`Settings::GetBuiltSuccessfullyPaths`](https://github.com/o3de/o3de/blob/69dbcd08a56539315bfb0472984daf0f46e7a966/Code/Tools/ProjectManager/Source/Settings.cpp#L139-L142) | 针对请求的每个项目路径，获取构建状态。结果以集合形式返回。 |
 
-[Back to Overview](#overview)
+[返回概述](#overview)

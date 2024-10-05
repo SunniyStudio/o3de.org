@@ -1,16 +1,16 @@
 ---
-linkTitle: Project Manager
-title: Project Manager Developer Documentation
-description: Documentation for developers extending or contributing to the Project Manager bundled as part of Open 3D Engine.
+linkTitle: 项目管理器
+title: 项目管理器开发者文档
+description: 为开发人员提供的文档，用于扩展或改进作为Open 3D Engine一部分捆绑的项目管理器。
 ---
 
-***Project Manager*** is the entry point for many new users to O3DE. It is used to manage project creation and editing, building, downloading, among many other tasks. It also features templates for new projects, allowing you to easily create new objects as you need, without needing the CLI. Gems as well are managed through the Gem Catalog for any project.
+***项目管理器****是许多新用户使用 O3DE 的入口。它用于管理项目的创建和编辑、构建、下载以及许多其他任务。它还为新项目提供模板，让您无需使用 CLI 就能根据需要轻松创建新对象。Gem也可通过宝石目录管理任何项目。
 
-The development source for the Project Manager can be found here: https://github.com/o3de/o3de/tree/development/Code/Tools/ProjectManager
+项目管理器的开发源代码可在此处找到： https://github.com/o3de/o3de/tree/development/Code/Tools/ProjectManager
 
-## Topics
+## 主题
 
-| Name | Description |
-|-|-|
-| [Bootup Sequence](./bootup-sequence) | Learn about how the Project Manager starts up. This will include all necessary steps in the sequence and identify some key classes that affect the rest of the Project Manager's architecture.|
-| [Source Code Map](./source-code-map) | This contains a high level map of some of the most important code files in Project Manager, including brief descriptions and links to further information for each class.|
+| 名称                         | 说明                                                 |
+|----------------------------|----------------------------------------------------|
+| [启动顺序](./bootup-sequence)  | 了解项目管理器如何启动。这将包括顺序中的所有必要步骤，并确定影响项目管理器架构其余部分的一些关键类。 |
+| [源代码映射](./source-code-map) | 其中包含项目管理器中一些最重要代码文件的高级映射，包括简要说明和每个类的进一步信息链接。       |

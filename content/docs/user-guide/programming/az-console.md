@@ -1,29 +1,29 @@
 ---
-description:  Use AZ::Console to set console variables and functors for your O3DE game. 
+description:  使用 AZ::Console 为您的 O3DE 游戏设置控制台变量和函数。
 title: AZ::Console
 ---
 
-The `AZ::Console` class provides a set of macros for defining variables and mapping functions that you can use to interact with in-game variables and processes. Use the macros defined in this class to set the console variables (cvars) and functors (cfuncs) for your game, and then access them through the O3DE console.
+`AZ::Console` 类提供了一组用于定义变量和映射函数的宏，您可以用它们与游戏中的变量和进程进行交互。使用该类中定义的宏为游戏设置控制台变量（cvars）和函数（cfuncs），然后通过 O3DE 控制台访问它们。
 
-`AZ::Console` is defined in the following header: `%INSTALL-ROOT%\dev\Code\Framework\AzCore\AzCore\Console\IConsole.h`
+`AZ::Console`在以下头文件中定义：`%INSTALL-ROOT%\dev\Code\Framework\AzCore\AzCore\Console\IConsole.h`
 
-`AZ::Console` features:
+`AZ::Console`的功能：
 
-+ Basic access protections and anti-cheat mechanisms for locking down cvars and cfuncs in release builds.
-+ Default support for several C++ types, including bool (Boolean), stdint (all types), floats, doubles, vectors and quaternions, and enums (enumerations).
-+ Flexible and expandable type support. You can add support for new cvar types without altering the console code directly.
++ 在发布版本中锁定 cvars 和 cfuncs 的基本访问保护和反作弊机制。
++ 默认支持多种 C++ 类型，包括 bool（布尔）、stdint（所有类型）、浮点数、双倍、向量和四元数，以及 enums（枚举）。
++ 灵活、可扩展的类型支持。您可以添加对新 cvar 类型的支持，而无需直接修改控制台代码。
 
 ![The AZ::Console](/images/user-guide/programming/az-console-1.png)
 
-**Topics**
-- [Console variables (cvars)](#console-variables-cvars)
-- [Console functors (cfuncs)](#console-functors-cfuncs)
-- [Optional flags](#optional-flags)
-- [Adding support for new console variable types](#adding-support-for-new-console-variable-types)
+**主题**
+- [控制台变量 (cvars)](#console-variables-cvars)
+- [控制台函数 (cfuncs)](#console-functors-cfuncs)
+- [可选标签](#optional-flags)
+- [添加新的控制台变量类型](#adding-support-for-new-console-variable-types)
 
-## Console variables (cvars) 
+## 控制台变量 (cvars) 
 
-Declare a cvar using one of two macros from `IConsole.h:`
+使用 `IConsole.h:` 中的两个宏之一声明 cvar：
 
 ```
 AZ_CVAR(_TYPE, _NAME, _INIT, _CALLBACK, _FLAGS, _DESC) //Standard cvar macro, provides no external linkage.
@@ -33,26 +33,26 @@ AZ_CVAR(_TYPE, _NAME, _INIT, _CALLBACK, _FLAGS, _DESC) //Standard cvar macro, pr
 AZ_CVAR_EXTERNABLE(_TYPE, _NAME, _INIT, _CALLBACK, _FLAGS, _DESC) //Cvar macro that creates a console variable with external linkage.
 ```
 
-Parameters:
-+ **\_TYPE**: The base type of the cvar.
-+ **\_NAME**: The name of the cvar.
-+ **\_INIT**: The initial value to assign to the cvar.
-+ **\_CALLBACK**: An optional callback function invoked when a cvar changes value. 
-
-    {{< note >}}
-These macros do not guarantee that this callback will be run on a specific thread. The implementor of the callback handler is responsible for ensuring thread safety.
-{{< /note >}}
-
-+ **\_FLAGS**: One or more `AZ::Console::FunctorFlags` that are used to mutate behavior. Use the logical AND \(`&&`\) and OR \(`||`\) operators to combine flags. If you do not have any flags to set, use `FunctorFlags::None`.
-+ **\_DESC**: String that provides a short description of the cvar for display.
-
-To declare a new cvar in your code, include the `IConsole.h` header. Then use one of the cvar macros \(such as `AZ_CVAR`\) to declare your new console variable in your own code (.cpp) files.
+参数：
++ **\_TYPE**: cvar的基本类型。
++ **\_NAME**: cvar的名称。
++ **\_INIT**: 分配给cvar的初始值。
++ **\_CALLBACK**: cvar更改值时调用的回调函数。
 
 {{< note >}}
-AZ\_CVAR and AZ\_CVAR\_EXTERNABLE variables can be declared only in C++ code (.cpp) files. AZ\_CVAR\_EXTERNED variables, however, can be declared in either C++ code (.cpp) or header (.h) files.
+  这些宏不能保证回调在特定线程上运行。回调处理程序的实现者有责任确保线程安全。
 {{< /note >}}
 
-Here are some examples.
++ **\_FLAGS**: 一个或多个用于改变行为的 `AZ::Console::FunctorFlags`。使用逻辑AND \(`&&`\) 和  OR \(`||`\) 运算符来组合标志。如果没有要设置的标志，请使用 `FunctorFlags::None`。
++ **\_DESC**: 字符串，用于显示 cvar 的简短说明。
+
+要在代码中声明新的 cvar，请包含 `IConsole.h` 头文件。然后使用其中一个 cvar 宏\(如 `AZ_CVAR`\) 在自己的代码 (.cpp) 文件中声明新的控制台变量。
+
+{{< note >}}
+AZ\_CVAR 和 AZ\_CVAR\_EXTERNABLE 变量只能在 C++ 代码 (.cpp) 文件中声明。而 AZ\_CVAR\_EXTERNED 变量则可以在 C++ 代码 (.cpp) 或头文件 (.h) 中声明。
+{{< /note >}}
+
+下面是几个例子。
 
 ```
 AZ_CVAR(int32_t, cl_GameServiceRefreshTimeMs, 1000, nullptr, FunctorFlags::None, "Controls the auto-refresh delay for all gameService data, time in milliseconds");
@@ -72,46 +72,46 @@ AZ_CVAR(int32_t, sv_ConsoleWidth, 160, OnConsoleResUpdate, FunctorFlags::ReadOnl
 AZ_CVAR_EXTERNABLE(uint16_t, net_ServerRateMs, 33, nullptr, FunctorFlags::ReadOnly, "Server tick rate to use for network relevent simulations");
 ```
 
-Optionally, use the following name prefixes to help organize groups of cvars:
-+ **sv\_**: For server only cvars
-+ **cl\_**: For client only cvars
-+ **bg\_** : "Both games" for common cvars (client and server)
+可选择使用以下名称前缀来帮助组织 cvars 组：
++ **sv\_**: 仅用于服务器 cvars
++ **cl\_**: 仅适用于客户端 cvars
++ **bg\_** : 通用 cvars（客户端和服务器），"Both games"
 
-These prefixes are useful to quickly limit the scope of autocomplete, and to see groups of associated cvars in the console. You can use your own prefixes as well.
+这些前缀可以快速限制自动完成的范围，并在控制台中查看相关的 cvars 组。你也可以使用自己的前缀。
 
-To make an existing console variable external (extern), use the `AZ_CVAR_EXTERNED` macro:
+要将现有的控制台变量设置为外部变量（extern），请使用 `AZ_CVAR_EXTERNED` 宏：
 
 ```
 AZ_CVAR_EXTERNED(_TYPE, _NAME)
 ```
 
-Make sure that the **\_TYPE **and **\_NAME** parameters match those of the previously defined cvar.
+确保 **\_TYPE** 和 **\_NAME** 参数与之前定义的 cvar 匹配。
 
-## Console functors (cfuncs) 
+## 控制台函数 (cfuncs) 
 
-Console functions allow you to register a command with the console that's not associated with a specific type or value. In O3DE, they're purely a mechanism to allow a method to be invoked directly from the O3DE in-game console.
+控制台函数允许您在控制台注册一个命令，该命令与特定类型或值无关。在 O3DE 中，它们纯粹是一种允许从 O3DE 游戏控制台直接调用方法的机制。
 
-There are two types of cfuncs: one to invoke class member methods \(`AZ_CONSOLEFUNC`\), and one to invoke static methods \(`AZ_CONSOLEFREEFUNC`\).
+有两种类型的 cfuncs：一种用于调用类成员方法\(`AZ_CONSOLEFUNC`\)，另一种用于调用静态方法 \(`AZ_CONSOLEFREEFUNC`\)。
 
-To declare a class member method cfunc, use the `AZ_CFUNC` macro from `IConsole.h`:
+要声明类成员方法 cfunc，请使用 `IConsole.h` 中的 `AZ_CFUNC` 宏：
 
 ```
 AZ_CONSOLEFUNC(_CLASS, _FUNCTION, _INSTANCE, _FLAGS, _DESC)
 ```
 
-Parameters:
-+ **\_CLASS**: The class that contains the method (function) for invocation.
-+ **\_FUNCTION**: The method to invoke as a callback. 
+参数：
++ **\_CLASS**: 包含调用方法（函数）的类。
++ **\_FUNCTION**: 作为回调调用的方法。
 
     {{< note >}}
-These macros do not guarantee that this callback will be run on a specific thread. The implementor of the callback handler is responsible for ensuring thread safety.
+  这些宏不能保证回调在特定线程上运行。回调处理程序的实现者有责任确保线程安全。
 {{< /note >}}
 
-+ **\_INSTANCE**: The instance of the class on which this method gets invoked \(usually set to `this` for the current instance\).
-+ **\_FLAGS**: One or more `AZ::Console::FunctorFlags` that are used to mutate behavior. Use the logical AND \(`&&`\) and OR \(`||`\) operators to combine flags. If you do not have any flags to set, use `FunctorFlags::None`.
-+ **\_DESC**: String that provides a short description of the cfunc for display.
++ **\_INSTANCE**: 调用此方法的类的实例\(通常设置为当前实例的 `this`\)。
++ **\_FLAGS**: 一个或多个用于改变行为的`AZ::Console::FunctorFlags`。使用逻辑AND \(`&&`\) 和 OR \(`||`\)运算符来组合标志。如果没有要设置的标志，请使用 `FunctorFlags::None`。
++ **\_DESC**: 字符串，用于显示 cfunc 的简短说明。
 
-Some examples of cfunc declarations:
+cfunc 声明的一些示例：
 
 ```
 class Example
@@ -122,52 +122,52 @@ public:
 };
 ```
 
-To declare a cfunc for a static method (or other non-member function), use the `AZ_CONSOLEFREEFUNC` macro:
+要为静态方法（或其他非成员函数）声明 cfunc，请使用 `AZ_CONSOLEFREEFUNC` 宏：
 
 ```
 AZ_CONSOLEFREEFUNC(_FUNCTION, _FLAGS, _DESC)
 ```
 
-Parameters:
-+ **\_FUNCTION**: The static method to invoke as a callback. 
+参数：
++ **\_FUNCTION**: 作为回调调用的静态方法。
 
     {{< note >}}
-These macros do not guarantee that this callback will be run on a specific thread. The implementor of the callback handler is responsible for ensuring thread safety.
+  这些宏不能保证回调在特定线程上运行。回调处理程序的实现者有责任确保线程安全。
 {{< /note >}}
 
-+ **\_FLAGS**: One or more `AZ::Console::FunctorFlags` that are used to mutate behavior. Use the logical AND \(`&&`\) and OR \(`||`\) operators to combine flags. If you do not have any flags to set, use `FunctorFlags::None`.
-+ **\_DESC**: String that provides a short description of the cfunc for display.
++ **\_FLAGS**: 一个或多个用于改变行为的 `AZ::Console::FunctorFlags`。使用逻辑 AND \(`&&`\) 和 OR \(`||`\) 运算符来组合标志。如果没有要设置的标志，请使用 `FunctorFlags::None`。
++ **\_DESC**: 字符串，用于显示 cfunc 的简短说明。
 
-Example:
+示例：
 
 ```
 void ForceEnableMetrics(const StringSet&) {}
     AZ_CONSOLEFREEFREEFUNC(ForceEnableMetrics, FunctorFlags::Null, "If called, force enable metrics");
 ```
 
-## Optional flags 
+## 可选标签
 
-`AZ::Console` provides a set of flags that can be passed to cvar and cfunc declarations and indicate how they should be handled:
+`AZ::Console` 提供了一组标志，可以传递给 cvar 和 cfunc 声明，并指示如何处理它们：
 
 ```
 enum class FunctorFlags
 {
-    Null           = 0        // Empty flags
-,   DontReplicate  = (1 << 0) // Should not be replicated (CURRENTLY UNUSED)
-,   ServerOnly     = (1 << 1) // Should never replicate to clients (CURRENTLY UNUSED)
-,   ReadOnly       = (1 << 2) // Should not be invoked at runtime
-,   IsCheat        = (1 << 4) // Should not be shown in the console for autocomplete
-,   IsDeprecated   = (1 << 5) // Command is deprecated, show a warning when invoked
-,   NeedsReload    = (1 << 6) // Level should be reloaded after executing this command
-,   AllowClientSet = (1 << 7) // Allow clients to modify this cvar even in release (this alters the cvar for all connected servers and clients, be VERY careful enabling this flag) (CURRENTLY UNUSED)
+    Null           = 0        // 空标签
+,   DontReplicate  = (1 << 0) // 不应复制（目前未使用）
+,   ServerOnly     = (1 << 1) // 不应复制到客户端（当前未使用）
+,   ReadOnly       = (1 << 2) // 不应在运行时调用
+,   IsCheat        = (1 << 4) // 不应在自动完成控制台中显示
+,   IsDeprecated   = (1 << 5) // 命令已被弃用，调用时会发出警告
+,   NeedsReload    = (1 << 6) // 执行此命令后，应重新加载关卡
+,   AllowClientSet = (1 << 7) // 允许客户端修改此 cvar，即使是在发行版中（这将改变所有已连接服务器和客户端的 cvar，启用此标记时要非常小心）（当前未使用）
 };
 ```
 
-## Adding support for new console variable types 
+## 添加对新控制台变量类型的支持 
 
-To add support for a new cvar type, override the two template methods that convert the custom type to a space-delimited string from a vector of space-delimited string inputs.
+要添加对新 cvar 类型的支持，需要覆盖两个模板方法，将自定义类型从空格分隔的字符串输入向量转换为空格分隔的字符串。
 
-As an example, an override that converts `AZ::Vector3` to a string and back to a value is declared like this:
+例如，将 `AZ::Vector3` 转换为字符串并返回值的重载方法是这样声明的：
 
 ```
 namespace AZ

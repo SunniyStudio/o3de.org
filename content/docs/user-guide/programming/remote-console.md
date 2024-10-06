@@ -1,43 +1,42 @@
 ---
-description: ' Use console commands to modify and configure the Open 3D Engine runtime
-  application. '
-title: 'Universal Remote Console'
+description: ' 使用控制台命令修改和配置 Open 3D Engine 运行时应用程序。 '
+title: '通用远程控制台'
 draft: true
 ---
 
-You can use **Console** commands to modify and configure the O3DE runtime application. On a PC, the **Console** is available from O3DE Editor or the game. But for mobile platforms you must use a separate Windows-based application called the Universal Remote Console. With the Universal Remote Console you can use the IP address of the machine running the O3DE game to connect to a remote instance of O3DE.
+您可以使用**控制台**命令来修改和配置 O3DE 运行应用程序。在个人电脑上，**控制台**可通过O3DE编辑器或游戏使用。但在移动平台上，您必须使用一个单独的基于 Windows 的应用程序，即通用远程控制台（Universal Remote Console）。通过通用远程控制台，您可以使用运行O3DE游戏的机器的IP地址连接到O3DE的远程实例。
 
-Universal Remote Console requires the use of a PC and works with both Android and iOS. Your mobile device and the PC will need to be on the same network and your firewall should be configured to allow traffic through port 4600.
+通用远程控制台需要使用个人电脑，可与安卓和iOS系统一起使用。您的移动设备和电脑需要在同一网络上，防火墙应配置为允许通过 4600 端口进行通信。
 
-**To start the Universal Remote Console**
+**为了使用通用远程控制台**
 
-1. Run `Tools\RemoteConsole\RemoteConsole.exe`
+1. 运行`Tools\RemoteConsole\RemoteConsole.exe`
 
 ![The Remote Console](/images/user-guide/programming/remote-console.png)
 
-1. To see output from the O3DE logging system, click the **Full Log** tab.
+1. 要查看 O3DE 日志系统的输出，请单击 **Full Log** 选项卡。
 
-**To connect to a O3DE game on a mobile device**
+**连接移动设备上的 O3DE 游戏**
 
-1. In the `system_platform_asset.cfg` file, enter the console variable `log_RemoteConsoleAllowedAddresses=[IP address]`, where IP address is the address of the computer that the remote console is running on.
+1. 在`system_platform_asset.cfg`文件中，输入控制台变量`log_RemoteConsoleAllowedAddresses=[IP address]`，其中 IP 地址是远程控制台运行的计算机地址。
 
-   For Android, use the `system_android_es.cfg` file.
+   对于Android，使用`system_android_es.cfg`文件。
 
-   For iOS, use the `system_ios_ios.cfg` file.
+   对于iOS，使用`system_ios_ios.cfg`文件。
 
-1. Save the file.
+1. 保存文件。
 
-1. After you update the `.cfg` file, deploy the game to mobile devices.
+1. 在更新`.cfg`文件后，将游戏部署到移动设备。
 
-   For more information, see [Android support for O3DE](/docs/user-guide/platforms/android/)<!-- and [iOS support for O3DE](/docs/user-guide/platforms/ios/)-->.
+   要了解更多信息，请查看[O3DE的Android支持](/docs/user-guide/platforms/android/)<!-- and [iOS support for O3DE](/docs/user-guide/platforms/ios/)-->.
 
-1. If the game is already running, restart it.
+1. 如果游戏已经运行，请重启它。
 
-1. In the Universal Remote Console, click **Targets** on the toolbar.
+1. 在通用远程控制台中，点击工具栏中的 **Targets** 。
 
-1. Enter the IP address of the device under **Custom IP**.
+1. 在**Custom IP**下输出设备的IP地址。
 
-If your network allows you to assign fixed IP addresses per device, you can edit the `params.xml` file and add the new target devices, as illustrated in the following example. This file is located in the same directory as Universal Remote Console, and you can edit it with the application running.
+如果您的网络允许您为每个设备分配固定的 IP 地址，您可以编辑 `params.xml` 文件并添加新的目标设备，如下例所示。该文件与通用远程控制台位于同一目录，您可以在应用程序运行时对其进行编辑。
 
 ```
 <Targets>
@@ -46,14 +45,14 @@ If your network allows you to assign fixed IP addresses per device, you can edit
 </Targets>
 ```
 
-This lets you select from a list of devices instead of entering the IP address each time. Once successfully connected, the status indicator in the lower right corner will turn green.
+这样，您就可以从设备列表中进行选择，而不必每次都输入 IP 地址。连接成功后，右下角的状态指示灯将变为绿色。
 
-## Issuing Commands
+## 提交命令
 
-In the **Type a command** box at the bottom of the window, enter a command like the ones that follow. This control features autocomplete and, for certain commands \(like `map`\), can also detect available options.
+在窗口底部的**Type a command**框中，输入类似下面的命令。该控件具有自动完成功能，对于某些命令（如map），还可以检测可用选项。
 
-Commands include the following:
-+ `cl_DisableHUDText` - Disables HUD text
-+ `g_debug_stats` - Enables gameplay events debugging
-+ `r_DisplayInfo` - Displays rendering information
-+ `r_ProfileShaders` - Displays profiling information for the shaders
+包含以下命令：
++ `cl_DisableHUDText` - 禁用HUD文本
++ `g_debug_stats` - 启用游戏事件调试
++ `r_DisplayInfo` - 显示渲染信息
++ `r_ProfileShaders` - 显示着色器的分析信息

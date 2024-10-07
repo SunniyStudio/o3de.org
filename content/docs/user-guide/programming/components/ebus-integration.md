@@ -1,22 +1,22 @@
 ---
-description: ' Learn about the relationship between components and EBuses in Open 3D Engine. '
-title: Components and EBuses
+description: ' 了解 Open 3D Engine 中组件与 EBus 之间的关系。 '
+title: 组件和EBus
 weight: 700
 ---
 
-EBuses are not required for components, nor are they directly bound to components in any way. But because they form the backbone of communication among all O3DE components, EBuses offer many benefits. We highly recommend that you learn how to use them in your game, systems, and components. For more information, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+EBus 并非组件所必需，也不以任何方式与组件直接绑定。但由于 EBus 构成了所有 O3DE 组件之间的通信骨干，因此可以带来很多好处。我们强烈建议您学习如何在游戏、系统和组件中使用它们。更多信息，请参阅[使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
-Most components provide two EBuses to facilitate communication: a request bus and a notification bus. Both these EBuses use the `EBusAddressPolicy::ById` address policy and the ID of the entity for identification.
+大多数组件提供两种 EBus 来促进通信：请求总线和通知总线。这两种 EBus 都使用 `EBusAddressPolicy::ById` 地址策略和实体 ID 进行标识。
 
-## Request Bus 
+## 请求总线
 
-A component's request bus allows other components or external systems to make requests of the component. Usually the runtime version of the component implements the request bus. However, the editor component can service the bus in special cases.
+组件的请求总线允许其他组件或外部系统向组件提出请求。通常，组件的运行时版本会实现请求总线。不过，在特殊情况下，编辑器组件也可以为总线提供服务。
 
-The following sections examine the individual parts of an example request bus.
+下面将介绍请求总线的各个部分。
 
-### Transform Request Event Group 
+### Transform请求事件组 
 
-The following example defines a group of events that the `TransformComponent` handles.
+下面的示例定义了一组由 `TransformComponent` 处理的事件。
 
 ```
 class TransformComponentRequests
@@ -47,17 +47,17 @@ class TransformComponentRequests
  };
 ```
 
-### Base Class and Trait Specification 
+### 基类和Trait规范
 
-The base class for most `AZ::Component` request buses is `AZ::ComponentBus`. This class is a convenience to help set up EBus traits typical of component EBuses. You could also set up EBus traits by inheriting the default `AZ::EbusTraits`. Then you could optionally override any or all of the following traits. For more information, see [EBus Configuration Options](/docs/user-guide/programming/messaging/ebus-design/#ebus-in-depth-configuration).
-+ Address policy
-+ Bus ID type
-+ Connection policy
-+ Handler policy
-+ Lock type
-+ Priority sorting
+大多数 `AZ::Component` 请求总线的基类是 `AZ::ComponentBus`。该类便于设置组件 EBus 的典型 EBus 特性。您也可以通过继承默认的`AZ::EbusTraits`来设置 EBus 特征。然后，您可以选择覆盖以下任何或所有特征。更多信息，请参阅 [EBus 配置选项](/docs/user-guide/programming/messaging/ebus-design/#ebus-in-depth-configuration)。
++ 地址策略
++ 总线 ID 类型
++ 连接策略
++ 处理程序策略
++ 锁定类型
++ 优先排序
 
-These two approaches are shown in the following examples.
+以下示例展示了这两种方法。
 
 ```
 // Example using AZ::ComponentBus.
@@ -80,9 +80,9 @@ class TransformComponentRequests
 }
 ```
 
-### EBus Request Bus Events 
+### EBus请求总线事件 
 
-EBus event definitions are the main part of the bus specification. This interface defines what your component does. In the following example, the `TransformComponent` allows the retrieval and modification of the local and world transforms. It also creates interfaces for setting parent-child relationships.
+EBus 事件定义是总线规范的主要部分。该接口定义了组件的功能。在下面的示例中，`TransformComponent`允许检索和修改本地和世界变换。它还创建了用于设置父子关系的接口。
 
 ```
 ...
@@ -105,27 +105,27 @@ virtual void GetLocalAndWorld(Transform& /*localTM*/, Transform& /*worldTM*/) {}
 ...
 ```
 
-### EBus Request Bus Definition 
+### EBus请求总线定义 
 
-After the event group has been declared, the EBus must be defined. Although you can use `AZ::EBus<TransformComponentRequests>` to define an EBus, we recommend that you use a `typedef` instead, as in the following example. This improves readability at bus call sites.
+声明事件组后，必须定义 EBus。虽然您可以使用 `AZ::EBus<TransformComponentRequests>` 来定义 EBus，但我们建议您使用 `typedef` 来代替，如下例所示。这样可以提高总线调用站点的可读性。
 
 ```
 typedef AZ::EBus<TransformComponentRequests> TransformComponentRequestBus;
 ```
 
-Another best practice is to use descriptive names in EBuses and avoid overloaded functions. Explicit and descriptive function names prevent future API name collisions as classes inherit (potentially many of) your EBus interfaces. Avoiding overloaded functions improves the experience of using your EBuses from scripting environments. In Lua and in visual scripting, the extra expressiveness improves readability and clarity.
+另一个最佳实践是在 EBus 中使用描述性名称，避免重载函数。明确和描述性的函数名称可以防止将来在类继承（可能是许多继承）EBus接口时发生API名称冲突。避免重载函数可以改善在脚本环境中使用 EBus 的体验。在 Lua 和可视化脚本中，额外的表现力可以提高可读性和清晰度。
 
-## Notification Bus 
+## 通知总线 
 
-A component uses its notification bus to inform other components and the rest of the engine about relevant changes. To do this, it sends notifications in the form of EBus events to any class that monitors the bus. To monitor the bus, classes implement the notification bus handler interface \(in the case of `TransformComponent`, this is `AZ::TransformNotificationBus::Handler`.\)
+组件使用其通知总线向其他组件和引擎的其他部分通报相关变更。为此，它以 EBus 事件的形式向任何监控总线的类发送通知。为了监控总线，类需要实现通知总线处理程序接口\(对于 `TransformComponent`，这就是 `AZ::TransformNotificationBus::Handler`。\)
 
 {{< note >}}
-A request bus sends messages **to** a component; a notification bus sends messages **from** a component.
+请求总线**向**组件发送信息；通知总线**从**组件发送信息。
 {{< /note >}}
 
-### Transform Notification Event Group 
+### Transform通知事件组 
 
-The following example defines a group of notification events that the `TransformComponent` sends.
+下面的示例定义了一组由 `TransformComponent` 发送的通知事件。
 
 ```
 class TransformNotifications
@@ -141,11 +141,11 @@ class TransformNotifications
 typedef AZ::EBus<TransformNotifications>    TransformNotificationBus;
 ```
 
-The notification bus can also change its `EBusTrait` specification if required.
+如果需要，通知总线还可以更改其 `EBusTrait` 规范。
 
-## Components as EBus Handlers 
+## 作为 EBus 处理程序的组件
 
-After you have created the EBus event groups and defined the EBuses, your component can implement the EBus interface by deriving the EBus handler. The following example is from the `TransformComponent`.
+创建 EBus 事件组并定义 EBus 后，您的组件就可以通过派生 EBus 处理程序来实现 EBus 接口。下面的示例来自`TransformComponent`。
 
 ```
 class TransformComponent
@@ -175,4 +175,4 @@ class TransformComponent
 }
 ```
 
-At this point you can implement the defined methods in the `TransformComponent`. After the `TransformComponent` connects to the EBus for its entity ID, its event handlers are invoked whenever an event is sent on that bus or ID.
+此时，您可以在 `TransformComponent` 中实现所定义的方法。当 `TransformComponent` 为其实体 ID 连接到 EBus 后，每当该总线或 ID 上有事件发生时，就会调用其事件处理程序。

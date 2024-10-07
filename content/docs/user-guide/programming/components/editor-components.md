@@ -1,25 +1,25 @@
 ---
-linktitle: Editor Components
-title: Editor Components in O3DE
-description: Learn how to create editor components in Open 3D Engine.
+linktitle: 编辑器组件
+title: O3DE中的编辑器组件
+description: 学习如何在 Open 3D Engine 中创建编辑器组件。
 weight: 500
 ---
 
-Some components in **Open 3D Engine (O3DE)** have separate `editor` and `runtime` versions. The editor version is active in the editor. The runtime version is used for running the level in game or in the editor by pressing **Ctrl+G** or clicking **AI/Physics** below the viewport. O3DE uses editor components to maintain a clean separation between tools-specific code and data on one hand, and leaner runtime component data on the other. In general, runtime game components do not require editor counterparts. Components rarely need to be fully active at edit time. The light and mesh components are exceptions because they must behave the same at edit time as at run time.
+**Open 3D Engine (O3DE)** 中的某些组件有独立的 “编辑器 ”和 “运行时 ”版本。编辑器版本在编辑器中激活。运行时版本用于在游戏中或在编辑器中通过按**Ctrl+G**或点击视口下方的**AI/Physics**来运行关卡。O3DE 使用编辑器组件来保持特定于工具的代码和数据与更精简的运行时组件数据之间的分离。一般来说，运行时游戏组件不需要对应的编辑器。组件很少需要在编辑时完全激活。光线和网格组件是例外，因为它们在编辑时的行为必须与运行时相同。
 
-`EditContext` reflection is fully supported in runtime components. Edit time is the only time when editor components are active. At run time, when O3DE processes a level or dynamic slice, it uses the runtime equivalents of editor components. Using the `EditContext` from a runtime component is usually sufficient to provide a rich editing experience.
+运行时组件完全支持 `EditContext` 反射。编辑时是编辑器组件处于活动状态的唯一时间。在运行时，当 O3DE 处理一个关卡或动态切片时，它会使用运行时编辑器组件。使用运行时组件的 `EditContext` 通常足以提供丰富的编辑体验。
 
 {{< important >}}
-Editor components are not required. An editor component is necessary only if one of the following is true:
+编辑器组件不是必需的。只有当以下情况之一为真时，才需要编辑器组件：
 
-* Your component must be fully active at _edit time_, which refers to standard editing mode. Runtime components are used for the **AI/Physics** mode and gameplay (**Ctrl+G**).
-* You must add special tools functionality to your component that requires that you compile only into your editor binaries.
-* Your component provides functionality only in the editor and does not export a runtime component (for example, if your component manages selection logic).
+* 您的组件必须在**编辑时间**（指标准编辑模式）完全激活。运行时组件用于**AI/Physics**模式和游戏（**Ctrl+G**）。
+* 您必须在组件中添加特殊工具功能，这要求您只能编译到编辑器二进制文件中。
+* 您的组件只在编辑器中提供功能，而不输出运行时组件（例如，如果您的组件管理选择逻辑）。
 {{< /important >}}
 
-## Sample editor component
+## 编辑器组件示例
 
-The following code shows a sample editor component.
+下面的代码显示了一个编辑器组件示例。
 
 ```cpp
 /* Include the following headers:
@@ -66,13 +66,13 @@ public:
 };
 ```
 
-## Editor component and runtime component differences
+## 编辑器组件和运行时组件的区别
 
-The code for editor components is similar to the code for runtime components. The following sections list the key differences. It is safe to assume that editor component code is the same as it is for runtime component code other than the differences listed. For more information, see [Creating a Component](/docs/user-guide/programming/components/create-component/).
+编辑器组件的代码与运行时组件的代码类似。以下章节列出了主要区别。除了列出的区别外，可以认为编辑器组件代码与运行时组件代码相同。更多信息，请参阅 [创建组件](/docs/user-guide/programming/components/create-component/)。
 
-### Base classes
+### 基类
 
-All editor components include the `AzToolsFramework::Components::EditorComponentBase` class somewhere in their inheritance ancestry. If a component must display edit-time visualization, it must be a handler on the `AzFramework::EntityDebugDisplayEventBus` bus, as in the following example.
+所有编辑器组件在其继承祖先的某个地方都包含`AzToolsFramework::Components::EditorComponentBase`类。如果组件必须显示编辑时的可视化效果，它必须是 `AzFramework::EntityDebugDisplayEventBus` 总线上的处理程序，如下例所示。
 
 ```cpp
 #include <AzToolsFramework/ToolsComponents/EditorComponentBase.h>
@@ -83,31 +83,31 @@ class MyComponent
       , private AzFramework::EntityDebugDisplayEventBus::Handler
 ```
 
-### Macro
+### 宏
 
-Every editor component must specify the `AZ_EDITOR_COMPONENT` macro within its class definition. The macro takes two arguments:
+每个编辑器组件都必须在其类定义中指定`AZ_EDITOR_COMPONENT`宏。该宏包含两个参数：
 
-1. The component type name.
+1. 组件类型名称。
 
-1. A unique UUID. You may use any UUID generator to produce the value. Visual Studio provides this functionality through **Tools**, **Create GUID**. Use the **Registry Format** setting, and then copy and paste the value that is generated.
+1. 唯一的 UUID。您可以使用任何 UUID 生成器来生成该值。Visual Studio 通过**工具**、**创建 GUID** 提供了这一功能。使用**注册表格式**设置，然后复制并粘贴生成的值。
 
-A sample `AZ_EDITOR_COMPONENT` macro follows.
+`AZ_EDITOR_COMPONENT`宏的示例如下。
 
 ```cpp
 AZ_EDITOR_COMPONENT(MyEditorComponent, "{5034A7F3-63DB-4298-83AA-915AB23EFEA0}");
 ```
 
 {{< note >}}
-Some O3DE editor components specify `AzToolsFramework::Components::EditorComponentBase` as the base class but use the `AZ_COMPONENT` instead of the `AZ_EDITOR_COMPONENT` macro, as in the following example.
+一些 O3DE 编辑器组件指定 `AzToolsFramework::Components::EditorComponentBase` 为基类，但使用了 `AZ_COMPONENT` 而不是 `AZ_EDITOR_COMPONENT` 宏，如下例所示。
 {{< /note >}}
 
 ```cpp
 AZ_COMPONENT(EditorMannequinComponent, "{C5E08FE6-E1FC-4080-A053-2C65A667FE82}", AzToolsFramework::Components::EditorComponentBase);
 ```
 
-### The DisplayEntityViewport method
+### DisplayEntityViewport 方法
 
-To draw debug visuals in the viewport for a specific entity, implement the `DisplayEntityViewport` method of the `AzFramework::EntityDebugDisplayEventBus` interface. Use this location for custom primitive edit-time visualization code.
+要在特定实体的视口中绘制调试视觉效果，请实现 `AzFramework::EntityDebugDisplayEventBus` 接口的 `DisplayEntityViewport` 方法。将此位置用于自定义原始编辑时可视化代码。
 
 ```cpp
 #include <AzFramework/Entity/EntityDebugDisplayBus.h>
@@ -115,14 +115,14 @@ To draw debug visuals in the viewport for a specific entity, implement the `Disp
 void DisplayEntityViewport(const AzFramework::ViewportInfo& viewportInfo, AzFramework::DebugDisplayRequests& debugDisplay) override;
 ```
 
-| Parameter | Description |
+| 参数 | 说明 |
 | --- | --- |
-| viewportInfo | Determines information such as camera position. |
-| debugDisplay | Contains the interface for debug draw or display commands. |
+| viewportInfo | 确定摄像机位置等信息。 |
+| debugDisplay | 包含调试绘制或显示命令的界面。 |
 
-### The BuildGameEntity method
+### BuildGameEntity 方法
 
-The `BuildGameEntity` method from `EditorComponentBase.h` facilitates the translation of an editor component into a runtime component. Override this method as follows.
+`EditorComponentBase.h` 中的 `BuildGameEntity` 方法有助于将编辑器组件转换为运行时组件。重载此方法如下。
 
 ```cpp
 #include <AzToolsFramework/ToolsComponents/EditorComponentBase.h>
@@ -130,12 +130,12 @@ The `BuildGameEntity` method from `EditorComponentBase.h` facilitates the transl
 void BuildGameEntity(AZ::Entity* gameEntity) override;
 ```
 
-A typical implementation of the `BuildGameEntity` method performs the following actions:
+`BuildGameEntity` 方法的典型实现会执行以下操作：
 
-1. Create a runtime component based on the editor component of the specified `gameEntity`.
+1. 根据指定的 `gameEntity` 的编辑器组件创建运行时组件。
 
-1. Copy the configuration data from the editor component into the runtime component.
+1. 将编辑器组件中的配置数据复制到运行时组件中。
 
-1. Add the runtime component to the `gameEntity` that was specified.
+1. 将运行时组件添加到指定的`gameEntity`中。
 
-At this point, the runtime component serializes the `gameEntity` and reloads it to create a new, clean version of the runtime entities.
+此时，运行时组件会序列化`gameEntity`并重新加载，以创建一个新的、干净的运行时实体版本。

@@ -1,76 +1,76 @@
 ---
-linktitle: AzAutoGen Source Generator
-title: Automate Source Generation from Templates with AzAutoGen
-description: O3DE features can use AzAutoGen to automatically generate code and assets, given a Jinja2 template and data files. Learn how AzAutoGen works, how to integrate AzAutoGen into your feature's process, and how to create templates and data files.
+linktitle: AzAutoGen 源代码生成器
+title: 使用 AzAutoGen 从模板自动生成源代码
+description: O3DE 功能可以使用 AzAutoGen 在给定 Jinja2 模板和数据文件的情况下自动生成代码和资产。了解 AzAutoGen 如何工作，如何将 AzAutoGen 集成到您的功能流程中，以及如何创建模板和数据文件。
 weight: 200
 ---
 
-To create many similar boilerplate classes or assets, the most efficient solution is often automated generation from templates and data inputs. For source file generation, **Open 3D Engine (O3DE)** uses **AzAutoGen**, its own lightweight generator system.
+3D Engine (O3DE)** uses **AzAutoGen**, its own lightweight generator system.
+要创建许多类似的模板类或资产，最有效的解决方案往往是从模板和数据输入自动生成。在源文件生成方面，**Open 3D Engine (O3DE)** 使用了**AzAutoGen**，这是它自己的轻量级生成系统。
 
-AzAutoGen is a Python tool that uses the [Jinja2](https://jinja.palletsprojects.com/) template engine. Given a Jinja template and a set of XML or JSON data, AzAutoGen generates a set of output files. Your own O3DE Gems and projects can use AzAutoGen during build to generate output source files, such as code or assets. For information about invoking AzAutoGen during a build, refer to [Build Generated Source Files with AzAutoGen](/docs/user-guide/build/generated-source/).
+AzAutoGen 是一个使用 [Jinja2](https://jinja.palletsprojects.com/)模板引擎的 Python 工具。给定一个 Jinja 模板和一组 XML 或 JSON 数据，AzAutoGen 就会生成一组输出文件。您自己的 O3DE Gem 和项目可以在构建过程中使用 AzAutoGen 生成输出源文件，如代码或资产。有关在构建过程中调用 AzAutoGen 的信息，请参阅[使用 AzAutoGen 构建生成的源文件](/docs/user-guide/build/generated-source/)。
 
-This topic explains how AzAutoGen works and familiarizes you with both the JSON and XML input formats. 
+本主题将解释 AzAutoGen 如何工作，并让您熟悉 JSON 和 XML 输入格式。
 
-## How AzAutoGen works
+## AzAutoGen 的工作原理
 
-AzAutoGen works off of two input sets. You can author these files and define these rules depending on the functionality you need for your project. 
+AzAutoGen 通过两个输入集工作。您可以授权这些文件，并根据项目所需的功能定义这些规则。
   
-- A collection of data input files and template files, which AzAutoGen uses to automatically generate the output code or assets.
-- A list of [*autogen rules*](/docs/user-guide/build/generated-source#autogen-rules), which map data input files to template files, and define their resulting output filename.
- 
-
-Then, you can invoke AzAutoGen by integrating it into a CMake build process. For more information about how to set up this integration, refer to [Build Generated Source Files](/docs/user-guide/build/generated-source/).
-
-After AzAutoGen invokes, it runs through the following steps. (You can refer to the source code at [`cmake/AzAutoGen.py`](https://github.com/o3de/o3de/blob/5c733c3a34931e48435ef6ee72b7feddeac0e03b/cmake/AzAutoGen.py).)
-
-  1. Prune all input files that don't have an `.xml`, `.json`, or `.jinja` extension. Because this occurs, you can place templates at the same location as other code, although this isn't recommended.
-
-  1. Categorize `.xml` and `.json` input files as source, or data, files, and `.jinja` as template files.
-
-  1. For each set of input, template, and output filenames that makes up an autogen rule, match the corresponding files into their appropriate sets. A template file must be a single file. Each input file runs through this template to generate a corresponding file that's named according to the pattern in the output filename.
-
-  1. For each XML or JSON data file:
-
-        1. The data is processed through a single Jinja template. Inside of the template, Jinja has access to a native Python object that represents the contents of the input file.
-
-        1. The output is written to its corresponding file.
+- 数据输入文件和模板文件的集合，AzAutoGen 使用这些文件自动生成输出代码或资产。
+- [**自动生成规则**](/docs/user-guide/build/generated-source#autogen-rules)列表，用于将数据输入文件映射到模板文件，并定义其输出文件名。
 
 
-## Authoring Jinja templates and data inputs
+然后，可以通过将 AzAutoGen 集成到 CMake 编译过程中来调用它。有关如何设置集成的详细信息，请参阅 [构建生成的源文件](/docs/user-guide/build/generated-source/)。
 
-How you use AzAutoGen in your Gem or project is driven by the functionality that you author in the Jinja template and the data inputs that you supply. 
+AzAutoGen 调用后会执行以下步骤。(您可以在 [`cmake/AzAutoGen.py`](https://github.com/o3de/o3de/blob/5c733c3a34931e48435ef6ee72b7feddeac0e03b/cmake/AzAutoGen.py)中找到代码。)
 
-Before you use the Jinja template, it helps to understand some Jinja concepts. 
-A *Jinja template* is a simple text file that takes in data, replaces parts of the template with the provided data, and outputs the final file. 
-A template contains *variables* and *expressions*, which the data replaces, as well as *tags*, which are logical instructions on how the output file should appear. *Data* are values that are input into the template. For AzAutoGen, you can author data in XML (`.xml`) or JSON (`.json`) files. 
+  1. 剪除所有没有`.xml`、`.json`或`.jinja`扩展名的输入文件。由于会出现这种情况，你可以将模板放在与其他代码相同的位置，但不建议这样做。
 
-Jinja2's templating system can also work with a set of data files to generate a set of output files, making AzAutoGen an efficient solution if you need to generate many files.
+  1. 将 `.xml` 和 `.json` 输入文件归类为源文件或数据文件，将 `.jinja` 归类为模板文件。
 
-For more information about authoring Jinja templates and data input, refer to the [Template Designer Documentation](https://jinja.palletsprojects.com/templates/) on the Jinja website.
+  1. 对于构成自动生成规则的每一组输入、模板和输出文件名，将相应文件匹配到相应的文件集中。模板文件必须是单个文件。每个输入文件都会通过该模板生成相应的文件，并根据输出文件名中的模式命名。
 
-### Input mapping and variables
+  1. 对于每个 XML 或 JSON 数据文件：
 
-As part of the Jinja2 template engine, AzAutoGen can access the data that's exposed to the templating system as Python objects. JSON input files are loaded directly as Python dictionaries, and XML files are represented by Python's [xml.etree.ElementTree](https://docs.python.org/3/library/xml.etree.elementtree.html) objects.
+        1. 数据通过一个单一的 Jinja 模板进行处理。在模板内部，Jinja 可以访问一个本地 Python 对象，该对象代表输入文件的内容。
 
-When authoring a Jinja template, you can use the following variables. AzAutoGen defines these variables and its attributes, sets their values, and then sends it through Jinja's templating system to generate the output files.
+        1. 输出结果将写入相应的文件。
 
+
+## 编写 Jinja 模板和数据输入
+
+如何在 Gem 或项目中使用 AzAutoGen，取决于在 Jinja 模板中编写的功能和提供的数据输入。
+
+在使用Jinja模板之前，了解一些Jinja的概念会有所帮助。
+一个**Jinja 模板**是一个简单的文本文件，它接收数据，用提供的数据替换模板中的部分内容，并输出最终文件。
+模板包含**变量**和**表达式**（数据替换这些变量和表达式），以及**标记**（输出文件应如何显示的逻辑指令）。**数据**是输入模板的值。对于 AzAutoGen，您可以用 XML (`.xml`) 或 JSON (`.json`) 文件编写数据。
+
+Jinja2 的模板系统还可以使用一组数据文件来生成一组输出文件，因此，如果需要生成许多文件，AzAutoGen 是一种高效的解决方案。
+
+有关编写 Jinja 模板和数据输入的更多信息，请参阅 Jinja 网站上的[模板设计器文档](https://jinja.palletsprojects.com/templates/) 。
+
+### 输入映射和变量
+
+作为 Jinja2 模板引擎的一部分，AzAutoGen 可以访问以 Python 对象形式暴露给模板系统的数据。JSON 输入文件直接作为 Python 字典加载，XML 文件则由 Python 的 [xml.etree.ElementTree](https://docs.python.org/3/library/xml.etree.elementtree.html) 对象表示。
+
+在制作 Jinja 模板时，您可以使用以下变量。AzAutoGen 定义这些变量及其属性，设置它们的值，然后通过 Jinja 的模板系统生成输出文件。
 | Name | Value |
 |-|-|
-| `dataFiles` | An array of dictionaries containing the objects that are read from input files. |
-| `dataFileNames` | An array of the input file names. Neither `dataFiles` nor `dataFileNames` are guaranteed to be ordered, but `dataFileNames[n]` is always the source for the object available in `dataFiles[n]`. |
-| `templateName` | The name of the template file that AzAutoGen is currently processing. |
-| `outputFile` | The name of the output file. |
-| `filename` | The name of the file that AzAutoGen is currently generating. |
+| `dataFiles` | 包含从输入文件读取的对象的字典数组。 |
+| `dataFileNames` | 输入文件名的数组。`dataFiles`和`dataFileNames` 都不保证是有序的，但 `dataFileNames[n]`始终是`dataFiles[n]`中可用对象的来源。 |
+| `templateName` | AzAutoGen 当前正在处理的模板文件名称。 |
+| `outputFile` | 输出文件的名称。 |
+| `filename` | AzAutoGen 当前正在生成的文件的名称。|
 
 
-### Example
+### 示例
 
-Because Python XML element objects and dictionaries can't provide a strict one-to-one mapping, using different input formats requires using different templates. O3DE frequently uses XML formats for source generation; for example, when [creating Script Canvas nodes](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/).
+由于 Python XML 元素对象和字典不能提供严格的一对一映射，因此使用不同的输入格式需要使用不同的模板。O3DE 经常使用 XML 格式生成源代码；例如，当 [创建Script Canvas节点](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/)。
 
-The following example shows how to use AzAutoGen to generate a large set of similar `.h`  files. This example is a simplified version of `AzNetworking` framework's packet generation templates. Be aware that there are structural differences between XML and JSON data. These differences are demonstrated in the example template for XML inputs, which contain annotations where there's a difference when processing JSON.
+下面的示例展示了如何使用 AzAutoGen 生成大量类似的 `.h` 文件。该示例是 `AzNetworking` 框架的数据包生成模板的简化版本。请注意，XML 和 JSON 数据在结构上存在差异。这些差异在 XML 输入的示例模板中进行了演示，其中包含注释，说明在处理 JSON 时存在的差异。
 
 
-#### XML data
+#### XML 数据
 
 ```xml
 <PacketGroup Name="CorePackets" PacketStart="0">
@@ -100,7 +100,7 @@ The following example shows how to use AzAutoGen to generate a large set of simi
 </PacketGroup>
 ```
 
-#### Template for XML data
+#### XML 数据的模板
 
 ```jinja
 {% macro CamelCase(text) %}{{ text[0] | upper }}{{ text[1:] }}{% endmacro %}
@@ -165,7 +165,7 @@ namespace {{ data.get('Name') }}
 {% endfor %} {# namespace generation #}
 ```
 
-#### JSON data
+#### JSON 数据
 
 ```json
 {
@@ -229,22 +229,22 @@ namespace {{ data.get('Name') }}
 }
 ```
 
-#### Template changes for JSON
+#### 针对 JSON 的模板更改
 
-For a JSON template, you can't use iterators directly over an XML element's children. Instead, you should iterate over an array. To support JSON, you would need to change the preceding XML input template in the following ways, on each of the annotated lines. Note that you must apply some of these changes in multiple places where iteration takes place.
+对于 JSON 模板，不能直接对 XML 元素的子元素使用迭代器。相反，您应该对数组进行遍历。为支持 JSON，您需要以下列方式对前面的 XML 输入模板进行修改，并将其修改到每一行的注释中。请注意，您必须在发生迭代的多个地方应用其中一些更改。
 
 ```jinja
 {% for packet in data.get('Packets') %} {# (1) #}
 {% for member in packet %} {# (2) #}
 ```
 
-You can write Jinja templates that more easily support both data formats by using Python's flexible typing and common methods such as `.get()`, which are both available on the `xml.etree.ElementTree.Element` class and `dict`.
+您可以使用 Python 灵活的类型和常用方法（如 `.get()`）来编写更容易支持这两种数据格式的 Jinja 模板，这些方法在 `xml.etree.ElementTree.Element` 类和 `dict` 中都可用。
 
 
-## Related topics
+## 相关主题
 
-| Topic | Description |
+| 主题 | 说明 |
 |-|-|
-| [Build Generated Source Files with AzAutoGen](/docs/user-guide/build/generated-source/) | How to use the `ly_add_autogen` function in CMake to generate and build source code from templates. |
-| [Networking Auto-packets](/docs/user-guide/networking/aznetworking/autopackets/) | How to create new packet types for the `AzNetworking` framework using AzAutoGen. |
-| [Creating Custom Nodes in Script Canvas](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/) | How to create custom nodes in Script Canvas using XML definitions and turn the nodes into code with AzAutoGen. |
+| [使用 AzAutoGen 生成源文件](/docs/user-guide/build/generated-source/) | 如何使用 CMake 中的 `ly_add_autogen` 函数从模板生成并编译源代码。 |
+| [网络自动数据包](/docs/user-guide/networking/aznetworking/autopackets/) | 如何使用 AzAutoGen 为 `AzNetworking` 框架创建新的数据包类型。 |
+| [在Script Canvas中创建自定义节点](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/) | 如何使用 XML 定义在 Script Canvas 中创建自定义节点，并使用 AzAutoGen 将节点转化为代码。 |

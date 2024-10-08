@@ -1,30 +1,30 @@
 ---
-linkTitle: Exposing Custom Components to Track View for Animation
-title: Exposing Custom Components to Track View for Animation
-description: Learn how to expose custom components and their properties to the Track View editor for animation in Open 3D Engine. 
+linkTitle: 将自定义组件暴露给Track View视图
+title: 将自定义组件暴露给Track View视图
+description: 了解如何将自定义组件及其属性公开给Track View编辑器，以便在 Open 3D Engine 中制作动画。
 toc: true
 weight: 800
 ---
 
-To include custom components in cinematic cut scenes and movies rendered to disk, you must expose animatable component properties to O3DE's Track View and **Entity Inspector**. To expose a custom component and its properties, you must perform three steps:
+要在电影剪辑场景和渲染到磁盘的影片中加入自定义组件，必须在 O3DE 的 Track View和**Entity Inspector**中公开可动画组件的属性。要公开自定义组件及其属性，必须执行三个步骤：
 
-1. Create getter and setter methods for the animated property on one of the component's request event buses.
+1. 在组件的一个请求事件总线上为 可以制作动画的 属性创建获取和设置方法。
 
-1. Implement the getter and setter request handlers in your component.
+1. 在组件中实施 getter 和 setter 请求处理程序。
 
-1. Reflect your component to the edit context and the behavior context. Edit context reflection exposes your component in **Entity Inspector**, and behavior context reflection exposes it in the Track View.
+1. 将组件反射到编辑上下文和行为上下文中。编辑上下文反射会在**Entity Inspector**中显示组件，而行为上下文反射会在 Track View中显示组件。
 
-## Exposing a Custom Component: Example
+## 公开自定义组件：示例
 
-The following example assumes that a custom component called `ImaginaryTargetComponent` has been created. The component has a `Vector3` property called `ImaginaryPosition` that you want to animate in **Track View**. A request bus called `ImaginaryTargetComponentBus` has also been created for the component. This example assumes that you are familiar with programming event buses and component handlers for them. For more information, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/) and [Creating a Component](/docs/user-guide/programming/components/create-component/).
+下面的示例假设创建了一个名为 `ImaginaryTargetComponent` 的自定义组件。该组件有一个名为`ImaginaryPosition`的 `Vector3` 属性，您希望在**Track View**中对其进行动画处理。还为该组件创建了名为 `ImaginaryTargetComponentBus` 的请求总线。本示例假定您熟悉事件总线和组件处理程序的编程。有关详细信息，请参阅 [使用事件总线 (EBus) 系统](/docs/user-guide/programming/messaging/ebus/)  和 [创建组件](/docs/user-guide/programming/components/create-component/)。
 
-**To expose a custom component to Track View**
+**要将自定义组件公开到 Track View**
 
-1. **Create getter and setter methods**
+1. **创建getter和setter方法**
 
-    Each property must provide a method to set its value and get its current value. To implement this, create setter and getter methods on one of the component's request buses. Then reflect those methods to the behavior context as part of the class reflection for the component.
+   每个属性都必须提供一个方法来设置其值和获取其当前值。要实现这一点，可在组件的一个请求总线上创建 setter 和 getter 方法。然后将这些方法反射到行为上下文中，作为组件类反映的一部分。
 
-    The following example creates setter and getter requests on the `ImaginaryTargetComponentRequestBus`.
+   下面的示例在 `ImaginaryTargetComponentRequestBus` 上创建了 setter 和 getter 请求。
 
     ```
    /*!
@@ -47,9 +47,9 @@ The following example assumes that a custom component called `ImaginaryTargetCom
    using ImaginaryTargetComponentRequestBus = AZ::EBus<ImaginaryTargetComponentRequests>;
    ```
 
-1. **Implement handlers in your component**
+1. **在组件中实现处理程序**
 
-   Implement handlers in your component for the setter and getter requests that you declared in the first step, as in the following example.
+   在组件中为第一步中声明的 setter 和 getter 请求执行处理程序，如下面的示例。
 
    ```
    class ImaginaryTargetComponent
@@ -79,9 +79,9 @@ The following example assumes that a custom component called `ImaginaryTargetCom
    };
    ```
 
-1. **Reflect your component**
+1. **反射组件**
 
-   Using the edit context and behavior contexts, reflect the component's class, request event bus, and setter and getter methods. **Track View** uses the setter and getter methods that you reflect in this step to set and get values for your animated property. You must also reflect a `VirtualProperty` declaration that tells **Track View** that your component is capable of being animated.
+   使用编辑上下文和行为上下文，反射组件的类、请求事件总线以及设置器和获取器方法。**Track View**会使用您在此步骤中反映的setter和getter方法来设置和获取动画属性的值。您还必须反映一个 `VirtualProperty` 声明，告诉 **Track View** 您的组件能够被动画化。
 
    ```
    /*static*/ void ImaginaryTargetComponent::Reflect(AZ::ReflectContext* context)
@@ -121,36 +121,36 @@ The following example assumes that a custom component called `ImaginaryTargetCom
    }
    ```
 
-1. **(Optional) Place Unit Attributes on Getters**
+1. **(可选）在获取器上放置单位属性**
 
-   The **Track View** user interface depends on the data type that the getter and setter use. The foregoing example uses a type of `AZ::Vector3`, so **Track View** creates a compound `x,y,z` track from the property. By contrast, if the getter and setters use a `bool`, **Track View** creates a Boolean track. For the majority of animatable properties, the type is sufficient. However, in some cases you might have to set units for a reflected property. For example, if your property's `AZ::Vector3` represents a color, you must add an attribute to the reflection of the getter event. The attribute instructs **Track View** to use a color picker for that property. If you have a property called `ImaginaryTargetColor` that calls a getter event called `GetImaginaryTargetColor`, use reflection code like the following:
+   **Track View** 的用户界面取决于 getter 和 setter 所使用的数据类型。前述示例使用的数据类型是 `AZ::Vector3`，因此 **Track View** 从属性中创建了一个复合的 `x,y,z` 轨迹。相比之下，如果获取器和设置器使用了`bool`类型，**Track View**就会创建一个布尔轨迹。对于大多数可动画属性来说，使用这种类型就足够了。但在某些情况下，您可能需要为反射属性设置单位。例如，如果属性的 `AZ::Vector3` 表示颜色，则必须在 getter 事件的反射中添加一个属性。该属性指示 **Track View** 为该属性使用颜色选择器。如果您有一个名为`ImaginaryTargetColor`的属性，它调用了一个名为`GetImaginaryTargetColor`的getter事件，请使用如下反射代码：
 
    ```
    ->Event("GetImaginaryTargetColor", &ImaginaryTargetComponentRequestBus::Events::GetImaginaryTargetColor)
        ->Attribute("Units", AZ::Edit::Attributes:: PropertyUnits8BitColor)
    ```
 
-   **Track View** then uses a color track for the property, as the following image shows.
+   如下图所示，**Track View**会为属性使用颜色轨迹。
 
    ![Color picker in Track View](/images/user-guide/programming/components/component-entity-system-pg-track-view-unit-attributes.png)
 
-   Other units can be found in the file `Code\Framework\AZCore\AZCore\Serialization\EditContextConstants.inl`. These units are the following.
+   其他单位可以在文件`Code\Framework\AZCore\AZCore\Serialization\EditContextConstants.inl`中找到。这些单元如下。
 
    ```
    const static AZ::Crc32 PropertyUnitsRadian = AZ_CRC("Radians");
    const static AZ::Crc32 PropertyUnits8BitColor = AZ_CRC("8BitColor");
    ```
 
-   If you have an angular parameter in radians that you want to **Track View** to convert to degrees in its user interface, use `AZ::Crc32 PropertyUnitsRadian`.
+   如果您想让 **Track View** 在用户界面中将以弧度为单位的角度参数转换为度，请使用`AZ::Crc32 PropertyUnitsRadian`。
 
-## Viewing the Result
+## 查看结果
 
-Now you can view how the example component and property appear in the **Entity Inspector** and the Track View.
+现在，您可以查看示例组件和属性在**Entity Inspector**和跟踪视图中的显示效果。
 
-In the following **Entity Inspector** image, `EditContext` reflection has exposed the **ImaginaryTarget** component and its **Imaginary Target Pos** property.
+在下面的**Entity Inspector**图像中，`EditContext`反射暴露了**ImaginaryTarget**组件及其**Imaginary Target Pos**属性。
 
 ![ImaginaryTarget component in Entity Inspector](/images/user-guide/programming/components/exposing-custom-components-to-track-view-for-animation-entity-inspector.jpg)
 
-In the following **Track View** image, `BehaviorContext` reflection has exposed the **ImaginaryTarget** component and the **ImaginaryPosition** track from the corresponding virtual property.
+在下面的**Track View**图片中，`BehaviorContext`反射从相应的虚拟属性中显示了**ImaginaryTarget**组件和**ImaginaryPosition**轨迹。
 
 ![ImaginaryTarget component in the Track View](/images/user-guide/programming/components/exposing-custom-components-to-track-view-for-animation-track-view.jpg)

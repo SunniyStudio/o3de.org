@@ -1,48 +1,48 @@
 ---
-linktitle: Overview
-title: Overview of Open 3D Engine Entities and Components
-description: Learn how Open 3D Engine (O3DE) components fit into the Entity-Component System.
+linktitle: 概述
+title: Open 3D Engine 实体和组件的概述
+description: 了解 Open 3D Engine (O3DE) 组件如何融入实体-组件系统。
 weight: 100
 ---
 
-**Open 3D Engine (O3DE)** is an *entity-component system (ECS)* engine. This means that rather than using a polymorphism system where objects derive from one another ("is-a" relationships), it instead uses composition ("has-a" relationships). A common polymorphism example is "a car *is a* vehicle", whereas a composition example is "a car *has the components of a* vehicle". Using composition makes it much easier to extend objects, design for reuse, and keep base implementations as flexible as possible for performance and ease of use.
+**Open 3D Engine (O3DE)** 是一个*实体-组件系统（ECS）*引擎。这意味着它不使用多态系统，即对象之间相互派生（“is-a ”关系），而是使用组合（“has-a ”关系）。一个常见的多态示例是 “一辆汽车**是一辆**汽车”，而组合示例则是 “一辆汽车**具有一辆**汽车的组件”。使用组合可以更容易地扩展对象、设计重用，并使基础实现尽可能灵活，从而提高性能和易用性。
 
-Entities have no functionality by themselves; rather, they are essentially an ID and a container for components. An entity can contain any number or combination of components. Some components allow only one instance per entity, and some depend on other components to function.
+实体本身没有任何功能；相反，实体本质上是一个 ID 和一个组件容器。一个实体可以包含任意数量或组合的组件。有些组件允许每个实体只有一个实例，有些则依赖于其他组件才能运行。
 
-The Gems that come with O3DE include a variety of components that implement core engine functionality. Within **O3DE Editor**, you can find these components in categories such as Animation, Atom, and Gameplay. As an O3DE developer, you can create new components, either to extend the functionality of existing Gems, or to implement the features of your own Gems. This section shows you how to create a component.
+O3DE 附带的 Gem 包含各种实现核心引擎功能的组件。在**O3DE 编辑器**中，您可以在动画、原子和游戏等类别中找到这些组件。作为 O3DE 开发人员，您可以创建新的组件，以扩展现有 Gem 的功能，或实现您自己 Gem 的功能。本节将向您展示如何创建组件。
 
-### Types of components
+### 组件类型
 
-All O3DE components derive from the `AZ::Component` class. In addition, O3DE defines a few specialized types of components designed for specific use cases.
+所有 O3DE 组件都源于 `AZ::Component` 类。此外，O3DE 还定义了一些专为特定用例设计的组件类型。
 
-#### Standard components
+#### 标准组件
 
-*Standard components* can implement functionality in both editor and runtime environments. In some contexts, they are referred to as "runtime components" or "game components" to help differentiate them from the specialized "editor" and "system" components.
+**标准组件**可在编辑器和运行时环境中实现功能。在某些情况下，它们被称为 “运行时组件 ”或 “游戏组件”，以区别于专门的 “编辑器 ”和 “系统 ”组件。
 
-#### Editor components
+#### 编辑器组件
 
-*Editor components* provide specific functionality to meet the needs of an editor environment. They are active only while you are using an editor in edit mode. They are often paired with a runtime component counterpart that can represent the editor component at runtime, providing related but simpler or leaner functionality in the runtime environment. The editor component class includes a method that you can override to facilitate creating a runtime component from an editor component for the entity it belongs to. For more information about editor components, refer to [Editor Components](editor-components).
+**编辑器组件**提供特定功能，以满足编辑器环境的需要。它们只有在编辑模式下使用编辑器时才会激活。它们通常与运行时组件配对，后者可以在运行时代表编辑器组件，在运行时环境中提供相关但更简单或更精简的功能。编辑器组件类包含一个可以覆盖的方法，以便于从编辑器组件为其所属实体创建运行时组件。有关编辑器组件的更多信息，请参阅 [编辑器组件](editor-components)。
 
-#### System components
+#### 系统组件
 
-*System components* are long-lived singletons that control behavior within the engine instead of providing editor or runtime behavior. For this reason, system components are registered with the engine rather than added to an individual entity. For more information about system components, refer to [System Components](system-components).
+**系统组件*是*长期存在的单件，它控制引擎内的行为，而不是提供编辑器或运行时行为。因此，系统组件是在引擎中注册的，而不是添加到单个实体中。有关系统组件的更多信息，请参阅 [系统组件](system-components)。
 
-### Communication between components
+### 组件之间的通信
 
-In O3DE, you use the **Event Bus (EBus)** messaging system to communicate between components instead of holding references to other entities or their components.
+在 O3DE 中，您可以使用 ** 事件总线（EBus）** 消息传递系统在组件之间进行通信，而不是持有对其他实体或其组件的引用。
 
-### Component dependencies
+### 组件依赖
 
-Components can depend on services. These services usually have a one-to-one relationship with EBuses. If a component declares that it depends on (requires) a service, any entity that uses the component must also contain a component that provides the required services. Entities are never allowed to be in a state in which one of their component dependencies is missing, even during authoring. In O3DE's editing tools, this means that components whose dependencies are missing are actually removed from the entity and stored in a temporary list. When all of the component's dependencies become available, the component is restored to the entity.
+组件可以依赖于服务。这些服务与 EBus 通常是一对一的关系。如果一个组件声明它依赖（需要）一项服务，那么使用该组件的任何实体也必须包含一个提供所需服务的组件。即使在编辑过程中，实体也不能处于缺少一个组件依赖关系的状态。在 O3DE 的编辑工具中，这意味着缺少依赖关系的组件实际上会从实体中移除，并存储在一个临时列表中。当组件的所有依赖关系都可用时，组件就会恢复到实体中。
 
-Components are always activated in order of their dependency. For this reason, a component can always assume that the services that it requires are available when the component is activated.
+组件总是按其依赖关系的顺序被激活。因此，当一个组件被激活时，它总是可以假定它所需要的服务是可用的。
 
-### Component lifecycle
+### 组件生命周期
 
-The component lifecycle is straightforward. After initialization, component activation and deactivation follows the owner entity's activation and deactivation lifecycle.
+组件的生命周期非常简单。初始化后，组件的激活和停用遵循所有者实体的激活和停用生命周期。
 
-* **`Init()`** -- (Optional) An `Init()` function is called once for each entity that owns the component. It allows a component to initialize its internal state. Although the `Init()` function initializes the component, the component is not active until the system calls the component's `Activate()` function.
-* **`Activate()`** -- (Required) When an entity is activated, it calls `Activate()` on all of its components, provided that all services and components that the component depends on are present and active. To learn how to specify these dependencies, refer to [Defining and Using Component Services](services). Typically in the `Activate()` function, a component performs setup procedures, connects to EBuses, and allocates resources or requests assets.
-* **`Deactivate()`** -- (Required) When an entity is deactivated, it calls `Deactivate()` on all of its components. In the `Deactivate()` function, a component should release all resources and disconnect from all EBuses. The order of deactivation is the reverse of activation, so your component is deactivated before the components it depends on. Components should be completely dormant after deactivation, and they should be in more or less the same state that they are in after `Init()` is called.
+* **`Init()`** -- (可选）`Init()`函数会为每个拥有组件的实体调用一次。它允许组件初始化其内部状态。虽然`Init()`函数初始化了组件，但在系统调用组件的`Activate()`函数之前，组件并没有激活。
+* **`Activate()`** -- (必填）当一个实体被激活时，它会调用其所有组件的 `Activate()`，前提是该组件依赖的所有服务和组件都存在并处于激活状态。要了解如何指定这些依赖关系，请参阅 [定义和使用组件服务](services)。通常在`Activate()`函数中，组件会执行设置程序、连接到 EBus 并分配资源或请求资产。
+* **`Deactivate()`** -- (必填）停用实体时，实体会调用其所有组件的 `Deactivate()`函数。在`Deactivate()`函数中，组件应释放所有资源并断开与所有 EBus 的连接。停用的顺序与激活相反，因此你的组件会先于它所依赖的组件停用。停用后，组件应完全处于休眠状态，其状态应与调用 `Init()` 后的状态大致相同。
 
-The remaining API operations of a component should be established by the EBus that it implements.
+组件的其余 API 操作应由其实现的 EBus 确定。

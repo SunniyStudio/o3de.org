@@ -1,13 +1,13 @@
 ---
-linkTitle: Edit Context
-title: Edit Context in O3DE
-description: Use the edit context to expose parameters for editing in O3DE Editor, the content creation environment for Open 3D Engine (O3DE).
+linkTitle: 编辑上下文
+title: O3DE中的编辑上下文
+description: 使用编辑上下文可在 O3DE 编辑器（Open 3D Engine (O3DE) 的内容创建环境）中显示用于编辑的参数。
 weight: 200
 ---
 
-The O3DE edit context is a utility context that relies on the [serialization context](/docs/user-guide/programming/components/reflection/serialization-context/). You can use the edit context to expose parameters of serialized data for editing in **O3DE Editor**. However, the edit context is an abstract container for editable data. As such, it is not directly tied to any specific editor. Any editor can query the data in the edit context and implement its own visualization and editing controls.
+O3DE 编辑上下文是一种依赖于[序列化上下文](/docs/user-guide/programming/components/reflection/serialization-context/)的实用上下文。您可以使用编辑上下文公开序列化数据的参数，以便在**O3DE 编辑器**中进行编辑。不过，编辑上下文是可编辑数据的抽象容器。因此，它并不直接与任何特定的编辑器绑定。任何编辑器都可以查询编辑上下文中的数据，并实现自己的可视化和编辑控件。
 
-The following code shows an `EditContext` definition:
+以下代码显示了一个 `EditContext` 定义：
 
 ```cpp
 AZ::EditContext* editContext = serializeContext->GetEditContext();
@@ -18,16 +18,16 @@ if (editContext)
 }
 ```
 
-An `EditContext` consists of `ClassElements` and `DataElements`.
-+ `ClassElement` - Specify attributes of the class that was reflected through the `SerializeContext::Class`. You can use this to group common elements.
-+ `DataElement` - Specify the display, behavior, and visualization of the fields that were serialized through `SerializeContext::Field`.
-+ `UIElement` - Specify the display, behavior, and visualization of a `UIHandler`, but without tying it to a `SerializeContext::Field`.
+`EditContext`由`ClassElements` 和 `DataElements`组成。
++ `ClassElement` - 指定通过 `SerializeContext::Class` 反映的类的属性。您可以用它来对共同元素进行分组。
++ `DataElement` - 指定通过 `SerializeContext::Field` 序列化的字段的显示、行为和可视化。
++ `UIElement` - 指定`UIHandler`的显示、行为和可视化，但不将其与 “SerializeContext::Field ”绑定。
 
-## Attributes 
+## 属性 
 
-You can use the `EditContext` to add arbitrary attributes to class and data elements.
+您可以使用 `EditContext` 为类和数据元素添加任意属性。
 
-Attributes are template based. As such, they can be of any type, including functions, as in the following example.
+属性是基于模板的。因此，它们可以是任何类型，包括函数，如下例所示。
 
 ```cpp
 editContext->Class<EditorLightComponent>(
@@ -43,4 +43,4 @@ editContext->Class<EditorLightComponent>(
     	->Attribute(AZ::Edit::Attributes::AutoExpand, true)
 ```
 
-For convenience, O3DE stores a library of frequently used and implemented attributes in the file `dev\Code\Framework\AzCore\AzCore\Serialization\EditContextConstants.inl`.
+为方便起见，O3DE在文件`dev\Code\Framework\AzCore\AzCore\Serialization\EditContextConstants.inl`中存储了一个常用属性库。

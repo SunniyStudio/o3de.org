@@ -1,12 +1,12 @@
 ---
-title: Defining and Using Component Services
-description: Learn how to define and use component services in Open 3D Engine.
+title: 定义和使用组件服务
+description: 了解如何在 Open 3D Engine 中定义和使用组件服务。
 weight: 400
 ---
 
-Components can optionally specify a list of services that they provide, are incompatible with, depend on, or require. When you create a component, you can use this service specification to define relationships between various components. The component entity system uses this list for the conditional addition and removal of components at both edit time and at run time. The service specification also defines the order in which components are activated when an entity is activated. Specifically, components that provide services that another component depends on are activated first.
+组件可以选择性地指定其提供、不兼容、依赖或需要的服务列表。创建组件时，可以使用此服务规范来定义不同组件之间的关系。在编辑和运行时，组件实体系统都会使用这个列表来有条件地添加和删除组件。服务规范还定义了激活实体时组件被激活的顺序。具体来说，提供另一个组件所依赖的服务的组件会首先被激活。
 
-The following example shows a service specification.
+下面的示例显示了一个服务规范。
 
 ```cpp
 static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
@@ -32,14 +32,14 @@ static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& d
 }
 ```
 
-**ProvidedService** -- Specifies the service that the component provides. For example, a `TransformComponent` could provide a `TransformService` that in turn provides locational information.
+**ProvidedService** -- 指定组件提供的服务。例如，`TransformComponent`可提供`TransformService`，而`TransformService`又可提供定位信息。
 
-**RequiredService** -- Specifies a service that the component requires. The components that provide the required services are guaranteed to be present and active before this component is activated. For example, an audio component might need to know where it is located and therefore require a `TransformService`. Because of this requirement, the audio component can be added only to entities that have the component that provides the `TransformService`.
+**RequiredService** -- 指定组件所需的服务。在激活该组件之前，提供所需服务的组件必须保证存在并处于活动状态。例如，音频组件可能需要知道它的位置，因此需要一个`TransformService`。由于这一要求，音频组件只能添加到拥有提供 `TransformService` 的组件的实体中。
 
-**DependentService** -- Specifies a service on which the component depends but which it does not require. The component entity system guarantees that the components that provide dependent services are activated before the component itself is activated. For example, an audio component could depend on the `physics` component. If the entity has physics, the audio component can query the `physics` component for physical material information. However, the audio component does not require that physics be present.
+**DependentService** -- 指定组件依赖但不需要的服务。组件实体系统保证，在组件本身被激活之前，提供依赖服务的组件已被激活。例如，音频组件可能依赖于 `physics`组件。如果实体具有物理特性，音频组件就可以向 `physics`组件查询物理材料信息。但是，音频组件并不要求物理材料存在。
 
-**IncompatibleService** -- Specifies a service that cannot work with the component. Consider these examples:
+**IncompatibleService** -- 指定不能与组件一起工作的服务。请参考这些示例：
 
-+ An entity can have only one type of collider. Therefore, the `PrimitiveColliderService` specifies that the `MeshColliderService` is incompatible with it and vice versa.
-+ The same effect can be achieved if two collider components already provide the `ColliderService` themselves and therefore specify the `ColliderService` as incompatible. Marking a component as incompatible with `ColliderService` ensures that no other component that has the same service is added to the entity.
-+ The `IncompatibleService` specification is frequently used to specify that multiples of the same component cannot exist on an entity.
++ 一个实体只能有一种类型的碰撞器。因此，`PrimitiveColliderService`会指定`MeshColliderService`与其不兼容，反之亦然。
++ 如果两个对撞机组件本身已经提供了 `ColliderService` 服务，并因此将 `ColliderService` 指定为不兼容，也能达到同样的效果。将一个组件标记为与 `ColliderService` 不兼容，可确保不会有其他具有相同服务的组件被添加到实体中。
++ `IncompatibleService`规范常用于指定一个实体上不能存在多个相同的组件。

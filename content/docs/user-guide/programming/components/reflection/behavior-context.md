@@ -1,31 +1,31 @@
 ---
-linkTitle: Behavior Context
-title: Behavior Context in O3DE
-description: Use the behavior context in Open 3D Engine (O3DE) to make runtime code accessible to scripting systems such as Script Canvas and Lua.
+linkTitle: 行为上下文
+title: O3DE中的行为上下文
+description: 在Open 3D Engine (O3DE)中使用行为上下文，使脚本系统（如 Script Canvas 和 Lua）可以访问运行时代码。
 weight: 300
 ---
 
-The behavior context makes runtime code accessible to **Open 3D Engine (O3DE)** scripting systems such as Script Canvas or Lua. It provides script bindings that invoke runtime C++ methods, read constants, write properties, and create and handle **Event Bus (Ebus)** events. You can have multiple behavior contexts that are specialized for different purposes, and you can unreflect the behavior contexts to implement reloading.
+行为上下文可让 **Open 3D Engine (O3DE)** 脚本系统（如 Script Canvas 或 Lua）访问运行时代码。它提供了脚本绑定，可调用运行时 C++ 方法、读取常量、写入属性以及创建和处理 **Event Bus (Ebus)** 事件。你可以拥有多个专门用于不同目的的行为上下文，还可以取消对行为上下文的反射以实现重载。
 
-Use the behavior context to bind the following C++ constructs for scripting:
+使用行为上下文可绑定以下 C++ 结构以编写脚本：
 
-+ [Classes](#classes)
-+ [Methods](#methods)
-+ [Properties](#properties)
-+ [Constants](#constants)
-+ [Enums](#enums)
++ [类](#classes)
++ [方法](#methods)
++ [属性](#properties)
++ [常量](#constants)
++ [枚举](#enums)
 
-In addition, the behavior context supports the O3DE [EBus](/docs/user-guide/programming/messaging/ebus) and [AZ::Event](/docs/user-guide/programming/messaging/az-event) event systems:
+此外，行为上下文还支持 O3DE [EBus](/docs/user-guide/programming/messaging/ebus) 和 [AZ::Event](/docs/user-guide/programming/messaging/az-event)事件系统：
 
 + [EBus](#ebus)
-  + [Events](#events)
-  + [Event Handlers](#event-handlers)
+  + [事件](#events)
+  + [事件处理程序](#event-handlers)
 
-## Classes
+## 类
 
-Classes in the behavior context reflect a C++ class or struct. You can provide an optional name for a class. If you don't provide a name, the class name from `AzTypeInfo` is used. That name must be unique for the scope. Because the system uses `AzRTTI` to build the class hierarchy, you can use RTTI if you want to reflect base class functionality.
+行为上下文中的类反射了 C++ 类或结构体。您可以为类提供一个可选名称。如果不提供名称，则使用 `AzTypeInfo` 中的类名。该名称在作用域中必须是唯一的。由于系统使用 `AzRTTI` 来构建类的层次结构，因此如果您想反射基类的功能，可以使用 RTTI。
 
-Classes that you bind to the behavior context become objects that can be instantiated in a script environment. To reflect a class, you must provide the type that is reflected as a template argument to the class function. For example:
+绑定到行为上下文的类将成为可在脚本环境中实例化的对象。要反射一个类，必须将所反射的类型作为模板参数提供给类函数。例如：
 
 ```cpp
 if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
@@ -34,7 +34,7 @@ if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(con
 }
 ```
 
-You should also specify the base class, if applicable:
+如果适用，还应指定基类：
 
 ```cpp
 if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
@@ -43,22 +43,22 @@ if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(con
 }
 ```
 
-### Class builder functions
+### 类构建器函数
 
-To provide additional configuration for the class binding, you can chain class builder functions after the behavior context `Class` function. The following builder functions are available:
+要为类绑定提供额外配置，可以在行为上下文 `Class` 函数之后链入类构建器函数。以下是可用的构建器函数：
 
-| Builder function | Description |
+| 构建器功能 | 说明
 | --- | --- |
-| **Allocator** | Allows you to provide a custom allocator/deallocator for your class to override any existing allocation schema. If you don't provide a custom allocator, `aznew` is used (`AZ_CLASS_ALLOCATOR`). |
-| **Constant** | Read-only properties. For more information about this builder function, refer to the section on [constants](#constants). |
-| **Constructor** | Allows you to enumerate the class constructors that you want to reflect. You must pass all constructor arguments as template arguments. |
-| **Enum** | Read-only `int` properties. For more information about this builder function, refer to the section on [enums](#enums). |
-| **Method** | Reflects a C++ class method. Can also reflect global methods. For more information about this builder function, refer to the section on [methods](#methods). |
-| **Property** | Reflects class data. Can also reflect global properties. For more information about this builder function, refer to the section on [properties](#properties). |
-| **UserData** | Allows you to provide a pointer to user data. This pointer is accessible from all callbacks (such as a custom allocator) that you implement for the class. |
-| **Wrapping <br> WrappingMember** | Signifies to the behavior context that the class is a wrapper of another class. This is useful when you reflect smart pointers and string wrappers. |
+| **Allocator** | 允许你为你的类提供一个自定义的分配器/去分配器，以覆盖任何现有的分配模式。如果不提供自定义分配器，则使用 `aznew`(`AZ_CLASS_ALLOCATOR`)。 |
+| **Constant** | 只读属性。有关此构建函数的更多信息，请参阅 [常量](#constants) 部分。 |
+| **Constructor** | 允许您枚举要反射的类构造函数。您必须将所有构造函数参数作为模板参数传递。|
+| **Enum** | 只读的 `int` 属性。有关此构造函数的更多信息，请参阅 [枚举](#enums) 章节。 |
+| **Method** | 反射 C++ 类方法。也可以反射全局方法。有关此构建函数的更多信息，请参阅 [方法](#methods) 章节。 |
+| **Property** | 反射类数据。也可反射全局属性。有关此构建函数的更多信息，请参阅 [properties](#properties)。 |
+| **UserData** | 允许您提供指向用户数据的指针。您为该类实现的所有回调（如自定义分配器）都可以访问该指针。 |
+| **Wrapping <br> WrappingMember** | 向行为上下文表明该类是另一个类的包装器。这在反射智能指针和字符串包装器时非常有用。 |
 
-#### C++ examples of class builder functions
+#### 类构建器函数的 C++ 示例
 
 ```cpp
 // Custom allocator and deallocator.
@@ -88,25 +88,25 @@ behaviorContext->Class<ScriptClass>()
     ->Enum<ScriptClass::SC_ET_VALUE2>("SC_ET_VALUE2");
 ```
 
-For more information about these functions, refer to [ClassBuilder](/docs/api/frameworks/azcore/struct_a_z_1_1_behavior_context_1_1_class_builder.html) in the O3DE `AzCore` API Reference.
+有关这些函数的更多信息，请参阅 O3DE`AzCore` API 参考 中的 [ClassBuilder](/docs/api/frameworks/azcore/struct_a_z_1_1_behavior_context_1_1_class_builder.html) 。
 
-### Attributes
+### 属性
 
-In addition to the builder functions, you can also use the following attributes to decorate a class:
+除构建器函数外，您还可以使用以下属性来装饰一个类：
 
-| Attribute | Description | Type | Values |
+| 属性 | 说明 | 类型 | 值 |
 | --- | --- | --- | --- |
-| **Category** | Used by the editor to categorize the object in a list. To nest categories, you can use the forward slash (`/`) separator. For example: <br> `Attribute(AZ::Script::Attributes::Category, "Gameplay/Triggers")` | `string` | |
-| **ClassNameOverride** | Provides a custom name for script reflection that is different from the behavior context name. | `string` | |
-| **ConstructibleFromNil** | Specifies whether to construct the class by default when nil is provided. | `bool` | `true`, <br> `false` |
-| **ConstructorOverride** | Provides a custom constructor to be called when created from Lua script. | function pointer | |
-| **Deprecated** | Marks a reflected class, method, EBus, or property as deprecated. | `bool` | `true`, <br> `false` |
-| **ExcludeFrom** | Hides the object from editor lists, self-documentation, preview builds, or all of the above. Use this optional flag primarily for internal objects that aren't intended to be accessible by script. | `AZ::Script::Attributes::ExcludeFlags` | `List`, <br> `Documentation`, <br> `Preview`, <br> `All` |
-| **Ignore** | Specifies whether to ignore the element during reflection. | `bool` | `true`, <br> `false` |
-| **Storage** | Specifies the owner of the memory storage for the reflected object. The owner can be the script system (`ScriptOwn`), the native runtime code (`RuntimeOwn`), or the script system's virtual machine (`Value`). | `AZ::Script::Attributes::StorageType` | `ScriptOwn`, <br> `RuntimeOwn`, <br> `Value` |
-| **ToolTip** | Used by the editor to display additional information in a tooltip. | `string` | |
+| **Category** | 编辑器用于对列表中的对象进行分类。要嵌套类别，可以使用斜线 (`/`) 分隔符。例如： <br> `Attribute(AZ::Script::Attributes::Category, "Gameplay/Triggers")` | `string` | |
+| **ClassNameOverride** | 为脚本反射提供不同于行为上下文名称的自定义名称。 | `string` | |
+| **ConstructibleFromNil** | 指定在提供 nil 时是否默认构造类。 | `bool` | `true`, <br> `false` |
+| **ConstructorOverride** | 提供一个自定义构造函数，在通过 Lua 脚本创建时调用。 | function pointer | |
+| **Deprecated** | 将反射的类、方法、EBus 或属性标记为已废弃。 | `bool` | `true`, <br> `false` |
+| **ExcludeFrom** | 从编辑器列表、自文档、预览构建或上述所有选项中隐藏对象。这个可选标记主要用于不打算通过脚本访问的内部对象。 | `AZ::Script::Attributes::ExcludeFlags` | `List`, <br> `Documentation`, <br> `Preview`, <br> `All` |
+| **Ignore** | 指定是否在反射过程中忽略元素。 | `bool` | `true`, <br> `false` |
+| **Storage** | 指定反射对象内存存储空间的所有者。所有者可以是脚本系统（`ScriptOwn`）、本地运行时代码（`RuntimeOwn`）或脚本系统的虚拟机（`Value`）。 | `AZ::Script::Attributes::StorageType` | `ScriptOwn`, <br> `RuntimeOwn`, <br> `Value` |
+| **ToolTip** | 编辑器用来在工具提示中显示附加信息。 | `string` | |
 
-#### C++ examples of attributes
+#### 属性的C++示例
 
 ```cpp
 behaviorContext->Class<AreaBlenderConfig>()
@@ -126,34 +126,34 @@ behaviorContext->Class<MathUtils>("MathUtils")
         ->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::All);
 ```
 
-For a complete list of script attributes, refer to [`Code/Framework/AzCore/AzCore/Script/ScriptContextAttributes.h`](https://github.com/o3de/o3de/blob/main/Code/Framework/AzCore/AzCore/Script/ScriptContextAttributes.h) in the O3DE source.
+有关脚本属性的完整列表，请参阅 O3DE 源中的 [`Code/Framework/AzCore/AzCore/Script/ScriptContextAttributes.h`](https://github.com/o3de/o3de/blob/main/Code/Framework/AzCore/AzCore/Script/ScriptContextAttributes.h)。
 
-### Lua usage examples
+### Lua 用法示例
 
-Classes reflected for scripting become objects that you can instance in Lua:
+用于编写脚本的类将成为可以在 Lua 中实例化的对象：
 
 ```lua
 local myObj = MyClass()
 ```
 
-To use non-default constructors in Lua, first reflect the constructor to the behavior context:
+要在 Lua 中使用非默认构造函数，首先要将构造函数反射到行为上下文中：
 
 ```cpp
 behaviorContext->Class<MyClass>("MyClass")
     ->Constructor<int>();
 ```
 
-Then you can instantiate in Lua:
+然后就可以在 Lua 中实例化了：
 
 ```lua
 local myClass = MyClass(10)
 ```
 
-## Methods
+## 方法
 
-Use the behavior context `Method` function to reflect C++ global methods and class methods. Each method must have a unique name for its scope.
+使用行为上下文 `Method` 函数来反射 C++ 全局方法和类方法。每个方法的作用域都必须有一个唯一的名称。
 
-You can reflect methods either as free functions or as parts of classes:
+您可以将方法作为自由函数或类的一部分来反射：
 
 ```cpp
 // This method is reflected as a free function:
@@ -164,7 +164,7 @@ behaviorContext->Class<MyMath>("MyMath")
     ->Method("Cos", &cosf);
 ```
 
-Class methods that are reflected for scripting are accessible through the reflected class:
+为编写脚本而反射的类方法可通过反射的类进行访问：
 
 ```lua
 -- Method from a class:
@@ -175,7 +175,7 @@ local result = math:Cos(3.14)
 AZTestAssert(ScriptClass ~= nil)
 ```
 
-To supply default values for a method, use `AZ::BehaviorDefaultValuePtr`:
+要为方法提供默认值，请使用 `AZ::BehaviorDefaultValuePtr`：
 
 ```cpp
 int globalMethod(int a)
@@ -186,7 +186,7 @@ int globalMethod(int a)
 behaviorContext->Method("GlobalMethod", &globalMethod, AZ::BehaviorDefaultValuePtr(aznew AZ::BehaviorDefaultValue(255)));
 ```
 
-To improve usability and facilitate documentation when binding a method, provide strings that describe the method's arguments:
+在绑定方法时，为提高可用性并方便文档记录，请提供描述方法参数的字符串：
 
 ```cpp
 // Given this method:
@@ -203,23 +203,23 @@ behaviorContext->Method("BoundsCheck", &BehaviorTestClass::BoundsCheck,
     );
 ```
 
-This approach is especially useful in Script Canvas so that users can understand the meaning of the arguments that they are expected to provide.
+这种方法在 Script Canvas 中特别有用，用户可以理解他们需要提供的参数的含义。
 
-## Properties
+## 属性
 
-Use behavior context properties to expose global and class data to scripts. Each property must have a unique name for its scope. You can query and set property values using getter and setter methods. If you don't provide a getter method for a property, the property is write only. If you don't provide a setter method, the property is read only.
+使用行为上下文属性向脚本公开全局和类数据。每个属性的作用域都必须有一个唯一的名称。可以使用 getter 和 setter 方法查询和设置属性值。如果不为某个属性提供 getter 方法，则该属性只能写入。如果不提供 setter 方法，则该属性只能读取。
 
-You can use global functions, member functions, or lambda expressions as property getters and setters.
+你可以使用全局函数、成员函数或 lambda 表达式作为属性的获取器和设置器。
 
-For convenience, O3DE provides macros that implement getter and setter functions as lambda expressions. Use `BehaviorValueProperty(&value)` to implement both a getter and setter method for a property. Or, you can implement getter and setter functions individually using `BehaviorValueGetter` and `BehaviorValueSetter`. The following table contains usage examples for each macro:
+为方便起见，O3DE 提供了以 lambda 表达式实现 getter 和 setter 函数的宏。使用 `BehaviorValueProperty(&value)`可以同时实现一个属性的getter和setter方法。或者，可以使用 `BehaviorValueGetter` 和 `BehaviorValueSetter` 单独实现获取器和设置器函数。下表包含每个宏的使用示例：
 
-| Operation | Macro | Example |
+| 操作 | 宏 | 实例 |
 | --- | --- | --- |
 | Getter | BehaviorValueGetter |  <pre>->Property("ReadOnlyFlag", BehaviorValueGetter(&MyClass::m_readOnlyFlag), nullptr)</pre> |
 | Setter | BehaviorValueSetter |  <pre>->Property("WriteOnlyFlag", nullptr, BehaviorValueSetter(&MyClass::m_writeOnlyFlag))</pre> |
 | Both | BehaviorValueProperty |  <pre>->Property("ReadWriteFlag", BehaviorValueProperty(&MyClass::m_readWriteFlag))</pre> |
 
-The following example exposes class member data `m_upperDistanceInMeters` as the read-write property `UpperDistanceInMeters`:
+下面的示例将类成员数据 `m_upperDistanceInMeters` 作为读写属性 `UpperDistanceInMeters` 公开：
 
 ```cpp
 behaviorContext->Class<SurfaceTagDistance>()
@@ -227,7 +227,7 @@ behaviorContext->Class<SurfaceTagDistance>()
     ->Property("UpperDistanceInMeters", BehaviorValueProperty(&SurfaceTagDistance::m_upperDistanceInMeters));
 ```
 
-To perform operations more complex than simply getting or setting the value, you can implement your own getters and setters instead of using the property macros:
+要执行比简单获取或设置值更复杂的操作，你可以实现自己的获取器和设置器，而不是使用属性宏：
 
 ```cpp
 behaviorContext->Property("SpawnerType", &Descriptor::GetSpawnerType, &Descriptor::SetSpawnerType);
@@ -245,22 +245,22 @@ void Descriptor::SetSpawnerType(const AZ::TypeId& spawnerType)
 }
 ```
 
-## Constants
+## 常量
 
-Constants are implemented in the behavior context as read-only [properties](#properties). To simplify the reflection of constants, the `BehaviorContext` class provides two helper functions: `Constant` and `ConstantProperty`. These functions help define the getter function that's needed to enable scripts to read a constant's value. Note that to associate additional attributes to the reflected constant, you must use the `ConstantProperty` function.
+常量在行为上下文中以只读 [属性](#properties) 的形式实现。为了简化常量的反映，`BehaviorContext` 类提供了两个辅助函数： `Constant` 和 `ConstantProperty`。这些函数有助于定义获取函数，使脚本能够读取常量的值。请注意，若要为反映的常量关联附加属性，必须使用 `ConstantProperty` 函数。
 
-### `Constant` function
+### `Constant` 函数
 
-Use the `Constant` helper function to define a getter for a C++ constant in the behavior context. You can use the behavior context macro `BehaviorConstant` to implement the lambda getter for you.
+使用 `Constant` 辅助函数为行为上下文中的 C++ 常量定义获取器。您可以使用行为上下文宏 `BehaviorConstant` 为您实现 lambda 获取器。
 
-For convenience, you can chain together calls to `Constant` and many other behavior context functions:
+为了方便起见，你可以将对 `Constant` 和许多其他行为上下文函数的调用串联起来：
 
 ```cpp
 behaviorContext->Constant("SystemEntityId", BehaviorConstant(SystemEntityId))
                ->Constant("PI", BehaviorConstant(3.14f));
 ```
 
-To associate a constant with a class, invoke it on a `ClassBuilder` object that the `BehaviorContext::Class` function returns:
+要将常量与类关联，可在 `BehaviorContext::Class` 函数返回的 `ClassBuilder` 对象上调用该常量：
 
 ```cpp
 behaviorContext->Class<AxisWrapper>("AxisType")
@@ -272,13 +272,13 @@ behaviorContext->Class<AxisWrapper>("AxisType")
     ->Constant("ZNegative", BehaviorConstant(AZ::Transform::Axis::ZNegative));
 ```
 
-An associated class that is reflected with a name acts as a kind of namespace for the constant. For example, to get the value for `XPositive` from the preceding example in Lua, you would use `AxisType.XPositive`.
+与名称相关联的类就像是常量的命名空间。例如，要在 Lua 中获取上例中 `XPositive` 的值，可以使用 `AxisType.XPositive`。
 
-If no name is specified for the associated class, no namespace prefix is needed.
+如果没有为关联类指定名称，则不需要名称空间前缀。
 
-### `ConstantProperty` function
+### `ConstantProperty` 函数
 
-The `ConstantProperty` function is similar to `Constant`, helping you define a getter for a constant in the behavior context. Additionally, because the function returns a `GlobalPropertyBuilder` object, you can use it to associate additional attributes with the reflected constant:
+`ConstantProperty`函数与`Constant`函数类似，可帮助您在行为上下文中定义常量的获取器。此外，由于该函数返回一个 `GlobalPropertyBuilder` 对象，因此您可以用它将其他属性与所反映的常量关联起来：
 
 ```cpp
 behaviorContext->ConstantProperty("DefaultMaterialAssignment", BehaviorConstant(DefaultMaterialAssignment))
@@ -287,15 +287,15 @@ behaviorContext->ConstantProperty("DefaultMaterialAssignment", BehaviorConstant(
     ->Attribute(AZ::Script::Attributes::Module, "render");
 ```
 
-## Enums
+## 枚举
 
-Similar to constants, C++ enums are also implemented in the behavior context as read-only [properties](#properties). To simplify the reflection of enums, the `BehaviorContext` class provides two helper functions: `Enum` and `EnumProperty`. These functions help define the getter function that's needed to enable scripts to read an enum's value. Note that to associate additional attributes to the reflected enum, you must use the `EnumProperty` function.
+与常量类似，C++ 枚举也在行为上下文中以只读 [属性](#properties) 的形式实现。为了简化枚举的反映，`BehaviorContext` 类提供了两个辅助函数： `Enum` 和 `EnumProperty`。这些函数有助于定义获取函数，使脚本能够读取枚举的值。请注意，要将附加属性与反映的枚举关联起来，必须使用 `EnumProperty` 函数。
 
-### `Enum` function
+### `Enum` 函数
 
-Use the `Enum` helper function to define a getter for a C++ enum in the behavior context. Since each enum value is itself a property, to reflect an entire enum into the behavior context, you must reflect each of its values.
+使用 `Enum` 辅助函数在行为上下文中定义 C++ 枚举的获取器。由于每个枚举值本身都是一个属性，要在行为上下文中反映整个枚举，必须反映其每个值。
 
-For convenience, you can chain together calls to `Enum` and many other behavior context functions:
+为方便起见，您可以连锁调用 `Enum` 和许多其他行为上下文函数：
 
 ```cpp
 enum class MyTypes
@@ -308,9 +308,9 @@ behaviorContext->Enum<aznumeric_cast<int>(MyTypes::One)>("MyTypes_One")
     ->Enum<aznumeric_cast<int>(MyTypes::Two)>("MyTypes_Two");
 ```
 
-When you reflect enum values in this way, take care to give each value a unique name, since each property must have a unique name in the behavior context.
+以这种方式反映枚举值时，请注意给每个值取一个唯一的名称，因为在行为上下文中，每个属性都必须有一个唯一的名称。
 
-To associate an enum with a class, invoke it on a `ClassBuilder` object that the `BehaviorContext::Class` function returns:
+要将枚举与类关联，请在 `BehaviorContext::Class` 函数返回的 `ClassBuilder` 对象上调用它：
 
 ```cpp
 behaviorContext->Class<PhotometricValue>("PhotometricUnit")
@@ -320,13 +320,13 @@ behaviorContext->Class<PhotometricValue>("PhotometricUnit")
     ->Enum<static_cast<int>(PhotometricUnit::Unknown>("Unknown");
 ```
 
-An associated class that you reflect with a name acts as a kind of namespace for the constant. For example, to get the value for `Lumen` from the preceding example in Lua, you would use `PhotometricUnit.Lumen`.
+您用名称反映的关联类就像常量的命名空间。例如，要在 Lua 中获取上例中的 `Lumen` 值，您可以使用 `PhotometricUnit.Lumen`。
 
-If no name is specified for the associated class, no namespace prefix is needed.
+如果没有为相关类指定名称，则不需要名称空间前缀。
 
-### `EnumProperty` function
+### `EnumProperty` 函数
 
-The `EnumProperty` function is similar to `Enum`, helping you define a getter for an enum in the behavior context. Additionally, because the function returns a `GlobalPropertyBuilder` object, you can use it to associate additional attributes with the reflected enum:
+`EnumProperty`函数与`Enum`函数类似，可帮助您在行为上下文中定义枚举的获取器。此外，由于该函数返回一个 `GlobalPropertyBuilder` 对象，因此您可以用它将附加属性与所反映的枚举关联起来：
 
 ```cpp
 behaviorContext->EnumProperty<static_cast<int>(FrameCaptureResult::None)>("FrameCaptureResult_None")
@@ -334,11 +334,11 @@ behaviorContext->EnumProperty<static_cast<int>(FrameCaptureResult::None)>("Frame
     ->Attribute(AZ::Script::Attributes::Module, "atom");
 ```
 
-### `AZ_ENUM` utility macro
+### `AZ_ENUM`工具宏
 
-O3DE `AzCore` provides a utility macro called `AZ_ENUM_DEFINE_REFLECT_UTILITIES`. This macro works in conjunction with the `AZ_ENUM` macros to generate utility functions that can reflect all values of an enum for you, so you don't need to reflect each value individually. This can be useful for enums that you expect to change during the course of development, or that contain a large number of values.
+O3DE `AzCore`提供了一个名为`AZ_ENUM_DEFINE_REFLECT_UTILITIES`的实用程序宏。该宏与 `AZ_ENUM` 宏配合使用，可生成能反映枚举所有值的实用程序函数，因此无需单独反映每个值。这对于在开发过程中可能会更改的枚举或包含大量值的枚举非常有用。
 
-To use this macro, you must define the enum using either of the `AZ_ENUM` macros, including `AZ_ENUM`, `AZ_ENUM_WITH_UNDERLYING_TYPE`, `AZ_ENUM_CLASS`, or `AZ_ENUM_CLASS_WITH_UNDERLYING_TYPE`. You must also include `<AzCore/Preprocessor/EnumReflectUtils.h>` in the source where you wish to reflect the enum.
+要使用这个宏，您必须使用 `AZ_ENUM`宏，包括 `AZ_ENUM`、`AZ_ENUM_WITH_UNDERLYING_TYPE`、`AZ_ENUM_CLASS` 或 `AZ_ENUM_CLASS_WITH_UNDERLYING_TYPE`，来定义枚举。您还必须在希望反映枚举的源代码中包含 `<AzCore/Preprocessor/EnumReflectUtils.h>` 。
 
 ```cpp
 // Define the enum and its values.
@@ -351,15 +351,15 @@ AZ_ENUM_DEFINE_REFLECT_UTILITIES(TestEnum)
 TestEnumReflect(*behaviorContext);
 ```
 
-For additional context on how to use these macros, examine the test code in `Code\Framework\AzCore\Tests\EnumTests.cpp` or in a Gem where they are used, such as `Gems\Atom\RHI\Code\Source\RHI.Reflect\RenderStates.cpp` or `Gems\Atom\RHI\Code\Include\Atom\RHI.Reflect\RenderStates.h`.
+有关如何使用这些宏的更多信息，请查看`Code\Framework\AzCore\Tests\EnumTests.cpp`中的测试代码或使用这些宏的 Gem，如 `Gems\Atom\RHI\Code\Source\RHI.Reflect\RenderStates.cpp` 或 `Gems\Atom\RHI\Code\Include\Atom\RHI.Reflect\RenderStates.h`中的测试代码。
 
 ## EBus
 
-To enable scripts to send and receive events, bind EBus events and event handlers to the behavior context.
+为使脚本能够发送和接收事件，请将 EBus 事件和事件处理程序绑定到行为上下文。
 
-### Events
+### 事件
 
-The EBus provides a mechanism to broadcast an event to all handlers or to send an event directly to handlers connected at a specific ID. When you bind an event, O3DE automatically reflects `Broadcast`, `Event`, `QueueBroadcast`, and `QueueEvent` as needed for your EBus configuration.
+EBus 提供了一种机制，可将事件广播给所有处理程序，或将事件直接发送给特定 ID 连接的处理程序。当你绑定一个事件时，O3DE会根据你的EBus配置自动反射`Broadcast`, `Event`, `QueueBroadcast`, 和 `QueueEvent`。
 
 ```cpp
 behaviorContext.EBus<TestBus>("TestBus")->
@@ -369,19 +369,19 @@ behaviorContext.EBus<TestBus>("TestBus")->
 ;
 ```
 
-When compiled, you can use the events in Script Canvas and call them in Lua:
+编译后，您可以在 Script Canvas 中使用事件，并在 Lua 中调用它们：
 
 ```lua
 local result = TestBus.Broadcast.GetSum1(1)
 ```
 
-### Event handlers
+### 事件处理程序
 
-An event handler reflects a class that you must implement to forward messages from the EBus to behavior context methods. To implement the event handler, you must create a class that can monitor the specified EBus and forward messages to the behavior context.
- 
-This is required because the behavior context cannot guarantee that there is a handler for each message. If a message expects a result, you must provide a default result in case the behavior context user does not handle the message. Keep in mind that the system creates as many of these handlers as the behavior context requires. Handlers can also execute in different threads. As a result, you should avoid static storage for values that change. For example:
+事件处理程序反映了一个类，您必须实现该类才能将 EBus 的消息转发给行为上下文方法。要实现事件处理程序，必须创建一个能监控指定 EBus 并将消息转发到行为上下文的类。
 
-1. Given the following EBus:
+之所以需要这样做，是因为行为上下文无法保证每条消息都有处理程序。如果消息期望一个结果，则必须提供一个默认结果，以防行为上下文用户不处理该消息。请记住，系统会根据行为上下文的需要创建尽可能多的处理程序。处理程序还可以在不同的线程中执行。因此，应避免为变化的值提供静态存储。例如：
+
+1. 给定以下 EBus：
 
     ```cpp
     class TestBusMessages
@@ -395,7 +395,7 @@ This is required because the behavior context cannot guarantee that there is a h
     using TestBus = AZ::EBus<TestBusMessages>;
     ```
 
-1. Implement the event handler bindings:
+1. 实现事件处理程序绑定：
 
     ```cpp
     class TestBusHandler
@@ -419,9 +419,9 @@ This is required because the behavior context cannot guarantee that there is a h
         };
     ```
 
-   This handler is what binds a C++ EBus interface to a script language such as Lua.
+   该处理程序将 C++ EBus 接口与 Lua 等脚本语言绑定在一起。
 
-1. Tell the behavior context reflection that the event handler is available:
+1. 告诉行为上下文反射事件处理程序可用：
 
     ```cpp
     behaviorContext.EBus<TestBus>("TestBus")->
@@ -431,7 +431,7 @@ This is required because the behavior context cannot guarantee that there is a h
     ;
     ```
 
-1. Optionally provide the implementation for the EBus handler:
+1. 可选择提供 EBus 处理程序的实现：
 
    ```cpp
    MyBusHandlerMetaTable1 = {

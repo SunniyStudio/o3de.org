@@ -1,56 +1,56 @@
 ---
-linkTitle: Versioning Serialized Data
-title: Versioning Your Component Serialization
-description: Use the Open 3D Engine (O3DE) component serialization versioning system to validate and update the serialized data of your components.
+linkTitle: 版本化序列化数据
+title: 版本化组件序列化
+description: 使用Open 3D Engine (O3DE)组件序列化版本系统来验证和更新组件的序列化数据。
 ---
 
-As requirements, code, and data representation change, you may need to modify your implementation of data reflection. However, changes to serialized data can result in incompatibilities. To manage compatibility, you can assign a version number increment to your serialized data structures. With this approach, you can perform validation during serialization to ensure that the data being read matches the format that the reflection system specifies. We recommend that you increase the version number of serialized data anytime there is a change to the reflected fields.
+随着需求、代码和数据表示的变化，您可能需要修改数据反射的实现。然而，序列化数据的更改可能会导致不兼容。为了管理兼容性，可以为序列化数据结构分配一个版本号增量。采用这种方法，可以在序列化过程中执行验证，确保读取的数据与反射系统指定的格式相匹配。我们建议你在反射字段发生变化时增加序列化数据的版本号。
 
-The following code shows how to specify a version number for the serialization context.
+以下代码展示了如何为序列化上下文指定版本号。
 
 ```cpp
 serializeContext->Class<SerializedStruct>()
     ->Version(1)
 ```
 
-Successful conversion of serialized data to a newer version requires careful planning.
+要成功地将序列化数据转换为更新的版本，需要精心策划。
 
-## Version converters
+## 版本转换器
 
-A version change can create incompatibilities that require data to be converted from one format to another. To resolve this, you can implement a version converter that reformats data "on the spot" to maintain data compatibility. For example, you might require a version converter if you change a data type or a container (for example, an `AZStd::vector` becomes an `AZStd::unordered_map`).
+版本变更可能会产生不兼容性，需要将数据从一种格式转换为另一种格式。为了解决这个问题，你可以实现一个版本转换器，“当场 ”重新格式化数据，以保持数据的兼容性。例如，如果更改了数据类型或容器（例如，`AZStd::vector`变成了`AZStd::unordered_map`），就可能需要版本转换器。
 
-Use the `Version` function mentioned in the previous section to specify a version converter, as in the following example.
+请使用上一节提到的 `Version` 函数来指定版本转换器，如下例所示。
 
 ```cpp
 serializeContext->Class<EditorEntitySortComponent, EditorComponentBase>()
     ->Version(2, &SerializationConverter)
 ```
 
-Version converters operate directly on the serialized data.
+版本转换器直接对序列化数据进行操作。
 
-To facilitate the creation of version converters, **Open 3D Engine (O3DE)** provides helper functions and examples such as the following:
+为方便创建版本转换器，**Open 3D Engine (O3DE)** 提供了辅助函数和示例，如以下所示：
 
-* To locate a specific element to manipulate, you can use the `AZ::Utils::FindDescendantElements` helper function.
-* To access serialized data and manipulate it, you can use the public functions in the `DataElementNode` class (`Code/Framework/AzCore/AzCore/Serialization/SerializeContext.h`).
-* For version converter examples, see the AZ core serialization unit test in the `Code/Framework/AzCore/Tests/Serialization.cpp` file.
+* 要定位要操作的特定元素，可以使用 `AZ::Utils::FindDescendantElements` 辅助函数。
+* 要访问序列化数据并对其进行操作，可使用`DataElementNode`类(`Code/Framework/AzCore/AzCore/Serialization/SerializeContext.h`)中的公共函数。
+* 有关版本转换器示例，请参阅 `Code/Framework/AzCore/Tests/Serialization.cpp`文件中的 AZ core 序列化单元测试。
 
-A version conversion operation that replaces a container might follow this common pattern:
+替换容器的版本转换操作可能遵循这种常见模式：
 
-1. Compare the version number of the data being serialized with the current version. If the versions do not match, perform the steps that follow.
+1. 比较序列化数据的版本号和当前版本。如果版本不匹配，请执行以下步骤。
 
-1. Locate the element to convert by its `Crc32` key.
+1. 通过元素的 `Crc32` 键找到要转换的元素。
 
-1. Create a container to store the updated elements.
+1. 创建一个容器来存储更新的元素。
 
-1. Populate the new container with the existing data.
+1. 用现有数据填充新容器。
 
-1. Delete the old element from the root data.
+1. 从根数据中删除旧元素
 
-1. Use the same `Crc32` key to add the new container as a new element in the root data.
+1. 使用相同的 `Crc32` 键将新容器添加为根数据中的新元素。
 
-After this operation is completed, the data exists in the new format. When the data is serialized again, it is stored in the latest format.
+此操作完成后，数据将以新格式存在。再次序列化数据时，数据将以最新格式存储。
 
-The following code shows an example of data conversion:
+下面的代码显示了一个数据转换示例：
 
 ```cpp
 if (rootElement.GetVersion() <= 1)
@@ -84,32 +84,32 @@ if (rootElement.GetVersion() <= 1)
 ```
 
 {{< note >}}
-If you need to emit a warning or error when a conversion fails (for example, for asset builds), use the `AZ_Warning` or `AZ_Error` macros.
+如果需要在转换失败时发出警告或错误（例如，用于资产构建），请使用 `AZ_Warning` 或 `AZ_Error` 宏。
 {{< /note >}}
 
-## Upgrade class builders
+## 升级类构建器
 
-Slice data patches present a unique challenge to versioning your component data structures. Data patches cannot be upgraded by version converters because they do not contain all the information about a component class. Changing the serialization of a component without upgrading data patches that contain partial component data can lead to crashes, corrupted slice data, or invalid slice files that cannot be loaded or manipulated and must be rebuilt from scratch.
+切片数据补丁对组件数据结构的版本控制提出了独特的挑战。数据补丁无法通过版本转换器升级，因为它们不包含组件类的所有信息。在不升级包含部分组件数据的数据补丁的情况下更改组件的序列化，可能会导致崩溃、切片数据损坏或切片文件无效，无法加载或操作，必须从头开始重建。
 
-In most cases, the solution is to use `NameChange` and `TypeChange` class builders alongside your version converters. This causes the serializer to update the data patch and to apply basic type changes and field name changes. You can chain these builders together to upgrade across multiple version changes. You can also write them to skip versions entirely.
+在大多数情况下，解决办法是在使用版本转换器的同时使用 `NameChange` 和 `TypeChange` 类构建器。这将使序列化器更新数据补丁，并应用基本的类型更改和字段名称更改。您可以将这些构建器串联起来，以便在多个版本变更时进行升级。您也可以编写这些构建器来完全跳过版本。
 
-### Class builder syntax
+### 类创建器语法
 
-Name-change class builders require an input and output version, followed by the input serialized name and a new output name.
+名称更改类构建器需要输入和输出版本，然后是输入序列化名称和新的输出名称。
 
 ```cpp
 NameChange(InputVersion, OutputVersion, "OldFieldName", "NewFieldName")
 ```
 
-Type-change class builders require input and output data types as template arguments, followed by the relevant field name, the input and output version, and a conversion function.
+类型更改类构建器需要输入和输出数据类型作为模板参数，然后是相关字段名称、输入和输出版本以及转换函数。
 
 ```cpp
 TypeChange<InputType, OutputType>("FieldName", InputVersion, OutputVersion, Function<OutputType(InputType)>)
 ```
 
-### NameChange class builder examples
+### NameChange 类创建器示例
 
-In the following example, we use a `NameChange` class builder to change a serialized name of a field from `"MyData"`, used in version `4` of the component serialization, to `"Data"` in version `5`.
+在下面的示例中，我们使用 `NameChange` 类创建器将一个字段的序列化名称从组件序列化版本 `4` 中的 `“MyData”` 更改为版本 `5` 中的  `"Data"` 。
 
 ```cpp
 serializeContext->Class<ExampleClass>()
@@ -118,7 +118,7 @@ serializeContext->Class<ExampleClass>()
     ->NameChange(4, 5, "MyData", "Data");
 ```
 
-You can also change the serialized name of a struct or class member when reflecting a class to the serialization context. In the following example, we use a `NameChange` class builder to change the name from `"MyStructData"` in version `4` to `"StructData"` in version `5`.
+在将类反映到序列化上下文时，还可以更改结构体或类成员的序列化名称。在下面的示例中，我们使用 `NameChange` 类创建器将名称从版本 `4` 中的 `“MyStructData”` 更改为版本 `5` 中的 `“StructData”。
 
 ```cpp
 class ExampleClass
@@ -133,9 +133,9 @@ serializeContext->Class<ExampleClass>()
     ->NameChange(4, 5, "MyStructData", "StructData");
 ```
 
-### TypeChange class builder examples
+### TypeChange 类创建器示例
 
-In the following example, class member `m_data` has changed from an `int` in version `4` to a `float` in version `5`. We add a `TypeChange` class builder to the serialization context so that any data patches containing the serialized field name `"MyData"` are applied using the new data type.
+在下面的示例中，类成员 `m_data` 已从版本 `4` 中的 `int` 变为版本 `5` 中的 `float`。我们在序列化上下文中添加了一个 `TypeChange` 类创建器，这样任何包含序列化字段名称 `“MyData”` 的数据修补程序都会使用新的数据类型。
 
 ```cpp
 // Serialization Context for Version 4:
@@ -166,7 +166,7 @@ class ExampleClass
 };
 ```
 
-You can also handle nesting value changes. In the following example, the field `m_data` has become nested inside of the new `MyData` struct in version `5`. We use a `TypeChange` class builder to instruct the serializer to convert the simple `int` data type to the more complex `MyData` type.
+您还可以处理嵌套值变化。在下面的示例中，字段 `m_data` 嵌套在版本 `5` 中新的 `MyData` 结构中。我们使用 `TypeChange` 类创建器来指示序列化器将简单的 `int` 数据类型转换为更复杂的 `MyData` 类型。
 
 ```cpp
 // Serialization Context for Version 4:
@@ -202,15 +202,15 @@ class ExampleClass
 };
 ```
 
-### Advanced class builder examples
+### 高级类创建器示例
 
-The following examples demonstrate more complex usage of class builders.
+以下示例演示了类构建器更复杂的用法。
 
-**Example: Multiple upgrades in one version**
+**示例： 一个版本中的多个升级**
 
-Type changes take priority over name changes. You can apply both in the same version upgrade, but the type change is applied first. Therefore, when changing both a type and a name at the same time, always specify the *previous* field name in the `TypeChange`.
+类型更改优先于名称更改。您可以在同一版本升级中同时应用这两种更改，但类型更改会优先应用。因此，在同时更改类型和名称时，一定要在 `TypeChange` 中指定**上一个**字段的名称。
 
-In the following example, a `TypeChange` changes the type from `float` to `int`. It is immediately followed by a `NameChange` that changes the serialized name from `"FloatData"` to `"IntData"`.
+在下面的示例中， `TypeChange` 将类型从`float` 改为 `int`。紧随其后的 `NameChange` 将序列化名称从 `“FloatData”` 变为 `“IntData”`。
 
 ```cpp
 // Serialization Context for Version 4:
@@ -242,11 +242,11 @@ class ExampleClass
 };
 ```
 
-**Example: Version skipping**
+**举例说明： 版本跳过**
 
-A `TypeChange` can skip multiple versions. Avoid skipping versions unless intermediate type changes contain conversions that could lose data.
+一个 `TypeChange` 可以跳过多个版本。除非中间类型更改包含可能丢失数据的转换，否则应避免跳过版本。
 
-In the following example, using `ExampleClass`, the member variable `m_data` changes from a `float` in version `1` to an `int` in version `2`. Then in version `3`, `m_data` changes back to a `float`. We use multiple `TypeChange` class builders to avoid losing the floating point precision when upgrading older overrides to version `3`, while still providing the ability to fix data patches written using version `2` of `ExampleClass`.
+在下面使用 `ExampleClass` 的示例中，成员变量 `m_data` 从版本 `1` 中的 `float` 变为版本 `2` 中的 `int`。然后在版本 `3` 中，`m_data` 又变回了 `float`。我们使用多个 `TypeChange` 类构建器，以避免在将旧版本的覆盖升级到版本 `3` 时丢失浮点精度，同时仍能修复使用版本 `2` 的 `ExampleClass` 编写的数据补丁。
 
 ```cpp
 // Version 1 of ExampleClass:
@@ -293,13 +293,13 @@ class ExampleClass
 };
 ```
 
-We strongly recommend against skipping versions with the `NameChange` builder. Doing so causes problems for any `TypeChange` builders used on the same field in between the skipped versions as they try to match the serialized field name.
+我们强烈建议不要使用 `NameChange` 创建器跳过版本。这样做会给在跳过版本之间的同一字段上使用的 `TypeChange` 创建器带来问题，因为它们会尝试匹配序列化字段名。
 
-## Deprecation
+## 废弃
 
-The serialization context also supports deprecation of a previously reflected class name. To deprecate a class, use the `ClassDeprecate` method. After a class is deprecated, any instances of the class are silently discarded during load.
+序列化上下文还支持废弃先前反映的类名。要废弃一个类，请使用 `ClassDeprecate` 方法。类被废弃后，该类的任何实例都会在加载过程中被静默丢弃。
 
-The following example shows the use of the `ClassDeprecate` method.
+下面的示例展示了 `ClassDeprecate` 方法的使用。
 
 ```cpp
 serializeContext->ClassDeprecate("DeprecatedClass", "{893CA46E-6D1A-4D27-94F7-09E26DE5AE4B}");

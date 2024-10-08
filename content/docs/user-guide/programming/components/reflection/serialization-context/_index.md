@@ -1,11 +1,11 @@
 ---
-linkTitle: Serialization Context
-title: Serialization Context in O3DE
-description: Use the serialization context in Open 3D Engine (O3DE) to provide persistence for C++ objects or O3DE types.
+linkTitle: 序列化上下文
+title: O3DE中的序列化上下文
+description: 在 Open 3D Engine (O3DE) 中使用序列化上下文，为 C++ 对象或 O3DE 类型提供持久性。
 weight: 100
 ---
 
-You can use the **Open 3D Engine (O3DE)** serialization context to provide persistence for C++ objects or any O3DE type. The `SerializeContext` class is defined in `Code/Framework/AzCore/AzCore/Serialization/SerializeContext.*`. To implement this, make an `AzTypeInfo` declaration or use `AZ_RTTI` (runtime type information), as in the following example:
+您可以使用**Open 3D Engine (O3DE)** 序列化上下文为C++对象或任何O3DE类型提供持久性。 `Code/Framework/AzCore/AzCore/Serialization/SerializeContext.*`中定义了`SerializeContext`类。要实现这一点，请声明`AzTypeInfo`或使用`AZ_RTTI`（运行时类型信息），如下例所示：
 
 ```cpp
 class SerializedObject
@@ -24,16 +24,16 @@ public:
 };
 ```
 
-You can also reflect native types and [POD structs](https://en.wikipedia.org/wiki/C++_classes#POD-structs) for serialization by creating an `AZ_TYPE_INFO` specialization, as in the following code example:
+您还可以通过创建 `AZ_TYPE_INFO` 特殊化来反映本地类型和 [POD 结构](https://en.wikipedia.org/wiki/C++_classes#POD-structs) ，以便进行序列化，如以下代码示例所示：
 
 ```cpp
 AZ_TYPE_INFO_SPECIALIZE(AZStd::chrono::system_clock::time_point, "{5C48FD59-7267-405D-9C06-1EA31379FE82}");
 AZ_TYPE_INFO_SPECIALIZE(float, "{EA2C3E90-AFBE-44d4-A90D-FAAF79BAF93D}");
 ```
 
-## Fields
+## 字段
 
-To associate a text string with the address to a field of a serialized object, use the `Field` function, as in the following example. You can use the builder pattern to serialize multiple fields.
+要将文本字符串与地址关联到序列化对象的字段，请使用 `Field` 函数，如下例所示。您可以使用构建器模式序列化多个字段。
 
 ```cpp
 serializedContext->Class<SerializedObject>()
@@ -42,13 +42,13 @@ serializedContext->Class<SerializedObject>()
 ;
 ```
 
-## Serializers
+## 序列化器
 
-Serializers are a useful way to provide custom data formats. If you want to do custom processing on an object before writing or reading it, you can override O3DE's default serializer.
+序列化器是提供自定义数据格式的有用方法。如果想在写入或读取对象之前对其进行自定义处理，可以覆盖 O3DE 的默认序列化器。
 
-To override the default serializer, implement the `AZ::SerializeContext::IDataSerializer` interface. Use the interface to override how data is handled as it is streamed into its persistent format. You can also use the interface to determine the actions that occur when the reflected object is serialized (read or written).
+要覆盖默认序列化器，请实现 `AZ::SerializeContext::IDataSerializer` 接口。使用该接口可覆盖数据流转化为持久化格式时的处理方式。您还可以使用该接口来确定反射对象被序列化（读取或写入）时发生的操作。
 
-The `AZ::Uuid` class `(Code/Framework/AzCore/AzCore/Math/MathScriptHelpers.h)` provides a good example of a custom serializer. To save a UUID value, the code writes it directly into the stream. This part of the code is straightforward.
+`AZ::Uuid`类`(Code/Framework/AzCore/AzCore/Math/MathScriptHelpers.h)`提供了一个自定义序列化器的良好示例。要保存 UUID 值，代码会将其直接写入数据流。这部分代码简单明了。
 
 ```cpp
 /// Store the class data into a binary buffer.
@@ -59,7 +59,7 @@ size_t Uuid::Save(const void* classPtr, IO::GenericStream& stream, bool)
 }
 ```
 
-Loading a UUID is also straightforward, but the code does some error checking to ensure that the data loads as expected:
+加载 UUID 也很简单，但代码会进行一些错误检查，以确保数据按预期加载：
 
 ```cpp
 /// Load the class data from a stream.
@@ -78,9 +78,9 @@ bool Uuid::Load(void* classPtr, IO::GenericStream& stream, unsigned int /*versio
 }
 ```
 
-The custom serializer has functions that convert the data between binary and text formats. By converting the data into text format, you can store it in `.xml` or `.json` files.
+自定义序列化器具有在二进制和文本格式之间转换数据的功能。通过将数据转换为文本格式，可以将其存储到 `.xml` 或 `.json` 文件中。
 
-The following `DataToText` function reads the binary value for the UUID from the incoming stream. The function converts the binary value into an `AZStd::string` and then writes it to the outgoing stream.
+下面的 `DataToText` 函数从输入流中读取 UUID 的二进制值。该函数将二进制值转换为 `AZStd::string`，然后将其写入输出流。
 
 ```cpp
 size_t Uuid::DataToText(IO::GenericStream& in, IO::GenericStream& out, bool)
@@ -99,7 +99,7 @@ size_t Uuid::DataToText(IO::GenericStream& in, IO::GenericStream& out, bool)
 }
 ```
 
-The following `TextToData` function converts the text input string into binary UUID format and then writes the binary data out to the stream.
+下面的 `TextToData` 函数将文本输入字符串转换为二进制 UUID 格式，然后将二进制数据写入数据流。
 
 ```cpp
 /// Convert text data to binary to support the loading of legacy formats.
@@ -112,15 +112,15 @@ size_t Uuid::TextToData(const char* text, unsigned int, IO::GenericStream& strea
 }
 ```
 
-## Data containers
+## 数据容器
 
-To create custom serialization for templates and types that are not directly reflected through the `SerializeContext::Reflect` function, you can use data containers.
+要为无法通过 `SerializeContext::Reflect` 函数直接反映的模板和类型创建自定义序列化，可以使用数据容器。
 
-To create a data container, implement the `AZ::SerializeContext::IDataContainer` interface. You can use this interface to provide serialization for a class or template of classes and let the user choose the elements to be serialized. This is possible because `IDataContainer` allows the user to override an `EnumElements` function. The `EnumElements` function determines which elements of the serialized class are enumerated and are therefore capable of being serialized.
+要创建数据容器，请实现 `AZ::SerializeContext::IDataContainer` 接口。您可以使用该接口为一个类或类模板提供序列化，并让用户选择要序列化的元素。之所以能做到这一点，是因为 `IDataContainer` 允许用户覆盖一个 `EnumElements` 函数。`EnumElements`"函数决定序列化类中哪些元素是枚举元素，因此能够被序列化。
 
-### Templates
+### 模板
 
-Data containers provide the best way to add support for templates to the serialization context. The following templates have a [metaclass](https://en.wikipedia.org/wiki/Metaclass) that implements the `IDataContainer` interface and serializes the templates.
+数据容器是在序列化上下文中添加模板支持的最佳方式。以下模板有一个[metaclass](https://en.wikipedia.org/wiki/Metaclass)，它实现了 `IDataContainer`接口并将模板序列化。
 
 ```cpp
 AZStd::vector<T>
@@ -128,14 +128,14 @@ AZStd::basic_string<T>
 AZStd::unique_ptr<T>
 ```
 
-### Nontemplate types
+### 非模板类型
 
-You can use the `IDataContainer` interface to serialize nontemplate types like `AZStd::any`. This is because the type of element that is serialized is dependent on the type that is stored in the `AZStd::any` object.
+您可以使用 `IDataContainer` 接口序列化非模板类型，如 `AZStd::any`。这是因为序列化的元素类型取决于存储在`AZStd::any`对象中的类型。
 
-**Stable Elements**
-Elements are considered stable if their pointers do not change when other elements are added to or removed from a container. O3DE's implementation of stable elements corresponds to the [C++17](https://en.wikipedia.org/wiki/C++17) rules for iterator invalidation as documented in section 26 of the [ISO/IEC 14882:2017(E)](https://www.iso.org/standard/68564.html) standard. The elements in types like `AZStd::vector` are not stable because they are stored in a contiguous sequence. When an element that is not at the end of the vector is removed, all elements after it in memory must shift to the left to keep the sequence contiguous. Stable elements can be removed from a container without affecting other elements in the container. You can use the `IsStableElements` function to determine the status of a container's elements. If a container's elements are not stable, you must enumerate them in order for them to be serialized.
+**稳定元素**
+如果在容器中添加或移除其他元素时，元素的指针不会发生变化，那么这些元素就被认为是稳定的。O3DE 对稳定元素的实现与[ISO/IEC 14882:2017(E)](https://www.iso.org/standard/68564.html)标准第 26 节中记录的[C++17](https://en.wikipedia.org/wiki/C++17)迭代器失效规则相对应。`AZStd::vector` 等类型中的元素并不稳定，因为它们是以连续序列存储的。当删除一个不在向量末尾的元素时，内存中该元素之后的所有元素都必须向左移动，以保持序列连续。从容器中移除稳定元素不会影响容器中的其他元素。可以使用 `IsStableElements` 函数来确定容器元素的状态。如果容器中的元素不稳定，则必须枚举这些元素才能对其进行序列化。
 
-The following code example shows how to set up serialization for a container that stores a dynamic sequence of homogenous elements.
+下面的代码示例展示了如何为存储同质元素动态序列的容器设置序列化。
 
 ```cpp
 template<class T, bool IsStableIterators>
@@ -149,13 +149,13 @@ public:
 };
 ```
 
-A `SerializeContext::ClassElement` is a struct that uniquely identifies a serialized element of a class. It includes fields like the following:
+`SerializeContext::ClassElement` 是一个结构体，用于唯一标识一个类的序列化元素。它包括以下字段：
 
-+ `TypeId` -- An ID for looking up data in `ClassData` within the `SerializeContext`.
-+ `Name`, `NameCrc` -- The name and CRC with which the element is serialized.
-+ Element-specific serialization attributes.
++ `TypeId` -- 用于在 `SerializeContext` 中查找 `ClassData` 中数据的 ID。
++ `Name`, `NameCrc` -- 元素序列化时使用的名称和 CRC。
++ 元素特定的序列化属性。
 
-To look up the name of the `SerializeContext::ClassElement` that the data container supports, override the `GetElement` function, as in the following example.
+要查找数据容器支持的 `SerializeContext::ClassElement` 名称，请重载 `GetElement` 函数，如下例所示。
 
 ```cpp
 // Returns the class element by looking up the CRC value of the element.
@@ -180,7 +180,7 @@ bool GetElement(SerializeContext::ClassElement& classElement, const SerializeCon
 }
 ```
 
-The following example shows how to override the `EnumElement` method to specify the elements that are enumerated. Enumerating them enables them to be saved.
+下面的示例展示了如何覆盖 `EnumElement` 方法，以指定要枚举的元素。通过枚举这些元素，可以保存它们。
 
 ```cpp
 /// Enumerate elements in the array.
@@ -202,7 +202,7 @@ void EnumElements(void* instance, const ElementCB& cb) override
 }
 ```
 
-To make a template editable in **O3DE Editor** and the reflected property editor, override the constraint functions in the following code:
+要在**O3DE 编辑器**和反射属性编辑器中编辑模板，请覆盖以下代码中的约束函数：
 
 ```cpp
 // The following code defines the characteristics of the container that is serialized.
@@ -238,12 +238,12 @@ bool    CanAccessElementsByIndex() const override   { return false; }
 ```
 
 {{< note >}}
-+ When `IsFixedSize` and `IsFixedCapacity` are false, the plus (+) and minus (-) buttons in the property editor can be used to add and remove elements from the data container.
-+ When `IsSmartPointer` is false, the data container does not create an instance of the `SmartPointer` type when an element is added to the container.
-+ When `CanAccessElementsByIndex` is false, the serialization system checks whether to allocate memory for new elements. `CanAccessElementsByIndex` is true for fixed-size containers like `AZStd::array`, `AZStd::pair`, and `AZStd::tuple` because those containers already have memory storage allocated for their elements.
++ 当 `IsFixedSize` 和 `IsFixedCapacity` 为 false 时，属性编辑器中的加号 (+) 和减号 (-) 按钮可用于从数据容器中添加和删除元素。
++ 当 `IsSmartPointer` 为 false 时，当元素被添加到数据容器时，数据容器不会创建 `SmartPointer` 类型的实例。
++ 当 `CanAccessElementsByIndex` 为 false 时，序列化系统会检查是否为新元素分配内存。对于固定大小的容器，如 `AZStd::array`、`AZStd::pair` 和 `AZStd::tuple`，`CanAccessElementsByIndex` 为 true，因为这些容器已经为其元素分配了内存。
 {{< /note >}}
 
-To load an element into the template class instance, override the `ReserveElement`, `StoreElement`, and `RemoveElements` functions, as in the following example.
+要将元素加载到模板类实例中，请重载 `ReserveElement`、`StoreElement` 和 `RemoveElements` 函数，如下例所示。
 
 ```cpp
 /// Use the reserve element function.
@@ -351,25 +351,25 @@ void    ClearElements(void* instance, SerializeContext* deletePointerDataContext
 }
 ```
 
-## Using the data container to serialize a template class
+## 使用数据容器序列化模板类
 
-After you have defined a data container, you can use it to serialize a specific type. For example, to set up serialization for the templated `AZStd::vector<T>`, you must serialize `SerializeGenericTypeInfo<T>` for `AZStd::vector`. To create the class data structure, you use the following `Create<ContainerType>` function:
+定义数据容器后，就可以用它来序列化特定类型。例如，要为模板化的 `AZStd::vector<T>` 设置序列化，就必须序列化 `AZStd::vector` 的 `SerializeGenericTypeInfo<T>` 。要创建类数据结构，请使用下面的 `Create<ContainerType>` 函数：
 
 ```cpp
 SerializeContext::ClassData::Create<ContainerType>("AZStd::vector", GetSpecializedTypeId(), Internal::NullFactory::GetInstance(), nullptr, &m_containerStorage);
 ```
 
-The `Create<ContainerType>` function parameters are explained in the following table.
-
-| Parameter | Description |
+`Create<ContainerType>` 函数参数的说明见下表。
+1
+| 参数 | 说明 |
 | --- | --- |
-| "AZStd::vector" | Specifies the user friendly name of the class in a JSON or XML stream. |
-| GetSpecializedTypeId() | Creates an ID that enables serialization of different types. For example, an `AZStd::vector` of integers can be serialized as a type that is different from an `AZStd::vector` of floats. The unique ID is made by aggregating the template type `AZStd::vector` with the contained type `T`.  |
-| Internal::NullFactory::GetInstance() | NullFactory is used to prevent heap memory from being used to create an `AZStd::vector`. To load an `AZStd::vector` element of a pointer type, change this to `Serialize::InstanceFactory<AZStd::vector<T,A>>`. |
-| nullptr  | This is the serializer parameter. Because the serialization occurs through a data container, this parameter is nullptr. |
-| &m_containerStorage | The `m_containerStorage` structure is an `AZStdBasicContainer` that ClassData uses to serialize the `AZStd::vector` element array. |
+| "AZStd::vector" | 以 JSON 或 XML 数据流形式指定类的用户友好名称。 |
+| GetSpecializedTypeId() | 创建一个 ID，以实现不同类型的序列化。例如，整数的 `AZStd::vector`可以序列化为不同于浮点数的 `AZStd::vector`的类型。唯一 ID 是由模板类型 `AZStd::vector` 与所含类型 `T` 聚合而成。 |
+| Internal::NullFactory::GetInstance() | NullFactory 用于防止堆内存被用于创建 `AZStd::vector`。要加载指针类型的 `AZStd::vector`元素，请将其改为`Serialize::InstanceFactory<AZStd::vector<T,A>>`。 |
+| nullptr  | 这是序列化器参数。由于序列化是通过数据容器进行的，因此该参数为 nullptr。 |
+| &m_containerStorage | `m_containerStorage` 结构是一个 `AZStdBasicContainer` ，ClassData 使用它来序列化 `AZStd::vector`元素数组。|
 
-The following code example uses the `Create<ContainerType>` function to set up serialization for the templated `AZStd::vector<T>`.
+以下代码示例使用 `Create<ContainerType>` 函数为模板化的 `AZStd::vector<T>` 设置序列化。
 
 ```cpp
 /// Generic serialization example for AZStd::vector.
@@ -438,13 +438,13 @@ struct SerializeGenericTypeInfo< AZStd::vector<T, A> >
 };
 ```
 
-## Events
+## 事件
 
-To process data before or after you read or write serialized data, you can write serialization event handlers. For example, by handling serialization events, you can perform runtime initializations specific to the data that is serialized.
+要在读取或写入序列化数据之前或之后处理数据，可以编写序列化事件处理程序。例如，通过处理序列化事件，可以针对序列化的数据执行运行时初始化。
 
-To create a serialization event handler, implement the `AZ::SerializeContext::IEventHandler` interface as in the following example.
+要创建序列化事件处理程序，请按以下示例实现 `AZ::SerializeContext::IEventHandler` 接口。
 
-The example uses an event handler to update a map container within the `SceneData` class after a `SceneData` instance has been serialized.
+该示例使用了一个事件处理程序，以在 `SceneData` 实例序列化后更新 `SceneData` 类中的映射容器。
 
 ```cpp
 class SceneDataEventHandler : public AZ::SerializeContext::IEventHandler
@@ -468,11 +468,11 @@ if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(
 }
 ```
 
-## Data overlays
+## 数据覆盖
 
-You can use the serialization context to provide data from an external source during serialization. These external sources of data are called *data overlays*.
+在序列化过程中，您可以使用序列化上下文从外部来源提供数据。这些外部数据源称为**数据覆盖**。
 
-To create a data overlay, you implement an [**Event Bus (EBus)**](/docs/user-guide/programming/messaging/ebus/) through which the data is serialized. The following example is the code that implements unit testing for the data overlay feature:
+要创建数据叠加，您需要实现一个[**事件总线（EBus）**](/docs/user-guide/programming/messaging/ebus/) ，通过它对数据进行序列化。下面的示例代码实现了数据叠加功能的单元测试：
 
 ```cpp
 struct DataOverlayTestStruct
@@ -488,7 +488,7 @@ struct DataOverlayTestStruct
 };
 ```
 
-The `DataOverlayTestStruct` holds data fields to be reflected for serialization:
+`DataOverlayTestStruct` 包含序列化时要反射的数据字段：
 
 ```cpp
 serializeContext.Class<DataOverlayTestStruct>()
@@ -497,9 +497,9 @@ serializeContext.Class<DataOverlayTestStruct>()
                   ->Field("pointer", &DataOverlayTestStruct::m_ptr);
 ```
 
-Next, implement the data overlay provider. The provider represents the data source that is overlaid into the serialized data.
+接下来，实现数据覆盖提供程序。该提供程序代表覆盖到序列化数据中的数据源。
 
-The following code shows an example of a data overlay provider:
+下面的代码展示了一个数据覆盖提供程序的示例：
 
 ```cpp
 class DataOverlayProviderExample
@@ -541,4 +541,5 @@ public:
 };
 ```
 
-`DataOverlayProviderExample` uses the `Crc32` ID for the reflected `DataOverlayTestStruct` source data fields. Then the example implements the `DataOverlayProviderBus::Handler` `FillOverlayData` function. The `FillOverlayData` function is where the actual data overlay occurs. The `DataOverlayToken` holds the ID of the field that is serialized. If the ID matches one of the fields that you want to overlay, you can use `DataOverlayTarget` to set the data.
+`DataOverlayProviderExample`使用 `Crc32` ID来反射`DataOverlayTestStruct`源数据字段。然后，该示例实现了 `DataOverlayProviderBus::Handler``FillOverlayData` 函数。`FillOverlayData`函数是实际数据叠加的地方。`DataOverlayToken`保存被序列化字段的 ID。如果 ID 与要覆盖的字段匹配，则可以使用 `DataOverlayTarget` 设置数据。
+

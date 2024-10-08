@@ -1,27 +1,27 @@
 ---
-title: Crash Reporting with Dump Files
-linktitle: Crash Reporting
-description: When you encounter a crash in Open 3D Engine (O3DE), it's helpful to generate a dump file with crash reporting information to help track down the problem. 
+title: 崩溃报告和崩溃报告
+linktitle: 崩溃报告
+description: 当您在 Open 3D Engine (O3DE) 中遇到崩溃时，生成一个包含崩溃报告信息的转储文件将有助于追踪问题。
 ---
 
-If you encounter a crash with **Open 3D Engine (O3DE)**, you may find helpful information in the dump file, `error.dmp`. The dump file records details about the state of the engine that led to the event of the crash. The dump file is a compact minidump and is located in the `user/log/` directory, within the same parent directory where you ran the O3DE Editor from. For example, if you ran the Editor from `MyProject`'s directory, then you can find the dump files in `/MyProject/user/log/`. 
+如果您遇到 **Open 3D Engine (O3DE)** 崩溃，您可以在转储文件 `error.dmp` 中找到有用的信息。转储文件记录了导致崩溃的引擎状态的详细信息。转储文件是一个紧凑的 minidump 文件，位于 `user/log/` 目录中，与您运行 O3DE 编辑器的父目录相同。例如，如果您在 `MyProject`目录下运行编辑器，那么您可以在 `/MyProject/user/log/`中找到转储文件。
 
-## Dump file creation
+## 创建转储文件
 
-By default, O3DE creates a dump file that includes the stack trace and some variable information. This is set via the `sys_dump_type` [console variable (CVAR)](/docs/user-guide/appendix/cvars/).
+默认情况下，O3DE 会创建一个转储文件，其中包括堆栈跟踪和一些变量信息。可以通过 `sys_dump_type` [控制台变量](/docs/user-guide/appendix/cvars/) 进行设置。
 
-If you want to configure the type of crash log information that's generated, set the `sys_dump_type` CVAR to one of the following values:
-- `0` -- Disable crash reporting.
-- `1` -- Generate a stack trace on crash.
-- `2` -- (Default) Generate a stack trace and limited variable information.
-- `3` -- Generate a full crash log of the stack trace, and all variable and information.
+如果要配置生成的崩溃日志信息的类型，请将 `sys_dump_type` CVAR 设置为以下值之一：
+- `0` -- 禁用崩溃报告。
+- `1` -- 崩溃时生成堆栈跟踪。
+- `2` -- (默认）生成堆栈跟踪和有限的变量信息。
+- `3` -- 生成包含堆栈跟踪、所有变量和信息的完整崩溃日志。
 
-## Debugging with the dump file
+## 使用转储文件调试
 
-To debug the dump file with **Visual Studio**:
+使用**Visual Studio**调试转储文件：
 
-1. Open `user/log/error.dmp` in Visual Studio. This displays a summary of the dump, including a timestamp, the process where the crash occurred, and information about the exception. 
+1. 在 Visual Studio 中打开 `user/log/error.dmp`。这会显示转储摘要，包括时间戳、发生崩溃的进程以及异常信息。 
 
-2. Then, you can start the Visual Studio debugger to see the context of the exception, as well as the call stack, and any variable and memory information.
+2. 然后，您可以启动 Visual Studio 调试器，查看异常的上下文、调用堆栈以及任何变量和内存信息。
 
-You may also look at other log files in `user/log/` to find more clues as to the cause of the crash. 
+您还可以查看 `user/log/`中的其他日志文件，以找到更多有关崩溃原因的线索。

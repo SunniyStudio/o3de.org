@@ -1,34 +1,34 @@
 ---
-title: Debug Tracing
-linktitle: Tracing
-description: Learn best practices for debug tracing in Open 3D Engine (O3DE). 
+title: 调试跟踪
+linktitle: 跟踪
+description: 学习 Open 3D Engine (O3DE) 中调试跟踪的最佳实践。
 ---
 
-**Recommended**: For code tracing needs, use `AZ_*` tracing macros.
+**推荐**: 如需跟踪代码，请使用 `AZ_*` 跟踪宏。
 
-**Reason**: Error handling and tracing functions provide useful messages formatted for readability about errors that occur. To facilitate debugging, `AZ_*` tracing functions indicate where in code the errors occurred.
+**原因**: 错误处理和跟踪函数提供了有用的信息，这些信息的格式使发生的错误具有可读性。为便于调试，`AZ_*` 跟踪函数会指出错误发生在代码的哪个位置。
 
-The following table describes the `AZ_Tracing` macros and their uses.
+下表描述了 `AZ_Tracing` 宏及其用途。
 
 
 ****
 
-| AZ Tracing Macro | Description                                                                                                                                                                                                                                                     |
+| AZ 跟踪宏 | 说明                                                                                                                                                                                                                                                     |
 |------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `AZ_Assert`      | Use for critical errors when the program cannot continue. `AZ_Assert` macros print an error message, the file name and line number where the error occurred, and then break program execution.                                                                  |
-| `AZ_Error`       | Use when an obvious error has occurred but the program can continue safely. `AZ_Error` macros print an error message and the file name and line number where the error occurred. In some environments, `AZ_Error` notifies the user that an error has occurred. |
-| `AZ_Warning`     | Use when an error might have occurred. `AZ_Warning` macros print an error message and the file name and line number of the possible error, but take no other action.                                                                                            |
-| `AZ_Info`        | Use for informational purposes only. Info messages indicate that a normal, expected or relevant event has happened. `AZ_Info` macros print a message but take no other action.                                                                                  |
-| `AZ_Trace`       | Use for debugging informational purposes only. `AZ_Trace` macros print a message but take no other action.                                                                                                                                                      |
-| `AZ_TracePrintf` | __(Deprecated)__ Use for informational purposes only. `AZ_TracePrintf` macros print a message but take no other action. Prefer to use `AZ_Info` and `AZ_Trace` macros.                                                                                          |
+| `AZ_Assert`      | 当程序无法继续时，用于处理关键性错误。`AZ_Assert` 宏会打印错误信息、文件名和发生错误的行号，然后中断程序的执行。                                                                 |
+| `AZ_Error`       | 当出现明显错误但程序可以安全继续时使用。`AZ_Error` 宏会打印错误信息以及发生错误的文件名和行号。在某些环境中，`AZ_Error` 会通知用户发生了错误。 |
+| `AZ_Warning`     | 在可能发生错误时使用。`AZ_Warning` 宏会打印一条错误信息以及可能发生错误的文件名和行号，但不会采取任何其他操作。                                                                                           |
+| `AZ_Info`        | 仅供参考。信息消息表示发生了正常的、预期的或相关的事件。`AZ_Info` 宏会打印一条信息，但不会采取任何其他操作。                                                                                 |
+| `AZ_Trace`       | 仅用于调试信息。`AZ_Trace` 宏会打印一条信息，但不会采取任何其他操作。                                                                                                                                                     |
+| `AZ_TracePrintf` | __(已弃用)__ 仅供参考。`AZ_TracePrintf` 宏会打印一条信息，但不会执行其他操作。最好使用 `AZ_Info` 和 `AZ_Trace` 宏。                                                                                         |
 
-There are also versions of many of these macros that only get printed once, for example `AZ_ErrorOnce`. For source code, see `Code\Framework\AzCore\AzCore\Debug\Trace.*`.
+这些宏中也有只打印一次的版本，例如 `AZ_ErrorOnce`。有关源代码，请参阅 `Code\Framework\AzCore\AzCore\Debug\Trace.*`。
 
 
-## Suppressing AZ Trace Messages in Unit Tests
+## 在单元测试中抑制 AZ 跟踪信息
 
-You can use macros to suppress AZ trace messages.
+您可以使用宏来抑制 AZ 跟踪信息。
 
-* `AZ_TEST_START_ASSERTTEST` - Enable `AZ_Error` and `AZ_Assert` trace messages
-* `AZ_TEST_STOP_ASSERTTEST` - Disable `AZ_Error` and `AZ_Assert` trace messages
+* `AZ_TEST_START_ASSERTTEST` - 启用 `AZ_Error` 和 `AZ_Assert` 跟踪消息
+* `AZ_TEST_STOP_ASSERTTEST` - 禁用 `AZ_Error` 和 `AZ_Assert` 跟踪消息
 

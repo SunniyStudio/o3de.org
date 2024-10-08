@@ -1,21 +1,20 @@
 ---
-title: Using the sys_asserts Console Variable (CVAR)
-linktitle: CVAR Asserts
-description: Learn how to use asserts in Open 3D Engine (O3DE) to debug your game code.
+title: 使用 sys_asserts 控制台变量 (CVAR)
+linktitle: CVAR 断言
+description: 了解如何在 Open 3D Engine (O3DE) 中使用断言来调试游戏代码。
 ---
 
-Manage assert notifications in **Open 3D Engine (O3DE)** with the `sys_asserts` [console variable (CVAR)](/docs/user-guide/appendix/cvars/). The following table shows the possible values and their meanings.
+使用 `sys_asserts` [控制台变量 (CVAR)](/docs/user-guide/appendix/cvars/)在 **Open 3D Engine (O3DE)** 中管理断言通知。下表列出了可能的值及其含义。
 
-
-| Value | Description |
+| 值 | 说明 |
 | --- | --- |
-| 0 | Ignore assert condition checks. Assert expressions are not evaluated. This option offers the best performance of all of these values. |
-| 1 | If asserts and assert call stacks are available, they are logged and printed to the console or terminal. This is the default value. |
-| 2 | If asserts and assert call stacks are available, they are logged and printed to the console or terminal. This value displays a dialog box with options to ignore the current assert, ignore all asserts, or break on the assert. |
+| 0 | 忽略断言条件检查。不评估断言表达式。在所有这些值中，该选项的性能最好。 |
+| 1 | 如果断言和断言调用堆栈可用，它们将被记录并打印到控制台或终端。这是默认值。 |
+| 2 | 如果断言和断言调用堆栈可用，它们将被记录并打印到控制台或终端。该值会显示一个对话框，其中包含忽略当前断言、忽略所有断言或断开断言的选项。 |
 
-## Example Outputs 
+## 示例输出
 
-`sys_asserts=1` produces output similar to the following:
+`sys_asserts=1` 会产生类似下面的输出结果：
 
 ```
 (System) - Trace::Assert
@@ -26,24 +25,24 @@ Manage assert notifications in **Open 3D Engine (O3DE)** with the `sys_asserts` 
 (System) - <path>\particleemitter.cpp (87) : <lambda_11fc931574fd38d67807576e751a0e04>::operator()
 ```
 
-`sys_asserts=2` opens a dialog box like the following:
+`sys_asserts=2` 会打开如下对话框：
 
 ![Assert dialog box](/images/user-guide/programming/debugging/debugging-using-asserts-1.png)
 
-The following table describes the options for the **Assert** dialog box.
+下表描述了 **Assert** 对话框的选项。
 
 
 ****
 
-| Option | Description |
+| 选项 | 说明 |
 | --- | --- |
-| Ignore | Ignores the current assert and continues running the application. The same assert no longer triggers the dialog box to display. |
-| Ignore All | Prevents the current assert and all future asserts from displaying a dialog box. To prevent decreases in performance, prints debug information to the log only after completion. |
-| Break | Breaks on the assert. If a debugger is attached, creates a breakpoint and breaks at the breakpoint in the debugger. If a debugger is not attached, stops the application. |
+| Ignore | 忽略当前断言，继续运行应用程序。同一断言不再触发对话框显示。 |
+| Ignore All | 防止当前断言和所有未来的断言显示对话框。为防止性能下降，仅在完成后才将调试信息打印到日志中。 |
+| Break | 在断言处中断。如果已连接调试器，则创建一个断点，并在调试器中的断点处中断。如果未连接调试器，则停止应用程序。 |
 
-## Setting the Assert Level at Initialization 
+## 在初始化时设置断言级别
 
-To set the assert level at engine initialization, add an entry to a project's `game.cfg` file. The following example shows a `game.cfg` file for the SamplesProject.
+要在引擎初始化时设置断言级别，请在项目的 `game.cfg` 文件中添加一个条目。下面的示例显示了 SamplesProject 的 `game.cfg` 文件。
 
 ```
 sys_game_name = "SamplesProject"
@@ -54,24 +53,24 @@ r_DisplayInfo=3
 sys_asserts=2
 ```
 
-## Setting the Assert Level at Runtime 
+## 在运行时设置断言级别
 
-You can set the `sys_asserts` console variable at runtime in the console window. The following image shows an example.
+您可以在运行时在控制台窗口中设置 `sys_asserts` 控制台变量。下图是一个示例。
 
 ![Setting the sys_asserts console variable at runtime.](/images/user-guide/programming/debugging/debugging-using-asserts-2.png)
 
-## Setting the Assert Level for Mobile Devices 
+## 设置移动设备的断言级别
 
-When debugging mobile platforms, you can use the Windows-based Universal Remote Console to set the assert level in the command-line window of the application.
+调试移动平台时，可以使用基于 Windows 的通用远程控制台在应用程序的命令行窗口中设置断言级别。
 
 ![Using the Universal Remote Console to set the assert level for mobile platforms.](/images/user-guide/programming/debugging/debugging-using-asserts-3.png)
 
-## **Setting an Assert in Source Code** 
+## **在源代码中设置断言** 
 
-To add an assert in source code, use the `AZ_Assert` macro.
+要在源代码中添加断言，请使用 `AZ_Assert` 宏。
 
 ```
 AZ_Assert(m_useCount >= 0, "AssetData has been deleted")
 ```
 
-For more information, see [Tracing](/docs/user-guide/programming/debugging/tracing/).
+更多信息，请参阅 [跟踪](/docs/user-guide/programming/debugging/tracing/)。

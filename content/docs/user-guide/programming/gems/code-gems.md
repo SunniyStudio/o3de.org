@@ -1,78 +1,75 @@
 ---
-linkTitle: Code Gems
-title: Code Gem Specifications
-description: An overview of Code Gems in Open 3D Engine.
+linkTitle: 代码Gem
+title: 代码Gem规范
+description: Open 3D Engine中的代码Gem概述。
 weight: 300
 ---
 
-Code Gems contain source code that can extend the **Open 3D Engine (O3DE)** Editor or integrate features and logic for your O3DE project. They can also contain assets that are required by the source code such as interface elements and assets that are used as tests and samples.
+代码Gem包含可扩展 **Open 3D Engine (O3DE)** 编辑器或为您的 O3DE 项目集成功能和逻辑的源代码。它们还包含源代码所需的资产，如界面元素以及用作测试和示例的资产。
 
-## Creating a Gem
+## 创建Gem
 
-Follow [Create an O3DE Gem](/docs/user-guide/programming/gems/creating) to create a Gem based on the **DefaultGem template**. Code and asset Gems have the same Gem directory structure and you can use the same command to create them.
+按照 [创建O3DE Gem](/docs/user-guide/programming/gems/creating)创建一个基于**DefaultGem模板**的Gem。代码Gem和资产Gem具有相同的Gem目录结构，您可以使用相同的命令来创建它们。
 
+## Gem代码
 
-## Gem code
-
-The code components of a Gem are located in the `Code` directory. The DefaultGem template provides the following boilerplate code in the `Code/Source` directory of your Gem.
+Gem 的代码组件位于 `Code` 目录中。DefaultGem 模板会在 Gem 的 `Code/Source` 目录中提供以下模板代码。
 
 ![An image of the file directory of Gem code](/images/user-guide/programming/gems/defaultgem-template-directory-code-source.png)
 
-You can browse the Gem's source code from a Gem that you created or from the DefaultGem template that's located in the `Templates/DefaultGem` directory of your engine source code.
+您可以从自己创建的 Gem 或引擎源代码的 `Templates/DefaultGem` 目录中的 DefaultGem 模板浏览 Gem 的源代码。
 
-The following files are the code components of a Gem.
+以下文件是 Gem 的代码组件。
 
 ### `<Gem>ModuleInterface.h`, `<Gem>Module.cpp`
 
-The `<Gem>ModuleInterface` is the main Gem `AZ::Module` class that contains the entry point functions to connect the Gem's functionality to O3DE. The DefaultGem template already sets up the Gem module to connect to O3DE by calling the `AZ_DECLARE_MODULE_CLASS` macro.
+`<Gem>ModuleInterface` 是主要的 Gem `AZ::Module`类，包含将 Gem 功能连接到 O3DE 的入口函数。DefaultGem 模板已经通过调用 `AZ_DECLARE_MODULE_CLASS` 宏设置了连接到 O3DE 的 Gem 模块。
 
-For more information on modules and their responsibilities in O3DE, refer to the overview of the [Gem Module System](/docs/user-guide/programming/gems/overview/).
+有关模块及其在 O3DE 中职责的更多信息，请参阅 [Gem 模块系统](/docs/user-guide/programming/gems/overview/) 概述。
 
 ### `<Gem>SystemComponent.cpp`, `<Gem>SystemComponent.h`
 
-The `<Gem>SystemComponent` class is a global singleton class that's responsible for managing the Gem's code. The Gem module registers the Gem System Component which manages the Gem module's life cycle: initialization, activation, and deactivation. The Gem System Component activates when the Gem loads and deactivates when the Gem unloads.
+`<Gem>SystemComponent` 类是一个全局单例类，负责管理 Gem 的代码。Gem模块注册了Gem系统组件，该组件负责管理Gem模块的生命周期：初始化、激活和停用。Gem系统组件在Gem加载时激活，在Gem卸载时停用。
 
-The Gem System Component allows the component within the Gem module to communicate with components from other Gems by connecting to their EBus. It also handles initialization and shutdown, events, memory allocation, and debugger connections.
-
+Gem 系统组件允许 Gem 模块内的组件通过连接到其他 Gem 的 EBus，与其他 Gem 的组件进行通信。它还处理初始化和关闭、事件、内存分配和调试器连接。
 
 ### `<Gem>EditorModule.cpp`
 
-The `<Gem>EditorModule` class contains the logic for using the Gem in the Editor. It's separate from the main Gem module, which handles the logic of the Gem. For example, if the Gem implements a component, the main Gem module implements the component's logic and the Editor module implements the component's user interface in the Editor.
-
+`<Gem>EditorModule`类包含在编辑器中使用Gem的逻辑。它与处理Gem逻辑的主Gem模块是分开的。例如，如果Gem实现了一个组件，主Gem模块会实现组件的逻辑，而编辑器模块会在编辑器中实现组件的用户界面。
 
 ### `<Gem>EditorSystemComponent.cpp`, `<Gem>EditorSystemComponent.h`
 
-The `<Gem>EditorSystemComponent` class is the system component class for managing the Editor module. You can use this class to program Editor functionality. For example, if your Gem implements a component or a window that appears in the O3DE Editor.
+`<Gem>EditorSystemComponent` 类是管理编辑器模块的系统组件类。你可以使用该类来编程编辑器功能。例如，如果你的 Gem 实现了在 O3DE 编辑器中出现的组件或窗口。
 
-## Building a Gem
+## 构建 Gem
 
-### Prerequisites
+### 先决条件
 
-You must register your Gem before you can build it.
+您必须先注册您的Gem，然后才能构建它。
 
-If you created a Gem using the [`create-gem` command](creating) in the `o3de` script, it is registered automatically.
+如果你使用 `o3de` 脚本中的[`create-gem`命令](creating) 创建了一个 Gem，它会自动注册。
 
-For more information on registering Gems to a project, refer to [Registering Gems to a Project](/docs/user-guide/project-config/register-gems/).
+有关将Gem注册到项目的更多信息，请参阅 [将Gem注册到项目](/docs/user-guide/project-config/register-gems/)。
 
-### Building a Gem using the command line
+### 使用命令行构建 Gem
 
-After a Gem is registered to an engine, project, or the global `o3de_manifest.json`, you can build the Gem using CMake, the same way that you [build the engine and projects](/docs/user-guide/build/). Gems that are [added to a project](/docs/user-guide/project-config/add-remove-gems/) build automatically when you build the project. While developing a Gem, however, you may want to build it individually to avoid rebuilding the entire project.
+将一个 Gem 注册到引擎、项目或全局 `o3de_manifest.json` 之后，就可以使用 CMake 构建该 gem，与 [构建引擎和项目](/docs/user-guide/build/) 的方式相同。[添加到项目](/docs/user-guide/project-config/add-remove-gems/) 的 Gem 会在构建项目时自动构建。不过，在开发一个 Gem 时，你可能想单独构建它，以避免重建整个项目。
 
-To build a Gem individually, in the directory that is appropriate for your [engine's build type](/docs/welcome-guide/setup/setup-from-github/building-windows/#build-the-engine), use the `cmake --build` command and specify the build solution and configuration. Use the `--target` flag to specify the Gem modules that you want to build: `<Gem Name>` for the main Gem module and `<Gem Name>.Editor` for Editor modules.  If your Gem contains static libraries, you may also include them in the list of targets to build. 
+要单独构建一个 Gem，请在适合你的 [引擎构建类型](/docs/welcome-guide/setup/setup-from-github/building-windows/#build-the-engine) 的目录中，使用 `cmake --build` 命令并指定构建方案和配置。使用 `--target` 标志指定要构建的 Gem 模块： 主 Gem 模块使用 `<Gem Name>`，编辑器模块使用 `<Gem Name>.Editor`。 如果你的 Gem 包含静态库，你也可以将它们包含在要构建的目标列表中。
 
-The following example shows the command to build _both_ the Editor and main Gem modules for a Gem named `MyGem`:
+下面的示例显示了为名为 `MyGem` 的Gem构建编辑器和主Gem模块的命令：
 
 ```cmd
 cmake --build build/windows --target MyGem.Editor MyGem --config profile -- -m
 ```
 
-When you build a Gem, the build system also builds the Gem's dependencies that are listed in the Gem's `code/CMakeLists.txt` file.
+当你构建一个 gem 时，构建系统也会构建该 gem 的依赖项，这些依赖项列在该 gem 的 `code/CMakeLists.txt` 文件中。
 
-### Building a Gem in Visual Studio
+### 在Visual Studio中构建Gem
 
-1. Open the Visual Studio build solution that is appropriate for your [engine's build type](/docs/welcome-guide/setup/setup-from-github/building-windows/#build-the-engine). For source engines, this is the engine's root directory, and for pre-built SDK engines, this is the project's root directory. 
-1. Find your Gem's `Code` directory in the **Solution Explorer**. In most cases, this directory is located at `Gems\<MyGem>\Code`.  This directory contains all of your Gem's build targets, including the main `<MyGem>` and Editor `<MyGem>.Editor` modules.  
-1. Ensure that the correct build configuration is selected in the top toolbar. For information about build configurations, see [Generated build configurations](/docs/user-guide/build/configure-and-build/#generated-build-configurations). 
-1. **Right-click** on a module and select **Build** from the menu to build the module.
+1. 打开与 [引擎构建类型](/docs/welcome-guide/setup/setup-from-github/building-windows/#build-the-engine) 相应的 Visual Studio 构建解决方案。对于源代码引擎，这是引擎的根目录；对于预构建的 SDK 引擎，这是项目的根目录。
+1. 在**解决方案资源管理器**中找到Gem的 `Code` 目录。在大多数情况下，该目录位于 `Gems\<MyGem>\Code`。 该目录包含 Gem 的所有构建目标，包括主模块 `<MyGem>` 和编辑器模块 `<MyGem>.Editor`。
+1. 确保在顶部工具栏中选择了正确的构建配置。有关构建配置的信息，请参阅 [生成的构建配置](/docs/user-guide/build/configure-and-build/#generated-build-configurations). 
+1. **右击**模块，从菜单中选择**构建**，即可构建模块。
 
     ![Building a Gem in Visual Studio with the context menu of the Solution Explorer](/images/user-guide/programming/gems/VS-build-gem.png)

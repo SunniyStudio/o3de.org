@@ -1,47 +1,47 @@
 ---
-linkTitle: Gem Manifest File
-description: Learn about the format and structure of the manifest file that defines Open 3D Engine Gems.
-title: Gem Manifest File (gem.json)
+linkTitle: Gem Manifest 文件
+description: 了解定义 Open 3D Engine Gem 的Manifest文件的格式和结构。
+title: Gem Manifest 文件 (gem.json)
 weight: 400
 ---
 
-The `gem.json` manifest provides data about a Gem. Each Gem must have a `gem.json` file at the root folder of that Gem.
+`gem.json` 清单提供有关Gem的数据。每个 Gem 的根文件夹中都必须有一个 `gem.json` 文件。
+## `gem.json` Manifest 内容
 
-## `gem.json` Manifest Contents
-| Field | Required | Description  |
+| 字段 | 是否必须 | 说明  |
 |-|-|-|
-| gem_name | **Required** | The name of this gem.  This name must be fewer than 64 characters and contain only alphanumeric, '_' or '-' characters, and start with a letter. |
-| display_name | **Required** | The user-friendly display name for this gem.  This name will be displayed in user interfaces and can contain characters not allowed in the `gem_name` field. |
-| canonical_tags | **Required** | A list of pre-defined tags used to differentiate types of manifests which can be `Project`, `Template` or `Gem`.  For Gems this field should always be `Gem`.  |
-| compatible_engines | Optional | A list of engine names and optional version specifiers that this gem is known to be compatible with: i.e. `o3de>=2.0.0`, `o3de-sdk==1.2.0`, `o3de-custom` etc. If empty, the gem is assumed compatible with all engines if they meet all the requirements in the `engine_api_dependencies` and `dependencies` fields. See [Gem Versioning](../../../user-guide/gems/gem-versioning.md) for details. |
-| dependencies | Optional | The names of any other Gems, your Gem directly depends on with optional version specifiers: i.e. `Atom>=1.0.0`, `PhysX==2.0.0`, `ScriptCanvas` etc. See [Gem Versioning](../../../user-guide/gems/gem-versioning.md) for details. |
-| documentation_url | Optional | The URL of the documentation for your gem: i.e. https://www.mydomain.com/docs. |
-| download_source_uri | Optional | The URI of the `.zip` file containing the Gem archive.  This is a direct download to the Gem's `.zip` archive: i.e. https://github.com/o3de/o3de-extras/releases/download/1.0/Example-2.0.zip  |
-| engine_api_dependencies | Optional | A list of engine API dependencies.  If empty, the Gem is assumed compatible with all versions of any engine APIs. See [Gem Versioning](../../../user-guide/gems/gem-versioning.md) for details. |
-| icon_path | Optional | The relative path to the filename of the icon image file, usually `preview.png`. |
-| last_updated | Optional | The date this file or Gem was last updated in `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS`, or `YYYY-MM-DDTHH:MM:SS` format. |
-| license | **Required** | The license this Gem uses: i.e. Apache-2.0 or MIT. |
-| license_url | **Required** | The URL for the license website: i.e. https://opensource.org/licenses/Apache-2.0 Or https://opensource.org/licenses/MIT. |
-| origin | **Required** |The name of the originator for this Gem: i.e. XYZ Inc. |
-| origin_uri | Optional | Deprecated and replaced by `download_source_uri`. |
-| origin_url | Optional | The URL of the originator for this gem: i.e. https://www.mydomain.com. |
-| platforms | Optional | A list of platforms this Gem is known compatible with: i.e. "Windows","Linux","Android","iOS","MacOS" etc. |
-| repo_uri | Optional | The URI for the Gem repository containing this Gem. |
-| requirements | Optional | Notice of any requirements your Gem has: i.e. This Gem requires you install X from https://www.mydomain.com. |
-| sha256 | Optional | The SHA-256 digest of the `.zip` archive that the `origin_uri` field points to.  You can omit this field for testing, but we highly recommend including it. |
-| source_control_ref | Optional | The source control reference for this Gem version.  This can be a tag, commit hash or branch: i.e. `release-1.0.0`, `0462139`, `development` etc.  |
-| source_control_uri | Optional | The URI of the source repository for this Gem: i.e. https://github.com/o3de/o3de-extras.  |
-| summary | **Required** | A short description of your Gem. |
-| type | **Required** | The type of gem which can be `Code`, `Asset` or `Tool`. This field is used as a filter in the Project Manager. |
-| user_tags | Optional | A list of user-defined tags used to categorize Gems. This list should always include the name of your Gem, and any other common tags that might help a user discover your gem: i.e. `Network`, `Rendering`, `Utility`, `Scripting` etc. |
-| version | Optional | The `MAJOR.MINOR.PATCH` [semantic version](https://semver.org/) that is updated as changes are made to the gem. Developers may use the `dependencies` field in `gem.json` to indicate other gem dependencies and the version ranges they are compatible with. See [Gem Versioning](../../../user-guide/gems/gem-versioning.md) for details. |
-| versions_data | Optional | A list of JSON dictionaries containing the changed fields for each Gem version. Usually this data is only stored in a `repo.json` file to keep track of the changes and unique download URIs for each Gem version. |
+| gem_name | **必须** | 该 gem 的名称。 该名称必须少于 64 个字符，只包含字母数字、'_' 或 '-' 字符，并以字母开头。 |
+| display_name | **必须** | 该 gem 的用户友好显示名称。 该名称将显示在用户界面中，可以包含  `gem_name` 字段中不允许使用的字符。 |
+| canonical_tags | **必须** | 用于区分清单类型的预定义标签列表，可以是 `Project`, `Template` 或 `Gem`。 对于Gem，该字段应始终为 `Gem`。  |
+| compatible_engines | 可选 | 已知与该 gem 兼容的引擎名称和可选版本说明的列表：即 `o3de>=2.0.0`、`o3de-sdk==1.2.0`、`o3de-custom` 等。如果为空，则假定 gem 与所有满足 `engine_api_dependencies` 和 `dependencies` 字段中所有要求的引擎兼容。详见[Gem 版本](../../../user-guide/gems/gem-versioning.md)。|
+| dependencies | 可选 | 您的 Gem 直接依赖的任何其他 Gem 的名称，带有可选的版本说明符：例如，`Atom>=1.0.0`、`PhysX==2.0.0`、`ScriptCanvas` 等。详情请参见 [Gem 版本](../../../user-guide/gems/gem-versioning.md) 。 |
+| documentation_url | 可选 | 您的 gem 文档的 URL：即 https://www.mydomain.com/docs. |
+| download_source_uri | 可选 | 包含 Gem 压缩包的`.zip`文件的 URI。 这是直接下载 Gem 的`.zip`压缩包：即 https://github.com/o3de/o3de-extras/releases/download/1.0/Example-2.0.zip  |
+| engine_api_dependencies | 可选 | 引擎 API 依赖关系列表。 如果为空，则假定该 gem 与任何引擎 API 的所有版本兼容。详见 [Gem 版本](../../../user-guide/gems/gem-versioning.md) 。 |
+| icon_path | 可选 | 图标图像文件（通常为 `preview.png`）文件名的相对路径。 |
+| last_updated | 可选 | 该文件或 Gem 最后更新的日期，格式为 `YYYY-MM-DD`、`YYYY-MM-DD HH:MM:SS` 或 `YYYY-MM-DDTHH:MM:SS`。 |
+| license | **必须** | 本 Gem 使用的许可证：即 Apache-2.0 或 MIT。 |
+| license_url | **必须** | 许可证网站的 URL：即 https://opensource.org/licenses/Apache-2.0 或 https://opensource.org/licenses/MIT。 |
+| origin | **必须** |该 Gem 的发起人名称：即 XYZ 公司。  |
+| origin_uri | 可选 | 已被弃用，由 `download_source_uri` 代替。 |
+| origin_url | 可选 | 该 gem 的发起者 URL：即 https://www.mydomain.com。 |
+| platforms | 可选 | 该 Gem 已知的兼容平台列表：即 "Windows","Linux","Android","iOS","MacOS" 等。 |
+| repo_uri | 可选 | 包含该 Gem 的 Gem 资源库的 URI。 |
+| requirements | 可选 | 请注意您的Gem所需的任何条件：例如，该Gem要求您从 https://www.mydomain.com安装X。 |
+| sha256 | 可选 | `origin_uri` 字段指向的 `.zip` 压缩包的 SHA-256 摘要。 测试时可以省略此字段，但我们强烈建议包含它。 |
+| source_control_ref | 可选 | 此 Gem 版本的源代码控制参考。 可以是标签、提交哈希值或分支：如 `release-1.0.0`、`0462139`、`development` 等。  |
+| source_control_uri | 可选 | 该Gem源代码库的 URI：即 https://github.com/o3de/o3de-extras.  |
+| summary | **必须** | 对Gem的简短描述。 |
+| type | **必须** | gem 的类型，可以是 `Code`, `Asset` 或 `Tool`。该字段在项目管理器中用作过滤器。 |
+| user_tags | 可选 | 用于对Gem进行分类的用户自定义标记列表。该列表应始终包括您的 gem 名称，以及任何其他可帮助用户发现您的 gem 的常用标记：如 `Network`, `Rendering`, `Utility`, `Scripting`等。 |
+| version | 可选 | `MAJOR.MINOR.PATCH` [语义版本](https://semver.org/)。随着 gem 的更改而更新。开发人员可使用 `gem.json` 中的 `dependencies` 字段来指明其他 gem 依赖项及其兼容的版本范围。详情请参阅[Gem 版本](../../../user-guide/gems/gem-versioning.md) 。|
+| versions_data | 可选 | JSON 字典列表，其中包含每个 Gem 版本的更改字段。通常这些数据只存储在 `repo.json` 文件中，以跟踪每个 Gem 版本的更改和唯一下载 URI。 |
 
 
-## `gem.json` Manifest Examples
+## `gem.json` Manifest 示例
 
 ### ScriptCanvas `Tool` Gem `gem.json` Manifest
-ScriptCanvas is a `Tool` type gem that comes with the engine and provides Editor and game functionality.
+ScriptCanvas 是引擎自带的 `Tool` 类型 gem，可提供编辑器和游戏功能。
 ```json
 {
     "gem_name": "ScriptCanvas",
@@ -75,7 +75,7 @@ ScriptCanvas is a `Tool` type gem that comes with the engine and provides Editor
 ```
 
 ### AudioEngineWwise `Code` Gem `gem.json` Manifest
-AudioEngineWwise is a `Code` type gem that comes with the engine that requires an external application be installed in order to use it.
+AudioEngineWwise 是引擎自带的`Code`类型 gem，需要安装外部应用程序才能使用。
 ```json
 {
     "gem_name": "AudioEngineWwise",
@@ -107,7 +107,7 @@ AudioEngineWwise is a `Code` type gem that comes with the engine that requires a
 ```
 
 ### DevTextures `Asset` Gem `gem.json` Manifest
-DevTextures is an `Asset` type gem that comes with the engine and provides general purpose texture assets useful for prototypes and preproduction.
+DevTextures 是引擎自带的 `Asset` 类型 gem，可提供对原型和试生产有用的通用纹理资产。
 ```json
 {
     "gem_name": "DevTextures",

@@ -1,16 +1,16 @@
 ---
-title: Create an O3DE Gem
-description: Learn about the requirements for creating a component to use with the Open 3D Engine Gem system.
+title: 创建O3DE Gem
+description: 了解创建与 Open 3D Engine Gem 系统一起使用的组件的要求。
 weight: 200
 ---
 
-You can develop your own independent modules to distribute and build as **Open 3D Engine (O3DE)** Gems. A Gem is just a bundle of code and/or assets, a manifest file, a CMake build file, and an optional display icon for project configuration tools. This is all that's needed to ship a Gem.
+您可以开发自己的独立模块，作为 **Open 3D Engine (O3DE)** Gem 发布和构建。一个 gem 只是一捆代码和/或资产、一个清单文件、一个 CMake 构建文件和一个用于项目配置工具的可选显示图标。这就是发布一个 Gem 所需要的一切。
 
-The minimum requirements for a Gem is a directory with a `CMakeLists.txt` build file and a `gem.json` manifest file.
+Gem 的最低要求是一个包含 `CMakeLists.txt` 构建文件和 `gem.json` 清单文件的目录。
 
-Although you can create a Gem manually by creating all of the files yourself, it's recommended to use the `o3de` tool located in the `<engine>/scripts` directory:
+虽然您可以通过自行创建所有文件来手动创建 Gem，但建议使用位于`<engine>/scripts`目录下的`o3de`工具：
 
-{{< tabs name="Create a Gem" >}}
+{{< tabs name="创建 Gem" >}}
 {{% tab name="Windows" %}}
 
 ```cmd
@@ -27,70 +27,67 @@ Although you can create a Gem manually by creating all of the files yourself, it
 {{% /tab %}}
 {{< /tabs >}}
 
-This will create your Gem with a standard file structure and CMake files created from [templates](https://github.com/o3de/o3de/tree/development/Templates).
+这将创建具有标准文件结构的 Gem，以及根据 [模板](https://github.com/o3de/o3de/tree/development/Templates) 创建的 CMake 文件。
 
-For more information on how to use the `o3de` tool, refer to [Project Configuration CLI Reference](/docs/user-guide/project-config/cli-reference/).
+有关如何使用 `o3de` 工具的更多信息，请参阅 [项目配置 CLI 参考](/docs/user-guide/project-config/cli-reference/)。
 
 ## Assets
 
-Each Gem has an `Assets` directory that can contain models, textures, scripts, animations, and more. Asset files are accessed the same way as they are in a game project. O3DE uses this root directory to find the asset file path. For example, when O3DE looks for the `textures/rain/rainfall_ddn.tif` file, it looks in the `<GemName>/Assets/textures/rain/` directory.
+每个 Gem 都有一个 `Assets` （资产）目录，其中可包含模型、纹理、脚本、动画等内容。资产文件的访问方式与游戏项目中的相同。O3DE 使用这个根目录来查找资产文件路径。例如，当 O3DE 查找 `textures/rain/rainfall_ddn.tif` 文件时，它会在 `<GemName>/Assets/textures/rain/` 目录中查找。
 
-Assets used by your Gem in a launcher runtime should have their source assets listed in a [Gem dependencies `.xml` file](#gem-dependencies) or their compiled asset path should be listed in [`<GemName>/Assets/seedList.seed`](#default-gemnameassetsseedlistseed). 
+你的 Gem 在启动器运行时使用的资产应在 [Gem 依赖 `.xml` 文件](#gem-dependencies) 中列出其源资产，或在 [`<GemName>/Assets/seedList.seed`](#default-gemnameassetsseedlistseed) 中列出其编译资产路径。
 
-### Default `<GemName>/Assets/seedList.seed`
+### 默认 `<GemName>/Assets/seedList.seed`
 
-This file contains a list of compiled asset paths and platforms that will automatically appear in the Asset Bundler GUI making it easy for users to find and include in their project asset bundle.
-They will also be included in a bundle when the [*AssetBundlerBatch* `--addDefaultSeedListFiles`](/docs/user-guide/packaging/asset-bundler/command-line-reference/#options-2) CLI option is used.
-The `seedList.seed` approach is useful when you want to provide a ready-to-use list of default compiled assets and the platforms they're used on.
+该文件包含一个编译资产路径和平台的列表，将自动显示在资产捆绑程序图形用户界面中，方便用户查找并包含在项目资产捆绑程序中。
+当使用 [*AssetBundlerBatch* `--addDefaultSeedListFiles`](/docs/user-guide/packaging/asset-bundler/command-line-reference/#options-2)CLI 选项时，它们也会被包含在捆绑包中。
+`seedList.seed`方法在您需要提供默认编译资产及其使用平台的即用列表时非常有用。
 
-Refer to the [Asset Bundler documentation](/docs/user-guide/packaging/asset-bundler/) for more information on the Asset Bundler, `.seed` files, and bundling assets.
+有关资产捆绑程序、`.seed` 文件和捆绑资产的更多信息，请参阅 [Asset Bundler文档](/docs/user-guide/packaging/asset-bundler/)。
 
 {{<important>}}
-The filename `seedList.seed` is case-sensitive and must be in your Gem `Assets` folder or the seed list will not automatically appear in the Asset Bundler GUI.
+文件名 `seedList.seed` 区分大小写，必须位于 Gem `Assets` 文件夹中，否则种子列表不会自动出现在 Asset Bundler GUI 中。
 {{</important>}}
 
-### Gem dependencies
+### Gem 依赖
 
-The Gem dependencies `.xml` file contains a list of source assets which will be used by the Asset Processor to create a seed list containing all the compiled asset paths and platforms.
-Using the Gem dependencies file is convenient for specifying source assets with glob patterns, for example when you want to include all shader variants, but does require running the Asset Processor.   
+Gem 依赖项`.xml`文件包含源资产列表，资产处理器将使用该列表创建包含所有编译资产路径和平台的种子列表。
+使用 Gem 依赖项文件可以方便地指定具有全局模式的源资产，例如，当你想包含所有着色器变体时，但需要运行资产处理器。  
 
-Refer to [Default dependencies for O3DE projects](/docs/user-guide/packaging/asset-bundler/default-dependencies/) for instructions on creating Gem dependencies.
+有关创建 Gem 依赖项的说明，请参阅 [O3DE 项目的默认依赖项](/docs/user-guide/packaging/asset-bundler/default-dependencies/)。
 
 
+## Code (可选)
 
-## Code (optional)
+Gem 代码可以包含在 Gem 的 `CMakeLists.txt` 文件所选取的任何目录中，不过按照惯例，只有一个源代码模块的 Gem 会使用 `Code` 作为目录名。
 
-Gem code can be contained in any directory that is picked up by the `CMakeLists.txt` file of the Gem, although, by convention, Gems with only one source module use `Code` for the directory name.
+包含代码的Gem称为**代码Gem**。有关开发代码Gem的更多信息，请参阅 [代码Gem规格](/docs/user-guide/programming/gems/code-gems)。
 
-A Gem that contains code is known as a *Code Gem*. For more information on developing Code Gems, refer to [Code Gem Specifications](/docs/user-guide/programming/gems/code-gems).
+## Manifest 文件
 
-## Manifest file
+每个 gem 都需要一个描述该 gem 的 `gem.json` 清单文件。请参阅 [Gem manifest 文档](./manifest) 以获取配置 清单的信息。
 
-Each Gem is required to have a `gem.json` manifest file, describing the Gem. See the [Gem manifest documentation](./manifest) for information on configuring a
-manifest.
+## 图标文件(可选)
 
-## Icon file (optional)
+每个 Gem 还可以包含一张可选图片，作为 GUI 项目配置工具的图标。该图片应为尺寸为 140x80 的 `.png`、`.gif` 或 `.jpg`，并命名为 `preview.<ext>`。Gem图标的相对路径在 `gem.json`中指定。
 
-Each Gem can also contain an optional image to use as an icon in GUI project configuration tools. This image should be a `.png`, `.gif`, or `.jpg` with dimensions of 140x80, and named `preview.<ext>`. The relative path to a Gem's icon is specified in `gem.json`.
+## CMakeLists.txt 文件
 
-## CMakeLists.txt file
+Gem还需要一个 `CMakeLists.txt` CMake 构建文件，以便 O3DE 构建系统能识别它们。这应该是一个用于构建 Gem 源代码的标准 CMake 文件，它应该位于 Gem 的根目录下。
 
-Gems also require a `CMakeLists.txt` CMake build file, so that they can be picked up by the O3DE build system. This should be a standard CMake file for building your
-Gem's source code, and it should be located in the Gem's root directory.
+对于使用二进制库或未作为源代码发布的可执行文件的 Gem，O3DE 有一个 [第三方软件包系统](/docs/user-guide/build/packages/)。
 
-For Gems that use binary libraries or executables that aren't distributed as source, O3DE has a [third-party package system](/docs/user-guide/build/packages/).
+您的 `CMakeLists.txt` 文件与其他 CMake 文件一样。创建它时，请牢记以下要点：
 
-Your `CMakeLists.txt` file is like any other CMake file. When you create it, keep the following important points in mind:
+* 为 Gem 生成的目标将与 `gem.json` 清单中定义的 Gem 名称相同。在调用 Gem 的 `CMakeLists.txt` 时，这将是活动目标。
+* 您可以使用 O3DE 核心构建系统中可用的功能。请参阅源代码中 `cmake` 目录的内容。
+* 避免使用`file(DOWNLOAD ...)`。O3DE 的软件包系统是一个强大的替代品，应予以使用。
 
-* The target generated for the Gem will have the Gem name as defined in the `gem.json` manifest. This will be the active target during the invocation of your Gem's `CMakeLists.txt`.
-* You can use the functions available in the core O3DE build system. See the contents of the `cmake` directory in source.
-* Avoid the use of `file(DOWNLOAD ...)`. The package system of O3DE is a robust replacement, and should be used instead.
+## 创建只包含资产的Gem
 
-## Creating an asset-only Gem
+当你创建一个没有指定模板的 Gem 时，它会根据 “DefaultGem ”模板创建。这样创建的 Gem 可同时打包代码和资产。你也可以通过`create-gem` 命令指定 “AssetGem ”模板，创建一个只提供资产的 Gem：
 
-When you create a Gem without specifying a template, it's created from the "DefaultGem" template. This creates a Gem for packaging both code and assets. You can also create a Gem that provides only assets by specifying the "AssetGem" template through the `create-gem` command:
-
-{{< tabs name="Create an asset Gem" >}}
+{{< tabs name="创建资产Gem" >}}
 {{% tab name="Windows" %}}
 
 ```cmd
@@ -111,6 +108,6 @@ When you create a Gem without specifying a template, it's created from the "Defa
 {{% /tab %}}
 {{< /tabs >}}
 
-## Gem templates
+## Gem 模板
 
-O3DE provides a list of Gem templates, which can be found in the [Templates](https://github.com/o3de/o3de/tree/development/Templates) directory in the O3DE repository, or in your O3DE engine installation.
+O3DE 提供了一个 Gem 模板列表，可在 O3DE 版本库中的 [Templates](https://github.com/o3de/o3de/tree/development/Templates)目录或您的 O3DE 引擎安装中找到。

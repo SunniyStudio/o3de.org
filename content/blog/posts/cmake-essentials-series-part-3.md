@@ -1,5 +1,5 @@
 ---
-title: "CMake Essentials Series - Part 3"
+title: "CMake 基础系列 - 第 3 部分"
 date: 2022-11-02
 slug: cmake-essentials-series-part-3
 author: Tom Hulton-Harrop
@@ -7,17 +7,17 @@ blog_img: "/images/blog/announcement_thumbnail.jpg"
 full_img: ""
 ---
 
-How to integrate larger third-party dependencies into your CMake projects and reuse them across multiple projects.
+如何在 CMake 项目中集成更大的第三方依赖项，并在多个项目中重复使用它们。
 
-## Motivation
+## 动机
 
-While `FetchContent` is great for some things, it’s not always the right tool. When a larger dependency like a full framework or package needs to be integrated, instead of making it part of the same build, the dependency can be built and installed separately and then integrated into the main build with `find_package`.
+虽然 `FetchContent` 对某些事情很有用，但它并不总是正确的工具。当需要集成较大的依赖（如完整的框架或软件包）时，与其将其作为同一构建的一部分，不如单独构建和安装依赖，然后使用 `find_package` 将其集成到主构建中。
 
-## Example
+## 示例
 
-Many C++ libraries support a concept called installing. Installing is simply the operation of copying all the relevant build artifacts to a particular location (e.g. the .h files, .lib/.dll/.a/.so files and CMake config files) so that another application or library can use them. By default, installing copies the files to a default system location but this can be freely configured.
+许多 C++ 库都支持一个名为 “安装 ”的概念。所谓安装，就是将所有相关的构建工件复制到一个特定位置（例如 .h 文件、.lib/.dll/.a/.so 文件和 CMake 配置文件），以便另一个应用程序或库可以使用它们。默认情况下，安装程序会将文件复制到系统默认位置，但也可以自由配置。
 
-Suppose we would like to download, build and install Google Test for a little prototype. The commands are as follows:
+假设我们要为一个小原型下载、构建并安装 Google Test。命令如下：
 
 ```bash
 > git clone https://github.com/google/googletest.git #1
@@ -26,15 +26,15 @@ Suppose we would like to download, build and install Google Test for a little pr
 > cmake --build build --target install #4
 ```
 
-First, we simply clone the Google Test repo and then navigate to that folder (`#1` and `#2`). 
+首先，我们只需克隆 Google Test 代码库，然后导航到该文件夹（`#1` 和 `#2`）。
 
-We then run the CMake configure command (`#3`) and provide an install folder with `-DCMAKE_INSTALL_PREFIX` (otherwise it’d end up in `C:\Program Files` on Windows or `usr/local/lib` and `usr/local/include` on Linux/macOS). 
+然后，我们运行 CMake configure 命令 (`#3`)，并提供一个带有 `-DCMAKE_INSTALL_PREFIX`的安装文件夹（否则在 Windows 下会被放在 `C:\Program Files` 中，在 Linux/macOS 下会被放在 `usr/local/lib` 和 `usr/local/include` 中）。
 
-On Windows, we also need to provide `-Dgtest_force_shared_crt` when building Google Test to ensure it links to the C runtime dynamically, otherwise you’ll get lots of link errors (this is just a Google Test quirk). 
+在 Windows 上，我们还需要在构建 Google Test 时提供 `-Dgtest_force_shared_crt`，以确保它动态链接到 C 运行时，否则会出现大量链接错误（这只是 Google Test 的一个怪癖）。
 
-Finally, we build and then install the library (`#4`) which will copy the relevant files to the `gtest-install` folder.
+最后，我们构建并安装库 (`#4`)，将相关文件复制到 `gtest-install` 文件夹。
 
-If we want to then use Google Test in a sample app, we can bring it in using `find_package` in our `CMakeLists.txt`. We’ll make a new folder at the same level as `googletest/` called `testing` and add this file:
+如果我们想在示例应用程序中使用 Google Test，可以在 `CMakeLists.txt` 中使用 `find_package` 将其引入。我们将在 `googletest/` 的同级新建一个名为 `testing` 的文件夹，并添加此文件：
 
 ```bash
 # CMakeLists.txt
@@ -45,9 +45,9 @@ add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest) #2
 ```
 
-`find_package` (`#1`) will attempt to bring in the Google Test library as an imported target. `CONFIG` lets CMake know we’re using a config file (as opposed to a module file in the form `FindXXX.cmake`) and the `REQUIRED` keyword will terminate the configure step early if Google Test cannot be found. 
+`find_package` (`#1`) 会尝试将 Google Test 库作为导入目标。`CONFIG` 让 CMake 知道我们使用的是配置文件（而不是格式为 `FindXXX.cmake` 的模块文件），如果找不到 Google Test，`REQUIRED` 关键字将提前终止配置步骤。
 
-We use the `GTest` namespace when linking (`#2`) to indicate Google Test is an imported target. Our `main.cpp` is as follows:
+我们在链接时使用 `GTest` 命名空间 (`#2`) 来表示 Google Test 是一个导入目标。我们的 `main.cpp` 如下：
 
 ```c++
 #include "gtest/gtest.h"
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-When configuring our project, all we need to do is tell CMake where to find the installed Google Test library. We do this with `-DCMAKE_PREFIX_PATH` (`#1`). We can then simply build (`#2`) and run (`#3`) the application.
+在配置项目时，我们只需告诉 CMake 在哪里可以找到已安装的 Google Test 库。我们可以使用 `-DCMAKE_PREFIX_PATH` (`#1`)。然后，我们就可以简单地构建 (`#2`) 和运行 (`#3`)应用程序了。
 
 ```bash
 > cmake -S . -B build -DCMAKE_PREFIX_PATH=../gtest-install #1
@@ -68,29 +68,29 @@ When configuring our project, all we need to do is tell CMake where to find the 
 > ./build/Debug/testing.exe #3
 ```
 
-## Deliberation
+## 讨论
 
-The great benefit of installing libraries and using `find_package` is that first, we can share that library across multiple projects and second, we do not need to rebuild our dependencies each time we rebuild our code. For a library like Google Test we’re rarely going to be making changes to it, so installing it and keeping it separate can have a huge benefit in terms of iteration time. This whole process can be automated through the use of `ExternalProject_Add` which removes some of the manual steps like cloning and building, though it’s doing the exact same thing under the hood.
+安装库并使用 `find_package` 的最大好处在于：首先，我们可以在多个项目中共享该库；其次，每次重建代码时，我们都无需重建依赖关系。对于像 Google Test 这样的库，我们很少会对其进行修改，因此将其安装并保持独立可以大大缩短迭代时间。整个过程可以通过使用 `ExternalProject_Add` 自动完成，它省去了一些手动步骤，如克隆和构建，尽管它在引擎盖下做着完全相同的事情。
 
-## Further Reading
+## 进一步阅读
 
-I got super into CMake a little while ago and wanted to better understand topics such as installing. So I created a little GitHub repo with a number of simple projects to help people better learn and understand CMake. It might help some people who are just getting to grips with CMake.
+不久前，我对 CMake 产生了浓厚的兴趣，并希望更好地了解安装等主题。因此，我创建了一个 GitHub 仓库，其中包含一些简单的项目，以帮助人们更好地学习和了解 CMake。这可能会对一些刚刚接触 CMake 的人有所帮助。
 
-* [CMake Examples](https://github.com/pr0g/cmake-examples)
+* [CMake 示例](https://github.com/pr0g/cmake-examples)
 
-There's also this little demo application which uses `ExternalProject_Add` to download and configure SDL, bgfx, and Dear ImGui (see the `third-party/` folder):
+还有这个小演示程序，它使用 `ExternalProject_Add` 下载和配置 SDL、bgfx 和 Dear ImGui（请参阅 `third-party/` 文件夹）：
 
 * [SDL-bgfx-ImGui Starter](https://github.com/pr0g/sdl-bgfx-imgui-starter)
 
-## To be continued
+## 待续
 
-We’ll wrap up the final entry in this series with what it takes to actually write a library that can be installed.
+在本系列的最后一篇中，我们将介绍如何编写一个可以安装的程序库。
 
-_Disclaimer: The views expressed here are those of the individual author and do not represent those of the Open 3D Foundation, Open 3D Engine or individual's respective company._
+_免责声明：本文仅代表作者个人观点，不代表Open 3D基金会、Open 3D Engine或作者所在公司的观点。_
 
-### Check out the other parts of the series:
+### 查看该系列的其他部分：
 
-* [CMake Essentials Series - Part 1](/blog/posts/cmake-essentials-series-part-1/)
-* [CMake Essentials Series - Part 2](/blog/posts/cmake-essentials-series-part-2/)
-* [CMake Essentials Series - Part 3](/blog/posts/cmake-essentials-series-part-3/)
-* [CMake Essentials Series - Part 4](/blog/posts/cmake-essentials-series-part-4/)
+* [CMake 基础系列 - 第 1 部分](/blog/posts/cmake-essentials-series-part-1/)
+* [CMake 基础系列 - 第 2 部分](/blog/posts/cmake-essentials-series-part-2/)
+* [CMake 基础系列 - 第 3 部分](/blog/posts/cmake-essentials-series-part-3/)
+* [CMake 基础系列 - 第 4 部分](/blog/posts/cmake-essentials-series-part-4/)

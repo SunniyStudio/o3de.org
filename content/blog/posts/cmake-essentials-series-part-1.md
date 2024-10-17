@@ -1,27 +1,27 @@
 ---
-title: "CMake Essentials Series - Part 1"
+title: "CMake 基础系列 - 第 1 部分"
 date: 2022-10-05
 slug: cmake-essentials-series-part-1
 author: Tom Hulton-Harrop
 blog_img: "/images/blog/announcement_thumbnail.jpg"
 full_img: ""
 ---
-This series aims to give an overview of some of the most useful functionality in CMake and how to apply it in O3DE.
+本系列旨在概述 CMake 中一些最有用的功能，以及如何在 O3DE 中应用这些功能。
 
-## Motivation
+## 动机
 
-CMake is the most widely used build system in the C++ community and understanding how best to use it unlocks a whole host of possibilities when it comes to C++ development in O3DE. Project setup becomes a breeze and integration with open source projects is made much simpler.
+CMake 是 C++ 社区使用最广泛的构建系统，了解如何最好地使用它，就能在 O3DE 中进行 C++ 开发。项目设置变得轻而易举，与开源项目的集成也变得更加简单。
 
-## Example
+## 示例
 
-To begin this series we’ll show the minimum amount of code required to get a `‘Hello, World!’` application up and running. First create a new folder and in it create an empty `main.cpp` and `CMakeLists.txt` file.
+作为本系列的开头，我们将展示启动并运行 `‘Hello, World!’` 应用程序所需的最少代码量。首先创建一个新文件夹，并在其中创建一个空的 `main.cpp` 和 `CMakeLists.txt` 文件。
 
 ```bash
 mkdir cmake-essentials-part1 && cd cmake-essentials-part1
 touch main.cpp && touch CMakeLists.txt
 ```
 
-The `CMakeLists.txt` file looks like this:
+`CMakeLists.txt`文件看起来像这样：
 
 ```bash
 cmake_minimum_required(VERSION 3.15) # 1
@@ -31,19 +31,19 @@ target_sources(${PROJECT_NAME} PRIVATE main.cpp) # 4
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17) # 5
 ```
 
-First we set the CMake version (`#1`). This line always has to come first in a top-level CMakeLists.txt file (`3.15` is a safe bet but feel free to pick a newer version).
+首先，我们设置 CMake 版本 (`#1`)。在 CMakeLists.txt 文件的顶层，这一行必须放在第一位（`3.15`是一个安全的选择，但也可以选择更新的版本）。
 
-Next is the `project` command (`#2`), this should immediately follow `cmake_minimum_required` (`LANGUAGES` is optional but good practice).
+接下来是 `project` 命令（`#2`），它应紧跟在 `cmake_minimum_required` 之后（`LANGUAGES` 是可选项，但也是很好的做法）。
 
-We then create the target to build (`#3`), in this case an executable (`${PROJECT_NAME}` maps to `cmake-essentials-part1`, the name set in the `project` command).
+然后，我们创建要编译的目标（`#3`），这里是一个可执行文件（`${PROJECT_NAME}`映射到`cmake-essentials-part1`，即`project`命令中设置的名称）。
 
-Following that we set the sources to be built (`#4`). As with all<sup>1</sup> `target_` commands we must specify the scope of the items - here we use `PRIVATE` as these files are not going to be relied on by some downstream dependency.
+然后，我们设置要编译的源代码（`#4`）。与所有 <sup>1</sup> `target_` 命令一样，我们必须指定项目的范围，这里我们使用 `PRIVATE`，因为这些文件不会被下游依赖项依赖。
 
-Finally we set the C++ version (`#5`), which again is not strictly required but good practice (note we’re not touching compiler flags here, CMake will handle this for us).
+最后，我们设置 C++ 版本 (`#5`)，这同样不是严格要求的，但却是良好的做法（注意，我们在此不涉及编译器标志，CMake 会为我们处理）。
 
-<sup>1</sup> Technically not _all_ target commands require scope, but it’s best practice to always provide this even if legacy commands work without it.
+<sup>1</sup> 从技术上讲，并非**所有**目标命令都需要作用域，但最好的做法是始终提供作用域，即使传统命令在没有作用域的情况下也能运行。
 
-`main.cpp` should look familiar:
+`main.cpp` 看起来应该很熟悉：
 
 ```c++
 #include <iostream>
@@ -53,38 +53,38 @@ int main(int argc, char argv[]) {
 }
 ```
 
-With that setup, the last thing to do is to run CMake.
+完成上述设置后，最后要做的就是运行 CMake。
 
 ```bash
 > cmake -S . -B build # 1
 > cmake --build build # 2
 ```
 
-The first line (`#1`) will run the CMake configure step to generate host build files. On Windows this will likely default to Visual Studio and can be specified with `-G`.
+第一行 (`#1`) 将运行 CMake 配置步骤来生成主机构建文件。在 Windows 上，这可能默认为 Visual Studio，可以用 `-G`指定。
 
-The following line (`#2`) will invoke whatever build system the configure step generated and leave your application in the `build` folder. With Visual Studio this will be `build/Debug/cmake-essentials-part1.exe`.
+下面一行（`#2`）将调用配置步骤生成的构建系统，并将应用程序留在`build`文件夹中。在 Visual Studio 中，这将是 `build/Debug/cmake-essentials-part1.exe`。
 
-## Deliberation
+## 讨论
 
-This might seem like mildly more work than opening Visual Studio and creating a project from there, but the massive advantage to this approach is you’ve now created a completely portable C++ program you can build from source on any operating system that supports CMake (most do!). You can easily share this with someone else to quickly build a demo application and even better, with only a few more commands it’s possible to start integrating third-party libraries. (No more searching through include paths and linker settings in Visual Studio configuration windows.)
+与打开 Visual Studio 并在其中创建一个项目相比，这样做似乎要费点事，但这种方法的巨大优势在于，你现在创建了一个完全可移植的 C++ 程序，可以在任何支持 CMake 的操作系统（大多数都支持！）上从源代码开始构建。您可以轻松地与他人分享，快速构建一个演示程序，更妙的是，只需再下几条命令，就可以开始集成第三方库。(无需再在 Visual Studio 配置窗口中搜索包含路径和链接器设置）。
 
-## Further Reading
+## 更多阅读
 
-One of the most widely recommended talks on CMake is an excellent presentation by Daniel Pfeifer titled 'Effective CMake':
+关于 CMake 最广泛推荐的讲座之一是 Daniel Pfeifer 所做的题为 “有效的 CMake ”的精彩演讲：
 
 > [C++ Now 2017: Daniel Pfeifer “Effective CMake"](https://youtu.be/bsXLMQ6WgIk) by Daniel Pfeifer
 
-It covers a lot of ground and gives a thorough introduction to the current CMake landscape and best practices.
+它涵盖了大量内容，全面介绍了当前的 CMake 环境和最佳实践。
 
-## To be continued...
+## 未完待续...
 
-In the next entry in this series we’ll look at bringing in some third-party dependencies to our project.
+在本系列的下一篇文章中，我们将介绍如何为项目引入第三方依赖关系。
 
-_Disclaimer: The views expressed here are those of the individual author and do not represent those of the Open 3D Foundation, Open 3D Engine or individual's respective company._
+_免责声明：本文仅代表作者个人观点，不代表Open 3D基金会、Open 3D Engine或作者所在公司的观点。_
 
-### Check out the other parts of the series:
+### 查看该系列的其他部分：
 
-* [CMake Essentials Series - Part 1](/blog/posts/cmake-essentials-series-part-1/)
-* [CMake Essentials Series - Part 2](/blog/posts/cmake-essentials-series-part-2/)
-* [CMake Essentials Series - Part 3](/blog/posts/cmake-essentials-series-part-3/)
-* [CMake Essentials Series - Part 4](/blog/posts/cmake-essentials-series-part-4/)
+* [CMake 基础系列 - 第 1 部分](/blog/posts/cmake-essentials-series-part-1/)
+* [CMake 基础系列 - 第 2 部分](/blog/posts/cmake-essentials-series-part-2/)
+* [CMake 基础系列 - 第 3 部分](/blog/posts/cmake-essentials-series-part-3/)
+* [CMake 基础系列 - 第 4 部分](/blog/posts/cmake-essentials-series-part-4/)

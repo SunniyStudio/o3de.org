@@ -1,35 +1,35 @@
 ---
-linktitle: Build Generated Source Files
-title: Build Generated Source Files with AzAutoGen
-description: Learn how to integrate AzAutoGen into Open 3D Engine (O3DE), so it can generate source files when building a target using CMake.
+linktitle: 构建生成的源文件
+title: 使用 AzAutoGen 生成源文件
+description: 了解如何将 AzAutoGen 集成到 Open 3D Engine (O3DE)，以便在使用 CMake 构建目标时生成源文件。
 weight: 150
 ---
 
-For complicated systems that use a lot of boilerplate code, it's useful to perform some kind of light automation to generate source files where possible. To generate files during builds, **Open 3D Engine (O3DE)** uses the **AzAutoGen** tool through a CMake command. O3DE stores the output source code in your CMake build directory and picks up the code to build it in your target.
+对于使用大量模板代码的复杂系统来说，在可能的情况下执行某种轻量级自动化来生成源文件是非常有用的。为了在构建过程中生成文件，**Open 3D Engine (O3DE)** 通过 CMake 命令使用**AzAutoGen**工具。O3DE 将输出的源代码存储在 CMake 编译目录中，并提取代码在目标中进行编译。
 
-To use AzAutoGen, you must provide Jinja templates and XML or JSON data files that AzAutoGen can generate output files from. The contents of these files depend on your intended purpose for using AzAutoGen. For a complete description of how AzAutoGen works and how to write templates and data inputs for generation, refer to [Automate Source Generation from Templates with AzAutoGen](/docs/user-guide/programming/autogen/). 
+要使用 AzAutoGen，必须提供 Jinja 模板和 XML 或 JSON 数据文件，以便 AzAutoGen 生成输出文件。这些文件的内容取决于你使用 AzAutoGen 的预期目的。有关 AzAutoGen 如何工作以及如何编写模板和生成数据输入的完整说明，请参阅 [使用 AzAutoGen 从模板自动生成源代码](/docs/user-guide/programming/autogen/)。
 
 
-## Integrating with an O3DE target build
+## 与 O3DE 目标构建集成
 
-AzAutoGen is invoked when CMake builds an O3DE target. To invoke AzAutoGen and generate the output source files for your project or Gem, complete the following steps:
+当 CMake 编译 O3DE 目标时，会调用 AzAutoGen。要调用 AzAutoGen 并为项目或 Gem 生成输出源文件，请完成以下步骤：
 
-1. Define the autogen rules by passing in a set of `AUTOGEN_RULES` to the `ly_add_target(...)` command in your project's `CMakeLists.txt` file. Each rule maps a set of data input files to a single template and specifies the output filenames for the generated content.
+1. 通过在项目的 `CMakeLists.txt` 文件中向 `ly_add_target(...)` 命令传递一组 `AUTOGEN_RULES` 来定义自动生成规则。每条规则将一组数据输入文件映射到一个模板，并指定生成内容的输出文件名。
 
-    For specifications on defining autogen rules, refer to the [Autogen rules](#autogen-rules) section on this page. 
+   有关定义自动生成规则的规范，请参阅本页的 [自动生成规则](#autogen-rules) 部分。
 
-2. Add your data input files (`.xml` and `.json`) and templates (`.jinja`) to your project's set of all files, so CMake can locate them when building. 
-To do this:
-    - In your project's `*_files.cmake` file, pass the filenames into the `set(FILE...)` command. 
-    - In your project's `CMakeLists.txt` file, include the `*_files.cmake` file to the `FILE_CMAKE` parameter.
+2. 将数据输入文件（`.xml` 和 `.json`）和模板（`.jinja`）添加到项目的所有文件集中，以便 CMake 能在构建时找到它们。
+   要做到这一点:
+    - 在项目的 `*_files.cmake` 文件中，将文件名传入 `set(FILE...)` 命令。
+    - 在项目的 `CMakeLists.txt` 文件中，将 `*_files.cmake` 文件包含到 `FILE_CMAKE` 参数中。
 
-When building, CMake detects the list of autogen rules, deduces the set of generated files, and sets up the appropriate build-time hooks to run AzAutoGen for your project. Then, CMake places the output directory at `${CMAKE_CURRENT_BINARY_DIR}/Azcg/Generated`.
+编译时，CMake 会检测自动生成规则列表，推断生成文件集，并设置适当的编译时钩子，以便为项目运行 AzAutoGen。然后，CMake 会将输出目录放在 `${CMAKE_CURRENT_BINARY_DIR}/Azcg/Generated`。
 
-### Example
+### 示例
 
-The following example shows snippets of how the AzNetworking Framework generates the source code for various types of packets that the system requires.
+下面的示例展示了 AzNetworking 框架如何为系统所需的各类数据包生成源代码的片段。
 
-Autogen rules are defined in [`Code/Framework/AzNetworking/CMakeLists.txt`](https://github.com/o3de/o3de/blob/dd0978c59f1d01b39e006e6c3ba3baf6060136cf/Code/Framework/AzNetworking/CMakeLists.txt#L33-L36). It also includes the `aznetworking_files.cmake` file using the `FILES_CMAKE` parameter.
+Autogen 规则在 [`Code/Framework/AzNetworking/CMakeLists.txt`](https://github.com/o3de/o3de/blob/dd0978c59f1d01b39e006e6c3ba3baf6060136cf/Code/Framework/AzNetworking/CMakeLists.txt#L33-L36)中定义。它还包括使用 `FILES_CMAKE` 参数的 `aznetworking_files.cmake` 文件。
 ```cmake
 ly_add_target(
     NAME AzNetworking STATIC
@@ -44,7 +44,7 @@ ly_add_target(
 )
 ```
 
-Data input files and templates are included in [Code\Framework\AzNetworking\AzNetworking\aznetworking_files.cmake](https://github.com/o3de/o3de/blob/dd0978c59f1d01b39e006e6c3ba3baf6060136cf/Code/Framework/AzNetworking/AzNetworking/aznetworking_files.cmake#L12-L17). 
+数据输入文件和模板包含在 [Code\Framework\AzNetworking\AzNetworking\aznetworking_files.cmake](https://github.com/o3de/o3de/blob/dd0978c59f1d01b39e006e6c3ba3baf6060136cf/Code/Framework/AzNetworking/AzNetworking/aznetworking_files.cmake#L12-L17)中。
 ```cmake
 set(FILES
     # ...
@@ -59,10 +59,11 @@ set(FILES
 ```
 
 
-## Autogen rules
+## 自动生成规则
 
-An *autogen rule* instructs CMake to use AzAutoGen to generate files. 
-You define autogen rules by passing in a set of `AUTOGEN_RULES` to the `ly_add_target(...)` command that's inside your project's `CMakeLists.txt` file.
+**自动生成规则**指示 CMake 使用 AzAutoGen 生成文件。
+您可以通过在项目的 `CMakeLists.txt` 文件中向 `ly_add_target(...)` 命令传递一组 `AUTOGEN_RULES` 来定义自动生成规则。
+
 
 Each element of the set passed to `AUTOGEN_RULES` should follow the `<input>,<template>,<output>` format. Here, `<input>` is the name of the XML or JSON data input file, `<template>` is the name of the Jinja template file, and `<output>` is the name that you want the generated file to have. 
 

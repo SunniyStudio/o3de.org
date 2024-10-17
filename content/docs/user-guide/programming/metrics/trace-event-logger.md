@@ -1,57 +1,59 @@
 ---
-linktitle: Google Trace Event Format 
-title: Google Trace Event Format Metrics
-description: Describes how to create, register and record metrics using the Event Logger API in Open 3D Engine (O3DE) to JSON format viewable in the chromium about:tracing window.
+linktitle: Google跟踪事件格式 
+title: Google 跟踪事件格式指标
+description: 介绍如何使用 Open 3D Engine (O3DE) 中的事件记录器 API 将指标创建、注册和记录为 JSON 格式，并可在 chromium about:tracing 窗口中查看。
 weight: 100
 ---
 
 
-## Learn the JSON Trace Event Logger
+## 学习 JSON 跟踪事件记录器
 
-The Trace Event Logger in **Open 3D Engine (O3DE)** provides the ability to log metrics compatible with the Google [Trace Event Format](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview#).  
-The implementation is a limited subset of Google Trace format and only events types relevant for O3DE needs at the time have been implemented.
+**Open 3D Engine (O3DE)** 中的跟踪事件记录器能够记录与谷歌[跟踪事件格式](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview#)兼容的指标。
+该实现是 Google 跟踪格式的一个有限子集，只实现了与 O3DE 当时需要相关的事件类型。
 
-O3DE currently supports the following set of events:
-|Events|Description|Phase Markers|
+O3DE 目前支持以下事件集：
+
+|事件|描述|阶段标记|
 |---|---|---|
-|Duration|Provides a way to measure duration within a single thread.  Duration events can be nested|B (begin), E(end)|
-|Complete|Combines the Begin and End of a Duration Event into a single event.|X|
-|Instant|Corresponds to an event that occurs at a point in time. It has no duration associated with it. For example an out of memory event might be logged as an "instant" event.  An "s" scope parameter is available to provide the scope of the event. Valid scopes are "g" (global), "p" (process), "t" (thread). If no scope is provided it is assumed to be a thread scope event.|i|
-|Counter|Provides a way to track multiple values over time. When an "id" is provided , it combines with the "name" field to form the counter name.|C|
-|Async|Provides a way to measure asynchronous operations across multiple threads.  This event may be used to output the frame time or network I/O stastistics.  Events with the same "cat"(category) and "id" field values are considered to be from the same event tree.  The "scope" argument is an optional string used to avoid id conflicts. When specified the "cat", "id" and "scope" will be used to identify an event from the same event tree.|b (nestable start), n (nestable instant), e (nestable end)|
+|Duration|提供了一种测量单个线程内持续时间的方法。 持续时间事件可以嵌套|B (begin), E(end)|
+|Complete|将Duration 事件的开始和结束合并为一个事件。|X|
+|Instant|与发生在某个时间点的事件相对应。它没有相关的持续时间。例如，内存不足事件可记录为 “即时 ”事件。"s" 作用域参数可提供事件的作用域。有效的作用域包括 “g”（全局）、“p”（进程）和 “t”（线程）。如果没有提供范围，则假定为线程范围事件。|i|
+|Counter|提供了一种随时间跟踪多个值的方法。如果提供了 “id”，它就会与 “name ”字段组合成计数器名称。|C|
+|Async|提供了一种跨多个线程测量异步操作的方法。 该事件可用于输出帧时间或网络 I/O 统计数据。 具有相同 “cat”（类别）和 “id ”字段值的事件被视为来自同一事件树。 "scope"参数是一个可选字符串，用于避免 id 冲突。指定后，“cat”、“id ”和 “scope ”将用于识别同一事件树中的事件。 |b (nestable start), n (nestable instant), e (nestable end)|
 
 
-The following set of events are not provided by the JSON Trace Event Logger in O3DE currently:
-|Events|Description|Phase Markers|
+O3DE 中的 JSON 跟踪事件记录器目前不提供以下事件集：
+|事件|描述|阶段标记|
 |---|---|---|
-|Flow|Similar to an asynchronous event, except each thread can have a duration associated with it.|s (start), t (step), f (end)|
-|Object|Provides a way to build complex structures in events.  Normally used to track when an object instance is created("N") and destroyed("D") in-memory.  The "O" object can be used to associate "snapshot" data with an object, which can be anything that is storable in an JSON object.|N (created), O (snapshot), D (destroyed)|
-|Metadata|Allows associating associating custom data with one of the supported fields("process_name", "process_labels", "process_sort_index", "thread_name", "thread_sort_index"). The "args" argument is used to specify that metadata.|M|
-|Memory Dump|Corresponds to a memory dump of either the global OS memory or the running application process memory.  The "V" phase is used for a global memory information such as system ram.  The "v" phase is used for process statistics.|V (global), v (process)|
-|Mark|(Not Needed for O3DE) Used for logging events when a web navigation timing API is used.|R|
-|Clock Sync|(Not needed for O3DE) Used to perform sync clock synchronization among multiple event logs.|c|
-|Context|Used to mark a sequence of events belonging to a context.|,|
+|Flow|与异步事件类似，只是每个线程可以有一个与之相关的持续时间。|s (start), t (step), f (end)|
+|Object|提供了一种在事件中构建复杂结构的方法。 通常用于跟踪对象实例在内存中创建（“N”）和销毁（“D”）的时间。 O “对象可用于将 ”快照 "数据与对象关联起来，快照数据可以是任何可存储在 JSON 对象中的数据。|N (created), O (snapshot), D (destroyed)|
+|Metadata|允许将自定义数据与支持的字段之一（“process_name”、“process_labels”、“process_sort_index”、“thread_name”、“thread_sort_index”）关联。args "参数用于指定元数据。|M|
+|Memory Dump|相当于全局操作系统内存或运行中的应用程序进程内存的内存转储。 "V" 阶段用于全局内存信息，如系统内存。"v" 阶段用于进程统计。|V (global), v (process)|
+|Mark|(O3DE 不需要）在使用网络导航定时 API 时用于记录事件。|R|
+|Clock Sync|(O3DE 不需要）用于在多个事件日志之间执行同步时钟同步。|c|
+|Context|用于标记属于上下文的一系列事件。|,|
 
-More information about each of these events can be found in the [Event Descriptions](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview#heading=h.uxpopqvbjezh) section of the Google Trace Event Format document.
+有关这些事件的更多信息，请参阅 Google 跟踪事件格式文档的 [事件描述](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview#heading=h.uxpopqvbjezh)部分。
 
-## Event Logger API documentation
+## 事件记录器 API 文档
 
-Detailed doxygen comments on the available interfaces for the Event Logger API is located within the header API files located within the [Code/Framework/AzCore/AzCore/Metrics](https://github.com/o3de/o3de/tree/development/Code/Framework/AzCore/AzCore/Metrics) directory.  
-Within that directory the following are the most important files to examine to learn about the API:
+事件记录器 API 可用接口的详细 doxygen 注释位于[Code/Framework/AzCore/AzCore/Metrics](https://github.com/o3de/o3de/tree/development/Code/Framework/AzCore/AzCore/Metrics)目录下的头文件 API 文件中。
 
-|File|Description|
+在该目录中，要了解 API，需要检查以下最重要的文件：
+
+|文件|说明|
 |---|---|
-|[IEventLogger.h](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Metrics/IEventLogger.h)|Provides the interface for recording event data via using an Event Description.  Structures definitions for specific Event Phase Types are also described in this file.|
-|[IEventLoggerFactory.h](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Metrics/IEventLoggerFactory.h)|Provides the interface for registration of Event Loggers with a global registrar. This can be used to access Event Loggers accross shared library boundaries or access an EventLogger without the needing to store it explicitly.|
-|[EventLoggerUtils.h](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Metrics/EventLoggerUtils.h)|Contains utility functions to simplify recording of events using the Event Logger API.  The functions can both query and Event Logger from the Event Logger Factory and record and event in a single call.  This file also provides the simplified `AZ::Metrics::RecordEvent` api which can accept any type of supported Event Phase Type.|
+|[IEventLogger.h](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Metrics/IEventLogger.h)|提供了使用事件描述记录事件数据的接口。 本文件还描述了特定事件阶段类型的结构定义。|
+|[IEventLoggerFactory.h](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Metrics/IEventLoggerFactory.h)|为使用全局注册器注册事件记录器提供接口。这可用于跨共享库边界访问事件记录器，或访问事件记录器而无需显式存储。|
+|[EventLoggerUtils.h](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Metrics/EventLoggerUtils.h)|包含用于简化使用事件记录器 API 记录事件的实用功能。 这些函数既能从事件记录器工厂查询事件记录器，也能在一次调用中记录事件。 该文件还提供简化的 `AZ::Metrics::RecordEvent` 应用程序，可接受任何类型的受支持事件阶段类型。|
 
-## How to use the JSON Trace Event Logger
+## 如何使用 JSON 跟踪事件记录器
 
-This section describes how to register to create an Event Factory and register it with a global interface, create an Event Logger, provide the Event Logger stream to record data output and to record sample metrics. By the end you will be able to view collected metrics in a Chromium-based browser.
+本节将介绍如何注册创建事件工厂并将其注册到全局接口、创建事件记录器、提供事件记录器流以记录数据输出以及记录示例指标。最后，您将能在基于 Chromium 的浏览器中查看收集到的指标。
 
-The full source code in this section is available in the [JsonTraceEventLogger Unit Tests](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/Tests/Metrics/JsonTraceEventLoggerTests.cpp) and [EventLoggerUtils Unit Tests](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/Tests/Metrics/EventLoggerUtilsTests.cpp)
+本节的完整源代码可在 [JsonTraceEventLogger 单元测试](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/Tests/Metrics/JsonTraceEventLoggerTests.cpp)和 [EventLoggerUtils 单元测试](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/Tests/Metrics/EventLoggerUtilsTests.cpp)中找到。
 
-### Create EventLogger Factory and register it as a global instance
+### 创建 EventLogger Factory 并将其注册为全局实例
 ```c++
 //! The logger is created from a compile time hash of the "SampleEventLogger" string using the FNV-1a 64 bit algorithm
 constexpr AZ::Metrics::EventLoggerId SampleLoggerId{ static_cast<AZ::u32>(AZStd::hash<AZStd::string_view>{}("SampleEventLogger")) };
@@ -78,7 +80,7 @@ protected:
 };
 ```
 
-### Create a JSON Trace Event Logger that writes to an in-memory string and register it with the Event Logger Factory
+### 创建写入内存字符串的 JSON 跟踪事件记录器，并向事件记录器工厂注册
 ```c++
     JsonTraceEventLoggerTest()
     {
@@ -96,9 +98,9 @@ protected:
     }
 ```
 
-### Generate duration trace metrics and record them to the Event Logger
+### 生成持续时间跟踪指标并将其记录到事件记录器中
 
-The following block of code shows how to record a string and a number using the event logger:
+以下代码块展示了如何使用事件记录器记录字符串和数字：
 
 ```c++
 {
@@ -134,10 +136,11 @@ The following block of code shows how to record a string and a number using the 
 }
 ```
 
-### Flush the metrics string to a text file
+### 将指标字符串刷新到文本文件中
 
-At this point the the metrics can be logged to `stdout`, sent over the network or written to a JSON file on disk.  
-The example will write the metrics a file named with the prefix "sample_metrics_" with the current time formatted using the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. An example filename is `sample_metrics_2023-01-01T120000.123456.json`.
+此时，度量值可记录到 `stdout`、通过网络发送或写入磁盘上的 JSON 文件。
+示例将把度量值写入一个文件，文件名前缀为 “sample_metrics_”，当前时间格式采用[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) 标准。文件名示例为 `sample_metrics_2023-01-01T120000.123456.json`。
+
 ```c++
 {
     constexpr AZ::IO::OpenMode openMode = AZ::IO::OpenMode::ModeWrite;
@@ -154,9 +157,9 @@ The example will write the metrics a file named with the prefix "sample_metrics_
 }
 ```
 
-### Event Metrics JSON output
+### 事件指标 JSON 输出
 
-  The following example shows logging of metrics using multithreads, to illustrate that the thread ID is associated with each metric.  
+下面的示例显示了使用多线程记录指标的情况，以说明线程 ID 与每个指标相关联。  
 ```json
 [
   {"name":"Duration Event","id":"0","cat":"Test","ph":"B","ts":1664329933375019,"pid":31760,"tid":36036,"args":{"string":"Hello world","int64_t":-2}},
@@ -165,7 +168,7 @@ The example will write the metrics a file named with the prefix "sample_metrics_
 ```
 
 
-### Viewing the event metrics
-Using a Cchromium-based browser `about:tracing` page or the trace-viewer provided by the [catapult repo](https://google.github.io/trace-viewer/), the recorded metrics can be visualized based on their event types.
+### 查看事件指标
+使用基于 Chromium 的浏览器 `about:tracing` 页面或[catapult repo](https://google.github.io/trace-viewer/)提供的跟踪查看器，可以根据事件类型可视化记录的指标。
 
 ![about::tracing](/images/user-guide/metrics/about-tracing.png)

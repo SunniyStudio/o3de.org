@@ -1,49 +1,48 @@
 ---
 linktitle: AZ::Event
 title: AZ::Event
-description: Use the AZ::Event template class to subscribe to and publish messages
-  across game components.
+description: 使用 AZ::Event 模板类订阅和发布跨游戏组件的信息。
 weight: 500
 ---
 
-The `AZ::Event` template class is used to subscribe to and publish single value messages across the different components of your game. It's designed to replace value-based event pub/sub patterns that are currently implemented using EBus, only with significantly simpler syntax. There are a number of benefits to this new system, including simpler code, fewer files, removal of aggregate interfaces where a handler only cares about a subset of events, and improved runtime performance when dispatching value changes to registered handlers.
+`AZ::Event` 模板类用于在游戏的不同组件中订阅和发布单值消息。它旨在取代目前使用 EBus 实现的基于值的事件发布/子模式，只是语法要简单得多。这种新系统有很多优点，包括代码更简单、文件更少、去除了处理程序只关心事件子集的聚合接口，以及在向已注册的处理程序分派值变化时提高了运行时性能。
 
-`AZ::Event` is defined as a C++ template \(`template <typename... Params>`\) in the following header: `%INSTALL-ROOT%\dev\Code\Framework\AzCore\AzCore\Ebus\Event.h`
+`AZ::Event` 被定义为 C++ 模板 \(`template <typename... Params>`\) ，位于以下头文件中：`%INSTALL-ROOT%\dev\Code\Framework\AzCore\AzCore\Ebus\Event.h`
 
-`AZ::Event `limitations include the following:
-* The event system is single-threaded only. Handlers should `Connect()` and `Disconnect()` on the same thread that is dispatching events.
-* Handlers can be bound only to an existing event instance. You can't bind to an event prior to its creation (the way you can with an address by ID EBus).
-* A handler can be bound only to a single event. You can't bind a single handler to more than one event.
-* There are no return results for handlers. The handler function signature must have a void return result.
-* There is no event queuing. A queue can be built as a modular handler wrapper, but in the single-threaded implementation, all events immediately dispatch to all handlers.
+`AZ::Event `限制包括以下方面：
+* 事件系统只支持单线程。处理程序应在调度事件的同一线程上进行`Connect()` 和 `Disconnect()`。
+* 处理程序只能绑定到现有的事件实例。在事件创建之前，无法绑定到该事件（就像通过 ID EBus 绑定地址一样）。
+* 处理程序只能绑定到一个事件。一个处理程序不能绑定多个事件。
+* 处理程序没有返回结果。处理程序函数签名的返回结果必须为空。
+* 没有事件队列。队列可以作为模块化处理程序包装器构建，但在单线程实现中，所有事件都会立即分派给所有处理程序。
 
-`AZ::Event` provides a `Handler` class and the following explicit constructors:
+`AZ::Event` 提供了一个 `Handler` 类和以下显式构造函数：
 + `Handler(std::nullptr_t)`
 +  `Handler(Callback callback)`
 + `Handler(const Handler& rhs)`
 + `Handler(Handler&& rhs)`
 
-`AZ::Event::Handler` has the following methods defined on it:
-+ To connect to a `Handler` instance: `void Connect(Event<Params...>& event);`
-+ To disconnect from a `Handler` instance: `void Disconnect();`
+`AZ::Event::Handler`中定义了以下方法：
++ 要连接到`Handler`实例: `void Connect(Event<Params...>& event);`
++ 要从`Handler`实例断开连接：`void Disconnect();`
 
-**Example usage**
-+ To create an event for handling, declare an instance of `AZ::Event` with the following C++ syntax:
+**使用示例**
++ 要创建要处理的事件，请使用以下 C++ 语法声明一个 `AZ::Event` 实例：
 
   `AZ::Event<{type}> {name_of_event};`
 
-  For example, to declare an event that can publish a Boolean value:
+  例如，声明一个可以发布布尔值的事件：
 
   `AZ::Event<bool> isPlayerActive;`
-+ To declare a handler that will process the event when it is signaled:
++ 声明一个处理程序，在事件发出信号时对其进行处理：
 
   `AZ::Event<bool>::Handler playerActiveHandler([]({type} value) {});`
 
-  For example, to create a handler for the event from the previous example:
+  例如，为上一个示例中的事件创建一个处理程序：
 
   `AZ::Event<bool>::Handler playerActiveHandler([](bool value) {});`
 
-When you declare the event and the handler in your header, you can connect to the event and signal it. Here is a simple example using the declarations and calls from the prior examples:
+在头文件中声明事件和处理程序后，就可以连接到事件并发出信号。下面是一个使用前面示例中的声明和调用的简单示例：
 
 ```
 // Declaration in your header
@@ -56,7 +55,7 @@ handler.Connect(isPlayerActive); // Connect the handler to to our event
 isPlayerActive.Signal(true); // Signal the event to inform subscribers that the player is active
 ```
 
-Here is a more complex example that signals multiple events with a class to handle them:
+下面是一个更复杂的示例，它通过一个类来处理多个事件信号：
 
 ```
 class ExampleEventComponent
@@ -114,10 +113,10 @@ private:
 };
 ```
 
-**Performance**
-`AZ::Event` is roughly another 20% faster than even the lambda syntax for EBus, and over 40% faster than EBus's member function pointer model. These performance deltas scale linearly with the number of handlers, so `AZ::Event` is 40% faster than using standard EBus member function pointers whether there's 1,000 handlers attached, or 1,000,000.
+**性能**
+`AZ::Event` 甚至比 EBus 的 lambda 语法还要快 20%，比 EBus 的成员函数指针模型快 40% 以上。这些性能差距与处理程序的数量成线性关系，因此无论有 1,000 个处理程序还是 1,000,000 个处理程序，`AZ::Event` 都比使用标准 EBus 成员函数指针快 40%。
 
-To compare the EBus handler implementation code against `AZ::Event`, here is an example of code used to signal a change to a single value using EBus.
+为了将 EBus 处理器的实现代码与`AZ::Event`进行比较，下面是一个使用 EBus 发出单个值变化信号的代码示例。
 
 ```
 // Single-value message handler using EBus
@@ -149,7 +148,7 @@ EBusEventExampleImpl handler;
 EBusEventExampleBus::Broadcast(&EBusEventExample::OnSignal, 1);
 ```
 
-And here is an example that performs the same work using `AZ::Event`.
+下面是一个使用 `AZ::Event`执行相同工作的示例。
 
 ```
 // Single-value message handler implemented using AZ::Event
@@ -161,17 +160,17 @@ handler.Connect(event); // Connect the handler to our event
 event.Signal(1); // Signal an event, this will invoke our handler's lambda
 ```
 
-Note the reduced lines of code, as well as the overall simpler code pattern. Try it out by porting some of your current EBus message handlers to use `AZ::Event`, and then test it using our built-in unit tests and benchmarks.
+请注意代码行数的减少以及整体代码模式的简化。请将您当前的一些 EBus 消息处理程序移植到使用 `AZ::Event`，然后使用我们内置的单元测试和基准进行测试。
 
-## Unit testing and benchmarking 
+## 单元测试和基准测试
 
-The `AZ::Event `system includes a number of unit tests and benchmarks to validate correct behavior and confirm the performance advantages over an equivalent EBus implementation.
+`AZ::Event`系统包含大量单元测试和基准测试，以验证行为的正确性，并确认与同等 EBus 实现相比的性能优势。
 
-To execute the unit tests, the following command-line arguments can be provided to the `AzTestRunner`:
+要执行单元测试，可向 `AzTestRunner` 提供以下命令行参数：
 
 %INSTALL-ROOT%\\dev\\Bin64vc141.Test\\AzCoreTests.dll AzRunBenchmarks --pause-on-completion --benchmark\_filter=BM\_EventPerf\*
 
-You should see unit testing output like this.
+你应该会看到类似这样的单元测试输出。
 
 ```
 [==========] Running 7 tests from 1 test case.
@@ -194,11 +193,11 @@ You should see unit testing output like this.
 [----------] 7 tests from EventTests (9 ms total)
 ```
 
-To execute the benchmarks, the following command-line arguments can be provided to the `AzTestRunner`:
+要执行基准，可向 `AzTestRunner` 提供以下命令行参数：
 
 %INSTALL-ROOT%\\dev\\Bin64vc141.Test\\AzCoreTests.dll AzRunBenchmarks --pause-on-completion --benchmark\_filter=BM\_EventPerf\*
 
-You should see benchmark output like this.
+您应该会看到类似这样的基准输出。
 
 ```
 Benchmark name                     benchmark time   cpu time   iterations

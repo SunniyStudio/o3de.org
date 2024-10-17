@@ -1,13 +1,13 @@
 ---
-linkTitle: Register Objects
-title: Register Objects for Serialization
-description: Learn how to register objects in Open 3D Engine (O3DE) for JSON or XML serialization.
+linkTitle: 注册对象
+title: 注册对象以序列化
+description: 了解如何在 Open 3D Engine (O3DE) 中为 JSON 或 XML 序列化注册对象。
 weight: 100
 ---
 
-Serialization in **Open 3D Engine (O3DE)** is done by registering classes with a *serialization context*. This context takes information about the provided class and uses reflection mechanisms to determine which class members to emit and their types. Serialization is controlled through the `AZ::SerializeContext` class, declared in `AZCore/Serialization/SerializeContext.h` as part of the `AzCore` library.
+在**Open 3D Engine (O3DE)**中，序列化是通过在**序列化上下文**中注册类来完成的。该上下文获取关于所提供类的信息，并使用反射机制来确定要发射哪些类成员及其类型。序列化是通过 `AZ::SerializeContext`类来控制的，该类在`AZCore/Serialization/SerializeContext.h`中声明，是 `AzCore` 库的一部分。
 
-Serialization requires access to an `AZ::ReflectContext` instance that you can safely cast to an `AZ::SerializeContext` object through the AzCore reflection system. There's a globally managed serialization context within O3DE that you can retrieve through the `AZComponentApplicationBus`.
+序列化需要访问`AZ::ReflectContext`实例，您可以通过 AzCore 反射系统将该实例安全地转换为 `AZ::SerializeContext`对象。在 O3DE 中有一个全局管理的序列化上下文，您可以通过 `AZComponentApplicationBus`获取。
 
 ```
 AZ::SerializeContext* serializeContext = nullptr;
@@ -15,33 +15,33 @@ AZ::ComponentApplicationBus::BroadcastResult(serializeContext, &AZ::ComponentApp
 ```
 
 {{< caution >}}
-When using the global serialization context, only register an object for serialization in a `Reflect` function call. Registering outside of this function can cause race conditions. If you need to register for serialization at any other time, use a custom serialization context.
+使用全局序列化上下文时，只能在`Reflect` 函数调用中为序列化注册对象。在该函数之外注册可能会导致竞赛条件。如果需要在其他时间注册序列化，请使用自定义序列化上下文。
 {{< /caution >}}
 
-## Register classes 
+## 注册类
 
-Classes are registered on a serialization context with the `AZ::SerializeContext::Class<T>()` method, using the type `T` to determine which class to register. In order to be serialized, the class **must** be a specialization of `AzTypeInfo` registered with the `AZ_TYPE_INFO_SPECIALIZE()` macro, or have RTTI information set with the `AZ_RTTI` macro. The `AZ::SerializeContext::Class<T>()` method returns an `AZ::SerializeContext::ClassBuilder` object, which is used to store version and field information for the class.
+类是通过`AZ::SerializeContext::Class<T>()`方法在序列化上下文中注册的，使用`T`类型来确定要注册的类。要进行序列化，类**必须**是使用`AZ_TYPE_INFO_SPECIALIZE()`宏注册的`AzTypeInfo`的特化，或使用`AZ_RTTI`宏设置了 RTTI 信息。`AZ::SerializeContext::Class<T>()`方法会返回一个`AZ::SerializeContext::ClassBuilder`对象，用于存储类的版本和字段信息。
 
 ### `AZ::SerializeContext::ClassBuilder` 
 
 `Version(unsigned int version, VersionConverter converter = nullptr)`
-Sets version information for the serialization.
-+  `version` - The version of the class. Whenever the internal structure of the class changes, the version should be updated.
-+  `converter` - Converter function which translates older versions of the class to the provided `version`.
+设置序列化的版本信息。
++  `version` - 类的版本。每当类的内部结构发生变化时，就应更新版本。
++  `converter` - 转换函数，用于将类的旧版本转换为所提供的 `version` 版本。
 
 `template<class ClassType, class FieldType> Field(const char* name, FieldType ClassType::* address, AZStd::initializer_list<AttributePair> attrbuteIds = {})`
-Tags a field in a class for storage.
-+ `name` - The name to store the field as. Field names for the same class must be unique. Matching the member name isn't required.
-+ `address` - The address of the field to store, as a pointer to member or offset from the start of an instance of `ClassType`. If a pointer to member is used, all type information is inferred.
-+ `attributeIds` - Associate other attribute objects with this field.
+标记存储类中的一个字段。
++ `name` - 存储字段的名称。同一类别的字段名必须是唯一的。不要求与成员名称匹配。
++ `address` - 要存储的字段地址，可以是指向成员的指针，也可以是从 `ClassType` 实例开始的偏移量。如果使用成员指针，则会推断出所有类型信息。
++ `attributeIds` - 将其他属性对象与该字段关联。
 
 `template<class ClassType, class BaseType, class FieldType> FieldFromBase(const char* name, FieldType BaseType:* address)`
-Create a field from a base class member. This can be used if you want to serialize a base class member without registering and serializing a whole base class, to decouple the serialized class from its base.
-+ `name` - The name to store the field as. Field names for the same class must be unique. Matching the member name isn't required.
-+ `address` - The address of the field to store, as a pointer to member or offset from the start of an instance of `BaseType`. If a pointer to member is used, all type information is inferred.
+从基类成员创建字段。如果要序列化基类成员，而不需要注册和序列化整个基类，则可以使用此方法将序列化后的类与其基类解耦。
++ `name` - 存储字段的名称。同一类别的字段名必须是唯一的。不要求与成员名称匹配。
++ `address` - 要存储的字段地址，可以是指向成员的指针，也可以是从 `BaseType` 实例开始的偏移量。如果使用成员指针，则会推断出所有类型信息。
 
-**Example Registering a class for serialization**
-The following is an example from the O3DE Asset Processor code, demonstrating how a class can be registered for serialization.
+**示例 为序列化注册一个类**
+下面是 O3DE 资产处理器代码中的一个示例，演示了如何为序列化注册一个类。
 
 ```
 if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
@@ -57,28 +57,28 @@ if (AZ::SerializeContext* serializeContext = azrtti_cast<AZ::SerializeContext*>(
 }
 ```
 
-## Register enums 
+## 注册枚举
 
-Enums are registered on a serialization context with the `AZ::SerializeContext::Enum<T>()` method, using the type `T` to determine which enum to register. In order to be serialized, the enum **must** be a specialization of the `AzTypeInfo` using the `AZ_TYPE_INFO_SPECIALIZE()` macro. The `AZ::SerializeContext::Enum<T>()` method returns an `AZ::SerializeContext::EnumBuilder` object, which is used to store version and value information for the enum.
+枚举是使用`AZ::SerializeContext::Enum<T>()`方法在序列化上下文中注册的，使用`T`类型来决定注册哪个枚举。为了进行序列化，枚举必须***是使用`AZ_TYPE_INFO_SPECIALIZE()`宏的`AzTypeInfo`的特化。 `AZ::SerializeContext::Enum<T>()` 方法会返回一个`AZ::SerializeContext::EnumBuilder`对象，用于存储枚举的版本和值信息。
 
 ### `AZ::SerializeContext::EnumBuilder` 
 
 `Version(unsigned int version, VersionConverter converter = nullptr)`
-Sets version information for the serialization.
-+  `version` - The version of the enum. Unlike classes, this doesn't need to change whenever an enum's definition is updated, and is mostly for conversion purposes.
-+  `converter` - Converter function which translates older versions of the enum to the provided `version`.
+设置序列化的版本信息。
++  `version` - 枚举的版本。与类不同，每次更新枚举定义时，它都不需要更改，主要用于转换目的。
++  `converter` - 转换函数，用于将枚举的旧版本转换为所提供的 `version` 版本。
 
 `template<class EnumType> Value(const char* name, EnumType value)`
-Tags an enum value for serialization as part of the enum's information.
-+ `name` - The name to store the value as. Field names for the same enum must be unique. Matching the internal value name isn't required.
-+ `value` - The associated value to store for the enum. If this is a value associated with the enum, all type information is inferred.
+标记一个枚举值，作为枚举信息的一部分进行序列化。
++ `name` - 存储值的名称。同一枚举的字段名必须是唯一的。不要求与内部值名称匹配。
++ `value` - 枚举的相关存储值。如果这是一个与枚举相关联的值，则会推断出所有类型信息。
 
 {{< important >}}
-If you're serializing a member from a class with an enum type, that enum **must** be registered with the serializer.
+如果要序列化带有枚举类型的类中的成员，则**必须**在序列化器中注册该枚举。
 {{< /important >}}
 
-**Example Registering an enum for serialization**
-The following is an example showing a sample declaration of an enum, and a short function that can be called to register it with the serialization system.
+**示例 为序列化注册一个枚举**
+下面的示例展示了一个枚举声明示例，以及一个可用于在序列化系统中注册枚举的简短函数。
 
 ```
 enum ExampleEnum : uint8_t

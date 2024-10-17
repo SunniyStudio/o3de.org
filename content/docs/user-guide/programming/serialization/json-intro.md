@@ -1,21 +1,21 @@
 ---
-title: JSON Object Serialization System
-description: Serialize objects from Open 3D Engine (O3DE) to JSON for other tools to process, or to load between runtime sessions.
+title: JSON对象序列化系统
+description: 将 Open 3D Engine (O3DE) 中的对象序列化为 JSON 格式，供其他工具处理，或在运行会话之间加载。
 weight: 200
 ---
 
-Objects can be serialized out to [JSON](http://json.org), a machine-readable format that's designed to be easy for humans to read and edit. With JSON, contributors can make small changes to data without requiring specialized tools or a detailed XML schema. Many programming languages also offer robust, easy-to-use support for JSON data, simplifying the development of build and design tools for supporting your project outside of **O3DE Editor**.
+对象可以序列化为 [JSON](http://json.org)，这是一种机器可读格式，旨在方便人类阅读和编辑。有了 JSON，撰稿人无需专业工具或详细的 XML 架构，就能对数据进行微小的修改。许多编程语言也为 JSON 数据提供了强大、易用的支持，从而简化了在**O3DE 编辑器**之外支持项目的构建和设计工具的开发。
 
-In **Open 3D Engine (O3DE)**, using the JSON serialization format also offers the following benefits:
+在**Open 3D Engine (O3DE)** 中，使用 JSON 序列化格式还具有以下优点：
 
-* **Minimal serialization** -- Only data relevant to the object is serialized. Default values and information that can be retrieved at runtime aren't stored. This reduces object size and makes manual editing easier.
-* **Best-effort deserialization** -- To complement the minimal serialization, the engine applies as much data as possible when deserializing. If a field is missing from the JSON input, default values are used. Fields in the JSON that the object doesn't support are ignored. This makes working with JSON less error-prone than XML, which requires a rigid structure.
-* **Forgiveness** -- Because of the forgiving nature of JSON, O3DE can proceed with serialization and deserialization, even if it finds missing data, while emitting a warning (and optionally reporting an error). This extends to specialized data types that O3DE uses, such as vectors. (For example, if a 3D vector contains a 4th coordinate, O3DE simply ignores it and reports a warning.) This makes manual editing and custom tooling much safer.
-* **Easier source control** -- Source control systems can have difficulty with merging or generating useful diffs with XML files. Because of JSON's flexibility and limited format, it's easier to work with JSON files as text files in your source control system.
+* **最小序列化** -- 只有与对象相关的数据才会被序列化。默认值和可在运行时检索的信息不会被存储。这样可以减小对象的大小，使手动编辑更容易。
+* **尽全力反序列化** -- 为了补充最小序列化，引擎在反序列化时会应用尽可能多的数据。如果 JSON 输入中缺少字段，则会使用默认值。对象不支持的 JSON 字段将被忽略。这样，与需要严格结构的 XML 相比，处理 JSON 的错误率更低。
+* **Forgiveness** -- 由于 JSON 的宽容性，即使发现数据丢失，O3DE 也能继续序列化和反序列化，同时发出警告（可选择报告错误）。这也适用于 O3DE 使用的特殊数据类型，如向量。(例如，如果一个 3D 矢量包含第 4 个坐标，O3DE 会忽略它并发出警告）。这使得手动编辑和自定义工具更加安全。
+* **易于版本控制** -- 版本控制系统在合并 XML 文件或生成有用的差异时可能会遇到困难。由于 JSON 的灵活性和有限的格式，在版本控制系统中将 JSON 文件作为文本文件处理会更容易。
 
- This section of the documentation covers serialization and deserialization of data in the JSON format, and how O3DE data types are mapped to JSON data types.
+本节文档包括 JSON 格式数据的序列化和反序列化，以及如何将 O3DE 数据类型映射到 JSON 数据类型。
 
-## Related topics
+## 相关主题
 
-* [Serialize and Deserialize JSON Objects](json-serialize-deserialize)
-* [JSON Serialization of O3DE Data Types](json-data-types)
+* [序列化和反序列化JSON对象](json-serialize-deserialize)
+* [O3DE数据类型的JSON序列化](json-data-types)

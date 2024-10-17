@@ -1,42 +1,42 @@
 ---
-linktitle: EBus In Depth
-title: Event Buses In Depth
-description: Learn detailed information about EBuses in Open 3D Engine.
+linktitle: 深入EBus
+title: 深入事件总线
+description: 了解有关 Open 3D Engine 中 EBus 的详细信息。
 weight: 300
 ---
 
-Event buses (EBus) are a general purpose system for dispatching messages. EBuses have many advantages:
+事件总线（EBus）是一种调度信息的通用系统。EBus 有许多优点：
 
-* **Abstraction** - Minimize hard dependencies between systems.
-* **Event-driven programming** - Eliminate polling patterns for more scalable and high performing software.
-* **Cleaner application code** - Safely dispatch messages without concern for what is handling them or whether they are being handled at all.
-* **Concurrency** - Queue events from various threads for safe execution on another thread or for distributed system applications.
-* **Predictability** - Provide support for ordering of handlers on a given bus.
-* **Debugging** - Intercept messages for reporting, profiling, and introspection purposes.
+* **抽象** - 尽量减少系统间的硬性依赖。
+* **事件驱动编程** - 消除轮询模式，使软件更具可扩展性和高性能。
+* **更简洁的应用代码** - 安全地发送信息，而无需担心是谁在处理这些信息，或者这些信息是否正在被处理。
+* **并发** - 对来自不同线程的事件进行排队，以便在另一个线程或分布式系统应用中安全执行。
+* **预测性** - 支持对特定总线上的处理程序进行排序。
+* **调试** - 拦截信息，用于报告、剖析和反省。
 
-You can use EBuses in many different ways. Following are some examples:
+您可以通过多种不同方式使用 EBus。以下是一些例子：
 
-* As a direct global function call
-* Dispatch processing to multiple handlers
-* Queue all calls, acting like a command buffer
-* As an addressable mailbox
-* For imperative delivery
-* For queued delivery
-* Automatic marshalling of a function call into a network message or other command buffer
+* 作为直接的全局函数调用
+* 将处理分派给多个处理程序
+* 对所有调用进行排队，就像命令缓冲区一样
+* 作为可寻址邮箱
+* 用于强制发送
+* 用于队列传送
+* 自动将函数调用编入网络信息或其他命令缓冲区
 
-The EBus source code can found in the O3DE directory location `Code/Framework/AZCore/AZCore/EBus/EBus.h`.
+EBus 源代码可在 O3DE 目录中找到`Code/Framework/AZCore/AZCore/EBus/EBus.h`。
 
-## Bus Configurations
+## 总线配置
 
-You can configure EBuses for various usage patterns. This section presents common configurations and their applications.
+您可以为各种使用模式配置 EBus。本节将介绍常见的配置及其应用。
 
-### Single Handler
+### 单个处理程序
 
-The simplest configuration is a many-to-one (or zero) communication bus, much like a singleton pattern.
+最简单的配置是多对一（或零）通信总线，很像单机模式。
 
 {{< image-width src="/images/user-guide/programming/messaging/ebus/ebus-in-depth-1.png" width="700" alt="Many to one pattern" >}}
 
-There is at most one handler, to which any sender can dispatch events. Senders need not manually check and de-reference pointers. If no handler is connected to the bus, the event is simply ignored.
+处理程序最多只有一个，任何发送者都可以向其发送事件。发送者无需手动检查和取消引用指针。如果没有处理程序连接到总线，事件将被直接忽略。
 
 ```cpp
 // One handler is supported.
@@ -46,18 +46,18 @@ static const AZ::EBusHandlerPolicy HandlerPolicy = AZ::EBusHandlerPolicy::Single
 static const AZ::EBusAddressPolicy AddressPolicy = AZ::EBusAddressPolicy::Single;
 ```
 
-### Many Handlers
+### 多个处理程序
 
-Another common configuration is one in which many handlers can be present. You can use this configuration to implement observer patterns, subscriptions to system events, or general-purpose broadcasting.
+另一种常见的配置是可以有许多处理程序的配置。您可以使用这种配置来实现观察者模式、系统事件订阅或通用广播。
 
 {{< image-width src="/images/user-guide/programming/messaging/ebus/ebus-in-depth-2.png" width="700" alt="Many handlers" >}}
 
 
-Events to the handlers can be received in defined or undefined order. You specify which one in the `HandlerPolicy` trait.
+处理程序可按已定义或未定义的顺序接收事件。您可以在 `HandlerPolicy` 特质中指定哪种顺序。
 
-#### Example Without Handler Ordering
+#### 无处理程序排序示例
 
-To handle events in no particular order, simply use the `Multiple` keyword in the `HandlerPolicy` trait, as in the following example:
+要不按特定顺序处理事件，只需在 `HandlerPolicy` 特质中使用 `Multiple` 关键字，如下例所示：
 
 ```cpp
 // Multiple handlers. Events received in undefined order.
@@ -67,9 +67,9 @@ static const AZ::EBusHandlerPolicy HandlerPolicy = AZ::EBusHandlerPolicy::Multip
 static const AZ::EBusAddressPolicy AddressPolicy = AZ::EBusAddressPolicy::Single;
 ```
 
-#### Example with Handler Ordering
+#### 处理程序排序示例
 
-To handle events in a particular order, use the `MultipleAndOrdered` keyword in the `HandlerPolicy` trait, and then implement a custom handler-ordering function, as in the following example:
+要按特定顺序处理事件，可在 `HandlerPolicy` 特质中使用 `MultipleAndOrdered` 关键字，然后实现自定义处理程序排序功能，如下例所示：
 
 ```cpp
 // Multiple handlers. Events received in defined order.
@@ -85,17 +85,17 @@ struct BusHandlerOrderCompare : public AZStd::binary_function<MyBusInterface*, M
 };
 ```
 
-### EBus with Addresses and a Single Handler
+### 具有地址和单一处理程序的 EBus
 
-EBuses also support addressing based on a custom ID. Events addressed to an ID are received by handlers connected to that ID. If an event is broadcast without an ID, it is received by handlers at all addresses.
+EBus 还支持基于自定义 ID 的寻址。指向某个 ID 的事件会被连接到该 ID 的处理程序接收。如果广播的事件不带 ID，则所有地址的处理程序都会接收到该事件。
 
-A common use for this approach is for communication among the components of a single entity, or between components of a separate but related entity. In this case the entity ID is the address.
+这种方法通常用于单个实体的组件之间或独立但相关实体的组件之间的通信。在这种情况下，实体 ID 就是地址。
 
 {{< image-width src="/images/user-guide/programming/messaging/ebus/ebus-in-depth-3.png" width="700" alt="Addressing based on specific IDs" >}}
 
-#### Example Without Address Ordering
+#### 地址排序示例
 
-In the following example, messages broadcast with an ID arrive at each address in no particular order.
+在下面的示例中，带有 ID 的报文不按特定顺序到达每个地址。
 
 ```cpp
 // One handler per address is supported.
@@ -108,9 +108,9 @@ static const AZ::EBusAddressPolicy AddressPolicy = AZ::EBusAddressPolicy::ById;
 using BusIdType = AZ::EntityId;
 ```
 
-#### Example With Address Ordering
+#### 地址排序示例
 
-In the following example, messages broadcast with an ID arrive at each address in a specified order.
+在下面的示例中，带有 ID 的广播信息会按指定顺序到达每个地址。
 
 ```cpp
 // One handler per address is supported.
@@ -126,15 +126,15 @@ using BusIdType = AZ::EntityId;
 using BusIdOrderCompare = AZStd::greater<BusIdType>;
 ```
 
-### EBus with Addresses and Many Handlers
+### 带地址和多个处理程序的 EBus
 
-In the previous configuration, only one handler is allowed per address. This is often desirable to enforce ownership of an EBus for a specific ID, as in the singleton case above. However, if you want more than one handler per address, you can configure the EBus accordingly:
+在前面的配置中，每个地址只允许一个处理程序。这通常适用于强制执行特定 ID 的 EBus 所有权，如上面的单例。但是，如果希望每个地址有一个以上的处理程序，可以对 EBus 进行相应的配置：
 
 {{< image-width src="/images/user-guide/programming/messaging/ebus/ebus-in-depth-4.png" width="700" alt="More than one handler per address" >}}
 
-#### Example: Without Address Ordering
+#### 示例： 无地址排序
 
-In the following example, messages broadcast with an ID arrive at each address in no particular order. At each address, the order in which handlers receive the message is defined by `EBusHandlerPolicy`, which in this example is simply `ById`:
+在下面的示例中，带有 ID 的报文不按特定顺序到达每个地址。在每个地址上，处理程序接收信息的顺序由 `EBusHandlerPolicy` 定义，在本例中只是 `ById`：
 
 ```cpp
 // Allow any number of handlers per address.
@@ -147,9 +147,9 @@ static const AZ::EBusAddressPolicy AddressPolicy = AZ::EBusAddressPolicy::ById;
 using BusIdType = AZ::EntityId;
 ```
 
-#### Example: With Address Ordering
+#### 示例： 地址排序
 
-In the following example, messages broadcast with an ID arrive at each address in a specified order. At each address, the order in which handlers receive the message is defined by the `EBusHandlerPolicy`, which in this example is `ByIdAndOrdered`.
+在下面的示例中，带有 ID 的广播消息会按指定顺序到达每个地址。在每个地址，处理程序接收消息的顺序由 `EBusHandlerPolicy` 定义，在本例中为 `ByIdAndOrdered`。
 
 ```cpp
 // Allow any number of handlers per address.
@@ -165,31 +165,31 @@ using BusIdType = AZ::EntityId;
 using BusIdOrderCompare = AZStd::greater<BusIdType>;
 ```
 
-## Multithreaded Dispatches
+## 多线程调度
 
-EBuses can be configured for use in a multithreaded environment. Locking strategies are available for many common use cases.
+EBuses 可配置为在多线程环境中使用。锁定策略适用于许多常见用例。
 
-### Single-Threaded
+### 单线程
 
-By default, an EBus is configured for single-threaded usage. Attempts to use it from multiple threads will result in asserts. This configuration is defined by setting the `MutexType` to `NullMutex`.
+默认情况下，EBus 配置为单线程使用。如果试图在多个线程中使用，则会出现断言。可通过将 `MutexType` 设置为 `NullMutex` 来定义此配置。
 
 ```cpp
 // This EBus only supports single-threaded usage.
 using MutexType = NullMutex;
 ```
 
-### Multi-Threaded With Blocking Dispatches
+### 多线程与阻塞式派送
 
-To configure the EBus to allow for bus connects, disconnects, and event dispatches from multiple threads, set the MutexType to either `AZStd::mutex` or `AZStd::recursive_mutex`. Each operation on the EBus will lock the mutex to protect from multiple threads executing simultaneously. This configuration ensures that a bus handler cannot disconnect while it is in the middle of handling an event on a different thread. For simple multithreading cases, `AZStd::mutex` can be used. However, if the bus handler sends new events or connects / disconnects to a bus while handling an event on the same bus, `AZStd::recursive_mutex` should be chosen to ensure a single thread can't deadlock itself.
+要配置 EBus 以允许多个线程进行总线连接、断开连接和事件派发，可将 MutexType 设置为 `AZStd::mutex` 或 `AZStd::recursive_mutex`。EBus 上的每个操作都将锁定互斥，以防止多个线程同时执行。这种配置可确保总线处理程序在处理不同线程上的事件时无法断开连接。对于简单的多线程情况，可以使用 `AZStd::mutex`。但是，如果总线处理程序在处理同一总线上的事件时发送新事件或连接/断开总线，则应选择 `AZStd::recursive_mutex`，以确保单个线程不会陷入死锁。
 
 ```cpp
 // This EBus supports multi-threaded usage, though only one thread will execute at a time.
 using MutexType = AZStd::recursive_mutex;
 ```
 
-### Shared Locks
+### 共享锁
 
-Inherit from `EBusSharedDispatchTraits` to configure the EBus so that it exclusively locks during bus connects and disconnects but uses a shared lock for event dispatches. Shared locks enable multiple concurrent event dispatches while still ensuring that bus connects / disconnects cannot occur during an event dispatch. This configuration is useful for an EBus that services requests from many threads and also has handlers that frequently connect and disconnect during the application lifetime. `EBusSharedDispatchTraits` sets the MutexType and the related LockGuard types to custom policies that enable concurrent event dispatches and ensure connects / disconnects only occur when no event dispatches are in progress.
+继承自 `EBusSharedDispatchTraits` 以配置 EBus，使其在总线连接和断开时使用专用锁，但在事件派发时使用共享锁。共享锁允许多个并发事件派发，同时还能确保在事件派发期间不会发生总线连接/断开。这种配置适用于为来自多个线程的请求提供服务的 EBus，以及在应用程序生命周期中频繁连接和断开连接的处理程序。`EBusSharedDispatchTraits`会将 MutexType 和相关的 LockGuard 类型设置为自定义策略，以启用并发事件派发，并确保只有在无事件派发时才会发生连接/断开。
 
 ```cpp
 // This EBus supports concurrent multi-threaded event dispatches and protects
@@ -200,9 +200,9 @@ class MyBus : public AZ::EBusSharedDispatchTraits<MyBus>
 }
 ```
 
-### Lockless Dispatches
+### 无锁定派发
 
-To configure the EBus so that it only locks during bus connects and disconnects, but not during event dispatches, set `LocklessDispatch` to true. The MutexType still needs to be set as well to configure the EBus as a multithreaded EBus and to guard against concurrent connects / disconnects. This is useful for an EBus that has handlers that only connect at startup and disconnect at shutdown, and never have handlers change connections status while the bus is in use. Lockless dispatches allow multiple events to execute concurrently with the least amount of event dispatch overhead.
+要配置 EBus，使其仅在总线连接和断开时锁定，而不在事件派发时锁定，请将`LocklessDispatch` 设为 true。还需要设置 MutexType，以便将 EBus 配置为多线程 EBus 并防止并发连接/断开。如果 EBus 的处理程序只在启动时连接，关闭时断开，并且在总线使用时处理程序不会改变连接状态，那么这一点就非常有用。无锁定派发允许多个事件并发执行，事件派发开销最小。
 
 ```cpp
 // Locking primitive to use for connects and disconnects.
@@ -213,31 +213,31 @@ using MutexType = AZStd::recursive_mutex;
 static const bool LocklessDispatch = true;
 ```
 
-## Synchronous vs. Asynchronous
+## 同步与异步
 
-EBus supports both synchronous and asynchronous (queued) messaging.
+EBus 支持同步和异步（队列）消息传递。
 
-### Synchronous Messages
+### 同步消息
 
-Synchronous messages are sent to any and all handlers when an EBus event is invoked. Synchronous messages limit opportunities for asynchronous programming, but they offer the following benefits:
+当 EBus 事件被调用时，同步信息会被发送到所有处理程序。同步报文限制了异步编程的机会，但它们具有以下优点：
 
-* They don't require storing a closure. Arguments are forwarded directly to callers.
-* They let you retrieve an immediate result from a handler (event return value).
-* They have no latency.
+* 它们不需要存储闭包。参数直接转发给调用者。
+* 可以从处理程序（事件返回值）中获取即时结果。
+* 没有延迟。
 
-### Asynchronous Messages
+### 异步信息
 
-Asynchronous messages have the following advantages:
+异步信息具有以下优点：
 
-* They create many more opportunities for parallelism and are more future proof.
-* They support queuing messages from any thread, dispatching them on a safe thread (like the main thread, or any thread that you choose).
-* The code used to write them is inherently tolerant to latency and is easily migrated to actor models and other distributed systems.
-* The performance of the code that initiates events doesn't rely on the efficiency of the code that handles the events.
-* In performance-critical code, asynchronous messages can improve i-cache and d-cache performance because they require fewer virtual function calls.
+* 它们为并行性创造了更多机会，也更能适应未来的需要。
+* 它们支持从任何线程排队发送消息，并在安全线程（如主线程或您选择的任何线程）上分派消息。
+* 用于编写它们的代码本身就能容忍延迟，并能轻松迁移到行为者模型和其他分布式系统中。
+* 启动事件的代码的性能并不取决于处理事件的代码的效率。
+* 在对性能要求很高的代码中，异步信息可以提高 i-cache 和 d-cache 的性能，因为它们需要调用的虚拟函数更少。
 
-## Additional Features
+## 其他功能
 
-EBuses contain other features that address various patterns and use cases:
+电子总线包含其他功能，可解决各种模式和用例：
 
-* **Cache a pointer to which messages can be dispatched** - This is handy for EBuses that have IDs. Instead of looking up the EBus address by ID for each event, you can use the cached pointer for faster dispatching.
-* **Queue any callable function on an EBus** - When you use queued messaging, you can queue a Lambda function or bound function against an EBus for execution on another thread. This is useful for general purpose thread-safe queuing.
+* **缓存可发送信息的指针** - 这对于有 ID 的 EBus 来说非常方便。您可以使用缓存指针来加快调度速度，而不必根据 ID 为每个事件查找 EBus 地址。
+* **在 EBus 上队列任何可调用函数** - 使用队列消息传递时，可以针对 EBus 对 Lambda 函数或绑定函数进行队列，以便在另一个线程上执行。这对于通用线程安全队列非常有用。

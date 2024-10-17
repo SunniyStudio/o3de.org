@@ -1,13 +1,12 @@
 ---
 linktitle: EBus
-title: Event Bus (EBus) System
-description: Use event buses and the eventing system to dispatch messages between systems in Open 3D Engine. 
+title: 事件总线(EBus)系统
+description: 在 Open 3D Engine 中使用事件总线和事件系统在系统间调度信息。
 weight: 200
 ---
 
-Most engines driven by *entity-component systems (ECS)*, such as Open 3D Engine's [Component Entity System](../../components), use a *publish-subscribe (pub/sub)* model to decouple event generators from event consumers. In these systems, an entity *publishes* events which interested consumers can *subscribe* to. For example, a collision component would want to *publish* an event when an object collides into it, and the entity which owns the component would *subscribe* to these events in order to adjust the other components.
+大多数由**实体-组件系统（ECS）**驱动的引擎，如开放式三维引擎的[组件实体系统](../../components)，都使用**发布-订阅（pub/sub）**模式，将事件生成器与事件消费者分离开来。在这些系统中，一个实体**发布**事件，感兴趣的消费者可以**订阅**这些事件。例如，碰撞组件希望在物体碰撞它时**发布**事件，而拥有该组件的实体将**订阅**这些事件，以便调整其他组件。
 
-In O3DE, the two main pub/sub systems are **EBus** (Event Bus), and [`AZ::Event`](/docs/api/frameworks/azcore/class_a_z_1_1_event.html). `AZ::Event` uses a delegate pattern: Specific component instances have a member of type `AZ::Event`, and the component adds (or removes) [`AZ::EventHandler`](/docs/api/frameworks/azcore/class_a_z_1_1_event_handler.html) objects
-which perform the actual processing of the event itself for the component.
+在 O3DE 中，两个主要的发布/子系统是 **EBus**（事件总线）和 [`AZ::Event`](/docs/api/frameworks/azcore/class_a_z_1_1_event.html)。AZ::Event "使用委托模式： 特定的组件实例有一个 `AZ::Event` 类型的成员，组件添加（或删除）[`AZ::EventHandler`](/docs/api/frameworks/azcore/class_a_z_1_1_event_handler.html) 对象，这些对象为组件执行事件本身的实际处理。
 
-With EBus, listeners subscribe to a global singleton that is automatically created on first subscription, and automatically destroyed on last disconnection, with minimal logic of its own except to handle the list of listeners and to iterate over them, delivering callbacks. Because the singletons are global, any part of the code can connect, disconnect, or place events on that bus for listeners to receive. EBus is generally used for situations where event flow is more important than the source of the event, (or the source comes from many different components and is listened to by many others), and avoids writing boilerplate for the usual implementation of that sort of system, which would be to create a custom global singleton which receives calls, only to turn around and reflect them back down to subscribed listeners.
+在 EBus 中，监听器会订阅一个全局单例，该单例会在首次订阅时自动创建，并在最后一次断开连接时自动销毁，除了处理监听器列表和遍历这些监听器并提供回调外，其自身逻辑非常简单。由于单子是全局的，代码的任何部分都可以连接、断开或在总线上放置事件供监听器接收。EBus 通常用于事件流比事件源更重要的情况（或者事件源来自许多不同的组件，并被许多其他组件监听），并可避免为此类系统的常规实现编写模板，即创建一个自定义的全局单例来接收调用，然后再将其返回给订阅的监听者。

@@ -1,81 +1,83 @@
 ---
-description: ' Allocate and track memory in Open 3D Engine. '
-title: Using Memory Allocators in O3DE
+description: ' 在 Open 3D Engine 中分配和跟踪内存。 '
+title: 在 O3DE 中使用内存分配器
 ---
 
-O3DE's memory management system determines how memory is allocated. All memory allocations go through one pipeline, and memory allocation can be tracked. This makes it easier and quicker to pinpoint memory leaks or optimize memory usage to improve game performance. This improvement is especially important for mobile platforms, where memory resources are usually more constrained than in PC environments.
+O3DE 的内存管理系统决定了内存的分配方式。所有内存分配都通过一条流水线进行，并且可以跟踪内存分配情况。这样就能更方便快捷地找出内存泄漏点或优化内存使用，从而提高游戏性能。这一改进对于移动平台尤为重要，因为移动平台的内存资源通常比 PC 环境更为紧张。
 
-O3DE supports several known memory allocation schemes. You can use O3DE's allocators to categorize allocations or keep similar allocations together to improve locality or reduce fragmentation.
+O3DE 支持几种已知的内存分配方案。您可以使用 O3DE 的分配器对分配进行分类，或将类似的分配放在一起，以提高定位性或减少碎片。
 
 {{< note >}}
-For best C++ practices for managing memory in O3DE, see [Memory Management](/docs/user-guide/programming/memory-management).
+有关在 O3DE 中管理内存的最佳 C++ 实践，请参阅 [内存管理](/docs/user-guide/programming/memory-management)。
 {{< /note >}}
 
-## AZ Memory Allocators 
+## AZ内存分配器 
 
-The following diagram illustrates the hierarchy of AZ memory allocators.
+下图说明了 AZ 内存分配器的层次结构。
 
 
 ![AZ memory allocator hierarchy](/images/user-guide/programming/memory/memory-allocators.svg)
 
-+ **`OSAllocator`** - Acts as the interface to operating system memory and should be used for direct operating system allocations on the C heap. `OSAllocator` is lazily initialized on the first call to `AllocatorInstance<OSAllocator>::Get()`.
++ **`OSAllocator`** - 作为操作系统内存的接口，应该用于在 C 堆上直接分配操作系统内存。在首次调用 `AllocatorInstance<OSAllocator>::Get()` 时，会对 `OSAllocator` 进行懒惰初始化。
 
-  `OSAllocator` uses OS system calls to allocate memory. The calls are not recorded or tracked by default, but can be by following the [Allocator Tagging Guide wiki startup config](https://github.com/o3de/o3de/wiki/Allocator-Tagging-Guide#startupcfg) section. Other allocators use `OSAllocator` to obtain memory from the operating system. 
-+ **`SystemAllocator`** - The system allocator is the general purpose allocator for the AZ memory library. It is initialized with the first call to `AllocatorInstance<SystemAllocator>::Get()`. All other allocators use `SystemAllocator` for internal allocations.
-+ **`PoolAllocator`** - Performs extremely fast small object memory allocations. `PoolAllocator` can allocate sizes in a range specified by `m_minAllocationSize` to `m_maxPoolSize`.
+  `OSAllocator` 使用操作系统系统调用分配内存。这些调用默认情况下不会被记录或跟踪，但可以通过 [分配器标记指南 wiki 启动配置](https://github.com/o3de/o3de/wiki/Allocator-Tagging-Guide#startupcfg) 部分进行记录或跟踪。其他分配器使用 `OSAllocator` 从操作系统获取内存。
++ **`SystemAllocator`** - 系统分配器是 AZ 内存库的通用分配器。它通过首次调用 `AllocatorInstance<SystemAllocator>::Get()` 进行初始化。所有其他分配器都使用 `SystemAllocator` 进行内部分配。
++ **`PoolAllocator`** - 执行极快的小对象内存分配。`PoolAllocator` 可分配的内存大小范围为 `m_minAllocationSize` 至 `m_maxPoolSize`。
 
     {{< note >}}
-`PoolAllocator` is not thread safe. If you need a thread-safe version, use `ThreadPoolAllocator,` or inherit from `ThreadPoolBase` and then write custom code to handle the synchronization.
+`PoolAllocator` 不是线程安全的。如果需要线程安全版本，请使用 `ThreadPoolAllocator` 或从 `ThreadPoolBase` 继承，然后编写自定义代码来处理同步。
 {{< /note >}}
 
-+ **`ThreadPoolAllocator`** - Thread safe pool allocator. If you want to create your own thread pool heap, inherit from `ThreadPoolBase`, as O3DE requires a unique static variable for the allocator type.
++ **`ThreadPoolAllocator`** - 线程安全池分配器。如果想创建自己的线程池堆，请继承自 `ThreadPoolBase`，因为 O3DE 要求为分配器类型创建一个唯一的静态变量。
 
-## Applying Allocators to Your Classes 
+## 在类中应用分配器
 
-To apply an allocator to your class, use the `AZ_CLASS_ALLOCATOR` macro in your class or directly call `AZ::AllocatorInstance`<*some\_allocator*>.
+要在类中应用分配器，请在类中使用`AZ_CLASS_ALLOCATOR`宏或直接调用`AZ::AllocatorInstance`<*some\_allocator*>。
 
-AZCore relies on `AZ_CLASS_ALLOCATOR` to specify the default allocator for the class or on explicit `azcreate` and `azdestroy` calls that specify the allocator in their signature.
-+ If your class does not implement `AZ_CLASS_ALLOCATOR`, calls to `new` or `delete` will use the global `operator new` or `operator delete`.
-+ If your class does not implement `AZ_CLASS_ALLOCATOR` and you call `aznew`, a compile error will trigger indicating that the `operator new` must be overwritten.
+AZCore 依靠 `AZ_CLASS_ALLOCATOR` 为类指定默认分配器，或依靠在签名中指定分配器的显式 `azcreate` 和 `azdestroy` 调用。
++ 如果您的类没有实现 `AZ_CLASS_ALLOCATOR`，对 `new` 或 `delete` 的调用将使用全局的 `operator new` 或 `operator delete`。
++ 如果您的类没有实现 `AZ_CLASS_ALLOCATOR`，而您又调用了 `aznew` 时，编译错误将被触发，表明 `operator new` 必须被覆盖。
 
-## AZ Allocator Schemas 
+## AZ 分配器模式
 
-Each allocator commonly implements the `IAllocator` interface and uses a schema to implement the allocation algorithms and bookkeeping. This strategy enables the same schema to be used in multiple allocators.
+每个分配器通常都会实现 `IAllocator` 接口，并使用模式来实现分配算法和簿记。通过这种策略，可以在多个分配器中使用相同的模式。
 
 
-**Allocator Schemas**
 
-| Schema | Description |
+**分配器模式**
+
+| 模式 | 说明 |
 | --- | --- |
-| AZ::HphaSchema |  This is the preferred schema. It combines a small block allocator for small allocations and a [red-black tree](https://en.wikipedia.org/wiki/Red-black_tree) for large allocations. This provides good general purpose performance. Use this schema if you're not sure which one to use.  `HphaSchema` is based on Dimitar Lazarov's "High Performance Heap Allocator" (Game Programming Gems 7, Charles River Media, 2008, pp. 15-23).   |
-| AZ::ChildAllocatorSchema |  Acts as a pass-through schema to another allocator. Use this schema to create a new allocator based on an existing allocator like `SystemAllocator`. To properly tag the memory that each gem or logical subsystem allocates, each gem or subsystem can create its own child allocator. For more information, see [Creating an Allocator](#memory-allocators-creating-an-allocator).  |
-| AZ::PoolSchema |  A specialized schema that implements a small block allocator for managing small, high-throughput allocations. Objects are typically pooled at the cost of using more memory.  `PoolSchema` is not thread safe. If you need a thread-safe version, use `ThreadPoolSchema` or write custom code to handle the synchronization.   |
-| AZ::ThreadPoolSchema |  A thread-safe pool schema that uses thread local storage to implement a small block allocator for each thread.  Because the thread pool allocator creates separate pools for each thread, it uses somewhat more memory, especially for fixed pool sizes.   |
+| AZ::HphaSchema | 这是首选模式。它结合了用于小规模分配的小块分配器和用于大规模分配的[红黑树](https://en.wikipedia.org/wiki/Red-black_tree)。这提供了良好的通用性能。如果不确定使用哪种模式，请使用该模式。 HphaSchema “基于 Dimitar Lazarov 的 ”高性能堆分配器"（Game Programming Gems 7，Charles River Media，2008 年，第 15-23 页）。   |
+| AZ::ChildAllocatorSchema |  作为另一个分配器的直通模式。使用此模式可在现有分配器（如 `SystemAllocator`）的基础上创建新的分配器。为正确标记每个 gem 或逻辑子系统分配的内存，每个 gem 或子系统可创建自己的子分配器。更多信息，请参阅 [创建分配器](#memory-allocators-creating-an-allocator)。  |
+| AZ::PoolSchema |  一种实现小块分配器的专用模式，用于管理小规模、高吞吐量的分配。对象池通常以使用更多内存为代价。 `PoolSchema` 不是线程安全的。如果需要线程安全版本，请使用 `ThreadPoolSchema` 或编写自定义代码来处理同步。  |
+| AZ::ThreadPoolSchema |  线程安全池模式，使用线程本地存储为每个线程实现一个小块分配器。 由于线程池分配器会为每个线程创建单独的池，因此会占用更多内存，尤其是在池大小固定的情况下。  |
 
-## Creating an Allocator 
+## 创建分配器
 
-We recommend that each O3DE gem or logical subsystem create a `ChildAllocatorSchema` to properly tag the memory that it allocates. This practice makes it easier to budget resource usage and get a holistic view of it.
-Tagged memory usage can be viewed or written to files in several ways including running the `sys_DumpAllocators` or `sys_DumpAllocationRecordsToFile` console commands.
+我们建议每个 O3DE gem 或逻辑子系统创建一个`ChildAllocatorSchema`，以正确标记其分配的内存。这种做法可以更容易地预算资源使用情况，并获得整体视图。
+标记的内存使用情况可以通过几种方式查看或写入文件，包括运行`sys_DumpAllocators`或`sys_DumpAllocationRecordsToFile`控制台命令。
 
-If you choose to write your own schema, be aware that caching significant chunks of memory can be problematic. Such caching can hamper the ability of other systems to evolve to fit the content in your game. Unless you have specific requirements, we recommend that you create a `ChildAllocatorSchema` that eventually uses the `SystemAllocator`. Using a `ChildAllocatorSchema` ensures that your memory is as recoverable and reusable as possible.
+如果您选择编写自己的模式，请注意缓存大量内存可能会造成问题。这种缓存会妨碍其他系统适应游戏内容的能力。除非您有特殊要求，否则我们建议您创建一个最终使用`SystemAllocator`的 `ChildAllocatorSchema`。使用 `ChildAllocatorSchema` 可确保您的内存尽可能可恢复和可重用。
 
-**To create an allocator**
+**创建分配器**
 
-1. Choose a schema to use, write a custom schema, or choose an existing allocator that you want to modify. For more information, see [AZ Allocator Schemas](#allocator-schemas).
+1. 选择要使用的模式、编写自定义模式或选择要修改的现有分配器。更多信息，请参阅 [AZ 分配器模式］(#allocator-schemas)。
 
-1. Inherit from `AllocatorBase`<*your\_schema*> to create your `Allocator` class.
+1. 从 `AllocatorBase`<*your\_schema*> 继承，创建你的 `Allocator` 类。
 
-1. Add `AZ_RTTI` so that `AllocatorInstance<>` can properly manage your type.
+1. 添加 `AZ_RTTI`，以便 `AllocatorInstance<>` 可以正确管理您的类型。
 
-### Using Your Own Allocators from Containers 
+### 从容器中使用自己的分配器
 
-To use your own allocator from a container, wrap your allocator in `AZ::AZStdAlloc`, like the following example.
+要从容器中使用自己的分配器，请将分配器封装在 `AZ::AZStdAlloc`中，如下面的示例。
 
 ```
 using CustomAllocator_for_std_t = AZ::AZStdAlloc<CustomAllocator>;
 AZStd::vector<MyClass, CustomAllocator_for_std_t>;
 ```
 
-### Child Allocator Example 
+### 子代分配器示例
 
- For examples on how to use the `ChildAllocatorSchema`, refer to the [Allocator Tagging Guide](https://github.com/o3de/o3de/wiki/Allocator-Tagging-Guide) on the O3DE Wiki.
+有关如何使用 `ChildAllocatorSchema` 的示例，请参阅 O3DE Wiki 上的 [分配器标记指南](https://github.com/o3de/o3de/wiki/Allocator-Tagging-Guide)。
+

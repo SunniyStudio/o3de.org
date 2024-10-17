@@ -1,79 +1,79 @@
 ---
-description: ' Debug HPHA allocator memory issues in Open 3D Engine. '
-title: HPHA Memory Debugging
+description: ' 调试 Open 3D Engine中的 HPHA 分配器内存问题。 '
+title: HPHA 内存调试
 ---
 
-The HPHA memory allocator provides memory debugging features to detect and trace common memory issues.
+HPHA 内存分配器提供内存调试功能，可检测和跟踪常见内存问题。
 
-## Enabling HPHA Memory Debugging 
+## 启用 HPHA 内存调试 
 
-To avoid performance issues, debugging features are disabled by default.
+为避免性能问题，默认情况下调试功能是禁用的。
 
-**To enable HPHA memory debugging**
+**要启用 HPHA 内存调试**
 
-1. In the system allocator source file [SystemAllocator.cpp](https://github.com/o3de/o3de/blob/298cb5945b35fdc2d016501b5d16235536332292/Code/Framework/AzCore/AzCore/Memory/SystemAllocator.cpp#L54) file, change the HphaSchema to use the HphaSchemaBase with the debug option set to true:
+1. 在系统分配器源文件 [SystemAllocator.cpp](https://github.com/o3de/o3de/blob/298cb5945b35fdc2d016501b5d16235536332292/Code/Framework/AzCore/AzCore/Memory/SystemAllocator.cpp#L54)文件中，将 HphaSchema 改为使用 HphaSchemaBase，并将调试选项设置为 true：
 
 ```c++
 m_subAllocator = AZStd::make_unique<HphaSchemaBase<true>>();
 ```
 
-2. Save the file.
+2. 保存文件。
 
-3. Perform a build in debug mode. For more information, see [Building O3DE projects](/docs/user-guide/build/).
+3. 在调试模式下执行构建。更多信息，请参阅 [构建 O3DE 项目](/docs/user-guide/build/)。
 
-## Characteristics and Limitations 
+## 特性和限制
 
-Because of certain limitations, the HPHA debugger can help find memory issues but cannot guarantee their absence. When using HPHA memory debugging features, note the following:
-+ For the HPHA debugger to work, allocations must use the HPHA allocator. HPHA memory debugging does not cover allocations created by other allocators such as a `PoolAllocator`.
-+ Most of the HPHA memory debugging features assert when they detect a memory issue. When possible, the debugger prints a stack trace that indicates where the allocation happened. The stack trace is printed into the debugger output (not to the log) so that Visual Studio can recognize it. This makes it possible to double-click a trace and navigate directly to the corresponding file and line number.
-+ The HPHA memory debugger does not currently cover the following memory issues:
-  + Buffer underflows.
-  + "Far" buffer overflows. When detecting buffer overflows, O3DE detects changes up to 16 bytes after the memory block. If a buffer overflow writes on byte 17, O3DE does not detect it.
-+ O3DE shuts down by terminating the application rather than by destroying objects. Because O3DE relies on the operating system to recover memory, it cannot detect issues related to shutdowns or the destruction of objects. To reproduce, isolate, and debug such memory issues, we recommend that you use unit tests.
+由于某些限制，HPHA 调试器可以帮助查找内存问题，但不能保证不存在内存问题。使用 HPHA 内存调试功能时，请注意以下几点：
++ 要使 HPHA 调试器工作，分配必须使用 HPHA 分配器。HPHA 内存调试不包括由其他分配器（如  `PoolAllocator`）创建的分配。
++ HPHA 的大多数内存调试功能都会在检测到内存问题时断言。在可能的情况下，调试器会打印堆栈跟踪，指出分配发生的位置。堆栈跟踪会打印到调试器输出中（而不是日志中），以便 Visual Studio 可以识别。这样就可以双击跟踪，直接导航到相应的文件和行号。
++ HPHA 内存调试器目前不包括以下内存问题：
+  + 缓冲区底溢出。
+  + “远 "缓冲区溢出。在检测缓冲区溢出时，O3DE 会检测内存块后 16 字节以内的变化。如果缓冲区溢出写入第 17 个字节，O3DE 不会检测到。
++ O3DE 通过终止应用程序而不是销毁对象来关闭。由于 O3DE 依赖于操作系统来恢复内存，因此无法检测与关闭或销毁对象相关的问题。为了重现、隔离和调试此类内存问题，我们建议您使用单元测试。
 
-## How Memory Debugging Works 
+## 内存调试如何工作
 
-Some memory debugging features detect memory issues when an allocation is freed, and others detect issues when the HPHA allocator is destroyed. The memory debugging works by keeping a set of debug records for each allocation. When memory is requested or returned, the debugger compares the allocation or deallocation operation with the debug records. When anomalies are detected, the debugger enforces rules with asserts. The following sections describe the asserts that occur for the different memory operations.
+一些内存调试功能会在分配被释放时检测内存问题，另一些则会在 HPHA 分配器被销毁时检测内存问题。内存调试的工作原理是为每次分配保存一组调试记录。请求或返回内存时，调试器会将分配或取消分配操作与调试记录进行比较。一旦发现异常，调试器就会通过断言执行规则。下文将介绍不同内存操作中出现的断言。
 
-### Enabling Overrun Detection
+### 启用超限检测
 
-The [AZ::AllocatorDebug::UsesMemoryGuard](https://github.com/o3de/o3de/blob/298cb5945b35fdc2d016501b5d16235536332292/Code/Framework/AzCore/AzCore/Memory/IAllocator.h#L105-L106) property can be used when implementing the IAllocator [GetDebugConfig()](https://github.com/o3de/o3de/blob/298cb5945b35fdc2d016501b5d16235536332292/Code/Framework/AzCore/AzCore/Memory/SystemAllocator.cpp#L58-L65) function to turn on memory overrun detection.  
+在执行 IAllocator [GetDebugConfig()](https://github.com/o3de/o3de/blob/298cb5945b35fdc2d016501b5d16235536332292/Code/Framework/AzCore/AzCore/Memory/SystemAllocator.cpp#L58-L65) 函数时，可使用  [AZ::AllocatorDebug::UsesMemoryGuard](https://github.com/o3de/o3de/blob/298cb5945b35fdc2d016501b5d16235536332292/Code/Framework/AzCore/AzCore/Memory/IAllocator.h#L105-L106) 属性打开内存超限检测。
 
-### Allocations 
+### 分配
 
-For memory allocation operations, the debugger performs the following tasks:
-+ If a previous allocation has the same pointer, the debugger asserts and prints the stack trace of the previous allocation. This usually occurs when a process overwrites the memory for the allocator's tracking structures. Because the allocator uses memory near the blocks that it allocates, a memory overflow or underflow in a neighboring block can overwrite the memory that the HPHA uses for memory tracking. When this occurs, the HPHA might consider a used block of memory to be "unused".
-+ Fills the memory with a [quiet NaN](https://en.wikipedia.org/wiki/NaN) (qNaN) pattern \(`0xFF, 0xC0, 0xC0, 0xFF`\). This is useful for detecting specific patterns of use in uninitialized memory and can detect most (but not all) cases. For more information about the qNaN pattern, see [Deallocations](#memory-management-debugging-hpha-deallocations).
+对于内存分配操作，调试器会执行以下任务：
++ 如果之前的分配具有相同的指针，调试器会断言并打印之前分配的堆栈跟踪。这种情况通常发生在进程覆盖了分配器跟踪结构的内存时。由于分配器使用的内存靠近其分配的数据块，因此相邻数据块中的内存溢出或内存不足可能会覆盖 HPHA 用于内存跟踪的内存。发生这种情况时，HPHA 可能会将已使用的内存块视为 “未使用”。
++ 使用  [quiet NaN](https://en.wikipedia.org/wiki/NaN) (qNaN) pattern \(`0xFF, 0xC0, 0xC0, 0xFF`\) 模式填充内存。这对检测未初始化内存的特定使用模式非常有用，可以检测到大多数（但不是全部）情况。有关 qNaN 模式的更多信息，请参阅 [释放内存](#memory-management-debugging-hpha-deallocations)。
 
-### Deallocations 
+### 释放内存 
 
-For memory deallocation operations, the debugger performs the following tasks:
-+ Asserts if the debug record is not found. This can happen because of double deallocations or the deallocation of an invalid pointer.
-+ Asserts if a guard is invalid. When an allocation occurs, an additional 16 bytes ("the guard") are placed at the end of the allocation. For example, if the request is for 40 bytes, 56 bytes are assigned and 16 are used for the guard. Memory debugging assigns random values to the 16 bytes and places them in the debug record. When the deallocation happens, the 16 bytes are checked against the 16 bytes stored in the debug record. If they mismatch, the debugger asserts. This assert usually indicates a memory overflow (that is, an attempt to write beyond the requested size).
+对于内存释放内存操作，调试器会执行以下任务：
++ 如果未找到调试记录，则发出断言。出现这种情况的原因可能是重复释放内存或释放内存无效指针。
++ 如果保护无效，则置位。分配时，额外的 16 个字节（“保护”）会放在分配的末尾。例如，如果请求 40 字节，则分配 56 字节，16 字节用于保护。内存调试会为这 16 个字节分配随机值，并将其放入调试记录中。当发生释放内存时，将根据调试记录中存储的 16 个字节检查这 16 个字节。如果两者不匹配，调试器会发出断言。这种断言通常表示内存溢出（即试图写入超出请求大小的内容）。
 
     {{< note >}}
-This check cannot detect the cases in which the overflow writes the exact same random bytes or writes beyond the 16 byte guard.
+这种检查无法检测到溢出写入完全相同的随机字节或写入超出 16 字节保护的情况。
 {{< /note >}}
 
-+ Asserts if the freed size does not match the allocation size. During allocation, the requested size is stored in the debug record. If the same size is not freed, a problem occurred during the deallocation.
-+ Refills the freed memory with the qNaN pattern. This makes it easier to detect memory accesses after the memory has been deallocated. Without this feature, the memory contents are usually available until some code reuses the memory. Filling the freed memory with the qNaN pattern helps detect this anomalous usage early.
++ 如果释放的大小与分配的大小不匹配，则置信。在分配过程中，请求的大小存储在调试记录中。如果释放的大小与分配的大小不一致，则说明在释放内存过程中出现了问题。
++ 用 qNaN 模式重新填充释放的内存。这样，在内存被重新分配后，就能更容易地检测内存访问。如果没有这项功能，内存内容通常是可用的，直到某些代码重新使用内存。使用 qNaN 模式填充释放的内存有助于及早发现这种异常使用。
 
-### Reallocations 
+### 重新分配
 
-Reallocations use a new block or an existing block depending on whether contiguous memory is available.
+重新分配是使用新块还是现有块，取决于是否有连续内存。
 
-#### Reallocation to a New Block 
+#### 重新分配到新区块
 
-When contiguous memory is not available, memory is reallocated to a new block. The debugger performs the following tasks:
-+ Asserts if the previous allocation is not found. Normally, the previous allocation still exists. The allocator creates a new allocation with a new memory address and then copies the contents of the previous allocation to the new allocation. If the pointer to the previous allocation is not in the debug records, the debugger asserts.
-+ Asserts if the guard of the previous allocation is invalid. For information on guards, see [Deallocations](#memory-management-debugging-hpha-deallocations).
-+ Asserts if a previous allocation has the same address as the new allocation. For more information, see [Allocations](#memory-management-debugging-hpha-allocations).
-+ Fills the memory for the new allocation with the qNaN pattern. The previous block is copied over. The remaining unused part of the new allocation should have the qNaN pattern.
+当连续内存不可用时，内存会被重新分配到一个新块。调试器会执行以下任务：
++ 如果找不到之前的分配，则发出断言。通常情况下，前一个分配仍然存在。分配器会使用新的内存地址创建新的分配，然后将之前分配的内容复制到新的分配中。如果调试记录中没有指向上一个分配的指针，调试器会断言。
++ 如果上一次分配的保护无效，则发出断言。有关保护的信息，请参阅 [释放内存](#memory-management-debugging-hpha-deallocations)。
++ 断言先前分配的地址是否与新分配的地址相同。更多信息，请参阅 [分配](#memory-management-debugging-hpha-allocations)。
++ 用 qNaN 模式填充新分配的内存。前一个数据块被复制过来。新分配的剩余未使用部分应使用 qNaN 模式。
 
-#### Reallocation to an Existing Block 
+#### 重新分配给现有区块
 
-When contiguous memory is available, the pointer to an existing block is used. The debugger performs the following tasks:
-+ Asserts if the allocation is not found.
-+ Asserts if the guard of the previous allocation is invalid. For information on guards, see [Deallocations](#memory-management-debugging-hpha-deallocations).
-+ Updates the debug record stack.
-+ Because the size has changed, writes a new guard.
+当有连续内存时，则使用指向现有内存块的指针。调试器执行以下任务：
++ 如果未找到分配，则发出断言。
++ 如果上一次分配的保护无效，则发出断言。有关保护的信息，请参阅 [释放内存](#memory-management-debugging-hpha-deallocations)。
++ 更新调试记录栈。
++ 因为大小发生了变化，所以要写入一个新的 guard。

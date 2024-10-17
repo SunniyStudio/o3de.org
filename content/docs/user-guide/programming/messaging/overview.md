@@ -1,24 +1,24 @@
 ---
-linktitle: Overview
-title: Overview of Event Messaging Systems
-description: Use event buses (EBus), AZ::Interface, and AZ::Event to dispatch messages between systems in Open 3D Engine (O3DE). 
+linktitle: 概述
+title: 事件消息系统概述
+description: 使用事件总线 (EBus)、AZ::Interface 和 AZ::Event 在Open 3D Engine (O3DE)中的系统间调度信息。
 weight: 100
 ---
 
-Event messaging systems are essential to a game engine because they allow systems to communicate with each other. **Open 3D Engine (O3DE)** uses a few types of communication methods, which are separated into the following modules: 
+事件消息系统对游戏引擎来说至关重要，因为它们允许系统之间相互通信。**Open 3D Engine (O3DE)** 使用几种类型的通信方法，它们被分为以下模块：
 
-- **Event Bus (EBus)**: A single global bus that all modules can use to invoke requests and dispatch messages, respectively known as *request* and *notification* buses.
-- `AZ::Interface`: A C++ template class for a global interface that other components can invoke requests from, equivalent to the EBus sytem's request bus.
-- `AZ::Event`: A C++ template class that can publish single-value messages, which other components can subscribe to, equivalent to the EBus system's notification bus.
+- **事件总线 (EBus)**: 所有模块都可使用的单一全局总线，用于调用请求和发送信息，分别称为 **请求** 总线和 **通知** 总线。
+- `AZ::Interface`: 全局接口的 C++ 模板类，其他组件可从该接口调用请求，相当于 EBus 系统的请求总线。
+- `AZ::Event`: 一个 C++ 模板类，可以发布单值消息，其他组件可以订阅，相当于 EBus 系统的通知总线。
 
-The functionality of these three modules overlaps in some ways: `AZ::Interface` provides a request interface, `AZ::Event` provides a publish-subscribe interface, and EBus provides both. However, all three modules have strengths and weaknesses that make them more suitable for different scenarios.
+这三个模块的功能在某些方面存在重叠： `AZ::Interface`提供了一个请求接口，`AZ::Event`提供了一个发布-订阅接口，而 EBus 则同时提供了这两个接口。不过，这三个模块各有优缺点，因此更适合不同的应用场景。
 
-The following table compares some key characteristics of EBus, `AZ::Interface`, and `AZ::Event`. You can find all three event messaging modules throughout O3DE's code base.
+下表比较了 EBus、`AZ::Interface` 和`AZ::Event` 的一些关键特性。您可以在 O3DE 的代码库中找到所有这三个事件消息传递模块。
 
 | | EBus | `AZ::Interface` | `AZ::Event` |
 | --- | --- | --- | --- |
-| **Communication model** |  EBus is a general purpose event messaging system whose design focuses on abstraction and decoupling systems. It allows many source components to provide requests or publish messages. It also allows many listener components to invoke those requests or subscribe to those messages---all without the components needing to know about each other. Unlike `AZ::Event`, a listener can subscribe to an EBus specialization even if the EBus doesn't exist yet. | An `AZ::Interface<T>` template specialization defines a global singleton-like request interface that other systems can invoke. To access the request interface, other systems can call `AZ::Interface<T>.Get()`. | `AZ::Event` events are defined as members of a component. As such, other components must have a reference to the component to subscribe to the event. To listen and process an event, subscriber components must implement a handler. A single handler can connect to only one event, but an event can have multiple handlers.<br><br>Some patterns for cross-entity communication include:<ul><li>Exposing the `AZ::Event` to an `AZ::Interface`.</li><li>Calling `SceneQuery()` and `AZ::IVisibility` to get a reference to the entity.</li></ul> |
-| **Lifetime** | EBus is a global singleton that initializes when the application launches and gets destroyed when the application terminates. | There can be only a single instance of an `AZ::Interface<T>` specialization at a time. An instance initializes when the application launches and gets destroyed when the application terminates. | There can be many instances of an `AZ::Event<T>` specialization. Each instance must be attached to a component. An instance initializes when the component is created and gets destroyed when the component is destroyed. |
-| **Scripting** | EBus supports script binding for both its notification bus (like `AZ::Event`) and request bus (unlike `AZ::Interface`). | `AZ::Interface` doesn't support script binding. You can still use `AZ::Interface`, but you must also use an EBus to expose it to scripting modules. | `AZ::Event` supports script binding. |
-| **Advantages** | EBus is O3DE's most flexible and powerful event messaging system. Any system can connect to it and communicate with any other system by simply providing a system's EBus name. EBus is generally used for situations in which event flow is more important than the source of the event. | Compared to EBus, `AZ::Interface` has improved runtime performance, improved debuggability, and compatibility with code autocompletion. | Compared to EBus, `AZ::Event` has improved runtime performance, allows simpler syntax to implement, uses fewer files, and removes aggregate interfaces where a handler cares only about a subset of events. |
-| **Examples** | EBus examples are similar to `AZ::Interface` and `AZ::Event`. In most cases, using those two is preferable due to their optimizations. However, you must use EBus to add script binding support for request buses. | A spawner-spawnee system. The spawner interface contains functions to manage spawnees. If you want another class to spawn something, that class can make a request via  `AZ::Interface<ISpawner>`. By calling `AZ::Interface<ISpawner>.Get()`, other components can invoke requests from the spawner. | In the networking layer, when a remote procedure call (RPC) is sent, it signals an `AZ::Event<NetworkEntityRpcMessage&>`. Then, a connected handler listens for that signal change and processes the `NetworkEntityRpcMessage`. |
+| **通信模型** |  EBus 是一种通用的事件消息传递系统，其设计重点在于抽象和解耦系统。它允许许多源组件提供请求或发布消息。它还允许许多监听器组件调用这些请求或订阅这些消息--所有这些组件之间无需相互了解。与`AZ::Event`不同的是，即使 EBus 还不存在，监听器也可以订阅 EBus 专化。 | 一个 `AZ::Interface<T>`模板特化定义了一个全局单子式请求接口，其他系统可以调用该接口。要访问请求接口，其他系统可调用 `AZ::Interface<T>.Get()`。| `AZ::Event` 事件被定义为组件的成员。因此，其他组件必须引用该组件才能订阅事件。要监听和处理事件，订阅组件必须实现一个处理程序。一个处理程序只能连接一个事件，但一个事件可以有多个处理程序。<br><br>跨实体通信的一些模式包括：<ul><li>将 `AZ::Event`公开到`AZ::Interface`。 </li><li>调用`SceneQuery()`和`AZ::IVisibility`获取实体的引用。</li></ul> |
+| **生命周期** | EBus 是一个全局单例，在应用程序启动时初始化，并在应用程序终止时销毁。 | 一次只能有一个 `AZ::Interface<T>` 专用化实例。实例在应用程序启动时初始化，并在应用程序终止时销毁。 | 一个 `AZ::Event<T>`特化可以有多个实例。每个实例都必须附加到一个组件。实例在组件创建时初始化，并在组件销毁时销毁。 |
+| **脚本** | EBus 的通知总线（如 `AZ::Event`）和请求总线（不同于 `AZ::Interface`）都支持脚本绑定。 | `AZ::Interface` 不支持脚本绑定。您仍然可以使用 `AZ::Interface`，但必须使用 EBus 将其暴露给脚本模块。 | `AZ::Event`支持脚本绑定。 |
+| **优势** | EBus 是 O3DE 最灵活、功能最强大的事件消息系统。任何系统都可以连接到它，只需提供系统的 EBus 名称即可与任何其他系统通信。EBus 通常用于事件流比事件源更重要的情况。 | 与 EBus 相比， `AZ::Interface` 提高了运行时性能，改善了可调试性，并与代码自动完成兼容。 | 与 EBus 相比，`AZ::Event` 提高了运行时性能，允许使用更简单的语法来实现，使用更少的文件，并删除了处理程序只关心事件子集的聚合接口。 |
+| **示例** | EBus 示例类似于 `AZ::Interface` 和 `AZ::Event`。在大多数情况下，使用这两种方法更可取，因为它们进行了优化。但是，您必须使用 EBus 为请求总线添加脚本绑定支持。 | 生成器-被生成物系统 生成器接口包含管理产卵器的函数。如果你想让另一个类生成某些东西，该类可以通过 `AZ::Interface<Ispawnner>`提出请求。通过调用 `AZ::Interface<ISpawner>.Get()`，其他组件可从生成器调用请求。 | 在网络层中，当远程过程调用（RPC）发送时，会发出 `AZ::Event<NetworkEntityRpcMessage&>`信号。然后，连接的处理程序会监听该信号的变化并处理`NetworkEntityRpcMessage`。 |

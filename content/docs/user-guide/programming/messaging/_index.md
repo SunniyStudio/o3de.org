@@ -1,18 +1,18 @@
 ---
-linktitle: Event Messaging
-title: Event Messaging Systems
-description: Learn about the event messaging systems in Open 3D Engine (O3DE). 
+linktitle: 事件消息
+title: 事件消息系统
+description: 了解 Open 3D Engine (O3DE) 中的事件消息系统。 
 weight: 300
 ---
 
-Event messaging systems are core parts of **Open 3D Engine (O3DE)** that allow cross-system communication. When you develop systems that need to communicate with other parts of O3DE, you need to use the event messaging systems that O3DE has in place.
+事件消息系统是**Open 3D Engine (O3DE)** 的核心部分，允许跨系统通信。当您开发的系统需要与 O3DE 的其他部分通信时，您需要使用 O3DE 的事件消息系统。
 
-## Section topics
-
-| Topic | Description | 
+## 章节主题
+1
+| 主题 | 说明 | 
 | --- | --- |
-| [Overview](overview) | An overview of the event messaging systems in O3DE and how they compare to each other. |
-| [EBus](ebus) | An overview of the **Event Bus (EBus)** system. EBus is a single global bus that all systems can use to invoke requests and dispatch messages, respectively known as *request* and *notification* buses. |
-| [EBuses in Depth](ebus-design) | A closer look at the technical design of EBuses and how to use them. |
-| [AZ::Interface](az-interface) | A simpler alternative to EBus, `AZ::Interface` creates global request buses for invoking requests across systems. |
-| [AZ::Event](az-event) | A simpler alternative to EBus, `AZ::Event` publishes single-value messages, which other components can subscribe to and process using the event's handler. |
+| [概述](overview) | 概述 O3DE 中的事件消息传递系统及其相互比较。 |
+| [EBus](ebus) | **事件总线（EBus）** 系统概述。EBus 是一个单一的全局总线，所有系统都可以使用它来调用请求和发送信息，分别称为 **请求** 总线和 **通知** 总线。 |
+| [深入EBus](ebus-design) | 详细了解 EBus 的技术设计和使用方法。 |
+| [AZ::Interface](az-interface) | 作为 EBus 的简单替代方案，`AZ::Interface` 创建了用于跨系统调用请求的全局请求总线。 |
+| [AZ::Event](az-event) | 作为 EBus 的简单替代方案，`AZ::Event` 发布单值消息，其他组件可以订阅并使用事件处理程序处理这些消息。|

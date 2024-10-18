@@ -1,8 +1,8 @@
 ---
-title: "Components"
+title: "组件"
 weight: 500
 ---
 
-| Topic | Description |
+| 主题 | 说明 |
 | - | - | 
-| [Reference](reference) | A reference of all the components available to use in the O3DE Editor. | 
+| [参考](reference) | O3DE 编辑器中所有可用组件的参考资料。 | 

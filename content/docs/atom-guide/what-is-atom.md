@@ -1,48 +1,48 @@
 ---
-title: Overview
-description: An overview of the Atom Renderer in Open 3D Engine (O3DE).
+title: 概述
+description: Open 3D Engine (O3DE)中的 Atom 渲染器概述。
 toc: false
 weight: 110
 ---
 
-Atom is a modular, data-driven, and multi-threaded rendering engine. With Atom, you can create content using the latest rendering technology. Atom supports modern rendering pipelines such as Forward+ and Deferred rendering. Its rendering pipeline is fully data driven, enabling developers to modify or replace key components with minimal code change. Atom's multi-threading support allows rendering features to run parallel on both the CPU and GPU, taking advantage of all computing resources. Atom is built on multiple industry-standard 3D graphics APIs and features a modular design that makes it easy to expand support for additional platforms. 
+Atom 是一个模块化、数据驱动和多线程的渲染引擎。通过 Atom，您可以使用最新的渲染技术创建内容。Atom 支持 Forward+ 和延迟渲染等现代渲染管道。它的渲染管道完全由数据驱动，开发人员只需修改最少的代码，就能修改或替换关键组件。Atom 的多线程支持允许渲染功能在 CPU 和 GPU 上并行运行，从而充分利用所有计算资源。Atom 基于多个行业标准 3D 图形 API 构建，采用模块化设计，可轻松扩展对其他平台的支持。
 
-Atom also has the following advantages: 
-* High-level APIs wrapping platform-dependent implementations. Developers can add or customize features without having to touch low-level code or understand platform graphics libraries.
-* Optimized cluster forward+ shading model. Each process of the shading model is componentized into discrete passes, allowing flexibility to adopt future shading models.
-* Modular design. The renderer's structure is separated into discrete units, allowing developers to move to a different shading model such as a full physically based or toon-based shading model. 
+Atom 还具有以下优势：
+* 高级应用程序接口封装了与平台相关的实现。开发人员可以添加或定制功能，而无需接触底层代码或了解平台图形库。
+* 优化的集群前向+阴影模型。遮光模型的每个过程都被组件化为离散通道，从而可以灵活地采用未来的遮光模型。
+* 模块化设计。渲染器的结构分为多个独立单元，允许开发人员转用不同的着色模型，如完全基于物理或基于卡通的着色模型。
 
 ![A scene with shader balls showcasing PBR materials and other graphics features rendered by Atom](/images/atom-guide/intro-to-atom.jpg)
 
-## Rendering pipeline
+## 渲染管道
 
-Atom's rendering pipeline is split into several core systems, each communicating with one another to use the power of the GPU to process and display graphics onto the screen. The architecture of the rendering pipeline includes the Rendering Hardware Interface (RHI), the Render Pipeline Interface (RPI), and the graphics features.
+Atom 的渲染管道分为几个核心系统，每个系统相互通信，利用 GPU 的强大功能处理图形并显示到屏幕上。渲染管道的架构包括渲染硬件接口（RHI）、渲染管道接口（RPI）和图形功能。
 
-The Atom architecture is designed for modularity, allowing developers to activate only the graphics features that they need. The architecture also allows developers to easily build additional graphics features on top of the RPI. Understanding the fundamental concepts underlying Atom's architecture is advantageous across many roles -- whether you're designing materials, livening your 3D environment with graphics features, or displaying your project across multiple views.
+Atom 架构采用模块化设计，允许开发人员只激活所需的图形功能。该架构还允许开发人员在 RPI 的基础上轻松构建其他图形功能。了解 Atom 体系结构的基本概念对很多工作都有好处--无论您是设计素材、用图形功能为 3D 环境增添活力，还是在多个视图中显示您的项目。
 
 **RHI**  
-The RHI is at the lower level of the rendering pipeline. It talks directly to different graphics APIs and hardware. It provides an abstract layer of APIs to expose the GPU's functionality so high-level graphics features don't need to use platform-specific graphics APIs. For more information on the RHI, see [RHI](dev-guide/rhi).
+RHI 位于渲染管道的底层。它直接与不同的图形应用程序接口和硬件对话。它提供了一个抽象的 API 层，用于公开 GPU 的功能，因此高级图形功能无需使用特定平台的图形 API。有关 RHI 的更多信息，请参阅 [RHI](dev-guide/rhi)。
 
 **RPI**  
-The RPI is the data-driven layer that makes the rendering pipeline customizable. The RPI also defines fundamental graphics assets such as images, materials, and shaders. Furthermore, it defines the Feature Processors that implement most of the high-level graphics features and enable their interaction with the render pipeline. When making changes to the rendering pipeline or adding and editing features, developers and engineers work with the RPI API (C++ and JSON). For more information on the RPI, see [RPI](dev-guide/rpi).
+RPI 是数据驱动层，使渲染管道可以自定义。RPI 还定义了图像、材质和着色器等基本图形资产。此外，它还定义了实现大部分高级图形功能的特征处理器（Feature Processor），并使其能够与渲染管道进行交互。在更改渲染管道或添加和编辑功能时，开发人员和工程师需要使用 RPI API（C++ 和 JSON）。有关 RPI 的更多信息，请参阅 [RPI](dev-guide/rpi)。
 
-**Shader and Materials**  
-In Atom, shaders are written in the Amazon Shading Language (AZSL), an extended version of HLSL. Shaders are compiled by the AZSL compiler. Then, materials reference these shaders, which ultimately describes how to render a mesh. For more information on shaders and materials, see [Shader System](dev-guide/shaders) and [Material System](dev-guide/materials).
+**着色器和材质**  
+在 Atom 中，着色器是用亚马逊着色语言（AZSL）编写的，它是 HLSL 的扩展版本。着色器由 AZSL 编译器编译。然后，材质会引用这些着色器，最终描述如何渲染网格。有关着色器和材质的更多信息，请参阅[着色器系统](dev-guide/shaders) 和[材质系统](dev-guide/materials)。
 
-**Features**  
-As a part of the renderer, Atom provides built-in graphics features. Most graphics features are implemented using Feature Processor interfaces, which are defined in the RPI. For example, the RPI defines the Mesh Feature Processor, which implements static and dynamic meshes. Other features (like physically based rendering) live outside of feature processors and are instead implemented through passes and shaders. Atom integrates many features into **Open 3D Engine (O3DE)** through the Atom Gem, introducing components such as lighting, camera, and mesh. For more information on the features, see [Features and Feature Processors](features).
+**功能**  
+作为渲染器的一部分，Atom 提供内置图形功能。大多数图形功能都是通过 RPI 中定义的特征处理器接口实现的。例如，RPI 定义了网格特征处理器（Mesh Feature Processor），用于实现静态和动态网格。其他功能（如基于物理的渲染）则不属于特征处理器，而是通过传递和着色器来实现。Atom 通过 Atom Gem 将许多功能集成到**Open 3D Engine (O3DE)**中，引入了照明、摄像头和网格等组件。有关这些功能的更多信息，请参阅 [功能和功能处理器](features)。
 
 ![Atom Architecture](/images/atom-guide/what-is-atom/atom-architecture.png)
 
-## Common Workflows
-Atom can elevate your project's rendering capabilities and energize you and your whole team to push the limits of creation and innovation. Depending on your role, here are some common workflows that you'll encounter when working with Atom:
+## 常见工作流程
+Atom 可以提升项目的渲染能力，让您和您的整个团队充满活力，不断突破创作和创新的极限。根据您的角色，以下是您在使用 Atom 时会遇到的一些常见工作流程：
 
-* **Technical artists** can use Atom to create new materials easily through the Material Editor application, or with more control and detail through JSON files. With Atom's raytracing technology and physically based rendering materials, artists can create accurate, real-life materials. 
+* **技术美术**可以使用 Atom 通过材质编辑器应用程序轻松创建新材质，也可以通过 JSON 文件进行更多控制和细节处理。利用 Atom 的光线跟踪技术和基于物理的渲染材质，艺术家可以创建精确、真实的材质。
 
-* **Game developers** can use Atom's collection of rendering features to enhance many aspects of their game such as lighting, mesh rendering, and post-processing effects. Atom is integrated into O3DE, a game engine where game developers can create AAA games. 
+* **游戏开发人员**可以使用 Atom 的渲染功能集合来增强游戏的许多方面，如照明、网格渲染和后期处理效果。Atom 已集成到 O3DE 游戏引擎中，游戏开发者可在该引擎中创建 AAA 级游戏。
 
-* **Rendering engineers** can configure Atom's rendering pipeline, add new rendering passes, and create new rendering features using Atom's C++ API. 
+* **渲染工程师**可以配置 Atom 的渲染管道，添加新的渲染通道，并使用 Atom 的 C++ API 创建新的渲染功能。 
 
-## Get started with Atom
+## 开始使用 Atom
 
-Get started with Atom Renderer through O3DE by [creating a new O3DE project](/docs/welcome-guide/create/) or building [Atom Sample Viewer](https://github.com/o3de/o3de-atom-sampleviewer), Atom's standalone application.
+通过 O3DE [创建一个新的 O3DE 项目](/docs/welcome-guide/create/)或构建 Atom 的独立应用程序 [Atom Sample Viewer](https://github.com/o3de/o3de-atom-sampleviewer)，开始使用 Atom 渲染器。

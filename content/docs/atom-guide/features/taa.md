@@ -1,23 +1,22 @@
 ---
-title: Temporal Anti-aliasing
-description: "Learn about temporal anti-aliasing (TAA) in Atom Renderer, the graphics engine integrated into Open 3D Engine (O3DE)."
+title: Temporal Anti-aliasing 时间抗锯齿
+description: "了解 Atom Renderer（集成到 Open 3D Engine (O3DE) 中的图形引擎）中的时间抗锯齿（TAA）。"
 toc: true
----  
+---
 
-*Temporal anti-aliasing* (TAA) is a type of supersampling that takes samples from different locations within a pixel each frame and combines them with samples from previous frames to create a supersampled image. The main challenge of TAA is knowing when samples from the previous frame are valid. TAA may cause some softness in your image, especially while in motion. To improve the quality of your image, you can enable contrast adaptive sharpening, which sharpens the details of your image. For more information, refer to [Contrast Adaptive Sharpening](cas/).
+**时间抗锯齿**（Temporal anti-aliasing，TAA）是一种超采样技术，它从每帧像素的不同位置采集样本，然后与前一帧的样本相结合，生成超采样图像。TAA 的主要挑战在于了解前一帧的样本何时有效。TAA 可能会使图像变得柔和，尤其是在运动时。为了提高图像质量，您可以启用对比度自适应锐化，它可以锐化图像细节。有关详细信息，请参阅 [对比度自适应锐化](cas/)。
 
+## 参数
 
-## Parameters
-
-| Parameter | Description | Values | Default |
+| 参数 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **m_currentFrameContribution** | Controls how much the current frame's samples contribute to the final image, when history isn't rejected. Reducing this value may help prevent flickering in some circumstances. | `0.1` to `1.0` | `0.1` |
-| **m_clampGamma** | Controls the number of standard deviations from the mean of the 3x3 current neighborhood that the history is clipped to. Increasing this value may prevent flickering, but can also lead to ghosting. | `0.0` to infinity | `1.0` |
-| **m_maxDeviationBeforeDampening** | Controls the number of standard deviations from the mean, which defines a threshold for the pixel's brightness before it begins to reduce its contribution. This prevents flickering by lowering the weight of the current pixel, if its brightness is very different from the surrounding neighborhood and history. By default, any pixel with a brightness that is more than 0.5 standard deviations from the mean begins to contribute less. | `0.0` to infinity | `0.5` |
+| **m_currentFrameContribution** | 控制在不剔除历史记录的情况下，当前帧采样对最终图像的贡献程度。在某些情况下，降低该值有助于防止闪烁。 | `0.1` 到 `1.0` | `0.1` |
+| **m_clampGamma** | 控制历史记录剪切到的 3x3 当前邻域平均值的标准差数量。增加该值可以防止闪烁，但也可能导致重影。 | `0.0` 到 无限 | `1.0` |
+| **m_maxDeviationBeforeDampening** | 控制平均值的标准偏差数，它定义了像素亮度的阈值，然后才会开始降低像素的贡献度。如果当前像素的亮度与周围像素和历史像素的亮度相差很大，就可以通过降低当前像素的权重来防止闪烁。默认情况下，亮度与平均值相差超过 0.5 个标准差的任何像素都会开始降低贡献度。 | `0.0` 到 无限 | `0.5` |
 
 
-## Using TAA
+## 使用 TAA
 
-You can enable `Taa.pass` in the main render pipeline through the parent pass, `PostProcessParent.pass`. By default, TAA is disabled. To enable it, set `Enabled` to `true` in the parent pass.
+在主渲染管道中，您可以通过父通道`PostProcessParent.pass`启用`Taa.pass`。默认情况下，TAA 是禁用的。要启用它，请在父传递中将 `Enabled` 设置为 `true`。
 
-You can also add `Taa.pass` to a custom pipeline.
+您也可以将 `Taa.pass` 添加到自定义管道中。

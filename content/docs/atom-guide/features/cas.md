@@ -1,25 +1,25 @@
 ---
-title: Contrast Adaptive Sharpening
-description: "Learn about contrast adaptive sharpening (CAS) in Atom Renderer, the graphics engine integrated into Open 3D Engine (O3DE)."
+title: 对比度自适应锐化
+description: "了解 Atom 渲染器中的对比度自适应锐化 (CAS)，该渲染器是集成在 Open 3D Engine (O3DE) 中的图形引擎。"
 toc: true
----  
+---
 
-*Contrast adaptive sharpening* (CAS) is an image-sharpening technique that takes into account the local 3x3 neighborhood's contrast when deciding how much to sharpen. High-contrast samples are sharpened much less than low-contrast samples. This helps prevent the over-sharpened look that is found in standard sharpening filters that sharpen uniformly. You can use CAS with temporal anti-aliasing (TAA) to reduce the softness that TAA introduces to your image. For more information, refer to [Temporal Anti-aliasing](taa/).
+**对比度自适应锐化**（Contrast adaptive sharpening，CAS）是一种图像锐化技术，在决定锐化程度时会考虑局部 3x3 邻域的对比度。高对比度样本的锐化程度远远低于低对比度样本。这有助于避免在均匀锐化的标准锐化滤镜中出现的过度锐化现象。您可以将 CAS 与时间抗锯齿 (TAA) 结合使用，以减少 TAA 给图像带来的柔和感。更多信息，请参阅 [时间抗锯齿](taa/)。
 
-CAS in **Atom Renderer** is based on AMD's implementation. For more information, refer to [AMD FidelityFX CAS](https://gpuopen.com/fidelityfx-cas/).
+**Atom 渲染器**中的 CAS 基于 AMD 的实现。更多信息，请参阅 [AMD FidelityFX CAS](https://gpuopen.com/fidelityfx-cas/)。
 
 
-## Parameters
+## 参数
 
-| Parameter | Description | Values | Default |
+| 参数 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **m_strength** | Controls the strength of the sharpening effect. | `0.0` to `1.0` | `0.25` |
+| **m_strength** | 控制锐化效果的强度。 | `0.0` 到 `1.0` | `0.25` |
 
 
-## Using CAS
+## 使用 CAS
 
-You can enable `ContrastAdaptiveSharpening.pass` in the main render pipeline through the parent pass, `PostProcessParent.pass`. By default, CAS is disabled. To enable it, set `Enabled` to `true` in the parent pass. 
+在主渲染管道中，您可以通过父通道程序`PostProcessParent.pass`启用  `ContrastAdaptiveSharpening.pass`。默认情况下，CAS 是禁用的。要启用 CAS，请在父传递中将 `Enabled` 设置为 `true`。
 
-You can also add `ContrastAdaptiveSharpening.pass` to a custom pipeline. 
+您也可以将 `ContrastAdaptiveSharpening.pass` 添加到自定义管道中。
 
-To use CAS with TAA to improve the quality of your image, run the `ContrastAdaptiveSharpening.pass` after the `Taa.pass`.
+要将 CAS 与 TAA 结合使用以提高图像质量，请在`Taa.pass`之后运行`ContrastAdaptiveSharpening.pass`。

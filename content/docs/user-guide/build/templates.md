@@ -1,92 +1,92 @@
 ---
-linktitle: Project and Gem Templates
-title: Project and Gem Templates
-description: Learn about the project and gem templates available in O3DE
+linktitle: 项目和Gem模板
+title: 项目和Gem模板
+description: 了解 O3DE 中可用的项目和 gem 模板
 weight: 100
 toc: true
 ---
 
-O3DE includes a template system, which you can use to create new projects, new gems, or new snippets of code for the engine based on those templates.  The default engine from installer or github includes a few basic templates, but more can be downloaded as part of gems or repositories and added to the engine.
+O3DE 包含一个模板系统，您可以根据这些模板创建新项目、新 gem 或引擎的新代码片段。 安装程序或 github 中的默认引擎包含一些基本模板，但更多模板可作为 gem 或软件源的一部分下载并添加到引擎中。
 
-You can find all the existing templates in the root of the engine in the `templates` sub-folder.  They operate by copying their template files into a folder of the user's choosing and replacing certain placeholder text in those files, such as project name, with the actual name given by the user.
+您可以在引擎根目录下的 `templates` 子文件夹中找到所有现有模板。 它们的操作方法是将模板文件复制到用户选择的文件夹中，并将这些文件中的某些占位符文本（如项目名称）替换为用户提供的实际名称。
 
-## Project templates included with the engine
-These templates are for entire projects, which can be created using the Project Manager and then opened to work on in the Editor.
-For a guide on how to create projects from template, see [Creating Projects Using Project Manager](/docs/welcome-guide/create/creating-projects-using-project-manager). 
+## 引擎中包含的项目模板
+这些模板用于整个项目，可使用项目管理器创建，然后在编辑器中打开进行操作。
+有关如何通过模板创建项目的指南，请参阅 [使用项目管理器创建项目](/docs/welcome-guide/create/creating-projects-using-project-manager)。
 
 ### DefaultProject
-This is a good all-round starting point for a game project using O3DE.  It comes with a script to export the project into a shippable standalone package.  It has a number of gems active by default, including ones for UI, basic prototyping, Script Canvas and Animation, among others.  Using this template requires a C++ compiler installed and it includes a basic c++ game module that can be used to write core game logic and components.
+对于使用 O3DE 的游戏项目来说，这是一个很好的全面起点。 它附带了一个脚本，用于将项目导出为可发布的独立软件包。 它默认激活了许多Gem，包括用户界面、基本原型设计、脚本画布和动画等Gem。 使用该模板需要安装 C++ 编译器，其中包含一个基本的 c++ 游戏模块，可用于编写核心游戏逻辑和组件。
 
 ### ScriptOnlyProject
-This has an identical gem selection to DefaultProject, but disables all C++ compiling and linking.  The project is still able to use the Lua and Script Canvas capabilities of the engine, but cannot have custom c++ code embedded or use other gems or modules that are not pre-compiled.  It can be used to get a quick look at the engine and editor without having to compile a project, download 3rd party libraries, or install a compiler or linker.   You can convert a Script Only project to a regular project at a later time. 
+它的 gem 选择与 DefaultProject 相同，但禁止所有 C++ 编译和链接。 该项目仍可使用引擎的 Lua 和 Script Canvas 功能，但不能嵌入自定义的 C++ 代码，也不能使用其他未预编译的 gem 或模块。 它可用于快速了解引擎和编辑器，而无需编译项目、下载第三方库或安装编译器或链接器。  你可以在以后将纯脚本项目转换为常规项目。
 
-See the [Script-only 'Quick Start' Projects](/docs/user-guide/build/script-only-projects.md) documentation for more information about this feature.
+有关此功能的更多信息，请参阅 [纯脚本'快速启动'项目](/docs/user-guide/build/script-only-projects.md)文档。
 
 ### MinimalProject
-This has as few gems active as possible, and is a bare-bones starting point.  It is not recommended to use this template as-is, but rather start with it and then activate what gems you might need for your project.   Because it activates as little as possible, and includes as few other gems as possible, it has the quickest startup time and asset compilation time.
+该模板尽可能少激活Gem，是一个简易的起点。 不建议原封不动地使用该模板，而是从它开始，然后激活项目可能需要的Gem。  由于它激活的Gem越少越好，包含的其他Gem也越少越好，因此它的启动时间和资产编译时间都是最快的。
 
-## Notable Gem templates included with the engine
-These templates are for making your own custom gems that can be used to extend the engine and reused across projects.
-To create gems and other components from template, the command line utility must be used, similar to how projects are created using the CLI in [Creating Projects using CLI](/docs/welcome-guide/create/creating-projects-using-cli), but with a different command (`create-gem`) and different argument (`--gem-path`) to supply the output folder.
+## 引擎中包含的著名Gem模板
+这些模板用于制作您自己的自定义 gem，这些 gem 可用来扩展引擎，并在各个项目中重复使用。
+要从模板创建 gem 和其他组件，必须使用命令行实用程序，类似于 [使用 CLI 创建项目](/docs/welcome-guide/create/creating-projects-using-cli) 中使用 CLI 创建项目的方式，但使用不同的命令 (`create-gem`)和不同的参数 (`--gem-path`)来提供输出文件夹。
 
-linux example:
+linux 示例：
 ```shell
 scripts/o3de.sh create-gem --help
 scripts/o3de.sh create-gem --gem-path $HOME/O3DE/Projects/MyProject/Gem/MyGem -tn AssetGem
 ```
 
-windows example:
+windows 示例：
 ```cmd
 scripts\o3de create-gem --help
 scripts\o3de create-gem --gem-path %USERPROFILE%\O3DE\Projects\MyProject\Gem\MyGem -tn AssetGem
 ```
 
 ### AssetGem
-This template can be used to create a gem that contains only assets, no code, and does not require C++ compilation to use.  Ideal for creating buckets of assets you would like to reuse between projects or package and ship without any code attached.  It can still contain Lua scripts, as well as Script Canvas, or Python for tooling.
+该模板可用于创建仅包含资产、无代码且无需 C++ 编译即可使用的 gem。 非常适合创建资产桶，以便在项目间重复使用，或在不附带任何代码的情况下打包和发布。 它仍可包含 Lua 脚本、Script Canvas 或 Python 工具。
 
 ### CppToolGem
-This template can be used to create new C++ tools for the Editor.  It contains a scaffold of C++ code that will cause a component to be registered with the Editor and has place for you to start adding your custom Tool code.
+该模板可用于为编辑器创建新的 C++ 工具。 它包含一个 C++ 代码脚手架，可使组件在编辑器中注册，并为您提供了开始添加自定义工具代码的位置。
 
 ### PythonToolGem
-This template can be used to create new tools for the editor written in Python.  Python can be used to access the Engine and Editor APIs, and it can also use Qt For Python to create new panels and UI elements.  It contains a bootstrap script which will automatically be called on startup if the gem is active, as well as an example Qt Dialog written in Python that it registers with the View Pane system of the Editor.
+该模板可用于为用 Python 编写的编辑器创建新工具。 Python 可用于访问引擎和编辑器 API，还可使用 Qt For Python 创建新面板和 UI 元素。 它包含一个引导脚本，如果 gem 处于活动状态，该脚本将在启动时自动调用，还包含一个用 Python 编写的 Qt 对话框示例，该对话框可在编辑器的视图窗格系统中注册。
 
 ### DefaultGem
-This template is meant for use when developing a more comprehensive gem that contains code that runs in the engine in standalone mode, as well as code that runs in the Editor and tooling side.  It contains those two modules, as well as the boilerplate used to register and activate those two modules in the appropriate location. 
+本模板用于开发更全面的 gem，其中包含以独立模式在引擎中运行的代码，以及在编辑器和工具端运行的代码。 它包含这两个模块，以及用于在适当位置注册和激活这两个模块的模板。
 
 ### GraphicsGem
-This template is meant for use when creating a gem which Atom rendering APIs.  Most suitable when adding a new rendering feature to the engine.  It includes a module which registers itself with the engine and a Feature Processor which hooks into Atom, letting you start writing your rendering feature immediately.
+该模板用于创建包含 Atom 渲染 API 的 gem。 最适合在引擎中添加新的渲染功能。 它包括一个向引擎注册的模块和一个挂钩 Atom 的功能处理器，让你可以立即开始编写你的渲染功能。
 
 ### UnifiedMultiplayerGem
-This template contains the scaffolding of a Gem that will plug into the multiplayer system of the engine and support differing behavior between the client and server (including a Unified launcher that has both behaviors). It includes a Tool-side module as well as an Engine-side module and component.  See the [Multiplayer Documentation](/docs/user-guide/networking/multiplayer) for more information.
+该模板包含一个 Gem 的脚手架，该 Gem 将插入引擎的多人系统，并支持客户端和服务器之间的不同行为（包括具有两种行为的统一启动器）。它包括一个工具端模块以及一个引擎端模块和组件。 更多信息，请参阅 [多人游戏文档](/docs/user-guide/networking/multiplayer)。
 
 ### PrebuiltGem
-This template contains instructions and a starting layout for a gem that can be shipped as a pre-built library (with only header files, no source code).  It shows how to hook into existing static or shared libraries instead of shipping the source, as well as how you might structure the shippable tree of a Gem if you want it to work without compiling on the user's side.  Pre-built gems are the only way to ship gems that work with Script Only Mode.
+本模板包含可作为预构建库（只有头文件，没有源代码）发布的 gem 的说明和起始布局。 它展示了如何与现有的静态库或共享库挂钩，而不是发送源代码，以及如果您希望 gem 无需在用户端编译即可运行，可以如何构建 gem 的可发送树。 预构建 gem 是发布可在纯脚本模式下运行的 gem 的唯一方法。
 
-## Other templates included with the engine
-These templates can be used to save time with boilerplate code, and are used by telling the CLI to inject them into existing projects or gems, as they contain a fragment of code or assets and are not functional standalone.  The CLI command `create-from-template` should be used to instantiate the template, with the `-dp` destination path supplied where to put the instantiated template and the `-tn` argument being the name of the template.
+## 引擎中包含的其他模板
+这些模板可用于节省模板代码的时间，并通过告诉 CLI 将其注入到现有项目或 gem 中来使用，因为它们包含代码片段或资产，并不是功能独立的。 应使用 CLI 命令`create-from-template` （从模板创建）来实例化模板，其中的`-dp` 目标路径是放置实例化模板的位置，`-tn` 参数是模板的名称。
 
-linux example:
+linux 示例:
 ```shell
 scripts/o3de.sh create-from-template --help
 scripts/o3de.sh create-from-template -dp $HOME/O3DE/Projects/MyProject/Gem/MyGem/MyComponent -tn DefaultComponent
 ```
 
-windows example:
+windows 示例:
 ```cmd
 scripts\o3de create-from-template --help
 scripts\o3de create-from-template --gem-path %USERPROFILE%\O3DE\Projects\MyProject\Gem\MyComponent -tn DefaultComponent
 ```
 
 ### DefaultComponent
-This template contains a simple component that can be injected into an existing gem or project.  This saves you boilerplate typing when adding new components to an existing code-base. It includes an interface header that allows you to immediately start adding EBus messages to talk to the component.
+该模板包含一个可注入现有 gem 或项目的简单组件。 在向现有代码库中添加新组件时，可节省模板键入的时间。它包含一个接口头，允许你立即开始添加 EBus 消息与组件对话。
 
 ### GemRepo
-This template contains the scaffold of a Gem Repository.  Users can add the URL of a Gem Repository to their Project Manager and the Gems inside that repository will become available for use.  See the [Gem Repository Overview](/docs/user-guide/gems/repositories/overview) for more information.
+该模板包含一个Gem库的脚手架。 用户可以将Gem仓库的 URL 添加到自己的项目管理器中，然后就可以使用该仓库中的Gem了。 更多信息，请参阅[Gem版本库概览](/docs/user-guide/gems/repositories/overview)。
 
 ### RemoteRepo
-This template contains the scaffold of a Remote Repository.  See the [Remote Repository](/docs/learning-guide/tutorials/remote-repositories/create-remote-repository) documentation for more information.
+该模板包含远程存储库的脚手架。 更多信息，请参阅 [远程版本库](/docs/learning-guide/tutorials/remote-repositories/create-remote-repository) 文档。
 
 ### ScriptCanvasNode
-This template contains the scaffold of a Script Canvas Node which can be added to an existing codebase to supply new Script Canvas nodes to the engine and editor.  Instantiating this template will result in the XML files as well as code, header, and CMake files required to hook into the Script Canvas system.  See the [Script Canvas Custom Nodes](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/_index.md) documentation for more information.
+该模板包含 Script Canvas 节点的脚手架，可添加到现有代码库中，为引擎和编辑器提供新的 Script Canvas 节点。 实例化此模板后，将生成 XML 文件以及代码、头文件和 CMake 文件，以便连接到 Script Canvas 系统。 更多信息，请参阅 [Script Canvas自定义节点](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/_index.md)文档。
 
 

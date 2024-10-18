@@ -1,62 +1,61 @@
 ---
-linktitle: Script-Only 'Quick Start' Projects
-title: Script-only 'Quick Start' Projects
-description: Describes how Script-only 'Quick Start' projects work in O3DE
+linktitle: 仅脚本的'Quick Start'项目
+title: 仅脚本的'Quick Start'项目
+description: 说明仅脚本的'Quick Start'项目如何在 O3DE 中运行
 weight: 100
 toc: true
 ---
 
-Projects in O3DE can be created in a mode which disables all C++ compiling and linking, including the downloading of any libraries that would otherwise be used by those linkers.  In this 'Script-only' mode, the project can only make use of pre-compiled gems and components, from shared libraries, but can still otherwise use Lua and Script Canvas to create game logic, and Python to create editor tooling.
+O3DE 中的项目可以在一种模式下创建，该模式禁止所有 C++ 编译和链接，包括下载这些链接器可能使用的任何库。 在这种 “纯脚本 ”模式下，项目只能使用共享库中的预编译 gem 和组件，但仍可使用 Lua 和 Script Canvas 创建游戏逻辑，并使用 Python 创建编辑器工具。
 
-Script-only mode is also known as "Quick Start" mode, because the lack of need to compile anything using C++ or link anything means that the 'build time' for the project is very quick (seconds), and iteration can be much faster.
+纯脚本模式也被称为 "Quick Start" 模式，因为不需要使用 C++ 编译或链接任何东西，这意味着项目的 “构建时间 ”非常短（几秒钟），迭代速度也更快。
 
-The down-side of Script-only mode is that no C++ components can be created and used by the game project itself, unless they are pre-built by other means and injected by some other build system, and all existing libraries used must also be pre-built, such as the ones that are included using the installer layout of the engine.
+纯脚本模式的缺点是，游戏项目本身无法创建和使用任何 C++ 组件，除非这些组件是通过其他方式预先构建并由其他构建系统注入的，而且所有使用的现有库也必须是预先构建的，例如引擎安装布局中包含的库。
 
-Third party gems and plugins can only be used if they are also pre-built.
+第三方Gem和插件只有在预编译的情况下才能使用。
 
-Despite these limitations it is a way to quickly get into the editor and start creating immediately, without downloading a compiler and without downloading any additional c++ development libraries such as the Qt SDK.
+尽管有这些限制，但它仍是一种快速进入编辑器并立即开始创建的方法，无需下载编译器，也无需下载任何额外的 c++ 开发库（如 Qt SDK）。
 
-## Creating a Script-only Project
-You can create a new Script-only project by using the ScriptOnlyProject [template](/docs/user-guide/build/templates.md), see the [Creating Projects](/docs/welcome-guide/create) document for more information.
+## 创建纯脚本项目
+你可以使用 ScriptOnlyProject [模板](/docs/user-guide/build/templates.md)创建一个新的纯脚本项目，更多信息请参阅 [创建项目](/docs/welcome-guide/create)文档。
 
-You can also convert an existing project into a Script-only project by modifying the `project.json` file in the root.  The flag that determines whether a project is script-only is the following tag at the root of a `project.json`:
+您也可以通过修改项目根目录下的 `project.json` 文件，将现有项目转换为纯脚本项目。 决定项目是否为纯脚本项目的标志是`project.json`根目录中的以下标记：
 ```json
 "script_only": true,
 ```
 
-The default value is false, so projects without this tag are not script-only.
-If you do convert an existing project to script only, you may need to remove any C++ modules that already exist in it, or disable them from the build system, or encounter errors.
+默认值为 false，因此没有此标记的项目不是纯脚本项目。
+如果将现有项目转换为脚本专用，可能需要移除其中已存在的 C++ 模块，或从构建系统中禁用这些模块，或遇到错误。
 
-You may also have to copy the `EngineFinder.cmake` file from an existing script-only project (or the script-only project template in the `templates` folder) into the project's cmake subfolder.
+您可能还需要将现有纯脚本项目（或 `templates` 文件夹中的纯脚本项目模板）中的 `EngineFinder.cmake` 文件复制到项目的 cmake 子文件夹中。
 
-## Converting a Script-only project to a compiled project
+## 将纯脚本项目转换为编译后项目
 
-To switch back to a 'normal' project, flip the same above flag to false, or remove it from the `project.json`.
-You can then start adding C++ components to your project or use the [template](/docs/user-guide/build/templates.md) system to instantiate new c++ components.  You may need to modify the CMake build files to include new subdirectories containing code, just like any project.
+要切换回 “正常 ”项目，只需将上述标志设为 false，或从 `project.json` 中删除即可。
+然后，你就可以开始在项目中添加 C++ 组件，或使用 [模板](/docs/user-guide/build/templates.md) 系统实例化新的 C++ 组件。 您可能需要修改 CMake 生成文件，以包含包含代码的新子目录，就像其他项目一样。
 
-## Shipping a Script-only project
-Script-only projects do include a script at the root to export the project into a standalone project.  See the [Project Export](content/docs/user-guide/packaging/project-export) documentation for details on how project export functions, as it is the same export system used as regular projects.
+## 发送纯脚本项目
+纯脚本项目的根目录包含一个脚本，用于将项目导出为独立项目。 有关项目导出功能的详细信息，请参阅[项目导出](content/docs/user-guide/packaging/project-export) 文档，因为它与普通项目使用相同的导出系统。
 
-## Trade-offs to be aware of
+## 需要注意的权衡
 
-### There is no monolithic build
-Because no C++ compiler or linker is involved and no 3rd party libraries are downloaded, packaging and releasing a script-only mode project will ship as a generic dynamically linked game launcher, as opposed to a final release monolithic executable.  This means the final package will be larger and contain Shared Libraries (DLLs on Windows) instead of one giant monolithic executable.  
+### 没有单片构建
+由于不涉及 C++ 编译器或链接器，也不下载第三方库，因此打包和发布纯脚本模式项目将以通用动态链接游戏启动器的形式发布，而不是最终发布的单体可执行文件。 这意味着最终的软件包会更大，并包含共享库（Windows 上为 DLL），而不是一个巨大的单体可执行文件。
 
-Making such an executable would require a compiler and linker.  You can always switch it to a regular project or even modify the package script to temporarily do so before building it, by automating the modification of `project.json` by your build pipeline as it calls the export script, if you want to still make use of monolithic builds but leave it as a script-only project.
+制作这样的可执行文件需要编译器和链接器。 如果你想继续使用单体构建，但又想将其作为纯脚本项目，那么可以将其切换为常规项目，甚至可以在构建前修改软件包脚本，通过构建管道在调用导出脚本时自动修改 `project.json` 来临时这样做。
 
-### All modules and gems you use must already be compiled
-Because there is no compiler or linker involved, all gems you activate and all other 3rd party content you need to use must be in a form that lets CMake use them without having to compile them (For example, pre-compiled dll files, as opposed to static libraries with headers).  When using the pre-built engine from an installer (or making your own) this is the case for all gems included with the engine.  Some 3rd Party gems downloaded from other websites may only contain source code, or stub of source that is compiled and linked into the game.  These gems will not function in Script-only mode unless the developer of those gems creates and ships special pre-compiled versions of them, perhaps using the pre-built gem [Template](/docs/user-guide/build/templates.md).
+### 您使用的所有模块和 gem 必须已编译过
+由于不涉及编译器或链接器，您激活的所有 gem 和需要使用的所有其他第三方内容都必须以 CMake 可以使用而无需编译的形式存在（例如，预编译的 dll 文件，而不是带头文件的静态库）。 当使用安装程序中的预置引擎（或自己制作）时，引擎中包含的所有 gem 都必须如此。 从其他网站下载的一些第三方Gem可能只包含源代码，或经过编译并链接到游戏中的源代码存根。 这些Gem在纯脚本模式下无法运行，除非这些Gem的开发者创建并发布了特殊的预编译版本，或许可以使用预构建的Gem [模板](/docs/user-guide/build/templates.md)。
 
-## How it works (Technical description)
-When CMake configures O3DE, one of the scripts in the project (`EngineFinder.cmake`) sets a global CMake property `O3DE_SCRIPT_ONLY` to `TRUE`.  This happens before the CMake project command, and thus before CMake auto-selects a compiler.  When this is `TRUE`, the CMake scripts from O3DE which would normally configure compilers, linkers, and other build tools will instead set a null compiler, which is a simple program that always returns success.
+## 工作原理（技术描述）
+当 CMake 配置 O3DE 时，项目中的一个脚本 (`EngineFinder.cmake`)会将 CMake 全局属性 `O3DE_SCRIPT_ONLY` 设置为 `TRUE`。 这发生在 CMake 项目命令之前，也就是 CMake 自动选择编译器之前。 当该属性为`TRUE`时，O3DE 的 CMake 脚本通常会配置编译器、链接器和其他编译工具，但会设置一个 null 编译器，这是一个简单的程序，总是返回成功。
 
-CMake is still invoked just like a 'real' project, but all compiling and linking operations are essentially instantaneous and always succeed (without actually emitting any binaries).  But because all binaries are pre-built in an installer (and the Script-Only project contains no custom binaries), this is enough to build and run the editor and game.
+CMake 仍会像 “真实 ”项目一样被调用，但所有编译和链接操作基本上都是瞬时的，而且总是会成功（实际上不会生成任何二进制文件）。 不过，由于所有二进制文件都预置在安装程序中（纯脚本项目不包含自定义二进制文件），因此这足以构建并运行编辑器和游戏。
 
-Third Party packages are also skipped downloading during CMake configure and instead, the Third Party libraries that would normally be fetched are synthesized just from their shared libraries and other files.  The list of shared libraries and the dynamic linkage information in the dependency tree is gathered when CMake is configuring and building the installer image.  During that process, a script located in `cmake/3rdParty/script-only-mode/PostProcessScriptOnlyMappings.cmake` runs during build time based on information emitted about third party libraries (such as their required extra files or shared libraries) at configure time.  This script essentially generates a CMake file containing fake 'imported' 3rd Party targets to supply the necessary shared libraries and other files that would otherwise come from 3rd Party packages, and points them at their counterparts that ship as part of the installer instead.
+在 CMake 配置过程中，也会跳过第三方软件包的下载，取而代之的是，通常会获取的第三方库将仅从其共享库和其他文件中合成。 CMake 在配置和构建安装镜像时，会收集依赖树中的共享库列表和动态链接信息。 在此过程中，位于 `cmake/3rdParty/script-only-mode/PostProcessScriptOnlyMappings.cmake` 中的脚本会根据配置时发出的第三方库信息（如所需的额外文件或共享库）在构建时运行。 该脚本本质上是生成一个 CMake 文件，其中包含伪造的 “导入 ”第三方目标，以提供必要的共享库和其他文件，否则这些文件将来自第三方软件包，并将其指向作为安装程序一部分的对应文件。
 
-Finally, a 'fake' game launcher for the project is declared to CMake which depends on a pre-built generic game launcher executable.  This generic game launcher is built as part of the install image build, and will read project.json to determine the project name and other information instead of relying on data burned into the binary.
+最后，我们会向 CMake 声明项目的 “假 ”游戏启动器，它依赖于预制的通用游戏启动器可执行文件。 这个通用游戏启动器是作为安装映像构建的一部分构建的，它将读取 project.json 来确定项目名称和其他信息，而不是依赖二进制文件中的数据。
 
-Because the compiler and linker are fake, CMake will not actually compile or link this 'fake' target, but will still consider it to have succeeded, and copy the things it depends on (recursively) to the binaries folder, which is how the generic game launcher and all its dependencies end up in the binaries folder.
+由于编译器和链接器都是假的，CMake 不会实际编译或链接这个 “假 ”目标，但仍会认为它已经成功，并将其依赖的东西（递归）复制到二进制文件文件夹，这就是通用游戏启动器及其所有依赖的东西最终出现在二进制文件文件夹的原因。
 
-This means that developers wishing to support Script-only mode for their modules can do so, but would need to ship with pre-built shared libraries which are exposed as `add_library(name SHARED IMPORTED GLOBAL)` in cmake and list their runtime dependencies in that declaration using normal cmake conventions. 
-  
+这意味着希望为其模块支持纯脚本模式的开发人员可以这样做，但需要在发货时提供预构建的共享库，这些库在 cmake 中以 `add_library(name SHARED IMPORTED GLOBAL)` 的形式公开，并在声明中使用正常的 cmake 约定列出其运行时依赖关系。

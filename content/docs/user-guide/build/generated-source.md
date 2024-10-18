@@ -65,48 +65,48 @@ set(FILES
 您可以通过在项目的 `CMakeLists.txt` 文件中向 `ly_add_target(...)` 命令传递一组 `AUTOGEN_RULES` 来定义自动生成规则。
 
 
-Each element of the set passed to `AUTOGEN_RULES` should follow the `<input>,<template>,<output>` format. Here, `<input>` is the name of the XML or JSON data input file, `<template>` is the name of the Jinja template file, and `<output>` is the name that you want the generated file to have. 
+传给 `AUTOGEN_RULES` 的每个元素都应遵循 `<input>,<template>,<output>` 格式。这里，`<input>` 是 XML 或 JSON 数据输入文件的名称，`<template>` 是 Jinja 模板文件的名称，`<output>` 是希望生成的文件的名称。
 
 {{< important >}}
-Data input files and Jinja template files must be listed in your project's set of files, which is located in a `*_files.cmake` file, inside a `set(FILES...)` command. For organization, we recommend creating a specific `*_autogen_files.cmake` file and placing Jinja template files there. 
+数据输入文件和Jinja模板文件必须列在项目的文件集中，文件集位于`set(FILES...)`命令内的`*_files.cmake`文件中。为便于组织，我们建议创建一个特定的 `*_autogen_files.cmake` 文件，并在其中放置金雅模板文件。
 {{< /important >}}
 
-### Data input files
+### 数据输入文件
 
-A data input filename can refer to one file explicitly or many files that match a pattern.  If you list a filename explicitly, then it must have a proper path that's absolute or relative to the `CMakeLists.txt` file. If a filename contains a pattern, then the expansion finds all data input files that match the filename.
+数据输入文件名可以明确指代一个文件，也可以指代与模式匹配的多个文件。 如果您明确列出一个文件名，那么它必须有一个正确的路径，该路径可以是绝对路径，也可以是相对于 `CMakeLists.txt` 文件的路径。如果文件名包含一个模式，则扩展会找到与文件名匹配的所有数据输入文件。
 
-<!-- TODO: Verify - can explicit filenames be absolute or relative to the CMakeLists.txt file?-->
+<!-- TODO: 验证 - 显式文件名可以是 CMakeLists.txt 文件的绝对文件名还是相对文件名？-->
 
-The input filename supports the following matching operators:
-  * `*` - Sequence of characters any length.
-  * `?` - Single-character sequence.
-  * `[<sequence>]` - Matches any characters in `<sequence>`.
-  * `[!<sequence>]` - Matches any characters _not_ in `<sequence>`.
+输入文件名支持以下匹配运算符：
+  * `*` - 任意长度的字符序列
+  * `?` - 单字符序列
+  * `[<sequence>]` - 匹配`<sequence>`中的任意字符。
+  * `[!<sequence>]` - 匹配**不在**`<sequence>`中的任何字符。
 
-For information about authoring data input files, refer to [Authoring Jinja templates and data inputs](/docs/user-guide/programming/autogen/).
+有关编写数据输入文件的信息，请参阅 [编写 Jinja 模板和数据输入](/docs/user-guide/programming/autogen/)。
 
-### Jinja Templates
+### Jinja 模板
 
-A template filename must be an explicit path to a single `.jinja` file. The path can be absolute or relative to the `CMakeLists.txt` file. 
+模板文件名必须是指向单个 `.jinja` 文件的明确路径。路径可以是绝对路径，也可以是相对于 `CMakeLists.txt` 文件的路径。
 
-For information about authoring Jinja templates, refer to [Authoring Jinja templates and data inputs](/docs/user-guide/programming/autogen/).
+有关编写 Jinja 模板的信息，请参阅 [编写 Jinja 模板和数据输入](/docs/user-guide/programming/autogen/)。
 
 
-### Output files
+### 输出文件
 
-When AzAutoGen feeds data input files into the Jinja2 templates, it generates output files. You must specify the names of the output files you want to generate in the autogen rules. You can use the following *special values* when defining the output filenames:
+当 AzAutoGen 将数据输入文件送入 Jinja2 模板时，它会生成输出文件。您必须在自动生成规则中指定要生成的输出文件名。在定义输出文件名时，可以使用以下**特殊值**：
 
-* `$path`: The path to the final output destination, `${CMAKE_CURRENT_BINARY_DIR}/Azcg/Generated`.
-* `$fileprefix`: The name of the current input file up to the first `.` token. This is equivalent to running the UNIX shell command `basename ${file%%.*}`.
-* `$file`: The full name of the current input file. This is equivalent to running the UNIX shell command `basename $file`.
+* `$path`: 到最终输出目的地的路径，`${CMAKE_CURRENT_BINARY_DIR}/Azcg/Generated`。
+* `$fileprefix`: 当前输入文件的名称，直至第一个 `.` 标记。这相当于运行 UNIX shell 命令 `basename ${file%%.*}`。
+* `$file`: 当前输入文件的全名。这相当于运行 UNIX shell 命令 `basename $file`。
 
 {{< important >}}
-When generating multiple output files, the output name should _always_ begin with `$path`. Otherwise, AzAutoGen may place output files in an incorrect directory.
+生成多个输出文件时，输出名称应**始终**以 `$path`开头。否则，AzAutoGen 可能会将输出文件放到错误的目录中。
 {{< /important >}}
 
-### Example
+### 示例
 
-The following example shows how autogen rules are formatted.
+下面的示例显示了自动生成规则的格式。
 
 ```
 AUTOGEN_RULES
@@ -124,11 +124,11 @@ AUTOGEN_RULES
     *.AutoEnum.xml,AutoEnumRegistry_Header.jinja,$path/AutoEnumRegistry.h
 ```
 
-## Integrating with any target
+## 与任何目标集成
 
-Most of the time, you want to run AzAutoGen by passing autogen rules into `ly_add_target()`, as outlined in the [Integrating with an O3DE target build](#integrating-with-an-o3de-target-build) section earlier. 
-For situations where a target is already defined and AzAutoGen needs to be invoked, use the `ly_add_autogen()` CMake command. This command associates a set of autogen rules, including build outputs, with an existing target. 
-The `ly_add_autogen()` function is defined in [LyAutoGen.cmake](https://github.com/o3de/o3de/blob/development/cmake/LyAutoGen.cmake#L9-L15). It takes the following parameters:
+大多数情况下，您希望通过向 `ly_add_target()` 传递自动生成规则来运行 AzAutoGen，如前面的[与 O3DE 目标构建集成](#integrating-with-an-o3de-target-build) 部分所述。
+如果目标已定义且需要调用 AzAutoGen，请使用 `ly_add_autogen()` CMake 命令。该命令将一组自动生成规则（包括编译输出）与现有目标关联起来。
+`ly_add_autogen()`函数在 [LyAutoGen.cmake](https://github.com/o3de/o3de/blob/development/cmake/LyAutoGen.cmake#L9-L15)中定义。它需要以下参数：
 ```cmake
 ly_add_autogen(
     NAME Name of the target to add the autogen step to
@@ -139,10 +139,10 @@ ly_add_autogen(
 )
 ```
 
-## Related topics
+## 相关主题
 
-| Title | Description |
+| 标题 | 说明 |
 |-|-|
-| [Automate Source Generation from Templates with AzAutoGen](/docs/user-guide/programming/autogen/) | How to generate new types of network packets for O3DE. |
-| [Networking Auto-packets](/docs/user-guide/networking/aznetworking/autopackets/) | How to create new packet types for `AzNetworking` using AzAutoGen. |
-| [Creating Custom Nodes in Script Canvas](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/) | How to create custom nodes in Script Canvas using XML definitions and turn the nodes into code with AzAutoGen. |toGen. |
+| [使用 AzAutoGen 从模板自动生成源代码](/docs/user-guide/programming/autogen/) | 如何为 O3DE 生成新类型的网络数据包。 |
+| [网络自动数据包](/docs/user-guide/networking/aznetworking/autopackets/) | 如何使用 AzAutoGen 为 `AzNetworking` 创建新的数据包类型。 |
+| [创建自定义Script Canvas节点](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/) | 如何使用 XML 定义在 Script Canvas 中创建自定义节点，并使用 AzAutoGen 将节点转化为代码。|AzAutoGen。 |

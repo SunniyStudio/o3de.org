@@ -1,35 +1,35 @@
 ---
-title: "Material Type File Specification"
-description: "Material type files (`*.materialtype`) are in written JSON format."
+title: "材质类型文件规范"
+description: "材质类型文件（`*.materialtype`）是以 JSON 格式编写的。"
 toc: true
 ---
 
-Material type files (`*.materialtype`) are in written JSON format and contain the following elements.
+材质类型文件(`*.materialtype`)采用书面 JSON 格式，包含以下元素。
 
 ## **description**  
-Provides a description or comment from the material type's author.
+提供材质类型作者的描述或评论。
 
 ## **version**  
-Indicates the current version number of the material type. Any materials created with this material type will save this value in their [`materialTypeVersion`](material-file-spec/#materialtypeversion-optional) field.
+表示材质类型的当前版本号。使用此材质类型创建的任何材质都会在其[`materialTypeVersion`](material-file-spec/#materialtypeversion-optional)字段中保存此值。
 
 ## **versionUpdates**  
 
-Provides backward compatibility for `.material` files that reference an older version of this `.materialtype`. This section includes a list of update steps that can update material data from one version to the next. Whenever the author makes a change to the material type that would break existing materials, such as renaming a property, they can increment the `version` number (previously discussed) and provide a new version update description here. Then, any system that loads the old `.material` file can automatically upgrade it to be compatible with the latest material type.
+为引用该 `.materialtype`旧版本的`.material`文件提供向后兼容性。本节包括一个更新步骤列表，可将材质数据从一个版本更新到下一个版本。每当作者对材质类型做出会破坏现有材质的改动（如重命名属性）时，他们可以递增`version`号（前面已讨论过），并在此处提供新版本更新说明。然后，任何加载旧版`.material`文件的系统都可以自动升级，使其与最新的材质类型兼容。
 
-* **toVersion**: Indicates the material type version when these changes were introduced. The update step will be applied to any material with a [`materialTypeVersion`](material-file-spec/#materialtypeversion-optional) number less than this value.
+* **toVersion**: 表示引入这些更改时的材质类型版本。更新步骤将应用于 [`materialTypeVersion`](material-file-spec/#materialtypeversion-optional) 编号小于此值的任何材质。
 
-* **actions**: A list of actions to perform when applying this update. Each action will first have an `op` parameter to indicate what operation to perform. Additional parameters must be specified depending on which operation is used. Available actions and their required parameters are listed as follows:
-
-| op            | Parameter 1 | Description          | Parameter 2 | Description        |
+* **actions**: 应用此更新时要执行的操作列表。每个操作首先会有一个 `op` 参数，用于指示要执行的操作。根据使用的操作，还必须指定其他参数。可用的操作及其所需参数如下：
+1
+| op            | 参数 1 | 说明          | 参数 2 | 说明        |
 |---------------|-------------|----------------------|-------------|--------------------|
-| rename        | from        | old property name    | to          | new property name  |
-| setValue      | name        | property name to set | value       | new property value, must be of the appropriate type for the given property |
+| rename        | from        | 旧的属性名称    | to          | 新的属性名称  |
+| setValue      | name        | 要设置的属性名称 | value       | 新属性值，必须是给定属性的适当类型 |
 
 {{< note >}}
-To upgrade the `.material` source file to match the latest version of the material type, open it in the **Material Editor** and then save it.
+要升级`.material`源文件以匹配最新版本的材质类型，请在**材质编辑器**中打开它，然后保存。
 {{< /note >}}
 
-#### Example
+#### 示例
 
 ```json
     ...
@@ -53,25 +53,25 @@ To upgrade the `.material` source file to match the latest version of the materi
 ```
 
 ## **propertyLayout**
-This section defines the set of properties that will be available in the Material Editor, and what shader inputs or shader options they will connect to. Properties are organized into groups, and each group can contain other groups, forming a hierarchy. The Material Editor's property inspector will organize the properties into group panels accordingly.
+本节定义了 “材质编辑器 ”中可用的属性集，以及它们将连接到哪些着色器输入或着色器选项。属性按组排列，每个组可以包含其他组，形成一个层次结构。材质编辑器的属性检查器会相应地将属性组织到组面板中。
 
-It's common practice to "factor-out" property group definitions into separate JSON files using the `$import` feature. This allows the reuse of groups in multiple `.materialtype` files.
+通常的做法是使用 `$import` 功能将属性组定义 “因子化 ”为单独的 JSON 文件。这样就可以在多个 `.materialtype` 文件中重复使用属性组。
 
-* **propertyGroups**: The top-level list of property groups. Each group contains the following:
-  * **name**: An identifier for this group. The value must be formatted in C-style and be unique among sibling groups. 
-  * **displayName**: The given name of this group that will appear in the Material Editor. 
-  * **description**: The given description of this group that will appear as tooltips in the Material Editor.
-  * **shaderInputsPrefix**: Any shader input names appearing in this group, such as shader constants or shader images, will automatically prepend this value. This is useful when using `$import` to include a shared group definitions in another group.
-  * **shaderOptionsPrefix**: Any shader option names that appear in this group will automatically prepend this value. This is useful when using `$import` to include a shared group definitions in another group.
-  * **properties**: Defines the list of properties that will appear in this group.
-    * **name**: An identifier for this property. The value must be formatted in C-style and be unique among sibling properties. 
-    * **displayName**: The given name of this property that will appear in the Material Editor. 
-    * **description**: The given description of this property that will appear as tooltips in the Material Editor.
-    * **visibility**: The initial visibility for this property. By default, this is `Enabled`. Possible values are:
+* **propertyGroups**: 属性组的顶层列表。每个组包含以下内容：
+  * **name**: 该组的标识符。该值必须采用 C 风格格式，并且在同级组中是唯一的。
+  * **displayName**: 该组的给定名称，将显示在 “材质编辑器 ”中。
+  * **description**: 该组的指定描述，将作为工具提示出现在材质编辑器中。
+  * **shaderInputsPrefix**: 该组中出现的任何着色器输入名称（如着色器常量或着色器图像）都将自动预置此值。这在使用 `$import` 将共享组定义包含在另一个组中时非常有用。
+  * **shaderOptionsPrefix**: 任何出现在该组中的着色器选项名称都会自动预置该值。这在使用 `$import` 将共享组定义包含在另一个组中时非常有用。
+  * **properties**: 定义将出现在该组中的属性列表。
+    * **name**: 该属性的标识符。该值必须采用 C 风格格式，并且在同级属性中是唯一的。
+    * **displayName**: 该属性在材质编辑器中的给定名称。
+    * **description**: 该属性的指定描述，将作为工具提示出现在材质编辑器中。
+    * **visibility**: 该属性的初始可见性。默认为`Enabled`。可能的值有：
       - Enabled
       - Disabled
       - Hidden
-    * **type**: The data type for this propoerty. Supported types include:
+    * **type**: 该属性的数据类型。支持的类型包括：
       - Bool
       - Int
       - UInt
@@ -82,25 +82,25 @@ It's common practice to "factor-out" property group definitions into separate JS
       - Color
       - Image
       - Enum
-    * **enumValues**: A list of names defining the possible values for an `Enum` type property.
-    * **enumIsUv**: If `true`, and `type` is set to `Enum`, this uses the UV names from [`uvNameMap`](#uvnamemap) as the possible enum values.
-    * **defaultValue**: The default value to use for this property. The value must be specified using the appropriate data type according to its standard JSON serialization (see [JSON Serialization of O3DE Data Types](/docs/user-guide/programming/serialization/json-data-types)). If no default is provided, then the default will be `false`, `0`, or empty according to the data type.
-    * **min**: The minimum value of the property that a user can configure using a slider or similar UI widget. May be used in combination with `max`, `softMax`, or neither.
-    * **max**: The maximum value of the property that a user can configure using a slider or similar UI widget. May be used in combination with `min`, `softMin`, or neither. 
-    * **softMin**: The minimum value of the property that a user can configure using a slider or similar UI widget. However, a user can type in a smaller value manually. May be used in combination with `max`, `softMax`, or neither.
-    * **softMax**: The maximum value of the property that a user can configure using a slider or similar UI widget. However, a user can type in a larger value manually. May be used in combination with `min`, `softMin`, or neither. 
-    * **step**: Indicates the size of the increment to use for sliders or similar UI widgets.
-    * **vectorLabels**: Provide a list of labels to use for the elements of a `Vector` type property. By default, the labels are "X", "Y", "Z", "W".
-    * **connection**: Defines connections for passing the property value to a shader. Each connection defines a connection `type`, a `name`, and optionally a `shaderIndex`. The connection is optional, if omitted the property can be connected to shaders by a material functor.
-      * **type**: Which type of connection to make:
-        - ShaderInput - Connect to a shader constant or shader image in the SRG_PerMaterial ShaderResourceGroup.
-        - ShaderOption - Connect to a shader option.
-      * **name**: The name of the shader input or shader option to connect to.
-      * **shaderIndex**: The index of which shader in the [`shaders`](#shaders) list to connect to. By default, it connects to every shader that has an option with this name.
-  * **propertyGroups**: Other property groups can be nested inside this one.
-  * **functors**: List of material functors for custom processing of the properties in this group and sub-groups. All property references, shader input names, and shader option names can assume the local scope of this property group. For example, if this group is called "baseColor" and has a property "textureMap", then the functor can reference the property as simply "texture", and the system will automatically interpret this as "baseColor.texture". Similarly, `shaderInputsPrefix` and `shaderOptionsPrefix` will be applied automatically. For example, if `shaderInputsPrefix` is "baseColor_" and the shader has a texture input called "baseColor_tex", then the functor can reference the texture input as simply "tex", and the system will automatically turn this into "baseColor_tex". For more information about material functors, see the following [`functors`](#functors) section.
+    * **enumValues**: 定义 `Enum` 类型属性可能值的名称列表。
+    * **enumIsUv**: 如果 `true`，且 `type` 设置为 `Enum`，则使用[`uvNameMap`](#uvnamemap)中的 UV 名称作为可能的枚举值。
+    * **defaultValue**: 该属性的默认值。必须根据标准 JSON 序列化（参见 [O3DE 数据类型的 JSON 序列化](/docs/user-guide/programming/serialization/json-data-types)）使用适当的数据类型指定该值。如果没有提供缺省值，那么根据数据类型，缺省值将是 `false`, `0`或空。
+    * **min**: 用户可使用滑块或类似 UI widget 配置的属性最小值。可与 `max`、`softMax` 或两者结合使用。
+    * **max**: 用户可以使用滑块或类似 UI widget 配置的属性的最大值。可与 `min`、`softMin` 或两者结合使用。
+    * **softMin**: 用户可使用滑块或类似 UI widget 配置的属性最小值。不过，用户也可以手动输入一个更小的值。可与 `max`、`softMax` 或两者结合使用。
+    * **softMax**: 用户可使用滑块或类似 UI widget 配置的属性最大值。不过，用户也可以手动输入更大的值。可与 `min`、`softMin` 或两者结合使用。
+    * **step**: 表示滑块或类似 UI widget 使用的增量大小。
+    * **vectorLabels**: 为 `Vector` 类型属性的元素提供标签列表。默认情况下，标签为 “X”、“Y”、“Z”、“W”。
+    * **connection**: 定义将属性值传递给着色器的连接。每个连接都定义了连接的`type`、`name`和可选的`shaderIndex`。连接是可选的，如果省略，则可通过材质函数将属性连接到着色器。
+      * **type**: 进行哪种类型的连接：
+        - ShaderInput - 连接到 SRG_PerMaterial ShaderResourceGroup中的着色器常量或着色器图像。
+        - ShaderOption - 连接到着色器选项。
+      * **name**: 要连接的着色器输入或着色器选项的名称。
+      * **shaderIndex**: 要连接到[`shaders`](#shaders)列表中哪个着色器的索引。默认情况下，它会连接到所有具有此名称选项的着色器。
+  * **propertyGroups**: 其他属性组可以嵌套在这个属性组中。
+  * **functors**: 用于自定义处理该组和子组中属性的材质函数列表。所有属性引用、着色器输入名称和着色器选项名称都以该属性组为本地范围。例如，如果该组名为 “baseColor”（基色），并有一个属性 “textureMap”（纹理图），那么函数可以简单地将该属性引用为 “texture”（纹理），系统会自动将其解释为 “baseColor.texture”（基色.纹理）。同样，“shaderInputsPrefix”（着色器输入前缀）和 `shaderOptionsPrefix`（着色器选项前缀）也会自动应用。例如，如果 `shaderInputsPrefix` 是 “baseColor_”，而着色器有一个名为 “baseColor_tex ”的纹理输入，那么函数可以将纹理输入引用为简单的 “tex”，系统会自动将其转换为 “baseColor_tex”。有关材质函数的更多信息，请参阅下面的 [`functors`](#functors) 部分。
 
-#### Example
+#### 示例
 
 ```json
 ...
@@ -272,32 +272,32 @@ It's common practice to "factor-out" property group definitions into separate JS
 ...
 ```
 
-## **version** (deprecated)
+## **version** (已弃用)
 
-This version number in the `propertyLayout` section is no longer used and has been replaced by the previously shown [`version`](#version) number.
+`propertyLayout`部分中的版本号已不再使用，取而代之的是之前显示的 [`version`](#version) 版本号。
 
-## **groups** (deprecated)
-This is replaced by `propertyGroups` (in [propertyLayout](#propertylayout)), which can support any number of group levels with properties and groups defined in the same place. The engine can still load the old format, however any new material type files should use the new format.
+## **groups** (已弃用)
+`propertyGroups`（[propertyLayout](#propertylayout) 中）所取代，它可以支持在同一位置定义属性和组的任意数量的组级别。引擎仍可加载旧格式，但任何新的材质类型文件都应使用新格式。
 
 {{< note >}}
-An older version of the material type file format organized `propertyLayout` with separate `groups` and `properties` sections. This imposed several limitations, such as restricting property grouping to only one level. This made it difficult to factor out reusable property groups.
+旧版本的材质类型文件格式用独立的`groups` 和properties`部分来组织`propertyLayout`。这就造成了一些限制，例如将属性分组限制为只有一个级别。这样就很难找出可重复使用的属性组。
 {{< /note >}}
 
-## **properties** (deprecated)
-This is replaced by `propertyGroups`. Similar to [**groups (deprecated)**](#groups-deprecated).
+## **properties** (已弃用)
+这已被`propertyGroups`替代。相似的有[**groups (已弃用)**](#groups-deprecated)。
 
 ## **shaders**  
 
-An array of references to shader files (`*.shader`) to be used to render materials of this type. By default, all shaders are enabled, but they can be disabled using [`functors`](#functors).
+用于渲染此类型材质的着色器文件（`*.shader`）的引用数组。默认情况下，所有着色器都已启用，但可以使用 [`functors`](#functors) 关闭它们。
 
-Each shader item includes the following values. 
+每个着色器项目都包含以下值。
 
-* **file**: The path to the shader file. The path must be relative to the asset root or to the material type file.
-* **tag**: A unique name for this shader item that can be used to reference the shader from other places in the material type definition, like in material functors. It must be a C-Style identifier.
-* **options**: Set the initial value for any options in this shader, using a list of key/value pairs.
+* **file**: 着色器文件的路径。该路径必须与资产根目录或材质类型文件相对。
+* **tag**: 该着色器项目的唯一名称，可用于在材质类型定义的其他地方（如材质函数中）引用该着色器。它必须是一个 C 样式标识符。
+* **options**: 使用键/值对列表为该着色器中的任何选项设置初始值。
 
-#### Example
-In this example, we reference the ShadowMap and DepthPass shaders. 
+#### 示例
+在本例中，我们引用了 ShadowMap 和 DepthPass 着色器。
 ```JSON
 "shaders": [
     {
@@ -316,32 +316,32 @@ In this example, we reference the ShadowMap and DepthPass shaders.
 ```
 
 ## **functors**
-An array of material functors. Each one reads material property values, performs some logic or calculations, and sets shader inputs accordingly. These can be defined in Lua or C++. Each functor data contains the following:
+材质函数数组。每个函数都会读取材质属性值，执行一些逻辑或计算，并相应设置着色器输入。这些函数可以用 Lua 或 C++ 来定义。每个函数数据包含以下内容：
 
-* **type**: The name of the functor type. Possible values are:
-    - `Lua` - for custom Lua script functors
-    - The name of a specialized functor type (defined in C++).
-* **args**: An object containing key/value pairs of all the arguments to send to this functor. The arguments vary depending on functor type.
+* **type**: 函数类型的名称。可能的值有:
+    - `Lua` - 用于自定义 Lua 脚本函数
+    - 专用函数类型的名称（在 C++ 中定义）。
+* **args**: 一个对象，包含要发送给该函数的所有参数的键/值对。参数因函数类型而异。
 
-Several core functor types are provided with the engine, listed here. 
+引擎提供了几种核心函数类型，在此一一列举。
 
 {{< note >}}
-Additional functor types can be added by other gems or game projects. Try searching the source code for "RegisterMaterialFunctor" to discover what others might be available.
+其他宝石或游戏项目可以添加更多的函数类型。请尝试搜索 “RegisterMaterialFunctor ”的源代码，以了解可能存在的其他类型。
 {{< /note >}}
 
 ### Lua
 
-This functor type operates using custom Lua scripts. It's the most flexible functor type available, and can be used in almost any situation. However, it has poor performance compared to the other functor types. 
+该函数类型使用自定义 Lua 脚本运行。它是最灵活的函数类型，几乎可用于任何情况。不过，与其他函数类型相比，它的性能较差。
 
-See [Lua Material Functor API](/docs/atom-guide/dev-guide/materials/lua-material-functor-api/) for details about the Lua script itself.
+有关 Lua 脚本本身的详细信息，请参阅 [Lua材质函数 API](/docs/atom-guide/dev-guide/materials/lua-material-functor-api/)  。
 
-Arguments:
-* **file**: The path to a `.lua` file that contains material functor code. The path must be relative to the asset root or to the material type file.
-* **propertyNamePrefix**: Any property names appearing in the functor will automatically prepend this value. Note this is intended only for use with functors defined at the top level of the material type. The functors within property groups will get their prefixes from the property group.
-* **srgNamePrefix**: Any ShaderResourceGroup field names appearing in the functor will automatically prepend this value. Note this is intended only for use with functors defined at the top level of the material type. The functors within property groups will get their prefixes from the property group.
-* **optionsNamePrefix**: Any shader option names appearing in the functor will automatically prepend this value. Note this is intended only for use with functors defined at the top level of the material type. The functors within property groups will get their prefixes from the property group.
+参数：
+* **file**: 包含材质函数代码的 `.lua` 文件的路径。该路径必须相对于资产根目录或材质类型文件。
+* **propertyNamePrefix**: 函数中出现的任何属性名称都将自动预置该值。请注意，这仅适用于在材质类型顶层定义的函数。属性组中的函数将从属性组中获取前缀。
+* **srgNamePrefix**: 函数中出现的任何 ShaderResourceGroup 字段名称都将自动预置此值。请注意，这仅适用于在材质类型顶层定义的函数。属性组中的函数将从属性组中获取前缀。
+* **optionsNamePrefix**: 函数中出现的任何着色器选项名称都将自动预置此值。请注意，这仅适用于在材质类型顶层定义的函数。属性组中的函数将从属性组中获取前缀。
 
-#### Example
+#### 示例
 ```json
     ...
     {
@@ -358,16 +358,16 @@ Arguments:
 
 ### UseTexture
 
-Sets a use-texture *shader option* to false if a use-texture *property* is false, or if an `Image` type property has no image bound.
+如果UseTexture **shader option**  **属性**为 false，或`Image`类型属性没有图像绑定，则将UseTexture **shader option** 设置为 false。
 
-Arguments:
-* **textureProperty**: The name of an `Image` type property.
-* **useTextureProperty**: The name of a `bool` type property. This property is hidden if the texture property is null.
-* **dependentProperties**: (optional) A list of other properties that are irrelevant when no texture is being used. These will be hidden or disabled when the texture is null or unused.
-* **shaderTags**: (optional) If provided, the shader option will be set only on this list of shaders. See **tags** in the [Shaders](#shaders) section.
-* **shaderOption**: The name of the use-texture shader option to set.
+参数:
+* **textureProperty**: `Image`类型属性的名称。
+* **useTextureProperty**: `bool`类型属性的名称。如果纹理属性为空，该属性将被隐藏。
+* **dependentProperties**: (可选）在未使用纹理时无关的其他属性列表。当纹理为空或未使用时，这些属性将被隐藏或禁用。
+* **shaderTags**: (可选）如果提供，着色器选项将只在此着色器列表中设置。请参阅 [Shaders](#shaders) 部分中的 **tags** 。
+* **shaderOption**: 要设置的使用纹理着色器选项的名称。
 
-#### Example
+#### 示例
 ```json
     ...
     {
@@ -384,21 +384,21 @@ Arguments:
 
 ### Transform2D
 
-Reads user-friendly properties, like rotation and scale, and converts them to a 2D transform matrix for the shader to consume.
+读取用户友好的属性（如旋转和缩放），并将其转换为二维变换矩阵供着色器使用。
 
-Arguments:
-* **transformOrder**: An array of strings that indicate the order in which rotate, translate, and scale should be performed. It is recommend to always use `[ "Rotate", "Translate", "Scale" ]`.
-* **centerProperty**: The name of a `Vector2` type property. Defines the center of rotation and scale.
-* **scaleProperty**: The name of a `float` type property. Controls the overall scale of the transformation.
-* **scaleXProperty**: The name of a `float` type property. Controls the X-scale.
-* **scaleYProperty**: The name of a `float` type property. Controls the Y-scale.
-* **translateXProperty**: The name of a `float` type property. Controls the X-translation.
-* **translateYProperty**: The name of a `float` type property. Controls the Y-translation.
-* **rotateDegreesProperty**: The name of a `float` type property. Controls the amount of rotation in degrees.
-* **float3x3ShaderInput**: The name of a `float3x3` shader constant for the final transform matrix.
-* **float3x3InverseShaderInput**: (optional) The name of a `float3x3` shader constant for an inverse of the final transform matrix. Some shaders may require this; for example, ones that use a parallax mapping effect.
+参数:
+* **transformOrder**: 表示旋转、平移和缩放顺序的字符串数组。建议始终使用 `[ "Rotate", "Translate", "Scale" ]`。
+* **centerProperty**: `Vector2` 类型属性的名称。定义旋转和缩放的中心。
+* **scaleProperty**: `float`属性的名称。控制变换的整体比例。
+* **scaleXProperty**: `float`属性的名称。控制 X 比例。
+* **scaleYProperty**: `float`属性的名称。控制 Y 比例。
+* **translateXProperty**:`float`属性的名称。控制 X 平移。
+* **translateYProperty**: `float`属性的名称。控制 Y 平移。
+* **rotateDegreesProperty**: `float`属性的名称。控制旋转的度数。
+* **float3x3ShaderInput**: 用于最终变换矩阵的 `float3x3` 着色器常量的名称。
+* **float3x3InverseShaderInput**: (可选）用于最终变换矩阵逆变换的 `float3x3` 着色器常量的名称。某些着色器可能需要此常量，例如使用视差映射效果的着色器。
 
-#### Example
+#### 示例
 ```json
     {
         "type": "Transform2D",
@@ -419,18 +419,18 @@ Arguments:
 
 ### ConvertEmissiveUnit
 
-This is a specialized functor for a standardized set of emissive lighting properties. It allows an enum property to select a light instensity unit (either nits or EV100) and converts a light intensity property's value accordingly.
+这是一个专门的函数，用于一组标准化的发射照明属性。它允许枚举属性选择光强度单位（尼特或 EV100），并相应地转换光强度属性的值。
 
-Arguments:
-* **intensityProperty**: The name of a `float` type property. Specifies the intensity of the emissive light.
-* **lightUnitProperty**: The name of a `Enum` type property. Indicates the units for the intesity value.
-* **shaderInput**: The name of a `float` shader constant that will receive the final intensity value. This is assumed to be in nits.
-* **ev100Index**: An integer value that corresponds to the enum value for EV100, according to the definition of the `lightUnitProperty`.
-* **nitIndex**: An integer value that corresponds to the enum value for nits, according to the definition of the `lightUnitProperty`.
-* **ev100MinMax**: An array of two floats, indicating the min and max intensity value when operating in _EV100_ mode.
-* **nitMinMax**: An array of two floats, indicating the min and max intensity value when operating in _nits_ mode.
+参数:
+* **intensityProperty**: `float` 属性的名称。指定发射光的强度。
+* **lightUnitProperty**: `Enum` 类型属性的名称。表示无量纲值的单位。
+* **shaderInput**: 将接收最终强度值的 `float` 着色器常量的名称。假定单位为尼特。
+* **ev100Index**: 根据 `lightUnitProperty` 的定义，与 EV100 的枚举值相对应的整数值。
+* **nitIndex**: 根据 `lightUnitProperty` 的定义，与 nits 的枚举值相对应的整数值。
+* **ev100MinMax**: 由两个浮点数组成的数组，表示在 _EV100_ 模式下运行时的最小和最大强度值。
+* **nitMinMax**: 由两个浮点数组成的数组，表示在 _nits_ 模式下运行时的最小和最大强度值。
 
-#### Example
+#### 示例
 ```json
     {
         "type": "ConvertEmissiveUnit",
@@ -447,9 +447,9 @@ Arguments:
 ```
 
 ### HandleSubsurfaceScatteringParameters
-This is a specialized functor for a standardized set of properties for controlling subsurface scattering and light transmission features. See [`Skin.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/Skin.materialtype) for an example of its usage.
+这是一个专门的函数，用于控制表层下散射和透光特性的标准化属性集。请参阅 [`Skin.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/Skin.materialtype) ，了解其用法示例。
 
-#### Example
+#### 示例
 ```json
     {
         "type": "HandleSubsurfaceScatteringParameters",
@@ -474,19 +474,19 @@ This is a specialized functor for a standardized set of properties for controlli
     },
 ```
 
-### OverrideDrawList (deprecated)
-Replaced by the use of a Lua functor with the `SetDrawListTagOverride` function. 
+### OverrideDrawList (已弃用)
+由使用 Lua 函数的`SetDrawListTagOverride`函数取代。
 
 {{< note >}}
-Before the Lua functor type was available, this functor was used to override a shader's draw list name. 
+在使用 Lua 函数类型之前，该函数用于覆盖着色器的绘制列表名称。
 {{< /note >}}
 
 ## **uvNameMap**
-This maps default identifiers to mesh UV streams. When loading meshes, the runtime tries to match UV streams from the incoming geometry using these names. 
+这将默认标识符映射到网格 UV 流。加载网格时，运行时会尝试使用这些名称匹配输入几何体的 UV 流。
 
-For each entry, the key must match the semantic used for a `float2` vertex input. The value should be a user-friendly name that is consistent with the intended purpose of the stream, and consistent with the names of similar streams in other material types. By default, all core material types in O3DE use the names _Tiled_ and _Unwrapped_. Tiled means that tiling is expected, so overlapping hulls is acceptable. Unwrapped means that this is used for lightmaps and similar, so hulls should not overlap in the UV space.
+对于每个条目，键必须与用于 `float2` 顶点输入的语义相匹配。值应该是一个用户友好的名称，与流的预期目的一致，并与其他材质类型中类似流的名称一致。默认情况下，O3DE 中的所有核心材质类型都使用 _Tiled_ 和 _Unwrapped_ 这两个名称。Tiled 表示平铺，因此可以接受重叠的船体。Unwrapped（无包裹）表示用于光贴图和类似用途，因此在 UV 空间中不应该重叠船体。
 
-#### Example
+#### 示例
 ```json
     "uvNameMap": {
         "UV0": "Tiled",

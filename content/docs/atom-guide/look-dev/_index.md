@@ -1,17 +1,17 @@
 ---
-linktitle: Look Development
-title: "Look Development"
-description: "Learn about the different tools in the Atom Renderer for look development."
+linktitle: 视觉开发
+title: "视觉开发"
+description: "了解 Atom 渲染器中用于视觉开发的不同工具。"
 toc: true
 weight: 500
 ---
 
-This section contains the information about creative tools and concepts for look development using the Atom Renderer. 
-
-| Topic                        | Description |
+本节包含有关使用 Atom 渲染器进行视觉开发的创意工具和概念的信息。
+1
+| 主题                        | 说明 |
 |--------------------------------------|---------|
-| [Materials](materials/) | Learn about the Atom material system and PBR materials. |
-| [Shading](shaders/) | Learn about shading in Atom. |
-| [Color Management](color-management/) | Learn about the color space conversion workflow used in Atom. |
-| [Tools](tools/) | Learn about Atom tools like Material Editor, Material Canvas, and Shader Management Console. |
-| [Tutorials](/docs/learning-guide/tutorials/rendering/) | A collection of tutorials about rendering and look development in O3DE, located in the Learning Guide. |
+| [材质](materials/) | 了解 Atom 材质系统和 PBR 材质。 |
+| [着色](shaders/) | 了解 Atom 中的着色处理。 |
+| [颜色管理](color-management/) | 了解 Atom 中使用的颜色空间转换工作流程。 |
+| [工具](tools/) | 了解材质编辑器、Material Canvas和着色器管理控制台等 Atom 工具。 |
+| [教程](/docs/learning-guide/tutorials/rendering/) | 有关 O3DE 渲染和视觉开发的教程集，位于《学习指南》中。 |

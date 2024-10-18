@@ -1,7 +1,7 @@
 ---
-linktitle: Color Management
-title: "Color Management"
-description: "Learn about the color space conversion workflow used in the Atom Renderer."
+linktitle: 颜色管理
+title: "颜色管理"
+description: "了解 Atom 渲染器中使用的颜色空间转换工作流程。"
 toc: true
 weight: 500
 ---

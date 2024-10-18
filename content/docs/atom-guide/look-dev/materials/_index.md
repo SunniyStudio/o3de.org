@@ -1,18 +1,18 @@
 ---
-title: "Materials"
-description: "Learn about the material system and PBR materials in the Atom Renderer."
+title: "材质"
+description: "了解 Atom 渲染器中的材质系统和 PBR 材质。"
 toc: true
 weight: 200
----  
+---
 
-This section is a high-level guide for working with materials in Atom. 
+本节是在 Atom 中使用材质的高级指南。
 
-For more technical details, see [Atom Developer Guide - Material System](/docs/atom-guide/dev-guide/materials/).
+有关更多技术细节，请参阅 [Atom 开发人员指南 - 材质系统](/docs/atom-guide/dev-guide/materials/)。
 
-| Topic                        | Description |
+| 主题                        | 说明 |
 |--------------------------------------|---------|
-| [Material System Overview](material-system/) | An overview of the material system. |
-| [PBR Materials](pbr/) | The basic concepts of physically based rendering and how it applies to Atom's PBR shading model. |
-| [Material File Specification](material-file-spec/) | JSON reference for material data. |
-| [Material Type File Specification](material-type-file-spec/) | JSON reference for material type data. |
+| [材质系统概述](material-system/) | 材质系统概述。 |
+| [PBR 材质](pbr/) | 基于物理的渲染的基本概念及其如何应用于 Atom 的 PBR 着色模型。 |
+| [材质文件规范](material-file-spec/) | 材质数据的 JSON 参考。 |
+| [材质类型文件规范](material-type-file-spec/) | 材质类型数据的 JSON 引用。 |
 

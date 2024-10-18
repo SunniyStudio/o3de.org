@@ -1,83 +1,84 @@
 ---
-linktitle: PBR Materials
-title: "Physically Based Rendering in Materials"
-description: "Learn about physically based rendering and how it applies to materials in Atom."
+linktitle: PBR 材质
+title: "基于物理的材质渲染"
+description: "了解基于物理的渲染及其如何应用于 Atom 中的材质。"
 toc: true
 weight: 200
----  
+---
 
-*Physically based rendering (PBR)* is rendering in a photorealistic way by simulating the physics of real-world lighting models. The following sections describe how the concepts of PBR rendering are represented in Atom's core material types.
+**基于物理的渲染（Physically based rendering，PBR）** 是通过模拟真实世界照明模型的物理特性，以逼真的方式进行渲染。下文将介绍如何在 Atom 的核心材质类型中体现 PBR 渲染的概念。
 
 {{< todo issue="https://github.com/o3de/o3de.org/issues/688" >}}
 {{< /todo >}}
 
-## Core PBR Material Types
+## 核心PBR材质类型
 
-The following core material types are included in Atom: 
+Atom 中包含以下核心材料类型：
 
 - **StandardPBR**  
-    A full-featured PBR material type that provides as much functionality as possible with a limited number of render targets. 
+  一种全功能的 PBR 材质类型，可通过有限的渲染目标提供尽可能多的功能。
     
-    This file is located in [`Gems/Atom/Feature/Common/Assets/Materials/Types/StandardPBR.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/StandardPBR.materialtype).
+    此文件位于[`Gems/Atom/Feature/Common/Assets/Materials/Types/StandardPBR.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/StandardPBR.materialtype)。
 
 - **EnhancedPBR**  
-    An enhanced version of StandardPBR that includes additional features, but comes at a higher performance cost. It supports more advanced features that require additional render targets (g-buffers). 
+  StandardPBR 的增强版本，包含更多功能，但性能代价更高。它支持需要额外渲染目标（g 缓冲区）的更高级功能。
 
-    This file is located in [`Gems/Atom/Feature/Common/Assets/Materials/Types/EnhancedPBR.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/EnhancedPBR.materialtype). 
+  此文件位于[`Gems/Atom/Feature/Common/Assets/Materials/Types/EnhancedPBR.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/EnhancedPBR.materialtype)。 
 
 - **BasePBR**  
-    A simplified alternative to StandardPBR that is limited to only the most common PBR features such as *base color*, *metallic*, *roughness*, and *normal*. This is especially helpful for testing and debugging, because it eliminates some features from StandardPBR that add considerable complexity.
+  StandardPBR 的简化替代方案，仅限于最常见的 PBR 功能，如*base color*, *metallic*, *roughness*, 和 *normal*。这对测试和调试特别有帮助，因为它消除了 StandardPBR 中一些增加复杂性的功能。
 
-    This file is located in [`Gems/Atom/Feature/Common/Assets/Materials/Types/BasePBR.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/BasePBR.materialtype). 
+  此文件位于[`Gems/Atom/Feature/Common/Assets/Materials/Types/BasePBR.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/BasePBR.materialtype). 
     
 - **StandardMultilayerPBR**  
-    Combines up to three layers of StandardPBR, blended together. This is especially useful for breaking up repeated patterns on large surfaces.
+  最多可将三层 StandardPBR 混合在一起。这对于分解大面积表面上的重复图案特别有用。
 
-    This file is located in [`Gems/Atom/Feature/Common/Assets/Materials/Types/StandardMultilayerPBR.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/StandardMultilayerPBR.materialtype). 
-    
-More types are available or may be added beyond those listed above, especially for specialized use cases like skin and eyes. To find the full list of available material types check the [`Gems/Atom/Feature/Common/Assets/Materials/Types`](https://github.com/o3de/o3de/tree/development/Gems/Atom/Feature/Common/Assets/Materials/Types) folder.
+  此文件位于[`Gems/Atom/Feature/Common/Assets/Materials/Types/StandardMultilayerPBR.materialtype`](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/Materials/Types/StandardMultilayerPBR.materialtype). 
 
-## PBR Shading Model
+除上述类型外，我们还提供或可能添加更多类型，尤其是针对皮肤和眼睛等特殊用途的类型。要查找可用材料类型的完整列表，请查看[`Gems/Atom/Feature/Common/Assets/Materials/Types`](https://github.com/o3de/o3de/tree/development/Gems/Atom/Feature/Common/Assets/Materials/Types) 文件夹。
 
-The PBR shading model is composed of properties that describe how a material interacts in the physical world. At the basic level, the PBR shading model requires the following properties: *base color*, *metallic*, *roughness*, and *specular reflectivity*. These properties are enough to define materials such as wood, metal, concrete, and other raw materials. However, materials can become much more complex with properties such as *clear coat*, *subsurface scattering*, and more. For example, varnished wood is made from a basic wood material type with an additional clear coat layer on top.  
+## PBR 着色模型
 
-The following list of properties are used to define PBR materials in Atom. An overview of which properties are included in which material type is shown in the [Properties in PBR Material Types](#properties-in-material-types) table. 
+PBR 着色模型由描述材料在物理世界中如何相互作用的属性组成。在基本层面上，PBR 着色模型需要以下属性： **base color**, **metallic**, **roughness**, 和 **specular reflectivity**。这些属性足以定义木材、金属、混凝土和其他原材料等材料。然而，材料的属性会变得复杂得多，如**clear coat**, **subsurface scattering**等等。例如，上过清漆的木材是由一种基本的木质材料制成的，上面还有一层透明涂层。
 
-| Property | Definition |
+以下属性列表用于在 Atom 中定义 PBR 材质。[PBR 材质类型中的属性](#properties-in-material-types) 表格中列出了哪些属性包含在哪种材质类型中。
+1
+| 属性 | 定义 |
 | - | - |
-| [Base Color](#base-color) | The surface reflected color for non-metals (dielectrics) or reflectance values for metals (conductors). |
-| [Metallic](#metallic) | Whether the surface appears metallic or not. |
-| [Roughness](#roughness) | Apparent smoothness or roughness of a surface. |
-| [Specular Reflectance f0](#specular-reflectance-f0) | Apparent reflectance of non-metal surfaces. The constant f0 represents the specular reflectance at normal incidence (Fresnel 0 angle). |
-| Emissive | A mechanism to simulate light emitting from the surface. |
-| Occlusion | Describes how much ambient light affects a point on a surface using baked AO and Cavity texture maps. |
-| Opacity | Transparency levels of a surface. |
-| Normal | A texture mapping technique that simulates bumpiness on a surface. Similar to bump maps. |
-| UVs | Texture coordinates that describe how a texture maps to a surface. |
-| Clear Coat | A thin translucent layer on top of the surface. |
-| Detail Layer | Additional base color and normal texture maps that mix with the main surface to provide small-scale details. |
-| Subsurface Scattering | A mechanism that simulates how light that penetrates translucent surfaces is scattered and absorbed before exiting the surface at a different location. |
-| Irradiance | Describes how a surface interacts with the global illumination (GI) system's diffuse lighting environment. It does not affect the appearance of the material itself. |
-| Displacement/Parallax | Uses a displacement map to describes bumps or offsets in the surface. Various techniques such as parallax occlusion mapping use this information to give the appearance of depth to the surface. |
-| Anisotropic Response | Controls direction-dependent lighting, making reflections appear elongated across tiny grooves in the surface. |
+| [Base Color](#base-color) | 非金属（电介质）的表面反射颜色或金属（导体）的反射率值。 |
+| [Metallic](#metallic) | 表面是否呈现金属光泽。 |
+| [Roughness](#roughness) | 表面的表面光滑度或粗糙度。 |
+| [Specular Reflectance f0](#specular-reflectance-f0) | 非金属表面的表面反射率。常数 f0 表示正常入射角（菲涅尔 0 角）下的镜面反射率。 |
+| Emissive | 模拟从表面发射光线的机制。 |
+| Occlusion | 使用烘焙 AO 和空腔纹理贴图描述环境光对表面上某一点的影响程度。 |
+| Opacity | 表面的透明度。 |
+| Normal | 一种模拟表面凹凸的纹理贴图技术。与凹凸贴图类似。 |
+| UVs | 描述纹理如何映射到表面的纹理坐标。 |
+| Clear Coat | 表面有一层半透明的薄层。 |
+| Detail Layer | 与主表面混合的附加基色和法线纹理贴图，可提供小尺度细节。 |
+| Subsurface Scattering | 一种模拟光线穿透半透明表面后在不同位置被散射和吸收的机制。 |
+| Irradiance | 描述表面如何与全局照明（GI）系统的漫反射照明环境互动。它不会影响材质本身的外观。 |
+| Displacement/Parallax | 使用位移贴图来描述表面的凹凸或偏移。视差闭塞映射等各种技术都会使用这些信息来呈现表面的深度。 |
+| Anisotropic Response | 控制光照方向，使表面微小凹槽中的反射拉长。 |
 
 ### Base Color
 
-The **base color** defines the diffuse albedo for non-metals, and the specular color for metals. 
+ color for metals.
+**base color**定义了非金属的漫反射和金属的镜面反射颜色。
 
-When configuring the **Base Color** property group in a PBR material type, you can set a linear sRGB color in the `Color` property. This color can be combined with a texture by assigning an image to the `Texture Map` property. The `Texture Blend Mode` dictates how the `Color` and `Texture Map` are combined. And the `Factor` value can be used to adjust the strength of the blend. Colors are stored as linear sRGB on disk and later converted to ACEScg before passing to the shaders and the GPU<!-- (for more information, see [Color Management](/docs/atom-guide/look-dev/color-management))DRAFT TOPIC-->. 
+在 PBR 材质类型中配置**Base Color**属性组时，可以在`Color`属性中设置线性 sRGB 颜色。通过在 `Texture Map`属性中指定图像，可以将该颜色与纹理相结合。`Texture Blend Mode`决定了`Color` 和 `Texture Map`的组合方式。`Factor` 值可用于调整混合强度。颜色以线性 sRGB 格式存储在磁盘上，随后转换为 ACEScg 格式，再传递给着色器和 GPU<!-- (for more information, see [Color Management](/docs/atom-guide/look-dev/color-management))DRAFT TOPIC-->. 
 
 ### Metallic 
 
-The **Metallic** properties determine whether a material behaves as a dielectric (non-metal) surface, or as a conductor (metal) surface. The metallic value is usually either a completely metal (1) or completely non-metal (0), though in between values will occur when transitioning between the two using a texture map. 
+**Metallic** 属性决定了材料是作为电介质（非金属）表面，还是作为导体（金属）表面。金属值通常为完全金属（1）或完全非金属（0），但在使用纹理贴图在两者之间转换时，会出现介于两者之间的值。
 
-When configuring the **Metallic** property group in a PBR material type, the metallic value is defined using the `Factor` property for uniform surfaces. For surfaces with varying levels of metalness, you can assign an image in the `Texture Map` property to indicate values between 0 and 1 per pixel. 
+在 PBR 材质类型中配置**Metallic**属性组时，对于均匀的表面，金属值是通过`Factor`属性定义的。对于具有不同金属度的表面，可以在 `Texture Map`属性中指定一个图像，表示每个像素的值在 0 到 1 之间。
 
 ### Roughness
 
-The **Roughness** properties determine the roughness or glossiness of a surface. The rougher a surface is, the more blurred its reflections appear to be. 
+**Roughness** 属性决定了表面的粗糙度或光泽度。表面越粗糙，反射就越模糊。
 
-When configuring the **Roughness** property group of a PBR material, the `Factor` property defines how rough (factor = 1) or smooth (factor = 0) a material is, for uniform surfaces. For surfaces with varying levels of roughness, you can assign an image in the `Texture Map` property to indicate roughness values per pixel. You can adjust how the values of the texture map translate to roughness level using the `Upper Bound` and `Lower Bound` properties. 
+在配置 PBR 材质的**Roughness**属性组时，`Factor`属性定义了统一表面的粗糙度（因子 = 1）或光滑度（因子 = 0）。对于粗糙度不同的表面，您可以在`Texture Map`属性中指定一个图像来表示每个像素的粗糙度值。您可以使用`Upper Bound` and `Lower Bound` ”属性调整纹理贴图的值如何转换为粗糙度级别。
 
 ### Specular Reflectance f0
 

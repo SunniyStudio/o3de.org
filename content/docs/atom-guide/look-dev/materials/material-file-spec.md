@@ -1,43 +1,42 @@
 ---
-title: "Material File Specification"
-description: "Material files (`*.material`) are written in JSON format and contain the following elements."
+title: "材质文件规范"
+description: "材质文件（`*.material`）以 JSON 格式编写，包含以下元素。"
 toc: true
 ---
 
 ## Elements
 
-Material files (`*.material`) are written in JSON format and contain the following elements.
+材质文件（`*.material`）以 JSON 格式编写，包含以下元素。
 
-### **description** (*optional*)  
-Provides a description or comment from the material's author.
+### **description** (**可选**)  
+提供材质作者的说明或评论。
 
 ### **materialType**
-The path to the material type. Materials must reference a material type, which provides the list of available properties and the shaders to use for rendering. The path must be relative to the asset root or to the material file.
+材质类型的路径。材质必须引用材质类型，该类型提供了可用属性列表和渲染时使用的着色器。该路径必须与资产根目录或材质文件相对。
 
-### **materialTypeVersion** (*optional*)  
+### **materialTypeVersion** (**可选**)  
 
-Indicates the version number of the material type that was used to create this material. The material type version update feature can use this to support backward compatibility with older versions of the material type. See [`version`](material-type-file-spec/#version) and [`versionUpdates`](material-type-file-spec/#versionupdates) in the Material Type File Specification.
+表示用于创建此材质的材质类型的版本号。材质类型版本更新功能可以使用它来支持与材质类型旧版本的向后兼容性。请参阅材质类型文件规范中的 [`版本`](material-type-file-spec/#version) 和 [`版本更新`](material-type-file-spec/#versionupdates) 。
 
-
-### **parentMaterial** (*optional*)  
-The path to the parent material file. If specified, the material inherits the properties of another parent material. The parent material must have the same material type as the material. The path must be relative to the asset root or to the material file. If not specified, the material inherits default values directly from the material type.
+### **parentMaterial** (**可选**)  
+父材质文件的路径。如果指定，该材质将继承另一个父材质的属性。父材质必须与该材质具有相同的材质类型。路径必须是资产根目录或材质文件的相对路径。如果未指定，材质将直接继承材质类型的默认值。
 
 ### **propertyValues**
 
-Lists the names and values to set for material properties. Any properties that aren't specified here will inherit the value from the parent material if available or from the material type's default value. The JSON data type used for the values should match the property's data type as specified in the `.materialtype` file. However, some data type conversion is supported; for example, "1" can be used to set a float property to "1.0".
+列出材质属性的名称和设置值。此处未指定的任何属性都将继承父材质的值，如果有的话，或者继承材质类型的默认值。值所使用的 JSON 数据类型应与`.materialtype`文件中指定的属性数据类型相匹配。不过，也支持一些数据类型转换；例如，“1 ”可用于将浮点属性设置为 “1.0”。
 
-Image properties must have a path to the source image file. The path must be relative to the asset root or to the material file.
+图像属性必须包含源图像文件的路径。该路径必须是资产根目录或材质文件的相对路径。
 
-Enum properties must use one of the available enum values as specified by the property definition in the `.materialtype` file.
+枚举属性必须使用由`.materialtype`文件中的属性定义所指定的可用枚举值之一。
 
-All other property types must be specified according to their standard JSON serialization. See [JSON Serialization of O3DE Data Types](/docs/user-guide/programming/serialization/json-data-types).
+所有其他属性类型必须根据其标准 JSON 序列化来指定。参见 [O3DE 数据类型的 JSON 序列化](/docs/user-guide/programming/serialization/json-data-types)。
 
-The following example demonstrates how to set a property of each possible data type.
+下面的示例演示了如何为每种可能的数据类型设置属性。
 
-### **properties** (deprecated)
-An older version of the material file format organized properties by group in nested JSON objects. This is replaced by `propertyValues` (shown previously), which uses a flat list of property identifiers. The engine can still load the old format, but new material files must use the new format.
+### **properties** (已弃用)
+旧版本的材质文件格式是按嵌套 JSON 对象中的组来组织属性的。现在这种格式已被 `propertyValues`（如前所述）所取代，后者使用的是属性标识符的平面列表。引擎仍可加载旧格式，但新材质文件必须使用新格式。
 
-## Example
+## 示例
 
 ```json
 {

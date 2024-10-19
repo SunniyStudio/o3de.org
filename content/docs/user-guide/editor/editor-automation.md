@@ -1,37 +1,37 @@
 ---
-linkTitle: Automating Editor
-title: Automating the O3DE Editor with the Python Editor Bindings Gem
-description: Use the features of the Python Editor Bindings Gem to automate actions and tasks inside of the O3DE Editor.
+linkTitle: 自动化编辑器
+title: 使用Python Editor Bindings Gem自动化编辑器
+description: 使用 Python Editor Bindings Gem 的功能，在 O3DE 编辑器内自动执行操作和任务。
 weight: 600
 ---
 
- Some tasks in the O3DE Editor are tedious or could easily be automated, and to support that, O3DE has support for scripting the editor through Python bindings to the underlying editor implementation. These bindings are enabled with the **PythonEditorBindings** gem, and interacted with through a Python 3 library embedded within the editor. You can access a Python REPL through an in-editor console, or launch the editor with an argument that loads and runs a Python script on boot.
+O3DE 编辑器中的某些任务比较繁琐，或者很容易实现自动化，为了支持这些任务，O3DE 支持通过 Python 绑定底层编辑器实现编辑器脚本。这些绑定通过**PythonEditorBindings** gem启用，并通过嵌入在编辑器中的Python 3库进行交互。你可以通过编辑器内的控制台访问 Python REPL，或在启动编辑器时使用加载和运行 Python 脚本的参数。
 
-## Enable editor automation 
+## 启用编辑器自动化
 
- Editor automation is enabled by selecting the **PythonEditorBindings** gem for your project, and then rebuilding the editor. No specific configuration (debug, profile, release) is required to enable the Python bindings. Because the bindings are enabled through a gem that you select for your project, you'll need to make sure that this gem is enabled for *all* projects that you intend to use automation with.
+为项目选择**PythonEditorBindings** gem，然后重建编辑器，即可启用编辑器自动化。启用 Python 绑定不需要特定的配置（调试、配置文件、发布）。由于绑定是通过您为项目选择的 gem 启用的，因此您需要确保您打算使用自动化的**个项目都启用了该 gem。
 
-## Use editor automation 
+## 使用编辑器自动化
 
- The easiest way to get started with editor automation is to use the REPL that's available from within the O3DE Editor and try out some commands. Open this REPL by selecting **Tools** > **Other** > **Python Console**. The Python console opens in a new editor view, which gives you access to a console that displays output from Python, the REPL input, and a full reference of available commands. To get access to the reference, select the **?** icon in the lower-right corner of the console.
+开始使用编辑器自动化的最简单方法是使用 O3DE 编辑器中的 REPL，并尝试使用一些命令。选择 **Tools** > **Other** > **Python Console**，打开 REPL。Python 控制台会在新的编辑器视图中打开，您可以访问显示 Python 输出、REPL 输入和可用命令完整参考的控制台。要访问参考，请选择控制台右下角的 **?**
 
- You can also access a set of available scripts, including some samples for common tasks in the editor, by selecting **Tools** > **Other** > **Python Scripts**. These scripts are stored in a directory depending on their scope. Scripts only for your project are stored in the `Editor\Scripts` directory, and scripts meant to be used along with a gem are stored at `Gems\<name>\Editor\Scripts`.
+您还可以通过选择**Tools** > **Other** > **Python Scripts**，访问一组可用的脚本，包括编辑器中常见任务的一些示例。这些脚本存储在不同的目录中，具体取决于其范围。仅用于你的项目的脚本存储在 `Editor\Scripts`目录下，而与 gem 一起使用的脚本存储在`Gems\<name>\Editor\Scripts`目录下。
 
- Editor automation is driven primarily through the event bus (EBus) system. Before working with the editor bindings, you should become familiar with the basics of EBus from [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/). To learn about some of the specific buses used by the editor automation system, take a look at the [Python Editor Bindings Gem examples](#python-editor-bindings-gem-examples).
+编辑器自动化主要通过事件总线（EBus）系统驱动。在使用编辑器绑定之前，你应该熟悉 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)中的 EBus 基础知识。要了解编辑器自动化系统使用的一些特定总线，请参阅 [Python 编辑器绑定 Gem 示例](#python-editor-bindings-gem-examples)。
 
-## Python Editor Bindings Gem Examples
+## Python Editor Bindings Gem 示例
 
- The Python Editor Bindings Gem provides an API that defines a connection to the Editor's C++ implementation, using the O3DE event bus (Ebus) to send messages between Python scripts and the Editor. This reference covers the use of the bindings API to perform tasks like interacting with components, entities, and properties.
+Python Editor Bindings Gem 提供了一个 API，它定义了与编辑器 C++ 实现的连接，使用 O3DE 事件总线 (Ebus) 在 Python 脚本和编辑器之间发送消息。本参考资料涵盖了绑定 API 的使用，以执行与组件、实体和属性交互等任务。
  
- ## Level management
- 
- Use these functions to load, create, and save levels. In order to use other binding APIs, a level needs to be loaded in O3DE Editor.
+ ## 关卡管理
+
+使用这些函数加载、创建和保存关卡。要使用其他绑定 API，需要在 O3DE 编辑器中加载关卡。
  
  ```python
- # opens a level with a user prompt
+ # 用用户提示打开关卡
  azlmbr.legacy.general.open_level(strLevelName)
  
- # opens a level without prompting the user (better for automation)
+ # 在不提示用户的情况下打开关卡（更适合自动化操作）
  azlmbr.legacy.general.open_level_no_prompt(strLevelName)
  
  # creates a level with the parameters of 'levelName', 'resolution', 'unitSize' and 'bUseTerrain'
@@ -44,9 +44,9 @@ weight: 600
  azlmbr.legacy.general.save_level()
  ```
  
- ## Editor timing
- 
- Occasionally a script will need to introduce a delay in actions to be performed in the Editor while another action completes, such as loading a level. Rather than use the built-in Python delay methods, use these Editor binding APIs.
+ ## 编辑器定时
+
+有时，脚本需要在编辑器中执行另一个操作（如加载关卡）时引入延迟。与其使用内置的 Python 延迟方法，不如使用这些编辑器绑定 API。
  
  ```python
  # enables/disables idle processing for the Editor
@@ -59,13 +59,13 @@ weight: 600
  azlmbr.legacy.general.idle_wait(floatSeconds)
  ```
  
- ## Entitites
- 
- The API enables you to add and remove entities to the root entity of a level, retrieve and compare entity IDs, and search for entities.
+ ## 实体
+
+该应用程序接口可让您在一个层的根实体中添加和删除实体、检索和比较实体 ID 以及搜索实体。
  
  ### Entity IDs
- 
- Use the `azlmbr.entity.EntityId` class to refer to entity instances, properties, and the entity tree.
+
+使用 `azlmbr.entity.EntityId` 类来引用实体实例、属性和实体树。
  
  ```python
  # returns True if the entity ID is valid
@@ -78,14 +78,14 @@ weight: 600
  entityId.Equal(otherEntityId)
  ```
  
- ### Entity operations and Ebus interfaces
+ ### 实体操作和 Ebus 接口
+
+用于管理编辑器实体的 EBus 接口主要有三个：
+ +  `azlmbr.editor.ToolsApplicationRequestBus`: 用于创建和删除编辑器实体
+ +  `azlmbr.editor.EditorEntityInfoRequestBus`: 用于访问实体值
+ +  `azlmbr.editor.EditorEntityAPIBus`: 用于更改实体值
  
- There are three main EBus interfaces used to manage Editor entities:
- +  `azlmbr.editor.ToolsApplicationRequestBus`: Used to create and delete Editor entities
- +  `azlmbr.editor.EditorEntityInfoRequestBus`: Used to access entity values
- +  `azlmbr.editor.EditorEntityAPIBus`: Used to mutate entity values
- 
- **Example usage**:
+ **使用示例**:
  
  ```python
  # Create a new entity at the root level
@@ -110,11 +110,11 @@ weight: 600
  getId = azlmbr.editor.EditorEntityInfoRequestBus(azlmbr.bus.Event, 'GetParent', childId);
  ```
  
- ### Entity search
+ ### 实体搜索
+
+实体搜索 API 基于使用 `azlmbr.entity.SearchFilter` 设置过滤器来设置搜索参数，然后通过 `azlmbr.entity.SearchBus` 所代表的 Ebus 进行搜索。
  
- The entity search API is based around setting up filters using `azlmbr.entity.SearchFilter` to set up the search parameters, and then conduct the search over the Ebus represented by `azlmbr.entity.SearchBus`.
- 
- **`azlmbr.entity.SearchFilter` usage**:
+ **`azlmbr.entity.SearchFilter` 用法**:
  
  ```python
  searchFilter = azlmbr.entity.SearchFilter()
@@ -126,7 +126,7 @@ weight: 600
  searchFilter.names_are_root_based = False # Determines if the names are relative to the root or should be searched in children too
  ```
  
- **`azlmbr.entity.SearchBus` usage**:
+ **`azlmbr.entity.SearchBus` 用法**:
  
  ```python
  # The SearchBus interface
@@ -138,12 +138,12 @@ weight: 600
  # Returns a list of all Editor entities at the root level in the current level
  entityIdList = azlmbr.entity.SearchBus(busType, 'GetRootEditorEntities', searchFilter)
  ```
+
+**使用通配符搜索**：
+
+实体可通过 `名称路径 `寻址，使用由管道字符 `|` 分隔的字符串，如`root name|my entity|my child`作为名称路径。实体搜索还支持使用`?`和`*`通配符。
  
- **Searching with wildcards**:
- 
- Entities are addressable by a 'name path' using strings separated by the pipe character `|` such as `root name|my entity|my child` for a name path. Entity search also supports the use of `?` and `*` wildcards.
- 
- **Example usage**:
+ **使用示例**:
  
  ```python
  import azlmbr.bus as bus
@@ -166,7 +166,7 @@ weight: 600
  entityIdList = entity.SearchBus(bus.Broadcast, 'SearchEntities', searchFilter)
  ```
  
- **Force search to start from root entities**:
+ **强制搜索从根实体开始**:
  
  ```python
  import azlmbr.bus as bus
@@ -187,17 +187,17 @@ weight: 600
  entityIdList = entity.SearchBus(bus.Broadcast, 'SearchEntities', searchFilter)
  ```
  
- ### Entity notifications
- 
- You can capture Editor entity events using the `EditorEntityContextNotificationBus` handler. Callbacks can be assigned to entity management event names: `OnEditorEntityCreated` and `OnEditorEntityDeleted` where the callback will be called with a tuple of data coming from the events.
- 
+ ### 实体通知
+
+您可以使用`EditorEntityContextNotificationBus`处理程序捕获编辑器实体事件。回调可分配给实体管理事件名称：`OnEditorEntityCreated` 和`OnEditorEntityDeleted`，其中回调将使用来自事件的数据元组调用。
+  
  ```python
  # The events
  "OnEditorEntityCreated" # returns when an entity is created in the Editor
  "OnEditorEntityDeleted" # returns when an entity is destroyed in the Editor
  ```
  
- **Example usage**:
+ **使用示例**:
  
  ```python
  # assumes a level has been opened or created
@@ -230,17 +230,17 @@ weight: 600
  editor.ToolsApplicationRequestBus(bus.Broadcast, 'CreateNewEntity', EntityId())
  ```
  
- ## Component management
- 
- Use the component system to add and remove components to existing entities with the `azlmbr.editor.EditorComponentAPIBus` bus.
+ ## 组件管理
+
+使用组件系统，通过 `azlmbr.editor.EditorComponentAPIBus` 总线向现有实体添加和删除组件。
  
  {{< note >}}
- Components are not active when in editing mode. They only become active when the game is being played within the Editor.
+ 组件在编辑模式下不会激活。只有在编辑器中进行游戏时，它们才会激活。
  {{< /note >}}
  
- ### Component type events
- 
- The API requires IDs to create, use, or control component instances. To get a component IDs, use the following Ebus events:
+ ### 组件类型事件
+
+API 需要 ID 才能创建、使用或控制组件实例。要获取组件 ID，请使用以下 Ebus 事件：
  
  ```python
  # azlmbr.editor.EditorComponentAPIBus Broadcast events
@@ -266,7 +266,7 @@ weight: 600
  'BuildComponentTypeNameListByEntityType'
  ```
  
- **Example usage**:
+ **使用示例**:
  
  ```python
  import azlmbr.bus as bus
@@ -284,9 +284,9 @@ weight: 600
  typeNameList = azlmbr.editor.EditorComponentAPIBus(bus.Broadcast, 'FindComponentTypeNames', typeIdsList)
  ```
  
- ### Component usage events
- 
- The API can add components to an existing entity, test for component existence, counts components by type, and enumerate the components on an entity.
+ ### 组件使用事件
+
+应用程序接口可以向现有实体添加组件、测试组件是否存在、按类型统计组件以及枚举实体上的组件。
  
  ```python
  # azlmbr.editor.EditorComponentAPIBus Broadcast events
@@ -323,7 +323,7 @@ weight: 600
  'GetComponentsOfType'
  ```
  
- **Example usage:**
+ **使用示例:**
  
  ```python
  import azlmbr.bus as bus
@@ -366,9 +366,9 @@ weight: 600
  firstMeshComponentId = meshMultipleComponentOutcome.GetValue()[0]
  ```
  
- ### Component control events
- 
- The API offers events to validate, enable or disable, and remove components.
+ ### 组件控制事件
+
+API 提供用于验证、启用或禁用以及移除组件的事件。
  
  ```python
  # azlmbr.editor.EditorComponentAPIBus Broadcast events
@@ -399,7 +399,7 @@ weight: 600
  'RemoveComponents'
  ```
  
- **Example usage**:
+ **使用示例**:
  
  ```python
  import azlmbr.bus as bus
@@ -430,12 +430,12 @@ weight: 600
     print("Mesh component has been removed.")
  ```
  
- ## Component property events
+ ## 组件属性事件
+
+组件属性可以使用一个字符串来访问和修改，该字符串表示通向属性值的直接路径。在属性路径元素之间使用管道字符 `|`作为分隔符。
  
- Component properties can be accessed and modified using a string that indicates a direct path to a property value. The pipe character `|` is used as the separator between the property path elements.
- 
- The `azlmbr.editor.EditorComponentAPIBus` bus is used to access or modify component property values.
- 
+ `azlmbr.editor.EditorComponentAPIBus` 总线用于访问或修改组件属性值。
+
  ```python
  # azlmbr.editor.EditorComponentAPIBus Broadcast events
  
@@ -458,7 +458,7 @@ weight: 600
  'BuildComponentPropertyList'
  ```
  
- **Example usage:**
+ **使用示例:**
  
  ```python
  import azlmbr.bus as bus
@@ -487,11 +487,11 @@ weight: 600
     print ('ComponentId path has {}'.format(path))
  ```
  
- ## Editing properties
- 
- To access this API a script needs access to a property tree editor instance. This object accesses the properties on a component, in the style of the property editing view inside of the Editor. Properties are accessed starting from the root of the component, and follow the chain of labels until a property value is encountered.
- 
- A common way to create a property tree editor instance is during content creation when a component is created via the `EditorComponentAPIBus.AddComponentsOfType` event.
+ ## 编辑属性
+
+要访问此 API，脚本需要访问一个属性树编辑器实例。该对象以编辑器内部属性编辑视图的样式访问组件上的属性。属性的访问从组件的根开始，并沿着标签链进行，直到遇到属性值为止。
+
+创建属性树编辑器实例的常见方法是在内容创建过程中，通过 `EditorComponentAPIBus.AddComponentsOfType` 事件创建组件。
  
  ```python
  componentOutcome = editor.EditorComponentAPIBus(bus.Broadcast, 'AddComponentsOfType', entityId, typeIdsList)
@@ -540,13 +540,13 @@ weight: 600
  #            Retrieves an item value from a container.
  ```
  
- ### Property containers
+ ### 属性容器
+
+编辑器自动化 API 提供了许多特殊方法来处理容器组件属性类型。如果属性树编辑器指向具有容器属性的组件，这些方法就可以访问容器中的项目。
+
+要确定属性是否属于容器类型，请使用 `azlmbr.PropertyTreeEditor.is_container()` 方法。
  
- The Editor automation API exposes a number of special methods to handle container component property types. If the property tree editor points to a component that has container properties these methods give access to the items in the container.
- 
- To determine if the property is a container type use the `azlmbr.PropertyTreeEditor.is_container()` method.
- 
- **Example usage**:
+ **使用示例**:
  
  ```python
  # the path to the 'Extended Tags' property
@@ -595,10 +595,10 @@ weight: 600
    print('removed an item')
  ```
  
- ## Asset management
- 
- The Editor automation API exposes a few methods to manage assets via the `azlmbr.asset.AssetCatalogRequestBus` bus.
- 
+ ## 资产管理
+
+编辑器自动化 API 通过 `azlmbr.asset.AssetCatalogRequestBus` 总线提供了一些管理资产的方法。
+  
  ```python
  # type: azlmbr.asset.AssetId
  #   - method: IsValid()
@@ -616,7 +616,7 @@ weight: 600
  'GetAssetIdByPath'
  ```
  
- **Example usage**:
+ **使用示例**:
  
  ```python
  import azlmbr.bus as bus

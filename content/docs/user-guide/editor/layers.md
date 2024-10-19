@@ -1,24 +1,24 @@
 ---
-description: ' Manage your entities with the Entity Outliner in Open 3D Engine. '
-title: Working with Layers
+description: ' 使用 Open 3D Engine 中的实体大纲管理器管理实体。 '
+title: 使用图层
 draft: true
 ---
 
-Use the O3DE layer system to organize level data into discrete files. The layer system segments level content so that members of a development team can work on different aspects of a level asynchronously.
+使用 O3DE 图层系统将关卡数据组织成离散文件。图层系统可以分割关卡内容，这样开发团队的成员就可以异步处理关卡的不同方面。
 
-Layers are standard O3DE entities with a special editor-only layer component. In your game, this component appears as an empty entity in your hierarchy. When you export your game, the behavior you designed is unchanged and all entities in your level are added to the exported data.
+图层是标准的 O3DE 实体，带有一个特殊的编辑器专用图层组件。在游戏中，该组件在层次结构中显示为一个空实体。当您导出游戏时，您设计的行为将保持不变，关卡中的所有实体都会添加到导出数据中。
 
-**Topics**
-+ [Creating a Layer](#creating-layers)
-+ [Modifying a Layer](#modifying-layers)
-+ [Adding Entities to a Layer](#adding-entities-to-layers)
-+ [Saving a Layer](#saving-layers)
-+ [Recovering a Layer](#recovering-layers)
-+ [Layer-Specific Components](#layer-specific-components)
+**主题**
++ [创建图层](#creating-layers)
++ [修改图层](#modifying-layers)
++ [将实体添加到图层](#adding-entities-to-layers)
++ [保存图层](#saving-layers)
++ [恢复图层](#recovering-layers)
++ [图层相关组件](#layer-specific-components)
 
-## Creating a Layer 
+## 创建图层
 
-When you create a layer, you can add entities to that layer. This helps you organize the content in your game. For example, you might create a layer for all character entities and another layer for vegetation.
+创建图层后，您可以向该图层添加实体。这可以帮助您组织游戏中的内容。例如，您可以为所有角色实体创建一个图层，为植被创建另一个图层。
 
 **To create a layer**
 

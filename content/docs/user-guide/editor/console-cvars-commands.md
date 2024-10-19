@@ -1,43 +1,43 @@
 ---
-linkTitle: Customizing Console
-title: Customizing O3DE Console
-description: Use the Open 3D Engine console to customize and create your own console variable commands.
+linkTitle: 自定义控制台
+title: 自定义O3DE控制台
+description: 使用 Open 3D Engine 控制台自定义和创建自己的控制台变量命令。
 weight: 550
 ---
 
-The console is a user interface system which handles console commands and console variables. It also outputs log messages and stores the input and output history.
+控制台是一个用户界面系统，用于处理控制台命令和控制台变量。它还输出日志信息并存储输入和输出历史。
 
-## Color coding 
+## 颜色编码
 
-The game console supports color coding by using the color indices 0..9 with a leading $ character. The code is hidden in the text outputted on the console. Simple log messages through the `ILog` interface can be used to send text to the console.
+游戏控制台支持颜色编码，方法是使用带有前导 $ 字符的颜色指数 0...9。代码会隐藏在控制台输出的文本中。通过 `ILog` 接口发送的简单日志信息可用于向控制台发送文本。
 
 ```
 This is normal $1one$2two$3three and so on
 ```
 
-In the preceding example, one renders in red, two in green, and three (and the remaining text) in blue.
+在前面的示例中，1 显示为红色，2 显示为绿色，3（以及其余文字）显示为蓝色。
 
-## Console Variables 
+## 控制台变量
 
-Console variables (cvars) provide a convenient way to expose variables which can be modified easily by the user either by being entered in the console during runtime or by passing it as command-line argument before launching the application.
+控制台变量（cvars）提供了一种方便的方法来暴露变量，用户可以通过在运行时在控制台中输入或在启动应用程序前将其作为命令行参数传递来轻松修改这些变量。
 
-### Registering new console variables 
+### 注册新的控制台变量
 
-For an integer or float based console variable, it is recommended to use the `IConsole::Register()` function to expose a C++ variable as a console variable.
+对于基于整数或浮点数的控制台变量，建议使用 `IConsole::Register()` 函数将 C++ 变量公开为控制台变量。
 
-To declare a new string console variable, use the `IConsole::RegisterString()` function.
+要声明一个新的字符串控制台变量，请使用`IConsole::RegisterString()`函数。
 
-### Accessing console variables from C++ 
+### 从 C++ 访问控制台变量
 
-Console variables are exposed using the `ICVar` interface. To retrieve this interface, use the `IConsole::GetCVar()` function.
+控制台变量使用 `ICVar` 接口公开。要检索该接口，请使用 `IConsole::GetCVar()`函数。
 
-The most efficient way to read the console variable value is to access directly the C++ variable bound to the console variable proxy.
+读取控制台变量值的最有效方法是直接访问绑定到控制台变量代理的 C++ 变量。
 
-## Adding New Console Commands 
+## 添加新的控制台命令
 
-The console can easily be extended with new console commands. A new console command can be implemented in C++ as a static function which follows the `ConsoleCommandFunc` type. Arguments for this console command are passed using the `IConsoleCmdArgs` interface.
+使用新的控制台命令可以轻松扩展控制台。新的控制台命令可以在 C++ 中以静态函数的形式实现，该函数遵循 `ConsoleCommandFunc` 类型。该控制台命令的参数使用 `IConsoleCmdArgs` 接口传递。
 
-The following code shows the skeleton implementation of a console command:
+以下代码显示了控制台命令的基本实现：
 
 ```
 static void RequestLoadMod(IConsoleCmdArgs* pCmdArgs);
@@ -56,26 +56,26 @@ void RequestLoadMod(IConsoleCmdArgs* pCmdArgs)
 }
 ```
 
-The following code will register the command with the console system:
+以下代码将在控制台系统中注册该命令：
 
 ```
 IConsole* pConsole = gEnv->pSystem->GetIConsole();
 pConsole->AddCommand("g_loadMod", RequestLoadMod);
 ```
 
-## Console Variable Groups 
+## 控制台变量组
 
-Console variable groups provide a convenient way to apply predefined settings to multiple console variables at once.
+控制台变量组提供了一种方便的方法，可同时对多个控制台变量应用预定义设置。
 
-Console variables are commonly referred to as `CVarGroup` in the code base. Console variable groups can modify other console variables to build bigger hierarchies.
+在代码库中，控制台变量通常被称为`CVarGroup`。控制台变量组可以修改其他控制台变量，从而建立更大的层次结构。
 
 {{< caution >}}
-Cycles in the assignments are not detected and can cause crashes.
+作业中的循环未被检测到，可能导致崩溃。
 {{< /caution >}}
 
-### Registering a new variable group 
+### 注册新变量组
 
-To register a new variable group, add a new `.cfg` text file to the `GameSDK\config\CVarGroups` directory.
+要注册新的变量组，请在 `GameSDK\config\CVarGroups`目录下添加一个新的`.cfg`文本文件。
 
 `sys_spec_Particles.cfg`
 
@@ -97,20 +97,20 @@ e_particles_max_emitter_draw_screen=4
 e_particles_max_emitter_draw_screen=16
 ```
 
-This creates a new console variable group named `sys_spec_Particles` that behaves like an integer console variable. By default, this variable has the state `4` (set in the line following the comment in the example).
+这将创建一个名为 `sys_spec_Particles` 的新控制台变量组，其行为类似于整数控制台变量。默认情况下，该变量的状态为 `4`（在示例中注释后的一行中设置）。
 
-On changing the variable, the new state is applied. Console variables not specified in the `.cfg` file are not set. All console variables need to be part of the default section. An error message is output in case of violation of this rule.
+更改变量后，新状态将被应用。未在 `.cfg` 文件中指定的控制台变量不会被设置。所有控制台变量都必须是默认部分的一部分。如果违反此规则，将输出错误信息。
 
-If a console variable is not specified in a custom section, the value specified in the default section is applied.
+如果未在自定义部分中指定控制台变量，则会应用默认部分中指定的值。
 
-### Console variable group documentation 
+### 控制台变量组文档
 
-The documentation of the console variable group is generated automatically.
+控制台变量组的文档会自动生成。
 
 `sys_spec_Particles`
 
 ```
-Console variable group to apply settings to multiple variables
+控制台变量组将设置应用于多个变量
 
 sys_spec_Particles [1/2/3/4/x]:
  ... e_particles_lod = 0.75/1/1/1/1
@@ -121,11 +121,11 @@ sys_spec_Particles [1/2/3/4/x]:
  ... r_UseSoftParticles = 0/1/1/1/1
 ```
 
-### Checking if a console variable group value represents the state of the variables it controls 
+### 检查控制台变量组值是否代表其控制变量的状态
 
-#### From the console 
+#### 从控制台
 
-In the console you can enter in the console variable group name and press tab. If the variable value is not represented, it will print the value of `RealState`.
+在控制台中，您可以输入控制台变量组名称并按 tab 键。如果未表示变量值，则将打印 `RealState` 的值。
 
 ```
 sys_spec_Particles=2 [REQUIRE_NET_SYNC] RealState=3
@@ -133,21 +133,21 @@ sys_spec_Sound=1 [REQUIRE_NET_SYNC] RealState=CUSTOM
 sys_spec_Texture=1 [REQUIRE_NET_SYNC]
 ```
 
-By calling the console command `sys_RestoreSpec` you can check why the `sys_spec_` variables don't represent the right states.
+通过调用控制台命令 `sys_RestoreSpec` 可以检查为什么 `sys_spec_` 变量不代表正确的状态。
 
-#### From C++ code 
+#### 来自 C++ 代码
 
-From the code you can use the member function `GetRealIVal()` and compare its return value against the result of `GetIVal()` in `ICVar`.
+通过代码，您可以使用成员函数 `GetRealIVal()` 并将其返回值与 `ICVar` 中的 `GetIVal()` 结果进行比较。
 
-## Deferred execution of command line console commands 
+## 延迟执行命令行控制台命令
 
-The commands that are passed via the command line by using the + prefix are stored in a separate list as opposed to the rest of the console commands.
+与其他控制台命令相比，使用 + 前缀通过命令行传递的命令会存储在一个单独的列表中。
 
-This list allows the application to distribute the execution of those commands over several frames rather than executing everything at once.
+该列表允许应用程序将这些命令的执行分配到多个帧中，而不是一次性执行所有命令。
 
-### Example 
+### 示例
 
-Consider the following example.
+请看下面的例子。
 
 ```
 --- autotest.cfg --
@@ -161,30 +161,30 @@ screenshot autotestTime
 StarterGameLauncher.exe -devmode +map SinglePlayer +exec autotest +quit
 ```
 
-In the example, the following operations were performed:
-- Load the SinglePlayer map.
-- Wait for 100 frames.
-- Take a screenshot called autotestFrames.
-- Wait for 5 seconds.
-- Take a screenshot called autotestTime.
-- Quit the application.
+在示例中，执行了以下操作：
+- 加载SinglePlayer地图。
+- 等待 100 帧。
+- 截取名为 autotestFrames 的屏幕截图。
+- 等待 5 秒。
+- 截取名为 autotestTime 的截图。
+- 退出应用程序。
 
-### Details 
+### 详细信息
 
-Two categories of commands are defined: blocker and normal.
+定义了两类命令：阻塞命令和正常命令。
 
-For each frame, the deferred command list is processed as a fifo. Elements of this list are consumed as long as normal commands are encountered.
+在每一帧中，延迟命令列表作为一个 fifo 进行处理。只要遇到正常命令，就会消耗该列表中的元素。
 
-When a blocker is consumed from the list and executed, the process is delayed until the next frame. For instance, commands like `map` and `screenshot` are blockers.
+当阻止程序从列表中被消耗并执行时，进程会延迟到下一帧。例如，`map`和`screenshot`等命令就是阻塞程序。
 
-A console command (either command or variable) can be tagged as a blocker during its declaration using the` VF_BLOCKFRAME` flag.
+控制台命令（命令或变量）可以在声明时使用` VF_BLOCKFRAME` 标记标记为阻塞程序。
 
-The following synchronization commands are supported.
+支持以下同步命令。
 
 
-**Optional Title**
+**可选标题**
 
-|  Command  |  Type  |  Description  |
+|  命令  |  类型  |  说明  |
 | --- | --- | --- |
-| wait\_frames num: |  <int>  |  Wait for *num* frames before the execution of the list is resumed.  |
-| wait\_seconds sec: |  <float>  |  Wait for *sec* seconds before the execution of the list is resumed.  |
+| wait\_frames num: |  <int>  |  等待 **num** 帧后，重新开始执行列表。  |
+| wait\_seconds sec: |  <float>  |  等待 *num* 秒后，重新开始执行列表。  |

@@ -1,119 +1,120 @@
 ---
 linkTitle: Entity Inspector
 title: Entity Inspector
-description: Use Entity Inspector to add components to entities and modify their properties in Open 3D Engine (O3DE).
+description: 在 Open 3D Engine (O3DE) 中使用Entity Inspector为实体添加组件并修改其属性。
 weight: 300
 ---
 
-The **Entity Inspector** manages all the components for each entity. Select an entity in the **Entity Outliner** or the viewport to see the attached components in the **Entity Inspector**.
+**Entity Inspector**管理每个实体的所有组件。在**Entity Outliner**或视口中选择一个实体，就能在**Entity Inspector**中看到所附的组件。
 
-Use the **Entity Inspector** to do the following:
+使用**Entity Inspector**进行以下操作：
 
-- Add components to entities
-- Modify component properties
-- Remove, copy, cut, and paste components
-- Set the entity status
-- Customize the entity icon
-- Pin an entity's inspector
-- Create your own help topic for your custom component
+- 为实体添加组件
+- 修改组件属性
+- 删除、复制、剪切和粘贴组件
+- 设置实体状态
+- 自定义实体图标
+- 钉住实体的检查器
+- 为自定义组件创建自己的帮助主题
 
 {{< note >}}
-For a list and descriptions of available components, see [Component Reference](/docs/user-guide/components/reference). You can also click the **Help** icon in the header of each component to open a help topic.
+有关可用组件的列表和说明，请参阅[组件参考](/docs/user-guide/components/reference)。您还可以点击每个组件标题下的**Help**图标，打开帮助主题。
 {{< /note >}}
 
-## Opening Entity Inspector
+## 打开Entity Inspector
 
-**To open the Entity Inspector**
+**打开Entity Inspector**
 
-1. In O3DE Editor, choose **Tools**, **Entity Inspector**.
+1. 在 O3DE 编辑器中，选择 **Tools**，**Entity Inspector**。
 
-1. Select an entity in the viewport or the **Entity Outliner**.
+1. 在视口或**Entity Outliner**中选择一个实体。
 
-1. In the **Entity Inspector**, you can see the following:
+1. 在**Entity Inspector**中，您可以看到以下内容：
 
-  * **Name** - Name of the entity. You can enter a different name for the entity.
-  * **Entity Icon** - Customizable icon to help you recognize entities in the viewport.
-  * **Status** - Active status of the entity. When the level starts, the entity can be active, inactive, or active but only in editor mode.
-  * **Entity ID** - If this entity ID is called out in messages, errors, or asserts, you can find the entity by searching for it in the **Entity Outliner**.
-  * Components attached to the entity appear below.
+  * **Name** - 实体名称。您可以为实体输入不同的名称。
+  * **Entity Icon** - 可定制的图标，帮助你识别视口中的实体。
+  * **Status** - 实体的活动状态。关卡开始时，实体可能处于活动、非活动或仅在编辑器模式下处于活动状态。
+  * **Entity ID** - 如果该实体 ID 在消息、错误或断言中被调用，您可以在 **Entity Outliner**
+  * 中搜索该实体。
+  * 实体的附属组件显示在下方。
 
 ![Find entities and its attached components in the Entity Inspector.](/images/user-guide/component/entity_system/component-entity-inspector.png)
 
-## Setting entity status
+## 设置实体状态
 
-By default, an entity starts as active in a level. When you create a game, you can specify that an entity remain inactive until activated through some mechanism such as a script or player action. You can also set an entity as editor only if you want to disable an entity during gameplay mode or you want to create test entities or visual comments for users working in your game.
+默认情况下，实体在关卡中以激活状态开始。创建游戏时，您可以指定实体保持非活动状态，直到通过脚本或玩家操作等机制激活为止。如果您想在游戏模式中禁用实体，或想为在游戏中工作的用户创建测试实体或视觉注释，也可以将实体设置为编辑器。
 
-**To set an entity's status**
+**设置实体的状态**
 
-1. In the **Entity Outliner** or the viewport, select an entity.
+1. 在**Entity Outliner**或视口中，选择一个实体。
 
-1. In the **Entity Inspector**, choose the **Status** drop-down menu, and select one of the following options:
-      - **Start active** - Entity is active when the level starts.
-      - **Start inactive** - Entity is inactive when the level starts.
-      - **Editor only** - Entity is only active in editor mode.
+1. 在**Entity Inspector**中，选择**Status**下拉菜单，选择以下一个选项：
+      - **Start active** - 关卡开始时，实体处于激活状态。
+      - **Start inactive** - 关卡开始时，实体处于非激活状态。
+      - **Editor only** - 实体仅在编辑器模式下激活。
 
       ![Specify whether component is active, inactive, or active in editor mode only.](/images/shared/shared-component-entity-inspector-startactive.png)
 
-1. When you set an entity as **Start Inactive** or **Editor only**, select the entity to view its status in the **Entity Outliner** and the viewport.
+1. 将实体设置为**Start Inactive**或**Editor only**时，选择实体可在**Entity Outliner**和视口中查看其状态。
 
-    **Example Start Inactive**
+    **示例 Start Inactive**
 
-    Inactive entities have a strikethrough icon and inactive text appears in the viewport.
+   不活动的实体会有一个删除线图标，视口中也会显示不活动的文本。
 
     ![Specify whether component is active, inactive, or active in editor mode only.](/images/shared/shared-component-entity-inspector-inactive-example.png)
     
-    **Example Editor only**
+    **示例 Editor only**
 
-    Editor only entities have an icon that is not shaded and editor only text appears in the viewport.
+   只显示编辑器实体的图标没有阴影，视口中只显示编辑器文本。
 
     ![Specify whether component is active, inactive, or active in editor mode only.](/images/shared/shared-component-entity-inspector-editor-only-example.png)
    
-## Pinning an Entity Inspector
+## 固定Entity Inspector
 
-You can pin an entity's inspector to keep it open and visible even when you select another entity. You can pin inspectors for multiple entities, and also pin multiple inspector instances of the same entity. This helps you compare the entities and their components to each other.
+您可以固定一个实体的检查器，使其在您选择另一个实体时仍保持打开和可见状态。您可以固定多个实体的检查器，也可以固定同一实体的多个检查器实例。这可以帮助您将实体及其组件相互比较。
 
-A pinned inspector has the following features:
-- Always shows the pinned entity even when you select a different entity.
-- Functions like the main **Entity Inspector** window.
-- Closes when you open a different level or exit O3DE.
-- If you convert a loose entity to a slice, the pinned inspector points to the new slice entity that corresponds to the previously loose entity.
-- Persists when entering and exiting game mode.
-- Updates all pinned inspectors for a particular entity when you modify that entity.
+Entity Inspector具有以下功能：
+- 即使您选择了其他实体，也会始终显示已固定的实体。
+- 功能与主**Entity Inspector**窗口类似。
+- 打开不同的层或退出 O3DE 时关闭。
+- 如果将松散实体转换为切片，固定的检查器会指向与之前松散实体相对应的新切片实体。
+- 在进入和退出游戏模式时持续存在。
+- 当您修改某个实体时，会更新该实体的所有固定检查器。
 
-You can pin an inspector from the **Entity Outliner** or the **Entity Inspector**.
+你可以从**Entity Outliner** 或 **Entity Inspector**固定一个检查器。
 
-**To pin an inspector**
+**要固定一个检查器**
 
-1. Select an entity.
+1. 选择一个实体。
 
-1. Do one of the following:
+1. 请执行以下操作之一：
 
-     1. In the **Entity Outliner**, right-click the entity and then choose **Open pinned Inspector**.
+     1. 在**Entity Outliner**中，右击该实体，然后选择**Open pinned Inspector**。
 
          ![In the Entity Outliner, choose Open pinned Inspector to pin an inspector for that entity.](/images/user-guide/component/entity_system/component-entity-inspector-pin-1.png)
 
-     1. In the **Entity Inspector**, click the pin icon.
-
+     1. 在**Entity Inspector**中，点击图钉图标。
+   
          ![In the Entity Inspector, click the pin icon to pin an inspector for the entity.](/images/user-guide/component/entity_system/component-entity-inspector-pin-2.png)
 
-1. In O3DE Editor, you can view the pinned entity inspectors.
+1. 在O3DE编辑器中，你可以查看固定的Entity Inspector。
 
-    **Example**
+    **示例**
 
     ![Multiple pinned inspectors open in a level.](/images/user-guide/component/entity_system/component-entity-inspector-pin.png)
 
-## Customizing entity icons
+## 自定义实体图标
 
-The default icon for an entity without any added components is the **Transform** ( ![Transform Component Icon](/images/user-guide/component/entity_system/entity-inspector-transform-icon.png)) component's icon. When you add another component, the icon changes to the first component that you add to that entity.
+没有添加任何组件的实体的默认图标是**Transform**( ![Transform Component Icon](/images/user-guide/component/entity_system/entity-inspector-transform-icon.png))组件的图标。当你添加另一个组件时，该图标会变成你添加到该实体的第一个组件。
 
-You can also specify your own icon.
+您还可以指定自己的图标。
 
-**To customize an entity icon**
+**自定义实体图标**
 
-1. In the **Entity Inspector**, click the icon image at the top.
+1. 在**Entity Inspector**中，单击顶部的图标图像。
 
-1. Choose **Set custom icon**.
+1. 选择**Set custom icon**。
 
      !['Set custom icon' menu item](/images/user-guide/component/entity_system/component-working-customize.png)
 
-1. Select an icon from your game project directory.
+1. 从你的游戏项目目录选择一个图标。

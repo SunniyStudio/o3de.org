@@ -1,81 +1,81 @@
 ---
-linkTitle: Console
-title: Working with O3DE Console
-description: Use the console in O3DE Editor to update the value for console variables or type commands.
+linkTitle: 控制台
+title: 使用O3DE 控制台
+description: 使用 O3DE 编辑器中的控制台更新控制台变量的值或键入命令。
 weight: 500
 ---
 
-In O3DE Editor, the console window shows a running list of all editor commands, processes, and output. For example, when you delete an entity, the console shows the action and the output. You can use the console to enter or modify console variables (CVARs). Console variables are a type of variable that you can manipulate in O3DE Editor.
+在 O3DE 编辑器中，控制台窗口显示所有编辑器命令、进程和输出的运行列表。例如，当你删除一个实体时，控制台会显示操作和输出。你可以使用控制台输入或修改控制台变量（CVAR）。控制台变量是一种可以在 O3DE 编辑器中操作的变量类型。
 
-## Viewing the Console Window 
+## 查看控制台窗口
 
-You can enter commands directly in the console window or search and edit console variables.
+您可以直接在控制台窗口中输入命令，或搜索和编辑控制台变量。
 
-**To view the console window**
+**查看控制台窗口**
 
-1. In O3DE Editor, choose **Tools**, **Console**.
+1. 在O3DE编辑器中，选择**Tools**, **Console**。
 
-1. Click the **X** icon in the left corner to open the **Console Variables** window. The **Console Variables** window lists all available console variables.
+1. 点击左上角的**X**图标，打开**Console Variables**窗口。**Console Variables**窗口列出了所有可用的控制台变量。
 
     ![View all available console variables in the console window.](/images/shared/console-x-window.png)
 
-1. Enter a name to search for a specific console variable. To learn more about the console variable, pause on the name.
+1. 输入名称搜索特定的控制台变量。要了解控制台变量的更多信息，请点击名称。
 
     ![View console variables in the console window.](/images/user-guide/console-variables.png)
 
-## Exporting All Console Commands and Variables 
+## 导出所有控制台命令和变量
 
-You can retrieve a complete list of console commands and variables, including their descriptions and assigned values.
+您可以检索控制台命令和变量的完整列表，包括它们的说明和分配值。
 
-**To export a list of all console commands and variables**
+**导出所有控制台命令和变量的列表**
 
-1. In the **Console** window, enter the following command: DumpCommandsVars
+1. 在**Console**窗口中，输入以下命令：DumpCommandsVars
 
-1. Navigate to the O3DE directory and then open the `consolecommandandvars.txt` file.
-**Example**
+1. 导航至 O3DE 目录，然后打开 `consolecommandandvars.txt` 文件。
+**示例**
 
-       You can see the available commands and variables in the file.
+       您可以在文件中看到可用的命令和变量。
 
        ![Open the consolecommandandvars.txt file to see all console commands and variables.](/images/user-guide/console-variables-test-file.png)
 
-1. You can specify a sub-string parameter to restrict the results that you want. For example, the DumpCommandsVars i\_ command exports all commands and variables that begin with the prefix `i_`, such as `i_giveallitems` and `i_debug_projectiles`.
+1. 你可以指定一个子字符串参数来限制你想要的结果。例如，DumpCommandsVars i\_ 命令会导出所有以 `i_` 开头的命令和变量，如 `i_giveallitems` 和 `i_debug_projectiles`。
 
-## Configuring Console Variables 
+## 配置控制台变量
 
-Console variables can also be set in code or specified in configuration files. Console variables are executed in the following order:
+控制台变量也可以在代码中设置或在配置文件中指定。控制台变量按以下顺序执行：
 
-1. Configuration files:
-     - The `game.cfg` file in your project directory
-     - The `system_gamesystem.cfg` file for your game system
-     - The `engine\config\user.cfg` file
-     - The `level.cfg` file in your project's level directory
+1. 配置文件：
+     - 项目目录中的 `game.cfg`
+     - 用于游戏系统的 `system_gamesystem.cfg`文件
+     - `engine\config\user.cfg` 文件
+     - 项目的关卡目录中的`level.cfg`文件
 
-1. Code
+1. 编码
 
-1. Console variables typed directly into the console
+1. 直接输入控制台变量
 
-The order of execution is also the override order. For example, console variables set in code override those set in configuration files \(and `level.cfg` overrides `user.cfg`, and so on\). Console variables set in flow graphs override any identical console variables set in code. Finally, console variables typed directly into the console override all the other console variable settings.
+执行顺序也是覆盖顺序。例如，代码中设置的控制台变量会覆盖配置文件中设置的控制台变量\(`level.cfg`覆盖 `user.cfg`，以此类推\)。在流程图中设置的控制台变量会覆盖代码中设置的任何相同控制台变量。最后，直接输入控制台的控制台变量会覆盖所有其他控制台变量设置。
 
-### Configuring Console Variables in the Console 
+### 在控制台中配置控制台变量
 
-You can specify values for console variables in the console to apply changes to your level.
+您可以在控制台中为控制台变量指定值，以便将更改应用到关卡。
 
-**To configure console variables in the console**
+**在控制台配置控制台变量**
 
-Do one of the following:
-     - In the **Console Variables** window, search for the variable name, double-click the value, and then enter the value that you want.
-     - In the **Console** command line, enter the console variable and its value, and then press **Enter**. For example, enter the r\_DisplayInfo=1 command to display debugging information in the viewport.
+执行以下操作之一：
+      - 在**Console Variables**窗口中，搜索变量名，双击变量值，然后输入想要的值。
+      - 在**Console**命令行中，输入控制台变量及其值，然后按**Enter**。例如，输入 r\_DisplayInfo=1 命令可在视口中显示调试信息。
 
-### Configuring Console Variables in Configuration Files 
+### 在配置文件中配置控制台变量
 
-You can specify values for console variables in the configuration files, such as the level configuration file \( `level.cfg`\).
+你可以在配置文件中为控制台变量指定值，如关卡配置文件 \( `level.cfg`\)。
 
-**To configure console variables with a configuration file**
+**使用配置文件配置控制台变量**
 
-1. Navigate to the directory that has the configuration file. For example, if you want to configure the `level.cfg` file, navigate to the `Levels\level_name` directory in your project.
+1. 导航到包含配置文件的目录。例如，如果要配置 `level.cfg` 文件，请导航到项目中的 `Levels\level_name` 目录。
 
-1. Use a text editor to edit the file or to create one.
+1. 使用文本编辑器编辑或创建文件。
 
-1. Specify the console variable name and the value. For example: `r_DisplayInfo=1` shows debugging information in the viewport.
+1. 指定控制台变量名称和值。例如：`r_DisplayInfo=1` 在视口中显示调试信息。
 
-1. Save the file.
+1. 保存文件。

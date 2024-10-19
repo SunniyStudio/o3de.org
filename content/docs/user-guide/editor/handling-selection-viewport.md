@@ -1,19 +1,18 @@
 ---
-description: ' Update your component so that it knows how to handle selection in the
-  Open 3D Engine viewport. '
-title: 'Step 5: Handle Selection in the Viewport'
+description: ' 更新您的组件，使其知道如何处理 Open 3D 引擎视口中的选择。 '
+title: '步骤 5：处理视口中的选区'
 draft: true
 ---
 
-In the following procedure, make changes to your code so that you can enter Component Mode by double-clicking the component in the viewport.
+在以下步骤中，请修改代码，以便双击视口中的组件进入组件模式。
 
- In Component Mode, you can modify the dimensions of the **Point Light** component directly in the viewport.
+在组件模式下，您可以直接在视口中修改**Point Light**组件的尺寸。
 
-**To handle selection in the viewport**
+**处理视口中的选择**
 
-1. In a text editor, open the `EditorPointLightComponent.h` file.
+1. 在文本编辑器中，打开`EditorPointLightComponent.h`文件。
 
-1. For the last parameter, add the `EditorComponentSelectionRequestsBus::Handler`.
+1. 对最后的参数，添加`EditorComponentSelectionRequestsBus::Handler`。
 
    ```
    class EditorPointLightComponent
@@ -21,15 +20,15 @@ In the following procedure, make changes to your code so that you can enter Comp
            , private AzToolsFramework::EditorComponentSelectionRequestsBus::Handler
    ```
 
-1. To implement the `EditorComponentSelectionRequests`, you must override the following four functions:
+1. 要实现`EditorComponentSelectionRequests`，必须重写以下4个函数：
 
-   1. `GetEditorSelectionBoundsViewport` - Returns an AABB encompassing the visible extents of your component
+   1. `GetEditorSelectionBoundsViewport` - 返回包含组件可见范围的 AABB
 
-   1. `EditorSelectionIntersectRayViewport` - Where you implement selection for the component
+   1. `EditorSelectionIntersectRayViewport` - 为组件执行选择的位置
 
-   1. `SupportsEditorRayIntersect` - Override this function and return `true` if you implemented `EditorSelectionIntersectRayViewport`
+   1. `SupportsEditorRayIntersect` - 重载此函数，如果执行了 `EditorSelectionIntersectRayViewport`，则返回 `true`
 
-   1. `GetBoundingBoxDisplayType` - Used for debugging to ensure that the AABB is the correct fit. This example sets the function to `NoBoundingBox`
+   1. `GetBoundingBoxDisplayType` - 用于调试，以确保 AABB 适合正确。此示例将函数设置为 `NoBoundingBox`
 
    ```
    // EditorComponentSelectionRequests
@@ -42,11 +41,11 @@ In the following procedure, make changes to your code so that you can enter Comp
    AZ::u32 GetBoundingBoxDisplayType() override;
    ```
 
-1. Save the file.
+1. 保存文件。
 
-1. In a text editor, open the `EditorPointLightComponent.cpp` file.
+1. 在文本编辑器中，打开`EditorPointLightComponent.cpp`文件。
 
-1. Connect and disconnect from the `EditorComponentSelectionRequestsBus` in the `Activate` and `Deactivate` functions of the component.
+1. 在组件的`Activate` 和 `Deactivate` 函数中，分别连接和断开连接到`EditorComponentSelectionRequestsBus`。
 
    ```
    void EditorPointLightComponent::Activate()
@@ -64,9 +63,9 @@ In the following procedure, make changes to your code so that you can enter Comp
    }
    ```
 
-1. Add the following changes to your code:
-    + Add an implementation of `SupportsEditorRayIntersect` to return `true`. By default, this function returns `false`.
-    + Add an implementation of `GetBoundingBoxDisplayType` to return `AzToolsFramework::EditorComponentSelectionRequests::BoundingBoxDisplay::NoBoundingBox`.
+1. 向你的代码添加以下变更：
+    + 添加`SupportsEditorRayIntersect`的实现，返回`true`。默认情况下，此函数返回`false`。
+    + 添加`GetBoundingBoxDisplayType`的实现，返回`AzToolsFramework::EditorComponentSelectionRequests::BoundingBoxDisplay::NoBoundingBox`。
 
     ```
     bool EditorPointLightComponent::SupportsEditorRayIntersect()
@@ -79,17 +78,17 @@ In the following procedure, make changes to your code so that you can enter Comp
            return AzToolsFramework::EditorComponentSelectionRequests::BoundingBoxDisplay::NoBoundingBox;}
     ```
     {{< note >}}
-It's possible to instead return the `AzToolsFramework::EditorComponentSelectionRequests::BoundingBoxDisplay:BoundingBox` for debugging, but you shouldn't leave it enabled.
+可以返回`AzToolsFramework::EditorComponentSelectionRequests::BoundingBoxDisplay:BoundingBox`以进行调试，但不应该启用它。
 {{< /note >}}
 
-   The next two functions show how to implement the picking and selection support.
+   接下来的两个函数展示了如何实现提取和选择支持。
 
-1. Add the implementation for the `GetEditorSelectionBoundsViewport` function.
+1. 为`GetEditorSelectionBoundsViewport`函数添加实现。
 
-1. Create an AABB centered around the component covering its extents. In this case, get the position in world space of the entity and create an AABB with the radius of the point light. Because the point light is represented as a sphere, use the `GetPointMaxDistance` function.
-**Example**
+1. 以组件为中心创建一个覆盖其外延的 AABB。在这种情况下，获取实体在世界空间中的位置，然后以点光源的半径创建一个 AABB。由于点光源是以球体表示的，因此应使用 `GetPointMaxDistance` 函数。
+**示例**
 
-   Your code should look like the following.
+   您的代码应如下所示。
 
    ```
    AZ::Aabb EditorPointLightComponent::GetEditorSelectionBoundsViewport(
@@ -103,8 +102,8 @@ It's possible to instead return the `AzToolsFramework::EditorComponentSelectionR
    }
    ```
 
-   In the next step, make changes to the `EditorSelectionIntersectRayViewport` function.
-**Example**
+   下一步，更改 `EditorSelectionIntersectRayViewport` 函数。
+**示例**
 
    ```
    // top of file
@@ -145,16 +144,16 @@ It's possible to instead return the `AzToolsFramework::EditorComponentSelectionR
    }
    ```
 
-1. Get the position of the entity in world space and approximate a torus or flat hollow cylinder to represent the rings of the **Point Light** component. The minor radius corresponds to the tube part of the torus, which is its thickness.
+1. 获取实体在世界空间中的位置，并用近似的环形或扁平空心圆柱体来表示**Point Light**组件的环。小半径对应于圆环的管状部分，也就是它的厚度。
 
    ```
    const float minorRadius = 0.1f;
    const float majorRadius = GetPointMaxDistance();
    ```
 
-1. You want a radius that is a reasonable size so that you can easily select it in the viewport. The major radius is the distance from the center of the torus to the middle of the tube. Because you have a ring for each axis, check that each one is using the `IntersectHollowCylinder` function, which basically approximates a torus.
+1. 您需要一个合理大小的半径，以便在视口中轻松选择。主半径是指从圆环中心到圆管中间的距离。由于每个轴都有一个环，因此请检查每个轴是否都使用了`IntersectHollowCylinder`函数，该函数基本上近似于一个环。
 
-1. Test a ring for each axis and store the intersection distances to find the closest intersection.
+1. 为每个轴测试一个环，并存储交点距离，以找到最近的交点。
 
    ```
    {
@@ -165,6 +164,6 @@ It's possible to instead return the `AzToolsFramework::EditorComponentSelectionR
    }
    ```
 
-   If a successful intersection occurred, the shortest distance is returned.
+   如果交叉成功，则返回最短的距离。
 
-1. Save the file.
+1. 保存文件。

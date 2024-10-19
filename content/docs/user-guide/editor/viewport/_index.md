@@ -1,112 +1,112 @@
 ---
-linkTitle: 3D Viewport
-title: Working with the 3D Viewport
-description: Use the 3D Viewport to interact with entities in Open 3D Engine (O3DE).
+linkTitle: 3D 视口
+title: 使用3D 视口
+description: 使用 3D 视口与 Open 3D Engine (O3DE)中的实体进行交互。
 weight: 400
 ---
 
-In **Open 3D Engine** (O3DE), you can interact directly with entities using the 3D Viewport.  The 3D Viewport provides several features to complete common tasks such as editing the position, rotation, and scale of entities, hierarchies of entities, and their components.  [UI widgets](#viewport-ui-widgets), [Manipulators](#manipulators), [Hotkeys](#hotkeys), and visual feedback mechanisms simplify the process of editing and arranging entities. With [Reference spaces](reference-spaces), you can quickly select if entities are transformed in world space, local space, in relation to a parent entity, or custom spaces.
+在**Open 3D Engine** (O3DE)中，您可以使用三维视口直接与实体交互。 三维视口提供了多种功能来完成常见任务，如编辑实体的位置、旋转和缩放、实体的层次结构及其组件。 [用户界面部件](#viewport-ui-widgets)、[操纵器](#manipulators)、[快捷键](#hotkeys) 和视觉反馈机制简化了编辑和排列实体的过程。有了[参考空间](reference-spaces)，你可以快速选择实体是在世界空间、本地空间、与父实体的关系还是自定义空间中转换。
 
 ![Screenshot of 3D Viewport with UI widgets, entity, and a manipulator visible.](/images/user-guide/editor/3d-viewport.png)
 
-## Viewport UI widgets
+## 视口UI控件
 
-### Transform mode widget
+### 变换模式控件
 
-You can select one of the three transform modes with the transform mode widget, _translate_, _rotate_, or _scale_.  Each transform mode displays a unique [Manipulator](#manipulators) on the entity in the 3D Viewport that you can adjust with the mouse.  Select a transform mode by clicking the widget with the mouse or using a keyboard hotkey listed in the following table. You can quickly switch between translate and rotate modes by pressing **Ctrl + Mousewheel Up/Down**.
+您可以使用变换模式控件从**平移**、**旋转**或**缩放**三种变换模式中选择一种。 每种变换模式都会在 3D 视口中的实体上显示一个独特的 [操纵器](#manipulators)，您可以用鼠标对其进行调整。 用鼠标点击部件或使用下表列出的键盘热键选择变换模式。按下 **Ctrl + 鼠标滚轮上/下**，即可在平移和旋转模式之间快速切换。
 
 ![Image of transform mode widget](/images/user-guide/editor/transform-widget.png)
 
-| Mode | Keyboard Hotkey | Description |
+| 模式 | 键盘快捷键 | 说明 |
 | - | - | - |
-| Translate | **1** | Moves an entity along an axis, plane, or surface. |
-| Rotate | **2** | Rotates an entity on one of three axes or in relation to the camera. |
-| Scale | **3** | Uniformly scales an entity's size. |
+| 平移 | **1** | 沿轴、平面或表面移动实体。|
+| 旋转 | **2** | 在三个轴中的一个轴上旋转实体，或相对于摄像机旋转实体。 |
+| 缩放 | **3** | 统一缩放实体的大小。 |
 
-### Reference space widget
+### 参考空间控件
 
-Reference spaces set the alignment of manipulator axes.  By default, entities will translate and rotate in _local space_, which is determined by an entity's **Rotate** and **Translate** values in the [Transform component](/docs/user-guide/components/reference/transform).  _World space_ is constant at all times for all entities.  World space is always centered at the **Translate** coordinates of `(0, 0, 0)` without any rotation.  If an entity is the child of another entity, _parent space_ will reference the **Rotate** and **Translate** values of the parent entity's Transform component.  You can **left-click** on an icon in the widget to lock a reference space selection; **left-click** the icon again to return the reference space to the default, local space.
+参照空间设定了操纵器轴线的对齐方式。默认情况下，实体将在**本地空间**中进行平移和旋转，这是由实体在[Transform组件](/docs/user-guide/components/reference/transform)中的**Rotate**和**Translate**值决定的。所有实体的**世界空间**在任何时候都是不变的。 世界空间始终以**Translate**坐标 `(0, 0, 0)`为中心，不会发生任何旋转。 如果一个实体是另一个实体的子实体，**父空间**将引用父实体变换组件的 **Rotate** 和 **Translate** 值。 您可以**左键单击**部件中的图标来锁定参照空间选择；再次**左键单击**图标可将参照空间返回到默认的本地空间。
 
 ![Image of reference space widget](/images/user-guide/editor/reference-space-widget.png)
 
-| Mode | Keyboard Hotkey | Description |
+| 模式 | 键盘快捷键 | 说明 |
 | - | - | - |
-| World space | Hold **Shift** | Manipulators align with the unchanging world space that is common to all entities in a level. |
-| Parent space | | If an entity has a parent, manipulators align with the parent's rotation. |
-| Local space | | Manipulators align with the rotation of the entity that is selected. |
+| 世界空间 | 按住 **Shift** | 操纵者与一个关卡中所有实体共有的不变世界空间保持一致。 |
+| 父空间 | | 如果一个实体有一个父实体，操纵器就会与父实体的旋转对齐。 |
+| 本地空间 | | 操纵器与所选实体的旋转保持一致。 |
 
-### Component mode switcher
+### 组件模式切换器
 
 ![Image of component mode switcher widget](/images/user-guide/editor/component-mode-switcher.png)
 
-Every entity in the 3D viewport has a Transform component.  Other components that you can add to entities have properties that are easily edited in the 3D viewport using the component's _edit mode_.  You can **left-click** the icon of an editable component to enter that component's edit mode.  The Transform component's edit mode is selected by default. 
+三维视口中的每个实体都有一个 Transform组件。 您可以添加到实体中的其他组件具有一些属性，这些属性可以在三维视口中使用组件的**编辑模式**轻松编辑。 您可以**左键单击**可编辑组件的图标，进入该组件的编辑模式。 默认情况下，Transform组件的编辑模式被选中。
 
-The following table lists some of the components with an edit mode and describes the tasks you can complete while it is selected in the component mode switcher.  Refer to a component's page in the [Component Reference](/docs/user-guide/components/reference/) for a description of actions you can take while in edit mode.
-
-| Component | Edit Mode Tasks |
+下表列出了一些具有编辑模式的组件，并介绍了在组件模式切换器中选择该组件时可以完成的任务。 有关编辑模式下的操作说明，请参阅[组件参考](/docs/user-guide/components/reference/)中的组件页面。
+1
+| 组件 | 编辑模式任务 |
 | - | - |
-| [Shape](/docs/user-guide/components/reference/shape) | Edit the dimensions of the various shape components. |
-| [White Box Tool](/docs/user-guide/components/reference/shape/white-box) | Design models with the White Box Tool. |
-| [Spline](/docs/user-guide/components/reference/shape/spline) | Add, remove, and position spline control points. |
-| [Non-uniform Scale](/docs/user-guide/components/reference/non-uniform-scale) | Edit the scaling of an entity on the X, Y, and Z-axis separately. |
-| [PhysX Collider](/docs/user-guide/components/reference/physx/collider) | Edit the dimensions of a collider. |
-| [PhysX Ball Joint](/docs/user-guide/components/reference/physx/ball-joint) | Edit the position and limitations of a joint. |
+| [Shape](/docs/user-guide/components/reference/shape) | 编辑各种形状组件的尺寸。 |
+| [White Box Tool](/docs/user-guide/components/reference/shape/white-box) | 使用白盒工具设计模型 |
+| [Spline](/docs/user-guide/components/reference/shape/spline) | 添加、移除和定位Spline控制点。 |
+| [Non-uniform Scale](/docs/user-guide/components/reference/non-uniform-scale) | 分别编辑实体在 X、Y 和 Z 轴上的缩放比例。 |
+| [PhysX Collider](/docs/user-guide/components/reference/physx/collider) | 编辑碰撞体的尺寸。 |
+| [PhysX Ball Joint](/docs/user-guide/components/reference/physx/ball-joint) | 编辑关节的位置和限制。 |
 
-## Manipulators 
+## 操纵器
 
-With manipulators, you can edit an entity's Transform component properties directly in the 3D Viewport instead of in the [Entity Inspector](../entity-inspector).  When you select an entity, only the current transform mode's manipulator displays.  The orientation of the manipulator matches the reference space selection.
+使用操纵器，您可以直接在三维视口中而不是在[Entity Inspector](../entity-inspector).中编辑实体的Transform组件属性。 选择实体时，只显示当前变换模式的操纵器。 操纵器的方向与参考空间选择相匹配。 
 
-### Translation manipulator
+### 平移操纵器
 
 ![Image of the translation manipulator with the linear, planar, and surface manipulator highlighted](/images/user-guide/editor/transform-manipulator.png)
 
-The translation manipulator is composed of three different types of manipulators. The red, green, and blue arrows are _linear manipulators_, they correspond to the X-axis, Y-axis, and Z-axis, respectively.  You can **left-click** and drag a linear manipulator to move an entity along a single axis at a time.  Manipulators turn yellow when you hover over them.
+平移机械手由三种不同类型的机械手组成。红色、绿色和蓝色箭头是线性操纵器，分别对应 X 轴、Y 轴和 Z 轴。 您可以**左键点击**并拖动线性操纵器，一次沿单个轴移动一个实体。 悬停在操纵器上时，操纵器会变成黄色。
 
-Use _Planar manipulators_, represented by squares, to move an entity along two axes while restricting movement on the unselected axis. 
+使用**平面操纵器**（以正方形表示）可沿两个轴移动实体，同时限制未选定轴上的移动。
 
-The yellow sphere at the center of the translation manipulator is the _surface manipulator_.  You can move an entity along the surface of other meshes that are visible in the 3D Viewport.  If there are no surfaces that the entity would intersect with, the entity will move a fixed distance in front of the camera.
+平移操纵器中心的黄色球体是**表面操纵器**。 您可以沿三维视口中可见的其他网格的表面移动实体。 如果没有与实体相交的表面，实体将在摄像机前方移动固定的距离。
 
 ![Image of translation manipulator with a ghost axis](/images/user-guide/editor/ghost-axis.png)
 
-The translation manipulators display a red, blue, and green _ghost axis_ that indicates the original position of the entity while a manipulator is in use.
+平移操纵器会显示一个红色、蓝色和绿色的 “幽灵轴”，指示实体在使用操纵器时的原始位置。
 
-### Rotation manipulator
+### 旋转操纵器
 
 ![Image of the rotation manipulator](/images/user-guide/editor/rotation-manipulator.png)
 
-The rotation manipulator is composed of two types of manipulators. A set of red, green, and blue circles are _angular manipulators_ that rotate the entity on the X-axis, Y-axis, and Z-axis, respectively.  The larger white circle is the _camera space manipulator_, which rotates the entity on the Editor camera's forward axis. **Left-click** and drag a manipulator to rotate the entity on an axis.
+旋转操纵器由两类操纵器组成。一组红色、绿色和蓝色圆圈是**矩形操纵器**，分别在 X 轴、Y 轴和 Z 轴上旋转实体。 较大的白色圆圈是 **相机空间操纵器**，它可以在编辑器相机的前轴上旋转实体。**左键单击***并拖动操纵器，可在轴上旋转实体。
 
 ![Image of the rotation manipulator with a yellow sector that shows how much the entity has been rotated](/images/user-guide/editor/rotation-feedback.png)
 
-The rotation manipulators display a yellow sector that indicates the original orientation of the entity while a manipulator is in use.
+旋转机械手在使用时会显示一个黄色扇形，指示实体的原始方向。
 
 ### Scale manipulator
 
 ![Image of the scale manipulator](/images/user-guide/editor/scale-manipulator.png)
 
-The scale manipulator is represented by a set of white cubes on a 3D axis.  You can **left-click** and drag away from the manipulator's center to increase the uniform-scale of an entity.
+缩放操纵器由三维轴上的一组白色立方体表示。 您可以**左键点击**并拖离操纵器的中心，以增加实体的均匀比例。
 
-## Pivots
+## 支点
 
 ![Side-by-side images of an entity showing the locations of its default and center pivot](/images/user-guide/editor/pivots.png)
 
-Entities with a three-dimensional shape may have more than one pivot point.  In the viewport, the pivot point is indicated by a small yellow cube.  The default pivot point is located at the local origin of the entity, often this is set when the 3D object is modelled in a DCC tool and imported into O3DE.  The second pivot point of an entity is located at the geometric center of the object's volume.  You can switch between the two pivot points by pressing **P** on the keyboard.
+具有三维形状的实体可能有不止一个支点。 在视口中，支点由一个黄色的小立方体表示。 默认的支点位于实体的本地原点，通常是在三维对象用 DCC 工具建模并导入 O3DE 时设置的。 实体的第二个支点位于对象体积的几何中心。 您可以通过按键盘上的**P**键在两个支点之间切换。
 
-An entity's pivot point determines the fixed point that an entity rotates around and scales from.
+实体的支点决定了实体旋转和缩放的固定点。
 
-## Hotkeys
+## 快捷键
 
-Refer to the following table for a summary of keyboard hotkeys for the 3D Viewport.
-
-| Default Hotkey | Action | Note |
+有关 3D 视口的键盘热键摘要，请参阅下表。
+1
+| 默认热键 | 操作 | 注意 |
 | - | - | - |
-| **1** | Displays the translation manipulator. |  |
-| **2** | Displays the rotation manipulator. |  |
-| **3** | Displays the scale manipulator. |  |
-| **Ctrl + Mousewheel Up/Down** | Switches between the translation and rotation mode manipulators. |  |
-| **R** | Resets the entity's transform. | Only resets the transform values for the current transform mode. |
-| **Ctrl + Drag** Translation manipulator | Sets all manipulators to a custom translation. | Sets a custom pivot point for rotation and scaling. |
-| **Ctrl + Drag** Rotation manipulator | Sets all manipulators to a custom rotation. | Sets a custom rotation for the axes of translations. |
-| **Ctrl + Drag** Scale manipulator | Sets the size of all manipulators. |  |
-| **Ctrl + R** | Resets the current manipulator. |  |
-| **P** | Toggles the pivot of the selected entity. |  |
+| **1** | 显示平移操纵器。 |  |
+| **2** | 显示旋转操纵器。 |  |
+| **3** | 显示缩放操纵器。 |  |
+| **Ctrl + 鼠标滚轮向上/向下滚动** | 在平移和旋转模式操纵器之间切换。 |  |
+| **R** | 重置实体的变换。 | 仅重置当前变换模式的变换值。 |
+| **Ctrl + 拖拽** 平移操纵器 | 将所有操纵器设置为自定义平移。| 为旋转和缩放设置自定义支点。|
+| **Ctrl + 拖拽** 旋转操纵器 | 将所有操纵器设置为自定义旋转。| 为平移轴设置自定义旋转。 |
+| **Ctrl + 拖拽** 缩放操纵器 | 设置所有操纵器的大小。 |  |
+| **Ctrl + R** | 重置当前操纵器。 |  |
+| **P** | 切换选中实体的支点。 |  |

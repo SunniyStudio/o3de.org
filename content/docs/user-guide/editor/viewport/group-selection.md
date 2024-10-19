@@ -1,74 +1,74 @@
 ---
-linkTitle: Group Selection
-title: Group Selection
-description: Select and manipulate groups of entities in the 3D Viewport in Open 3D Engine (O3DE).
+linkTitle: 组选择
+title: 组选择
+description: 在 Open 3D Engine (O3DE) 的 3D 视口中选择和操作实体组。
 weight: 300
 ---
 
-In the viewport, you can select multiple entities. This is called a group selection. You can use the following shortcuts for group selection.
+在视口中，您可以选择多个实体。这称为组选择。您可以使用以下快捷键进行分组选择。
 
-| Shortcut | Description |
+| 快捷方式 | 说明 |
 | --- | --- |
-| **Left-click** and **drag** in the viewport to create a box around entities. |  Selects multiple entities.  |
-|  Press and hold **Ctrl** and **left-click** and **drag** in the viewport.  | Deselect multiple entities. |
-|  Press and hold **Ctrl** and **left-click** a target entity.  |  Adds or removes an entity from the selection. If you already selected a group of entities, this moves the manipulator to the center of the selected group.  |
+| 在视口中**鼠标左键单击** 并 **拖拽** 围绕实体创建一个盒子。 |  选择多个实体。  |
+|  在视口中按住**Ctrl** 并 **鼠标左键单击** 并 **拖拽**。  | 取消选择多个实体。 |
+|  按住**Ctrl** 并 **鼠标左键单击** 一个目标实体。  |  从选区中添加或删除一个实体。如果您已经选择了一组实体，则会将操纵器移动到所选实体组的中心。  |
 
-When you select a group of entities, you can use the same controls as you would for a single entity. For a group selection, the manipulator acts like a temporary parent entity. This means that the feature works the same for a single entity or a group of entities. By default, a manipulator defaults to a common parent of the group selection. If you select entities that don't share a common parent, world space is used.
+选择一组实体时，可以使用与单个实体相同的控件。对于组选择，操纵器就像一个临时的父实体。这意味着该功能对单个实体或实体组的作用相同。默认情况下，操纵器默认为组选择的共同父实体。如果选择的实体没有共同的父实体，则会使用世界空间。
 
-## Selecting a group of entities
+## 选择一组实体
 
-1. With multiple entities visible in the viewport, hold **Ctrl** and **left-click** on individual entities to add them to a group selection.
+1. 在视口中可见多个实体时，按住**Ctrl**并左键单击**单个实体，即可将它们添加到组选择中。
 
-1. To remove an entity from a group selection, hold **Ctrl** and **left-click** on it.
+1. 要从组选项中移除一个实体，请按住**Ctrl**，然后**左键单击**。
 
-You can hold **Shift** to switch from the group selection's reference space to world space.
+您可以按住**Shift**键，从组选择的参照空间切换到世界空间。
 
-In the following example, three entities are selected. Because there is no common parent of the group, the manipulator defaults to world space. The entities now move in relation to the parent (the manipulator).
+在下面的示例中，选择了三个实体。由于该组没有共同的父实体，因此操纵器默认为世界空间。实体现在相对于父实体（操纵器）移动。
 
 ![Manipulate a group of entities using world space in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-6.gif)
 
-## Selecting a reference space for a group
+## 为一组选择参照空间
 
-1. With a group of entities selected, press and hold **Ctrl** and **Alt** and **left-click** a target entity. This selects a reference space for the group.
+1. 选中一组实体后，按住**Ctrl**和**Alt**，然后**左键单击**目标实体。这样就为该组选择了一个参照空间。
 
-1. Use the manipulator to modify the entities.
+1. 使用操作器修改实体。
 
-   In the following example, a group of entities move in relation to the reference space.
+   在下面的示例中，一组实体相对于参考空间移动。
 
    ![Move entities as a group in relation to the reference space in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-7.gif)
-   
-## Creating a custom reference space for a group
 
-With a group of entities selected, press and hold **Ctrl**, and move the manipulator in the viewport. This creates a custom reference space.
+## 为一组实体创建自定义参考空间
 
-In the following example, a custom reference space is set for a group of entities.
+选中一组实体后，按住 **Ctrl**，在视口中移动操纵器。这将创建一个自定义参照空间。
+
+在下面的示例中，为一组实体设置了自定义参照空间。
 
 ![Move a manipulator to create a custom reference space in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-8.gif)
-   
-## Parent reference spaces
 
-Select child entities of the same parent entity and use the manipulator to change them. When you select a group of entities that share the same parent, the manipulator defaults its orientation to the parent.
+## 父实体参考空间
 
-In the following example, two child entities (the tires) are selected. The manipulator rotates the child entities in relation to its parent (the car).
+选择同一父实体的子实体，并使用操纵器更改它们。当您选择一组共享同一父实体的实体时，操纵器会默认其方向为父实体的方向。
+
+在下面的示例中，选择了两个子实体（轮胎）。操纵器会根据父实体（汽车）的方向旋转子实体。
 
 ![Manipulate child entities from a parent entity in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-9.gif)
 
-## Using individual influence in a group
+## 在组中使用个体影响
 
-- Press and hold **Alt** while modifying a group of selected entities. This modifies the entities in the local space. The manipulator influence is _individual_ rather than the default _group_ influence. You can iterate and modify your entities and view the changes in the viewport.
+- 按住**Alt**，同时修改一组选定的实体。这将修改局部空间中的实体。操纵器的影响是**个体**的，而不是默认的**组**的。您可以遍历和修改实体，并在视口中查看变化。
 
-   In the following example, you can press and hold **Alt** during translation. This moves each entity in their own local space (_individual_ manipulator influence).
+  在下面的示例中，您可以在平移过程中按住 **Alt**。这样，每个实体都会在各自的本地空间中移动（**个体**操纵器影响）。
 
    ![Modify each entity in their own local space during translation in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-10.gif)
 
-- Select child entities from different parent entities and press and hold **Alt**. You can modify multiple entities at the same time, even if they have different parents.
+- 从不同的父实体中选择子实体，然后按住 **Alt**。您可以同时修改多个实体，即使它们有不同的父实体。
 
-   In the following example, child entities from different parents are selected. The manipulator modifies the child entities at the same time.
+  在下面的示例中，选择了来自不同父实体的子实体。操纵器同时修改子实体。
 
    ![Modify child entities from different parents in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-11.gif)
 
-- Press and release **Alt** to dynamically change the manipulator influence.
+- 按下并释放 **Alt**，可动态更改操纵器的影响。
 
-   In the following example, the manipulator changes the scale for the selected entities, switching from group influence to individual influence.
+  在下面的示例中，操纵器会改变所选实体的比例，从群体影响切换到个体影响。
 
    ![Switch group influence to individual influence while modifying entities in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-12.gif)

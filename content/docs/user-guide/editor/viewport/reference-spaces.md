@@ -1,52 +1,52 @@
 ---
-linkTitle:  Reference Spaces
-title: Reference Spaces
-description: Create reference spaces to modify your entities in Open 3D Engine (O3DE).
+linkTitle:  参考空间
+title: 参考空间
+description: 创建参考空间，以便在 Open 3D Engine (O3DE) 中修改实体。
 weight: 200
 ---
 
-You can use the Viewport Interaction Model to create reference spaces for your selected entities. This enables you to customize your selected entities in relation to a reference space.
+您可以使用视口交互模型为所选实体创建参照空间。这样，您就可以根据参照空间自定义所选实体。
 
-When working with reference spaces, remember the following rules:
-+ New selections always default to the local space.
-+ Holding **Shift** aligns the manipulator to the world coordinate space.
-+ Holding **Alt** changes the manipulator to have _individual_ influence, as opposed to the default _group_ influence.
-+ You can access custom reference spaces by moving the manipulator (press and hold **Ctrl** and then choose and drag the manipulator) or picking a target entity as a reference space (press hold **Ctrl** and **Alt** and click a target entity).
+在使用参照空间时，请记住以下规则：
++ 新选择始终默认为本地空间。
++ 按住 **Shift** 可使操纵器与世界坐标空间对齐。
++ 按住**Alt**键可使操纵器具有**个体**影响，而不是默认的**组**影响。
++ 您可以通过移动操纵器（按住**Ctrl**，然后选择并拖动操纵器）或选择目标实体作为参考空间（按住**Ctrl**和**Alt**，然后单击目标实体）来访问自定义参考空间。
 
-The Viewport Interaction Model simplifies the mental model for you by not requiring you to manually track the last local or world space that you were using. You can specify a target and define that target as custom reference spaces. This new reference space model covers any arbitrary transformation.
+视口交互模型简化了您的心智模型，不需要您手动追踪上一次使用的本地或世界空间。您可以指定一个目标，并将该目标定义为自定义参考空间。这种新的参考空间模型涵盖了任何任意变换。
 
-## Switching Between Local and World Space 
+## 在本地空间和世界空间之间切换
 
-You can use the manipulator to switch between local and world space without losing focus of your entity selection in the viewport.
+您可以使用操纵器在本地空间和世界空间之间切换，而不会丢失视口中实体选择的焦点。
 
-**To switch between local and world space**
+**在本地空间和世界空间之间切换**
 
-1. In the viewport, select a child entity that has a parent.
+1. 在视口中，选择一个有父实体的子实体。
 
-1. Use the manipulator to modify the entity.
+1. 使用操作器修改实体。
 
-1. To switch to world space, press and hold **Shift**. Use the manipulator to modify the entity.
+1. 要切换到世界空间，请按住 **Shift**。使用操纵器修改实体。
 
-1. Viewport UI icons ({{< icon "world.svg" >}} World, {{< icon "parent.svg" >}} Parent, and {{< icon "local.svg" >}} Local) in the top right of the viewport allow you to pin a reference space.
+1. 视口用户界面图标({{< icon "world.svg" >}} 世界空间, {{< icon "parent.svg" >}} 父空间，和 {{< icon "local.svg" >}} 本地空间) 图标允许您固定一个参考空间。
 
     ![Switch between local and parent space in the viewport in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-1.gif)
 
-## Creating custom reference spaces
+## 创建自定义参考空间
 
-You can adjust the manipulator independent of the entity to create a custom reference space. You can also pick another target entity as a reference space. When you specify a reference space, the entities that you select move in relation to that space.
+您可以调整操纵器，使其独立于实体，从而创建自定义参考空间。您也可以选择另一个目标实体作为参照空间。指定参考空间后，您选择的实体将相对于该空间移动。
 
-1. In the viewport, select an entity.
+1. 在视口中，选择一个实体。
 
-1. Select a manipulator mode, such as translation.
+1. 选择操纵器模式，如平移。
 
-1. Press and hold **Ctrl** and **Alt** and **left-click** a target entity in the viewport. This matches the manipulator to the translation or orientation of the target entity.
+1. 按住**Ctrl**和**Alt**，左键单击**视口中的目标实体。这将使操纵器与目标实体的平移或方向相匹配。
 
-    In the following example, the excavator entity becomes a reference space for the car. When the manipulator moves the car, the car moves in relation to the reference space.
+   在下面的示例中，挖掘机实体成为小车的参照空间。当操纵器移动汽车时，汽车会相对于参考空间移动。
 
     ![Create a custom reference using another entity as a target in O3DE.](/images/user-guide/viewportinteractionmodel/viewport-selection-model-4.gif)
 
-1. Use the manipulator to modify the entity.
+1. 使用操纵器修改实体。
 
 {{< note >}}
-The manipulator and the custom reference space are context-based and apply only when you select an entity. If you don't select an entity, there's no manipulator, and you can't create a reference space. The reference space doesn't persist across selections. However, if you move the reference space, you can undo that action.
+操纵器和自定义参照空间是基于上下文的，只有在选择实体时才会应用。如果不选择实体，就没有操纵器，也无法创建参照空间。参考空间不会在选择时持续存在。不过，如果您移动了参考空间，可以撤销该操作。
 {{< /note >}}

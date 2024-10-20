@@ -1,56 +1,56 @@
 ---
-linkTitle: Asset Processor
-title: Asset Processor 
-description: Asset processing job management in Open 3D Engine (O3DE) with Asset Processor.
+linkTitle: 资产处理器
+title: 资产处理器
+description: 利用资产处理器对Open 3D Engine (O3DE)中的资产处理工作进行管理。
 weight: 200
 toc: true
 ---
 
-**Asset Processor** starts automatically with **Open 3D Engine (O3DE) Editor**, and runs as a background process. Asset Processor provides many asset related functions including the following:
+**资产处理器**随**Open 3D Engine (O3DE)编辑器**自动启动，并作为后台进程运行。资产处理器提供许多与资产相关的功能，包括以下功能：
 
-* Detect new or updated source assets.
-* Send **Create Jobs** requests to appropriate **Asset Builders**.
-* Schedule process jobs provided by Asset Builders.
-* Manage the process job queue.
-* Provide status, logs, and messages about asset process jobs.
-* Place generated product assets and related data in the **Asset Cache**.
-* Send notifications when product assets have been updated so they can be hot reloaded by **O3DE Editor**, tools, and runtimes.
-* Provide tools to retrieve information about source assets and product assets.
-* Track source dependencies, job dependencies, and product dependencies.
+* 检测新的或更新的源资产。
+* 将**创建工作**请求发送给适当的**资产构建者**。
+* 安排资产生成器提供的处理任务。
+* 管理处理任务队列。
+* 提供有关资产处理工作的状态、日志和信息。
+* 将生成的产品资产和相关数据放入**资产缓存**。
+* 在产品资产更新时发送通知，以便**O3DE 编辑器**、工具和运行时能对其进行热重载。
+* 提供检索源资产和产品资产信息的工具。
+* 跟踪源依赖关系、作业依赖关系和产品依赖关系。
 
-With Asset Processor, a **Launcher** can be run on a target platform without deploying assets to that platform. Instead, the assets are accessed from the Asset Cache on a connected host platform. Asset Processor communicates through a USB connection with mobile target platforms using proxy requests.
+有了资产处理器，**启动器**可在目标平台上运行，而无需将资产部署到该平台。相反，资产可从已连接主机平台上的资产缓存中访问。资产处理器通过 USB 连接与使用代理请求的移动目标平台进行通信。
 
-On a host platform, connections between Asset Processor and O3DE Editor are automatically maintained.
+在主机平台上，资产处理器和 O3DE 编辑器之间的连接会自动保持。
 
-When you launch software that requires an Asset Processor connection, such as the O3DE Editor or Launcher in a non-release configuration, Asset Processor is automatically launched. If Asset Processor has been launched this way, it automatically shuts down when you close the Editor or Launcher.
+当你启动需要连接资产处理器的软件时，例如非发布配置下的 O3DE 编辑器或启动器，资产处理器会自动启动。如果以这种方式启动了资产处理器，当你关闭编辑器或启动器时，它会自动关闭。
 
 {{< note >}}
-Symbolic links are not supported when using Asset Processor. To ensure that Asset Processor works properly, follow these guidelines:
+使用资产处理器时不支持符号链接。为确保资产处理器正常工作，请遵循以下准则：
 
-* Do not use a symbolic link for your Asset Cache directory.
-* Do not use symbolic links for scan directories.
-* Use a unique Asset Cache directory.
-* Do not share the Asset Cache directory with another host platform that is also running Asset Processor.
+* 不要为资产缓存目录使用符号链接。
+* 不要为扫描目录使用符号链接。
+* 使用唯一的资产缓存目录。
+* 不要与同时运行 Asset Processor 的其他主机平台共享资产缓存目录。
 {{< /note >}}
 
-## Asset Processor topics
+## 资产处理器主题
 
-| Topic | Description |
+| 主题 | 说明 |
 | - | - |
-| [Interface](interface) | Learn to navigate Asset Processor's interface, and how to read the status of process jobs. |
-| [Asset Processor Batch](asset-processor-batch) | Use Asset Processor batch to batch process the source assets for a project in an automated build system. |
-| [Configuration](configuration) | Configure Asset Processor by setting options in the `AssetProcessorPlatformConfig.setreg` configuration file. |
-| [Faster Scanning](faster-scanning) | Learn how Asset processor determines when assets should be processed and how to set Asset Processor's scanning mode. |
-| [Skip Startup Scan](skip-startup-scan) | Learn to skip startup checks for assets modified while AssetProcessor was closed. |
-| [Debugging](debugging) | Learn several methods you can use to debug Asset Processor issues. |
-| [Move Assets](move-assets) | Learn how to move assets to new directory locations in O3DE while maintaining internal references. |
-| [Asset Cache Server](asset-cache-server) | Learn how to enable the Asset Processor to cache assets in order to reduce asset processing for a team. |
-| [Settings](settings) | Learn how to use advance settings to control Asset Processor and Asset Processor Batch. |
+| [界面](interface) | 学习如何浏览 Asset Processor 的界面，以及如何读取流程作业的状态。 |
+| [Asset Processor Batch](asset-processor-batch) | 使用 Asset Processor batch 在自动构建系统中批量处理项目的源资产。 |
+| [配置](configuration) | 通过在 `AssetProcessorPlatformConfig.setreg` 配置文件中设置选项来配置资产处理器。|
+| [更快扫描](faster-scanning) | 了解资产处理器如何确定何时处理资产，以及如何设置资产处理器的扫描模式。 |
+| [跳过启动扫描](skip-startup-scan) | 学会跳过在 AssetProcessor 关闭时修改的资产的启动检查。 |
+| [调试](debugging) | 学习几种调试资产处理器问题的方法。 |
+| [移动资产](move-assets) | 了解如何在 O3DE 中将资产移动到新的目录位置，同时保持内部引用。 |
+| [资产缓存服务器](asset-cache-server) | 了解如何启用资产处理器缓存资产，以减少团队的资产处理工作。 |
+| [设置](settings) | 了解如何使用高级设置来控制资产处理器和资产处理器批处理。 |
 
-## Asset Processor Contributing Topics 
+## 资产处理器贡献主题
 
-These topics cover information needed to contribute changes to the Asset Processor, and are not necessary for using the Asset Processor.
+这些主题涵盖了为资产处理器提供更改所需的信息，但并非使用资产处理器所必需。
 
-| Topic | Description |
+| 主题 | 说明 |
 | - | - |
-| [Asset Database](asset-database) | Find out about the Asset Database, and how the Asset Processor tracks the work it's completed. |
+| [资产数据库](asset-database) | 了解资产数据库，以及资产处理器如何跟踪已完成的工作。 |

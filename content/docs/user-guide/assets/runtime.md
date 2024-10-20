@@ -1,55 +1,56 @@
 ---
-linkTitle: Runtime Asset System
-title: Asset Runtime Asset System
-description: Covers the use and working of the Open 3D Engine (O3DE) runtime asset system.
+linkTitle: 运行时资产系统
+title: 运行时资产系统
+description: 介绍Open 3D Engine (O3DE)运行时资产系统的使用和工作。
 weight: 700
 toc: true
 ---
 
-The runtime asset system is responsible for loading and managing assets in the editor/launcher of O3DE.  An asset corresponds to a single file that has been proccessed by the Asset Processor into a Product Asset.  Each asset is given a unique ID called an AssetId which is composed of the UUID of the Source Asset along with the SubId of the Product Asset.
+运行时资产系统负责在 O3DE 编辑器/启动器中加载和管理资产。 一个资产对应一个由资产处理器处理成产品资产的文件。 每个资产都有一个称为 AssetId 的唯一 ID，该 ID 由源资产的 UUID 和产品资产的 SubId 组成。
 
-## Asset References
+## 资产引用
 
-The [AZ::Data::Asset](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Asset/AssetCommon.h#L293) class is used to reference an `AssetData` object (an asset) and is essentially a smart pointer.  When all references to a given asset are released, the asset is unloaded.  When an `Asset<T>` type is saved to disk, it is saved as an AssetId that can be used to load the asset again later.
+[AZ::Data::Asset](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Asset/AssetCommon.h#L293) 类用于引用`AssetData`对象（资产），本质上是一个智能指针。 当对给定资产的所有引用都被释放时，该资产就会被卸载。 当一个 `Asset<T>` 类型保存到磁盘时，它会被保存为一个 AssetId，可用于以后再次加载资产。
 
+## 运行时加载资产
 
-## Loading Assets at Runtime
-
-The [AZ::Data::AssetManager](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Asset/AssetManager.h#L136) system is responsible for loading and managing assets at runtime.
-
-
-`GetAsset` is the primary API used to load an existing asset.  It returns an `Asset<T>` reference.  Only one copy of an asset is loaded in memory at a time, so if an asset is already loaded or currently loading, no new load requests will be made; the `Asset<T>` returned will point to the same `AssetData` and will be ready when the load is finished (if it hasn't already finished).  `GetAsset` is a non-blocking asychronous API, meaning the asset data may not be available immediately after the call completes.
-
-There are two ways to handle waiting for an asset load to complete: the blocking way is to call [BlockUntilLoadComplete](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzCore/AzCore/Asset/AssetCommon.h#L387) on the `Asset<T>` reference.  This will block the current thread until loading of the asset is completed.  The other (and recommended) option is to connect to the [AssetBus](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzCore/AzCore/Asset/AssetCommon.h#L527) and handle the `OnAssetReady`/`OnAssetReloaded` events for your asset.
-
-Note that the engine does not currently support load cancelling (cancelling a load request before completion), making it possible to call `GetAsset` and then discard the result while waiting for `OnAssetReady` to be called.  It is best to avoid relying on this as it is not an intended feature.  Asset references should always be stored for as long as the asset is expected to be loaded (generally when the asset is in use).
+[AZ::Data::AssetManager](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Asset/AssetManager.h#L136) 系统负责在运行时加载和管理资产。
 
 
-### Dependency Loading
+`GetAsset` 是用于加载现有资产的主要 API。 它返回一个 `Asset<T>` 引用。 每次只会在内存中加载一份资产副本，因此如果资产已经加载或正在加载，则不会发出新的加载请求；返回的 `Asset<T>` 将指向相同的 `AssetData`，并将在加载完成时（如果尚未完成）准备就绪。 `GetAsset` 是一个非阻塞异步 API，这意味着资产数据可能不会在调用完成后立即可用。
 
-By default, the `AssetManager` will load all the dependencies of an asset before signalling an asset has completed loading.  Asset dependencies are recorded in the `AssetCatalog` and are determined by the Product Dependencies emitted by each builder.  There are 3 different load settings possible for dependencies (`AssetLoadBehavior`):
-1. Preload - The dependency will complete loading before the parent asset is signalled ready.
-2. QueueLoad - The dependency will start loading when the parent asset starts but will not be required to complete before the parent asset has been signalled ready.
-3. NoLoad - The dependency will not be requested to load.  If the dependency is already loaded anyway, any references will still point to the already-loaded asset.
+有两种方法可以处理等待资产加载完成的问题：阻塞方法是在 `Asset<T>` 引用上调用[BlockUntilLoadComplete](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzCore/AzCore/Asset/AssetCommon.h#L387)。 这将阻塞当前线程，直到资产加载完成。 另一种（也是推荐的）方法是连接到 [AssetBus](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzCore/AzCore/Asset/AssetCommon.h#L527) 并处理资产的 `OnAssetReady`/`OnAssetReloaded` 事件。
 
-Keep in mind that regardless of the settings, AssetManager makes no guarantees on the order assets complete loading.
+请注意，引擎目前不支持取消加载（在加载请求完成前取消加载），因此有可能调用 `GetAsset`，然后在等待调用 `OnAssetReady` 时丢弃结果。 最好不要依赖这种情况，因为这不是我们想要的功能。 资产引用的存储时间应与资产的加载时间一致（通常是在资产处于使用状态时）。
 
-### Hot-Reloading
 
-The Asset System provides support for hot-reloading, which is the updating of loaded, in-memory assets when the on-disk asset changes.  Hot-reloading allows content creators to quickly iterate on assets and see the changes update live without needing to restart the engine.  When the Asset Processor finishes processing an asset, a notification is sent out to the engine; if the asset in question is already loaded or loading, a reload request is queued and the Asset Manager starts loading the newly updated asset.  Each system utilizing the Asset System must implement support for this individually by handling the [OnAssetReloaded](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzCore/AzCore/Asset/AssetCommon.h#L603) event.
+### 加载依赖项
 
-Often, projects copy data out of loaded assets to perform additional processing. A common error around asset reloading is to not refresh any copied data. For example, if your project is a game that uses an XML file to define the player's movement speed, and when this XML file is loaded, the information is copied to a component on the player entity, then when a reload event occurs, it's important to also re-copy the information over to the player entity. Otherwise, the player will continue to move at the old movement speed, even if the XML file is updated to change it.
+默认情况下，`AssetManager` 会在发出资产加载完成的信号之前加载资产的所有依赖项。 资产依赖项记录在`AssetCatalog`中，由每个生成器发出的 “产品依赖项 ”决定。 依赖项有 3 种不同的加载设置（`资产加载行为`）：
+1. Preload（预加载） - 依赖关系将在父资产就绪之前完成加载。
+2. QueueLoad（队列加载）- 依赖项将在父资产启动时开始加载，但在父资产发出就绪信号之前无需完成加载。
+3. NoLoad - 不要求加载依赖项。 如果依赖项已经加载，则任何引用仍将指向已加载的资产。
 
-## Asset Processing Prioritization
+请记住，无论设置如何，AssetManager 都不保证资产完成加载的顺序。
 
-The following are generally only relevant during project development, when assets aren't always processed ahead of time before running the engine.  In a release project where all assets have been compiled and bundled, these concepts do not apply.
 
-### Critical Assets
+### 热加载
 
-Critical assets are assets which are required to start the engine and must be processed by the Asset Processor before start-up can complete.  Critical assets are prioritized by Asset Processor before any other type of asset.  They are declared by Asset Builders as part of the [Job Descriptor](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Tools/AssetProcessor/AssetBuilderSDK/AssetBuilderSDK/AssetBuilderSDK.h#L446).  The exception to this is if a critical asset has a Job Dependency on a non-critical asset, the critical asset will wait until the non-critical asset has been processed before proceeding.  This can result in the critical asset waiting until all the other critical assets have finished first before its dependencies can even start processing.  It is recommended to keep these type of assets to a minimum as they can considerably impact the time taken to start the engine.
+资产系统支持热加载，即在磁盘上的资产发生变化时更新已加载的内存资产。 热加载允许内容创建者快速迭代资产，并在无需重启引擎的情况下看到实时更新的变化。 当资产处理器完成对资产的处理后，会向引擎发出通知；如果相关资产已经加载或正在加载，则会排队等待重新加载请求，然后资产管理器开始加载新更新的资产。 使用资产系统的每个系统都必须通过处理 [OnAssetReloaded](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzCore/AzCore/Asset/AssetCommon.h#L603)事件来单独实现对这一功能的支持。
 
-### Asset Job Escalation
+通常情况下，项目会从加载的资产中复制数据，以执行额外的处理。资产重载的一个常见错误是不刷新任何复制的数据。例如，如果您的项目是一款使用 XML 文件定义玩家移动速度的游戏，在加载 XML 文件时，信息会被复制到玩家实体上的一个组件中，那么在发生重新加载事件时，也必须将信息重新复制到玩家实体上。否则，即使更新了 XML 文件以改变移动速度，玩家也将继续以旧的移动速度移动。
 
-As an alternative to critical assets, the Asset Processor supports Job Escalation, which can be used to make Asset Processor prioritize the processing of a given asset before other assets.  The `AssetSystemBus` offers a set of [CompileAssetSync](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzFramework/AzFramework/Asset/AssetSystemBus.h#L199) APIs which can be used to request the Asset Processor escalate the compiling of an asset and blocks until compilation is complete.
+## 资产处理优先级
 
-For a non-blocking escalation request, see the [EscalateAsset](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzFramework/AzFramework/Asset/AssetSystemBus.h#L248) APIs.
+以下内容通常只与项目开发期间相关，因为在运行引擎之前，资产并不总是被提前处理。 在已编译和捆绑所有资产的发布项目中，这些概念并不适用。
+
+### 关键资产
+
+关键资产是启动发动机所需的资产，必须由资产处理器处理后才能完成启动。 资产处理器会优先处理关键资产，然后再处理其他类型的资产。 它们由资产创建者声明为 [任务描述符](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Tools/AssetProcessor/AssetBuilderSDK/AssetBuilderSDK/AssetBuilderSDK.h#L446)的一部分。 例外情况是，如果关键资产与非关键资产有任务依赖关系，则关键资产将等待非关键资产处理完毕后再继续。 这可能会导致关键资产要等到所有其他关键资产都先处理完毕后，其依赖资产才能开始处理。 建议尽量减少这类资产，因为它们会大大影响启动引擎所需的时间。
+
+### 资产任务升级
+
+作为关键资产的替代方案，资产处理器支持 “任务升级”（Job Escalation），可用于使资产处理器优先处理给定资产，然后再处理其他资产。 `AssetSystemBus`提供了一组[CompileAssetSync](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzFramework/AzFramework/Asset/AssetSystemBus.h#L199) 应用程序接口，可用于请求资产处理器升级资产编译并阻塞直到编译完成。
+
+有关非阻塞升级请求，请参阅 [EscalateAsset](https://github.com/o3de/o3de/blob/18205539abf1b1d2eb3959c0a1c42a3eea16a455/Code/Framework/AzFramework/AzFramework/Asset/AssetSystemBus.h#L248) API。
+

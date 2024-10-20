@@ -1,35 +1,35 @@
 ---
-linkTitle: Asset Cache Server Mode
-title: Asset Cache Server
-description: Enable a feature to reduce asset builds for a team.
+linkTitle: 资产缓存服务器模式
+title: 资产缓存服务器
+description: 启用一项功能，减少团队的资产构建。
 weight: 800
 toc: true
 ---
 
-**Asset Cache Server (ACS)** mode allows **Asset Processor** to cache product asset files to a remote directory so that they can be shared across a team.
+**资产缓存服务器（ACS）** 模式允许**资产处理器**将产品资产文件缓存到远程目录，以便在团队中共享。
 
-ACS mode lets Asset Processor fetch preprocessed products of a job from an asset server cache instead of processing it locally. It does this by using a shared directory where Asset Processor writes out product asset archive ZIP files for a processed source asset job. Asset Processor clients retrieve these ZIP files and unzip the product assets instead of processing the source asset from scratch.
+ACS 模式允许资产处理器从资产服务器缓存中获取作业的预处理产品，而不是在本地进行处理。具体做法是使用一个共享目录，在该目录中，资产处理器为已处理的源资产作业写出产品资产归档 ZIP 文件。资产处理器客户端检索这些 ZIP 文件并解压产品资产，而不是从头开始处理源资产。
 
-# Setting up Asset Processor in ACS mode
+# 在 ACS 模式下设置资产处理器
 
-Setting up ACS mode so that developers can use it has three parts; setting up an ACS server, setting up ACS clients, and configuring an ACS block.
+设置 ACS 模式以便开发人员使用它包括三个部分：设置 ACS 服务器、设置 ACS 客户端和配置 ACS 块。
 
 {{< note >}}
-The next sections assume the root folder to be `T:/o3de` but it can be in any folder or it can run on Linux.
+接下来的章节假定根文件夹是 `T:/o3de`，但它可以在任何文件夹中，也可以在 Linux 上运行。
 {{< /note >}}
 
-## Create the transfer directory
+## 创建传输目录
 
-The team needs to create a shared directory that all the team members can access over the network. ACS should work between Windows and Linux, but the `cacheServerAddress` string only accepts a single string such as `T:/o3de/Transfer/Cache` that all the clients are meant to read from. It's possible to have an Asset Processor in ACS mode write to one configured `cacheServerAddress` string via Windows and have another ACS retrieve from a Samba link on Linux. Your team's IT manager can provide a solution for this scenario.
+团队需要创建一个所有成员都能通过网络访问的共享目录。ACS 可在 Windows 和 Linux 之间运行，但  `cacheServerAddress`字符串只接受一个字符串，如 `T:/o3de/Transfer/Cache`，所有客户端都要从该字符串读取数据。可以让资产处理器在 ACS 模式下通过 Windows 向一个配置好的 `cacheServerAddress` 字符串写入数据，并让另一个 ACS 从 Linux 上的 Samba 链接中检索数据。您团队的 IT 经理可以为这种情况提供解决方案。
 
-## Using the Shared Cache Tab
+## 使用共享缓存选项卡
 
-The Asset Processor has a tab that manages the settings for the Shared Cache (aka Asset Cache Server).
+资产处理器有一个选项卡，用于管理共享缓存（又名资产缓存服务器）的设置。
 
-The panel is broken up into three steps:
- 1. Choose a mode via "Set shared cache mode"
- 2. Select the transfer directory via "Select a remote folder"
- 3. Select the asset patterns that will be cached via "Manage shared cache patterns"
+面板分为三个步骤：
+1. 通过 “Set shared cache mode设置共享缓存模式 ”选择模式
+2. 通过 “Select a remote folder选择远程文件夹 ”选择传输目录
+3. 通过 “Manage shared cache patterns管理共享缓存模式 ”选择要缓存的资产模式
 
 ![Create a log tab in Asset Processor](/images/user-guide/assets/asset-processor/acs_snapshot.png)
 

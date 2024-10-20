@@ -1,84 +1,84 @@
 ---
-title: Registration
-linktitle: Registration
-description: Best practices and specifics on the Action Manager registration API calls.
+title: 注册
+linktitle: 注册
+description: 动作管理器注册 API 调用的最佳实践和具体细节。
 weight: 202
 ---
 
-The Action Manager architecture requires items to be registered before they can be used. This measure allows the system to provide error messages if an API is called with unknown identifiers, especially if due to a typo.
-A second limitation, although it’s not enforced, is to register all items at Editor startup. Since the system has been designed for extensibility and customization, registering all elements at a defined time makes them available for use from other system while still enforcing a strict ownership.
+动作管理器架构要求项目在使用前必须注册。如果调用 API 时出现未知标识符，尤其是由于错字造成的未知标识符，系统可以通过这一措施提供错误信息。
+第二个限制是在编辑器启动时注册所有项目，但这一限制并未强制执行。由于系统是为可扩展性和定制化而设计的，因此在规定的时间注册所有元素可以让其他系统使用这些元素，同时仍然执行严格的所有权规定。
 
-To simplify the registration process, the Action Manager architecture provides a set of notification hooks that are triggered on Editor startup. These notifications are split by item type; this allows systems to be certain that an item they require, but is defined elsewhere, has already been registered by the time the hook corresponding to a different item type that has a dependency on it is called. For example, the action context registration hook is called first, so by the time the action registration hook is triggered we can assume all action contexts have been registered already and are available.
+为了简化注册过程，动作管理器架构提供了一组在编辑器启动时触发的通知钩子。这些通知按项目类型划分；这使得系统可以确定，在调用与不同项目类型相对应的钩子时，它们所需的项目（但已在其他地方定义）是否已经注册。例如，动作上下文注册钩子首先被调用，因此当动作注册钩子被触发时，我们可以假设所有的动作上下文都已注册并可用。
 
-## Registration hooks
+## 注册钩子
 
 #### `OnActionContextRegistrationHook`
 
-Synchronization signal to register Action Contexts.
+注册动作上下文的同步信号。
 
 #### `OnActionContextModeRegistrationHook`
 
-Synchronization signal to register Action Context Modes.
-It can be assumed that Action Contexts have already been registered when this is called.
+同步信号，用于注册动作上下文模式。
+可以假定在调用该信号时，动作上下文已经注册。
 
 #### `OnActionUpdaterRegistrationHook`
 
-Synchronization signal to register Action Updaters.
+同步信号，用于注册 “动作更新器”。
 
 #### `OnMenuBarRegistrationHook`
 
-Synchronization signal to register Menu Bars.
+同步信号，用于注册菜单条。
 
 #### `OnMenuRegistrationHook`
 
-Synchronization signal to register Menus.
+同步信号，用于注册菜单。
 
 #### `OnToolBarAreaRegistrationHook`
 
-Synchronization signal to register ToolBar Areas.
+同步信号，用于注册工具栏区域。
 
 #### `OnToolBarRegistrationHook`
 
-Synchronization signal to register ToolBars.
+同步信号，用于注册工具栏。
 
 #### `OnActionRegistrationHook`
 
-Synchronization signal to register Actions.
-It can be assumed that Action Contexts and Action Updaters have already been registered when this is called.
+注册动作的同步信号。
+可以假定在调用此功能时，Action Context 和 Action Updaters 已经注册。
 
 #### `OnWidgetActionRegistrationHook`
 
-Synchronization signal to register Widget Actions.
+用于注册 Widget 动作的同步信号。
 `
 #### `OnActionContextModeBindingHook`
 
-Synchronization signal to bind Actions to Action Context Modes.
-It can be assumed that Action Contexts Modes have already been registered when this is called.
+将动作与动作上下文模式绑定的同步信号。
+可以假定在调用该信号时，动作上下文模式已经注册。
 
 #### `OnMenuBindingHook`
 
-Synchronization signal to add actions/widgets to Menus, and Menus to Menu Bars.
-It can be assumed that Action, Widget Actions, Menus and Menu Bars have already been registered when this is called.
+同步信号，用于将动作/小部件添加到菜单，将菜单添加到菜单栏。
+调用该信号时，可以假定已经注册了动作、小部件动作、菜单和菜单栏。
 
 #### `OnToolBarBindingHook`
 
-Synchronization signal to add actions/widgets/menus to ToolBars, and ToolBars to ToolBar Areas.
-It can be assumed that Action, Widget Actions, Menus, ToolBars and ToolBar Areas have already been registered when this is called.
+同步信号，用于向工具栏添加动作/部件/菜单，以及向工具栏区域添加工具栏。
+可以假定，在调用该信号时，动作、小工具动作、菜单、工具栏和工具栏区域已经注册。
 
 #### `OnPostActionManagerRegistrationHook`
 
-Synchronization signal for any post-registration activity.
-This is mostly to future-proof the system, but other hooks should be used as appropriate if possible before resorting to this.
+任何注册后活动的同步信号。
+这主要是为了保证系统的未来发展，但在采用这种方法之前，应尽可能使用其他钩子。
 
 
-## Accessing the registration hooks
+## 访问注册钩子
 
 ### C++
 
-To handle the registration hooks, you need to connect an instance of your class to the `ActionManagerRegistrationNotificationBus`.
-The hooks are called at Editor initialization, after the Main Window, Gems and Editor systems has been initialized, but before the UI is shown to the user. As such, the class instance needs to be connected to the bus before the end of the Editor initialization; usually, using a system component is the best choice.
+要处理注册钩子，您需要将您的类的实例连接到`ActionManagerRegistrationNotificationBus`。
+钩子会在编辑器初始化时调用，即在主窗口、Gem和编辑器系统初始化之后，但在用户界面显示给用户之前。因此，类实例需要在编辑器初始化结束前连接到总线；通常，使用系统组件是最佳选择。
 
-Have your class extend `ActionManagerRegistrationNotificationBus`.
+让您的类扩展 `ActionManagerRegistrationNotificationBus`.
 
 ```
 class TestSystemComponent
@@ -87,8 +87,8 @@ class TestSystemComponent
 }
 ```
 
-In the class initialization, connect to the bus. This could be in the constructor, the `Init` or `Activate` function of a system component, or any other form on initialization function.
-Remember to also disconnect on the destructor.
+在类的初始化过程中，连接总线。这可以在构造函数、系统组件的`Init` 或 `Activate`函数或任何其他形式的初始化函数中进行。
+记得在析构函数中也要断开连接。
 
 ```
 void TestSystemComponent::Init()
@@ -97,7 +97,7 @@ void TestSystemComponent::Init()
 }
 ```
 
-This class can then handle the functions as appropriate.
+然后，该类就可以酌情处理这些功能。
 
 ```
 void TestSystemComponent::OnActionRegistrationHook()
@@ -109,7 +109,7 @@ void TestSystemComponent::OnActionRegistrationHook()
 
 ### Python
 
-Gems can also handle the registration hooks via a `bootstrap.py` file added to the `Editor\Scripts\` folder of the Gem.
+Gem还可以通过添加到Gem的`Editor\Scripts\`文件夹中的`bootstrap.py`文件来处理注册钩子。
 
 ```
 import azlmbr.action as action

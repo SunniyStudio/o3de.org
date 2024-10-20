@@ -1,44 +1,44 @@
 ---
-title: Identifiers
-linktitle: Identifiers
-description: Unique strings used to address the elements of the Action Manager system.
+title: 标识符
+linktitle: 标识符
+description: 用于称呼动作管理器系统元素的唯一字符串。
 weight: 203
 ---
 
-In the Action Manager architecture, items are addressed via string identifiers.
-These are used to refer to actions, menus, toolbars and other items so that they are accessible from anywhere, regardless of what system defined them. String identifiers are used for this purpose as they are easier to read, discover and share between different environments (C++, Python) rather than numerical IDs or other obfuscated methods.
+在动作管理器架构中，项目是通过字符串标识符来处理的。
+字符串标识符用于指代动作、菜单、工具栏和其他项目，因此无论哪个系统定义了它们，都可以从任何地方访问它们。之所以使用字符串标识符，是因为字符串标识符比数字标识符或其他混淆方法更容易读取、发现和在不同环境（C++、Python）之间共享。
 
-Identifiers need to be unique per item type in the architecture, but don’t need to be for different types.
-For example, it is possible to register an Action and a Menu with the same identifier string, as the APIs expect a specific identifier type and there is no possible misdirection.
-Trying to register two different items of the same type to the same identifier will instead result in a failure.
+在架构中，每个项目类型的标识符都必须是唯一的，但不同类型的标识符不必是唯一的。
+例如，可以用相同的标识符字符串注册一个动作和一个菜单，因为应用程序接口希望使用特定的标识符类型，而且不存在可能的误导。
+如果尝试用相同的标识符注册相同类型的两个不同项，则会导致注册失败。
 
-## Identifier standard
+## 标识符标准
 
-The system does not enforce a specific structure for the identifier string, so any string can be used. To prevent collisions, though, we define a recommended standard to make these identifiers easier to recognize, readable, and prevent repetitions.
+系统并不强制规定标识符字符串的具体结构，因此可以使用任何字符串。不过，为了防止碰撞，我们定义了一个推荐标准，以使这些标识符更容易识别、阅读并防止重复。
 
-Following the standard, an identifier string should be built as follows:
+根据该标准，标识符字符串的结构如下：
 
 ```
 `o3de` . <item type> . <system/Gem> . <category (optional)> . <item name>
 ```
 
-As an example, the action to restore the default editor layout is registered with the following identifier:
+例如，恢复默认编辑器布局的动作使用以下标识符注册：
 
 ```
 o3de.action.layout.restoreDefault
 ```
 
-where
+其中
 
-* `action` is the item type
-* `layout` is the editor system
-* `restoreDefault` is the item name
-
-
-Categories can be used to group items that are related, like part of a subsystem or specific mode of the main system or Gem.
-Identifier portions are in lowerCamelCase.
+* `action` 是项的类型
+* `layout` 是编辑器系统
+* `restoreDefault` 是项的名称
 
 
-## Identifier headers
+类别可用于分组相关的项目，如子系统的一部分或主系统或 Gem 的特定模式。
+标识符部分使用小写。
 
-To streamline development in the O3DE C++ codebase, some common identifiers are defined as constants in specific headers to easily reference them in multiple files. Nonetheless, there is no requirement for Gems to include a file from the main Editor for the system to work, and just using the same identifier string will work as expected. By the same principle, identifiers can be used from different languages seamlessly (for example, Python).
+
+##标识符标题
+
+为了简化 O3DE C++ 代码库的开发，一些常用标识符被定义为特定标头中的常量，以便在多个文件中轻松引用。尽管如此，Gems 并不要求在主编辑器中包含一个文件，只需使用相同的标识符字符串即可正常工作。根据同样的原则，不同语言（例如 Python）也可以无缝使用标识符。

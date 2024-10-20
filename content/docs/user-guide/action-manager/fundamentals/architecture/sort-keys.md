@@ -1,12 +1,12 @@
 ---
-title: Sort Keys
-linktitle: Sort Keys
-description: An overview of sort keys in the Action Manager in the Open 3D Engine (O3DE).
+title: 排序键
+linktitle: 排序键
+description: 开放式 3D 引擎 (O3DE) 动作管理器中的排序键概览。
 weight: 204
 ---
 
-The menu manager and toolBar manager APIs provide ways to add actions and other items to the UI. To allow custom ordering with an eye to extensibility, these calls use the concept of sort keys.
+菜单管理器和工具栏管理器 API 提供了向用户界面添加动作和其他项目的方法。这些调用使用了排序键的概念，允许自定义排序，同时考虑到可扩展性。
 
-A sort key is an integer that is used to determine the absolute ordering of elements in a menu or toolbar.
-When the menu or toolbar is generated, items will be shown in order by their sort key. If multiple elements share the same sort key, they will then be shown in order as they were added.
-In general, it is recommended to leave some space between items when populating a menu that is likely to be extended from a Gem, so that there is enough leeway to introduce items in-between.
+排序键是一个整数，用于确定菜单或工具栏中元素的绝对排序。
+生成菜单或工具栏时，项目将按照排序键的顺序显示。如果多个元素共享相同的排序键，它们将按照添加时的顺序显示。
+一般情况下，建议在填充可能从 Gem 扩展的菜单时，在项目之间留出一些空间，以便有足够的余地引入中间的项目。

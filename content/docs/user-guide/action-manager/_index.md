@@ -1,15 +1,15 @@
 ---
-title: Action Manager
-linktitle: Action Manager
-description: Learn how to create or extend editor behaviors, menus, toolbars and hotkeys.
+title: 动作管理器
+linktitle: 动作管理器
+description: 了解如何创建或扩展编辑器行为、菜单、工具栏和快捷键。
 weight: 340
 ---
 
-The Action Manager is the system that handles actions, menus, toolbars and shortcuts in the O3DE Editor.
-It standardizes both the extensibility API, allowing Gems to access and customize the Editor’s interface, and the user experience, ensuring different tools and widget across the core Editor and Gems share the same UX Language.
+动作管理器是处理 O3DE 编辑器中的动作、菜单、工具栏和快捷方式的系统。
+它对扩展性 API 和用户体验进行了标准化，前者允许 Gem 访问和定制编辑器界面，后者则确保核心编辑器和 Gem 中的不同工具和 widget 共享相同的用户体验语言。
 
-## Topics
-
-| Topic | Description |
+## 主题
+1
+| 主题 | 说明 |
 | - | - |
-| [Fundamental Concepts](./fundamentals) | Learn the fundamental concepts of the Editor Action Manager system and how they are used in the core Editor. |
+| [基本概念](./fundamentals) | 了解编辑器动作管理器系统的基本概念以及如何在核心编辑器中使用这些概念。 |

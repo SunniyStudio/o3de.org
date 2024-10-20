@@ -1,20 +1,20 @@
 ---
-linkTitle: Menus
-title: Menus
-description: An overview of the Action Manager Menu API.
+linkTitle: 菜单
+title: 菜单
+description: 动作管理器菜单 API的概述。
 weight: 102
 ---
 
-The menu manager system provides interfaces to register and extend menus for use in the Open 3D Engine (O3DE) Editor UI.
+菜单管理系统提供注册和扩展菜单的接口，以便在开放式 3D 引擎 (O3DE) 编辑器用户界面中使用。
 
 
-## Registration
+## 注册
 
-A new menu can be registered by providing its string identifier.
+新菜单可通过提供其字符串标识符进行注册。
 
-The menu properties structure can also specify additional information:
+菜单属性结构还可指定其他信息：
 
-* A **name** string, which is meant to be a human-readable description to show in UI;
+* 一个**name**字符串，它的目的是在用户界面中显示一个人类可读的描述；
 
 
 ```
@@ -28,9 +28,9 @@ menuManagerInterface->RegisterMenu(
 ```
 
 
-## Displaying the menu
+## 显示菜单
 
-When a menu is registered, it is possible to display it in the interface.
+菜单注册后，可以在界面中显示。
 
 ```
 // Display a menu at a specific screen position.
@@ -41,9 +41,9 @@ menuManagerInternalInterface->DisplayMenuUnderCursor("o3de.menu.identifier");
 ```
 
 
-## Adding actions
+## 添加动作
 
-It is possible to add actions to a menu via this API call:
+可以通过此 API 调用为菜单添加动作：
 
 ```
 int sortKey = 100;
@@ -55,12 +55,12 @@ menuManagerInterface->AddActionToMenu(
 );
 ```
 
-See the [Sort Keys](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/) section for more information about menu item ordering.
+有关菜单项排序的更多信息，请参阅 [排序键](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/)部分。
 
 
-## Adding separators
+## 添加分隔符
 
-To divide a menu into sections, it is possible to add separators.
+要将菜单划分为多个部分，可以添加分隔符。
 
 ```
 int sortKey = 100;
@@ -71,14 +71,14 @@ menuManagerInterface->AddSeparatorToMenu(
 );
 ```
 
-See the [Sort Keys](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/) section for more information about menu item ordering.
+有关菜单项排序的更多信息，请参阅 [排序键](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/)部分。
 
-If multiple separators are added one after the other in order, or at the beginning or end of the menu, they may be collapsed into one or not displayed at all (default Qt behavior).
+如果按顺序一个接一个地添加多个分隔符，或者在菜单的开头或结尾添加多个分隔符，它们可能会被折叠为一个或根本不显示（Qt 默认行为）。
 
 
-## Adding sub-menus
+## 添加子菜单
 
-It is possible to add existing menus as sub-menus via the following API call.
+可以通过以下 API 调用将现有菜单添加为子菜单。
 
 ```
 int sortKey = 100;
@@ -90,14 +90,14 @@ menuManagerInterface->AddSubMenuToMenu(
 );
 ```
 
-See the [Sort Keys](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/) section for more information about menu item ordering.
+有关菜单项排序的更多信息，请参阅[排序键](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/)部分。
 
-Note that the function call will fail if a user tries to add a menu to itself, or if the operation would cause the creating of a circular dependency that could stall the Editor.
+请注意，如果用户试图向自己添加菜单，或者如果该动作会导致创建循环依赖关系，从而使编辑器停滞，则函数调用将失败。
 
 
-## Adding widget actions
+## 添加部件动作
 
-Widgets can also be added to menus as follows:
+小部件也可以按如下方式添加到菜单中：
 
 ```
 int sortKey = 100;
@@ -109,12 +109,12 @@ menuManagerInterface->AddWidgetToMenu(
 );
 ```
 
-See the [Sort Keys](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/) section for more information about menu item ordering.
+有关菜单项排序的更多信息，请参阅 [排序键](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/)部分。
 
 
-# Menu bar
+# 菜单栏
 
-It is possible to register a MainWindow's menu bar region to the Menu Manager, so that is can be accessed via the Menu Manager APIs.
+可以将主窗口的菜单栏区域注册到菜单管理器，这样就可以通过菜单管理器 API 访问该区域。
 
 ```
 // Retrieve an existing Main Window
@@ -126,12 +126,12 @@ menuManagerInterface->RegisterMenuBar(
 );
 ```
 
-When the menu bar is registered, external Gems can add new menus to the menu bar via the string identifier.
+注册菜单栏后，外部 Gems 可通过字符串标识符向菜单栏添加新菜单。
 
 
-## Adding menus
+## 添加菜单
 
-Adding menus to a menu bar works the same as adding sub-menus to menus.
+向菜单栏添加菜单的方法与向菜单添加子菜单的方法相同。
 
 ```
 int sortKey = 100;
@@ -143,4 +143,4 @@ menuManagerInterface->AddMenuToMenuBar(
 );
 ```
 
-See the [Sort Keys](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/) section for more information about menu item ordering.
+有关菜单项排序的更多信息，请参阅 [排序键](/docs/user-guide/action-manager/fundamentals/architecture/sort-keys/)部分。

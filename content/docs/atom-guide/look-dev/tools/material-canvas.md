@@ -33,12 +33,12 @@ Material Canvas 建立在与 Script Canvas 和 Material Editor 等其他 O3DE �
     {{< note >}}
   在保存图形之前，生成的文件会暂时输出到项目中的`Assets/Materials/Generated` 文件夹。保存图形后，生成的文件将输出到与图形相同的文件夹。
     {{< /note >}}
-- 根据模板创建新的材料图形。
+- 根据模板创建新的材质图形。
   - 选择 **Main Menu > File > New > New Material Graph Document...**。这将打开 **Create Material Graph Document** 对话框。
-  - 选择一个模板作为新材料图形的基础。
+  - 选择一个模板作为新材质图形的基础。
     - 模板是以特殊的`.materialgraphtemplate`扩展名保存的材质图形，指定它们作为新图形的起点。
-  - 为新材料图形选择路径和文件名。
-- 打开现有材料图形
+  - 为新材质图形选择路径和文件名。
+- 打开现有材质图形
   - 选择 **Main Menu > File > Open > Open Material Graph Document...**.
 - 从 “资产浏览器 ”打开或创建材质图形。
 
@@ -51,7 +51,7 @@ Material Canvas 建立在与 Script Canvas 和 Material Editor 等其他 O3DE �
 ### 配置节点
 您可以直接在图形视图或检查器中的节点上更改节点属性。如果选择基础 PBR 或标准 PBR 作为输出节点，材质最初是白色的。
 
-例如，更改材料的颜色：
+例如，更改材质的颜色：
 1. 将base color更改为红色 (1,0,0,1)。
 2. 注意状态栏显示文件正在再生和重新处理。 
 3. 注意视口更新后，材质和模型不再是红色。
@@ -116,87 +116,87 @@ Material Canvas 提供了几个与图形相关的附加窗口。与 Material Edi
 #### Bookmarks
 使用书签面板管理活动图表上的所有书签。您可以配置书签说明和颜色 书签面板和检查器。
 
-You can do the following actions: 
-- Place bookmarks on the graph, like pins on a map, as a point of reference for any important positions. 
-- **Double-click** on a bookmark to center the graph view on that position.
+您可以执行以下操作：
+- 在图表上放置书签，就像在地图上放置图钉一样，作为重要位置的参考点。
+- 在书签上**双击**，将图表视图置于该位置的中心。
 
 #### Mini Map
-The mini map window displays a zoomed-out overview of the nodes and graph. **Click-and-drag** the mini map to quickly navigate to different parts of the graph.
+小地图窗口显示节点和图表的放大概览。**点击并拖动**小地图，可快速浏览图表的不同部分。
 
-#### Viewport
-The viewport renders a scene containing a model, with the current material applied to it, under configurable lighting conditions. The viewport window has a toolbar with controls for setting different options related to the grid, shadow catcher, and tone mapping mode. There are also drop downs for selecting the viewport model, lighting preset, and render pipeline. Lighting presets contain all the settings for the skybox, image-based lighting, directional lights, and other settings used in the viewport. Since the introduction of the material pipeline system, render pipelines can also be changed at runtime.
+#### 视口
+视口可在可配置的照明条件下渲染包含模型的场景，并应用当前材质。视口窗口有一个工具栏，用于设置与网格、阴影捕捉器和色调映射模式相关的不同选项。此外，还有用于选择视口模型、照明预设和渲染管道的下拉菜单。照明预设包含天空盒、基于图像的照明、方向灯的所有设置，以及视口中使用的其他设置。自从引入材质管道系统后，渲染管道也可以在运行时更改。
 
-For more information about the viewport and how to interact with it, see [Atom Tools Viewport](/docs/atom-guide/look-dev/tools/atom-tools-viewport/). 
+有关视口以及如何与之交互的更多信息，请参阅 [Atom Tools Viewport](/docs/atom-guide/look-dev/tools/atom-tools-viewport/)。 
 
 #### Viewport Settings
-Use the viewport settings panel to edit the active lighting preset. The changes are reflected in the viewport. Select, create, and save lighting presets from this panel. You can also manage model presets, which are sidecar files for identifying which models are available in the viewport. The viewport settings panel does not currently support undo and redo.
+使用视口设置面板编辑活动照明预设。更改会反映在视口中。从该面板选择、创建和保存灯光预设。您还可以管理模型预设，它是用于识别视口中可用模型的辅助文件。视口设置面板目前不支持撤消和重做。
 
-For more information about the viewport settings, see [Atom Tools Viewport](/docs/atom-guide/look-dev/tools/atom-tools-viewport/). 
+有关视口设置的更多信息，请参阅 [Atom 工具视口](/docs/atom-guide/look-dev/tools/atom-tools-viewport/)。 
 
-## Editing material graphs
-### Node creation and placement
-Nodes are the building blocks of every material graph. Every node serves a purpose, providing data or a distinct piece of functionality that you can add to the graph. 
+## 编辑材质图
+### 创建和放置节点
+节点是每个材质图形的组成部分。每个节点都有其作用，提供数据或独特的功能，你可以将其添加到图形中。
 
-To create and place nodes, do either one of the following:
-- **Drag** nodes from the node palette onto the material graph view. 
-- **Right-click** on the graph view and choose a node from the embedded node palette. 
-When you create a node, the node appears at the drop or click position. The node is selected and its properties display in the Inspector for editing.
+要创建和放置节点，请执行以下操作之一：
+- 将节点从节点调板**拖**到材质图形视图上。
+- **右键单击**图形视图，从嵌入的节点调板中选择一个节点。
+  创建节点时，节点会出现在拖放或单击的位置。节点被选中后，其属性会显示在 “检查器 ”中供编辑。
 
-Depending on system constraints, you can repeat this process add more nodes to a graph. Some operations may take longer to perform based on the number of nodes on a graph or the number of selected nodes.
+根据系统限制，您可以重复此过程为图形添加更多节点。根据图形上节点的数量或所选节点的数量，某些操作的执行时间可能会更长。
 
-After you add nodes, move and reorganize them by dragging them to new positions. Access actions in the toolbar and in the Edit menu to change the placement and alignment of the selected nodes.
+添加节点后，可以通过拖动到新位置来移动和重组节点。访问工具栏和编辑菜单中的操作可更改所选节点的位置和对齐方式。
 
-### Node slots and connections
-Every Material Canvas node has some number of slots. _Slots_ define properties, inputs, and outputs for a node.
+### 节点插槽和连接
+每个 Material Canvas 节点都有一定数量的插槽。插槽定义了节点的属性、输入和输出。
 
-_Properties slots_ have no incoming or outgoing connections. They are often used as constant values or to describe other details about the node.
+**属性插槽**没有输入或输出连接。它们通常用作常量或描述节点的其他细节。
 
-_Input slots_ have default values that are consumed by and assigned to variables used inside the node. Input slots can only have one incoming connection.
+**输入插槽**具有默认值，这些值被节点内部使用的变量消耗并分配给这些变量。输入槽只能有一个输入连接。
 
-_Output slots_ represent return values from some operation performed by the node. Output slots can have connections to multiple input slots on other nodes. When an output slot is connected to an input slot on another node, the output slot value replaces the input slot value.
+**输出插槽**代表节点执行某些操作后的返回值。输出槽可以连接到其他节点上的多个输入槽。当一个输出槽连接到另一个节点上的输入槽时，输出槽的值将取代输入槽的值。
 
-Connections are made between input slots and output slots by dragging a connection wire between them. Material Canvas prevents invalid, recursive or cyclic, connections between nodes.
+输入槽和输出槽之间的连接是通过拖动连接线来实现的。Material Canvas 可防止节点之间出现无效、递归或循环连接。
 
-### Node types
-Material Canvas has different node types that are categorized into logical groups and color-coded based on the function of the node.
+### 节点类型
+Material Canvas 具有不同的节点类型，这些类型根据节点的功能分为不同的逻辑组和颜色编码。
 
-#### Output nodes (main nodes)
-The most important node type for a material graph is the main output node. These nodes provide all of the templates and meta data that instruct Material Canvas on what to generate. Material Canvas begins to generate data once an output node, with properly configured template data, is added to a material graph.
+#### 输出节点（主节点）
+材质图中最重要的节点类型是主输出节点。这些节点提供所有模板和元数据，指示 Material Canvas 生成什么数据。材质图中添加了具有正确配置的模板数据的输出节点后，Material Canvas 即开始生成数据。
 
-At this time, Material Canvas has two output nodes. The Base PBR and Standard PBR nodes contain input slots, options, and templates that you can use to create custom shaders and materials with lighting models and features similar to the core material type counterpart. Not all features have been exposed to the Standard PBR node.
+目前，“材质画布 ”有两个输出节点。基础 PBR 节点和标准 PBR 节点包含输入插槽、选项和模板，可用于创建自定义着色器和材质，其光照模型和功能与核心材质类型类似。标准 PBR 节点并未包含所有功能。
 
-Experiment by dragging one of these nodes onto a material graph. If the automatic graph compilation settings are enabled, which they are by default, several shader files, the material type, and the default material will be generated in the folder containing the material graph file.
+请将其中一个节点拖到材质图形上进行试验。如果启用了自动图形编译设置（默认情况下是这样），则会在包含材质图形文件的文件夹中生成多个着色器文件、材质类型和默认材质。
 
-#### Constant nodes
-Constant nodes represent constant variables defined in line in shader code. There are several constant nodes corresponding to different data types supported by the AZSL. These nodes should be used to setup any variables that do not need to be exposed to outside of the shader or configurable through materials.
+#### Constant 节点
+常量节点代表着色器代码中定义的常量变量。有多个常量节点与 AZSL 支持的不同数据类型相对应。这些节点应用于设置任何不需要暴露在着色器外部或可通过材质进行配置的变量。
 
-#### Input nodes
-Input nodes represent named variables that will be added to the Material SRG structure with properties and connections exposed in the material type. These properties will be displayed and configurable in the Material Editor and material component. You can also control them through script. Input nodes have additional property slots for you to specify their name, description, and other data to make them easily identifiable. As with constant nodes, there are several different nodes corresponding to data types supported by AZSL and the material system.
+#### Input 节点
+输入节点表示命名变量，这些变量将被添加到材质 SRG 结构中，并在材质类型中显示属性和连接。这些属性将在 “材质编辑器 ”和材质组件中显示和配置。您还可以通过脚本控制它们。输入节点有额外的属性插槽，用于指定其名称、描述和其他数据，使其易于识别。与常量节点一样，AZSL 和材质系统支持的数据类型也有几种不同的节点。
 
-#### Vertex nodes
-The vertex node category contains nodes that correspond to different vertex attributes like positions, normals, texture coordinates, and so on. There are nodes for the same attribute in local and world space.
+#### Vertex 节点
+顶点节点类别包含与不同顶点属性（如位置、法线、纹理坐标等）相对应的节点。同一属性在本地空间和世界空间都有节点。
 
-#### Function nodes
-The function node category contains several math related and utility function nodes that process property and input values and return a result. Currently, the majority of the function nodes are wrappers for AZSL intrinsic functions.
+#### Function 节点
+函数节点类别包含几个数学相关和实用的函数节点，用于处理属性和输入值并返回结果。目前，大部分函数节点都是 AZSL 固有函数的封装器。
 
-#### Texturing nodes
-This category contains nodes related to texture sampling. Note that some texture sampling nodes sample from a constant vector by default. You may require input from a UV node or other varying vertex attribute node to sample using texture coordinates covering a surface or model.
+#### Texturing 节点
+此类别包含与纹理采样相关的节点。请注意，某些纹理采样节点默认从恒定向量采样。您可能需要 UV 节点或其他不同顶点属性节点的输入，才能使用覆盖曲面或模型的纹理坐标进行采样。
 
-#### Scene nodes
-This category is intended to contain nodes for elements of the Scene SRG. At this time, the only exposed node is Time.
+#### Scene 节点
+该类别旨在包含场景 SRG 元素的节点。目前，唯一公开的节点是时间。
 
-#### Utility nodes
-The utility node category contains standard comment and group nodes used by all of the O3DE, graph editing tools. Comment nodes can be placed throughout the graph to leave notes and descriptions about a particular part of the graph. You can use group nodes as a container for other nodes on the graph. For groups that contain other nodes, you can expand, collapse, and treat them as a single node.
+#### Utility 节点
+实用节点类别包含所有 O3DE 图形编辑工具使用的标准注释和分组节点。注释节点可以放置在整个图形中，以便对图形的特定部分进行注释和描述。您可以使用组节点作为图形上其他节点的容器。对于包含其他节点的组，您可以展开、折叠并将它们视为一个节点。
 
-## Creating new material graph nodes
-Material Canvas nodes, with the exception of utility nodes, are completely defined in JSON configuration files. As mentioned earlier, these files describe the nodes UUID, name, description, category, as well as the layout and details for each slot on the node. Node configurations may have additional settings or meta data to drive the code and data generation process.
+## 创建新的材质图节点
+材质图节点（实用工具节点除外）完全由 JSON 配置文件定义。如前所述，这些文件描述了节点的 UUID、名称、描述、类别以及节点上每个插槽的布局和细节。节点配置可能会有额外的设置或元数据，以驱动代码和数据生成过程。
 
-The inspector for material graph node documents allows you to create unique node UUIDs, add and remove slots, select data types, configure default values, and manage custom settings for nodes and slots. The inspector also has custom controls for making selections and editing AZSL.
+通过材质图节点文档检查器，可以创建唯一的节点 UUID、添加和删除插槽、选择数据类型、配置默认值以及管理节点和插槽的自定义设置。检查器还具有用于进行选择和编辑 AZSL 的自定义控件。
 
-It is possible to create nodes from scratch using tools provided by Material Canvas. However, some of the nodes are simple enough that it might be more convenient to copy an existing material graph node file, update the UUID, and make changes using the tool or directly in JSON.
+使用 Material Canvas 提供的工具可以从头开始创建节点。不过，有些节点非常简单，复制现有的材质图节点文件、更新 UUID 并使用工具或直接在 JSON 中进行更改可能会更方便。
 
-### Material graph node configuration example
-Below is a material graph node configuration for a floating-point constant node with one property and one output slot.
+### 材质图节点配置示例
+下面是一个浮点常量节点的材质图节点配置，该节点有一个属性和一个输出槽。
 
 ```
 {
@@ -244,59 +244,59 @@ Below is a material graph node configuration for a floating-point constant node 
 }
 ```
 
-#### Material graph node configuration attributes
-Every node configuration must have a unique ID. This ensures that they are uniquely identifiable, regardless of location on disk, project, name collisions, or other factors.
+#### 材质图节点配置属性
+每个节点配置都必须有一个唯一的 ID。这可以确保它们具有唯一的可识别性，而不受磁盘位置、项目、名称碰撞或其他因素的影响。
 
-The node category determines how nodes are grouped together in the node palette tree.
+节点类别决定了节点在节点调色板树中的分组方式。
 
-The node title is the name displayed in the node palette and on the top of the node in the graph view. It's also used to create unique symbol names and variable names in shader code.
+节点标题是节点调色板和图形视图中节点顶部显示的名称。它还用于在着色器代码中创建唯一的符号名称和变量名称。
 
-The node title palette name is an optional field specifying which style sheet palette to use for the title bar on the node. Style sheets configure styling, coloring, fonts, and other attributes that control how elements in the node palette and graph view are displayed. Style sheets are defined in a separate, application wide file.
+节点标题调色板名称是一个可选字段，用于指定节点标题栏使用的样式表调色板。样式表可配置样式、着色、字体和其他属性，以控制节点调色板和图形视图中元素的显示方式。样式表是在一个单独的应用程序文件中定义的。
 
-The node description is an optional field that's presented as a tool tip when you hover over a node in the palette.
+节点描述是一个可选字段，当你将鼠标悬停在调板中的节点上时，它会以工具提示的形式显示出来。
 
-Slot data type groups contains a delimited list of slots names. The Material Canvas graph traversal and code generation process will enforce that all slot names listed in this field are promoted to the same data type, if they are compatible. Currently, if all of the listed slots reference scalar or vector values than all of the slot values will be promoted to the largest data type. For example, if all of the slots on the node are scalar values but an incoming connection is a three-dimensional vector then all of the other slots will be up converted to three dimensional vectors. This is necessary, in addition to other forms of casting, so that variables generated from different incoming types will be compatible with code and function calls defined in the node.
+槽数据类型组包含一个槽名称分隔列表。Material Canvas 图形遍历和代码生成过程会强制将此字段中列出的所有插槽名称提升为相同的数据类型（如果它们是兼容的）。目前，如果列出的所有插槽都引用了标量或矢量值，那么所有插槽值都将提升为最大的数据类型。例如，如果节点上的所有插槽都是标量值，但输入的连接是三维向量，那么所有其他插槽都将向上转换为三维向量。除了其他形式的转换外，这样做也是必要的，这样从不同输入类型生成的变量才能与节点中定义的代码和函数调用兼容。
 
-#### Material graph node slot configuration attributes
-Every slot configuration must have a unique name with respect to the node. The slot name is used to identify and address the slot, set up connections between slots, and create a unique variable name in generated shader code and other files. The name is also used as the display name in the UI, if there is no display name specified. Avoid changing the name because it breaks connections and loses any data associated with the slot.
+#### 材质图节点槽配置属性
+相对于节点而言，每个插槽配置都必须有一个唯一的名称。插槽名称用于标识和寻址插槽、建立插槽之间的连接，以及在生成的着色器代码和其他文件中创建唯一的变量名。如果没有指定显示名称，该名称还将用作用户界面中的显示名称。请避免更改名称，因为这会破坏连接并丢失与插槽相关的任何数据。
 
-For display name, specify a more user-friendly name to present in the UI. If no display name is provide, then a name inferred from the slot name.
+对于显示名称，请指定一个更方便用户使用的名称，以便在用户界面中显示。如果没有提供显示名称，则根据槽名推断名称。
 
-The description provides more detail about what slots do or represent. This is presented as tool tips when you hover over the node and slot in the graph view.
+描述提供了有关槽的作用或表示的更多细节。当您将鼠标悬停在图形视图中的节点和槽上时，这些信息会以工具提示的形式显示出来。
 
-The supporting data types' regular expression field is used to acquire which data types are compatible with a slot. With [regular expressions](https://en.m.wikipedia.org/wiki/Regular_expression), you can query multiple data types that match a specific pattern, or list the data types individually. 
+支持数据类型的正则表达式字段用于获取与插槽兼容的数据类型。使用 [正则表达式](https://en.m.wikipedia.org/wiki/Regular_expression)，可以查询与特定模式匹配的多个数据类型，也可以单独列出数据类型。
 
-The default value field is used to set a specific default value for a slot. This is optional because the system specifies a standard default value when registering all the data types. No explicit default value is assigned in the node configuration then the registered default value will be used.
+默认值字段用于为槽设置特定的默认值。这是可选项，因为系统会在注册所有数据类型时指定一个标准默认值。如果节点配置中没有指定明确的默认值，则将使用已注册的默认值。
 
-#### Material graph node settings
-Material graph nodes and slots provide a field for arbitrary settings. Material graph nodes use the settings for data like blocks of AZSL instructions, template file lists, include file lists, and other entries used for material inputs and shader options.
+#### 材质图节点设置
+材质图节点和插槽为任意设置提供了一个字段。材质图节点使用的设置数据包括 AZSL 指令块、模板文件列表、包含文件列表以及其他用于材质输入和着色器选项的条目。
 
-In the previous example, the settings are used to add AZSL instruction blocks and code snippets to create a variable from a property slot and return its value on an output slot.
+在前面的示例中，设置用于添加 AZSL 指令块和代码片段，以便从属性槽创建变量，并在输出槽中返回变量值。
 
-#### Material graph node settings for AZSL instructions
-Material graph node and slot configurations can both contain settings for AZSL instruction blocks. These instructions settings are simply lines of AZSL code that create variables, assign values, call functions, and anything else that can be done in AZSL.
+#### AZSL 指令的材质图节点设置
+材质图节点和插槽配置都可以包含 AZSL 指令块的设置。这些指令设置是简单的 AZSL 代码行，用于创建变量、赋值、调用函数以及其他任何可以在 AZSL 中完成的操作。
 
-In the above example, unique instruction sets are added to each input and output slot. The input slots have instructions for creating variables with the slot type and value assigned. The output slot instructions create another variable to hold the result of the multiplication.
+在上述示例中，每个输入和输出插槽都添加了独特的指令集。输入槽指令用于创建带有槽类型和指定值的变量。输出槽指令创建另一个变量来保存乘法运算的结果。
 
-During the code generation process, the entire graph is traversed in depth order, and instructions are stitched together from each node to fill in the shader program. For each node, instructions are added in the following order: property slot instructions, input slot instructions, node instructions, output slot instructions. This gives a deterministic flow of data from inputs to outputs. In the final shader code, each variable name is prefixed with a unique identifier for the contributing node.
+在代码生成过程中，会按深度顺序遍历整个图形，并将每个节点的指令拼接在一起，以填充着色器程序。对于每个节点，指令按以下顺序添加：属性槽指令、输入槽指令、节点指令、输出槽指令。这样就形成了从输入到输出的确定数据流。在最终的着色器代码中，每个变量名的前缀都是该节点的唯一标识符。
 
-Use the following macros to insert details about the node or slot in instruction settings.
--	SLOTTYPE is substituted with the AZSL data type for the current slot.
--	SLOTTYPE(name) is substituted with the AZSL data type for the slot with the specified name.
--	SLOTNAME is substituted with the unique, decorated variable name for the current slot.
--	SLOTNAME(name) is substituted with the unique, decorated variable name for the slot with the specified name.
--	SLOTVALUE is substituted with the value for the current slot unless it has an incoming connection. If there is an incoming connection, it is replaced with the unique variable name for that connection.
--	SLOTVALUE(name) is substituted with the value for the slot with the specified name unless it has an incoming connection. If there is an incoming connection, it is replaced with the unique variable name for that connection.
+使用以下宏在指令设置中插入节点或槽的详细信息。
+-	SLOTTYPE 将被替换为当前插槽的 AZSL 数据类型。
+-	SLOTTYPE(name) 将被指定名称的插槽的 AZSL 数据类型所替代。
+-	SLOTNAME 会被替换为当前槽的唯一、经过修饰的变量名。
+-	SLOTNAME(name) 会被指定名称的槽的唯一、经过修饰的变量名所替代。
+-	SLOTVALUE 将被替换为当前时段的值，除非该时段有输入连接。如果有输入连接，则用该连接的唯一变量名代替。
+-	SLOTVALUE(name) 将被指定名称的插槽值取代，除非该插槽有输入连接。如果有输入连接，则用该连接的唯一变量名代替。
 
-## Troubleshooting
-### Material Canvas viewport does not update immediately after editing graph
-Material Canvas automatically launches the Asset Processor if it is not already running. Some graphics related assets must be processed before the main window opens. Wait until Asset Processor is done processing all assets.
+## 故障排除
+### 编辑图形后，“材质画布 ”视口不会立即更新
+如果资产处理器尚未运行，Material Canvas 会自动启动该处理器。在主窗口打开之前，必须先处理一些与图形相关的资产。请等待资产处理器处理完所有资产。
 
-The shader compilation process is expensive, complex, and currently managed by the Shader Asset Builder. Material Canvas relies on the Asset Processor and Shader Asset Builder to process, validate, and preview content generated by material graphs. The Asset Processor reports status, error messages, and other notifications as shader and material assets are built. The viewport updates with shader and material previews as quickly as those assets can be processed.
+着色器编译过程既昂贵又复杂，目前由着色器资产生成器管理。材质画布依靠 “资产处理器 ”和 “着色器资产生成器 ”来处理、验证和预览由材质图形生成的内容。在创建着色器和材质资产时，资产处理器会报告状态、错误信息和其他通知。视口更新着色器和材质预览的速度与处理这些资产的速度一样快。
 
-Building shader assets takes more time on Windows than Linux, or other platforms. This is partially because Windows builds shaders for the null renderer, DX12, and Vulkan by default. Registry settings can be configured to disable unused targets and vastly improve shader compilation and preview times. Use the Material Canvas settings dialog to override these settings.
+在 Windows 上构建着色器资产要比在 Linux 或其他平台上花费更多时间。部分原因是 Windows 默认为空渲染器、DX12 和 Vulkan 构建着色器。可以对注册表设置进行配置，禁用未使用的目标，大幅缩短着色器编译和预览时间。使用 “材质画布 ”设置对话框可覆盖这些设置。
 
-### Material Canvas fails to launch
-Material Canvas initialize all of the O3DE Gems enabled by your game project to access the same rendering features and assets. To reduce start times and system resource utilization, Material Canvas and the other Atom tools include registry setting files that forcibly disable several standard O3DE Gems that are not needed within the tool.
+### Material Canvas 启动失败
+Material Canvas 会初始化游戏项目启用的所有 O3DE Gems，以访问相同的渲染功能和资产。为了减少启动时间和系统资源利用率，Material Canvas 和其他 Atom 工具包含注册表设置文件，可强制禁用工具内不需要的多个标准 O3DE Gems。
 
-If Material Canvas fails to launch, then it may be because of dependency issues with Gems in the active project. Check `MaterialCanvas.log` for any system entity or module initialization errors. If necessary, change or delete the custom registry settings from the Material Canvas project registry folder.
+如果 Material Canvas 无法启动，则可能是因为活动项目中 Gems 的依赖性问题。检查 `MaterialCanvas.log` 是否有任何系统实体或模块初始化错误。如有必要，更改或删除 Material Canvas 项目注册表文件夹中的自定义注册表设置。

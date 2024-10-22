@@ -1,85 +1,85 @@
 ---
-title: Material Editor
-description: Learn how to use the Material Editor to create materials in Atom.
+title: 材质编辑器
+description: 学习如何使用材质编辑器在 Atom 中创建材质。
 toc: true
 ---
 
-The **Material Editor** is a standalone application that allows artists to view, edit, and create new materials. This section introduces the Material Editor and describes the editor layout and its individual panels.
+**材质编辑器**是一个独立的应用程序，允许艺术家查看、编辑和创建新材质。本节将介绍材质编辑器，并介绍编辑器布局及其各个面板。
 
-For more information about features common to Atom tools, menus, dockable panels, and working with documents, see [Atom Tools Common Features](/docs/atom-guide/look-dev/tools/atom-tools-common-features/). 
+有关 Atom 工具的常用功能、菜单、可停靠面板和文档处理的更多信息，请参阅 [Atom 工具常用功能](/docs/atom-guide/look-dev/tools/atom-tools-common-features/)。
 
-## Quick start
-To get started, launch the Material Editor and create or edit a material. 
+## 快速入门
+要开始使用，请启动 “材质编辑器 ”并创建或编辑一个材质。
 
-### Launching Material Editor
-There are multiple ways to launch Material Editor.
-- From **Open 3D Engine (O3DE)** Editor select **Main Menu > Tools > Material Editor**
-- From the Material Component context menu, select **Open Material Editor...**
-- From the Asset Browser, double click on a `.material` or `.materialtype` file.
-- From the Asset Browser, right click on a `.material` or `.materialtype`, and select **Open in Material Editor...** 
-- Material Editor is also a standalone executable that can be launched directly from a file browser or command console.
-  - Launch the executable `<build>\bin\profile\MaterialEditor.exe`
-  - This requires passing the —project-path, followed by the path your project, as a command line argument.
+### 启动材质编辑器
+启动材质编辑器有多种方法。
+- 从 **Open 3D Engine (O3DE)** 编辑器选择 **主菜单 > Tools > Material Editor**
+- 从 Material Component 上下文菜单，选择 **Open Material Editor...**
+- 从 Asset Browser，双击一个`.material` 或 `.materialtype` 文件
+- 从 Asset Browser，右击一个`.material` 或 `.materialtype`，并选择 **Open in Material Editor...** 
+- Material Editor 还是一个独立的可执行文件，可直接从文件浏览器或命令控制台启动。
+  - 启动可执行程序 `<build>\bin\profile\MaterialEditor.exe`
+  - 这需要在命令行参数中传递 -project-path（项目路径），然后是项目路径。
 
-### Creating materials
-You have multiple options to start editing a material.
-- Create a new material from a material type.
-  1. Select **Main Menu > File > New...**. This opens the **Create Material Document** dialog.
-  2. Select a material type as the basis for your new material.
-  3. Select a path and file name for the new material.
-- Open an existing material,
-  1. Select **Main Menu > File > Open...**.
-- Open or create a material from the Asset Browser.
+### 创建材质
+开始编辑材质时，您有多种选择。
+- 根据材料类型创建新材料。
+  1. 选择 **Main Menu > File > New...**。这将打开 **Create Material Document** 对话框。
+  2. 选择一种材料类型作为新材料的基础。
+  3. 为新材料选择路径和文件名。
+- 打开现有材料，
+  1. 选择 **Main Menu > File > Open...**.
+- 从 “资产浏览器 ”打开或创建材料。
 
-### Editing materials
-To edit materials, change the material's properties in the Material Editor Inspector. The system records any changes you make, so you can always undo and redo them.
+### 编辑材质
+要编辑材质，请在材质编辑器检查器中更改材质的属性。系统会记录您所做的任何更改，因此您可以随时撤销或重做更改。
 
-### Child materials
-Materials can reference a parent material to inherit and override its properties. Changes to the parent or another ancestor automatically reflect in the child material, unless the child overrides those properties.
+###子材料
+材料可以引用父材料来继承和覆盖其属性。除非子材质覆盖了父材质或另一个祖先材质的属性，否则对父材质或另一个祖先材质的更改会自动反映到子材质中。
 
-To create child materials, open an existing material and select **Main Menu > File > Save As Child...**. 
+要创建子材质，请打开现有材质并选择 **主菜单 > File > Save As Child...**。 
 
-### Mirroring changes to O3DE Editor
-- Materials saved in the Material Editor will be processed by the Asset Processor.
-- If the O3DE Editor is open and the saved material is assigned to a Material Component or terrain it will automatically not reload to reflect the changes.
-- Enabling the autosave in Material Editor settings dialog will causes updates to be continuously mirrored in the O3DE Editor.
+### 将更改镜像到 O3DE 编辑器
+- 在 “材质编辑器 ”中保存的材质将由 “资产处理器 ”处理。
+- 如果 O3DE 编辑器已打开，且保存的材质已分配给材质组件或地形，则它不会自动重新加载以反映更改。
+- 在 “材质编辑器 ”设置对话框中启用自动保存功能将使 O3DE 编辑器中不断映射更新。
 
-## Navigating Material Editor
-When you launch Material Editor, you will see the following main window.
+## 浏览材质编辑器
+启动 “材质编辑器 ”后，您将看到以下主窗口。
 
 ![Material Editor](/images/atom-guide/tools/material-editor.jpg)
 
-For more information about features common to Atom tools, menus, dockable panels, and working with documents, see [Atom Tools Common Features](/docs/atom-guide/look-dev/tools/atom-tools-common-features/). 
+有关 Atom 工具常用功能、菜单、可停靠面板和处理文档的更多信息，请参阅 [Atom 工具常用功能](/docs/atom-guide/look-dev/tools/atom-tools-common-features/)。 
 
-### Document types and views
-Material Editor supports material documents, `.material` and `.materialtype`. 
+### 文档类型和视图
+材料编辑器支持材料文档， `.material` 和 `.materialtype`。 
 
-#### Material Documents
-You can create, open, and edit `.material files`.  You can also open `.materialtype` files to view it's properties, but you cannot edit them in the Material Editor. 
+#### 材料文件
+您可以创建、打开和编辑 `.material files`。 您也可以打开`.materialtype` 文件查看其属性，但不能在 “材质编辑器 ”中编辑它们。
 
-The material that you're currently editing displays on the model in the viewport. As you edit the material through the inspector or script, the material shown in the viewport automatically updates to reflect the changes.
+当前正在编辑的材质会显示在视口中的模型上。当您通过检查器或脚本编辑材质时，视口中显示的材质会自动更新以反映更改。
 
-### Main Menu
-The main menu contains all of the submenus and actions common to all Atom tools. 
+### 主菜单
+主菜单包含所有 Atom 工具通用的子菜单和操作。
 
-For more information about features common to Atom tools, menus, dockable panels, and working with documents, see [Atom Tools Common Features](/docs/atom-guide/look-dev/tools/atom-tools-common-features/). 
+有关 Atom 工具常用功能、菜单、可停靠面板和处理文档的更多信息，请参阅 [Atom 工具常用功能](/docs/atom-guide/look-dev/tools/atom-tools-common-features/)。
 
-### Viewport
-Use the **Viewport** panel to preview materials applied to models under different lighting conditions.
+### 视口
+使用**视口**面板预览在不同光照条件下应用于模型的材质。
 
 {{< note >}}
-The Viewport cannot be closed entirely. If all the tabs are closed, the Viewport shows a default scene that contains a blank model, ground, and natural light. 
+视口不能完全关闭。如果关闭了所有选项卡，视口将显示一个包含空白模型、地面和自然光的默认场景。
 {{< /note >}}
 
 For more information about the viewport and how to interact with it, see [Atom Tools Viewport](/docs/atom-guide/look-dev/tools/atom-tools-viewport/).  
 
 ### Viewport Settings
-The Viewport Settings panel displays options to configure the Viewport properties. These properties control how the Viewport appears and which features are active. You can also create or edit configuration presets for the viewport model and the lighting environments. 
+视口设置 面板显示用于配置视口属性的选项。这些属性可控制视口的显示方式以及哪些功能处于活动状态。您还可以创建或编辑视口模型和照明环境的配置预置。
 
-For more information about the viewport settings, see [Atom Tools Viewport](/docs/atom-guide/look-dev/tools/atom-tools-viewport/).
+有关视口设置的更多信息，请参阅 [Atom 工具视口](/docs/atom-guide/look-dev/tools/atom-tools-viewport/)。
 
-## Troubleshooting
-### Material Editor fails to launch
-Material Editor initialize all of the O3DE Gems enabled by your game project to access the same rendering features and assets. To reduce start times and system resource utilization, Material Editor and the other Atom tools include registry setting files that forcibly disable several standard O3DE Gems that are not needed within the tool.
+## 故障排除
+### 材料编辑器无法启动
+材质编辑器会初始化游戏项目启用的所有 O3DE Gems，以访问相同的渲染功能和资产。为减少启动时间和系统资源利用率，Material Editor 和其他 Atom 工具包含注册表设置文件，可强制禁用工具内不需要的多个标准 O3DE Gems。
 
-If Material Editor fails to launch, then it may be because of dependency issues with Gems in the active project. Check `MaterialEditor.log` for any system entity or module initialization errors. If necessary, change or delete the custom registry settings from the Material Editor project registry folder.
+如果 “材质编辑器 ”无法启动，那么可能是因为活动项目中宝石的依赖性问题。检查 `MaterialEditor.log` 是否有任何系统实体或模块初始化错误。如有必要，更改或删除 Material Editor 项目注册表文件夹中的自定义注册表设置。

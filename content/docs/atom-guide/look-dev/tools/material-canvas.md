@@ -1,120 +1,120 @@
 ---
 title: Material Canvas
-description: Learn how to use the Material Canvas to create material types and shaders from material graphs in Atom.
+description: 了解如何使用 “材质画布 ”从 Atom 中的材质图形创建材质类型和着色器。
 toc: true
 ---
 
-Creating material types and shaders in **Open 3D Engine (O3DE)** is ordinarily a time-consuming process that requires familiarity with the engine, renderer, shaders, data types, file formats, and how everything fits together. It involves manually editing and managing multiple files, writing **Amazon Shading Language (AZSL)** shader code, editing in JSON, launching the Asset Processor to compile them, addressing any reported errors, then using the O3DE Editor or Material Editor to preview and customize assets.
+在**Open 3D Engine (O3DE)** 中创建材质类型和着色器通常是一个耗时的过程，需要熟悉引擎、渲染器、着色器、数据类型、文件格式以及所有内容的组合方式。它涉及手动编辑和管理多个文件、编写**Amazon Shading Language (AZSL)**着色器代码、在 JSON 中编辑、启动资产处理器编译它们、处理任何报告的错误，然后使用 O3DE 编辑器或材质编辑器预览和自定义资产。
 
-**Material Canvas** drastically simplifies, accelerates, and automates the creation of custom shaders and material types by providing a visual scripting editor with familiar tools, workflows, status reporting, and live previews.
+**Material Canvas** 通过提供一个可视化脚本编辑器，以及熟悉的工具、工作流程、状态报告和实时预览，大大简化、加快并自动创建自定义着色器和材质类型。
 
-Drag-and-drop, connect, and configure nodes to construct material graphs that automatically transform into standard source files for shaders, material types, and materials. The Asset Processor automatically recognizes and processes the generated source files, so other O3DE systems and compoments can use the materials. By default, Material Canvas regenerates and overwrites files whenever you open, edit, and save a graph. The viewport updates to display the results as quickly as changes are made and processed.
+通过拖放、连接和配置节点来构建材质图形，这些图形会自动转换为着色器、材质类型和材质的标准源文件。资产处理器会自动识别并处理生成的源文件，因此其他 O3DE 系统和组件也能使用这些材质。默认情况下，只要打开、编辑和保存图形，Material Canvas 就会重新生成并覆盖文件。视口会在更改和处理完成后迅速更新以显示结果。
 
-Material Canvas is built on top of the same foundations as other O3DE tools like Script Canvas and Material Editor. It is data-driven, customizable, extensible, and scriptable through the settings registry, Python, and C++. All of the current material graph nodes are defined in JSON files that contain snippets of AZSL. You can edit and create new material graph nodes from within Material Canvas.
+Material Canvas 建立在与 Script Canvas 和 Material Editor 等其他 O3DE 工具相同的基础之上。它以数据为驱动、可定制、可扩展，并可通过设置注册表、Python 和 C++ 编写脚本。当前所有的材质图节点都定义在包含 AZSL 片段的 JSON 文件中。您可以在 Material Canvas 中编辑和创建新的材质图形节点。
 
-For more information about features common to Atom tools, menus, dockable panels, and working with documents, see [Atom Tools Common Features](/docs/atom-guide/look-dev/tools/atom-tools-common-features/). 
+有关 Atom 工具常用功能、菜单、可停靠面板和处理文档的更多信息，请参阅 [Atom 工具常用功能](/docs/atom-guide/look-dev/tools/atom-tools-common-features/)。 
 
-## Quick Start
-### Launching Material Canvas
-There are multiple ways to launch Material Canvas.
-- From O3DE Editor, select **Main Menu > Tools > Material Canvas**
-- From the Material Component context menu, select **Open Material Canvas...**
-- From the Asset Browser, **double-click** on a material graph or other file type compatible with Material Canvas.
-- From the Asset Browser, **right-click** on a material graph or other file type compatible with Material Canvas. Then select **Open in Material Canvas...** 
-- Material Canvas is also a standalone executable that you can launch directly from a file browser or command console.
-    - Launch the executable `<build>\bin\profile\MaterialCanvas.exe`. Specify the `--project-path`, followed by the path your project, as a command line argument. For example: 
+## 快速启动
+### 启动 Material Canvas
+启动 “材质画布 ”有多种方法。
+- 从O3DE编辑器，选择 **主菜单 > Tools > Material Canvas**
+- 从Material Component上下文菜单，选择**Open Material Canvas...**
+- 从Asset Browser，**双击**一个材质图表或其它与Material Canvas兼容的文件类型。
+- 从Asset Browser，**右击**一个材质图表或其它与Material Canvas兼容的文件类型。然后选择 **Open in Material Canvas...** 
+- Material Canvas 也是一个独立的可执行文件，可以直接从文件浏览器或命令控制台启动。
+    - 启动可执行程序 `<build>\bin\profile\MaterialCanvas.exe`。 指定`--project-path`，跟上你的项目的路径，就像是命令行参数一样。例如：
   ```shell
    .\<build>\bin\profile\MaterialCanvas.exe --project-path MyProject
   ```
 
-### Creating material graphs
-You have multiple options to start editing a material graph.
-- By default, Material Canvas starts with an untitled, blank material graph document, which you can use to create a new material graph.
+### 创建材质图形
+您有多个选项可以开始编辑材质图形。
+- 默认情况下，“材质画布 ”以一个无标题的空白材质图文档开始，您可以使用该文档创建新的材质图。
     {{< note >}}
-    Until you save the graph, generated files are temporarily output to the `Assets/Materials/Generated` folder in your project. When you save the graph, the generated files output to the same folder as the graph. 
+  在保存图形之前，生成的文件会暂时输出到项目中的`Assets/Materials/Generated` 文件夹。保存图形后，生成的文件将输出到与图形相同的文件夹。
     {{< /note >}}
-- Create a new material graph from a template.
-  - Select **Main Menu > File > New > New Material Graph Document...**. This opens the **Create Material Graph Document** dialog.
-  - Select a template as the basis for your new material graph.
-    - Templates are material graphs saved with a special `.materialgraphtemplate` extension that designates them as a starting point for new graphs.
-  - Select a path and file name for the new material graph.
-- Open an existing material graph
-  - Select **Main Menu > File > Open > Open Material Graph Document...**.
-- Open or create a material graph from the Asset Browser.
+- 根据模板创建新的材料图形。
+  - 选择 **Main Menu > File > New > New Material Graph Document...**。这将打开 **Create Material Graph Document** 对话框。
+  - 选择一个模板作为新材料图形的基础。
+    - 模板是以特殊的`.materialgraphtemplate`扩展名保存的材质图形，指定它们作为新图形的起点。
+  - 为新材料图形选择路径和文件名。
+- 打开现有材料图形
+  - 选择 **Main Menu > File > Open > Open Material Graph Document...**.
+- 从 “资产浏览器 ”打开或创建材质图形。
 
-### Creating nodes
-You can create nodes by dragging them from the node palette to the graph view or using the graph view context menu.
-1. Drag one of the output nodes, like Base PBR, from the node palette to the graph view. You can start with any nodes but no processing takes place without an output node to drive it.
-2. Notice that the status bar indicates files are being generated and processed.
-3. Notice the viewport update to show the generated material on the model.
+### 创建节点
+您可以通过将节点从节点调板拖动到图形视图或使用图形视图上下文菜单来创建节点。
+1. 将一个输出节点（如基础 PBR）从节点调板拖动到图形视图。您可以从任何节点开始，但如果没有输出节点驱动，则不会进行任何处理。
+2. 2. 注意状态栏显示正在生成和处理文件。
+3. 注意视口更新以在模型上显示生成的材质。
 
-### Configuring nodes
-You can change node properties directly on the node in the graph view or in the inspector. If you chose Base PBR or Standard PBR as your output node the material is initially white.
+### 配置节点
+您可以直接在图形视图或检查器中的节点上更改节点属性。如果选择基础 PBR 或标准 PBR 作为输出节点，材质最初是白色的。
 
-For example, to change the material's color:
-1. Change the base color to red (1, 0, 0, 1).
-2. Notice that the status bar indicates the files are being regenerated and reprocessed.
-3. Notice that the viewport updates such that the material and model are not red.
+例如，更改材料的颜色：
+1. 将base color更改为红色 (1,0,0,1)。
+2. 注意状态栏显示文件正在再生和重新处理。 
+3. 注意视口更新后，材质和模型不再是红色。
 
-### Connecting nodes
-Connections are a link between one node's output values to another node's input values.
+### 连接节点
+连接是一个节点的输出值与另一个节点的输入值之间的链接。
 
-The following instruction demonstrates a common scenario for connecting nodes:
-1. Create a Float4 or Color Input node anywhere on the graph. These are interchangeable but represent the value with different controls in the UI.
-2. **Drag-and-drop** the connection wire from that output slot to the base color slot on the output node. When the connection is made, the editable value disappears from the node and is grayed out in the Inspector.
-3. Notice that the viewport model changes from it's previous color to the color of the input node. Change the property values of the input node and notice the colors update in the viewport.
+下面的指令演示了连接节点的常见情况：
+1. 在图形的任意位置创建 Float4 或 Color 输入节点。这些节点可以互换，但在用户界面中代表不同控件的值。
+2. 将连接线从输出插槽**拖放**到输出节点上的基色插槽。连接完成后，节点上的可编辑值将消失，并在 “检查器 ”中显示为灰色。
+3. 请注意，视口模型的颜色已从之前的颜色变为输入节点的颜色。更改输入节点的属性值，注意视口中颜色的更新。
 
-For **Input** nodes, you can also open the generated material or material type in the Material Editor and configure the properties from there as well.
+对于**输入**节点，您也可以在 “材质编辑器 ”中打开生成的材质或材质类型，并在其中配置属性。
 
-You can create more interesting and advanced graphs by adding and nesting connections between function, texture sampling, time, transformations, and other nodes. Find several examples in the `Gems/Atom/Tools/MaterialCanvas/Assets/MaterialCanvas` folder.
+通过在功能、纹理采样、时间、变换和其他节点之间添加和嵌套连接，您可以创建更有趣、更高级的图形。在 `Gems/Atom/Tools/MaterialCanvas/Assets/MaterialCanvas` 文件夹中可找到多个示例。
 
 ## Navigating Material Canvas
 When you launch Material Canvas, you will see the following main window.
 
 ![Material Canvas](/images/atom-guide/tools/material-canvas.jpg)
 
-For more information about features common to Atom tools, menus, dockable panels, and working with documents, see [Atom Tools Common Features](/docs/atom-guide/look-dev/tools/atom-tools-common-features/). 
+有关 Atom 工具常用功能、菜单、可停靠面板和处理文档的更多信息，请参阅 [Atom 工具常用功能](/docs/atom-guide/look-dev/tools/atom-tools-common-features/)。 
 
-### Document types and views
-Material Canvas supports creating, opening, and editing multiple types of documents.
+### 文档类型和视图
+Material Canvas 支持创建、打开和编辑多种类型的文档。
 
-#### Material Graph documents
-Material Graph documents, `.materialgraph` are the main documents type in Material Canvas. Each open material graph has a corresponding, two dimensional, gridded, graph view, where most editing takes place. All of the data related to nodes, connections, slot values, positioning, selection, and any other metadata about the graph is stored in the material graph document.
+#### 材质图文档
+材质图文档（`.materialgraph`）是 Material Canvas 中的主要文档类型。每个打开的材质图形都有一个相应的二维网格图形视图，大部分编辑工作都在该视图中进行。所有与节点、连接、槽值、定位、选择相关的数据以及与图形相关的任何其他元数据都存储在材质图形文件中。
 
-#### Material Graph Node documents
-Material Graph Node documents, `.materialgraphnode`, are JSON files that define each type of node that you can create in Material Canvas. They contain settings for a unique ID, unique name, display name, description, data type, and default values for the node and its slots. Additionally, they declare fragments of AZSL shader code and other metadata that Material Canvas uses to assemble complete shaders. All of the current Material Canvas nodes are specified using material graph node configuration files. Nodes can also be created and registered programmatically using C++ or Python.
+#### 材质图节点文档
+Material Graph Node 文档（`.materialgraphnode`）是 JSON 文件，用于定义可在 Material Canvas 中创建的每种类型的节点。它们包含节点及其插槽的唯一 ID、唯一名称、显示名称、描述、数据类型和默认值的设置。此外，它们还声明了 AZSL 着色器代码片段和其他元数据，Material Canvas 会使用这些代码和元数据来组装完整的着色器。当前所有的 Material Canvas 节点都是通过材质图节点配置文件指定的。也可以使用 C++ 或 Python 以编程方式创建和注册节点。
 
-#### Shader Source Data Config Documents
-Shader Source Data Config Documents, `.shader`, are for editing shader configuration files. All of the supporting data types are reflected so you can edit shader source data files in the Inspector or using Python. In the Inspector, all of the options are listed. This is useful to edit shader source data files and creating new templates for material graph output nodes.
+#### 着色器源数据配置文档
+着色器源数据配置文档（`.shader`）用于编辑着色器配置文件。它反映了所有支持的数据类型，因此你可以在检查器中或使用 Python 编辑着色器源数据文件。在检查器中，会列出所有选项。这对于编辑着色器源数据文件和为材质图形输出节点创建新模板非常有用。
 
-### Main menu
-The main menu contains all of the submenus and actions common to all Atom tools as well as Material Canvas specific actions. 
+### 主菜单
+主菜单包含所有 Atom 工具通用的子菜单和操作，以及 Material Canvas 的特定操作。
 
-For more information about features common to Atom tools, menus, dockable panels, and working with documents, see [Atom Tools Common Features](/docs/atom-guide/look-dev/tools/atom-tools-common-features/). 
+有关 Atom 工具常用功能、菜单、可停靠面板和处理文档的更多信息，请参阅 [Atom 工具常用功能](/docs/atom-guide/look-dev/tools/atom-tools-common-features/)。 
 
-### Edit menu
-In addition to options common to Atom tools, when a material graph document is open and active, there are also options to manage the graph and its elements. 
+### Edit 菜单
+除了 Atom 工具常用的选项外，当材质图形文档打开并处于活动状态时，还有管理图形及其元素的选项。 
 
-Similar to Script Canvas and Landscape Canvas, you can select, align, delete, duplicate, cut, copy, and paste nodes.
+与脚本画布和横向画布类似，您可以选择、对齐、删除、复制、剪切、拷贝和粘贴节点。
 
-### View menu
-In addition to options common to Atom tools, there are also options to navigate and manage the graph view, as well as open an editor to configure comment nodes and node group presets.
+### View 菜单
+除了 Atom 工具常用的选项外，还有导航和管理图表视图的选项，以及打开编辑器配置注释节点和节点组预设的选项。
 
-### Tools menu
-From the Tools menu, you can toggle dockable windows that are specific to Material Canvas.
+### Tools 菜单
+通过 “工具 ”菜单，可以切换 “材质画布 ”特有的可停靠窗口。
 
-### Docked windows
-Material Canvas provides several additional windows related to working with graphs. Unlike Material Editor, the viewport is also dockable. 
+### 停靠窗口
+Material Canvas 提供了几个与图形相关的附加窗口。与 Material Editor 不同，视口也是可停靠的。 
 
 #### Node palette
-The node palette contains a tree of all available material graph nodes and other utility nodes, that you can add to a graph. The nodes are organized by category and color-coded by type. 
+节点调色板包含一棵树，树上有所有可用的材质图形节点和其他实用节点，您可以将它们添加到图形中。这些节点按类别排列，并以颜色标示。
 
-You can do the following actions: 
-- **Hover** over each node in the tree to read details about the node. 
-- **Drag** nodes from the palette into the active graph view to create an instance of that node at the drop position on the graph.
+您可以执行以下操作：
+- 将鼠标**悬停**在树状图中的每个节点上，以阅读该节点的详细信息。
+- 将调色板中的节点**拖**到活动图形视图中，在图形上的下拉位置创建该节点的实例。
 
 #### Bookmarks
-Use the bookmarks panel to manage all of the bookmarks on the active graph. You can configure bookmark descriptions and colors bookmarks panel and Inspector.
+使用书签面板管理活动图表上的所有书签。您可以配置书签说明和颜色 书签面板和检查器。
 
 You can do the following actions: 
 - Place bookmarks on the graph, like pins on a map, as a point of reference for any important positions. 

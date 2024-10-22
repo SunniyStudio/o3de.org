@@ -1,136 +1,140 @@
 ---
-title: Atom Tools Viewport
-description: Learn about the viewport, settings, and interactions shared by many tools in Atom.
+title: Atom 工具视口
+description: 了解 Atom 中许多工具共享的视口、设置和交互。
 toc: true
 ---
 
-## Viewport
-The Atom Tools Viewport is shared by multiple tools like Material Editor and Material Canvas.
+## 视口
+Atom 工具视口由多个工具共享，如材质编辑器和材质画布。
 
-The viewport contains the following features and configurable options:
-- An interactive camera that you can move and orient in the viewport.
-- A model placed at the origin of the scene with a material applied to it. 
-- A lighting preset that provides a skybox, image based lighting, directional lights, tone mapping, and other configurable lighting conditions.  
-- An optional grid at the origin of the viewport.  
-- An optional shadow catcher at the origin of the scene that renders a planar shadow of the viewport model. 
-- A toolbar for toggling features and selecting the current model, lighting preset, and render pipeline.
+视口包含以下功能和可配置选项：
+- 可在视口中移动和调整方向的交互式摄像机。
+- 放置在场景原点的模型，并在其上应用材质。
+- 灯光预设，可提供天空盒、基于图像的灯光、定向灯光、色调映射以及其他可配置的灯光条件。
+- 位于视口原点的可选网格。
+- 场景原点的可选阴影捕捉器，可渲染视口模型的平面阴影。
+- 工具栏，用于切换功能和选择当前模型、照明预设和渲染管道。
 
 ![Viewport](/images/atom-guide/tools/viewport.png)
 
-### Interacting with the viewport
-You can view the model or other content in the viewport at different perspectives by controlling the camera, model, or environment.
+### 与视口互动
+您可以通过控制摄像机、模型或环境，以不同的视角查看视口中的模型或其他内容。
 
-#### Camera controls
-These controls adjust the camera view.
-| Control | Action |
+#### 摄像头控制
+这些控件可调整摄像机视图。
+
+| 控制 | 动作 |
 | - | - |
-| **LMB+Drag**, **RMB+Drag** | Tumble the camera around a pivot or point of interest. |
-| **MMB Scroll** | Dolly the camera toward or away from a pivot or point of interest. |
-| **MMB+Drag** | Track the camera left, right, up, and down in the direction of mouse movement. |
-| **Z** | Reset camera view. |
+| **LMB+Drag**, **RMB+Drag** | 围绕一个支点或兴趣点翻转摄像机。 |
+| **MMB Scroll** | 将摄像机摇向或摇离一个支点或兴趣点。 |
+| **MMB+Drag** | 沿着鼠标移动的方向跟踪摄像头的左、右、上、下移动。 |
+| **Z** | 重置摄像机视图。|
 
-#### Model and lighting controls
-These controls adjust the model and lighting within the current camera view. 
-| Control | Action |
+#### 模型和照明控制
+这些控件用于调整当前摄像机视图中的模型和照明。
+
+| 控制 | 动作 |
 | - | - |
-| **Ctrl+LMB+Drag** | Tumble the model. |
-| **Shift+LMB+Drag** | Rotate the lighting environment horizontally around the model. |
+| **Ctrl+LMB+Drag** | 翻滚模型。|
+| **Shift+LMB+Drag** | 围绕模型水平旋转照明环境。 |
 
-#### Industry-standard controls
-Industry-standard controls to orbit, zoom, and pan in the Viewport. 
-| Control | Action |
+#### 行业标准控件
+行业标准控件，可在视口中进行轨道、缩放和平移操作。
+| 控制 | 动作 |
 | - | - |
-| **Alt+LMB+Drag** | Tumble the camera around a pivot or point of interest. |
-| **Alt+RMB+Drag** | Dolly the camera toward or away from a pivot or point of interest. |
-| **Alt+MMB+Drag** | Track the camera left, right, up, and down in the direction of mouse movement. |
+| **Alt+LMB+Drag** | 围绕一个支点或兴趣点翻转摄像机。|
+| **Alt+RMB+Drag** | 将摄像机摇向或摇离一个支点或兴趣点。 |
+| **Alt+MMB+Drag** | 沿着鼠标移动的方向跟踪摄像头的左、右、上、下移动。|
 
-## Viewport Toolbar
-The Viewport Toolbar contains the following set of functions to configure the Viewport:
+## 视口工具栏
+视口工具栏包含以下用于配置视口的功能：
 
-| Function | Description |
+| 功能 | 说明 |
 | - | - |
-| **Display Grid** | Show or hide the ground plane in the Viewport.    |  |  |
-| **Display Shadow** | Show or hide the shadow effect in the Viewport.    |  |  |
-| **Alternate Skybox** | Toggle between the primary and alternate skybox settings for the active lighting preset.    |  |  |
-| **Tone Mapping** | Select which tone mapping effect will be applied to the viewport.    |  |  |
-| **Model Preset** | Select a model preset to preview the material on. A model preset can be configured in the [Model property group](#model) in the Viewport Settings.   |  |  |
-| **Lighting Preset** | Select a lighting preset to view your material in a specific image-based lighting (IBL) environment. A lighting preset is a set of image-based lighting (IBL) data that can be configured in the [Lighting property group](#lighting) in the Viewport Settings. |  |  |
-| **Render Pipeline** | Select the render pipeline that will be used to render the scene in the viewport. |  |  |
+| **Display Grid** | 在视口中显示或隐藏地平面。   |  |  |
+| **Display Shadow** | 在视口中显示或隐藏阴影效果。   |  |  |
+| **Alternate Skybox** | 在活动照明预设的主要天空盒设置和备用天空盒设置之间切换。    |  |  |
+| **Tone Mapping** | 选择要应用到视口的色调映射效果。   |  |  |
+| **Model Preset** | 选择一个模型预设来预览材质。模型预设可在 “视口设置 ”的[模型属性组](#model) 中配置。   |  |  |
+| **Lighting Preset** | 选择照明预设可在特定的基于图像的照明 (IBL) 环境中查看材质。照明预设是一组基于图像的照明 (IBL) 数据，可在 “视口设置 ”的[照明属性组](#lighting) 中进行配置。 |  |  |
+| **Render Pipeline** | 选择用于在视口中渲染场景的渲染管道。 |  |  |
 
-## Viewport Settings
-The Viewport Settings window displays options to configure the Viewport properties. These properties control how the Viewport appears and which features are active. You can also create or edit presets for the viewport model and the lighting environments. 
+## 视口设置
+视口设置 "窗口显示用于配置视口属性的选项。这些属性可控制视口的显示方式以及哪些功能处于活动状态。您还可以为视口模型和照明环境创建或编辑预设。
 
 ![Viewport Settings](/images/atom-guide/tools/viewport-settings.png)
 
-Viewport Settings contains the following settings groups:
+"视口设置 "包含以下设置组：
 
 ### General
-The General property group contains basic properties that are required by the Viewport. 
+常规属性组包含视口所需的基本属性。
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Enable Grid** | Show or hide the ground plane. (This property is also accessible in the Viewport Toolbar.) |
-| **Enable Shadow Catcher** | Show or hide shadow effects. (This property is also accessible in the Viewport Toolbar.) |
-| **Enable Alternate Skybox** | Toggle to display the alternate skybox image if one is specified by the **Skybox Image Asset (Alt)** property in the lighting preset.  |
-| **Field of View** | Adjust the camera's field of view. |
-| **Display Mapper Type** | Configure tone mapping and color grading |
+| **Enable Grid** | 显示或隐藏地平面。(该属性也可在视口工具栏中访问）。 |
+| **Enable Shadow Catcher** | 显示或隐藏阴影效果。(该属性也可在视口工具栏中访问）。 |
+| **Enable Alternate Skybox** | 如果照明预设中的**Skybox Image Asset (Alt)** 属性指定了备用天空盒图像，则切换显示备用天空盒图像。  |
+| **Field of View** | 调整摄像头的视野。|
+| **Display Mapper Type** | 配置色调映射和色彩分级 |
 
 ### Model
-The Model property group allows you to manage the list of available model presets, and configure their properties. Model presets are useful for previewing materials on a variety of surfaces. Atom includes a collection of basic models, and you can create additional presets with custom models. Model presets are stored in JSON files (`*.modelpreset.azasset`) and can be configured in the Viewport Settings. 
+模型属性组允许您管理可用模型预设列表并配置其属性。模型预设对于在各种表面上预览材质非常有用。Atom 包含一系列基本模型，你还可以使用自定义模型创建其他预设。模型预设存储在 JSON 文件(`*.modelpreset.azasset`)中，可以在 “视口设置 ”中进行配置。
 
 #### Buttons
-These controls are used to create, edit, save, or reset a specific model preset.  
-| Button | Description |
+这些控制器用于创建、编辑、保存或重置特定的模型预设。
+
+| 按钮 | 说明 |
 | - | - |
-| **Add** | Create a new model preset and select a save file location. Model presets can be saved anywhere in your project folder.  |  |  |
-| **Select** | Open the **Model Preset Browser**, browse, and select from the list of available model presets. |  |  |
-| **Save** | Save changes made to the selected model preset. |  |  |
+| **Add** | 创建新的模型预设并选择保存文件的位置。模型预设可以保存在项目文件夹中的任何位置。  |  |  |
+| **Select** | 打开**模型预置浏览器**，浏览并从可用模型预置列表中进行选择。 |  |  |
+| **Save** | 保存对所选模型预设所做的更改。 |  |  |
 
 #### Properties
-The following are properties you can configure for the selected model preset.  
-| Property | Description |
+以下是您可以为所选模型预设配置的属性。 
+
+| 属性 | 说明 |
 | - | - |
-| **Display Name** | Specify the name of this preset. The name appears in the Viewport Model drop-down list in the Viewport Toolbar.  |  |  |
-| **Model Asset** | Assign a model asset for this preset. The model asset must be in FBX format (`.fbx`). |  |  |
-| **Preview Image Asset** | Assign an image as the preview icon for this preset. The image appears in the Viewport Model drop-down list in the Model Preset Browser. |  |  |
+| **Display Name** | 指定此预设的名称。该名称将显示在视口工具栏中的视口模型下拉列表中。 |  |  |
+| **Model Asset** | 为该预置指定模型资产。模型资产必须是 FBX 格式（`.fbx`）。 |  |  |
+| **Preview Image Asset** | 为该预置指定一幅图像作为预览图标。图像会出现在模型预设浏览器的视口模型下拉列表中。 |  |  |
 
 #### Model Preset Browser
-The **Model Preset Browser** window opens when you press the **Select** button. The Model Preset Browser window is a separate window that cannot be docked.
+按下**选择**按钮后，**模型预置浏览器**窗口将打开。模型预设浏览器 "窗口是一个单独的窗口，不能停靠。
 
 ![Model Preset Browser](/images/atom-guide/tools/model-preset-browser.png)
 
 ### Lighting
-The Lighting property group allows you to manage the list of available lighting presets and configure their properties. Lighting presets are useful for previewing materials in a variety of lighting conditions. Atom includes a collection of lighting presets, and you can create additional presets with a custom skymap image and lighting properties. Lighting presets are stored in JSON files (`*.lightingpreset.azasset`), which you can configure in the Viewport Settings. 
+照明属性组允许您管理可用照明预设列表并配置其属性。照明预设对于在各种照明条件下预览材质非常有用。Atom 包含一系列照明预设，你还可以使用自定义天图图像和照明属性创建其他预设。照明预设存储在 JSON 文件（`*.lightingpreset.azasset`）中，你可以在 “视口设置 ”中对其进行配置。
 
 #### Buttons  
-These controls are used to create, edit, save, or reset a specific lighting preset.  
+这些控制器用于创建、编辑、保存或重置特定的灯光预设。
 
-| Button | Description |
+| 按钮 | 说明 |
 | - | - |
-| **Add** | Create a new lighting preset and select a save file location. You can save lighting presets anywhere in your project folder.  |  |  |
-| **Select** | Open the **Lighting Preset Browser**, browse, and select from the list of available lighting presets. |  |  |
-| **Save** | Save changes made to the selected lighting preset. |  |  |
+| **Add** | 创建新的灯光预设并选择保存文件的位置。您可以将灯光预设保存在项目文件夹中的任何位置。  |  |  |
+| **Select** | 打开**灯光预设浏览器**，浏览并从可用灯光预设列表中进行选择。 |  |  |
+| **Save** | 保存对所选照明预设做出的更改。 |  |  |
 
 #### Properties  
-The following are properties you can configure for the selected lighting preset.  
+以下是您可以为所选照明预设配置的属性。
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Display Name** | Specify the name of this preset. The name appears in the Viewport Model drop-down list in the Viewport Toolbar.  |  |  |
-| **IBL Diffuse Image Asset** | Assign a diffuse lighting cubemap to use for IBL. |  |  |
-| **IBL Specular Image Asset** | Assign a specular lighting cubemap to use for IBL. |  |  |
-| **Skybox Image Asset** | Assign a diffuse lighting cubemap to use as the skybox, or background. |  |  |
-| **Skybox Image Asset (Alt)** | Assign a diffuse lighting cubemap to use an alternative skybox, or background. This allows you to have a different background while using the same lighting settings. Enable this skybox using the **Enable Alternate Skybox** property in the [General](#general) settings. |  |  |
-| **Skybox Exposure** | Adjust the brightness of the skybox. |  |  |
-| **Shadow Catcher Opacity** | Adjust the opacity level of the ground plane that catches the model's shadows.  |  |  |
-| **Exposure** | A group of settings to configure the exposure. |  |  |
-| **Lights** | Manage a list of lights for the active lighting preset. |  |  |
+| **Display Name** | 指定此预设的名称。该名称将显示在视口工具栏中的视口模型下拉列表中。  |  |  |
+| **IBL Diffuse Image Asset** | 为 IBL 指定一个漫反射照明立方体贴图。 |  |  |
+| **IBL Specular Image Asset** | 为 IBL 指定一个镜面照明立方体贴图。 |  |  |
+| **Skybox Image Asset** | 指定一个漫反射照明立方体贴图作为天空盒或背景。 |  |  |
+| **Skybox Image Asset (Alt)** | 为漫反射照明立方体贴图指定一个替代天空盒或背景。这样，您就可以在使用相同照明设置的情况下获得不同的背景。使用 [常规](#general) 设置中的 **Enable Alternate Skybox** 属性启用该天空盒。 |  |  |
+| **Skybox Exposure** | 调整天空盒的亮度。 |  |  |
+| **Shadow Catcher Opacity** | 调整捕捉模型阴影的地平面的不透明度。 |  |  |
+| **Exposure** | 一组用于配置曝光的设置。 |  |  |
+| **Lights** | 管理活动灯光预设的灯光列表。 |  |  |
 
 #### Lighting Preset Browser  
-The **Lighting Preset Browser** window opens when you press the **Select** button. The Lighting Preset Browser window is a separate window that cannot be docked.
+按下**Select**按钮后，**灯光预设浏览器**窗口将打开。照明预设浏览器窗口是一个单独的窗口，不能停靠。
 
 ![Lighting Preset Browser](/images/atom-guide/tools/lighting-preset-browser.png)
 
 {{< note >}}  
-Lighting and model presets can be stored in any valid source asset folder in your project or Gems. They will automatically be discovered, and you can select them from the Viewport Toolbar or Viewport Settings Panel. 
+灯光和模型预设可以存储在项目或 Gems 中任何有效的源资产文件夹中。它们会自动被发现，你可以从 “视口工具栏 ”或 “视口设置面板 ”中选择它们。
 {{< /note >}}  

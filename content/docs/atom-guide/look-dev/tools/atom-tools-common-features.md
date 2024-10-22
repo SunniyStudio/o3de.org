@@ -1,120 +1,121 @@
 ---
-title: Atom Tools Common Features
-description: Learn how to navigate and use the common features of Atom tools such as Material Editor and Material Canvas.
+title: Atom 工具常用功能
+description: 学习如何浏览和使用 Atom 工具的常用功能，如材质编辑器和材质画布。
 toc: true
 ---
 
-The tools included with Atom are built upon a common foundation. They share the same core concepts, features, workflows, and user experience.
+Atom 所包含的工具建立在一个共同的基础之上。它们共享相同的核心概念、功能、工作流程和用户体验。
 
 ![Basic Tool](/images/atom-guide/tools/empty-tool.jpg)
 
-## Document system
-All of the Atom tools use a multi-document, multi-view system. This allows all of the tools to follow the same patterns, so they share the same features, UI, and basic interactions. You'll have a familiar experience across the tools, regardless of the type of data you edit.
+## 文档系统
+所有 Atom 工具都使用多文档、多视图系统。这使得所有工具都遵循相同的模式，因此它们共享相同的功能、用户界面和基本交互。无论你编辑什么类型的数据，你都能在所有工具中获得熟悉的体验。
 
-A _document_ is the representation of a file or other data that you can create, open, and edit from within a tool. At a minimum, all document types support actions to open, save, undo, redo, and provide a list of properties that you can edit in an inspector, 
+**文档**是文件或其他数据的表示形式，可以在工具中创建、打开和编辑。至少，所有文档类型都支持打开、保存、撤销、重做等操作，并提供可在检查器中编辑的属性列表、
 
-A _view_ is usually a window or other UI that allows you to visualize, inspect, or interact with a document.
+**视图**通常是一个窗口或其他用户界面，它允许你对文档进行可视化、检查或交互。
 
-Each tool is designed specifically for a set of document types:
-- Material Editor currently only supports one document type for editing ".material" and viewing ".materialtype" files
-- Material Canvas supports multiple document types for ".materialgraph", ".materialgraphnode", and ".shader" files. 
-- Shader Management Console supports one document type for ".shadervariantlist" files. 
+每种工具都专门针对一组文件类型而设计：
+- 材质编辑器目前只支持一种文档类型，用于编辑".material"和查看".materialtype"文件
+- Material Canvas 支持".materialgraph", ".materialgraphnode", 和 ".shader"文件的多种文件类型。
+- 着色器管理控制台支持".shadervariantlist"文件的一种文档类型。
 
-You can open and edit multiple documents at the same time.
-- Access each document using a tab at the top of the central window. 
-- Each document tab displays the file name of the document.
-- **Right-click** on a tab to open a context menu with document-centric actions.
-- Select a tab to activate the corresponding document, display any associated views, and update other windows, like the inspector, with content from the document.
+您可以同时打开和编辑多个文档。
+- 使用中央窗口顶部的选项卡访问每个文档。
+- 每个文档选项卡都会显示文档的文件名。
+- 在标签页上**右击**，可打开一个上下文菜单，其中包含以文档为中心的操作。
+- 选择一个选项卡可激活相应的文档，显示任何相关视图，并用文档内容更新其他窗口（如检查器）。
 
-## Single instance
-By default, the tools are set up to only allow a single instance to run at a time. If you attempt to relaunch a tool that is already running, it instead focuses on the existing instance. If a tool is running and you attempt to open an associated file type from the O3DE Editor or file browser, then it opens in the same tool in a new tab. 
+## 单实例
+默认情况下，工具设置为一次只允许运行一个实例。如果尝试重新启动已在运行的工具，则会集中在现有实例上。如果工具正在运行，而您试图从 O3DE 编辑器或文件浏览器打开相关的文件类型，则该文件会在同一工具的新标签页中打开。
 
-## Python scripting
-All tools built on this foundation have common APIs for scripting, automation, and extension with Python. While there are differences from the main O3DE Editor environment and scripting API, you should have access to all other scripting features from your project and enabled Gems.
-- The document system is fully scriptable.
-- Several utility functions used in C++ are also available in Python.
-- Use PyQt for controlling and extending the UI. 
-- Run scripts from the file menu, Asset Browser context menu, or passed in as command line arguments. 
+## Python 脚本
+在此基础上构建的所有工具都有通用的 API，用于使用 Python 编写脚本、实现自动化和扩展。虽然与主要的 O3DE 编辑器环境和脚本 API 有所不同，但您应该可以通过项目和启用的 Gems 访问所有其他脚本功能。
+- 文件系统完全可以用脚本编写。
+- C++ 中使用的几个实用功能在 Python 中也同样可用。
+- 使用 PyQt 控制和扩展用户界面。
+- 通过文件菜单、资产浏览器上下文菜单或作为命令行参数传递的方式运行脚本。 
 
-## Main window
-The main window is the hub and owns all of the user interface for a tool.
+## 主窗口
+主窗口是一个工具的枢纽，拥有该工具的所有用户界面。
 
-### Title bar
-The title bar at the top of the main window displays the name of the application and the active RHI, rendering back end (DX12 or Vulkan).
+### 标题栏
+主窗口顶部的标题栏显示应用程序名称和活动 RHI、渲染后端（DX12 或 Vulkan）。
 
-### Layouts
-The position, size, and state of the main window and any child windows save and restore each time you open the tool. You can save, restore, and manage custom layouts from the view menu.
+### 布局
+每次打开工具时，都会保存并还原主窗口和任何子窗口的位置、大小和状态。你可以从视图菜单中保存、还原和管理自定义布局。
 
-### Docked Windows
-The main window contains several child windows for different features that you can dock, float, stack, or rearrange into custom layouts.
+### 停靠窗口
+主窗口包含多个不同功能的子窗口，你可以将它们停靠、浮动、堆叠或重新排列到自定义布局中。
 
-All of the tools come with a common set of basic panels but you can add more panels based on the needs of each tool. 
+所有工具都有一套通用的基本面板，但您可以根据每个工具的需要添加更多面板。
 
-#### Inspector
-The Inspector displays context-sensitive, editable properties for the active document.
+#### 检查器
+检查器显示活动文档的上下文相关、可编辑的属性。
 
 #### Asset Browser
-Use the Asset Browser panel to explore and manage assets in the active project and Gems. Set up filters, select, create, rename, move, delete, and perform other operations on assets. The Asset Browser automatically selects the file corresponding to the most recently opened or activated document. This only happens if the filters are set up to display the document type. Drag assets from the Asset Browser into asset properties in the Inspector and other windows supporting the dropped file types.
+使用 “资产浏览器 ”面板探索和管理活动项目和 Gems 中的资产。设置过滤器，选择、创建、重命名、移动、删除资产并执行其他操作。资产浏览器会自动选择与最近打开或激活的文档相对应的文件。这只有在设置了显示文档类型的筛选器时才会发生。将资产从 “资产浏览器 ”拖入 “检查器 ”中的资产属性和其他支持拖放文件类型的窗口。
 
-#### Logging
-Use the Logging window to review all of the trace, warning, and error messages reported since the tool was launched.
+#### 日志
+使用日志窗口查看工具启动后报告的所有跟踪、警告和错误信息。
 
-#### Python Terminal
-Use the Python terminal to invoke script commands directly from within the tool. It will also display the output, warnings, and errors from any Python code executed during the session. There are other buttons to display available script commands and buses.
+#### Python 终端
+使用 Python 终端可直接从工具中调用脚本命令。它还会显示会话期间执行的任何 Python 代码的输出、警告和错误。还有其他按钮可显示可用的脚本命令和总线。
 
-## Main menus
-The main menu bar in every tool contains a common set of options but can be customized by each tool. 
+### 主菜单
+每个工具的主菜单栏都包含一组通用选项，但每个工具都可以自定义。
 
-### File menu
-The file menu contains all of the common actions to create, open, close, and save documents. There are also actions to run Python scripts.
-| Menu item | Hotkey | Function |
+### File菜单
+文件菜单包含创建、打开、关闭和保存文档的所有常用操作。此外，还有运行 Python 脚本的操作。
+
+| 菜单项 | 快捷键 | 功能 |
 | - | - | - |
-| New... | **Ctrl+N** | Opens a dialog to create a new document. If the tool supports multiple document types, this first displays a sub menu that lists them. |
-| Open... | **Ctrl+O** | Opens a dialog to open an existing document. If the tool supports multiple document types, this first displays a sub menu listing them. |
-| Save | **Ctrl+S** | Saves the active document. |
-| Save As... | | Saves the active document to the specified folder and file name. |
-| Save As Child... | | Saves a new child document of the current document. Only Material Canvas and Material Editor has this action. |
-| Save All | | Saves the edits in all open documents. |
-| Close | **Ctrl+F4** | Closes the active document. |
-| Close All | | Closes all of the open documents. |
-| Close Others | | Closes all of the documents except the active one. |
-| Run Python... | | Opens a dialog to select and run a Python script. |
-| Exit | | Closes the application. |
+| New... | **Ctrl+N** | 打开创建新文档的对话框。如果工具支持多种文档类型，则首先会显示一个子菜单，列出这些类型。 |
+| Open... | **Ctrl+O** | 打开对话框以打开现有文档。如果工具支持多种文档类型，首先会显示一个子菜单，列出这些类型。 |
+| Save | **Ctrl+S** | 保存活动文档。|
+| Save As... | | 将活动文档保存到指定的文件夹和文件名。 |
+| Save As Child... | | 保存当前文档的新子文档。只有 “材质画布 ”和 “材质编辑器 ”有此操作。 |
+| Save All | | 保存所有打开文档中的编辑内容。 |
+| Close | **Ctrl+F4** | 关闭活动文档。 |
+| Close All | | 关闭所有打开的文档。|
+| Close Others | | 关闭除活动文档外的所有文档。 |
+| Run Python... | | 打开对话框，选择并运行 Python 脚本。 |
+| Exit | | 关闭应用程序。 |
 
-### Edit menu
-The edit menu has common actions to undo and redo changes on the active document. Other tools may have additional actions depending on the document types they support. 
-| Menu item | Hotkey | Function |
+### Edit 菜单
+编辑菜单具有撤销和重做活动文档更改的常用操作。其他工具可能还有其他操作，具体取决于它们支持的文档类型。
+| 菜单项 | 快捷键 | 功能 |
 | - | - | - |
-| Undo | **Ctrl+Z** | Undo the most recent action. |
-| Redo | **Ctrl+Y** | Redo the most recent action that was undone. |
+| Undo | **Ctrl+Z** | 撤销最近的操作。 |
+| Redo | **Ctrl+Y** | 重做最近取消的操作。 |
 
-### View menu
-The view menu includes actions to switch between documents. Other tools may have additional actions depending on the document types they support. 
+### View 菜单
+视图菜单包括在文档之间切换的操作。其他工具可能还有其他操作，具体取决于它们支持的文档类型。
 
-| Menu item | Hotkey | Function |
+| 菜单项 | 快捷键 | 功能 |
 | - | - | - |
-| Previous Tab | **Ctrl+Shift+Tab** | Switches to the previously opened tab. |
-| Next Tab | **Ctrl+Tab** | Switches to the next opened tab. |
+| Previous Tab | **Ctrl+Shift+Tab** | 切换到之前打开的选项卡。 |
+| Next Tab | **Ctrl+Tab** | 切换到下一个打开的选项卡。|
 
-### Tools menu
-The tools menu includes actions to toggle visibility of dockable panels and open the settings dialog. Other tools may have additional actions depending on the document types they support. 
+### Tools 菜单
+工具菜单包括切换可停靠面板的可见性和打开设置对话框的操作。其他工具可能还有其他操作，具体取决于它们支持的文档类型。
 
-| Menu item | Hotkey | Function |
+| 菜单项 | 快捷键 | 功能 |
 | - | - | - |
-| Asset Browser | | Toggles the Asset Browser window. |
-| Inspector | | Toggles the Inspector window. |
-| Logging | | Toggles the Logging window. |
-| Python Terminal | | Toggles the Python Terminal window. |
+| Asset Browser | | 切换 “资产浏览器 ”窗口。 |
+| Inspector | | 切换检查器窗口。 |
+| Logging | | 切换日志记录窗口。 |
+| Python Terminal | | 切换 Python 终端窗口。 |
 
-### Help Menu
-The help menu includes actions to open the help and about dialogs.
+### Help 菜单
+帮助菜单包括打开帮助和关于对话框的操作。
 
-| Menu item | Hotkey | Function |
+| 菜单项 | 快捷键 | 功能 |
 | - | - | - |
-| Help... | | Opens the help dialog with information about how to use the tool. |
-| About... | | Opens the about dialog with information about the tool. |
+| Help... | | 打开帮助对话框，其中包含有关如何使用工具的信息。 |
+| About... | | 打开 “关于 ”对话框，显示工具的相关信息。 |
 
-## Settings
-Customize and configure tools through the [settings registry](https://www.o3de.org/docs/user-guide/settings/). The settings dialog in each tool provides access to several common and application-specific settings. Values for all modified settings save between sessions. 
+## Settings设置
+通过[设置注册表](https://www.o3de.org/docs/user-guide/settings/)自定义和配置工具。每个工具中的设置对话框都提供了若干常用和特定于应用程序的设置。所有修改过的设置值都会在会话之间保存。
 
 ![Settings Dialog](/images/atom-guide/tools/settings-dialog.png)

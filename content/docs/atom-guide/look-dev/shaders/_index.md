@@ -1,13 +1,14 @@
 ---
-title: Shading
-description: "Learn about shading in the Atom Renderer."
+title: 着色
+description: "了解 Atom 渲染器中的着色。"
 toc: true
 weight: 400
 ---
 
-This section contains information about shading using the Atom Renderer.
+本节包含有关使用 Atom 渲染器着色的信息。
 
-## Contents
-| Topic                        | Description |
+## 内容
+
+| 主题                        | 说明 |
 |--------------------------------------|---------|
-| [Shader File Specification](shader-file-spec/) | JSON reference for shader asset data (`.shader`). |
+| [Shader文件规范](shader-file-spec/) | 着色器资产数据(`.shader`)的 JSON参考。 |

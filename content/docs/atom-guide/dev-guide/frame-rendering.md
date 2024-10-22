@@ -1,38 +1,38 @@
 ---
-title: "Frame Rendering"
-description: The frame rendering process describes how a scene is processed from Render Components, through Render Passes in the RPI, and to the RHI.
+title: "帧渲染"
+description: 帧渲染流程描述了场景如何从渲染组件（Render Components）通过 RPI 中的渲染通道（Render Passes）到 RHI 的处理过程。
 date: 2020-01-07
 toc: true
 weight: 100
 ---
 
-The frame rendering process describes how a scene is processed from Render Components, through Render Passes in the [Render Pipeline Interface (RPI)](rpi/), and to the [Render Hardware Interface (RHI)](rhi/). For visual aid, please refer to the RPI Overview Diagram below. 
+帧渲染流程描述了一个场景是如何从渲染组件（Render Components），通过[渲染管道接口（Render Pipeline Interface，RPI）](rpi/)中的渲染通道（Render Passes），到[渲染硬件接口（Render Hardware Interface，RHI）](rhi/)进行处理的。为方便查看，请参阅下面的 RPI 概述图。
 
 ![RPI Overview Diagram](/images/atom-guide/core-systems/rpi/rpi-frame-rendering.svg)
 
-## Render Component &rarr; Feature Processor
+## 渲染组件 &rarr; 特征处理器
 
-The Atom Renderer receives and processes data from its associated simulation and determines how to render the data. A simulation refers to the engine that Atom is rendering items for (such as Atom Sample Viewer and Open 3D Engine). At the start of each render, the simulation sends data to Atom. **Render Components** and **Feature Processors** handle this data flow. Render Components live in the simulation and are responsible for sending data to their corresponding Feature Processor. Feature Processors live in the renderer and are responsible for storing any data that's needed by the renderer to draw the Render Component. Feature Processors can store data in any way they see fit (such as arrays of structures, structure of arrays, one-to-one, one-to-many, and so on) *For example, the mesh Feature Processor stores the transform matrix of the mesh entity.*
+Atom 渲染器接收并处理来自相关模拟的数据，并决定如何渲染这些数据。模拟是指 Atom 正在渲染项目的引擎（如 Atom Sample Viewer 和 Open 3D Engine）。每次渲染开始时，模拟都会向 Atom 发送数据。渲染组件（**Render Components）** 和特征处理器（**Feature Processors）** 处理这些数据流。渲染组件位于模拟中，负责将数据发送到相应的特征处理器。特征处理器位于渲染器中，负责存储渲染器绘制渲染组件所需的任何数据。特征处理器可以以它们认为合适的任何方式（如结构数组、数组结构、一对一、一对多等）存储数据** 例如，网格特征处理器存储网格实体的变换矩阵**。
 
-When a Render Component is first created, it registers its Feature Processor and receives a unique, identifying index (usually represented by an array). This index allows the Feature Processor to recognize the Render Component in subsequent renders. At every render, the Render Component sends its updated data to the Feature Processor.  
+当首次创建渲染组件时，它会注册其特征处理器，并接收一个唯一的识别索引（通常用数组表示）。该索引允许特征处理器在后续渲染中识别渲染组件。每次渲染时，渲染组件都会向特征处理器发送更新的数据。
 
-*Example: An animated mesh Component will send new bone matrices to the animated mesh Feature Processor for that frame’s animation.*
+*例如 动画网格组件将向动画网格特征处理器发送该帧动画的新骨骼矩阵。
 
-## Feature Processor &rarr; Draw Item, Draw Packet
-At this point, a Render Component registers with a Feature Processor and before handing an index to the Render Component, the Feature Processor creates corresponding Draw Items and Draw Packets. A **Draw Item** contains the data necessary to render one object in a single pass. In some cases, it's necessary to render one object in multiple passes. *For example, opaque objects should be rendered in the pre-depth, shadow, and forward passes.* When rendering an object in multiple passes, a different Draw Item is rendered for each pass. This collection of Draw Items that pertain to a single object is called a **Draw Packet**. A single mesh might create several Draw Packets (such as LODs or multiple submeshes with different materials). Draw Packets can be recreated if the object swaps shaders or materials. However, since this is not a per-frame update, it is more common that shader and material updates are taken care of by updating and recompiling a Shader Resource Group (SRG). 
+## 特征处理器 &rarr; 绘制项、绘制数据包
+此时，渲染组件会向特征处理器注册，在将索引交给渲染组件之前，特征处理器会创建相应的绘制项和绘制包。一个**绘制项**包含一次性渲染一个对象所需的数据。在某些情况下，需要多次渲染一个对象。**例如，不透明对象应在预深度、阴影和前向遍历中渲染**。与单个对象相关的绘制项集合称为**绘制包**。一个网格可能会创建多个绘图包（如 LOD 或具有不同材质的多个子网格）。如果对象更换着色器或材质，则可以重新创建绘图包。不过，由于这不是按帧更新，着色器和材质更新通常是通过更新和重新编译着色器资源组（SRG）来完成的。
 
-Developers writing a new feature must implement their own versions of that feature's Feature Processor and Render Component. Although Draw Items and Draw Packets are universal and apply to all Feature Processors, *how* Feature Processors create them may vary. 
+编写新功能的开发人员必须实现自己版本的功能处理器和渲染组件。虽然绘制项和绘制包是通用的，适用于所有特征处理器，但**特征处理器创建它们的**方式可能会有所不同。
 
-*Example (continued): When an animated mesh Render Component is created, it first registers with the animated mesh Feature Processor. Then, it creates corresponding Draw Packets and Draw Items and hands back a unique, identifying index to the Render Component.*
+**示例（续）：当创建一个动画网格渲染组件时，它首先会向动画网格特征处理器注册。然后，它会创建相应的绘制包和绘制项，并向渲染组件交回一个唯一的标识索引。**
 
-## Draw Items &rarr; Views, Draw Lists
-When Draw Items are ready to be rendered, they need to be filtered first into Views and then into Draw Lists. At this point, Render Components have updated the Feature Processors and the Feature Processors must now hand their Draw Packets over to the Views. **Views** represent a perspective from which the Draw Item should be rendered. *For example, most objects will be seen through the main view and objects with shadows must also be seen through a shadow view.* **Draw Lists** represents which pass or passes a Draw Item will be rendered in. To find out which views the Feature Processor needs to talk to, it queries Views from the `Scene` using a `View List Tag`. Each View culls the Draw Packet using both spatial culling (frustum test) and a `Draw List Mask`. These masks filter out Draw Items and Draw Packets from Views that don't have relevant Draw Lists. *For example, the shadow View should cull out Draw Packets that don't contain any shadow Draw Items.*
+## 绘制项 &rarr; 视图，绘制列表
+当绘制项准备好被渲染时，它们需要首先被过滤到视图中，然后再被过滤到绘制列表中。此时，渲染组件已更新了地物处理器，地物处理器现在必须将其绘图数据包交给视图。**视图**代表渲染绘制项的视角。**例如，大多数物体将通过主视图来观察，而有阴影的物体也必须通过阴影视图来观察。** 为了找出特征处理器需要与哪些视图对话，它会使用`View List Tag`从`Scene`中查询 “视图”。每个视图都会使用空间剔除（渐缩测试）和`Draw List Mask`剔除绘图数据包。这些掩码会从没有相关绘图列表的视图中过滤出绘图项目和绘图数据包。**例如，阴影视图应剔除不包含任何阴影绘制项的绘制数据包。**
 
-When the Draw Packet is accepted to the View, its Draw Items are filtered in Draw Lists using a `Draw List Context`. A Draw List Context is a thread safe container that is used to accumulate Draw Items from multiple threads in Draw Lists. 
+当 “绘图包 ”被 “视图 ”接受时，其 “绘图项 ”会通过`Draw List Context`在 “绘图列表 ”中进行过滤。绘制列表上下文是一个线程安全容器，用于在绘制列表中累积来自多个线程的绘制项。
 
-*Example (continued): The animated mesh Feature Processor will query main Views and shadow Views from the Scene and submit its Draw Packets to those Views. The Views cull out Draw Packets using spatial culling and Draw List Masks, and then pass the Draw Packets to their Draw List Context. The Draw List Context takes the Draw Items from the Draw Packets and uses their Draw List Masks to filter them in Draw Lists. Shadow Draw Items will get filtered into the shadow Draw Lists inside the shadow Views. Pre-depth and forward Draw Items will get filtered into the pre-depth and forward Draw Lists inside the main Views.*
+**示例（续）：动画网格特征处理器将从 “场景 ”中查询主视图和阴影视图，并向这些视图提交绘制数据包。视图使用空间剔除和绘制列表遮罩剔除绘制数据包，然后将绘制数据包传递给绘制列表上下文。绘制列表上下文从绘制数据包中提取绘制项，并使用绘制列表掩码将其过滤到绘制列表中。阴影绘图项目将被过滤到阴影视图内的阴影绘图列表中。预深度和前向绘制项目将被过滤到主视图内的预深度和前向绘制列表中。**
 
-## Passes
-A **Pass** is a group of render work that is responsible for rendering the Draw Lists. When a Pass renders, it queries Views from its **Pipeline** using a `View List Tag`. (A Pipeline is a container around Passes and Views.) It then queries those Views from the Draw Lists using a `Draw List Tag`. 
+## 通道
+**通道**是一组渲染工作，负责渲染绘图列表。当通行证渲染时，它会使用`View List Tag`从其**管道**中查询视图（管道是通行证和视图的容器）。(管道是围绕通道和视图的一个容器），然后使用`Draw List Tag`从绘图列表中查询这些视图。
 
-Passes also create Scopes for the RHI backend. **Scopes** are similar to passes, except that they live in the RHI. When those Scopes get executed, Passes will take Draw Items from the Draw Lists they queries and submit them to an RHI Command List, a list of rendering commands. From there, the RHI finishes off the rendering of the frame. 
+通道还能为 RHI 后台创建作用域。**作用域**与通行证类似，只是它们存在于 RHI 中。当这些作用域被执行时，通行证将从它们查询的绘制列表中获取绘制项，并将其提交到 RHI 命令列表（一个渲染命令列表）中。在此基础上，RHI 完成帧的渲染。

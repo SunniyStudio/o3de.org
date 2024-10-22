@@ -1,56 +1,56 @@
 ---
-linkTitle: Render Pipelines
-title: Render Pipelines in Atom Renderer
-description: You can use pre-built render pipelines or create custom ones in Atom Renderer, the graphics engine integrated into Open 3D Engine (O3DE).
+linkTitle: 渲染管道
+title: Atom 渲染器中的渲染管道
+description: 您可以在 Atom Renderer（集成到 Open 3D Engine (O3DE) 中的图形引擎）中使用预置的渲染管道或创建自定义管道。
 toc: false
 weight: 150
 ---
 
-A *render pipeline* describes a sequence of steps to render a 3D scene on a 2D screen. In **Atom Renderer**, the render pipeline is completely modular and driven by a series of passes. This lets you customize the render pipeline for features such as shadows, lighting, and post effects. You can also completely change the rendering technique, for example, to Deferred, Checkerboard, or Forward+. By default, Atom implements *Forward+* rendering in its pre-built render pipelines.
+**渲染管道**描述了在二维屏幕上渲染三维场景的一系列步骤。在**Atom Renderer**中，渲染管道是完全模块化的，由一系列通道驱动。这样，你就可以针对阴影、光照和后期特效等功能定制渲染管道。你还可以完全改变渲染技术，例如延迟、棋盘格或前向+。默认情况下，Atom 在其预置的渲染管道中实现了 *Forward+* 渲染。
 
-Atom's pre-built render pipelines are ready to use and encompass common use cases for **Open 3D Engine (O3DE)**:
-- **Main Rendering Pipeline**: The default render pipeline for Windows, Linux, and macOS platforms. 
-- **Low-end Rendering Pipeline**: The default render pipeline for iOS and Android platforms.
+Atom 的预建渲染管道可随时使用，并包含**Open 3D Engine (O3DE)** 的常见用例：
+- **主渲染管道**： Windows、Linux 和 macOS 平台的默认渲染管道。
+- **低端渲染管道**： iOS 和 Android 平台的默认渲染管道。、
 
-The render pipeline consists of a root pass that drives a collection of passes to handle different graphics techniques in the render pipeline. For more information, refer to the [Pass System](/docs/atom-guide/dev-guide/passes/pass-system/) section.
+渲染管道由一个根通行证组成，根通行证驱动一系列通行证，用于在渲染管道中处理不同的图形技术。更多信息，请参阅[通道系统](/docs/atom-guide/dev-guide/passes/pass-system/)部分。
 
 
-## Supported features in pre-built render pipelines
+## 预建渲染管道支持的功能
 
-This table lists the features that are supported by the Main Rendering Pipeline and the Low-end Rendering Pipeline by default.
+本表列出了主渲染管道和低端渲染管道默认支持的功能。
 
-| Feature | Description | Main Pipeline | Low-end Pipeline |
+| 特性 | 说明 | 主渲染管道 | 低端渲染管道 |
 | - | - | - | - |
-| Skinning | Compute-shader-based mesh skinning for bone weighted animations and morph targets. | Yes | Yes |
-| Directional shadows | Cascaded shadowmap to simulate sun light. | Yes | Yes |
-| Punctual shadows | Shadows for punctual light types: point and spot lights. | Yes | Yes |
-| Area lights | Spherical, disk, capsule, quad, and polygonal lights. | Yes | Yes |
-| Light culling | Tile-based or cluster-based light culling for efficient light iteration in the Forward+ pass. | Yes | Yes |
-| RTX global illumination | Real-time global illumination that uses NVIDIA RTXGI (RTX Global Illumination). | Yes | No |
-| Reflection probe | Generates and uses reflection probes for specular image-based lighting (IBL). | Yes | Yes |
-| Physically based sky | Basic sky rendering that uses physically-based atmospheric modeling. | Yes | No |
-| HDR skybox | Uses an HDR image as a skybox. | Yes | Yes |
-| Screen space ambient occlusion (SSAO) | Applies SSAO to the scene to create contact shadows where objects meet.  | Yes | No |
-| Subsurface scattering | Calculates subsurface scattering for materials, such as skin, by using a screen space technique. | Yes | No |
-| Deferred fog | Applies a height-based fog to the scene. | Yes | No |
-| Screen space reflections (SSR) | Implements SSR by using renderered lighting buffer to approximate real-time reflections. | Yes | No |
-| Depth of field | Applies a bokeh-shaped depth of field effect to the scene that's based on the scene's depth and camera focus paramters. | Yes | No |
-| Bloom | Applies a bloom effect to the rendered image, making bright pixels bleed out into neighboring pixels. | Yes | No |
-| Subpixel morphological anti-aliasing (SMAA) | Applies SMAA as an anti-aliasing technique. | Yes | No |
-| Temporal anti-aliasing (TAA) | TAA uses motion vectors and temporal super-sampling to reduce aliasing in the final image. | Yes | No |
-| Light adaptation | Adjusts brightness of the final image based on the scene's average luminance, so the image appears neither too dark nor too bright. | Yes | Yes |
-| Look modification and color grading | Allows artists to adjust the final look of the image by using look up tables (LUTs). | Yes | Yes |
-| Display mapping | Adjusts the color values of the final image based on the color range that the screen expects. | Yes | Yes |
-| User interface (UI) | Renders 2D UI components. | Yes | Yes |
-| Auxilary geometry (AuxGeom) | Renders various geometry and text for in-editor tools and debugging, such as gizmos, grids, debug lines, and shapes. | Yes | Yes |
+| Skinning | 基于计算着色器的网格蒙皮，用于骨骼加权动画和变形目标。 | Yes | Yes |
+| Directional shadows | 级联阴影贴图，模拟太阳光。 | Yes | Yes |
+| Punctual shadows | 点光源和聚光灯的阴影。 | Yes | Yes |
+| Area lights | 球形灯、圆盘灯、胶囊灯、四边形灯和多边形灯。 | Yes | Yes |
+| Light culling | 基于瓦片或集群的光线剔除，以便在前向+通路中实现高效的光线迭代。 | Yes | Yes |
+| RTX global illumination | 使用 NVIDIA RTXGI（RTX 全局照明）的实时全局照明。 | Yes | No |
+| Reflection probe | 为镜面反射照明（IBL）生成和使用反射探针。| Yes | Yes |
+| Physically based sky | 使用基于物理的大气建模进行基本的天空渲染。| Yes | No |
+| HDR skybox | 使用 HDR 图像作为天空盒。| Yes | Yes |
+| Screen space ambient occlusion (SSAO) | 在场景中应用 SSAO，在物体交汇处创建接触阴影。 | Yes | No |
+| Subsurface scattering | 利用屏幕空间技术计算皮肤等材质的次表面散射。 | Yes | No |
+| Deferred fog | 在场景中应用基于高度的雾化效果。 | Yes | No |
+| Screen space reflections (SSR) | 通过使用渲染的照明缓冲区来近似实时反射，从而实现 SSR。 | Yes | No |
+| Depth of field | 根据场景的深度和相机对焦参数，为场景应用虚化景深效果。| Yes | No |
+| Bloom | 在渲染的图像上应用绽放效果，使明亮的像素向邻近像素渗出。 | Yes | No |
+| Subpixel morphological anti-aliasing (SMAA) | 应用 SMAA 作为抗锯齿技术。 | Yes | No |
+| Temporal anti-aliasing (TAA) | TAA 使用运动矢量和时间超采样来减少最终图像中的混叠现象。 | Yes | No |
+| Light adaptation | 根据场景的平均亮度调整最终图像的亮度，使图像看起来既不会太暗也不会太亮。 | Yes | Yes |
+| Look modification and color grading | 允许艺术家使用查找表（LUT）调整图像的最终效果。 | Yes | Yes |
+| Display mapping | 根据屏幕期望的色彩范围调整最终图像的色彩值。 | Yes | Yes |
+| User interface (UI) | 渲染二维用户界面组件 | Yes | Yes |
+| Auxilary geometry (AuxGeom) | 为编辑器内工具和调试渲染各种几何图形和文本，例如小工具、网格、调试线和形状。 | Yes | Yes |
 
 
 
-## File structure
+## 文件结构
 
-A render pipeline is stored as an `.azasset` file, which is a JSON file that links to the root pass of the render pipeline and contains other configurations. In this file, the `RootPassTemplate` parameter contains the name of pipeline's root pass.
+呈现管道存储为一个 `.azasset` 文件，它是一个 JSON 文件，链接到呈现管道的根传递并包含其他配置。在该文件中，“RootPassTemplate ”参数包含管道根传递的名称。
 
-The following example is the `MainRenderPipeline.azasset` file. The root pass template is called `MainPipeline`, which links to the `MainPipeline.pass` file. 
+下面的示例是 `MainRenderPipeline.azasset` 文件。根通行模板名为 `MainPipeline`，它链接到 `MainPipeline.pass` 文件。
 ```json
 {
     "Type": "JsonSerialization",
@@ -71,28 +71,28 @@ The following example is the `MainRenderPipeline.azasset` file. The root pass te
 ```
 
 
-You can find the following render pipeline files in your O3DE engine source:
-- **Main Rendering Pipeline**: `Gems\Atom\Feature\Common\Assets\Passes\MainRenderPipeline.azasset`
-- **Low-end Rendering Pipeline**: `Gems\Atom\Feature\Common\Assets\Passes\LowEndRenderPipeline.azasset`
+您可以在 O3DE 引擎源代码中找到以下渲染管道文件：
+- **主渲染管道e**: `Gems\Atom\Feature\Common\Assets\Passes\MainRenderPipeline.azasset`
+- **低端渲染管道e**: `Gems\Atom\Feature\Common\Assets\Passes\LowEndRenderPipeline.azasset`
 
 
-## Modifying the render pipeline
+## 修改渲染管道
 
-Because modular passes drive the render pipeline, it's more accessible to add or remove passes and update connections. You can modify the main render pipeline or create a custom render pipeline for your team. You might want to use a custom render pipeline for a number of reasons, such as to:
+由于模块化通行证驱动着渲染管道，因此添加或删除通行证以及更新连接都更加方便。你可以修改主呈现管道或为团队创建自定义呈现管道。出于多种原因，你可能需要使用自定义渲染管道，例如：
 
-- Develop new features that impact the render pipeline.
-- Implement and use alternative rendering techniques.
-- Improve rendering performance.
+- 开发影响渲染管道的新功能。
+- 实施和使用其他渲染技术。
+- 提高渲染性能。
 
-Modifying the render pipeline involves enabling or disabling a pass and updating the connections. You can do this directly by manually editing the `MainPipeline.pass` with a text editor.
+修改渲染管道需要启用或禁用一个通道并更新连接。您可以使用文本编辑器手动编辑 `MainPipeline.pass` ，直接完成上述操作。
 
-To enable or disable a pass in the render pipeline: 
-1. In the render pipeline's `.pass` file, find the pass that you want to enable or disable in the `PassRequests` list. 
-2. Set the `Enabled` property to true or false.
-   
-When you enable or disable a pass, the pass system automatically updates the connections in the pass hierarchy. This requires that you've set up fallback connections. For more information, refer to [PassTemplate File Specification](/docs/atom-guide/dev-guide/passes/pass-template-file-spec/)
+要启用或禁用渲染管道中的某一通道，请执行以下操作
+1. 在渲染管道的 `.pass` 文件中，在 `PassRequests` 列表中找到要启用或禁用的通行证。
+2. 将 `Enabled` 属性设置为 true 或 false。
 
-For example, in the `PassRequests` section of the `MainPipeline.pass`, disable `DeferredFogPass` in the render pipeline by setting `Enabled` to false.
+启用或禁用通行证时，通行证系统会自动更新通行证层次结构中的连接。这就需要你设置后备连接。更多信息，请参阅 [管道模板文件规范](/docs/atom-guide/dev-guide/passes/pass-template-file-spec/)
+
+例如，在`MainPipeline.pass`的`PassRequests`部分，将`Enabled`设置为 false，从而禁用呈现管道中的  `DeferredFogPass` 。
 ```JSON
     "PassRequests": [
 

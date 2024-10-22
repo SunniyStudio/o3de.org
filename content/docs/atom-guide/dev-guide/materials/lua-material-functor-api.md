@@ -1,47 +1,46 @@
 ---
-title: "Lua Material Functor API"
-description: "Lua material functors allow custom logic for processing material properties."
+title: "Lua 材质函数 API"
+description: "Lua 材料函数允许自定义处理材料属性的逻辑。"
 toc: true
 ---
 
-Lua material functors allow custom logic for processing material properties. They can read property values, set shader inputs and shader options, configure render states, adjust material property visibility in the editor, and more.
+Lua 材质函数允许自定义处理材质属性的逻辑。它们可以读取属性值、设置着色器输入和着色器选项、配置渲染状态、调整编辑器中材质属性的可见性等。
 
-For general information about the Lua programming language, see [Learning Lua](/docs/user-guide/scripting/lua/#learning-lua).
+有关 Lua 编程语言的一般信息，请参阅 [学习 Lua](/docs/user-guide/scripting/lua/#learning-lua)。
 
 {{< note >}}
-*Lua material functors* are distinct from *[Lua gameplay scripts](/docs/user-guide/scripting/lua/)*. While they both use the Lua language, the APIs and programming environment are mostly separate. Features like EBuses, the Properties table, and Entity integration are exclusive to gameplay scripts, and are not available to Lua material functors. The [Lua Math Library](/docs/user-guide/scripting/lua/math-library/) is the only part of the API that is common to both systems.
+**Lua 材质函数**有别于**[Lua 游戏脚本](/docs/user-guide/scripting/lua/)**。虽然它们都使用 Lua 语言，但应用程序接口和编程环境大多是分开的。EBuses、属性表和实体集成等功能是游戏脚本独有的，Lua 材质函数无法使用。[Lua 数学库](/docs/user-guide/scripting/lua/math-library/) 是 API 中唯一两个系统通用的部分。
 {{< /note >}}
 
-## Name context
+## 名称上下文
 
-The material functor may run in an implicit name context, where certain prefixes are attached to the names that appear in the script. This allows the same Lua script to be used in different contexts. 
+材质函数可以在隐式名称上下文中运行，在这种上下文中，脚本中出现的名称会附加某些前缀。这样，同一个 Lua 脚本就可以在不同的上下文中使用。
 
-For example, one material type might have a group named "metallic", and another material type has a group named "metalness". In both cases, the groups have the properties `texture` and `factor`. The Lua functor will reference the properties as simply "texture" or "factor" and the system will automatically prepend the appropriate name context internally. Material properties, shader inputs (constants or images), and shader options each potentially have a separate name context. 
+例如，一种材料类型可能有一个名为 “metallic的组，而另一种材料类型则有一个名为 “metalness ”的组。在这两种情况下，组都具有`texture` 和 `factor`属性。Lua 函数将以简单的`texture` 和 `factor`来引用这些属性，系统会在内部自动预置相应的名称上下文。材质属性、着色器输入（常量或图像）和着色器选项可能各有一个单独的名称上下文。
 
-For details about how the name context may be specified, search "prefix" in the [Material Type File Specification](/docs/atom-guide/look-dev/materials/material-type-file-spec/).
+有关如何指定名称上下文的详细信息，请在[材料类型文件规范](/docs/atom-guide/look-dev/materials/material-type-file-spec/)中搜索 “前缀”。
 
-## Main functions
+## 主函数
 
-The material system expects the following functions to be defined at the global scope in the Lua script.
+材质系统希望在 Lua 脚本的全局范围内定义以下函数。
 
 #### Process(`context`)
 
-This is the main function that runs when the material is *used for rendering*. It runs when the material is first initialized or whenever relevant material property values are changed. The `context` object provides access to the API for accessing the *material properties and shader(s)*.
+这是材料**用于渲染**时运行的主要函数。它在材质首次初始化或相关材质属性值发生变化时运行。 `context` 对象提供了访问 API 的途径，以便访问**材质属性和着色器**。
 
 #### ProcessEditor(`context`)
 
-This is the main function that runs when the material is *being edited in tools*. It runs when the material is first initialized or whenever relevant material property values are changed. The `context` object provides access to the API for accessing *material properties and their metadata*.
+这是材料**在工具中**编辑时运行的主要函数。它在材料首次初始化或相关材料属性值发生变化时运行。`context`对象提供了访问 API 的途径，以便访问**材料属性及其元数据**。
 
 #### GetMaterialPropertyDependencies()
 
-Returns a list of all material properties that may be read by the functor. Errors will be reported for properties that are accessed without reporting the dependency.
+返回函数可以读取的所有材料属性的列表。对于未报告依赖关系而访问的属性，将报告错误。
 
 #### GetShaderOptionDependencies()
 
-Returns a list of all shader options that may be set by the functor. Errors will be reported for options that are accessed without reporting the dependency. (Note that the `Material::SetSystemShaderOption` function in the C++ API may only be called on shader options that are *not* declared as dependencies or otherwised used by the material type).
+返回函数可能设置的所有着色器选项的列表。对于未报告依赖关系而访问的选项，将报告错误。(请注意，C++ API 中的`Material::SetSystemShaderOption`函数只能在**未**声明为依赖关系或未被材质类型使用的着色器选项上调用）。
 
-
-**Example**:
+**示例**:
 ```lua
 function GetMaterialPropertyDependencies()
     return {"textureMap", "useTexture"}
@@ -77,32 +76,32 @@ function ProcessEditor(context)
 end
 ```
 
-## Global utility functions
+## 全局实用函数
 
-These functions are available in the global scope.
+这些函数可在全局范围内使用。
 
-* **Error**(`string`): Report an error message to `AZ_Error`.
-* **Warning**(`string`): Report a warning message to `AZ_Warning`.
-* **Print**(`string`): Report a message to `AZ_TracePrintf`.
+* **Error**(`string`): 向 `AZ_Error`报告错误信息。
+* **Warning**(`string`): 向 `AZ_Warning`报告警告信息。
+* **Print**(`string`): 向`AZ_TracePrintf`报告信息。
 
-## Process(context) functions
+## Process(context) 函数
 
-These functions are available in the `context` object that is passed to the `Process` function.
+这些函数在传递给 `Process` 函数的 `context` 对象中可用。
 
 ### GetMaterialPropertyValue\_
 
-Each **GetMaterialPropertyValue\_** function takes a `string` property name and returns a value of the appropriate type. You must use the version that matches the data type of the material property. The material property must be listed in [GetMaterialPropertyDependencies](#main-functions).
+每个 **GetMaterialPropertyValue\_** 函数都会获取一个`string`属性名称，并返回相应类型的值。必须使用与材料属性的数据类型相匹配的版本。材料属性必须在 [GetMaterialPropertyDependencies](#main-functions) 中列出。
 
-  * **GetMaterialPropertyValue_bool**(`string`): Returns a `boolean`
-  * **GetMaterialPropertyValue_int**(`string`): Returns a `number`
-  * **GetMaterialPropertyValue_uint**(`string`): Returns a `number`
-  * **GetMaterialPropertyValue_enum**(`string`): Returns a `number`
-  * **GetMaterialPropertyValue_float**(`string`): Returns a `number`
-  * **GetMaterialPropertyValue_Vector2**(`string`): Returns a `Vector2` type. See [Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Vector3**(`string`): Returns a `Vector3` type. See [Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Vector4**(`string`): Returns a `Vector4` type. See [Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Color**(`string`): Returns a `Color` type. See [Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Image**(`string`): Returns a generic pointer `userdata` type if an image is available, or `nil` otherwise.
+  * **GetMaterialPropertyValue_bool**(`string`): 返回`boolean`
+  * **GetMaterialPropertyValue_int**(`string`): 返回`number`
+  * **GetMaterialPropertyValue_uint**(`string`): 返回`number`
+  * **GetMaterialPropertyValue_enum**(`string`): 返回`number`
+  * **GetMaterialPropertyValue_float**(`string`): 返回`number`
+  * **GetMaterialPropertyValue_Vector2**(`string`): 返回`Vector2`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
+  * **GetMaterialPropertyValue_Vector3**(`string`): 返回`Vector3`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
+  * **GetMaterialPropertyValue_Vector4**(`string`): 返回`Vector4`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
+  * **GetMaterialPropertyValue_Color**(`string`): 返回`Color`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
+  * **GetMaterialPropertyValue_Image**(`string`): 返回`userdata`类型的泛型指南，如果图像可用；否则返回`nil`。
 
 ### HasMaterialProperty(`string`)
 
@@ -159,16 +158,16 @@ These functions are available in the `context` object that is passed to the `Pro
 
 Each **GetMaterialPropertyValue\_** function takes a `string` property name and Returns a value of the appropriate type. You must use the version that matches the data type of the material property. The material property must be listed in [GetMaterialPropertyDependencies](#main-functions).
 
-  * **GetMaterialPropertyValue_bool**(`string`): Returns a `boolean`
-  * **GetMaterialPropertyValue_int**(`string`): Returns a `number`
-  * **GetMaterialPropertyValue_uint**(`string`): Returns a `number`
-  * **GetMaterialPropertyValue_enum**(`string`): Returns a `number`
-  * **GetMaterialPropertyValue_float**(`string`): Returns a `number`
-  * **GetMaterialPropertyValue_Vector2**(`string`): Returns a `Vector2` type. See [Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Vector3**(`string`): Returns a `Vector3` type. See [Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Vector4**(`string`): Returns a `Vector4` type. See [Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Color**(`string`): Returns a `Color` type. See [Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Image**(`string`): Returns a generic pointer `userdata` type if an image is available, or `nil` otherwise.
+  * **GetMaterialPropertyValue_bool**(`string`): 返回`boolean`
+  * **GetMaterialPropertyValue_int**(`string`): 返回`number`
+  * **GetMaterialPropertyValue_uint**(`string`): 返回`number`
+  * **GetMaterialPropertyValue_enum**(`string`): 返回`number`
+  * **GetMaterialPropertyValue_float**(`string`): 返回`number`
+  * **GetMaterialPropertyValue_Vector2**(`string`): 返回`Vector2`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
+  * **GetMaterialPropertyValue_Vector3**(`string`): 返回`Vector3`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
+  * **GetMaterialPropertyValue_Vector4**(`string`): 返回`Vector4`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
+  * **GetMaterialPropertyValue_Color**(`string`): 返回`Color`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
+  * **GetMaterialPropertyValue_Image**(`string`): 返回generic pointer `userdata` type if an image is available, or `nil` otherwise.
 
 ### SetMaterialProperty
 

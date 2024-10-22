@@ -1,51 +1,50 @@
 ---
-linkTitle: Troubleshooting
-title: Troubleshooting Atom Renderer
-description: Troubleshoot GPU issues in Atom Renderer, the graphics engine integrated into Open 3D Engine (O3DE).
+linkTitle: 故障排除
+title: Atom 渲染器故障排除
+description: 在 Atom Renderer（集成到 Open 3D Engine (O3DE) 中的图形引擎）中排除 GPU 问题。
 toc: true
 weight: 1000
 ---
 
-This guide can help you identify and handle graphics processing unit (GPU) crashes when running **Atom Renderer**.
+本指南可帮助您在运行**Atom 渲染器**时识别和处理图形处理器（GPU）崩溃。
 
-A key indicator of your GPU crashing is a "device removal" failure, which occurs when a driver exception leaves the GPU in a non-operational state. You can find this failure in an [O3DE log file](/docs/user-guide/appendix/log-files). If you encounter this crash, follow the instructions on this page to report the issue and try several techniques to debug the problem further.
+GPU 崩溃的一个关键指标是 “设备移除 ”故障，当驱动程序异常导致 GPU 处于非运行状态时，就会发生这种故障。您可以在[O3DE日志文件](/docs/user-guide/appendix/log-files)中找到这种故障。如果您遇到这种崩溃，请按照本页上的说明报告问题，并尝试几种技术来进一步调试问题。
+
+## 报告问题
+
+在报告问题之前，请检查是否有类似的 [现有问题](https://github.com/o3de/o3de/issues)。否则，请 [创建问题](https://github.com/o3de/o3de/issues/new/choose) 并提供以下信息：
+
+- 重现崩溃的步骤。尽量减少信息量并使其具体化。
+
+- GPU 供应商和驱动程序版本。例如，英伟达（NVIDIA）、AMD、英特尔（Intel）、苹果（Apple）等。
+
+- 渲染硬件接口 (RHI)。例如，Vulkan、Direct3D 12 或 Metal。
 
 
-## Reporting an issue
+## 测试其他 GPU 或 RHI 后端
 
-Before reporting an issue, check for similar [existing issues](https://github.com/o3de/o3de/issues). Otherwise, [create an issue](https://github.com/o3de/o3de/issues/new/choose) and provide the following information:
+如果您的机器有多个 GPU（例如多个独立 GPU 或集成 GPU）或多个 RHI 后端（例如 Vulkan 和 DirectX），请尝试测试不同的 GPU 或它们的不同组合。
 
-- Steps to reproduce the crash. Keep the information minimal and specific.
-  
-- GPU vendor and driver version. For example, NVIDIA, AMD, Intel, Apple, and so on.
+要优先使用一个 GPU 而不是另一个，请在命令行界面 (CLI) 中输入 `-forceAdapter=<device>`。对于 `<device>`（设备名称），可以输入任何不区分大小写的部分匹配。
 
-- Render Hardware Interface (RHI). For example, Vulkan, Direct3D 12, or Metal.
-
-
-## Testing alternative GPUs or RHI backends
-
-If your machine has multiple GPUs (for example, multiple discrete GPUs or an integrated GPU) or multiple RHI backends (for example, Vulkan and DirectX), try testing different ones and different combinations of them.
-
-To prioritize the usage of one GPU over another, enter `--forceAdapter=<device>` in the command line interface (CLI). For `<device>` (the device name), you can enter any case-insensitive partial match.
-
-**Example**
+**示例**
 
 ```cmd
 --forceAdapter="NVIDIA GeForce GTX 1080"
 ```
 
-To use a non-default RHI backend, enter `--rhi=<rhi>` in the CLI and replace `<rhi>` with `vulkan` or `dx12`. This applies only to Windows computers for which `D3D12` is the default RHI backend.
+要使用非默认 RHI 后端，请在 CLI 中输入 `--rhi=<rhi>`，并将 `<rhi>` 替换为 `vulkan` 或 `dx12`。这仅适用于默认 RHI 后端为 `D3D12` 的 Windows 计算机。
 
-**Example**
+**示例**
 
 ```cmd
 --rhi=vulkan
 ```
 
 {{< note >}}
-If you don't know the name of your GPU, you can check the command window output or an [O3DE log file](/docs/user-guide/appendix/log-files). When Atom launches, the RHI prints the names of all the RHI devices to the command window.
+如果不知道 GPU 的名称，可以查看命令窗口输出或 [O3DE 日志文件](/docs/user-guide/appendix/log-files)。Atom 启动时，RHI 会将所有 RHI 设备的名称打印到命令窗口。
 
-For example, this output lists three RHI devices on the machine.
+例如，该输出列出了机器上的三个 RHI 设备。
 
 ```cmd
 Initializing RHI...
@@ -57,31 +56,31 @@ Design
 {{< /note >}}
 
 
-## Enable driver validation
+## 启用驱动程序验证
 
-You can enable validation in your RHI device to output additional debugging information produced at the RHI level. To enable RHI-level validation, enter `--rhi-device-validation=` in the CLI and pass one of the following listed values. For Vulkan, before you enable device validation, be sure that you've installed the [Vulkan SDK](https://vulkan.lunarg.com/sdk/home) for your machine.
+您可以在 RHI 设备中启用验证，以输出在 RHI 级别生成的额外调试信息。要启用 RHI 级验证，请在 CLI 中输入 `--rhi-device-validation=`，并传递下列值之一。对于 Vulkan，在启用设备验证之前，请确保您已经为机器安装了 [Vulkan SDK](https://vulkan.lunarg.com/sdk/home)。
 
-- `--rhi-device-validation="enable"`: Enables basic driver validation.
-- `--rhi-device-validation="verbose"`: Enables basic driver validation and additional reporting.
-- `--rhi-device-validation="gpu"`: Enables GPU-based validation (GBV). This validation mode runs slower, but catches issues that the `enable` and `verbose` modes may not catch. Note that this mode may produce false positives.
+- `--rhi-device-validation="enable"`: 启用基本的驱动程序验证。
+- `--rhi-device-validation="verbose"`: 启用基本驱动程序验证和附加报告。
+- `--rhi-device-validation="gpu"`: 启用基于 GPU 的验证 (GBV)。这种验证模式运行速度较慢，但能捕捉到`enable` 和 `verbose`模式可能捕捉不到的问题。请注意，该模式可能会产生误报。
 
 
-## DRED logs (Windows DirectX Only)
+## DRED 日志（仅限 Windows DirectX）
 
-When a Timeout Detection and Recovery (TDR) crash occurs while using the DirectX12 backend, [Device Removed Extended Data](https://microsoft.github.io/DirectX-Specs/d3d/DeviceRemovedExtendedData.html) (DRED) breadcrumbs
-are written to a timestamped log file in `.o3de/Logs/DRED/`. This log contains all of the events, draws, barriers, and dispatches that led up to a crash, as well as commands that failed to complete.
-The offending command that likely caused the device removal will be visible after the `===ERROR START===` and before the `===ERROR END===` lines in the log. 
+在使用 DirectX12 后端时发生超时检测和恢复 (TDR) 崩溃时，[设备已删除扩展数据](https://microsoft.github.io/DirectX-Specs/d3d/DeviceRemovedExtendedData.html) (DRED) 面包屑
+会被写入`.o3de/Logs/DRED/`中带有时间戳的日志文件。该日志包含导致崩溃的所有事件、绘制、障碍和派发，以及未能完成的命令。
+在日志的 `===ERROR START===` 行之后和 `===ERROR END===` 行之前，可以看到可能导致设备移除的违规命令。
 
-**Example**
+**示例**
 
-An example of a log with DRED breadcrumbs that's displayed in the Windows LogViewer.
+在 Windows 日志查看器中显示的带有 DRED 面包屑的日志示例。
 
 <img src="/images/atom-guide/dev-guide/dred_log_sample.png" alt="DRED Log Sample" style="max-width: 800px"/>
 
-The red lines demarcate the region containing the offending command. Depending on how much work was in-flight on the GPU at the time of the crash, the error region may be larger or smaller. In this example, the offending command was a single `DRAWINSTANCED` command, issued within the `FullsceenShadowPass`.
+红线划定了包含错误命令的区域。根据崩溃时 GPU 上正在运行的工作数量，错误区域可能会更大或更小。在本例中，违规命令是在`FullsceenShadowPass`中发出的一条`DRAWINSTANCED`命令。
 
 {{< note >}}
-The log above contains labeled events with pass names because the engine was compiled with the `-DLY_PIX_ENABLED` CMake configuration flag. For information about integrating [Microsoft's PIX Event Runtime for Windows](https://devblogs.microsoft.com/pix/winpixeventruntime/), please follow the directions in the O3DE Wiki page, [CPU& GPU Debugging and Profiling Tools](https://github.com/o3de/o3de/wiki/CPU-&-GPU-Debugging-and-Profiling-Tools#pix-cpu--gpu-profiling).
+由于引擎在编译时使用了`-DLY_PIX_ENABLED` CMake 配置标志，因此上述日志中包含了带有通名的标签事件。有关集成[微软 Windows 版 PIX 事件运行时](https://devblogs.microsoft.com/pix/winpixeventruntime/)的信息，请遵循 O3DE Wiki 页面[CPU&GPU 调试和剖析工具](https://github.com/o3de/o3de/wiki/CPU-&-GPU-Debugging-and-Profiling-Tools#pix-cpu--gpu-profiling))中的说明。
 
-For more details about the operation of DRED, consult the DirectX specification on [`WriteBufferImmediate`](https://microsoft.github.io/DirectX-Specs/d3d/D3D12WriteBufferImmediate.html) and [DRED](https://microsoft.github.io/DirectX-Specs/d3d/DeviceRemovedExtendedData.html).
+有关 DRED 操作的详细信息，请查阅 DirectX 规范 [`WriteBufferImmediate`](https://microsoft.github.io/DirectX-Specs/d3d/D3D12WriteBufferImmediate.html) 和 [DRED](https://microsoft.github.io/DirectX-Specs/d3d/DeviceRemovedExtendedData.html)。
 {{< /note >}}

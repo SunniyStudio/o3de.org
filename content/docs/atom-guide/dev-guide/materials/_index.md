@@ -1,18 +1,18 @@
 ---
-title: "Material System"
-description: "Material System in the Atom Renderer"
+title: "材质系统"
+description: "Atom 渲染器中的材质系统"
 toc: true
 weight: 400
 ---
 
-This section contains technical details about the material system in the Atom Renderer.
+本节包含 Atom 渲染器中材质系统的技术细节。
 
-| Contents                        | Details |
+| 内容                        | 细节 |
 |---------------------------------|---------|
-| [Lua Material Functor API](lua-material-functor-api.md) | Lua material functors allow custom logic for processing material properties. The API is detailed here. |
+| [Lua 材质函数 API](lua-material-functor-api.md) | Lua 材质函数允许自定义处理材质属性的逻辑。此处详细介绍了 API。 |
 
-## Related topics
+## 相关主题
 
-| Related topics | Details | 
+| 相关主题 | 细节 | 
 |---|---|
-| [Material System Overview](/docs/atom-guide/look-dev/materials/material-system/) | A overview of the material system and related high-level concepts. |
+| [材质系统概述](/docs/atom-guide/look-dev/materials/material-system/) | 材质系统及相关高级概念概述。 |

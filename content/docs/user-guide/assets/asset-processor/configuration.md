@@ -1,30 +1,30 @@
 ---
-linkTitle: Configuration
-title: Asset Processor Configuration
-description: Configure Asset Processor for Open 3D Engine (O3DE) with AssetProcessorPlatformConfig.setreg.
+linkTitle: 配置
+title: Asset Processor 配置
+description: 使用 AssetProcessorPlatformConfig.setreg 配置Open 3D Engine (O3DE) 的资产处理器。
 weight: 300
 toc: true
 ---
 
-## Settings Registry
+## 设置注册表
 
-Many of the content processing rules that **Asset Processor** uses for your project are controlled by settings registry values. You can view the default values in [`Registry/AssetProcessorPlatformConfig.setreg`](https://github.com/o3de/o3de/blob/development/Registry/AssetProcessorPlatformConfig.setreg). This file is well commented, and full of examples you can use to customize configuration for your project's asset pipeline.
+**Asset Processor** 用于项目的许多内容处理规则都由设置注册表值控制。您可以在 [`Registry/AssetProcessorPlatformConfig.setreg`](https://github.com/o3de/o3de/blob/development/Registry/AssetProcessorPlatformConfig.setreg)中查看默认值。该文件注释详尽，并包含大量示例，您可以使用这些示例自定义项目资产管道的配置。
 
-Some additional settings also exist in [Registry/bootstrap.setreg](https://github.com/o3de/o3de/blob/development/Registry/bootstrap.setreg).
+一些附加设置还存在于[Registry/bootstrap.setreg](https://github.com/o3de/o3de/blob/development/Registry/bootstrap.setreg)。
 
 {{< todo issue="https://github.com/o3de/o3de.org/issues/706" >}}
-To add project-specific or user-specific overrides, you can use the same pattern you would follow with other settings registry overrides. The linked issue covers documenting the setttings registry override functionality.
+要添加特定于项目或特定于用户的覆盖，可以使用与其他设置注册表覆盖相同的模式。链接的问题涵盖了对设置注册表覆盖功能的记录。
 {{</todo>}}
 
-### Processing Assets for Multiple Platforms
+### 处理多个平台的资产
 
-To process assets for a non-host platform, you can enable additional platforms under the settings registry path `Amazon/AssetProcessor/Settings/Platforms`. Note that this is only one step in enabling a platform for your project. See the [platforms](/docs/user-guide/platforms/) section of the documentation for how to set up and deploy to additional platforms.
+要处理非主机平台的资产，可以在设置注册表路径`Amazon/AssetProcessor/Settings/Platforms`下启用其他平台。请注意，这只是为项目启用平台的一个步骤。有关如何设置和部署到其他平台，请参阅文档中的 [平台](/docs/user-guide/platforms/)  部分。
 
-### Running Multiple Instances of Asset Processor
+### 运行资产处理器的多个实例
 
-In order to run multiple instances of Asset Processor, each instance must be configured to use a different server port by changing the `Amazon/AzCore/Bootstrap/remote_port` setting (in `bootstrap.setreg` by default).  This can be useful for having multiple projects open at once.
+要运行 Asset Processor 的多个实例，必须通过更改 `Amazon/AzCore/Bootstrap/remote_port` 设置（默认在 `bootstrap.setreg` 中），将每个实例配置为使用不同的服务器端口。 这对同时打开多个项目非常有用。
 
-Example:
+例如
 ```json
 {
     "Amazon": {
@@ -37,25 +37,25 @@ Example:
 }
 ```
 
-### Asset Job Management
+### 资产任务管理
 
-By default, the Asset Processor will create a worker job for each logical core on the host machine. If you want to control the number of worker jobs, adjust the setting `Amazon/AssetProcessor/Settings/Jobs/maxJobs`. A value of zero will have the Asset Processor create a job for each logical core on your machine. A value of one can be useful when debugging, if you wish to attach a debugger to a running builder processing a specific asset. Setting a value lower than the number of logical cores will allow you to reduce the resources asset processing consumes with the trade off that assets will take longer to process.
+默认情况下，资产处理器会为主机上的每个逻辑内核创建一个工作任务。如果要控制 Worker 作业的数量，可调整设置 `Amazon/AssetProcessor/Settings/Jobs/maxJobs`。如果值为零，资产处理器将为机器上的每个逻辑内核创建一个作业。在调试时，如果希望将调试器附加到处理特定资产的运行构建程序上，1 的值会很有用。设置一个低于逻辑内核数的值，可以减少资产处理所消耗的资源，但代价是资产处理时间会更长。
 
-### Asset Cache Server
+### 资产缓存服务器
 
-The Asset Cache server's address can be set using the setting path `Amazon/AssetProcessor/Settings/Server/CacheServerAddress`. In most cases this will be a network share, an example for Windows looks like `T:\\AssetServerCache`.
+资产缓存服务器的地址可以通过设置路径`Amazon/AssetProcessor/Settings/Server/CacheServerAddress`来设置。在大多数情况下，这将是一个网络共享，Windows 的示例如下`T:\\AssetServerCache`。
 
 {{< note >}}
-This feature is in development. If you have questions about the Asset Cache server, reach out to us on the [O3DE Discord](https://discord.com/invite/o3de).
+此功能正在开发中。如果您对资产缓存服务器有任何疑问，请通过 [O3DE Discord](https://discord.com/invite/o3de) 联系我们。
 {{< /note >}}
 
-### Metadata Files
+### 元数据文件
 
-Metadata files for assets are managed under the setting path `Amazon/AssetProcessor/Settings/MetaDataTypes`, with a format mapping the metadata extension to associated file extension. For example, FBX files use a metadata file type with the extension `.fbx.assetinfo`, which is defined under this setting path as `"fbx.assetinfo": "fbx"`. When adding a new asset type and you want to track settings in a metadata file, make sure to add it to this setting path. This is so the Asset Processor will re-run the processing job for the source asset when the metadata file changes.
+资产的元数据文件在设置路径`Amazon/AssetProcessor/Settings/MetaDataTypes`下进行管理，元数据扩展名与相关文件扩展名之间有一个格式映射。例如，FBX 文件使用扩展名为`.fbx.assetinfo`的元数据文件类型，在此设置路径下定义为 `"fbx.assetinfo": "fbx"`。添加新资产类型时，如果要在元数据文件中跟踪设置，请确保将其添加到此设置路径中。这样，当元数据文件发生变化时，资产处理器将重新运行源资产的处理任务。
 
-### Scan Folders
+### 扫描文件夹
 
-Scan folders can be added as registry settings. In most cases you'll use the asset folders of Gems or your project, which will be automatically added as scan folders. However, if you need to add a new scan folder for tracking source assets, you can add it under the registry setting path `Amazon/AssetProcessor/Settings/` with a pattern of:
+扫描文件夹可以作为注册表设置添加。大多数情况下，你会使用 Gems 或项目的资产文件夹，它们会被自动添加为扫描文件夹。不过，如果你需要添加一个新的扫描文件夹来跟踪源资产，可以在注册表设置路径  `Amazon/AssetProcessor/Settings/`下添加，模式为：
 
 ```json
 "ScanFolder <scan folder name>": {
@@ -66,11 +66,11 @@ Scan folders can be added as registry settings. In most cases you'll use the ass
 }
 ```
 
-Scan folder order is used when two assets have the exact same relative path to the scan folder root. In these situations, the source asset in the scan folder with the higher priority will be used over the other one.
+当两个资产到扫描文件夹根目录的相对路径完全相同时，就会使用扫描文件夹顺序。在这种情况下，扫描文件夹中优先级较高的源资产将被优先使用。
 
-### Excluding Folders
+### 排除文件夹
 
-The exclusion system is used to block files matching patterns from asset processing. These exist under the registry path `Amazon/AssetProcessor/Settings/Exclude` with a pattern that looks like:
+排除系统用于阻止与资产处理模式匹配的文件。这些模式存在于注册表路径 `Amazon/AssetProcessor/Settings/Exclude`下，模式如下：
 
 ```json
 "Exclude <exclusion title>": {
@@ -78,9 +78,9 @@ The exclusion system is used to block files matching patterns from asset process
 }
 ```
 
-### Asset Processing Tags
+### 资产处理标签
 
-Each platform has a collection of tags applied to it, under the registry path `Amazon/AssetProcessor/Settings/`. These tags are checked by other systems for processing, but don't directly trigger any activity themselves. Platform tags follow the pattern:
+每个平台都有一个标签集，应用于注册路径 `Amazon/AssetProcessor/Settings/`下。其他系统会检查这些标签以进行处理，但这些标签本身不会直接触发任何活动。平台标签遵循以下模式：
 
 ```json
 "Platform <platform name>": {
@@ -88,17 +88,17 @@ Each platform has a collection of tags applied to it, under the registry path `A
 }
 ```
 
-### Copy Jobs
+### 复制任务
 
-Copy jobs are for source assets that should be copied directly to the cache as a product asset. Some assets don't need additional processing, so setting up a copy job this way is quicker than authoring an entire C++ based builder to make content of that type available to your game as an asset. Copy jobs are managed by a registry setting pattern under `Amazon/AssetProcessor/Settings/`, using the following pattern:
+复制任务用于将源资产作为产品资产直接复制到缓存中。有些资产不需要额外处理，因此通过这种方式设置复制任务比编写整个基于 C++ 的生成器来将该类型的内容作为资产提供给您的游戏更快。复制任务由注册表设置模式管理，该模式位于`Amazon/AssetProcessor/Settings/`下，使用以下模式：
 
 ```json
 "RC <Copy job name>": {
-  // Matching type can be glob or pattern, do not use both. Pattern is for regular expression based matching, glob is useful for if you just want to match on a file extension.
+  // 匹配类型可以是 glob 或模式，不要同时使用两种类型。模式适用于基于正则表达式的匹配，而 glob 则适用于只想匹配文件扩展名的情况。
   "glob": "*.<extension>",
-  "pattern": "<regex pattern to match this copy job>", // It's either glob or pattern, not both
+  "pattern": "<regex pattern to match this copy job>", // 要么是glob ，要么是pattern，不能两者兼得
   "productAssetType": "<The UUID for the AZ::Data::AssetType for the product asset>",
-  "params": "<copy|skip>", // Use "copy" for copy jobs, "skip" to skip processing. Skip is mostly used for platforms that don't need a particular asset type.
-  "<platform tag>": "<copy|skip>", // Copy or Skip for platforms matching this tag. For example, if you don't want to run the copy job for platforms with the Server tag, this line would be `"server": "skip"`. See the earlier platform tag section for details.
+  "params": "<copy|skip>", // "copy"用于复制任务，"skip"用于跳过处理。"skip"主要用于不需要特定资产类型的平台。
+  "<platform tag>": "<copy|skip>", // 复制或跳过符合此标记的平台。例如，如果不想在带有服务器标记的平台上运行复制任务，这一行应为`"server": "skip"`。有关详情，请参阅前面的平台标记部分。
 }
 ```

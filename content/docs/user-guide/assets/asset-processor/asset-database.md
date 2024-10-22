@@ -1,71 +1,71 @@
 ---
-linkTitle: Asset Database
-title: Asset Database
-description: The Asset Database is used by the Asset Processor to track the work it has completed.
+linkTitle: 资产数据库
+title: 资产数据库
+description: 资产处理器使用资产数据库来跟踪其已完成的工作。
 weight: 950
 toc: true
 ---
 
-The **Asset Database** is an SQLite database used by the [**Asset Processor**](docs/user-guide/assets/asset-processor) to track the work it has completed. The Asset Database is not used by the Editor or Launchers, which instead use the **Asset Catalog** to track information about available assets.
+**资产数据库**是一个 SQLite 数据库，由[**Asset Processor**](docs/user-guide/assets/asset-processor)使用，用于跟踪已完成的工作。编辑器或启动器不使用资产数据库，而是使用**Asset Catalog**来跟踪可用资产的信息。
 
-The Asset Database is located in the [**Asset Cache**](docs/user-guide/assets/pipeline/asset-cache) for a project, in `assetdb.sqlite`.
+资产数据库位于项目的[**Asset Cache**](docs/user-guide/assets/pipeline/asset-cache)中的`assetdb.sqlite`。
 
-## Asset Database Overview
+## 资产数据库概述
 
-The Asset Database is organized into the following eight tables.
+资产数据库分为以下八个表格。
 
-### ScanFolders Table
+### ScanFolders 表
 
-The **ScanFolders** table tracks all folders registered for the project as [Scan Directories,](docs/user-guide/assets/pipeline/scan-directories) folders that can contain assets. This table includes the absolute path on the current machine to that scan folder. The paths might not be identical for different contributors because the paths are unique for each project instance.
+**ScanFolders** 表跟踪为项目注册为[扫描目录](docs/user-guide/assets/pipeline/scan-directories) 文件夹的所有可包含资产的文件夹。该表包括当前机器上指向该扫描文件夹的绝对路径。不同贡献者的路径可能不尽相同，因为每个项目实例的路径都是唯一的。
 
-### Files Table
+### Files 表
 
-The **Files** table tracks all files the Asset Processor finds in [Scan Directories.](docs/user-guide/assets/pipeline/scan-directories) This table tracks the scan folder a file is in, the relative path of the file to the scan folder, the last modification time of the file, and the hash of that file's contents. The mod time and hash are used by the Asset Processor to identify when it needs to re-process files.
+**文件***表跟踪资产处理器在[扫描目录](docs/user-guide/assets/pipeline/scan-directories) 中找到的所有文件。该表跟踪文件所在的扫描文件夹、文件到扫描文件夹的相对路径、文件的最后修改时间以及文件内容的哈希值。资产处理器使用修改时间和哈希值来确定何时需要重新处理文件。
 
-### BuilderInfo Table
+### BuilderInfo 表
 
-Files aren't assets unless a builder exists that processes them, so the next table in this process is the **BuilderInfo** table. This table tracks information related to [Asset Builders.](docs/user-guide/assets/pipeline/asset-builders) This has the BuilderID, Guid, and analysis fingerprint of each builder. The file matching patterns are not tracked in the database because they're defined in the code and don't need to be tracked here, however you can best view them in the Builder tab of the Asset Processor. The analysis fingerprint is used by the Asset Processor to know when a builder changes, so it can re-process all assets matching that builder.
+如果没有生成器对文件进行处理，文件就不是资产，因此在此过程中的下一个表是 **BuilderInfo** 表。该表跟踪与 [资产生成器](docs/user-guide/assets/pipeline/asset-builders) 相关的信息，其中包含生成器 ID、Guid 和每个生成器的分析指纹。文件匹配模式不在数据库中跟踪，因为它们是在代码中定义的，不需要在这里跟踪，不过你可以在资产处理器的生成器选项卡中查看它们。资产处理器使用分析指纹了解构建程序的变化，以便重新处理与该构建程序相匹配的所有资产。
 
-### Sources Table
+### Sources 表
 
-The **Sources** table tracks all files that have been matched to builders, otherwise known as [Source Assets.](docs/user-guide/assets/pipeline/source-assets) This table tracks the scan folder key for the source asset, and the relative path in that scan folder to the source asset. It also tracks the Guid for the source asset, which is how the engine generally references source assets, and is a portion of the asset ID used to track product assets.
+**Sources** 表跟踪[源资产](docs/user-guide/assets/pipeline/source-assets)的扫描文件夹键，以及该扫描文件夹到源资产的相对路径。它还跟踪源资产的 Guid，这是引擎通常引用源资产的方式，也是用于跟踪产品资产的资产 ID 的一部分。
 
-### Jobs Table
+### Jobs 表
 
-The **Jobs** table contains all jobs that have been completed. Jobs are associated with Asset Builders. For more information on jobs, refer to the [Process Job.](docs/user-guide/assets/pipeline/asset-builders#process-job) topic.
+**Jobs** 表包含所有已完成的工作。作业与资产生成器相关联。有关作业的更多信息，请参阅[处理作业](docs/user-guide/assets/pipeline/asset-builders#process-job) 主题。
 
-SourcePK is the SourceID from the Sources table for the source asset processed. JobKey is a descriptive string registered in CreateJobs for that job. Platform is the intended deployment target for the asset, such as PC or Android. BuilderGuid is the unique identifier for the builder used for the job. Status is the result code of the job: 2 means failed, 3 is failed because the source name was longer than the maximum length, 4 means Completed, and 5 is a failure due to a missing source asset. The job run key is the order the job was created. The number of errors and warnings that occurred in each job is tracked in this table, as well.
+SourcePK 是源表中已处理源资产的源 ID。JobKey 是在 CreateJobs 中为该任务注册的描述性字符串。Platform 是资产的预期部署目标，如 PC 或 Android。BuilderGuid 是作业所用生成器的唯一标识符。Status 是作业的结果代码：2 表示失败，3 表示由于源名称超过最大长度而失败，4 表示已完成，5 表示由于缺少源资产而失败。作业运行关键字是作业创建的顺序。每个作业中出现的错误和警告数量也会在此表中进行跟踪。
 
-### SourceDependency Table
+### SourceDependency 表
 
-The **SourceDependency** table tracks [Source dependencies.](docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers#source-dependencies) Source dependencies are files that, when modified, will cause the associated job to be re-run.
+**SourceDependency** 表跟踪 [源依赖项](docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers#source-dependencies)源依赖项是指修改后会导致相关作业重新运行的文件。
 
-### Product Table
+### Product 表
 
-The **Product** table tracks the product assets generated from those jobs. The JobPK is the Job ID that created this product. The Sub ID is part of the Asset ID used to identify this product asset. The complete Asset ID is this sub ID and the UUID of the source asset.
+**Product**表跟踪这些作业生成的产品资产。JobPK 是创建该产品的作业 ID。子 ID 是用于标识该产品资产的资产 ID 的一部分。完整的资产 ID 是该子 ID 和源资产的 UUID。
 
-### ProductDependencies Table
+### ProductDependencies 表
 
-The **ProductDependencies** table tracks the relationship between product assets for runtime and packaging purposes. A [product dependency](docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers#product-dependencies) exists when one product asset references another product asset.
+**ProductDependencies** 表跟踪产品资产之间的关系，用于运行时和打包目的。当一个产品资产引用另一个产品资产时，就会出现 [产品依赖关系](docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers#product-dependencies) 。
 
-## Updating Asset Processor and the Asset Database
+## 更新资产处理器和资产数据库
 
-There are two primary workflows for interacting with the Asset Database by making changes to Asset Processor code, [adding a new query,](#NewQuery) and [making changes to the Asset Database.](#UpdateDatabase)
+通过更改资产处理器代码与资产数据库交互有两个主要工作流程：[添加新查询](#NewQuery) 和[更改资产数据库](#UpdateDatabase)
 
-### Adding a New Query {#NewQuery}
+### 添加新查询 {#NewQuery}
 
-Asset Database queries are defined in [AssetDatabaseConnection.cpp](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.cpp#L49).
+资产数据库查询定义在在 [AssetDatabaseConnection.cpp](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.cpp#L49)中。
 
-#### 1. Create Static Const Strings for the Query
-The first step in adding a new query is creating a few static const strings at the top of [AssetDatabaseConnection.cpp.](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.cpp#L49).
-1. Add a new static const char\* with the name of the query. By convention, this is named QUERY_\*. These are typically namespaced.
-   * Example: `static const char* QUERY_SOURCE_BY_SOURCENAME_SCANFOLDERID = "AzToolsFramework::AssetDatabase::QuerySourceBySourceNameScanFolderID";`
-1. A static const with the actual sql of the query. By convention, this is named QUERY_\*_STATEMENT. This is just a standard SQLite query string. Parameters are always provided using parameter binding, to avoid issues with escaping.
-   * Example: `static const char* QUERY_SOURCE_BY_SOURCENAME_SCANFOLDERID_STATEMENT = SELECT * FROM Sources WHERE SourceName = :sourcename AND ScanFolderPK = :scanfolderid;";`
-   * Typically queries are designed to only return data from 1 table.  There's nothing preventing returning data from multiple tables, it just might require more set up.
-   * Queries are expected to return the entire row.  The data gets fed into a C++ struct which is expecting every column to be present, so don't filter the columns. The exception to this is queries that return just a single field, which is allowed.
-1. A static const query object. This is a helper class that ties the parameters and query together and helps keep things type-safe. This is created using the MakeSqlQuery function. Each query parameter is added as a parameter to the function using the SqlParam class, with a template type matching the column type and the parameter name passed to the constructor.
-   * Example:
+#### 1. 为查询创建静态常量字符串
+添加新查询的第一步是在[AssetDatabaseConnection.cpp](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.cpp#L49)的顶部创建几个静态常量字符串。
+1. 添加一个新的静态常量字符串 static const char\* ，其中包含查询的名称。按照惯例，这个字符串被命名为QUERY_\*。这些字符通常以名称命名。
+   * 示例: `static const char* QUERY_SOURCE_BY_SOURCENAME_SCANFOLDERID = "AzToolsFramework::AssetDatabase::QuerySourceBySourceNameScanFolderID";`
+1. 一个静态常量，包含查询的实际 sql 数据。按照惯例，它被命名为 QUERY_\*_STATEMENT。这只是一个标准的 SQLite 查询字符串。参数总是使用参数绑定提供，以避免转义问题。
+   * 示例: `static const char* QUERY_SOURCE_BY_SOURCENAME_SCANFOLDERID_STATEMENT = SELECT * FROM Sources WHERE SourceName = :sourcename AND ScanFolderPK = :scanfolderid;";`
+   * 通常情况下，查询只能从一个表中返回数据。 这并不妨碍从多个表中返回数据，只是可能需要更多的设置。
+   * 查询应返回整行数据。 数据会被送入一个 C++ 结构体，该结构体希望每一列都存在，因此不要过滤列。仅返回单个字段的查询是个例外，这是允许的。
+1. 静态常量查询对象。这是一个将参数和查询绑定在一起的辅助类，有助于保持类型安全。该类使用 MakeSqlQuery 函数创建。每个查询参数都是使用 SqlParam 类作为参数添加到函数中的，其模板类型与传给构造函数的列类型和参数名称相匹配。
+   * 示例:
 ```cpp
 static const auto s_querySourceBySourcenameScanfolderid = MakeSqlQuery(
     QUERY_SOURCE_BY_SOURCENAME_SCANFOLDERID,
@@ -75,18 +75,18 @@ static const auto s_querySourceBySourcenameScanfolderid = MakeSqlQuery(
     SqlParam<AZ::s64>(":scanfolderid"));
 ```
 
-#### 2. Register the Query Object
-1. The next step is to register the query object with the system. The query object was defined in step 1.3 in the previous section. Most of these are grouped by table. Simply add a call to AddStatement.
-   * Example:
+#### 2. 注册查询对象
+1. 下一步是向系统注册查询对象。查询对象已在上一节的步骤 1.3 中定义。大多数查询按表分组。只需调用 AddStatement。
+   * 示例:
 ```cpp
 AddStatement(m_databaseConnection, s_querySourceBySourcenameScanfolderid);
 ```
 
-#### 3. Add a Query Function
-1. Add a query function to make the query usable.
-   * These are typically grouped by table and take a set of parameters for your query followed by a handler. The handler is a function that takes an object representing the row from the table and returns a bool, which indicates if the query should continue to the next row.
-   * There are already premade handler definitions for each existing table, as well as a combinedHandler for queries that work with all the source/job/product/scanfolder table data. For the most part these should be pretty simple as there are already result handler functions for the typical use cases.
-   * Example:
+#### 3. 添加查询功能
+1. 添加查询函数，使查询可用。
+   * 这些函数通常按表分组，并包含一组查询参数和一个处理程序。处理程序是一个函数，它接收一个代表表中记录的对象，并返回一个 bool，表示查询是否应继续到下一行。
+   * 每个现有表都有预制的处理程序定义，还有一个用于查询所有source/job/product/scanfolder表数据的 combinedHandler。在大多数情况下，这些处理程序应该非常简单，因为已经为典型用例提供了结果处理程序函数。
+   * 示例:
 ```cpp
 bool AssetDatabaseConnection::QuerySourceBySourceNameScanFolderID(const char* exactSourceName, AZ::s64 scanFolderID, sourceHandler handler)
 {
@@ -94,9 +94,9 @@ bool AssetDatabaseConnection::QuerySourceBySourceNameScanFolderID(const char* ex
 }
 ```
 
-#### 4. Optional - Helper Get Function
-1. Add a helper Get function which returns a container of the resulting rows. [AssetDatabase.cpp](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp) contains helper functions for retrieving an entire set without having to write a handler every time. Most queries have a helper version added to this class.
-   * Example:
+#### 4. 可选 - 辅助获取功能
+1. 添加一个辅助获取函数，返回结果行的容器。[AssetDatabase.cpp](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp) 包含用于检索整个数据集的辅助函数，无需每次都编写处理程序。大多数查询都在该类中添加了辅助版本。
+   * 示例:
 ```cpp
 bool AssetDatabaseConnection::GetSourcesBySourceNameScanFolderId(QString exactSourceName, AZ::s64 scanFolderID, SourceDatabaseEntryContainer& container)
     {
@@ -114,50 +114,50 @@ bool AssetDatabaseConnection::GetSourcesBySourceNameScanFolderId(QString exactSo
 }
 ```
 
-### Updating the database structure {#UpdateDatabase}
+### 更新数据库结构 {#UpdateDatabase}
 {{< important >}}
-Changes to the Asset Database structure should only be done with careful configuration.
+资产数据库结构的更改只能在仔细配置后进行。
 
-Keep in mind when modifying an existing column what will happen to users with existing databases.  Be aware of possible data loss and handle it if needed.
+在修改现有列时，要牢记对使用现有数据库的用户会产生什么影响。 注意可能出现的数据丢失，并在必要时进行处理。
 {{< /important >}}
 
 {{< note >}}
-SQLite ALTER TABLE syntax does not support removing an existing column. You may need to accept having the column remain in existing databases, drop the entire table and handle the data loss that comes with it, or migrate the existing data to a new table that does not have the column.
+SQLite ALTER TABLE 语法不支持删除现有列。您可能需要在现有数据库中保留该列，删除整个表并处理随之而来的数据丢失，或将现有数据迁移到没有该列的新表中。
 {{< /note >}}
 
-#### 1. Update the Asset Database Version
+#### 1. 更新资产数据库版本
 
-In [AssetDatabaseConnection.h,](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.h#L70) add a new entry that describes your version change.
+在[AssetDatabaseConnection.h,](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.h#L70)中添加一个新条目，描述您的版本变化。
 
-#### 2. Update the struct definition for the associated table(s)
+#### 2. 更新相关表的结构定义
 
-In [AssetDatabaseConnection.h,](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.h#L93) update the struct that represents the table you plan to modify, to match your modifications.
+在 [AssetDatabaseConnection.h,](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.h#L93)中更新表示您计划修改的表的结构，以匹配您的修改。
 
-#### 3. Update the struct implementation for the associated table(s)
+#### 3. 更新相关表的结构实现
 
-In [AssetDatabaseConnection.cpp,](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.cpp#L999) update the implementation of associated struct functions for the change you are implementing.
+在 [AssetDatabaseConnection.cpp,](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/AssetDatabase/AssetDatabaseConnection.cpp#L999) 中，更新相关结构函数的实现，以实现所做的更改。
 
-#### 4. Update the table creation query
+#### 4. 更新表创建查询
 
-In [AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L32) update the table creation query based on the change you are implementing.
+在 [AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L32) 中，根据所实施的更改更新表创建查询。
 
-#### 5. Update the existing table queries
+#### 5. 更新现有表格查询
 
-In [AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L411) update the existing table queries. Look for const variables with names matching `INSERT_*_STATEMENT` and `UPDATE_*_STATEMENT`, replacing the asterisk with the associated table being changed.
+在[AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L411)中更新现有的表查询。查找名称与 `INSERT_*_STATEMENT` 和 `UPDATE_*_STATEMENT` 相匹配的常量，用要更改的相关表替换星号。
 
-These queries are typically grouped together, but it's important to be thorough in searching this file for queries because a missed query could lead to data loss or corruption.
+这些查询通常是组合在一起的，但在搜索该文件中的查询时一定要彻底，因为遗漏查询可能会导致数据丢失或损坏。
 
-#### 6. Create a new update query
+#### 6. 创建新的更新查询
 
-In [AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L781) add a new upgrade statement to handle modifying an existing database. For examples of existing upgrade queries, search for `ALTER TABLE`.
+在[AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L781)中添加新的升级语句，以处理修改现有数据库的问题。有关现有升级查询的示例，请搜索 `ALTER TABLE`。
 
-#### 7. Add update statement to PostOpenDatabase
+#### 7. 在 PostOpenDatabase 中添加更新语句
 
-In [AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L831) scroll to the bottom of the `AssetDatabaseConnection::PostOpenDatabase()` function definition to the last upgrade statement, and add a new one.
+在 [AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L831)中滚动到 `AssetDatabaseConnection::PostOpenDatabase()` 函数定义的底部，找到最后一条升级语句，并添加一条新语句。
 
-The upgrade block should check against the version of the last upgrade block, execute your statement(s), update the foundVersion to your version, and print out the new version.
+升级块应检查上次升级块的版本，执行您的语句，将 foundVersion 更新为您的版本，并打印出新版本。
 
-Example:
+示例:
 ```cpp
 if(foundVersion == AssetDatabase::DatabaseVersion::AddedSourceDependencySubIdsAndProductHashes)
 {
@@ -169,33 +169,33 @@ if(foundVersion == AssetDatabase::DatabaseVersion::AddedSourceDependencySubIdsAn
 }
 ```
 
-#### 8. Register the upgrade query
+#### 8. 注册升级查询
 
-In the AssetDatabaseConnection::CreateStatements function in [AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L831) register the upgrade query.
+在[AssetDatabase.cpp](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L831)中的 AssetDatabaseConnection::CreateStatements 函数中注册升级查询。
 
-Example:
+示例:
 ```cpp
 m_databaseConnection->AddStatement(INSERT_COLUMN_PRODUCTS_FLAGS, INSERT_COLUMN_PRODUCTS_FLAGS_STATEMENT);
 ```
 
-#### 9. Update existing bind calls
+#### 9. 更新现有绑定调用
 
-In [AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L2300) update the existing bind calls.
+在[AssetDatabase.cpp,](https://github.com/o3de/o3de/blob/development/Code/Tools/AssetProcessor/native/AssetDatabase/AssetDatabase.cpp#L2300) 中更新现有的绑定调用。
 
-Example of an existing bind call, what to look for to update:
+现有绑定调用示例，更新时应注意的事项：
 ```cpp
 if (!s_UpdateProductQuery.Bind(*m_databaseConnection, autoFinalizer, entry.m_jobPK, entry.m_subID, entry.m_productName.c_str(), entry.m_assetType, entry.m_legacyGuid, entry.m_flags.to_ullong(), entry.m_productID, entry.m_hash))
 ```
 
-The existing bind calls may be in several places in this file, but there will generally be a compile error for any that haven't been updated.
+现有的绑定调用可能存在于该文件的多个位置，但一般来说，未更新的绑定调用会出现编译错误。
 
-#### 10. Test and verify your change
+#### 10. 测试并验证您的变更
 
-In addition to any manual testing you may wish to perform to verify your change, it is recommended to also write automated tests.
+除了您可能希望执行的手动测试以验证您的更改外，我们还建议您编写自动测试。
 
-Automated C++ tests for the Asset Processor are found [here,](https://github.com/o3de/o3de/tree/development/Code/Tools/AssetProcessor/native/tests), and automated tests for AzToolsFramework are [here.](https://github.com/o3de/o3de/tree/development/Code/Framework/AzToolsFramework/Tests)
+资产处理器的 C++ 自动测试可在 [此处](https://github.com/o3de/o3de/tree/development/Code/Tools/AssetProcessor/native/tests)找到，AzToolsFramework 的自动测试可在[此处](https://github.com/o3de/o3de/tree/development/Code/Framework/AzToolsFramework/Tests)找到。
 
-Automated Python tests for the Asset Processor are found in the Automated Testing project, [here.](https://github.com/o3de/o3de/tree/development/AutomatedTesting/Gem/PythonTests/assetpipeline/asset_processor_tests)
+资产处理器的 Python 自动测试可在自动测试项目中找到，[此处](https://github.com/o3de/o3de/tree/development/AutomatedTesting/Gem/PythonTests/assetpipeline/asset_processor_tests)。
 
 
 

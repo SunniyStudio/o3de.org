@@ -1,104 +1,104 @@
 ---
-linkTitle: Faster Scanning
-title: Asset Processor Faster Scanning Mode
-description: Faster Scanning mode speeds up source asset scanning in Open 3D Engine (O3DE).
+linkTitle: 快速扫描
+title: Asset Processor快速扫描模式
+description: 快速扫描模式可加快Open 3D Engine (O3DE)中源资产的扫描速度。
 weight: 400
 toc: true
 ---
 
-**Faster Scanning Mode** speeds up **Asset Processor's** startup scan by using timestamps to track source asset changes before checking file hashes. This saves time when launching Asset Processor in all circumstances. You can switch scanning modes at any time without restarting Asset Processor, including during an asset scan. Asset Processor saves your preference between sessions.
+**更快的扫描模式** 通过在检查文件哈希值之前使用时间戳跟踪源资产变化，加快了**资产处理器**的启动扫描。这在任何情况下启动资产处理器时都能节省时间。你可以随时切换扫描模式，无需重启资产处理器，包括在资产扫描过程中。资产处理器会在会话之间保存你的偏好。
 
-When Faster Scanning is enabled:
-1. The Asset Processor compares the timestamp of the source asset's last modification time against the last time it processed that file. If the timestamps are identical, it skips processing that source asset.
-1. If the timestamps are different, Asset Processor creates a hash of the contents of the source asset and compares that to the hash of the source asset the last time it was processed. If they match, it skips processing the source asset.
-    * There are a few reasons why timestamps might not match when the hashes of the content do match:
-        * Some source control configurations may result in the same source asset having a different timestamp.
-        * Some archival formats, like ZIP, will truncate timestamps, so a source asset that is placed into a ZIP file and later removed will have a truncated timestamp.
-        * Sometimes, content creators may re-save a file without making a change.
-1. If the hashes of the source asset's content are different, the standard asset processing process begins, calling Create Jobs on the source asset for all relevant builders.
+启用 “更快扫描 ”后
+1. 资产处理器将源资产最后修改时间的时间戳与上次处理该文件的时间戳进行比较。如果时间戳相同，则跳过对该源资产的处理。
+1. 如果时间戳不同，资产处理器会创建源资产内容的哈希值，并与上次处理源资产时的哈希值进行比较。如果两者匹配，则跳过对源资产的处理。
+    * 当内容的哈希值匹配时，时间戳可能不匹配，这有几个原因：
+      * 某些版本控制配置可能会导致同一源资产具有不同的时间戳。
+      * 某些存档格式（如 ZIP）会截断时间戳，因此，放入 ZIP 文件中的源资产随后会被移除，其时间戳也会被截断。
+      * 有时，内容创建者可能会重新保存文件而不做更改。
+1. 如果源资产内容的哈希值不同，标准资产处理流程就会开始，调用源资产上所有相关构建器的创建任务。
 
-When Faster Scanning is disabled:
-1. The Asset Processor calls Create Jobs on every single source asset it tracks for each builder that processes those source assets.
-1. If the fingerprint of the Create Jobs result for the source asset on that builder matches the last time it was run, then Process Job is skipped for that builder.
+禁用 “更快扫描 ”时
+1. 资产处理器会在其跟踪的每个源资产上为每个处理这些源资产的构建程序调用创建任务。
+1. 如果该构建程序上源资产的 “创建任务 ”结果的指纹与上次运行时的指纹一致，则跳过该构建程序的 “处理任务”。
 
-With Faster Scanning enabled or disabled, if the fingerprint of the builder or the file has changed, the associated job will also run again. The builder fingerprint is modified by the builder author when they change the logic for the builder, and all jobs using that builder must be re-run. The file fingerprint checks if any source or job dependencies have changed and forces the job to re-run if those upstream files have been modified.
+启用或禁用 “更快扫描 ”后，如果创建程序或文件的指纹发生变化，相关作业也将重新运行。构建程序作者在更改构建程序的逻辑时会修改构建程序指纹，使用该构建程序的所有作业都必须重新运行。文件指纹会检查源代码或作业的依赖关系是否发生变化，如果上游文件被修改，则会强制重新运行作业。
 
 {{< note >}}
-In either scanning mode, the Asset Processor does not check the cache for changes made while it was not running. Making modifications to files in the asset cache should be avoided; those changes won't be tracked by the O3DE tools and could be overwritten at any time.
+在任何一种扫描模式下，资产处理器都不会检查缓存中在未运行时所作的更改。应避免对资产缓存中的文件进行修改；这些修改不会被 O3DE 工具跟踪，并可能随时被覆盖。
 {{< /note >}}
 
-## Choose a scanning mode
+## 选择一种扫描模式
 
 ![The Faster Scanning Mode settings in Asset Processor](/images/user-guide/assets/asset-processor/interface-fast-scan.png)
 
-Faster Scanning Mode is enabled by default for Asset Processor GUI but disabled by default for Asset Processor Batch.
+资产处理器图形用户界面默认启用 “更快扫描模式”，但资产处理器批处理默认禁用。
 
-To disable Faster Scanning Mode in the GUI, do the following:
-1. Choose the Tools tab in Asset Processor.
-1. Uncheck the **Faster Scanning Mode** option.
+要在图形用户界面中禁用 “更快扫描模式”，请执行以下操作：
+1. 在 Asset Processor 中选择工具选项卡。
+1. 取消勾选 **Faster Scanning Mode** 选项。
 
 {{< note >}}
-When Faster Scanning Mode is disabled, file hashes are used to check for updated source assets and source dependencies. This will significantly increase analysis time.
+禁用 “更快扫描模式 ”时，将使用文件哈希值来检查更新的源资产和源依赖关系。这将大大增加分析时间。
 {{< /note >}}
 
-You can use the command line option below to activate Faster Scanning Mode for **Asset Processor Batch**.
+您可以使用下面的命令行选项来激活 ** 资产处理器批**的 “Asset Processor Batch”。
 
 ```cmd
 AssetProcessorBatch.exe --zeroAnalysisMode
 ```
 
-### Faster scanning mode feedback
+### 快速扫描模式反馈
 
-Faster Scanning Mode provides feedback about how many files it finds, processes, and skips. In Asset Processor, this information is shown in the **Logs** tab. In Asset Processor Batch, this information is sent to `stdout` as in the example output below.
+更快扫描模式会反馈找到、处理和跳过的文件数量。在资产处理器中，该信息显示在**Logs**选项卡中。在 “ Asset Processor Batch ”中，该信息会发送到 `stdout` ，如下面的输出示例。
 
 ```cmd
 5303 files reported from scanner. 2903 unchanged files skipped, 2400 files processed
 ```
 
-## Source asset scanning
+## 源资产扫描
 
-When analyzing source assets, Asset Processor performs a series of low cost checks. If any of these checks fail, the source asset goes through the normal, unchanged analysis pipeline, and the Faster Scanning Mode has no effect for that source asset.
+分析源资产时，资产处理器会执行一系列低成本检查。如果其中任何一项检查失败，源资产就会通过正常的、不变的分析管道，快速扫描模式对该源资产没有任何影响。
 
-| Cost | Check |
+| 开销 | 检查 |
 | - | - |
-| Very Low | Collect timestamp information for every file scanned as part of Asset Processor startup. |
-| Very Low | Check whether any **Asset Builders** had version or fingerprint changes by comparing Asset Builder fingerprints to the previous process jobs. |
-| Very Low | Compare the source asset timestamps with the timestamps in the **Asset Database**. |
-| Low | Query the Asset Database files table to get a list of every asset and its timestamp from previous process jobs. |
-| Low | Query the Asset Database sources table to get a list of the Asset Builder fingerprint for every source asset. |
+| 非常低 | 作为资产处理器启动的一部分，为扫描的每个文件收集时间戳信息。|
+| 非常低 | 通过将资产生成器指纹与之前的流程作业进行比较，检查是否有任何 ** 资产生成器**的版本或指纹发生变化。 |
+| 非常低 | 将源资产时间戳与**资产数据库**中的时间戳进行比较。|
+| 低 | 查询资产数据库文件表，获取以前处理任务中的每个资产及其时间戳的列表。 |
+| 低 | 查询资产数据库来源表，获取每个来源资产的资产生成器指纹列表。 |
 
-## Full Scan
+## 全面扫描
 
-You can perform a **Full Scan**, even when Faster Scanning Mode is active. A Full Scan performs the analysis actions in the table below. Actions with a **Low** cost estimate contribute to less than 1% of the total scan time.
-
-| Cost | Analysis |
+即使快速扫描模式处于活动状态，您也可以执行**全面扫描**。全面扫描将执行下表中的分析操作。成本估算为**低**的操作占总扫描时间的 1%以下。
+2
+| 开销 | 分析 |
 | - | - |
-| Low | Determine which Asset Builders are responsible for building an asset. |
-| Low | Check source assets against the Asset Database to get information about previous process jobs. |
-| Low | Compare the new job fingerprints against the previous jobs. |
-| Moderate | Generate a job fingerprint that includes timestamps of source assets and dependencies and the versions of the Asset Builders. |
-| High | Check the **Asset Cache** and ensure that every product asset previously generated for the source asset is still present. |
-| Very High | Send a **Create Jobs** request to the registered Asset Builders so that they can spawn jobs for the job queue. |
+| 低 | 确定哪些资产构建者负责构建资产。 |
+| 低 | 根据资产数据库检查源资产，获取有关以前流程作业的信息。|
+| 低 | 将新工作指纹与之前的工作指纹进行比较。 |
+| 中 | 生成任务指纹，其中包括源资产和依赖项的时间戳以及资产生成器的版本。 |
+| 高 | 检查**资产缓存**，确保之前为源资产生成的每个产品资产都仍然存在。 |
+| 非常高 | 向已注册的资产创建者发送**创建作业**请求，以便他们为作业队列生成作业。 |
 
-A source asset found during the scan can be excluded from reanalysis if it meets all of the criteria below:
+如果在扫描过程中发现的源资产符合以下所有条件，则可将其排除在重新分析之外：
 
-* The source asset hasn't changed on disk (its timestamp matches the timestamp in the Asset Database).
-* The source assets's dependencies haven't changed on disk (the source dependency timestamps match the timestamps in the Asset Database).
-* The most recent process jobs for the source asset succeeded without errors or warnings.
-* The version and fingerprint of the Asset Builders that processed the source asset have not changed.
-* There are no new Asset Builders that may process the source file.
-* No Asset Builders that could have operated on the source file have been removed.
-* No Asset Builders have changed the set of source files.
+* 源资产在磁盘上未发生变化（其时间戳与资产数据库中的时间戳一致）。
+* 源资产的依赖关系在磁盘上没有变化（源依赖关系时间戳与资产数据库中的时间戳一致）。
+* 源资产的最新进程任务在无错误或警告的情况下成功执行。
+* 处理源资产的资产生成器的版本和指纹没有改变。
+* 没有新的资产创建程序可以处理源文件。
+* 没有可能对源文件进行操作的资产创建程序被删除。
+* 没有资产生成器更改过源文件集。
 
-## Perform a full scan
+## 执行全面扫描
 
-A full scan checks the Asset Cache for product assets and rebuilds the appropriate source assets. To start a full scan, follow the steps below:
+全面扫描会检查资产缓存中的产品资产，并重建相应的源资产。要开始全面扫描，请按以下步骤操作：
 
-1. Choose the Tools tab in Asset Processor.
-1. Choose Start Scan.
+1. 在资产处理器中选择Tools 选项卡。
+1. 选择开始扫描。
 
 {{< note >}}
-If you are having issues with the Asset Cache, performing a full scan might resolve the issues. If a full scan does not repair the Asset Cache, you can rebuild the entire Asset Cache by deleting the `Cache` directory in your project. If you're an engineer making BuilderSDK-based Asset Builders, deleting the cache is not recommended.
+如果资产缓存出现问题，执行全面扫描可能会解决问题。如果全面扫描无法修复资产缓存，可以通过删除项目中的 `Cache` 目录来重建整个资产缓存。如果您是制作基于 BuilderSDK 的资产生成器的工程师，则不建议删除缓存。
 {{< /note >}}
 
-Deleting the Asset Cache to work around or solve a problem should be treated as a last resort solution. The issue might not be resolved after the cache is rebuilt. Even if it is, you might lose more time deleting and rebuilding the cache than it requires to fix the root problem. Instead, it is recommended that you document the issue and share that information with your team.  Wait until a pipeline engineer can investigate the problem before deleting the cache.
+删除 “资产缓存 ”以绕过或解决某个问题应作为最后的解决方案。重建缓存后，问题可能无法解决。即使问题得到了解决，删除和重建缓存所耗费的时间也可能比解决根本问题所需的时间更多。相反，建议您将问题记录下来，并与团队共享该信息。 等到管道工程师能够调查问题后再删除缓存。

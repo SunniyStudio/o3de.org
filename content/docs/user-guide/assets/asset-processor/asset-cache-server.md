@@ -33,61 +33,61 @@ ACS 模式允许资产处理器从资产服务器缓存中获取作业的预处�
 
 ![Create a log tab in Asset Processor](/images/user-guide/assets/asset-processor/acs_snapshot.png)
 
-### Choose a Mode
+### 选择模式
 
-The Shared Cache mode can be set to:
- 1. Inactive - The Shared Cache is not active. All the assets will be processed locally.
- 2. Server - The Asset Processor will archive product assets on a remote folder.
- 3. Client - The Asset Processor will attempt to retrieve archive product assets from a remote folder.
- 
-The system defaults to Inactive.
+Shared Cache共享缓存模式可设置为
+ 1. Inactive - 共享缓存未激活。所有资产都将在本地处理。
+ 2. Server - 资产处理器会将产品资产存档到远程文件夹中。
+ 3. Client - 资产处理器将尝试从远程文件夹检索存档产品资产。
 
-### Select a Transfer Directory
+系统默认为 “未激活”。
 
-This field should have the full path to the remote folder that was set up in the "Create the transfer directory" step. When the "Save Changes" button is clicked, the system will detect the validity of the transfer directory.
+### 选择传输目录
 
-### Manage Shared Cache Patterns
+该字段应包含在 “创建传输目录Create the transfer directory”步骤中设置的远程文件夹的完整路径。点击 “Save Changes保存更改 ”按钮后，系统将检测传输目录的有效性。
 
-The table shows the active asset patterns that will be cached when the asset is processed on the server. The asset pattern row contains:
- 1. a check box to enable or disable the pattern
- 2. a text box to store the pattern's name
- 3. a combo box how to use the pattern to match source assets (Wildcard or RegEx)
- 4. a text box to enter the pattern to match source assets
- 5. a button to remove the pattern
- 
-The enable flag allows a user to toggle the row to disabled to force the local client Asset Processor to process the matching assets. Most of the time the client users will have all patterns enabled.
+### 管理共享缓存模式
 
-The `Name` is a label to explain what source assets are being matched. If the name matches the name of an asset builder, the source assets that use the asset builder will cache the product archives.
+该表显示在服务器上处理资产时将缓存的活动资产模式。资产模式行包含：
+1. 复选框用于启用或禁用模式
+2. 一个文本框，用于存储模式名称
+3. 如何使用模式匹配源资产的组合框（通配符或 RegEx）
+4. 一个文本框，用于输入匹配源资产的模式
+5. 删除模式的按钮
 
-The `Type` is either `Wildcard` or `RegEx` and tells the system how to use the `Pattern` text to match source asset files. `Wildcard` is normally starts with an asterisk (\*) and is followed by a dot (.) and an extension to match all source assets with a certain extension such as `*.png` and `*.wav` to match PNG and WAV files, respectively. The `RegEx` type interprets the `Pattern` as a regular expression so that projects can specify more advanced matching such as sub-folders or multiple asset types. 
+启用标志允许用户将该行切换为禁用，以强制本地客户端资产处理器处理匹配的资产。大多数情况下，客户端用户会启用所有模式。
 
-The trash can button can be used to remove an existing asset pattern row. The "+ Add Pattern" can be used to add a new asset pattern row.
+`Name`是一个标签，用于解释正在匹配的源资产。如果名称与资产创建器的名称相匹配，则使用该资产创建器的源资产将缓存产品存档。
 
-### Save or Discard Buttons
+`Type`是 `Wildcard` 或 `RegEx`，它告诉系统如何使用 `Pattern`文本来匹配源资产文件。`Wildcard` 通常以星号 (\*) 开头，后面跟一个点 (.) 和一个扩展名，用于匹配所有具有特定扩展名的源资产，如 `*.png` 和 `*.wav`，分别用于匹配 PNG 和 WAV 文件。`RegEx`类型将`Pattern`解释为正则表达式，因此项目可以指定更高级的匹配，如子文件夹或多种资产类型。
 
-The `Save Changes` and `Discard` buttons become enabled when a change to the settings has been detected. The `Save Changes` commits the changes to a settings file. The `Discard` button reverts the panel's values.
+垃圾桶 按钮可用于删除现有资产模式行。"+ Add Pattern"可用于添加新的资产模式行。
 
-The settings file is written to the `{project_folder}/Registry/asset_cache_server_settings.setreg` file. 
+### 保存或丢弃按钮
 
-If the Remote Folder is set to an invalid folder location, then an error dialog will show up and no settings will be written.
+当检测到设置更改时，`Save Changes`和 `Discard`按钮就会启用。`Save Changes`按钮会将更改提交到设置文件中。 `Discard` 按钮会恢复面板的值。
 
-# Asset Cache Server: Settings Details
+设置文件将被写入`{project_folder}/Registry/asset_cache_server_settings.setreg`文件。
 
-The settings for the Asset Cache Server are held in `.setreg` files inside the project. The default settings for the Asset Cache Server for the AutomatedTesting project are stored in the `o3de/AutomatedTesting/Registry/asset_cache_server_settings.setreg` file.
+如果远程文件夹设置为无效文件夹位置，则会显示错误对话框，并且不会写入任何设置。
 
-This file stores a JSON document where there is a `/AssetProcessor/Settings/Server` key includes at least two keys `assetCacheServerMode` and `cacheServerAddress` to set the Asset Cache Server mode. It can also contain any number of `ACS ` keys to manage the asset patterns to cache.
+# 资产缓存服务器： 设置详情
 
-The `cacheServerAddress` key stores a string field that contains the directory name of the remote folder.
+资产缓存服务器的设置保存在项目内的 `.setreg` 文件中。AutomatedTesting 项目的资产缓存服务器默认设置保存在`o3de/AutomatedTesting/Registry/asset_cache_server_settings.setreg` 文件中。
 
-The `assetCacheServerMode` key stores a string to set the mode of the Asset Cache Server. This can be set to `inactive` (the default value) so that the AP will not cache any files (either storing or retrieving). The `server` mode archives the product asset files. The `client` mode retrieves the product archive files.
+该文件存储一个 JSON 文档，其中有一个`/AssetProcessor/Settings/Server`键，包括至少两个`assetCacheServerMode`和`cacheServerAddress`键，用于设置资产缓存服务器模式。它还可以包含任意数量的`ACS`键，用于管理要缓存的资产模式。
 
-There can be any number of keys prefixed with `ACS ` to store asset patterns such as `ACS Audio Files` and `ACS PNG Files`. The structure of the `ACS block` is detailed at [`Configuring an ACS block`](#configuring-an-acs-block).
+`cacheServerAddress` 键存储一个字符串字段，其中包含远程文件夹的目录名。
 
-## Configure the Asset Processor in ACS mode as a server
+`assetCacheServerMode` 键存储一个字符串，用于设置资产缓存服务器的模式。可将其设置为`inactive`（默认值），这样 AP 就不会缓存任何文件（无论是存储还是检索）。`server`模式用于存档产品资产文件。`client`模式检索产品存档文件。
 
-The design of ACS mode is to have one machine contributing to the asset cache in the remote directory and other Asset Processor clients retrieve the cached product asset archive files.
+可以有任意多个前缀为 `ACS` 的键来存储资产模式，如 `ACS 音频文件` 和 `ACS PNG 文件`。`ACS 块`的结构详见 [`配置 ACS 块`](#configuring-an-acs-block)。
 
-To enable Asset Processor in ACS mode as a server, a `.setreg` file needs these settings:
+## 在 ACS 模式下将资产处理器配置为服务器
+
+ACS 模式的设计是让一台机器为远程目录中的资产缓存做贡献，其他资产处理器客户端检索缓存的产品资产存档文件。
+
+要在 ACS 模式下将资产处理器作为服务器启用，`.setreg` 文件需要这些设置：
 ```json
 {
     "Amazon": {
@@ -123,17 +123,17 @@ To enable Asset Processor in ACS mode as a server, a `.setreg` file needs these 
 }
 ```
 
-The previous example enables ACS mode for Asset Processor so that it writes the cached archive files to `T:/o3de/cache_folder` for all FBX files.
+上例启用了 Asset Processor 的 ACS 模式，这样它就会将所有 FBX 文件的缓存归档文件写入 `T:/o3de/cache_folder`。
 
-The setting key `/AssetProcessor/Settings/Server/assetCacheServerMode` sets the mode of the Asset Cache Server. This example has the `assetCacheServerMode` set to `server`.
+设置键 `/AssetProcessor/Settings/Server/assetCacheServerMode` 设置资产缓存服务器的模式。本例中的 `assetCacheServerMode` 设置为 `server`。
 
-The setting key `/AssetProcessor/Settings/Server/cacheServerAddress=<remote_shared_path>` points to a remote directory that the server and all clients can read from and write to. The transfer directory should be set up before launching Asset Processor. This examples sets `<remote_shared_path>` to `T:/o3de/cache_server`.
+设置键 `/AssetProcessor/Settings/Server/cacheServerAddress=<remote_shared_path>` 指向一个远程目录，服务器和所有客户端都可以从中读取和写入。传输目录应在启动 Asset Processor 之前设置好。本示例将`<remote_shared_path>`设置为`T:/o3de/cache_server`。
 
-The setting key `/AssetProcessor/Settings/Server/ACS FBX Glob={}` object specifies FBX source assets as a file type to cache. There can be a number of entries specified in the settings registry where the entry’s title needs to start with the letters ACS such as "ACS Our Textures" and "ACS Audio Files". The "glob" pattern can be used to capture files by extension or some basic matching pattern. It's important to flag the entry with `"checkServer": true` to enable the entry for caching.
+设置键 `/AssetProcessor/Settings/Server/ACS FBX Glob={}` 对象将 FBX 源资产指定为要缓存的文件类型。在设置注册表中可以指定许多条目，其中条目的标题需要以 ACS 字母开头，如 “ACS Our Textures（ACS 我们的纹理）”和 “ACS Audio Files（ACS 音频文件）”。"glob"模式可用于通过扩展名或一些基本的匹配模式来捕获文件。使用`"checkServer": true`标记条目以启用缓存非常重要。
 
-## Configure the Asset Processors in ACS mode as clients
+## 以客户端模式配置 ACS 模式下的资产处理器
 
-To run Asset Processor in ACS mode as a client, the client machine needs access to the remote directory, enable the cache system in client mode, and specify the asset file types to pull from the remote server.
+要在 ACS 模式下以客户端身份运行资产处理器，客户端机器需要访问远程目录，在客户端模式下启用缓存系统，并指定从远程服务器提取的资产文件类型。
 
 ```json
 {
@@ -150,15 +150,15 @@ To run Asset Processor in ACS mode as a client, the client machine needs access 
 }
 ```
 
-The setting key `/AssetProcessor/Settings/Server/assetCacheServerMode="client"` enables Asset Processor to run in `client` mode. In this mode, Asset Processor reads the source asset changes, checks the remote directory for the product archives, and processes the asset if it's not found. It's possible to have a hybrid of remote and local source assets since team members will add new assets locally before submitting them to a remote source asset repository.
+设置键`/AssetProcessor/Settings/Server/assetCacheServerMode="client"`可使资产处理器以`client`模式运行。在这种模式下，Asset Processor 会读取源资产更改，检查远程目录中的产品存档，并在未找到时处理资产。由于团队成员会先在本地添加新资产，然后再将其提交到远程源资产库，因此可以混合使用远程和本地源资产。
 
 {{< note >}}
-The cache server address should match the ACS server.
+缓存服务器地址应与 ACS 服务器相匹配。
 {{< /note >}}
 
-## Configuring an ACS block
+## 配置 ACS 块
 
-The asset caching system is configured using opt-in patterns. There are many types of files that process faster than copying an archived file from a remote folder. The most common way to cache the products of a source asset file is using a `"glob"` wild card pattern like `"*.png"` and `"*.wav"` scan patterns. Another way is to add a regular expression to match the source assets that would take a long time to process using `"pattern"` such as `"\/assets\/rock_[\w]*\.asset"` to cache all the rock asset files.
+资产缓存系统是使用选择模式配置的。有许多类型的文件比从远程文件夹复制存档文件处理得更快。缓存源资产文件产品的最常见方法是使用`"glob"`通配符模式，如 `"*.png"` 和 `"*.wav"` 扫描模式。另一种方法是添加一个正则表达式来匹配使用`"pattern"`需要长时间处理的源资产，如`"\/assets\/rock_[\w]*\.asset"`来缓存所有的岩石资产文件。
 
 ```
 "ACS title":
@@ -170,17 +170,17 @@ The asset caching system is configured using opt-in patterns. There are many typ
 }
 ```
 
-This ACS block allows users to configure the types of source assets that should be cached in the remote folder. The block is placed in the JSON path `/AssetProcessor/Settings/Server` object. The title must start with the prefix `"ACS "` to designate the object as a configuration block. The next part is either `"glob"` or `"pattern"` followed by the correct text for a wild card pattern or a regular expression; these are used to tag source assets that need to be cached.
+此 ACS 块允许用户配置应缓存在远程文件夹中的源资产类型。该块位于 JSON 路径`/AssetProcessor/Settings/Server`对象中。标题必须以`"ACS "`前缀开头，以指定该对象为配置块。下一部分是`"glob"` 或 `"pattern"`，后面是通配符模式或正则表达式的正确文本；这些用于标记需要缓存的源资产。
 
-The `"name"` field is used for the title of the configuration block in the GUI tool, but it can also match an asset pattern by setting the `"name"` to a name of an asset builder. For example, a configuration block can set the name to "Atom Image Builder" so that all the processed images will be cached.
+`"name"`字段用于 GUI 工具中配置块的标题，但也可以通过将`"name"`设置为资产生成器的名称来匹配资产模式。例如，配置块可以将名称设为 “Atom Image Builder”，这样所有处理过的图像都会被缓存。、
 
 {{< note >}}
-The block should only be set to `"glob"` or `"pattern"`, not both.
+块只能设置为`"glob"` 或 `"pattern"`，而不能同时设置为`"glob"` 和 `"pattern"`。
 {{< /note >}}
 
-The `"checkServer"` Boolean flag is used to enable the block. The default value for `"checkServer"` is false, so to enable the ACS block, the boolean flag needs to be set to true.
+`"checkServer"`布尔标志用于启用代码块。`"checkServer"`的默认值是 false，因此要启用 ACS 代码块，需要将布尔标志设置为 true。
 
-As an example, this JSON ACS block will cache all product assets built by the "XmlBuilderWorker" builder:
+例如，此 JSON ACS 块将缓存由"XmlBuilderWorker" 创建器创建的所有产品资产：
 
 ```json
 "ACS XmlBuilderWorker":

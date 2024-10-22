@@ -1,346 +1,346 @@
 ---
-linkTitle: Debugging
-title: Debugging Asset Processor Issues
-description: Methods to debug Asset Processor issues in Open 3D Engine (O3DE).
+linkTitle: 调试
+title: 调试资产处理器问题
+description: 调试 Open 3D Engine (O3DE) 中资产处理器问题的方法。
 weight: 600
 toc: true
 ---
 
-If you are having issues with **Asset Processor**, this page covers common problems, solutions, and debugging techniques.
+如果您在使用**资产处理器**时遇到问题，本页将介绍常见问题、解决方案和调试技巧。
 
-Some of the most common problems we've seen with Asset Processor include:
+资产处理器最常见的问题包括：
 
-* Asset processing takes too long after changes are made to a source asset.
-* The product assets don't behave like expected. They may have incorrect information, be missing information, or be missing entirely.
-* Unexpected warnings or errors.
-* Asset packaging isn't working as expected. Content is missing or content is being included in bundles that was not expected to be there.
-* Different members of a team getting different results from asset processing, impacting the ability for the team to cooperate.
+* 更改源资产后，资产处理时间过长。
+* 产品资产与预期不符。它们可能有不正确的信息、缺少信息或完全丢失。
+* 意外警告或错误。
+* 资产打包与预期不符。内容丢失或捆绑包中包含了预期之外的内容。
+* 团队中的不同成员从资产处理中获得不同的结果，影响团队的合作能力。
 
-## Non-deterministic product assets
+## 非确定性产品资产
 
-With no changes to the code for a builder, and no changes to a source asset, when that job is run multiple times, the contents of product assets end up different than the previous run. This indicates that the builder is _non-deterministic_ based on the inputs used to process the asset.
+在不更改生成器代码和不更改源资产的情况下，当多次运行该作业时，产品资产的内容最终会与前一次运行时不同。这表明根据用于处理资产的输入，生成器是**非确定的**。
 
-### Effect
+### 效果
 
-More assets than expected will show up when attempting to generate Delta Asset Bundles to create content patches for your game, causing your players to download more content than necessary.
+在尝试生成 Delta Asset Bundles 以创建游戏内容补丁时，会出现比预期更多的资产，导致玩家下载的内容超出需要。
 
-### Common causes
+### 常见原因
 
-* Extraneous information is included in the product asset, such as a timestamp. Information which would be guaranteed to vary for each build is a possible cause.
-* Logic in the builder is non-deterministic. Make sure that asset building is as deterministic as possible, with no side effects.
+* 产品资产中包含无关信息，如时间戳。保证每次构建的信息都会不同，这也是可能的原因。
+* 生成器中的逻辑是非确定性的。确保资产构建尽可能具有确定性，且不会产生副作用。
 
-### Solutions
+### 解决方案
 
-In most cases this will require an engineer to make changes to the internal builder logic to stabilize the product output.
+在大多数情况下，这需要工程师对内部生成器逻辑进行修改，以稳定产品输出。
 
-### Debugging
+### 调试
 
-Your team will most likely encounter this issue when generating [Asset Bundles](/docs/user-guide/packaging/asset-bundler/), which is the primary system non-deterministic Product Assets impacts. If a Product Asset shows up in a bundle that you didn't expect to be there because the Source Asset and associated Asset Builder did not change, then debugging tends to start by working backward from there.
+您的团队最有可能在生成[Asset Bundles](/docs/user-guide/packaging/asset-bundler/)时遇到这个问题，这是非确定性产品资产影响的主要系统。如果由于源资产和关联的资产生成器没有发生变化，而在捆绑包中出现了您没有预料到的产品资产，那么调试往往会从这里开始向后进行。
 
-Non-deterministic behavior in Product Assets will be introduced by the asset builder that created this product asset, so to identify the cause you'll want to look for this product asset in the Asset Processor's asset tab, or directly in the Asset Database using an external database browsing tool. From there you can find the job that created that product asset. Once you identify the job that created this product asset, you can then find the builder that produces that job, and go to the Process Jobs function for that builder, to find where it outputs the product asset. Working backward from here, you should be able to find the cause of the Product Asset changing by exploring the code. You can also try [debugging the Asset Builder](#DebugAssetBuilders) processing that job, to step through.
+产品资产中的非确定性行为将由创建该产品资产的资产创建器引入，因此要查明原因，您需要在资产处理器的资产选项卡中查找该产品资产，或使用外部数据库浏览工具直接在资产数据库中查找。在那里，你可以找到创建该产品资产的工作。确定创建该产品资产的任务后，就可以找到生成该任务的生成器，并进入该生成器的 “处理任务 ”功能，找到输出该产品资产的位置。从这里往回推，你应该可以通过探索代码找到产品资产发生变化的原因。你还可以尝试[调试资产创建器](#DebugAssetBuilders)处理该作业，逐步完成。
 
-To help identify the block of logic in the Product Asset that is changing each time it is processed, you may be able to use a standard file diffing tool using two generated product assets. You can quickly re-generate the product asset by right clicking it in the Asset Processor's asset tab and selecting reprocess source asset.
+为帮助识别产品资产中每次处理时都在变化的逻辑块，您可以使用标准文件差异工具，使用两个已生成的产品资产。在 “资产处理器 ”的 “asset ”选项卡中右击产品资产，选择 “重新处理源资产reprocess source asset”，即可快速重新生成产品资产。
 
-Another debugging option is setting up automation to catch this early. If you have an automated system that processes assets for your project, you can expand this automation to also compare iterative asset processing to a clean cache asset process and the previous day's assets. Doing this will let you compare the hashes of Product Assets, and find any where the hash has changed when it should not have.
+另一种调试方法是设置自动化，以便及早发现问题。如果您有一个为项目处理资产的自动化系统，您可以扩展该自动化系统，将迭代资产处理与干净的缓存资产处理和前一天的资产进行比较。这样做可以比较产品资产的哈希值，并找出哈希值发生变化而不应该发生变化的地方。
 
-## Same Product Asset generated with different Sub ID {#ProductAssetSubId}
+## 同一产品资产生成了不同的子 ID {#ProductAssetSubId}
 
-### Situation
+### 情况
 
-The Sub ID for a Product Asset changes when it is not expected to change. In the worst case, the Sub ID is changing when no changes have been made to the Source Asset or builder that created the Product Asset. In other cases, a change to the Source Asset results in a Product Asset that has a different Sub ID than it did previously.
+产品资产的子 ID 在预期不会发生变化的情况下发生变化。在最坏的情况下，当源资产或创建产品资产的构建程序未发生任何更改时，子 ID 却发生了更改。在其他情况下，源资产的更改会导致产品资产的子 ID 与之前的不同。
 
-### Effect
+### 效果
 
-Assets are mostly referenced by asset ID, the UUID of the source asset with the Sub ID for that product asset. If this is not consistent and the Sub ID changes for a Product Asset when it should not change, then external references to this asset can end up incorrect, pointing at a different asset after a rebuild or pointing at no asset if no other products use that Sub ID.
+资产大多通过资产 ID（源资产的 UUID 和该产品资产的子 ID）进行引用。如果这一点不一致，产品资产的子 ID 在不应更改的情况下发生了更改，那么对该资产的外部引用可能会出现错误，在重建后指向不同的资产，或者在没有其他产品使用该子 ID 的情况下指向任何资产。
 
-### Example
+### 示例
 
-Here is an example with scene files and prefabs:
+下面是一个包含场景文件和Prefab的示例：
 
-1. Create a new FBX file named `shapes_1.fbx` with two meshes in it, a cube and a cylinder. Name the cube `Mesh_A` and the cylinder `Mesh_B`.
-1. Swap the names of these two meshes, so the cube is now named `Mesh_B` and the cylinder is named `Mesh_A`. Save this to a second FBX named `shapes_2.fbx`.
-1. Place `shapes_1.fbx` in your project, and rename it to `shapes.fbx`.
-1. Create a new prefab with an entity in it with a mesh component.
-1. Assign the cube `Mesh_A` from `shapes.fbx` to this component.
-1. Save and quit the Editor.
-1. Replace the `shapes.fbx` file in your project with the `shapes_2.fbx` file created earlier.
-1. Load the Editor.
-1. Load the prefab you saved earlier.
-1. Notice that the mesh on the entity component is still `Mesh_A`, but now visually looks like the cylinder.
+1. 新建一个名为 `shapes_1.fbx` 的 FBX 文件，其中包含两个网格，一个立方体和一个圆柱体。将立方体命名为 `Mesh_A`，圆柱体命名为 `Mesh_B`。
+1. 将这两个网格的名称对调，立方体命名为 `Mesh_B`，圆柱体命名为 `Mesh_A`。将其保存为第二个 FBX，命名为 `shapes_2.fbx`。
+1. 将 `shapes_1.fbx` 放到您的项目中，并将其重命名为 `shapes.fbx`。
+1. 创建一个新的预制件，其中包含一个带有网格组件的实体。
+1. 将 `shapes.fbx` 中的立方体 `Mesh_A` 分配给此组件。
+1. 保存并退出编辑器。
+1. 用之前创建的 `shapes_2.fbx` 文件替换项目中的 `shapes.fbx` 文件。
+1. 加载编辑器。
+1. 加载之前保存的预置。
+1. 请注意，实体组件上的网格仍然是 `Mesh_A`，但现在在视觉上看起来像圆柱体。
 
-This happens because scene processing generates Sub IDs based on the node's name. The prefab was tracking the outgoing asset reference via this ID, so the node name is functionally what is used to track references to individual Product Assets generated from the source FBX.
+出现这种情况是因为场景处理会根据节点名称生成子 ID。预制板通过此 ID 跟踪传出的资产引用，因此节点名称在功能上是用来跟踪从源 FBX 生成的单个 “产品资产 ”的引用。
 
-Note that in this case, this behavior is 100% intentional. There is no code issue in this example. In this case, if this change was not intended by the FBX author, it is a content bug. The following sections will cover how to identify and correct issues like this.
+请注意，在本例中，这种行为是 100% 故意的。本例中不存在代码问题。在这种情况下，如果这种更改不是 FBX 作者有意为之，那就是内容错误。以下章节将介绍如何识别和纠正类似问题。
 
-### Common causes
+#### 常见原因
 
-#### Change to source asset causes Sub IDs to shift
+#### 源资产发生变化导致子标识符发生变化
 
-The most common place Sub ID changes occurs is when the Sub ID generation is based on data within the source asset, and that data can change. For example, if a node name is hashed to generate the Sub ID for a product asset, then a content creator renaming that node in the source asset will cause the associated product asset to generate a new Sub ID.
+子 ID 发生变化的最常见原因是，子 ID 是根据源资产中的数据生成的，而这些数据可能会发生变化。例如，如果一个节点名称是通过散列生成产品资产的子 ID，那么内容创建者在源资产中重命名该节点将导致相关产品资产生成一个新的子 ID。
 
-#### Non-deterministic Sub ID generation from builder
+#### 从生成器生成非确定性子 ID
 
-Sometimes the logic for how a builder may not be fully deterministic. For example, if a builder just increments an integer to use as the Sub ID for each product it generates, then a source asset change that results in a change in the products to remove one, will result in the Sub IDs changing for all product assets after the removed product asset.
+有时，生成器的逻辑可能不是完全确定的。例如，如果生成器只是递增一个整数，将其用作生成的每个产品的子 ID，那么源资产更改导致产品更改以移除一个产品时，将导致移除产品资产后的所有产品资产的子 ID 发生更改。
 
-#### Change in builder logic changes Sub ID generation
+#### 生成器逻辑的更改会改变子 ID 的生成
 
-There are times when a builder author needs to make a change to how the builder generates Sub IDs for product assets, resulting in all product assets output from that builder changing Sub IDs the next time they are processed.
+有时，生成器作者需要更改生成器为产品资产生成 Sub ID 的方式，导致该生成器输出的所有产品资产在下一次处理时改变 Sub ID。
 
-### Solutions
+### 解决方案
 
-#### Stabilize Sub IDs while authoring a builder
+#### 在创建创建器时稳定子 ID
 
-It is the responsibility of the person authoring a builder to define the rules for how Sub IDs are generated by that builder. When doing so, we recommend putting in effort to stabilize Sub ID generation as much as possible: Think about how the source asset can be modified, and how you can maintain continuity in product asset Sub ID generation based on those changes.
+创建创建器的人员有责任定义该创建器如何生成子 ID 的规则。在此过程中，我们建议尽量稳定子标识符的生成： 考虑如何修改源资产，以及如何根据这些修改保持产品资产子标识生成的连续性。
 
-The Asset Pipeline supports a Legacy Sub ID that can be used to remap old sub IDs to new sub IDs, when a builder author needs to change them.
+资产管道支持遗留子 ID，当创建程序作者需要更改子 ID 时，可以用它将旧的子 ID 重新映射到新的子 ID 上。
 
-Tips for stabilizing Sub IDs for Product Assets authoring a builder:
+为产品资产创建生成器稳定子 ID 的提示：
 
-* A randomly generated Sub ID is usually going to result in the Sub ID changing when not expected, even if the generation is semi-randomized. Randomly generated Sub IDs should be avoided.
-* Sometimes builder authors will assign Sub ID for Product Assets based on the ordered index of that information in the Source Asset. This can result in unstable Sub IDs, because changes in the Source Asset can result in the ordered list shuffling.
-   * For example if the content creator removes an entry and causes everything else to shuffle down an index.
-* Hashing the name of an object to use as a reference can work as long as content creators don't expect to rename these objects to have the Sub ID remain stable.
-   * Hashing the name of an object to use as the Sub ID can also be beneficial to content creators in that it allows them to replace content by creating new data with the same name to generate a Product Asset with the same ID.
-* Sometimes there may be a stable internal ID you can use, that content creators do not get direct control over. For example, there may be an internal node structure that generates unique internal IDs for nodes that content creators cannot change. This may be more stable in some ways to use to generate Sub IDs, but consider your content creator's workflows before committing to using this for Sub ID generation. There may be times a content creator specifically wants to make a new thing to replace something, and have the new Product Asset seamlessly be used everywhere the old one was. See the previous point about using object names for an example.
+* 随机生成的子 ID 通常会导致子 ID 在意想不到的情况下发生变化，即使生成是半随机的。应避免随机生成子 ID。
+* 有时，创建者会根据源资产中该信息的有序索引为产品资产分配子 ID。这可能导致子 ID 不稳定，因为源资产中的变化可能导致有序列表发生变化。
+   * 例如，如果内容创建者删除了一个条目，并导致其他所有内容都向下移动索引。
+* 只要内容创建者不希望重命名这些对象，以保持子 ID 的稳定，那么将对象名称散列作为引用也是可行的。
+   * 对对象名称进行散列以用作子 ID 对内容创建者也有好处，因为这样可以通过创建具有相同名称的新数据来替换内容，从而生成具有相同 ID 的产品资产。
+* 有时，您可以使用一个稳定的内部 ID，但内容创建者无法直接控制它。例如，可能有一种内部节点结构，会为内容创建者无法更改的节点生成唯一的内部 ID。用它来生成子 ID 在某些方面可能更稳定，但在使用它来生成子 ID 之前，请考虑一下内容创建者的工作流程。有时，内容创建者可能会特别想制作一个新的东西来替代某个东西，并让新的产品资产无缝地用于旧的产品资产的任何地方。请参阅前面关于使用对象名称的例子。
 
-#### Learning how Sub ID generation works for builders that process content you author
+#### 了解如何为处理您所创作内容的构建器生成子 ID
 
-As a content creator, learning how Sub IDs are generated for Product Assets created from the Source Assets you work on can prevent these problems in the first place.
+作为内容创建者，了解如何为从您所处理的源资产创建的产品资产生成子 ID，可以从根本上避免这些问题。
 
-When a Sub ID changes for a Product Asset, it will cause all references to that Product Asset to break, because the Asset ID will no longer resolve to that asset.
+当产品资产的子 ID 发生变化时，会导致对该产品资产的所有引用中断，因为资产 ID 将不再解析到该资产。
 
-During initial content creation, especially for scene files like FBX, thinking through how you want that content referenced elsewhere can help keep the Sub ID for the Product Assets stable.
+在创建初始内容时，尤其是创建 FBX 等场景文件时，考虑清楚如何在其他地方引用该内容有助于保持产品资产子 ID 的稳定。
 
-If you need to make a change to the Source Asset, keep in mind how your changes will impact the Sub IDs of the Product Assets. If you do need to change the Product Assets, a good pattern to follow is:
-1. Create a stub of the new Product Asset, or leave a stub for the old Product Asset.
-1. Find all references to the old Product Asset.
-1. Update those as necessary, working with other members on your team to do so.
-1. Once you're sure nothing is left referencing the old Product Asset, then make the final change to remove it from the Source Asset.
+如果您需要更改源资产，请记住您的更改将如何影响产品资产的子 ID。如果确实需要更改 “产品资产”，可遵循的良好模式是
+1. 创建新产品资产的存根，或为旧产品资产保留存根。
+1. 查找旧产品资产的所有引用。
+1. 1. 与团队其他成员合作，根据需要更新这些引用。
+1. 确定没有任何内容引用旧产品资产后，进行最后修改，将其从源资产中删除。
 
-#### Fix the broken references - update the source asset
+#### 修复断开的引用 - 更新源资产
 
-Updating the source asset in a way that it will output a product asset with the same sub ID will fix any broken connections. This works best when the product asset was removed unintentionally, either the content creator was unaware the product asset was in use, or they made a change to the source asset not realizing it would cause this issue.
+更新源资产，使其能输出具有相同子 ID 的产品资产，这样就能修复任何断开的连接。当产品资产被无意删除时，这种方法最有效，因为内容创建者不知道产品资产正在使用中，或者他们对源资产进行了更改，但没有意识到这会导致这一问题。
 
-#### Fix the broken references - update the content referencing the missing product asset
+#### 修复损坏的引用 - 更新引用丢失产品资产的内容
 
-If the removal of the product asset was intentional, or the source asset cannot safely be updated to restore the product asset, it may be necessary to instead update everything referencing the broken product asset. In this case you'll need to search for all broken references, and for each type or content or code referencing the missing product asset, update it within the relevant system to handle the removal of this product asset or change to the Sub ID.
+如果产品资产的删除是故意的，或者源资产无法安全地更新以恢复产品资产，那么可能需要更新所有引用已损坏产品资产的内容。在这种情况下，您需要搜索所有已损坏的引用，并针对引用缺失产品资产的每种类型、内容或代码，在相关系统中进行更新，以处理该产品资产的移除或子 ID 的更改。
 
-For example, if an FBX file was updated to no longer generate a Product Asset, and an O3DE Prefab referenced this product asset via a mesh component on an entity, you can use the prefab editing workflow to fix this.
+例如，如果 FBX 文件更新后不再生成产品资产，而 O3DE 预制件通过实体上的网格组件引用了该产品资产，您可以使用预制件编辑工作流程来修复这个问题。
 
-1. Load the prefab to be edited.
-1. Find the component with the broken reference.
-1. Either change it to reference alternate content, or remove the component/entity.
+1. 加载要编辑的Prefab。
+1. 查找引用中断的组件
+1. 要么将其更改为引用其他内容，要么删除该组件/实体。
 
-### Debugging
+### 调试
 
-If content appears missing or broken, try opening the file that references broken content in a text editor or another editor that might show additional details. Search for the broken reference, it will either be an asset ID which is a combination UUID and Sub ID, or it will be a reference via relative path.
+如果内容出现丢失或损坏，请尝试在文本编辑器或其他编辑器中打开引用损坏内容的文件，这样可能会显示更多细节。搜索破损的引用，它要么是资产 ID（UUID 和子 ID 的组合），要么是通过相对路径的引用。
 
-If you can find the missing reference and it is an Asset ID reference, then you can use the UUID to determine the Source Asset. From here, you can look at the history of this Source Asset in your source control to see what changes may have come in, as well as who authored those changes. You can experiment by rolling back the file locally to see if the missing product asset shows up again.
+如果你能找到丢失的引用，而且它是一个资产 ID 引用，那么你就可以使用 UUID 来确定源资产。在此基础上，您可以查看源控制中该源资产的历史记录，以了解可能发生了哪些变更，以及这些变更的作者是谁。您可以在本地回滚文件，看看丢失的产品资产是否会再次出现。
 
-If you believe the issue is within the builder itself, and is not a content problem, then you can try [debugging the Asset Builder](#DebugAssetBuilders) to investigate how the product Sub IDs are generated and where the change in Sub IDs is coming from.
+如果您认为问题出在生成器本身，而不是内容问题，那么您可以尝试[调试资产生成器](#DebugAssetBuilders)来调查产品子 ID 是如何生成的，以及子 ID 的变化来自何处。
 
-If the builder is an O3DE builder, and not one that your team has created, you can create a ticket [here](https://github.com/o3de/o3de/issues) to get this looked at.
+如果生成器是 O3DE 生成器，而不是您的团队创建的生成器，您可以[在此](#DebugAssetBuilders) 创建一个票单来查看此问题。
 
-## Logic Change in Builder with no Version Change {#NoVersionChange}
+## 在不更改版本的情况下更改生成器中的逻辑 {#NoVersionChange}
 
-### Situation
+#### 情况
 
-An engineer makes changes to the logic of an asset builder, but the engineer does not change the fingerprint or version of the builder.
+工程师更改了资产创建器的逻辑，但没有更改创建器的指纹或版本。
 
-### Common issues
+### 常见问题
 
-Source Assets processed by this builder will not be automatically reprocessed with the latest changes.
+使用此构建器处理的源资产不会自动根据最新更改重新处理。
 
-If an asset would fail to process due to the builder change, the engineer making the change might not notice until the builder change is pushed to the rest of the team, causing other people to be disrupted by the failing asset.
+如果资产因构建器更改而无法处理，进行更改的工程师可能不会注意到，直到构建器更改被推送给团队其他成员，导致其他人被失败的资产干扰。
 
-If other content or logic requires the changes from processing the asset, other team members may run into problems using the Product Assets output by the older version of the builder with the other updated logic.
+如果其他内容或逻辑在处理资产时需要更改，其他团队成员在使用旧版生成器输出的产品资产和其他更新逻辑时可能会遇到问题。
 
-### Immediate solution
+#### 立即解决方案
 
-Change the version number of the builder reported in that builder's `AssetBuilderSDK::AssetBuilderDesc`. After you do this and rebuild the Asset Processor, all assets using this builder will be reprocessed.
+更改生成器的 `AssetBuilderSDK::AssetBuilderDesc` 中报告的生成器版本号。这样做并重建资产处理器后，所有使用该生成器的资产都将被重新处理。
 
-### Long term solutions
+### 长期解决方案
 
-One configuration that would catch issues would be:
+一种能发现问题的配置是
 
-* Iterative Job - Processes assets after a code rebuild.
-* Clean Job - Cleans and processes all assets after a code build.
-* Compare the hashes of each Product Asset between builds and runs of these jobs. If any assets end up different in two back to back Clean Jobs but did not process in the Iterative Job, this usually means an asset builder was modified without changing its version.
+* 迭代任务 - 代码重建后处理资产。
+* 清理任务 - 代码构建后清理并处理所有资产。
+* 在这些任务的构建和运行之间比较每个产品资产的哈希值。如果任何资产在两个背靠背的清理任务中出现差异，但在迭代任务中没有处理，这通常意味着资产生成器被修改，但没有更改其版本。
 
-### Debugging
+### 调试
 
-Debugging this issue is usually focused around discovery of the issue in the first place. Once it's identified as a problem, identifying which builder needs a version change and making that change is usually trivial.
+调试这个问题的重点通常是首先发现问题。一旦发现问题，确定哪个构建程序需要更改版本并进行更改通常是小事一桩。
 
-If some team members are experiencing issues with content, but not everyone on the team is having the problem, but that content has not changed recently, this is commonly the cause. Check if the builder for that content has been modified in source control recently, and if so, check if the version was changed. If not, then it's likely that the builder change without a version number change is causing a problem.
+如果一些团队成员遇到了内容问题，但并非团队中的每个人都遇到了问题，但该内容最近没有更改，这通常就是原因所在。检查最近是否在源控制中修改了该内容的生成器，如果是，检查版本是否已更改。如果没有，那么很可能是生成器更改而版本号没有更改导致的问题。
 
-The Asset Processor UI lets you right click a Source Asset in the asset tab and re-run all jobs on that asset. If doing so causes a change in Product Asset, it likely means a builder was changed without having the version updated. If you want to debug this back and forth, it's recommended that you back up the old Product Asset(s) before reprocessing the Source Asset.
+通过资产处理器用户界面，您可以右键单击资产选项卡中的源资产，并重新运行该资产上的所有作业。如果这样做会导致 “产品资产 ”发生变化，这很可能意味着在未更新版本的情况下更改了构建程序。如果要来回调试，建议先备份旧的产品资产，然后再重新处理源资产。
 
-## Logic in Asset Builder persists between building assets
+## 资产生成器中的逻辑在构建资产之间持续存在
 
-### Situation
+###情况
 
-In some cases, due to information persisting during asset processing, you may get different Product Asset output from jobs based on the order Source Assets are processed. This is usually due to a bug within the Asset Builder that processed this content.
+在某些情况下，由于信息在资产处理过程中持续存在，您可能会根据源资产的处理顺序从作业中获得不同的产品资产输出。这通常是由于处理此内容的资产生成器中的错误造成的。
 
-The Asset Processor starts one or more Asset Builder executables based on configuration settings, and uses these to process assets, sending jobs to these Asset Builder executables to run with the individual Asset Builders. There is no system within the Asset Builder Executable to completely shut down and clear all Asset Builders, so it is possible for an Asset Builder to persist information across multiple sessions of processing jobs for a single Asset Builder Executable.
+资产处理器根据配置设置启动一个或多个资产生成器可执行程序，并使用这些程序处理资产，将作业发送到这些资产生成器可执行程序，与各个资产生成器一起运行。资产生成器可执行文件中没有完全关闭和清除所有资产生成器的系统，因此资产生成器有可能在处理单个资产生成器可执行文件作业的多个会话中持续存在信息。
 
-### Effect
+### 效果
 
-Stale data or logic in the Asset Builder Executable can result in an Asset processing incorrectly.
+资产生成器可执行文件中的陈旧数据或逻辑可能导致资产处理错误。
 
-### Cause
+### 原因
 
-The cause for this issue is when information is cached during one step in processing to make it easier to access at a later step.
+导致此问题的原因是在处理过程中的一个步骤中缓存了信息，以便在以后的步骤中更容易访问。
 
-### Example
+#### 示例
 
-This example covers a situation where this problem was encountered:
+本例介绍了遇到此问题的一种情况：
 
-* The Scene Builder processes scene files, such as FBX files, into a collection of product assets.
-* Each scene file has a scene manifest that contains additional processing rules.
-* Within the scene manifest, a Python script file can be marked to run during scene processing.
-* On initial startup, the Scene Builder within each Asset Builder Executable would start with no set Python script.
-* On encountering a scene file that had a scene manifest with a Python script to run, the Scene Builder was storing this Python script to use later.
-* The Scene Builder unintentionally stored this data in a way that persisted across jobs.
-* For this example, FBX file `NoPython.fbx` does not have a Python script set to run in its Scene Manifest, but FBX `WithPython.fbx` does have a Python script set to run in its Scene Manifest.
-* If both jobs end up running on the same Asset Builder Executable, then if `WithPython.fbx` is processed by the Scene Builder on that Asset Builder before `NoPython.fbx`, the Python script to run was persisted in a way that it was run on `NoPython.fbx`.
-* The end result was `NoPython.fbx` was producing different output if it ran after `WithPython.fbx` on the same Asset Builder Executable as `WithPython.fbx` ran on over any other situation: Running before `WithPython.fbx`, running on a different Asset Builder Executable.
+* 场景生成器可将 FBX 文件等场景文件处理为产品资产集合。
+* 每个场景文件都有一个包含附加处理规则的场景清单。
+* 在场景清单中，可以标记一个 Python 脚本文件，以便在场景处理过程中运行。
+* 初始启动时，每个 Asset Builder 可执行文件中的场景生成器启动时没有设置 Python 脚本。
+* 当遇到一个场景文件，其中有一个要运行的 Python 脚本的场景清单时，场景生成器会存储这个 Python 脚本，以便以后使用。
+* 场景生成器无意中以跨任务持久化的方式存储了这些数据。
+* 在本例中，FBX 文件 `NoPython.fbx` 的Scene Manifest中没有设置要运行的 Python 脚本，但 FBX 文件 `WithPython.fbx` 的 “场景任务说明 ”中确实设置了要运行的 Python 脚本。
+* 如果两个作业最终都在同一个 Asset Builder 可执行文件上运行，那么如果场景生成器在该 Asset Builder 上先于`NoPython.fbx`处理了`WithPython.fbx`，要运行的 Python 脚本就会以在`NoPython.fbx`上运行的方式被持久化。
+* 最终的结果是，在与 `WithPython.fbx` 相同的 Asset Builder 可执行文件上，如果在 `WithPython.fbx` 之后运行 `NoPython.fbx` 会产生不同的输出： 在 `WithPython.fbx` 之前运行，在不同的 Asset Builder 可执行文件上运行。
 
-### Solutions
+### 解决方案
 
-The primary solution to this problem is to update the builder to not cache information in a way that it persists across jobs.
+解决这个问题的主要办法是更新生成器，使其不在不同作业中持续缓存信息。
 
-Automated tests can help prevent this from cropping up. You can see a test that covers the example case above [here](https://github.com/o3de/o3de/blob/development/AutomatedTesting/Gem/PythonTests/assetpipeline/fbx_tests/pythonassetbuildertests.py#L50). This test is annotated with how it's setup and why.
+自动测试有助于防止出现这种情况。您可以查看涵盖上述示例案例的测试 [此处](https://github.com/o3de/o3de/blob/development/AutomatedTesting/Gem/PythonTests/assetpipeline/fbx_tests/pythonassetbuildertests.py#L50)。该测试注释了设置方式和原因。
 
-### Debugging
+### 调试
 
-This issue is difficult to identify because it requires a very specific setup, as explained previously. This issue was found by working backward from intermittent issues on automated asset processing jobs on the O3DE Jenkins servers.
+如前所述，这个问题很难识别，因为它需要非常特殊的设置。这个问题是通过对 O3DE Jenkins 服务器上自动资产处理作业的间歇性问题进行逆向分析发现的。
 
-If your team is seeing situations where some people encounter different asset processing results than other team members, and you've already ruled out [a builder change without a version change](#NoVersionChange) as the source of the issue, then keep this in mind. Examine asset processing logs for the assets showing the issue, and check the asset processing order for cases where the issue occurs, compared against cases it does not occur. Specifically look for what other jobs ran on the same Asset Builder Executable, using the same Asset Builder on that executable.
+如果您的团队中出现某些人遇到的资产处理结果与其他团队成员不同的情况，并且您已经排除了[无版本更改的构建程序更改](#NoVersionChange) 作为问题来源的可能性，那么请记住这一点。检查显示问题的资产的资产处理日志，检查出现问题时的资产处理顺序与未出现问题时的资产处理顺序。特别是查找在同一资产生成器可执行文件上运行的其他作业，在该可执行文件上使用相同的资产生成器。
 
-Asset Processor, both the command line and graphical interfaces, support a command line flag that can help with investigating. The flag `--sortJobsByDBSourceName` will stabilize the order that jobs are run in. Using this while debugging will let you test different job processing orders by renaming assets to control the order they run. The Asset Processor also allows for regset values to be controlled via command line, using the `--regset` flag with the setting to set. Specifically, setting the regset value `/Amazon/AssetProcessor/Settings/Jobs/maxJobs` to `1` will restrict the Asset Processor to only launch a single Asset Builder executable. Note that if you have many assets to process, this will result in a long asset processing time, so it's recommended that you set this after you've processed all jobs in a previous Asset Processor run with more max jobs. Once you are running Asset Processor with one max job, all assets will process in that session on the same builder, letting you specifically process assets in the order of your choosing.
+Asset Processor 的命令行和图形界面都支持一个有助于调查的命令行标志。标志`--sortJobsByDBSourceName` 将稳定作业的运行顺序。在调试时使用该标志，可以通过重命名资产来控制作业的运行顺序，从而测试不同的作业处理顺序。资产处理器还允许通过命令行控制 regset 值，使用`--regset`标志和要设置的设置。具体来说，将 regset 值`/Amazon/AssetProcessor/Settings/Jobs/maxJobs`设置为 `1` 将限制资产处理器只能启动单个资产生成器可执行文件。请注意，如果您有许多资产要处理，这会导致资产处理时间过长，因此建议您在使用更多最大作业的上一次资产处理器运行中处理完所有作业后再设置此值。使用一个最大作业运行资产处理器后，所有资产都将在同一生成器上的会话中处理，让您可以按照自己选择的顺序具体处理资产。
 
-Attaching Visual Studio to a running Asset Builder can also help with debugging. Following [these instructions](#DebugAssetBuilders) will run Asset Processor with a single builder, so you can process multiple assets in order with Visual Studio connected to the Asset Builder Executable. At that point you can try manually re-processing assets using the right click menu of the Asset Tab, and track what data is persisting across multiple jobs on the same Asset Builder on the same Asset Builder Executable.
+将 Visual Studio 附加到运行中的资产创建器还有助于调试。按照[这些说明](#DebugAssetBuilders) 将使用单个生成器运行资产处理器，这样您就可以在 Visual Studio 连接到资产生成器可执行文件的情况下按顺序处理多个资产。此时，您可以尝试使用 “资产 ”选项卡的右键菜单手动重新处理资产，并跟踪同一资产生成器可执行文件上的同一资产生成器的多个作业中持续存在哪些数据。
 
-## Fixing warnings, errors, and failures
+## 修复警告、错误和故障
 
-### Situation
+### 情况
 
-After an asset finishes processing, if the job completed it may still have a number of warnings or errors you may wish to address. In other cases, the job may not finish and may instead fail.
+资产处理完毕后，如果作业已完成，可能仍有一些警告或错误需要处理。在其他情况下，任务可能无法完成，反而会失败。
 
-You can see information about viewing Asset Job status in the Asset Processor [here](interface/#jobs).
+您可以在资产处理器中查看有关资产任务状态的信息 [此处](interface/#jobs)。
 
-### Effect
+### 效果
 
-A warning or error in an Asset Job is the Asset Builder author's way of informing content authors that they encountered an issue processing your asset, and may not have generated the Product Asset the content author expected.
+资产任务中的警告或错误是资产创建器作者通知内容作者的一种方式，即他们在处理您的资产时遇到了问题，可能没有生成内容作者预期的产品资产。
 
-A failure is an Asset Builder author's way of informing content authors that they were unable to process the Source Asset at all and cannot put out product assets.
+失败是资产创建器作者通知内容作者的一种方式，即他们在处理您的资产时遇到了问题，可能没有生成内容作者预期的产品资产。
 
-The builder author decides on a case by case basis what a warning, error, or failure is. There is guidance [here](/docs/user-guide/assets/asset-processor/interface/#jobs), with suggested patterns to follow.
+生成器作者可根据具体情况决定什么是警告、错误或失败。[此处](/docs/user-guide/assets/asset-processor/interface/#jobs)提供了指导，并建议了可遵循的模式。
 
-### Example - Warning
+### 示例 - 警告
 
 ```
 >	The name of the node 'Material.003' was invalid or conflicting and was updated to 'Material_003'.
 ```
 
-This warning occurred when an FBX file contained a material with the illegal character `.` in its name. This is a warning because the system was able to safely substitute the character for another, legal character. No action needs to be taken, but if the content creator wanted to clear this warning, they would rename the material in the FBX file. In this example, if you did decide to rename the material to clear the warning, be careful you don't introduce another problem by causing the [Sub ID of the Product Asset to change](#ProductAssetSubId).
+当 FBX 文件包含名称中含有非法字符“. ”的素材时，会出现此警告。这是一个警告，因为系统能够安全地将该字符替换为另一个合法字符。无需采取任何措施，但如果内容创建者希望清除此警告，他们可以重新命名 FBX 文件中的素材。在本例中，如果您决定重新命名素材以清除警告，请注意不要导致[产品资产的子 ID](#ProductAssetSubId)发生变化，从而引发其他问题。
 
-### Example - Error
+### 示例 - 错误
 
 ```
 >	Element with class ID '{4C19E257-F929-524E-80E3-C910C5F3E2D9}' is not registered with the serializer!
 ```
 
-This error occurred when a prefab file referenced a class that was no longer registered with the serializer. This is an error because this prefab will no longer behave the same way it behaved when it was authored, there is no longer a C++ class that matches this serialization information. This is an error and not a warning because the missing information could have side effects that effect the functionality of this prefab. The prefab can still be processed to some degree, so it is an error instead of a failure. In this case a broken Product Asset is usually desired over no Product Asset at all, because it gives more options for debugging and correcting the situation.
+当 prefab 文件引用的类已不再在序列化器中注册时，会出现此错误。这是一个错误，因为该 prefab 的行为方式不再与编写时相同，不再有与该序列化信息相匹配的 C++ 类。这是一个错误而不是警告，因为缺少的信息可能会产生副作用，影响该 prefab 的功能。该预制件在某种程度上仍可被处理，因此它是一个错误而不是失败。在这种情况下，通常希望有一个损坏的产品资产，而不是没有产品资产，因为它提供了更多的调试和纠正选项。
 
-### Example - Failure
+### 示例 - 失败
 
 ```
 >	Failed to import Asset Importer Scene. Error returned: FBX-Parser unexpected end of file
 ```
 
-This failure occurred because the file processed was a blank file with the FBX extension. There was no information for the Scene Builder to even attempt to create a Product Asset from, so it failed and output nothing.
+出现故障的原因是处理的文件是带有 FBX 扩展名的空白文件。场景生成器没有任何信息可用于创建产品资产，因此它失败了，什么也没有输出。
 
-### Solutions
+### 解决方案
 
-Most Warning, Error, and Failure messages will include enough information to help guide the steps to take in addressing the problem. If this is not enough information, the next step would be to look at other log messages for that job, to see if they contain relevant information.
+大多数 “警告”、“错误 ”和 “失败 ”消息都包含足够的信息，可帮助指导解决问题的步骤。如果这些信息还不够，下一步就是查看该作业的其他日志信息，看看它们是否包含相关信息。
 
-Usually clearing this will involve a change to the Source Asset. The asset processing logs for the specific asset you are investigating may contain additional details that can help you resolve the issue by changing the source asset.
+通常，要清除这些问题，需要更改源资产。您正在调查的特定资产的资产处理日志可能包含更多详细信息，可以帮助您通过更改源资产来解决问题。
 
-In some cases it may make more sense to change the Asset Builder to handle this data more correctly. If you're a content creator and you don't see a path you like in addressing the issue, talk to someone on your engineering team to see if the Asset Builder can be updated to better handle the Source Asset.
+在某些情况下，更改资产生成器以更正确地处理这些数据可能更有意义。如果你是内容创建者，但你看不到解决该问题的途径，请与工程团队的人员讨论，看看是否可以更新 “资产生成器”，以便更好地处理源资产。
 
-### Debugging
+### 调试
 
-The first step in debugging asset job warnings, errors, and failures is the [jobs tab](/docs/user-guide/assets/asset-processor/interface/#jobs) of the Asset Processor UI, or the log output of Asset Processor Batch. The logging from processing the job generally give guidance on why this situation is a problem and in many cases covers steps to take to correct it.
+调试资产作业警告、错误和失败的第一步是资产处理器用户界面的[作业选项卡](/docs/user-guide/assets/asset-processor/interface/#jobs)或资产处理器批处理的日志输出。处理作业时的日志一般会提供指导，说明为什么会出现这种情况，在很多情况下还包括纠正问题的步骤。
 
-The next debugging option is checking the documentation for that specific builder, which may provide guidance on creating assets that process cleanly. For example, if you are encountering an issue with FBX files and aren't sure what steps to take, the [3D Scene Format Support documentation](/docs/user-guide/assets/scene-settings/scene-format-support/) may have some information to help address the issue.
+下一个调试选项是查看特定生成器的文档，这可能会为创建可干净处理的资产提供指导。例如，如果您遇到 FBX 文件的问题，不知道该采取什么步骤，[3D 场景格式支持文档](/docs/user-guide/assets/scene-settings/scene-format-support/)可能会提供一些信息来帮助解决问题。
 
-Another option would be to examine the source code for the builder itself, especially around the locations generating those messages. Step through why the builder is having issue with the data, and see if this either leads to a way to change the Source Asset to clear the issue, or a path to changing the builder itself to better handle the Source Asset.
+另一种方法是检查生成器本身的源代码，尤其是生成这些信息的位置。逐步了解生成器在处理数据时出现问题的原因，看看是否有办法更改源资产以清除问题，或者是否有办法更改生成器本身以更好地处理源资产。
 
-To help with that, it may be useful to [more directly debug the Asset Builder](#DebugAssetBuilders).
+为了帮助解决这个问题，[更直接地调试资产生成器](#DebugAssetBuilders)能会有所帮助。
 
-## Slow asset processing times
+## 缓慢的资产处理时间
 
-Long asset processing times can be disruptive to a team's ability to iterate quickly on a project.
+资产处理时间过长会影响团队快速迭代项目的能力。
 
-### Common causes
+#### 常见原因
 
-* Source asset quantity - A project with a lot of content will take a longer time to process.
-* Large or difficult to process source assets - In some cases, a single source asset may be an outlier, having a much longer processing time than most other content.
-* Deep job dependency web - A large job dependency web can result in a change to one file causing many other files to need to reprocess. Read the topic on [asset dependencies and identifiers](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/) for more information.
+* 源资产数量多 - 一个项目的内容多，处理时间就长。
+* 大型或难以处理的源资产 - 在某些情况下，单个源资产可能是一个异常值，其处理时间比大多数其他内容要长得多。
+* 深层作业依赖网 - 一个大型作业依赖网可能会导致一个文件的更改导致许多其他文件需要重新处理。请阅读[资产依赖性和标识符](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/) 主题了解更多信息。
 
-### Solutions
+### 解决方案
 
-* Removing unused content from your project can save on overall asset processing time.
-* Targeted performance improvements at the Asset Builders that are taking the most overall time in asset processing can help.
+* 从项目中删除未使用的内容可节省整体资产处理时间。
+* 有针对性地改进资产生成器的性能，可帮助节省资产处理的总体时间。
 
-## Debugging the scene pipeline
+## 调试场景管道
 
-The scene pipeline imports source scene assets into a scene graph that contains the scene nodes like meshes and materials. The scene manifest adds processing rules that scene builders use to output scene product assets like models, collision meshes, and animations. The scene process is a complex framework that imports source asset scene files into a scene graph, updates the manifest, builds products from the scene rules in the manifest, and  generate product assets based on these rules. The frustration can lead to the scene author to tweak minor data in the original source scene (i.e. the Blender file) and re-exporting to attempt to resolve strange errors from the O3DE scene pipeline. The scene pipeline does many processing steps so it can be confusing to determine which of the scene node data (e.g. Transform Data, Mesh Data) were discovered and the rules used to import the scene nodes. Scene pipeline events can be overridden, by either Python scripts or C++ code modifying the scene manifest rules. This can lead to confusion of what rules were used to generate the product assets.
+场景管道将源场景资产导入包含网格和材质等场景节点的场景图中。场景清单中添加了处理规则，场景构建者可利用这些规则输出模型、碰撞网格和动画等场景产品资产。场景流程是一个复杂的框架，它将源资产场景文件导入场景图，更新清单，根据清单中的场景规则构建产品，并根据这些规则生成产品资产。这种挫败感可能会导致场景作者调整原始源场景（即 Blender 文件）中的次要数据，并重新导出以尝试解决来自 O3DE 场景管道的奇怪错误。场景流水线有许多处理步骤，因此在确定哪些场景节点数据（如变换数据、网格数据）被发现以及导入场景节点所使用的规则时可能会比较混乱。场景管道事件可以通过 Python 脚本或 C++ 代码修改场景清单规则来覆盖。这可能会导致混淆生成产品资产所使用的规则。
 
-As source scene assets become more complex, developers will eventually need to debug the output from the scene pipeline to troubleshoot problems.
+随着源场景资产变得越来越复杂，开发人员最终需要调试场景流水线的输出来排除故障。
 
-The team may encounter:
+团队可能会遇到：
 
-* Render models not aligning with collision meshes
-* Materials end up with unexpected settings or textures
-* Finding extra models in the scene
-* User defined properties not showing up with the correct values
-* Unexpected groupings of mesh nodes stored in a render model
+* 渲染模型无法与碰撞网格对齐
+* 材质最终出现意外设置或纹理
+* 在场景中找到额外的模型
+* 用户定义的属性没有显示正确的值
+* 渲染模型中存储的网格节点出现意外分组
 
-### Common causes
+### 常见原因
 
-#### AssImp issues
+#### AssImp 问题
 
-The scene pipeline uses the AssImp library to import source scene files into a scene graph. The scene graph is the in-memory representation of the source scene file in the pipeline. It is possible that the source scene file looks different in the scene graph due to how the AssImp library imports the file.
+场景管道使用 AssImp 库将源代码场景文件导入场景图。场景图是源场景文件在管道中的内存表示。由于 AssImp 库导入文件的方式不同，源场景文件在场景图中可能看起来不一样。
 
-#### Missing user defined properties
+#### 缺少用户定义的属性
 
-User defined properties in the source scene file might be imported with unexpected results such as missing keys or changed values. There could be a mismatch in what the AssImp library will import, options to export custom properties might have been missed, or the scene pipeline might expect exact value types from the source scene file.
+源场景文件中的用户自定义属性在导入时可能会出现意外结果，例如键丢失或值发生变化。AssImp 库将导入的内容可能不匹配，导出自定义属性的选项可能被遗漏，或者场景流水线可能期望从源场景文件中获得精确的值类型。
 
-For more information, refer to [Scene API: User Defined Properties](/docs/user-guide/assets/pipeline/scene-api-udp/).
+有关更多信息，请参阅 [场景 API：用户定义的属性](/docs/user-guide/assets/pipeline/scene-api-udp/)。
 
-#### Wrong scene manifest rules used
+#### 使用了错误的场景清单规则
 
-A technical content creator (such as a Technical Artist) who is authoring or debugging a script might find some unexpected results for some source scene assets. Python scripts can add output commands in the asset's log files using `print()`, but this may not be enough to determine what the script is affecting. The debug output flag is another good way to determine what is happening in the affected scripted pipeline.
+正在编写或调试脚本的技术内容创建者（如技术美术师）可能会发现某些源场景资产出现了一些意想不到的结果。Python 脚本可以使用 `print()` 在资产的日志文件中添加输出命令，但这可能不足以确定脚本正在影响什么。调试输出标记是确定受影响的脚本管道中发生了什么的另一个好方法。
 
-### Solutions
+### 解决方案
 
-#### Enable the debug output feature
+#### 启用调试输出功能
 
-The "debug output" flag is a feature flag that can be used to see what the scene pipeline produced for the scene graph and scene manifest. The scene graph is considered immutable after the source scene is imported from the AssImp library. The scene manifest can be updated during the scene pipeline events.
+调试输出 "标志是一个功能标志，可用于查看场景管道生成的场景图和场景清单。从 AssImp 库导入源场景后，场景图被认为是不可变的。场景清单可在场景管道事件中更新。
 
 {{< note >}}
-When enabled, AssetBuilders that support debug output will provide debug information as product assets. This is used primarily with scene files.
+启用后，支持调试输出的 AssetBuilder 将以产品资产的形式提供调试信息。这主要用于场景文件。
 {{< /note >}}
 
-The flag can be set on the command line or in the Asset Processor GUI application. To use the command line option:
+该标志可在命令行或资产处理器图形用户界面应用程序中设置。要使用命令行选项：
 
 ```cmd
 <path to asset processor>/AssetProcessor.exe --debugOutput
 ```
 
-The command line flag can be applied to the batch version of the Asset Processor as well.
+命令行标志也可应用于批处理版本的资产处理器。
 
 ```cmd
 <path to asset processor>/AssetProcessorBatch.exe --debugOutput
@@ -352,17 +352,17 @@ For example:
 D:\o3de\build\bin\profile\AssetProcessor.exe --debugOutput
 ```
 
-The debug output flag can be set in the Asset Processor GUI using the Tools | Debug Output check box. When this check box is active, debug output files will be found in the cache folder for the scene files.
+调试输出标志可在 Asset Processor GUI 中使用 Tools | Debug Output 复选框进行设置。激活该复选框后，调试输出文件将出现在场景文件的缓存文件夹中。
 
 ![Asset Processor UI Debug Output](/images/user-guide/assets/asset-processor/debug_output.png)
 
 {{< note >}}
-After turning on the debug output flag, the asset needs to be reprocessed to output the debug files.
+打开调试输出标记后，需要重新处理资产以输出调试文件。
 {{< /note >}}
 
 #### Debug output: scene graph
 
-The scene graph debug output files are stored next to the default `.azmodel` file. For example, for a source file in `D:\o3de\my_project\assets\test.fbx` for the PC platform, the Cache folder should have (at least) these files:
+场景图调试输出文件存储在默认的 `.azmodel` 文件旁边。例如，对于 PC 平台的源文件`D:\o3de\my_project\assets\test.fbx`，缓存文件夹中应（至少）有这些文件：
 
 ```cmd
 D:\o3de\my_project\Cache\pc\assets\test.azmodel
@@ -370,15 +370,15 @@ D:\o3de\my_project\Cache\pc\assets\test.dbgsg
 D:\o3de\my_project\Cache\pc\assets\test.dbgsg.xml
 ```
 
-The `.dbgsg` and `.dbgsg.xml` files are the debug scene graph files where the former is a flat list of debug information per node and the latter is an XML representation of the debug information of the nodes in the file.
+`.dbgsg` 和 `.dbgsg.xml` f文件是调试场景图文件，前者是每个节点调试信息的平面列表，后者是文件中节点调试信息的 XML 表示。
 
-The debug output lists the node name, the node path, and the node type. The name is the text label the author assigned to the node. The node path is the dotted notation that leads to the node from the root node. The node type stores specific data for that node such as mesh data, transform data, or custom property data. 
+调试输出会列出节点名称、节点路径和节点类型。名称是作者为节点指定的文本标签。节点路径是从根节点指向该节点的点号。节点类型存储该节点的特定数据，如网格数据、变换数据或自定义属性数据。
 
-The Mesh Data stores information about the mesh such as the count of positions, normals, face list, and face material IDs. The Transform Data stores information about the matrix translation, scale, and rotation. The Material Data stores information such as its name and physical base rendering properties. The Custom Property Data stores the user defined properties in key-value pairs.
+网格数据存储网格的相关信息，如位置数、法线、面列表和面材质 ID。变换数据（Transform Data）存储有关矩阵平移、缩放和旋转的信息。材质数据存储了材质名称和物理基础渲染属性等信息。自定义属性数据以键值对的形式存储用户定义的属性。
 
-#### Debug output: scene manifest
+#### 调试输出：场景清单
 
-The scene pipeline logic can be altered using Python scripts or C++ code to update the scene manifest. To determine how the logic affected the scene manifest rules a team can turn on the debug output flag and find the `.assetinfo.dbg` file in the Cache folder.
+可以使用 Python 脚本或 C++ 代码更改场景管道逻辑，以更新场景清单。要确定逻辑如何影响场景清单规则，团队可以打开调试输出标志，并在缓存文件夹中找到`.assetinfo.dbg`文件。
 
 For example:
 
@@ -387,121 +387,121 @@ D:\o3de\my_project\Cache\pc\assets\test.azmodel
 D:\o3de\my_project\Cache\pc\assets\test.assetinfo.dbg
 ```
 
-The `.assetinfo.dbg` file is a file representation of the scene manifest that was in memory when the scene builder processed the scene graph. Each rule starts with the `"$type"` key and lists the rule by both GUID and name such as `"{07B356B7-3635-40B5-878A-FAC4EFD5AD86} MeshGroup"`.
+`.assetinfo.dbg`文件是场景生成器处理场景图时内存中场景清单的文件表示。每个规则都以 `“$type”` 键开头，并按 GUID 和名称列出规则，如 `“{07B356B7-3635-40B5-878A-FAC4EFD5AD86}”。MeshGroup"`。
 
-The MeshGroup is an example of a rule where it creates an `.azmodel` product file that is named using the `"name"` field, includes the mesh node paths in the `"selectedNodes"` array, and excludes the node paths in the `"unselectedNodes"` array.
+MeshGroup 是规则的一个示例，它会创建一个 `.azmodel` 产品文件，该文件使用 `“name”`字段命名，在 `“selectedNodes”`数组中包含网格节点路径，并在 `“unselectedNodes”`数组中排除节点路径。
 
-## View Asset Processor logs 
+## 查看资产处理器日志
 
-If Asset Processor isn't working as expected, use the information in the **Logs** tab to debug the issue. The Logs tab contains log information for Asset Processor and not for individual process jobs. To view logs for individual process jobs, refer to the **Event Log Details** pane in the **Jobs** tab of Asset Processor.
+如果资产处理器未按预期运行，可使用 **Logs** 标签中的信息来调试问题。**Logs**选项卡包含资产处理器的日志信息，而不是单个流程作业的日志信息。要查看单个流程作业的日志，请参阅资产处理器**Jobs**选项卡中的**Event Log Details**窗格。
 
-1. In Asset Processor, choose **Logs**.
+1. 在Asset Processor中，选择**Logs**。
 
-1. In the **Logs** section, you can view the following:
+1. 在**Logs**部分中，你可以看到以下内容：
 
-    * **Status** - The date and time stamp of the log.
-    * **Source** - What produced the log (for example, Asset Processor).
-    * **Message** - The description of the log.
+    * **Status** - 日志的日期和时间戳。
+    * **Source** - 生成日志的内容（例如，资产处理器）。
+    * **Message** - 日志描述。
 
     ![Asset Processor UI logs tab](/images/user-guide/assets/asset-processor/interface-logs.png)
 
-1. To create another log report, choose **Add**.
+1. 要创建另一个日志报告，点击**Add**。
 
-1. In the **Create New Logging Tab**, you can specify the settings below:
+1. 在**Create New Logging Tab**中，你可以指定以下设置：
 
-    * **Filter name** - The name of your filter (for example, `All logs`).
-    * **Text filter (optional)** - Text to filter the log results.
-    * **Show messages** - Display messages about each log.
-    * **Show warnings** - Display logs that have warnings.
-    * **Show errors** - Display logs that have errors.
-    * **Show debug** - Display logs that have debug issues.
+    * **Filter name** - 筛选器的名称 (例如，`All logs`).
+    * **Text filter (optional)** - 用于过滤日志结果的文本。
+    * **Show messages** - 显示每个日志的相关信息。
+    * **Show warnings** - 显示有警告的日志。
+    * **Show errors** - 显示有错误的日志。
+    * **Show debug** - 显示有调试问题的日志。
 
     ![Create a log tab in Asset Processor](/images/user-guide/assets/asset-processor/create-logging-tab.png)
 
-1. Choose **OK**. Your log report appears as another tab in Asset Processor.
+1. 选择 **OK**。日志报告将作为另一个选项卡出现在资产处理器中。
 
-1. You can choose **Copy all** and paste the raw logs into a text file. You can also choose **Open log files** to open the directory containing the log files in your operating system.
+1. 您可以选择**Copy all**，将原始日志粘贴到文本文件中。您还可以选择**Open log files**，打开操作系统中包含日志文件的目录。
 
-## Restart Asset Processor 
+## 重启资产处理器
 
-You can restart **Open 3D Engine (O3DE) Editor** and Asset Processor. Verify that only one instance of Asset Processor runs at the same time.
+您可以重新启动 **Open 3D Engine (O3DE) Editor** 和 Asset Processor。确认同一时间只有一个 Asset Processor 实例在运行。
 
-1. Close O3DE Editor.
+1. 关闭O3DE编辑器。
 
-1. In the Windows taskbar, **right-click** Asset Processor, and choose **Quit** or press **Ctrl+Q**.
+1. 在Windows任务栏，**右击** Asset Processor，选择**Quit** 或按下 **Ctrl+Q**。
 
-1. Restart O3DE Editor. Asset Processor automatically starts.
+1. 重新启动 O3DE 编辑器。资产处理器自动启动。
 
-## Use Asset Builder to debug 
+## 使用资产生成器调试
 
-You can debug Asset Processor using **AssetBuilder**. This is a standalone `AzToolsFramework` application that lets you run BuilderSDK modules in isolation. You can run AssetBuilder in debug mode to develop new features for an Asset Builder. In debug mode, AssetBuilder creates a test job or processes jobs for specified files.
+您可以使用 **AssetBuilder** 调试资产处理器。这是一个独立的 `AzToolsFramework`应用程序，可让你单独运行 BuilderSDK 模块。你可以在调试模式下运行 AssetBuilder，为资产生成器开发新功能。在调试模式下，AssetBuilder 会创建测试作业或处理指定文件的作业。
 
 {{< note >}}
-You must start Asset Processor before you can enter a `-debug` command.
+必须先启动资产处理器，然后才能输入`-debug` 命令。
 {{< /note >}}
 
-1. In a terminal, navigate to `<build>/bin/<config>/`.
+1. 在终端中，导航到 `<build>/bin/<config>/`。
 
-1. Enter the command below to get a list of possible options. See [Asset Builder Settings](/docs/user-guide/assets/pipeline/asset-builders#Settings) for further information.
+1. 输入以下命令可获得可能的选项列表。更多信息请参阅 [资产生成器设置](/docs/user-guide/assets/pipeline/asset-builders#Settings)。
 
    ```cmd
    AssetBuilder.exe -help
    ```
 
-1. You can use the debug options below:
+1. 您可以使用以下调试选项：
 
-    * To debug a specified file, run the command below.
+  * 要调试指定文件，请运行以下命令。
 
         ```cmd
         AssetBuilder.exe -debug <path_to_scan_directory>\<source_asset.ext>
         ```
 
-    * To create a job without processing a specified file, run the command below.
+    * 要创建不处理指定文件的作业，请运行以下命令。
 
         ```cmd
         AssetBuilder.exe -debug_create "<path_to_scan_directory>\<source_asset.ext>" -module "<path_to_debug_build_directory>\Builders\ExampleBuilder.dll" -output "<path_to_log_directory>"
         ```
 
-    * To process without creating a job for a specified file, run the command below.
+    * 要在不为指定文件创建任务的情况下进行处理，请运行以下命令。
 
         ```cmd
         AssetBuilder.exe -debug_process "<path_to_scan_directory>\<source_asset.ext>"
         ```
 
-## Use the Microsoft Child Process Debugging Power Tool 
+## 使用 Microsoft 子进程调试强大工具
 
-Use this tool to automatically attach the debugger to spawned child processes.
+使用该工具可将调试器自动附加到生成的子进程上。
 
-1. Go to the [download](https://marketplace.visualstudio.com/items?itemName=vsdbgplat.MicrosoftChildProcessDebuggingPowerTool) page, and choose **Download**.
+1. 进入 [下载](https://marketplace.visualstudio.com/items?itemName=vsdbgplat.MicrosoftChildProcessDebuggingPowerTool) 页面，选择 **Download**。
 
-1. Install the tool for Visual Studio.
+1. 为 Visual Studio 安装工具。
 
-1. In Visual Studio, start `AssetProcessor.exe`. Breakpoints in Asset Builders work as normal.
+1. 在 Visual Studio 中，启动 `AssetProcessor.exe`。Asset Builders 中的断点工作正常。
 
-## Debug Asset Builders from Asset Processor {#DebugAssetBuilders}
+## 从资产处理器调试资产构建器 {#DebugAssetBuilders}
 
-Use the procedure below to debug in either of the following scenarios:
+使用以下步骤调试以下任一情况：
 
-* Intermittent failures that are difficult to reproduce in a single run of Asset Builder using the `-debug` option.
-* Failures that only occur in multiple process job requests.
+* 使用 `debug` 选项在 Asset Builder 的单次运行中难以重现的间歇性故障。
+* 仅在多个进程任务请求中出现的故障。
 
-1. In a text editor, open the `Registry/AssetProcessorPlatformConfig.setreg` file and set `maxjobs=1`. This limits Asset Processor to run one job at a time.
+1. 在文本编辑器中打开 `Registry/AssetProcessorPlatformConfig.setreg` 文件，设置 `maxjobs=1`。这将限制 Asset Processor 一次只能运行一个作业。
 
-1. Run Asset Processor so that it spawns the Asset Builder process.
+1. 运行 Asset Processor，使其生成 Asset Builder 进程。
 
-1. To debug, attach the `AssetBuilder.exe` in Visual Studio. There is only one Asset Builder.
+1. 要调试，请在 Visual Studio 中附加 `AssetBuilder.exe` 。资产生成器只有一个。
 
-The next time that you modify your source file, `AssetBuilder.exe` builds that asset.
+下一次修改源文件时，`AssetBuilder.exe` 将生成该资产。
 
 {{< tip >}}
-You can spawn multiple instances of `AssetBuilder.exe` and attach them to Visual Studio.
+您可以生成多个 `AssetBuilder.exe` 实例，并将它们附加到 Visual Studio。
 {{< /tip >}}
 
-## Clearing the cache
+## 清除缓存
 
 
-If you're a game artist and you're having issues running Asset Processor, the issues might be due to a corrupt cache. You might solve the issues by deleting your project's `Cache` directory. Restart Asset Processor to reprocess the source assets and rebuild the Asset Cache.
+如果你是一名游戏美术师，在运行 Asset Processor 时遇到问题，可能是因为缓存损坏。你可以通过删除项目的`Cache`目录来解决问题。重新启动 Asset Processor，重新处理源资产并重建资产缓存。
 
 {{< note >}}
-If you're an engineer making new BuilderSDK-based builders, we recommend that you don't delete your cache.
+如果你是一名工程师，正在制作基于 BuilderSDK 的新构建器，我们建议你不要删除缓存。
 {{< /note >}}

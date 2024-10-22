@@ -1,6 +1,6 @@
 ---
-title: O3DE Framework API reference
-description: Reference index for Open 3D Engine frameworks.
+title: O3DE Framework API 参考
+description: Open 3D Engine框架参考索引。
 ---
 
 * [AtomCore](/docs/api/frameworks/AtomCore)

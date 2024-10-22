@@ -1,6 +1,6 @@
 ---
-title: O3DE Gem API reference
-description: Reference index for Gems shipped with Open 3D Engine.
+title: O3DE Gem API 参考
+description: 随Open 3D Engine一起提供的 Gem 的参考索引。
 ---
 
 * [Achievements](/docs/api/gems/Achievements)

@@ -1,89 +1,89 @@
 ---
-linkTitle: Move or Delete Assets
-title: Move or Delete Assets with Asset Processor Batch
-description: Learn how to move assets to new directory locations or delete assets while maintaining internal references with Asset Processor Batch.
+linkTitle: 移动或删除资产
+title: 使用Asset Processor Batch移动或删除资产
+description: 了解如何使用 Asset Processor Batch 将资产移动到新的目录位置或删除资产，同时保持内部引用。
 weight: 700
 toc: true
 ---
 
-There are many reasons that you might decide to move or delete assets during development of your project in **Open 3D Engine (O3DE)**. When assets are moved, all references to the asset will need to be updated. If an asset is moved without updating any references to the moved asset, that upstream content may no longer work correctly due to the broken reference.
+在**Open 3D Engine (O3DE)** 中开发项目期间，您可能会出于多种原因决定移动或删除资产。移动资产时，需要更新资产的所有引用。如果在移动资产时未更新对该资产的任何引用，则上游内容可能会因引用中断而无法正常工作。
 
-To support asset relocation and removal, the **Asset Processor Batch** tool offers the `--move` and `--delete` commands. These commands will check for some, but not all, incoming references to this content, and will perform some automatic reference updating when possible. [See the limitations section for more details.](#Limitations)
+为支持资产搬迁和删除，**Asset Processor Batch**工具提供了`--move` 和 `--delete` 命令。这些命令将检查对该内容的部分（但不是全部）传入引用，并在可能的情况下执行一些自动引用更新。[更多详情，请参阅 “限制 ”部分。](#Limitations)
 
 {{< note >}}
-Some assets that contain references may be in a binary format. For example, `.fbx` files can be either ascii or binary format. References in binary format files are not automatically updated.
+某些包含引用的资产可能是二进制格式。例如，`.fbx` 文件既可以是 ascii 格式，也可以是二进制格式。二进制格式文件中的引用不会自动更新。
 
-Because moving or deleting files might be a destructive operation, the `--move` and `--delete` commands require an additional `--confirm` option to perform the operation. Using either command without the `--confirm` option only provides a preview of the results of the command.
+由于移动或删除文件可能是破坏性操作，因此 `-move`和`-delete`命令需要额外的`--confirm`选项来执行操作。在不使用 `--confirm` 选项的情况下使用这两条命令，只能预览命令的结果。
 {{< /note >}}
 
-## Asset Processor Batch Move Syntax
+## Asset Processor Batch 移动语法
 
-You can use the `--move` command below with Asset Processor Batch to move source assets in your project. This operation is also used to rename assets.
+您可以使用下面的 `--move` 命令和 Asset Processor Batch 来移动项目中的源资产。此操作还可用于重命名资产。
 
 `--move=<FromPath>,<ToPath>`
 
-Use the below guidance when specifying `FromPath` and `ToPath` arguments to move assets.
+在指定 `FromPath` 和 `ToPath` 参数以移动资产时，请使用以下指导。
 
-* `FromPath` and `ToPath` can be absolute paths or paths relative to a scan directory root, such as a project or Gem directory.
-* The specified paths *must* refer to files, not directories. To rename a directory, use directory names with wildcards (`*`) , for example, `OriginalDirectoryName/*,DirectoryRenamed/*`.
-* `FromPath` and `ToPath` may contain wildcards that match any number of characters in a file or directory name at the current level. If the path ends with a wildcard, it recursively matches any number of characters at any directory level at or below the wildcard's level.
-* `FromPath` and `ToPath` *must* contain the same number of wildcards.
+* `FromPath` 和 `ToPath`可以是绝对路径，也可以是扫描目录根目录（如项目或 Gem 目录）的相对路径。
+* 指定的路径**必须**指向文件，而不是目录。要重命名目录，请使用带通配符 (`*`) 的目录名，例如 `OriginalDirectoryName/*,DirectoryRenamed/*`.
+* `FromPath` 和 `ToPath`可包含通配符，可匹配当前级别文件或目录名中的任意数量字符。如果路径以通配符结尾，则会递归匹配通配符层级上下的任何目录层级中的任意字符数。
+* `FromPath` 和 `ToPath` ***必须*包含相同数量的通配符。
 
-The examples below illustrate how to use wildcards with the `--move` option.
+下面的示例说明了如何使用通配符和 `--move` 选项。
 
-| Path | Match |
+| 路径 | 匹配 |
 |------|------------|
-| `Textures/*` | A wildcard at the end of a path recursively matches every file contained in a directory. It includes the contents of all subdirectories as well. |
-| `Materials/*.material` | A wildcard in a file name matches every file at that directory level. In the example, every file with a  `.material` extension in a directory named `Materials` is a match. |
-| `Textures*/` | A wildcard at the end of a directory name won't match any directory or file. Paths must refer to files since directories are not tracked in source control. |
+| `Textures/*` | 路径末尾的通配符会递归匹配目录中包含的所有文件。它还包括所有子目录的内容。 |
+| `Materials/*.material` | 文件名中的通配符可匹配该目录级别下的所有文件。在示例中，名为  `Materials` 的目录中所有扩展名为`.material` 的文件都匹配。 |
+| `Textures*/` | 目录名称末尾的通配符不会匹配任何目录或文件。路径必须指向文件，因为源代码控制中不跟踪目录。 |
 
-## Asset Processor Batch Delete Syntax
+## Asset Processor Batch 删除语法
 
-You can use the `--delete` command below with Asset Processor Batch to delete source assets in your project.
+您可以使用下面的 `--delete` 命令和资产处理器批处理功能删除项目中的源资产。
 
 `--delete=<Path>`
 
-Use the below guidance when specifying a path argument to delete assets.
+在指定删除资产的路径参数时，请使用以下指导。
 
-* The path can be an absolute path or path relative to a scan directory root, such as a project or Gem directory.
-* The specified argument *must* refer to files, not directories. To delete a directory, use the directory name with a wildcard, for example, `DirectoryName/*`.
-* The path may contain wildcards that match any number of characters in a file or directory name at the current level. If the path ends with a wildcard, it recursively matches any number of characters at any directory level at or below the wildcard's level.
+* 路径可以是绝对路径，也可以是扫描目录根目录（如项目或 Gem 目录）的相对路径。
+* 指定的参数**必须**是指文件，而不是目录。要删除目录，请使用带通配符的目录名，例如 `DirectoryName/*`.
+* 路径可以包含通配符，通配符可以匹配当前级别文件或目录名称中的任意字符数。如果路径以通配符结尾，则会递归匹配通配符层级上下任何目录层级的任意字符数。
 
-## Asset Processor Batch Relocation Options
+## Asset Processor Batch 迁移选项
 
-You can use the additional command line options below when you move or delete assets with Asset Processor Batch.
+使用资产处理器批处理功能移动或删除资产时，可以使用下面的附加命令行选项。
 
-| Option | Description |
+| 选项 | 说明 |
 | - | - |
-| `--confirm` | Performs a move or delete, modifying files on disk. Without this, move and delete only provide a preview of the result. |
-| `--leaveEmptyFolders` | By default, empty folders are removed, even during a `--move`. This option keeps empty folders. |
-| `--allowBrokenDependencies` |  By default, move and delete commands fail if there are broken dependencies. This forces the action to proceed despite broken dependencies. |
-| `--updateReferences` | This option is only available with the `--move` command. The option attempts to update files that reference the selected files. This is a simple find-and-replace of the absolute path and UUID/AssetId. References in binary assets are not updated. |
-| `--enablescm` | Source Control Management is disabled by default in Asset Processor Batch. This enables the source control plugin so that the command can checkout files for edit/move/delete as appropriate. |
+| `--confirm` | 执行移动或删除，修改磁盘上的文件。如果没有这个功能，移动和删除只能提供结果预览。 |
+| `--leaveEmptyFolders` | 默认情况下，即使在 `--move`过程中，空文件夹也会被删除。此选项可保留空文件夹。|
+| `--allowBrokenDependencies` |  默认情况下，如果存在断开的依赖关系，移动和删除命令会失败。这样就能在依赖关系中断的情况下继续执行操作。 |
+| `--updateReferences` | 该选项仅适用于 `--move` 命令。该选项会尝试更新引用所选文件的文件。这是一个简单的查找并替换绝对路径和 UUID/AssetId 的过程。二进制资产中的引用不会更新。 |
+| `--enablescm` | 在资产处理程序批处理中，版本控制管理默认为禁用。这将启用源控制插件，以便该命令可以检查文件，并根据情况进行编辑/移动/删除。 |
 
-## Asset Processor Batch Relocation Limitations {#Limitations}
-The Asset Processor Batch relocation tool has a few limitations:
-* References in C++ to assets are not registered or known to this tool. If there is a hardcoded C++ load for the asset, that reference will break when the asset is relocated, and will need to be manually found and updated.
-* This tool supports Perforce integration, but no other source control integration. Git will sometimes be able to figure out on its own that a file was relocated, but it won't always. If you relocate an asset without using your source control's file relocation functionality, the new file won't easily map to the old file's history.
-* If there is a gap in the dependency graph, such as a builder not properly declaring a Product Dependency on the asset you are relocating, this tool will not know, and that unregistered asset reference will break with the relocation.
-* References to this file outside of O3DE will not be updated.
-   * Often the source asset is downstream from a DCC tool. The asset relocation tool will not update references like this that are upstream.
-      * For example, an FBX file is exported from Blender, and the original asset used to generate it is tracked via a blend file.
-   * There may be other files external to O3DE that reference Source Assets.
-      * For example, your team may make use of an Excel spreadsheet file to manage some game data, and have a process where that is exported. The asset relocator will not be aware of this and will not update these references.
+## Asset Processor Batch 迁移限制 {#Limitations}
+资产处理器批量搬迁工具有一些限制：
+* C++ 中对资产的引用未在本工具中注册或已知。如果资产有一个硬编码的 C++ 加载，那么当资产被重新定位时，该引用就会中断，需要手动查找和更新。
+* 该工具支持 Perforce 集成，但不支持其他源控制集成。Git 有时会自己发现文件被重新定位，但并不总是如此。如果不使用源代码控制的文件重定位功能就重定位资产，新文件就不会轻易映射到旧文件的历史记录。
+* 如果依赖关系图中存在缺口，例如构建程序没有正确声明要重置的资产的产品依赖关系，该工具就不会知道，而未注册的资产引用也会随着重置而中断。
+* O3DE 以外对该文件的引用将不会更新。
+   * 源资产通常位于 DCC 工具的下游。资产重定位工具不会更新像这样的上游引用。
+      * 例如，从 Blender 导出 FBX 文件，并通过 blend 文件跟踪用于生成该文件的原始资产。
+   * O3DE 外部可能还有其他引用源资产的文件。
+      * 例如，您的团队可能会使用 Excel 电子表格文件来管理一些游戏数据，并将其导出。资产搬迁者不会意识到这一点，也不会更新这些引用。
 
-## Moving, Renaming, and Deleting Assets Manually
-If you want to relocate an asset manually without using this tool, or you want to understand what this tool is doing internally, follow this process:
-1. Gather all references to both the Source Asset, and to all Product Assets generated from that Source Asset. This includes the following:
-   * C++ references, which the relocation will not handle.
-   * References from DCC tools.
-      * For example, if you want to relocate an image file, it may be referenced by relative path from a Blender .blend file that outputs an FBX file. If you update the FBX file without updating the Blender file, the next time the FBX is exported from Blender, it may include the old path that no longer resolves to the referenced image.
-   * Other references in other files that may be specific to your team and project.
-      * For example, if you use an Excel spreadsheet to manage game data, and this references the asset you wish to relocate, you will need to update that as well.
-1. For each reference, identify how the reference will need to be updated.
-   * You may need to involve other team members to perform this action.
-      * For example, if you wish to relocate an image referenced from an FBX file, you need to update the original DCC file, such as the Maya file used to export that FBX.
-1. You may find it easier to first copy the file to the new location so you can update the old and new references.
-   * You may need to be cautious with this step to preserve file history in your source control tool.
-1. Now that all references to the file to move, rename, or delete have been gathered, you can update them to all reference the relocated/renamed source and/or product assets. If you are deleting, you'll need to update these references to handle the asset no longer existing.
-1. Now you can complete the move, rename, or delete operation. It's recommended you do this in a way that preserves file history in your source control.
+## 手动移动、重命名和删除资产
+如果你想在不使用该工具的情况下手动重新定位资产，或者想了解该工具的内部操作，请按照以下流程操作：
+1. 收集源资产和由源资产生成的所有产品资产的所有引用。这包括以下内容：
+   * 重定位无法处理的 C++ 引用。
+   * 来自 DCC 工具的引用。
+      * 例如，如果你想重新定位一个图像文件，它可能会被输出 FBX 文件的 Blender .blend 文件中的相对路径引用。如果更新 FBX 文件而不更新 Blender 文件，下次从 Blender 导出 FBX 文件时，可能会包含不再解析到引用图像的旧路径。
+   * 其他文件中与团队和项目相关的参考资料。
+      * 例如，如果您使用 Excel 电子表格管理游戏数据，而该电子表格引用了您希望迁移的资产，那么您也需要更新该电子表格。
+1. 对于每个参考文献，确定需要如何更新参考文献。
+   * 您可能需要让其他团队成员参与执行此操作。
+      * 例如，如果要重新定位 FBX 文件中引用的图像，则需要更新原始 DCC 文件，如用于导出 FBX 的 Maya 文件。
+1. 您可能会发现，先将文件复制到新位置会更容易，这样就可以更新新旧引用。
+   * 您可能需要谨慎处理此步骤，以便在源控制工具中保留文件历史记录。
+1. 现在，要移动、重命名或删除的文件的所有引用都已收集完毕，您可以更新这些引用，使其全部引用重新定位/重命名的源和/或产品资产。如果要删除，则需要更新这些引用，以处理不再存在的资产。
+1. 现在你可以完成移动、重命名或删除操作了。建议在源控制中保留文件历史记录。

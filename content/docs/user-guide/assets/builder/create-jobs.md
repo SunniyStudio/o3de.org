@@ -1,57 +1,57 @@
 ---
 linkTitle: CreateJobs
 title: Python Asset Builder CreateJobs
-description: Create process job information for Asset Processor with CreateJobs in Python Asset Builder. 
+description: 使用 Python Asset Builder 中的 CreateJobs 为资产处理器创建流程作业信息。
 weight: 300
 toc: true
 ---
 
-CreateJobs generates asset processing jobs for **Asset Processor**. When Asset Processor detects a new or updated source asset and determines the appropriate **Asset Builder** to process the source asset, it sends a `CreateJobsRequest` that contains information about the source asset, including its path, to the Asset Builder. The Asset Builder responds with a `CreateJobsResponse` that contains `JobDescriptor` structures, and source and job dependencies.
+CreateJobs 为**资产处理器**生成资产处理任务。当资产处理器检测到新的或更新的源资产并确定合适的**资产生成器**来处理源资产时，它会向资产生成器发送包含源资产信息（包括其路径）的`CreateJobsRequest`。资产生成器会以 `CreateJobsResponse`作为回应，其中包含 `JobDescriptor` 结构以及源和作业依赖关系。
 
 ## CreateJobsRequest
 
-`azlmbr.asset.builder.CreateJobsRequest` is a class that provides information about the job request. It is sent by Asset Processor to the Asset Builder. It provides data that is used to create a `JobDescriptor` to process the source asset for a specific target platform.
+`azlmbr.asset.builder.CreateJobsRequest` 是一个提供作业请求信息的类。它由资产处理器发送给资产生成器。它提供的数据用于创建`JobDescriptor`，以便为特定目标平台处理源资产。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| `builderId` | `azlmbr.math.Uuid` | Identifies the Asset Builder. |
-| `watchFolder` | String | Contains the subdirectory of the source asset. |
-| `sourceFile` | String | The source asset path that is relative to the scan directory. |
-| `sourceFileUUID` | `azlmbr.math.Uuid` | The source asset's UUID, which is used as part of its product asset ID. |
-| `enabledPlatforms` | List[`azlmbr.asset.builder.PlatformInfo`] | Information about the host and target platforms. |
+| `builderId` | `azlmbr.math.Uuid` | 确定资产创建者。 |
+| `watchFolder` | String | 包含源资产的子目录。 |
+| `sourceFile` | String | 相对于扫描目录的源资产路径。 |
+| `sourceFileUUID` | `azlmbr.math.Uuid` | 源资产的 UUID，用作产品资产 ID 的一部分。 |
+| `enabledPlatforms` | List[`azlmbr.asset.builder.PlatformInfo`] | 有关主机和目标平台的信息。 |
 
 ### PlatformInfo
 
-`azlmbr.asset.builder.PlatformInfo` is a class that provides information about the host and target platforms that have been enabled for the project.
+`azlmbr.asset.builder.PlatformInfo` 是一个提供项目已启用的主机和目标平台信息的类。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| `identifier` | String | The ID of the platform such as 'pc' or 'ios'. |
-| `tags` | List[String] | The tags available for the platform. |
+| `identifier` | 字符串 | 平台 ID，如 “pc ”或 “ios”。 |
+| `tags` | List[String] | 平台可用的标签。 |
 
 ## CreateJobsResponse
 
-`azlmbr.asset.builder.CreateJobsResponse` is a class that determines how to process the source asset. It creates a `JobDescriptor` for each source asset and for each host and target platform. It also provides information about source dependencies, and the result of the `CreateJobsRequest`.
+`azlmbr.asset.builder.CreateJobsResponse` 是一个决定如何处理源资产的类。它为每个源资产以及每个主机和目标平台创建一个 `JobDescriptor` 。它还提供有关源依赖性的信息，以及 `CreateJobsRequest`的结果。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| `result` | `azlmbr.asset.builder.CreateJobsResponse Return Code` | The result code from the `CreateJobsRequest`. |
-| `sourceFileDependencyList` | List[`SourceFileDependency`] | Dependencies required to run the process job for the source asset. |
-| `createJobOutputs` | List[`JobDescriptor`] | A list of `JobDescriptor` structures for each source asset, and each host and target platform. |
+| `result` | `azlmbr.asset.builder.CreateJobsResponse Return Code` | `CreateJobsRequest`的结果代码。 |
+| `sourceFileDependencyList` | List[`SourceFileDependency`] | 运行源资产处理任务所需的依赖项。 |
+| `createJobOutputs` | List[`JobDescriptor`] | 每个源资产以及每个主机和目标平台的 `JobDescriptor` 结构列表。 |
 
-### CreateJobsResponse Return Code
+### CreateJobsResponse 返回代码
 
-`CreateJobsResponse result` contains one of the following `azlmbr.asset.builder.CreateJobsResponse` Return Codes from the `CreateJobs` request.
+`CreateJobsResponse result` 包含来自 `CreateJobs` 请求的下列 `azlmbr.asset.builder.CreateJobsResponse` 返回代码之一。
 
-| Return Code | Description |
+| 返回代码 | 说明 |
 | - | - |
-| `azlmbr.asset.builder.CreateJobsResponse_ResultFailed` | Job creation has failed. |
-| `azlmbr.asset.builder.CreateJobsResponse_ResultShuttingDown` | The Asset Builder is shutting down. |
-| `azlmbr.asset.builder.CreateJobsResponse_ResultSuccess` | Job creation has succeeded. |
+| `azlmbr.asset.builder.CreateJobsResponse_ResultFailed` | 创建任务失败。 |
+| `azlmbr.asset.builder.CreateJobsResponse_ResultShuttingDown` | 资产生成器正在关闭。 |
+| `azlmbr.asset.builder.CreateJobsResponse_ResultSuccess` | 创建任务成功，|
 
 ### SourceFileDependency
 
-`azlmbr.asset.builder.SourceFileDependency` is a class that contains the path and ID of a source file dependency.
+`azlmbr.asset.builder.SourceFileDependency` 是一个包含依赖源文件的路径和 ID 的类。
 
 | Field | Type | Description |
 | - | - | - |

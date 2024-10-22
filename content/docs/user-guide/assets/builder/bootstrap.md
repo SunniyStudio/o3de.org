@@ -1,16 +1,16 @@
 ---
-linkTitle: Bootstrap
-title: Bootstrap a Python Asset Builder
-description: Add a Python Asset Builder to a bootstrap.py script.
+linkTitle: 启动
+title: 启动 Python Asset Builder
+description: 在 bootstrap.py 脚本中添加 Python 资产创建器。
 weight: 100
 ---
 
-To make a **Python Asset Builder** script available to the **Asset Pipeline**, you must add a `bootstrap.py` file to the path or modify an existing `bootstrap.py` file. Placing the Python Asset Builder script and the `bootstrap.py` file in one of the following script locations is recommended:
+要使**Python 资产生成器**脚本可用于**资产流水线**，必须在路径中添加一个 `bootstrap.py` 文件或修改现有的 `bootstrap.py` 文件。建议将 Python Asset Builder 脚本和`bootstrap.py`文件放在以下脚本位置之一：
 
-+ In your project: `Editor\Scripts\bootstrap.py`
-+ In a Gem: `Editor\Scripts\bootstrap.py`
++ 在你的项目中：`Editor\Scripts\bootstrap.py`
++ 在Gem中：`Editor\Scripts\bootstrap.py`
 
-To add your Python Asset Builder, import it in the `bootstrap.py` file. The example below assumes that the Python Asset Builder is named `my_py_asset_builder.py`, and that it's in the same directory as the `bootstrap.py` file.
+要添加 Python 资产生成器，请在 `bootstrap.py` 文件中导入它。下面的示例假定 Python 资产生成器名为 `my_py_asset_builder.py`，并且与 `bootstrap.py` 文件位于同一目录。
 
 ```python
 import my_py_asset_builder

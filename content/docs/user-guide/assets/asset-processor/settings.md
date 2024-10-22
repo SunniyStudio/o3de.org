@@ -1,46 +1,46 @@
 ---
-linkTitle: Settings
-title: Asset Processor Settings
-description: Commandline settings for AssetProcessor and AssetProcessorBatch
+linkTitle: 设置
+title: Asset Processor 设置
+description: 用于AssetProcessor 和 AssetProcessorBatch的命令行设置
 weight: 900
 toc: true
 ---
 
-The Asset Processor and Asset Processor Batch expose a number of commandline settings that can be used when manually launching.
+资产处理器和资产处理器批处理暴露了许多命令行设置，可在手动启动时使用。
 
-For example, if you want to manually launch Asset Processor on Windows but delay launch to attach a debugger:
+例如，如果要在 Windows 上手动启动资产处理器，但要延迟启动以附加调试器：
 ```
 AssetProcessor --project-path="C:/o3de/o3de/AutomatedTesting" --engine-path="C:/o3de/o3de" --waitOnLaunch
 ```
 
-## General settings
-When manually launching Asset Processor or Asset Processor Batch you can set the following general properties:
+## 常规设置
+手动启动资产处理器或批量资产处理器时，可以设置以下常规属性：
 
-| Setting            | Description                                                         | Default value                                               |
-|--------------------|---------------------------------------------------------------------|-------------------------------------------------------------|
-| project-name       | Name of the current project.                                        | The project name associated with the passed `project-path`. |
-| project-cache-path | Full path to the project cache folder.                              | The cache path associated with the passed `project-path`.   |
-| project-path       | Supplies the path to the project that the Asset Processor should use (required). |                                                             |
-| engine-path        | Supplies the engine path to the engine.                             | The engine path associated with the passed `project-path`.  |
+| 设置                 | 说明                   | 默认值                           |
+|--------------------|----------------------|-------------------------------|
+| project-name       | 当前项目的名称。             | 与传递的 `project-path` 相关联的项目名称。 |
+| project-cache-path | 项目缓存文件夹的完整路径。        | 与传递的 `project-path` 相关联的缓存路径。 |
+| project-path       | 提供资产处理器应使用的项目路径（必填）。 |                               |
+| engine-path        | 为引擎提供引擎路径。           | 与传递的 `project-path` 相关联的引擎路径。 |
 
 
-## Advanced settings
-You can also control the behavior using the following command line options.  See also [configuration](configuration.md) for details on Asset Processor configuration settings.
+## 高级设置
+还可以使用以下命令行选项控制行为。 有关资产处理器配置设置的详情，另请参阅 [配置](configuration.md)。
 
-| Setting                         | Description                                                                                                                                                                                                 | Default value                                                                                   |
-|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| acceptInput                     | Enable external control messaging via the ControlRequestHandler, used with automated tests.                                                                                                                 |                                                                                                 |
-| additionalScanFolders           | Used with `dependencyScanPattern` to farther filter the scan.                                                                                                                                               |                                                                                                 |
-| debugOutput                     | When enabled, builders that support it will output debug information as product assets. Used primarily with scene files.                                                                                    |                                                                                                 |
-| dependencyScanMaxIteration      | Used to limit the number of recursive searches per line when running dependencyScanPattern.                                                                                                                 | 800                                                                                 |
-| dependencyScanPattern (dsp)     | Scans assets that match the given pattern for missing product dependencies.                                                                                                                                 |                                                                                                 |
-| enableQueryLogging              | Enables logging database queries.                                                                                                                                                                           |                                                                                                 |
-| fileDependencyScanPattern (fsp) | Used with `dependencyScanPattern` to further filter the scan.                                                                                                                                               |                                                                                                 |
-| help (h)                        | Displays all available commands and their description.                                                                                                                                                      |                                                                                                 |
-| sortJobsByDBSourceName          | When enabled, sorts pending jobs with equal priority and dependencies by database source name instead of job ID. Useful for automated tests to process assets in the same order each time.                  |                                                                                                 |
-| truncatefingerprint             | Truncates the fingerprint used for processed assets. Useful if you plan to compress product assets to share on another machine because some compression formats like zip will truncate file mod timestamps. |                                                                                                 |
-| waitOnLaunch                    | Briefly pauses Asset Processor during initialization.  Waits for 20 seconds when true. Useful if you want to attach a debugger.                                                                                                              | false                             |
-| warningLevel                    | Configure the error and warning reporting level for AssetProcessor. 0 Default, 1 for fatal errors, 2 for fatal errors and warnings.                                                                         | Defaults to 0.                                                                                  |
-| zeroAnalysisMode                | Use file modification time when examining source assets for processing.                                                                                                                           | Asset Processor defaults to true, and can be changed in Asset Processor's UI. Asset Processor Batch defaults to false. | 
+| 设置                              | 说明                                                                      | 默认值                                                                  |
+|---------------------------------|-------------------------------------------------------------------------|----------------------------------------------------------------------|
+| acceptInput                     | 通过 ControlRequestHandler 启用外部控制消息传递，与自动测试一起使用。                          |                                                                      |
+| additionalScanFolders           | 与 `dependencyScanPattern` 一起使用，可进一步过滤扫描。                                |                                                                      |
+| debugOutput                     | 启用后，支持该功能的构建器将以产品资产的形式输出调试信息。主要用于场景文件。                                  |                                                                      |
+| dependencyScanMaxIteration      | 用于限制运行依赖性扫描模式（dependencyScanPattern）时每行的递归搜索次数。                         | 800                                                                  |
+| dependencyScanPattern (dsp)     | 扫描符合给定模式的资产，查找缺失的产品依赖关系。                                                |                                                                      |
+| enableQueryLogging              | 启用数据库查询日志。                                                              |                                                                      |
+| fileDependencyScanPattern (fsp) | 与 `dependencyScanPattern` 一起使用，可进一步过滤扫描。                                |                                                                      |
+| help (h)                        | 显示所有可用命令及其说明。                                                           |                                                                      |
+| sortJobsByDBSourceName          | 启用后，可按数据库源名称而不是作业 ID 对具有相同优先级和依赖关系的待处理作业进行排序。这对自动测试非常有用，每次都能以相同的顺序处理资产。 |                                                                      |
+| truncatefingerprint             | 截断用于处理资产的指纹。如果你计划压缩产品资产以便在另一台机器上共享，这将非常有用，因为某些压缩格式（如 zip）会截断文件模式时间戳。    |                                                                      |
+| waitOnLaunch                    | 在初始化过程中短暂暂停资产处理器。 为真时等待 20 秒。如果要附加调试器，此功能很有用。                           | false                                                                |
+| warningLevel                    | 配置 AssetProcessor 的错误和警告报告级别。默认为 0，1 表示致命错误，2 表示致命错误和警告。                | 默认值为 0。                                                              |
+| zeroAnalysisMode                | 在检查处理源资产时使用文件修改时间。                                                      | AssetProcessor默认为 true，可在资产处理器用户界面中更改。Asset Processor Batch默认为false。 | 
 
-Please note that AssetProcessor and Asset Processor Batch may have different defaults.
+请注意，AssetProcessor 和 Asset Processor Batch 可能有不同的默认值。

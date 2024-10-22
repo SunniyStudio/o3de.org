@@ -1,267 +1,267 @@
 ---
-linkTitle: Interface
-title: Asset Processor Interface
-description: An overview of the Asset Processor Interface.
+linkTitle: 界面
+title: Asset Processor 界面
+description: Asset Processor 界面的概述。
 weight: 100
 toc: true
 ---
 
-**Asset Processor** launches with **Open 3D Engine (O3DE)** and runs as a background process. It monitors scan directories and creates and manages the job queue for asset processing jobs. With Asset Processor, you can see the results of asset processing jobs and troubleshoot asset processing issues. To view the Asset Processor interface, **right-click** the {{< icon "asset-processor.svg" >}} Asset Processor icon in the system tray and select **Show**.
+**资产处理器**与**Open 3D Engine (O3DE)**一起启动，并作为后台进程运行。它监控扫描目录，并为资产处理任务创建和管理作业队列。通过资产处理器，您可以查看资产处理任务的结果，并排除资产处理问题。要查看 "资产处理器 "界面，**右键单击**{{< icon "asset-processor.svg" >}}系统托盘中的资产处理器图标，然后选择**Show**。
 
 ![Show the Asset Processor UI](/images/user-guide/assets/asset-processor/show-asset-processor.png)
 
-## Asset Processor interface
+## Asset Processor 界面
 
-The Asset Processor UI has several tabs you can use to view the status of asset processing jobs, and get details about specific jobs and assets.
+资产处理器用户界面有几个选项卡，可以用来查看资产处理任务的状态，并了解特定任务和资产的详细信息。
 
 ![Asset Processor UI](/images/user-guide/assets/asset-processor/interface.png)
 
-* **A**: The status line in the upper left displays information about process activity, including the number of active jobs and remaining jobs.
-* **B**: Performance metrics are displayed in the upper right including the time spent on the last scan, the time spent on the last analysis, and the time spent processing assets.
-* **C**: Choose the {{< icon "help2.svg" >}} help icon to visit this documentation.
-* **D**: The project, engine root, and the port used by Asset Processor to communicate with other processes are displayed below the status line.
-* **E**:  The buttons on the left select the tab to display in the Asset Processor UI. Refer to [Asset Processor tabs](#asset-processor-tabs) below for more information.
-* **F**:  The information Asset Processor displays is dependent on the selected Asset Processor tab. Refer to [Asset Processor tabs](#asset-processor-tabs) below for more information.
+* **A**: 左上角的状态行显示进程活动信息，包括活动任务数和剩余任务数。
+* **B**: 右上方显示性能指标，包括最后一次扫描所用时间、最后一次分析所用时间以及处理资产所用时间。
+* **C**: 选择 {{< icon "help2.svg" >}} 帮助图标访问该文档。
+* **D**: 状态行下方显示项目、引擎根目录以及资产处理器用于与其他进程通信的端口。
+* **E**:  左侧的按钮选择要在资产处理器用户界面中显示的选项卡。更多信息请参阅下面的 [资产处理器选项卡](#asset-processor-tabs)。
+* **F**:  资产处理器显示的信息取决于所选的资产处理器选项卡。有关详细信息，请参阅下面的 [资产处理器选项卡](#asset-processor-tabs)。
 
-## Asset Processor tabs
+## 资产处理器选项卡
 
-The buttons on the left of the Asset Processor Interface (labeled **E** in the Asset Processor UI image above) select which tab to display (labeled **F** in the Asset Processor UI image above).
+资产处理器界面左侧的按钮（上图资产处理器用户界面中标有**E**）选择要显示的选项卡（上图资产处理器用户界面中标有**F**）。
 
 ## Jobs
 
-In the Jobs tab, the **Asset Status** pane displays the complete list of asset process jobs, the status of the jobs, and job details including completion time, deployment platform, job key (the descriptive name of the job), and last processing job duration. The **Event Log Details** pane displays the event log details for the asset selected in the Asset Status pane.
+在 “Jobs作业 ”选项卡中，**Asset Status资产状态**窗格显示资产处理作业的完整列表、作业状态和作业详情，包括完成时间、部署平台、作业关键字（作业的描述性名称）和最后处理作业持续时间。**Event Log Details事件日志详细信息***窗格显示资产状态窗格中所选资产的事件日志详细信息。
 
-Jobs for critical assets are processed before non-critical assets. Critical assets are required so that the engine can function and are marked as critical by their **Asset Builders**.
+关键资产的任务在非关键资产之前处理。关键资产是引擎运行所必需的，并由其**资产构建者**标记为关键资产。
 
-Asset processor supports job escalation for assets that are referenced before they have been processed. When you first launch **O3DE Editor**, it waits until all critical assets have processed, then O3DE Editor opens. Asset Processor continues processing non-critical assets in the background. If your interactions with O3DE Editor reference an asset that has not been processed, the job for the referenced asset is escalated so that the asset can be processed and loaded quickly. 
-    
-The Asset Status list can be sorted by status, source asset path, completion time, deployment platform, job key, or the processing time. **Right-click** any list item to access the source or the product asset, or view the logs for the process job.
+资产处理器支持对尚未处理就被引用的资产进行作业升级。首次启动**O3DE 编辑器**时，它会等待所有关键资产处理完毕，然后打开 O3DE 编辑器。资产处理器继续在后台处理非关键资产。如果您与 O3DE 编辑器的交互引用了尚未处理的资产，则引用资产的任务会升级，以便快速处理和加载资产。
+
+资产状态列表可按状态、源资产路径、完成时间、部署平台、任务关键字或处理时间排序。**右键单击**任何列表项，可访问源资产或产品资产，或查看处理任务的日志。
 
 ![Asset Processor UI jobs tab](/images/user-guide/assets/asset-processor/interface-jobs.png)
 
-### Status Column
+### 状态列
 
-Jobs in the Asset Status list display the statuses below:
+资产状态列表中的任务会显示以下状态：
 
-* {{< icon "pending.svg" >}} **Pending** - The job has been created, but has not run.
-* {{< icon "processing.svg" >}} **Processing** - The job is in progress.
-* {{< icon "warning-yellow.svg" >}} **Completed - Warning** - The job has completed but has emitted a warning.
-* {{< icon "error.svg" >}} **Completed - Error** - The job has completed and has emitted an error.
-* {{< icon "valid.svg" >}} **Completed** - The job has completed successfully with no warnings, errors, or failures.
-* {{< icon "failure.svg" >}} **Failed** - The job has failed and has emitted a failure.
+* {{< icon "pending.svg" >}} **Pending** - 任务已创建，但尚未运行。
+* {{< icon "processing.svg" >}} **Processing** - 任务正在进行中。
+* {{< icon "warning-yellow.svg" >}} **Completed - Warning** - 任务已完成，但发出了警告。
+* {{< icon "error.svg" >}} **Completed - Error** - 任务已完成，并已发出错误信息。
+* {{< icon "valid.svg" >}} **Completed** - 任务已成功完成，没有任何警告、错误或故障。
+* {{< icon "failure.svg" >}} **Failed** - 任务失败，已发出失败信息。
 
-It's possible for a job to emit a combination of warnings, errors, and failures.
+作业有可能同时发出警告、错误和失败。
 
-Completed with warnings produces a valid product asset, but might have some data substituted. Suppose a job is processing a `.fbx` file that produces several mesh product assets, and that a `.assetinfo` sidecar file specifies to process the meshes with custom normals. If the meshes in the `.fbx` file do not have custom normals, the Asset Builder generates normals instead. Valid product assets are produced, but several warnings are emitted because custom normals could not be found for the mesh assets.
+在有警告的情况下完成，会生成有效的产品资产，但可能会替换一些数据。假设一项任务正在处理一个生成多个网格产品资产的 `.fbx` 文件，而 `.assetinfo` sidecar 文件指定使用自定义法线处理网格。如果`.fbx`文件中的网格没有自定义法线，资产生成器会生成法线。生成的产品资产有效，但由于无法为网格资产找到自定义法线，因此会发出若干警告。
 
-Completed with errors produces a product asset but it may not be valid for all use cases, such as having incomplete data. Errors happen when data required for the product asset is missing or cannot be produced. Using the example above, suppose the `.assetinfo` specifies tangents should be generated for the mesh product assets, but the Asset Builder fails to produce the tangents. The end result is a valid product asset that does not contain all the requested data.
+有错误的完成会生成产品资产，但它可能不适用于所有用例，例如数据不完整。当产品资产所需的数据缺失或无法生成时，就会出现错误。以上面的例子为例，假设 `.assetinfo`指定应为网格产品资产生成切线，但资产生成器却无法生成切线。最终结果是一个有效的产品资产不包含所有要求的数据。
 
-Failed jobs do not produce a product asset.
+失败的任务不会生成产品资产。
 
-What is considered a log message, warning, error, and failure, and how the system handles these is up to each builder's author. Our guidance is:
- * Print a log message for anything that will be useful as a bread crumb for tracking down problems later, for both the content creator or the builder author.
- * Emit a warning if something is wrong but it can mostly be handled, and the output your builder can generate is reasonably close to what the content creator intended.
- * Post an error if your builder encounters data it can't properly handle and you know the product asset you output won't be fully correct. When possible, this is preferred over a failure because the failure won't produce any product asset, so any references from other assets to this asset may break. For example, if a prefab references a mesh product asset from an FBX file, an update to the FBX causes the job to fail, then any edits to the prefab while this job is failing may lose the reference to the mesh.
- * Post a failure if your builder encounters something it cannot handle and processing should end for that builder, and the builder should not output anything. This is generally considered a last resort, and is most commonly seen when a builder crashes during processing.
+什么是日志信息、警告、错误和失败，以及系统如何处理这些信息，由每个创建者自行决定。我们的指导原则是：
+ * 为任何内容打印日志信息，为内容创建者或创建者日后追踪问题提供有用的线索。
+ * 如果出现问题，会发出警告，但大部分情况下都能得到处理，而且您的生成器所能生成的输出与内容创建者的意图相当接近。
+ * 如果您的生成器遇到无法正确处理的数据，并且您知道输出的产品资产不会完全正确，则发布错误信息。在可能的情况下，发布错误比发布失败更可取，因为发布失败不会生成任何产品资产，因此其他资产对该资产的引用可能会中断。例如，如果预制件引用了 FBX 文件中的网格产品资产，FBX 的更新会导致任务失败，那么在任务失败时对预制件的任何编辑都可能会丢失对网格的引用。
+ * 如果您的生成器遇到无法处理的情况，则发布失败，该生成器的处理应结束，生成器不应输出任何内容。这通常被认为是最后的手段，最常见的情况是生成器在处理过程中崩溃。
 
 {{< note >}}
-The most common reason for failure is that the Asset Builder has crashed. When an Asset Builder crashes, Asset Processor logs the job as failed and continues processing assets from the jobs list. When Asset Processor is restarted, it attempts to reprocess any failed jobs. If an asset has failed to process, we recommend you first examine why this failure occurred, and inform your team, sharing any relevant artifacts such as log messages. Once you proceed to the next step, that information may be lost. Alternatively, you can locate individual source assets in the Assets tab, **right-click** on the asset, and select **Reprocess File** to re-run the process job.
+最常见的失败原因是资产生成器崩溃。当资产生成器崩溃时，资产处理器会将作业记录为失败，并继续处理作业列表中的资产。当重新启动资产处理器时，它会尝试重新处理任何失败的作业。如果资产处理失败，我们建议你首先检查失败的原因，并通知你的团队，共享任何相关的工件，如日志信息。一旦进入下一步，这些信息可能就会丢失。或者，您可以在 “资产 ”选项卡中找到单个源资产，**右键单击**资产，然后选择**Reprocess File**重新运行处理作业。
 {{< /note >}}
 
-The circumstances that cause an Asset Builder to complete a job with warnings, errors, or failures are left to the implementation of the Asset Builder, but should follow the guidance above.
+导致资产创建器在完成任务时出现警告、错误或失败的情况，由资产创建器的执行情况决定，但应遵循上述指导。
 
-### Filtering by keyword and status
+### 按关键字和状态筛选
 
-The Asset Status list can be filtered by entering keywords and regular expressions in the filter box. The regular expressions (regex) are standard `std::regex` in extended format. The `std::regex` rules apply.
+资产状态列表可通过在过滤框中输入关键字和正则表达式进行过滤。正则表达式 (regex) 是标准的扩展格式 `std::regex`。`std::regex` 规则适用。
 
-The example below searches for all files ending with .png. The period is escaped, because in a regex search `.` matches any non-newline character. The `$` indicates the match should be at the end of the string, so this won't match a file with multiple extensions that has .png in the middle, myImage.png.assetinfo wouldn't be matched, for example.
+下面的示例搜索所有以 .png 结尾的文件。句号被转义，因为在 regex 搜索中，`.` 匹配任何非新行字符。`$` 表示匹配应在字符串的末尾，因此不会匹配中间带有 .png 的多个扩展名的文件，例如，不会匹配 myImage.png.assetinfo。
 
 ```
 \.png$
 ```
 
 {{< note >}}
-It's easy to forget this is a regex based search. Searching for ".fbx" does not actually search for that exact string, it means search for any character followed by the characters fbx. ".FBX" would return results such as "MyFBXTexture.png", because it matches the given search condition, the '.' matches any character, including 'y' in this example.
+很容易忘记这是基于 regex 的搜索。搜索“.fbx ”实际上并不是搜索这个确切的字符串，而是搜索 fbx 后面的任何字符。“.FBX “会返回 "MyFBXTexture.png"这样的结果，因为它符合给定的搜索条件，‘.’可以匹配任何字符，包括本例中的‘y’。
 {{< /note >}}
 
 
-The example below uses regex to search for any files under an `Actors` subdirectory. The dot plus (`.+`) indicates any character 1 or more times.
+下面的示例使用 regex 搜索 `Actors` 子目录下的任何文件。点加号 (`.+`) 表示 1 次或 1 次以上的任何字符。
 
 ```
 /Actors/.+
 ```
 
-You can view all assets with a particular status with either of the methods below.
+您可以使用以下任一方法查看具有特定状态的所有资产。
 
-* Type the status keyword (for example, `failed`) in the filter box.
+* 在筛选框中键入状态关键字（例如 “失败”）。
 
-* Choose the {{< icon "filter.svg" >}} filter icon and select the status types to display.
+* 选择 {{< icon "filter.svg" >}} 过滤器图标并选择要显示的状态类型。
 
-Filters that you apply remain active until you remove them.
+您应用的筛选器将保持激活状态，直到您将其删除。
 
-### Row context menu
+### 行上下文菜单
 
-You can perform actions on each row in the Asset Status table. **Right-click** on the row to expose a context menu with the following actions:
+您可以对资产状态表中的每一行执行操作。在该行上**右击**，可显示包含以下操作的上下文菜单：
 
-| Menu Item | Description |
+| 菜单项 | 说明 |
 | - | - |
-| **Show in Asset Browser** | Highlights the asset in O3DE Editor’s Asset Browser, if O3DE Editor is open. |
-| **View Source Asset**  | Switches to the Asset Tab, and selects the Source Asset for this job. |
-| **View Product Asset...**  | A pop out menu showing all product assets created from this job. Selecting one will switch to the Asset Tab and select that Product Asset. |
-| **Open in Explorer** | Opens the asset in the system file browser. |
-| **Open**  | Attempts to open the Source Asset with your operating system's default interface for opening files of that type. |
-| **Copy**  | Copies the asset name. |
-| **Open log file** | Opens the most recent log file for the asset, if one exists. |
-| **Open folder with log file** | Opens the directory containing the log file for the asset. |
+| **Show in Asset Browser** | 如果 O3DE 编辑器已打开，则在 O3DE 编辑器的 “资产浏览器 ”中突出显示资产。 |
+| **View Source Asset**  | 切换到 “资产 ”选项卡，并为该任务选择源资产。 |
+| **View Product Asset...**  | 弹出菜单显示此任务创建的所有产品资产。选择一个将切换到资产选项卡并选择该产品资产。 |
+| **Open in Explorer** | 在系统文件浏览器中打开资产。 |
+| **Open**  | 尝试使用操作系统打开该类型文件的默认界面打开源资产。|
+| **Copy**  | 复制资产的名称。 |
+| **Open log file** | 打开资产的最新日志文件（如果存在）。 |
+| **Open folder with log file** | 打开包含资产日志文件的目录。 |
 
 ### Event Log Details
 
-The Event Log Details table displays asset processing information for the asset selected in the Asset Status table. This table provides an activity log that shows how the asset was processed and any errors or warnings generated during processing.
+事件日志详细信息表显示资产状态表中所选资产的资产处理信息。该表提供的活动日志显示了资产的处理过程以及处理过程中产生的任何错误或警告。
 
 
-The **Status** column displays icons for the following message types:
+The **Status** 栏显示以下信息类型的图标：
 
-* {{< icon "information.svg" >}} **Information** - Additional supporting messages are available about the processing of the asset.
-* {{< icon "warning-yellow.svg" >}} **Warning** - Additional supporting messages are available about a potential processing issue for this asset.
-* {{< icon "error.svg" >}} **Error** - The location of the asset and the specific error generated by attempting to process that asset.
+* {{< icon "information.svg" >}} **Information** - 有关资产处理的其他辅助信息。
+* {{< icon "warning-yellow.svg" >}} **Warning** - 有关该资产潜在处理问题的其他支持信息。
+* {{< icon "error.svg" >}} **Error** - 资产的位置以及试图处理该资产时产生的具体错误。
 
-The **Source** column indicates the subsystem that generated the message (such as Asset Builder) or a generic type, such as Warning or Error.
+**Source** 列表示生成信息的子系统（如资产生成器）或通用类型，如警告或错误。
 
-The **Message** column displays information related to the processing details of the selected asset.
+**Message** 栏显示与所选资产的处理细节相关的信息。
 
 {{< note >}}
-The Message column occasionally prefixes Errors with **E:** and warnings with **W:**.
+信息 “栏有时会在 ”错误 “前加上 **E:**，在 ”警告 "前加上 **W:**。
 {{< /note >}}
 
-The Event Log Details table also features a context menu to copy details to the clipboard. **Right-click** on the row to expose a context menu with the following actions:
+Event Log Details 表格还具有一个上下文菜单，可将详细信息复制到剪贴板。**右键单击**行，右键菜单会显示以下操作：
 
-| Menu Item | Description |
+| 菜单项 | 说明 |
 | - | - |
-| **Copy Line** | Copy the selected line of the log. |
-| **Copy Line With Details** | Copy the selected line and any related details that appear in the **Event Log Line Details** table. |
-| **Copy All** | Copy all log lines and any hidden details for each item. |
+| **Copy Line** | 复制所选日志行。 |
+| **Copy Line With Details** | 复制选中的行以及**Event Log Line Details**表中显示的任何相关详细信息。 |
+| **Copy All** | 复制每个项的所有日志行和任何隐藏的详细信息。 |
 
-If the selected line in the Event Log Details table has any additional information, the Event Log Line Details table will be displayed automatically. The details and additional information are generally useful only when debugging issues with a particular asset.
+如果事件日志详细信息表中所选行有任何附加信息，则会自动显示事件日志行详细信息表。只有在调试特定资产的问题时，详细信息和附加信息才会有用。
 
-The Event Log Line Details table also features a context menu to copy details to the clipboard. **Right-click** on the row to expose a context menu with the following actions:
+事件日志行详细信息表还有一个上下文菜单，可将详细信息复制到剪贴板。**右键单击**行，可显示包含以下操作的上下文菜单：
 
-| Menu Item | Description |
+| 菜单项 | 说明 |
 | - | - |
-| **Copy Selected Key** | Copy the text in the **Key** column of the selected row. |
-| **Copy Selected Value** | Copy the text in the **Value** column of the selected row. |
-| **Copy All Values** | Copy all keys and values in the table. |
+| **Copy Selected Key** | 复制所选行**键**列中的文本。 |
+| **Copy Selected Value** | 复制所选行**值**列中的文本。 |
+| **Copy All Values** | 复制表格中的所有键和值。 |
 
 ![Event Log Line Details table](/images/user-guide/assets/asset-processor/event_log_line_details.png)
 
 ## Assets
 
-In the Assets tab, the tabbed pane on the left displays either the **Source Assets** tree from the scan directories, the **Intermediate Assets**, or the **Product Assets** tree from the **Asset Cache**. You can browse either tree for specific assets, or use the search bar to find assets by name or ID. When an asset is selected, information about the asset is displayed on the right of the interface.
+在 “资产 ”选项卡中，左侧的选项卡窗格显示扫描目录中的**Source Assets**树、**Intermediate Assets**或**资产缓存**中的**Product Assets**树。您可以浏览其中一个树查找特定资产，或使用搜索栏按名称或 ID 查找资产。选择资产后，界面右侧会显示该资产的相关信息。
 
-The Assets Tab search is also a regex based search, like for the jobs tab. Refer to the previous section [filtering by keyword and status](#filtering-by-keyword-and-status) for more information.
+资产选项卡搜索也是基于 regex 的搜索，与Jobs选项卡一样。更多信息请参阅上一节[按关键字和状态过滤](#filtering-by-keyword-and-status)。
 
 {{< note >}}
-The directory tree displayed in the tab is from the **Asset Database**, not the files on disk. It only displays assets that have been processed. Files on disk that are ignored by Asset Processor do not appear in the directory tree. 
+选项卡中显示的目录树来自**资产数据库**，而不是磁盘上的文件。它只显示已处理的资产。资产处理器忽略的磁盘文件不会显示在目录树中。
 {{< /note >}}
 
-You can browse source assets in the scan directories to view IDs and dependency information for each asset. You can also browse product assets in the Asset Cache and view IDs, last process time, job key, deployment platform, and dependency information for each asset. A search bar is available in both tabs to filter the list of assets that are displayed. Search matches partial file names, and regex is supported.
+您可以浏览扫描目录中的源资产，查看每个资产的 ID 和依赖性信息。您还可以浏览资产缓存中的产品资产，查看每个资产的 ID、最后处理时间、任务密钥、部署平台和依赖性信息。两个选项卡中都有一个搜索栏，用于过滤显示的资产列表。搜索可匹配部分文件名，并支持 regex。
 
-With an asset selected, you can **right-click** and select from several actions such as view the source asset, view the job, open the asset location in a file manager, copy the asset path, and reprocess the asset.
+选定资产后，您可以**右键单击**并从多个操作中进行选择，如查看源资产、查看作业、在文件管理器中打开资产位置、复制资产路径以及重新处理资产。
 
 ### Source Assets
 
-On the left, the Source Assets tree displays all the source assets that match the current search filter. When the search is empty, all source assets are displayed. The "Last Analysis Job Duration" column shows the accumulation of duration values of all builders' CreateJobs on this source asset.
+在左侧，源资产树显示与当前搜索过滤器匹配的所有源资产。搜索为空时，将显示所有源资产。最后分析任务持续时间 "列显示该源资产上所有构建器创建任务的持续时间值的累积。
 
-When an asset is selected in the Source Assets list, information about the asset is displayed in the header and tabs on the right.
+在 “源资产 ”列表中选择资产后，右侧的标题和选项卡中将显示该资产的相关信息。
 
 ![Asset Processor UI assets tab - source assets](/images/user-guide/assets/asset-processor/interface-assets-source.png)
 
-| Pane | Description |
+| 面板 | 说明 |
 | - | - |
-| **Asset Information** | Detailed information about the selected asset including the name of the asset, the scan directory path, and the Universally Unique Identifier (UUID) associated with the asset. |
-| **Products** | The product assets that are produced from jobs that processed this source asset. |
-| **Dependencies - Out** | Any files that have been registered as a source dependency for any jobs that run on this source asset. |
-| **Dependencies - In** | The list of source assets that have one or more jobs that have marked this source asset as a source dependency. Any modifications to this source asset will cause these jobs to run. |
+| **Asset Information** | 所选资产的详细信息，包括资产名称、扫描目录路径和与资产相关的通用唯一标识符 (UUID)。 |
+| **Products** | 处理该源资产的工作所产生的产品资产。 |
+| **Dependencies - Out** | 已注册为在该源资产上运行的任何作业的源依赖关系的任何文件。 |
+| **Dependencies - In** | 有一个或多个任务将该源资产标记为源依赖关系的源资产列表。对该源资产的任何修改都会导致这些工作的运行。 |
 
 {{< note >}}
-Choose the {{< icon "open-in-internal-app.svg" >}} **Go to** icon next to a product asset name to go to that asset in the Product Assets tab, or this icon next to a source asset name to go to that asset in the Source Assets tab.
+选择产品资产名称旁边的 {{< icon "open-in-internal-app.svg" >}} **Go to**图标可转到Product Assets 选项卡中的该资产，或源资产名称旁边的该图标可转到 “源资产 ”选项卡中的该资产。
 {{< /note >}}
 
 ### Intermediate Assets
-Intermediate Assets are product assets that are monitored by Asset Processor as Source Assets. It allows you to chain builders together and add discrete steps for asset processing. Similar to the source assets pane, the search and the Intermediate Assets tree is on the left. The right side of the pane shows details of the selected Intermediate Asset, including the outcome of the Intermediate Asset, which could be a Product Asset or another Intermediate Asset. You can retrieve more information from [Intermediate Assets documentation](docs/user-guide/assets/pipeline/intermediate-assets).
+中间资产是资产处理器作为源资产监控的产品资产。通过它，您可以将构建器连锁在一起，并为资产处理添加离散步骤。与源资产窗格类似，搜索和中间资产树位于左侧。窗格右侧显示所选中间资产的详细信息，包括中间资产的结果，可能是产品资产或其他中间资产。您可以从[中间资产文档](docs/user-guide/assets/pipeline/intermediate-assets)中获取更多信息。
 
 ![Asset Processor UI assets tab - intermediate assets](/images/user-guide/assets/asset-processor/interface-assets-intermediate.png)
 
 ### Product Assets
 
-On the left, the Product Assets tree displays all the product assets that match the current search filter. When the search is empty, all product assets are displayed.
+左侧的产品资产树显示与当前搜索过滤器匹配的所有产品资产。搜索为空时，会显示所有产品资产。
 
-When an asset is selected in the Product Assets tree, information about the asset is displayed in the panes on the right.
+在 “产品资产 ”树中选择资产后，右侧窗格中将显示该资产的相关信息。
 
 ![Asset Processor UI assets tab - product assets](/images/user-guide/assets/asset-processor/interface-assets-product.png)
 
-| Pane | Description |
+| 面板 | 说明 |
 | - | - |
-| **Asset Information** | Information for the product asset including the asset ID, the last time the product was generated, the job that generated the asset (job key), which platform the asset was produced for, and which source asset is the primary input for the product. |
-| **Outgoing Product Dependencies** | Product assets that this asset depends on are listed here (outgoing dependency). Items in this list can be expanded recursively to show the outgoing dependencies of those items. |
-| **Outgoing Unmet Path Product Dependencies** | Path based product dependencies that have not been resolved. In some cases, these may be optional and expected. In other cases, an unmet path product dependency could indicate a gap in your product dependency graph. If you do not resolve this gap, the bundled release build might be missing content.  |
-| **Incoming Product Dependencies** | Product assets that depend on this asset are listed here (incoming dependency). Items in this list can be expanded recursively to show the incoming dependencies of those items. |
-| **Missing Product Dependencies** | A tool that examines the contents of this product asset, looks for references to other product assets, and will report any references that look like product dependencies that are not reported. See [Resolving Missing Assets](/docs/user-guide/packaging/asset-bundler/assets-resolving) for details. |
+| **Asset Information** | 产品资产的信息，包括资产 ID、上次生成产品的时间、生成资产的工作（工作关键字）、为哪个平台生成资产以及哪个源资产是产品的主要输入。 |
+| **Outgoing Product Dependencies** | 此处列出了该资产所依赖的产品资产（输出依赖关系）。该列表中的项目可递归展开，以显示这些项目的输出依赖关系。|
+| **Outgoing Unmet Path Product Dependencies** | 尚未解决的基于路径的产品依赖关系。在某些情况下，这些可能是可选的和预期的。在其他情况下，未满足的路径产品依赖关系可能表明产品依赖关系图中存在缺口。如果不解决这个缺口，捆绑的发布版构建可能会缺少内容。  |
+| **Incoming Product Dependencies** | 此处列出了依赖于此资产的产品资产（传入依赖关系）。该列表中的项目可递归展开，以显示这些项目的传入依赖关系。|
+| **Missing Product Dependencies** | 该工具可检查该产品资产的内容，查找对其他产品资产的引用，并报告任何看似产品依赖关系但未报告的引用。详见 [Resolving Missing Assets](/docs/user-guide/packaging/asset-bundler/assets-resolving)。 |
 
 ## Logs
 
-The Logs tab displays logs for Asset Processor itself, not for process jobs. If you are having issues with a specific process job, start debugging with the logs for the job found in the Jobs tab. The type of errors displayed in the Logs tab are often related issues with managing the process jobs, maintaining the Asset Cache, and writing log information for process jobs. 
+日志 选项卡显示的是资产处理器本身的日志，而不是流程作业的日志。如果遇到特定流程作业的问题，可从作业选项卡中的作业日志开始调试。日志选项卡中显示的错误类型通常与管理流程作业、维护资产缓存和为流程作业写入日志信息有关。
 
 
-The Logs tab has a single pane with three default tabs that display **Debug**, **Messages**, or **Warnings/Errors Only**. You can also add custom tabs to display any combination of information.
+日志 选项卡有一个窗格，其中有三个默认选项卡，分别显示**调试**、**消息**或**仅警告/错误**。您还可以添加自定义选项卡，以显示任何信息组合。
 
 ![Asset Processor UI logs tab](/images/user-guide/assets/asset-processor/interface-logs.png)
 
 ## Connections
 
-In the Connections view, a single pane displays the current connections, and offers tools to add, remove, and manage connections. This view displays connections to Asset Builders, **O3DE Editor**, and development and deployment platforms being served by the Asset Processor. You can add approved connections in **Allowed Listed Connections** and add disapproved connections in **Rejected Connections**.
+在 “连接 ”视图中，一个窗格显示当前连接，并提供添加、删除和管理连接的工具。该视图显示与资产构建器、**O3DE 编辑器**以及资产处理器所服务的开发和部署平台的连接。您可以在**允许列出的连接**中添加已批准的连接，在**拒绝的连接**中添加未批准的连接。
     
 ![Asset Processor UI connections tab](/images/user-guide/assets/asset-processor/interface-connections.png)
 
-In the **Active Connections** table’s **Enabled** column, automatic connections are labeled as `Auto`. This means that it’s a connection that the Asset Processor created. One example of such a connection is Asset Builder connections. User-created connections show a check box. If you select the check box, the Asset Processor continually attempts to reconnect to those connections. You can use these custom connections for specialized cases, such as when connecting to mobile devices outside of a company’s internal network.
+在**活动连接**表的**已启用**列中，自动连接标记为 “自动”。这意味着这是资产处理器创建的连接。资产生成器连接就是这种连接的一个例子。用户创建的连接会显示一个复选框。如果选择复选框，资产处理器就会不断尝试重新连接这些连接。你可以在特殊情况下使用这些自定义连接，例如连接到公司内部网络以外的移动设备时。
 
-### Editing connections
+### 编辑连接
 
-You can edit a connection with the steps below.
+您可以按以下步骤编辑连接。
 
-1. **Left-click** the desired connection in the connection list to select it.
-1. Choose **Edit Connection** in the upper-right to open the **Edit Connection** dialog.
+1. 在连接列表中**左键单击**所需的连接以选择该连接。
+1. 选择右上角的**Edit Connection**，打开**Edit Connection**对话框。
 
 ![Connection edit dialog](/images/user-guide/assets/asset-processor/edit-connection.png)
     
 ## Builders
 
-In the Builders view, the left pane lists all registered builders recognized by the Asset Processor. You can click on the builder in the list to retrieve the builder's information on the right pane.
+在 Builders视图中，左侧窗格列出了资产处理器识别的所有注册建造商。你可以点击列表中的构建程序，在右窗格中检索构建程序的信息。
 
-The right pane shows the type, fingerprint, version number, Universally Unique Identifier (UUID) of the builder in the header. The bottom of the right pane consists three stacked tabs showing patterns, details, and metrics of the builder respectively.
+右窗格的标题显示了构建程序的类型、指纹、版本号和通用唯一标识符（UUID）。右窗格底部有三个堆叠标签，分别显示创建器的模式、详细信息和指标。
 
 ![Asset Processor UI builders tab](/images/user-guide/assets/asset-processor/interface-builders-patterns.png)
-
-| Item Name | Description |
+1
+| 项名称 | 说明 |
 | - | - |
-| **Header** | The Asset Builder's type, (analysis) fingerprint, version, Bus ID (builder UUID) is shown in this section. Builder Type can be either Internal or External. Internal builders are created and run inside Asset Processor, while external builders are located within Gems and are run inside an AssetBuilder application. |
-| **Patterns** | All the file patterns that this builder wants to work on. Patterns can be defined by regular expressions (RegEx) or wildcards. If a file matches a pattern of the builder, it will become a source asset tracked by Asset Processor. When a source asset changes, Asset Processor will call the builder's CreateJobs function with this asset as an argument. |
-| **Details** | This tab is currently empty and is reserved to show detailed information about this builder in the future. |
-| **Metrics** | This tab shows the accumulation duration that the builder takes to process all source assets it wants to work on. You can expand the tree to see the composition of the duration. The tabular tree is sortable by name, job count, total duration, or average duration. |
+| **Header** | 资产创建器的类型、（分析）指纹、版本、总线 ID（创建器 UUID）显示在本节中。生成器类型可以是内部生成器或外部生成器。内部生成器在资产处理器中创建和运行，而外部生成器位于 Gems 中，在 AssetBuilder 应用程序中运行。 |
+| **Patterns** | 该生成器希望处理的所有文件模式。模式可以通过正则表达式（RegEx）或通配符定义。如果文件与创建器的模式匹配，它就会成为资产处理器跟踪的源资产。当源资产发生变化时，资产处理器将以该资产为参数调用创建器的 CreateJobs 函数。 |
+| **Details** | 该选项卡目前为空，保留用于将来显示有关该建筑商的详细信息。 |
+| **Metrics** | 此选项卡显示生成器处理其希望处理的所有源资产所需的累计持续时间。您可以展开树形结构，查看持续时间的组成。表格树可按名称、任务数、总持续时间或平均持续时间排序。 |
 
 ## Tools
 
-In the Tools view, you can activate **Faster Scanning** Mode, enable **Debug Output**, and initiate a full scan of available source assets.
+在 “工具 ”视图中，您可以激活**快速扫描**模式，启用**调试输出**，并启动对可用源资产的全面扫描。
 
 ![Asset Processor UI tools tab](/images/user-guide/assets/asset-processor/interface-tools.png)
 
-[Faster Scanning Mode](faster-scanning) detects source asset file changes using the timestamp of the file, and performs a series of quick checks to determine whether to process a source asset. When Fast Scanning Mode is disabled, file hashes are used to detect changes, which increases source asset analysis time.
+[Faster Scanning Mode](faster-scanning) 使用文件的时间戳检测源资产文件的更改，并执行一系列快速检查以决定是否处理源资产。如果禁用快速扫描模式，则使用文件哈希值来检测更改，这会增加源资产分析时间。
 
-When Debug Output is enabled, builders that support it will output debug information as product assets.
+启用调试输出后，支持该功能的构建程序将以产品资产的形式输出调试信息。
 
-Initiating a full scan checks all of the scan directories and processes any source assets that need to be processed. You can initiate a full scan to attempt to reprocess jobs that might have failed due to an Asset Builder crash.
+启动全面扫描会检查所有扫描目录，并处理任何需要处理的源资产。您可以启动全面扫描，尝试重新处理可能因资产生成器崩溃而失败的作业。
 
 ## Shared Cache
-You can configure Asset Cache Server (ACS) settings in Shared Cache view. Asset Cache Server is a way to share cached Product Assets across the team. When Asset Cache Server is enabled, Asset Processor can retrieve preprocessed Product Assets from an asset cache server, saving its processing time. You can set the Asset Cache Server mode, select the remote folder, and manage asset patterns in this view. 
+您可以在共享缓存视图中配置资产缓存服务器 (ACS) 设置。资产缓存服务器是跨团队共享缓存产品资产的一种方式。启用资产缓存服务器后，资产处理器可以从资产缓存服务器检索预处理的产品资产，从而节省处理时间。你可以在此视图中设置资产缓存服务器模式、选择远程文件夹和管理资产模式。
 
-For more information about the Asset Cache Server mode, refer to [Asset Cache Server documentation](asset-cache-server).
+有关资产缓存服务器模式的更多信息，请参阅[资产缓存服务器文档](asset-cache-server)。
 ![Asset Processor UI shared cache tab](/images/user-guide/assets/asset-processor/interface-sharedcache.png)

@@ -1,40 +1,40 @@
 ---
-linkTitle: Scene Source Assets
-title: Create and Process Scene Source Assets
-description: With Scene Settings, you can set custom processing options for meshes, actors, motions, and PhysX colliders.
+linkTitle: 场景源资产
+title: 创建和处理场景源资产
+description: 通过 “场景设置”，您可以为网格、Actor、动作和 PhysX 碰撞器设置自定义处理选项。
 weight: 400
 toc: true
 ---
 
-Assets can be created in any content creation program that can export to a [file format](../asset-types) supported by **Open 3D Engine's (O3DE)** [Asset Pipeline](../asset-pipeline). This section focus on *scene source assets*, which are 3D meshes and animations created in applications such as Blender or Maya.
+资产可以在任何内容创建程序中创建，这些程序可以导出为**Open 3D Engine's (O3DE)** [资产管道](../asset-pipeline)支持的[文件格式](../asset-types)。本节重点介绍*场景源资产*，即在 Blender 或 Maya 等应用程序中创建的 3D 网格和动画。
 
-## Source and product assets
+## 源资产和产品资产
 
-*Scene source assets* (meshes, actors, motions, and PhysX colliders) that are created in digital content creation (DCC) applications must be processed as runtime optimized *product assets* to be used in your project. To provide the broadest support for DCC applications and scene file formats, O3DE integrates the [Open Asset Import Library](https://github.com/assimp/assimp). O3DE uses `.fbx` as its primary format for scene source assets. O3DE also supports `.stl`, and support for `.gltf` is enabled and currently in development.
+在数字内容创建（DCC）应用程序中创建的**场景源资产**（网格、Actor、动作和 PhysX 碰撞器）必须处理为运行时优化的**产品资产**才能在项目中使用。为了对 DCC 应用程序和场景文件格式提供最广泛的支持，O3DE 集成了[Open Asset Import Library](https://github.com/assimp/assimp)。O3DE 使用 `.fbx` 作为场景源资产的主要格式。O3DE 还支持 `.stl`，并启用了对 `.gltf`的支持，目前正在开发中。
 
-## Scene settings
+## 场景设置
 
-When source assets are placed in a scan directory, [Asset Processor](../../assets/asset-processor) detects the new or modified files, determines the contents of the files, and then processes the data using *scene settings* that tell Asset Processor how to process the files.
+当源资产放置在扫描目录中时，[资产处理器](../../assets/asset-processor) 会检测新文件或修改文件，确定文件内容，然后使用*场景设置*处理数据，这些设置告诉资产处理器如何处理文件。
 
-Scene settings can come from several places:
+场景设置可以来自多个地方：
 
-* Default scene settings logic exists for all supported asset types. Asset Pipeline uses this default logic to process scene files when no other settings exist.
-* Soft naming conventions on the mesh and skeleton nodes in the source asset can be used to override the default logic. For example, a node with the suffix `_phys` is treated as a collision mesh.
-* User generated `.assetinfo` files override the default logic, and can override soft naming conventions. These sidecar files have the same name as their relative source asset file, but have a `.assetinfo` extension. For example, `myCharacter.fbx.assetinfo` contains the scene settings for `myCharacter.fbx`. User generated `.assetinfo` files are created with the [Scene Settings](scene-settings) tool.
-* Some jobs output procedurally generated `.assetinfo` files as part of asset processing. These files take priority over user generated `.assetinfo` files because the procedural system can read the source file when generating scene settings and choose to override them.
-* Python scripts can be called to modify the scene settings loaded in memory when an asset is processed. This can override all other scene settings, because the script can read the scene settings provided through any other method and modify them.
+* 所有支持的资产类型都有默认场景设置逻辑。当没有其他设置时，资产管道会使用该默认逻辑来处理场景文件。
+* 源资产中网格和骨架节点的软命名约定可用于覆盖默认逻辑。例如，后缀名为 `_phys` 的节点会被视为碰撞网格。
+* 用户生成的 `.assetinfo` 文件可覆盖默认逻辑，并可覆盖软命名约定。这些辅助文件的名称与其相对的源资产文件相同，但扩展名为`.assetinfo`。例如，`myCharacter.fbx.assetinfo` 包含`myCharacter.fbx`的场景设置。用户生成的 `.assetinfo`文件可通过[场景设置](scene-settings)工具创建。
+* 作为资产处理的一部分，某些任务会输出程序生成的`.assetinfo` 文件。这些文件比用户生成的`.assetinfo`文件优先，因为程序系统可以在生成场景设置时读取源文件并选择覆盖它们。
+* 在处理资产时，可以调用 Python 脚本来修改加载到内存中的场景设置。这可以覆盖所有其他场景设置，因为脚本可以读取通过任何其他方法提供的场景设置并对其进行修改。
 
-## Scene source assets topics
+## 场景源资产主题
 
-The topics in this section provide general information about creating scene source assets and the Scene Settings tool that you can use to customize how scene source assets are processed.
+本节中的主题提供了有关创建场景源资产和场景设置工具的一般信息，您可以使用场景设置工具自定义场景源资产的处理方式。
 
-| Topic | Description |
+| 主题 | 说明 |
 | - | - |
-| [Scene format support](scene-format-support) | In depth information on scene data supported in O3DE. |
-| [Best Practices](source-asset-best-practices) | Best practices for scene source assets created in DCC applications to be processed for O3DE. |
-| [Scene Settings](scene-settings) | Documentation on the Scene Settings tool that you can use to customize how individual scene source assets are processed. |
-| [Interface](interface) | An overview of the Scene Settings interface and the options it displays based on the contents of source assets. |
-| [Meshes](meshes-tab) | An explanation of the **Meshes** tab, and the modifiers you can add to customize mesh product asset generation. |
-| [Actors](actors-tab) | An explanation of the **Actors** tab, and the modifiers you can add to customize actor product asset generation. |
-| [Motions](motions-tab) | An explanation of the **Motions** tab, and the modifiers you can add to customize motion product asset generation. |
-| [PhysX](physx-tab) | An explanation of the **PhysX** tab, and how to customize the generation of PhysX collider meshes and collider product assets. |
+| [场景格式支持](scene-format-support) | 深入了解 O3DE 支持的场景数据。 |
+| [最佳实践](source-asset-best-practices) | 为 O3DE 处理 DCC 应用程序中创建的场景源资产的最佳实践。 |
+| [场景设置](scene-settings) | 关于场景设置工具的文档，您可以使用该工具自定义处理单个场景源资产的方式。 |
+| [界面](interface) | 场景设置界面及其根据源资产内容显示的选项概览。 |
+| [Meshes](meshes-tab) | 解释**Meshes**选项卡，以及您可以添加用于自定义网格产品资产生成的修改器。 |
+| [Actors](actors-tab) | 解释 **Actors**选项卡，以及为自定义Actor产品资产生成而添加的修改器。 |
+| [Motions](motions-tab) | 解释**Motions**选项卡，以及为自定义运动产品资产生成而添加的修改器。 |
+| [PhysX](physx-tab) | 解释 **PhysX** 选项卡，以及如何自定义生成 PhysX 碰撞体网格和碰撞体产品资产。 |

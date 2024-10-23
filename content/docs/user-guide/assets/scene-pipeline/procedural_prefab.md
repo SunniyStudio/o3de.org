@@ -1,135 +1,135 @@
 ---
 linkTitle: Procedural Prefab
 title: Procedural Prefab
-description: With procedural prefabs, you can use Python script to create prefab assets from scene source files for Open 3D Engine (O3DE).
+description: 有了程序化预制件，您就可以使用 Python 脚本从场景源文件中为 Open 3D Engine (O3DE) 创建预制件资产。
 weight: 400
 toc: true
 ---
 
-With procedural prefabs, you can write out **Open 3D Engine (O3DE)** native entity-component scene descriptions from source scene files in the form of prefab assets. You can write Python scripts that parse imported source scenes and write out any number of prefab assets. With procedural prefabs, some of the process for building prefabs is shifted back into digital content creation (DCC) tools such as Maya and Blender, streamlining the asset creation workflow for artists and designers.
+有了程序化Prefab，您就可以从源场景文件中以Prefab资产的形式写出**Open 3D Engine (O3DE)** 本地实体组件场景描述。您可以编写 Python 脚本，解析导入的源场景并写出任意数量的Prefab资产。有了程序化Prefab，构建Prefab的部分流程就可以转回到数字内容创建 (DCC) 工具（如 Maya 和 Blender）中，从而简化艺术家和设计师的资产创建工作流程。
 
-The workflow produces procedural prefabs using Python scripts inside the scene pipeline or when when the Prefab gem generates a default procedural prefab.
+该工作流程可使用场景管道内的 Python 脚本或预制板 gem 生成默认程序预制板时生成程序预制板。
 
 ![High level view of how procedural prefabs work with Python scripts](/images/user-guide/assets/scene-pipeline/proc_prefab_workflow.png)
 
-## The characteristics of a procedural prefab
+## 程序预制件的特征
 
-A prefab is a prefabricated description of entities, components, and properties for a scene. Prefabs serve the purpose of easily building and modifying large and complex worlds for games. A user can author a prefab inside the O3DE Editor.
+预制件是对场景实体、组件和属性的预制描述。预制件的作用是轻松构建和修改大型复杂的游戏世界。用户可以在 O3DE 编辑器中创建预制板。
 
-More information about the [Prefab](docs/user-guide/interactivity/prefabs) feature.
+关于 [Prefab](docs/user-guide/interactivity/prefabs) 功能的更多信息。
 
-It is also possible to define a procedure to produce a product prefab asset. Python scripts are the most typical way to define procedural prefab product assets. This feature gives the ability to maintain the prefab template inside a source art scene file such as FBX or glTF. Content creators are free to instantiate these procedural prefabs in a level and they are automatically updated when the source scene is updated.
+也可以定义一个程序来生成产品预制件资产。Python 脚本是定义程序化预制产品资产的最典型方式。此功能可将预制模板保存在源美术场景文件（如 FBX 或 glTF）中。内容创建者可以自由地在关卡中实例化这些程序化预制件，当源场景更新时，它们也会自动更新。
 
-These procedural prefab assets are treated as read only prefabs inside the Editor since they are created by the definition from the original source scene file plus the script that produced the prefab. In fact, procedural prefabs are placed in the asset cache so they should not be changed directly.
+这些程序化预制板资产在编辑器中被视为只读预制板，因为它们是根据原始源场景文件的定义和生成预制板的脚本创建的。事实上，程序化预制板被放置在资产缓存中，因此不应直接对其进行更改。
 
-## Producing procedural prefabs
+## 制作程序预制板
 
-The Prefab gem needs to be enabled by the project to gain the procedural prefab feature. Once the gem is enabled, all source scene files produce a default procedural prefab and the Python scripts will have the ability to produce prefabs.
-
-{{< note >}}
-It is possible to turn off the default procedural prefab by setting the registry key "/O3DE/Preferences/Prefabs/UseProceduralPrefabs" to False.
-{{< /note >}}
-
-### Creating procedural prefabs from Python
-
-It is possible to create a procedural prefab using a Python script to hook into the scene pipeline. This script will add a Prefab Group rule into the scene manifest that describes the entities and components it will use. In fact, the script can add many Prefab Groups to the scene manifest if there is more than one scene description. The scripts can split up complex scenes from source files and fill out entities with game components.
+项目需要启用 Prefab gem 才能获得程序预制功能。启用该 gem 后，所有源场景文件都会生成默认的程序预制板，Python 脚本也能生成预制板。
 
 {{< note >}}
-It should also be noted that the scene pipeline can be updated in C++ if the development team feels more comfortable writing C++ scene builders.
+可以通过将注册表键值"/O3DE/Preferences/Prefabs/UseProceduralPrefabs"设置为False来关闭默认程序预置。
 {{< /note >}}
 
-### Building default procedural prefabs
+### 使用 Python 创建程序化预制板
 
-The Prefab gem will separate all the mesh data nodes as mesh groups, assemble a prefab scene description using entities and mesh components, and optionally assign materials to the mesh components. The logic will create empty entities for "transform only" nodes that are encountered, but for the best result the advice is to store mesh data into each node that is expected to show up in the procedural prefab.
+可以使用 Python 脚本创建程序化预制板，并将其挂接到场景管道中。该脚本将在场景清单中添加一个预制组规则，该规则描述了它将使用的实体和组件。事实上，如果场景描述不止一个，脚本可以在场景清单中添加多个 Prefab 组。脚本可以从源文件中分割出复杂的场景，并用游戏组件填充实体。
 
 {{< note >}}
-There are instructions for tagging mesh data nodes with an Atom material using the [o3de_default_material](/blog/posts/blog-udp) user defined property.
+还应注意的是，如果开发团队觉得编写 C++ 场景构建器更得心应手，也可以用 C++ 更新场景流水线。
 {{< /note >}}
 
-## Using procedural	prefabs in the O3DE Editor
+### 构建默认的程序预制板
 
-For the most part, procedural prefabs are used in the same way that normal authored prefabs are used in the O3DE Editor. They can be instantiated into a level multiple times, can be updated all at once if the source scene is modified, and can be placed inside authored prefabs inside the Entity Outliner.
+预制 gem 会将所有网格数据节点分离为网格组，使用实体和网格组件组装预制场景描述，并可选择为网格组件分配材质。该逻辑会为遇到的"transform only"节点创建空实体，但为了达到最佳效果，建议将网格数据存储到预计会在程序预制板中出现的每个节点中。
 
-### Instantiate procedural prefab in the Editor
+{{< note >}}
+这里有使用 [o3de_default_material](/blog/posts/blog-udp) 用户定义属性用 Atom 材质标记网格数据节点的说明。
+{{< /note >}}
 
-Once the source scene files are producing procedural prefab assets (with the extension `.procprefab`) they will show up in the Asset Browser as a `(Procedural Prefab)` type.
+## 在 O3DE 编辑器中使用程序预制板
+
+在大多数情况下，程序预制板的使用方式与 O3DE 编辑器中使用普通自制预制板的方式相同。它们可以多次实例化到一个关卡中，如果源场景被修改，可以一次性更新，并且可以放置在实体大纲器中的自制预制板中。
+
+### 在编辑器中实例化程序预制板
+
+一旦源场景文件生成了程序预制资产（扩展名为`.procprefab`），它们就会在 “资产浏览器 ”中显示为`(Procedural Prefab)`类型。
 
 ![Asset Browser](/images/user-guide/assets/scene-pipeline/procprefab_ug_ab.png)
 
-#### Instantiate a procedural prefab in the scene
+#### 在场景中实例化程序预制件
 
-A O3DE Editor user can instantiate a procedural prefab by right clicking in the level 3D scene and choose the "Instantiate Procedural Prefab..." option.
+O3DE 编辑器用户可以通过右键单击关卡 3D 场景并选择"Instantiate Procedural Prefab..."选项来实例化程序预制件。
 
 ![Procedural Prefab Context Menu](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_context.png)
 
-The context menu "Pick Procedural Prefab" will open up to allow the user to choose the Procedural Prefab asset to instantiate.
+右键菜单"Pick Procedural Prefab"将打开，允许用户选择要实例化的程序预制件资产。
 
 ![Pick Procedural Prefab](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_pick.png)
 
-It is also possible to simply drag and drop a Procedural Prefab from the Asset Browser into the level 3D scene.
+也可以简单地将程序预制件从 “资产浏览器 ”拖放到关卡 3D 场景中。
 
 ![Procedural Prefab in the Entity Outliner](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_eo.png)
 
-#### Instantiate a procedural prefab in the Entity Outliner
+#### 在 “实体大纲视图 ”中实例化程序预制板
 
-It is possible to instantiate a procedural prefab directly in the Entity Outliner using the context menu's "Instantiate Procedural Prefab..." option and choose the Procedural Prefab using the "Pick Procedural Prefab" menu.
+使用右键菜单的"Instantiate Procedural Prefab..."选项，并使用"Pick Procedural Prefab"菜单选择程序预制板，可以在实体大纲视图中直接实例化程序预制板。
 
 ![Entity Outliner Procedural Prefab](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_eo_menu.png)
 
 {{< note >}}
 
-In the Entity Inspector that Procedural Prefab asset components and properties are show as "read only" since the properties are generated from the script definition of the components and properties. The entities inside the Procedural Prefab are also immutable.
+在实体检查器中，Procedural Prefab 资产组件和属性显示为 “只读”，因为属性是从组件和属性的脚本定义中生成的。程序预制板内的实体也是不可变的。
 
 ![Entity Inspector Procedural Prefab Read Only](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_ei_readonly.png)
 
 {{< /note >}}
 
-### Procedural prefab being used in an authored prefab
+### 程序预制板被用于自动生成的预制板中
 
-A Procedural Prefab can be added to an authored Prefab instance in the Entity Outliner. To do this, the user will need to go into focus mode on the Prefab.
+在 “实体大纲视图”（Entity Outliner）中，可以将程序预制板添加到已创建的预制板实例中。为此，用户需要进入预制件的焦点模式。
 
 ![Entity Outliner Authored Prefab](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_eo_authored.png)
 
-A user uses the context menu **Instantiate Procedural Prefab...** option to add the Procedural Prefab patch into the authored Prefab.
+用户可使用右键菜单**Instantiate Procedural Prefab...**选项将程序预制板补丁添加到已创建的预制板中。
 
 ![Entity Outliner Procedural Prefab Inside](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_eo_inst.png)
 
-Users cannot add entities in the Entity Outliner nor components in the Entity Inspector to any Procedural Prefab instances. The Asset Processor might re-export the procedural prefab templates at any time which will re-write the `.procprefab` file outside the Editor. The Procedural Prefab templates are backed by the source scene files.
+用户不能在 “实体大纲视图”（Entity Outliner）中添加实体，也不能在 “实体检查器”（Entity Inspector）中将组件添加到任何程序预制件实例中。资产处理器可能会随时重新导出程序预制模板，这将在编辑器之外重新写入`.procprefab`文件。程序预制模板由源代码场景文件支持。
 
-### Save Off Procedural Prefab as Authored Prefab
+### 将程序化预制件保存为自制预制件
 
-The Editor can save out a procedural prefab asset as an authored prefab source file as well. This allows Editor users to tweak a procedural prefab asset. The context menu item **Save as Prefab...** for the `(Procedural Prefab)` asset will prompt for a file name to save as an authored Prefab file.
+编辑器还可以将程序化预制板资产保存为自制预制板源文件。这样编辑器用户就可以对程序预制板资产进行调整。`(Procedural Prefab)`资产的上下文菜单项**Save as Prefab...** 将提示输入文件名，以保存为自制预制板文件。
 
-This will allow designers to tweak the entity layout, components, and properties of the prefab template
+这将允许设计人员调整预制模板的实体布局、组件和属性
 
 ![Save As Prefab](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_ab_saveas.png)
 
 {{< note >}}
-The authored Prefab will get no updates from the procedural prefab asset once been saved off to an authored prefab.
+自动生成的预制板一旦保存为自动生成的预制板，就不会从程序预制板资产中获得更新。
 {{< /note >}}
 
-### Toggling procedural prefab per source asset
+### 切换每个源资产的程序预置
 
-Sometimes teams have a reason to turn off the default procedural prefab for a source scene file such as when a script is assigned to create a Prefab Group.
+有时，团队有理由关闭源场景文件的默认程序预置，例如当脚本被指定创建预置组时。
 
-It is possible prevent generating a default procedural prefab using the **Scene Settings** dialog. In the Asset Browser select the source scene file, use the context menu, and select the **Edit Scene Settings...** option.
+使用**Scene Settings**对话框可以防止生成默认的程序预制板。在 “资产浏览器 ”中选择源场景文件，使用上下文菜单并选择**Edit Scene Settings...** 选项。
 
 ![Edit Settings](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_es_toggle.png)
 
-To disable the procedural prefab generation, set the toggle for **Create default procedural prefab?** to the off value.
+要禁用程序预制件生成，请将**Create default procedural prefab?** 的切换设置为关闭值。
 
-## Basic guidelines for default procedural prefab
+## 默认程序预制的基本准则
 
-The default procedural prefab logic does a "best guess" to describe the scene in terms of entities, meshes, and materials. This section is meant to help guide artists to export the cleanest version of a default procedural prefab from their DCC tool of choice.
+默认程序预制板逻辑是通过 “最佳猜测 ”来描述场景中的实体、网格和材质。本节旨在帮助指导艺术家从他们所选择的 DCC 工具中导出最简洁的默认程序预制版本。
 
-As detailed in the user guide for the [Scene Format Support](docs/user-guide/assets/scene-settings/scene-format-support), O3DE scene asset importing uses:
+正如[场景格式支持](docs/user-guide/assets/scene-settings/scene-format-support)用户指南中详细说明的那样，O3DE 场景资产导入使用：
 
-- a right-handed coordinate system
-- +Z as the up axis
-- -Y is the viewer axis
-- base measurement unit is one cubic meter per world unit
+- 右旋坐标系
+- +Z 为向上轴
+- -Y为观察轴
+- 基本测量单位为每世界单位一立方米
 
-There is no support for setting up level of detail inside the procedural prefab nor does it set up an actor or motions for animation.
+程序预制件不支持设置细节级别，也不支持为动画设置Actor或动作。
 
-The `o3de_default_material` user defined property that the default procedural prefab looks for to assign an AZ Material using a product asset path to an `.azmaterial` asset.
+用户定义的 `o3de_default_material` 属性，默认程序预制件会使用产品资产路径为 `.azmaterial` 资产分配 AZ 材质。
 

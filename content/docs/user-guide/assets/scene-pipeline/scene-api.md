@@ -1,49 +1,49 @@
 ---
 linkTitle: Scene API
 title: SceneAPI
-description: The API to execute logic inside the scene pipeline.
+description: 在场景管道内执行逻辑的应用程序接口。
 weight: 400
 toc: true
 ---
 
-The O3DE scene pipeline has two steps. First, a scene builder reads the content of the scene file and places it into an in-memory graph called the ```SceneGraph```. Then, this graph is used by various parts of the SceneAPI. For instance, read data can be presented to the user through the [Scene Settings](docs/user-guide/assets/scene-settings) interface, or converted to O3DE data. This approach makes it possible to add new formats to the Scene Pipeline while leveraging existing processing tools and code.
+O3DE 场景流水线有两个步骤。首先，场景生成器读取场景文件的内容，并将其放入名为 “场景图 ”的内存图中。然后，SceneAPI 的各个部分将使用该图。例如，读取的数据可以通过[场景设置](docs/user-guide/assets/scene-settings)界面呈现给用户，或转换为 O3DE 数据。这种方法可以为场景管道添加新的格式，同时利用现有的处理工具和代码。
 
 ### SceneCore
 
-At the heart of the Scene Pipeline is the SceneCore library. SceneCore provides all the base types, interfaces and containers used throughout the pipeline as well as several EBusses that are used to facilitate communication between the various parts that make up the SceneAPI.
+场景管道的核心是 SceneCore 库。SceneCore 提供了整个流水线中使用的所有基础类型、接口和容器，以及用于促进组成 SceneAPI 的各个部分之间通信的多个 EBus。
 
-SceneCore is the central library for the Asset Importer framework. It provides the storage for a graph (```SceneGraph```) that contains the in-memory representation of the imported data and a dictionary (```SceneManifest```) that contains the groups and rules that guide the exporting process. It also contains various utilities to make it easier to work with the graph and manifest. Lastly it contains a collection of interfaces that provides a common "language" for the import and export process to talk. Some of these interfaces are mandatory, such as the IManifestObject interface, in order for base functionality to be implemented. Others are optional, but advisable to implement as they make code reusable. As an example, if custom mesh data is loaded, it's advisable to have the data container implement the IMesh interface so the UI knows when to present the mesh to the user as a selectable option and for an exporter to know how to interpret the data. Of course, if this isn't desired, not implementing the IMesh interface will disable this functionality, but the new data can still be made available in the graph.
+SceneCore 是资产导入框架的中心库。它提供图形（```SceneGraph```）和字典（```SceneManifest```）的存储空间，前者包含导入数据的内存表示，后者包含指导导出过程的组和规则。它还包含各种实用程序，使图形和清单的处理更加容易。最后，它还包含一系列接口，为导入和导出过程提供了通用 “语言”。其中一些接口是必须的，如 IManifestObject 接口，以便实现基本功能。其他接口则是可选的，但建议实施，因为它们可以使代码重复使用。例如，如果要加载自定义网格数据，最好让数据容器实现 IMesh 接口，这样用户界面就知道何时将网格作为可选项呈现给用户，而输出程序也知道如何解释数据。当然，如果不希望这样做，不实现 IMesh 接口将禁用此功能，但新数据仍可在图形中使用。
 
 ### SceneData
 
-Concrete implementations for many of the interfaces and base types can be found in SceneData. Besides helpful default implementations, SceneData also contains many of the behaviors that control how the Scene Pipeline extracts information from the scene file. To load .fbx files specifically FbxSceneBuilder is used, which is responsible for reading .fbx files and converting to the in-memory ```SceneGraph```. These libraries are used by the SceneBuilderWorker that takes the instructions in the ```SceneManifest``` to convert the ```SceneGraph``` into O3DE assets.
+在 SceneData 中可以找到许多接口和基本类型的具体实现。除了有用的默认实现外，SceneData 还包含许多控制场景管道如何从场景文件中提取信息的行为。要加载 .fbx 文件，需要专门使用 FbxSceneBuilder，它负责读取 .fbx 文件并转换为内存中的```SceneGraph```。SceneBuilderWorker 会使用这些库，并根据 ```SceneManifest``` 中的指令将 ```SceneGraph``` 转换为 O3DE 资产。
 
 ### SceneUI
 
-The editor plugin EditorAssetImporter adds a window to the editor to allow the user to configure the pipeline. Most of the UI elements used in this window are located in the ``SceneUI`` library so they can be shared with other tools.
+编辑器插件 EditorAssetImporter 为编辑器添加了一个窗口，允许用户配置管道。该窗口中使用的大部分用户界面元素都位于 ``SceneUI`` 库中，因此可与其他工具共享。
 
-## Scene builder components
+## 场景生成器组件
 
-The key functionality of the scene pipeline phases are controlled by a few types of scene builder components.
+场景流水线各阶段的关键功能由几类场景构建器组件控制。
 
-### Loading
+### 加载
 
-Loading components are created just before loading begins and destroyed once loading has completed. Their purpose can range from loading a scene file to reading a particular field and adding its value to the SceneGraph. If loading components want to inject logic into an existing loader without changing code they can usually hook into a special EBus called the CallProcessor. By connecting to this EBus all events during loading are received but will be filtered to the ones bound to in the component. Binding can be done by calling “BindToCall” and specifying the member function to call. The CallProcessor will look at the argument for the bound function and only call that function if the event’s context matches the type of the argument.
+加载组件在加载开始前创建，并在加载完成后销毁。加载组件的作用范围很广，从加载场景文件到读取特定字段并将其值添加到场景图中。如果加载组件希望在不修改代码的情况下将逻辑注入到现有的加载器中，它们通常可以连接到一个名为 CallProcessor 的特殊 EBus。通过连接到该 EBus，加载过程中的所有事件都会被接收，但会被过滤为组件中绑定的事件。绑定可以通过调用 “BindToCall ”并指定要调用的成员函数来完成。CallProcessor 会查看绑定函数的参数，只有当事件的上下文与参数类型相匹配时，才会调用该函数。
 
-### Generating
+### 生成
 
-To allow for data optimizers to run before the export happens, the generation events are called. During the generation phase, components can respond to the scene generation event, and apply arbitrary transformations to the scene graph. For example, the mesh optimizer generation component identifies all mesh data nodes selected by a mesh group in the manifest, adds an optimized mesh to the scene graph so that other scene builders can reference it.
+为了让数据优化器在导出之前运行，会调用生成事件。在生成阶段，组件可以响应场景生成事件，并对场景图进行任意转换。例如，网格优化器生成组件会识别清单中网格组选择的所有网格数据节点，并将优化后的网格添加到场景图中，以便其他场景构建器可以引用。
 
-### Behavior
+### 行为组件
 
-Unlike the loading and exporting components, behavior components don’t have a limited life cycle, instead they remain alive for as long as the SceneAPI is active. Their responsibilities also vary more greatly with responsibilities like:
+与加载和导出组件不同，行为组件没有有限的生命周期，相反，只要 SceneAPI 处于活动状态，它们就会一直存在。它们的职责也有很大的不同，如：
 
-* Creating and updating the manifest
-* Providing meta-information on the graph and manifest
-* React to UI events
+* 创建和更新清单
+* 提供图形和清单的元信息
+* 对用户界面事件做出反应
 
-If a particular task doesn’t fit in either loading or exporting components, behavior components are usually a good place to put the functionality in.
+如果某项任务既不适合加载组件，也不适合导出组件，行为组件通常是实现该功能的好地方。
 
-### Exporting
+### 导出
 
-The exporting components work in a similar way to the loading components, though these only exist during processing and exporting rather than during loading. These components have the dual purpose of converting data in the graph to data types that are understood by the engine and saving the converted data in the appropriate files. When saving files, it’s important to use the paths provided by the Asset Processor to make sure the generated files are correctly monitored and end up in the correct location in the cache.
+导出组件的工作方式与加载组件类似，但这些组件只存在于处理和导出过程中，而不是加载过程中。这些组件有双重目的，一是将图形中的数据转换为引擎可以理解的数据类型，二是将转换后的数据保存到相应的文件中。保存文件时，必须使用资产处理器提供的路径，以确保生成的文件受到正确监控，并最终保存在缓存中的正确位置。

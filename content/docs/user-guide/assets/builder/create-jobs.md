@@ -53,61 +53,61 @@ CreateJobs 为**资产处理器**生成资产处理任务。当资产处理器�
 
 `azlmbr.asset.builder.SourceFileDependency` 是一个包含依赖源文件的路径和 ID 的类。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| `sourceFileDependencyPath` | String | Path (relative to the assets directory or absolute) to the dependency. |
-| `sourceFileDependencyUUID` | `azlmbr.math.Uuid` | UUID (without the sub ID) of the dependency. |
-| `sourceDependencyType` | `azlmbr.asset.builder.SourceFileDependency Type` | Absolute dependency or wildcard match (`azlmbr.asset.builder.SourceFileDependency_Absolute` is the default). |
+| `sourceFileDependencyPath` | String | 依赖项的路径（相对于资产目录或绝对路径）。|
+| `sourceFileDependencyUUID` | `azlmbr.math.Uuid` | 依赖关系的 UUID（不含子 ID）。 |
+| `sourceDependencyType` | `azlmbr.asset.builder.SourceFileDependency Type` | 绝对依赖关系或通配符匹配 (`azlmbr.asset.builder.SourceFileDependency_Absolute` 是默认值)。 |
 
 {{< note >}}
-The Asset Builder does not need to provide both the `sourceFileDependencyUUID` and the `sourceFileDependencyPath` info to **Asset Processor**. Either one is sufficient.
+资产生成器无需同时向**资产处理器**提供`sourceFileDependencyUUID`和 `sourceFileDependencyPath` 信息。只需提供其中一个即可。
 {{< /note >}}
 
-### SourceFileDependency Type
+### SourceFileDependency 类型
 
-`azlmbr.asset.builder.SourceFileDependency Type` specifies an absolute dependency or a wildcard match.
+`azlmbr.asset.builder.SourceFileDependency Type` 指定绝对依赖关系或通配符匹配。
 
-| Type | Description |
+| 类型 | 说明 |
 | - | - |
-| `azlmbr.asset.builder.SourceFileDependency_Absolute` | An absolute source file dependency. |
-| `azlmbr.asset.builder.SourceFileDependency_Wildcards` | Allow wildcard matches. |
+| `azlmbr.asset.builder.SourceFileDependency_Absolute` | 绝对源文件依赖关系。 |
+| `azlmbr.asset.builder.SourceFileDependency_Wildcards` | 允许通配符匹配。 |
 
 ## JobDescriptor
 
-`azlmbr.asset.builder.JobDescriptor` is a class used by the Asset Builder to store job-related information.
+`azlmbr.asset.builder.JobDescriptor` 是资产创建器用来存储工作相关信息的一个类。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| `jobParameters` | `JobParameterMap` | Asset Builder specific parameters to pass to the `ProcessJobRequest`. |
-| `additionalFingerprintInfo` | String | Additional info that should be taken into account when fingerprinting this job. |
-| `jobKey` | String | Job specific key, for example, TIFF Job. |
-| `priority` | Integer | Priority value for the jobs within the job queue. |
-| `checkExclusiveLock` | Boolean | Attempt to get an exclusive lock on the source asset file before processing the job when `True`. |
-| `checkServer` | Boolean | Check the server for the outputs of this job before processing the job. |
-| `jobDependencyList` | List[`azlmbr.asset.builder.JobDependency`] | Required for jobs that want to declare job dependencies on other jobs. |
-| `failOnError` | Boolean | Errors, asserts, and exceptions automatically cause the job to fail when `True`. |
-| `set_platform_identifier(platformIdentifier:string)` | Method | Sets the identifier for the build platform. |
-| `get_platform_identifier()` | Method | Returns the identifier for the build platform. |
+| `jobParameters` | `JobParameterMap` | 传递给 `ProcessJobRequest` 的资产生成器特定参数。 |
+| `additionalFingerprintInfo` | String | 打指纹时应考虑的其他信息。 |
+| `jobKey` | String | 特定任务键，例如 TIFF 任务。 |
+| `priority` | Integer | 作业队列中作业的优先级值。 |
+| `checkExclusiveLock` | Boolean | `True`时，在处理任务前尝试获取源资产文件的独占锁。 |
+| `checkServer` | Boolean | 在处理作业前，检查服务器是否有该作业的输出。 |
+| `jobDependencyList` | List[`azlmbr.asset.builder.JobDependency`] | 对于希望声明工作依赖于其他工作的工作来说是必需的。 |
+| `failOnError` | Boolean | 当 `True` 时，错误、断言和异常会自动导致作业失败。|
+| `set_platform_identifier(platformIdentifier:string)` | Method | 设置构建平台的标识符。 |
+| `get_platform_identifier()` | Method | 返回构建平台的标识符。 |
 
-The `priority` field is the value for the jobs within the job queue. A priority value less than `0` means the job's priority is not considered. A priority value of `0` or greater prioritizes the job by value. The higher the value, the higher priority.
+`priority`字段是作业队列中作业的值。优先级值小于 `0` 表示不考虑作业的优先级。优先级值大于等于 `0`，则作业的优先级按值排列。值越大，优先级越高。
 
 {{< note >}}
-Priorities for critical and non-critical jobs are set separately.
+关键工作和非关键工作的优先级分别设置。
 {{< /note >}}
 
-The `checkExclusiveLock` field is a flag to determine whether Asset Processor needs to check the source asset file for exclusive lock before processing the job. Asset Processor will lock and unlock the source asset file to ensure it is not opened by another process. This prevents premature processing of some source asset files that are opened for writing, but have zero bytes for longer than the modification threshold. This will time out if the Asset Processor cannot get an exclusive lock.
+`checkExclusiveLock` 字段是一个标志，用于确定资产处理器在处理作业前是否需要检查源资产文件的独占锁。资产处理器会锁定和解锁源资产文件，以确保它不会被其他进程打开。这可防止过早处理某些已打开可写入但零字节时间超过修改阈值的源资产文件。如果资产处理器无法获得独占锁，则会超时。
 
-The `checkServer` field determines whether Asset Processor needs to check the server for the outputs of this job before starting to process the job locally. If Asset Processor is running in server mode, then this is used to determine whether it needs to store the outputs of this job on the server.
+`checkServer` 字段决定 Asset Processor 在本地开始处理作业前是否需要检查服务器上是否有该作业的输出。如果 Asset Processor 以服务器模式运行，则该字段用于确定是否需要在服务器上存储该作业的输出。
 
-If the `failOnError` field is set to `True`, then all reported errors, asserts, and exceptions cause the job to fail, even if the result code is `ProcessJobResult_Success`.
+如果 `failOnError` 字段设置为 `True`，则所有报告的错误、断言和异常都会导致作业失败，即使结果代码是 `ProcessJobResult_Success`。
 
-The `setplatformidentifier` and `getplatformidentifier` methods set and retrieve the platform identifier such as 'pc' or 'android' for the job description. It is the identifier of the platform from the `PlatformInfo` struct.
+`setplatformidentifier` 和 `getplatformidentifier`方法用于设置和获取职位描述的平台标识符，如'pc' 或 'android'。这是 `PlatformInfo` 结构中的平台标识符。
 
 ### JobParameterMap
 
-The `JobParameterMap` is a map data structure that holds parameters that are passed into a job for `ProcessJob` requests. These parameters can optionally be set during the `CreateJobs` function of the builder so that they are passed along to the `ProcessJobFunction`. The values (key and value) are arbitrary and it is up to the Asset Builder how to use them.
+`JobParameterMap`是一个映射数据结构，用于保存为 `ProcessJob`请求而传入作业的参数。这些参数可选择在生成器的 `CreateJobs` 功能中设置，以便传递给 `ProcessJobFunction` 。参数值（键和值）是任意的，如何使用由资产创建器决定。
 
-#### Example: JobParameterMap
+#### 示例: JobParameterMap
 
 ```python
 jobParameterMap = {1 : "MyValue", 2 : "Another Value"}
@@ -115,29 +115,29 @@ jobParameterMap = {1 : "MyValue", 2 : "Another Value"}
 
 ### JobDependency
 
-`azlmbr.asset.builder.JobDependency` is a class containing job dependency information that the builder sends to the Asset Processor.
+`azlmbr.asset.builder.JobDependency` 是一个包含作业相关性信息的类，生成器会将该信息发送给资产处理器。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| sourceFile | `azlmbr.asset.builder.SourceFileDependency` | Source file dependency information that the Asset Builder sends to Asset Processor. |
-| jobKey | String | Job key of the dependent job. |
-| platformIdentifier | String | Platform identifier of the dependent job. |
-| type | `azlmbr.asset.builder.JobDependency Type` | Type of `JobDependency` (order or fingerprint). |
+| sourceFile | `azlmbr.asset.builder.SourceFileDependency` | 资产生成器发送给资产处理器的源文件依赖性信息。 |
+| jobKey | String | 从属工作的工作密钥。 |
+| platformIdentifier | String | 从属任务的平台标识符。 |
+| type | `azlmbr.asset.builder.JobDependency Type` | `JobDependency`类型 (顺序或指纹)。 |
 
 
-#### JobDependency Type
+#### JobDependency 类型
 
-`azlmbr.asset.builder.JobDependency Type` specifies the `azlmbr.asset.builder.JobDependency` type that determines when the job dependency should be processed.
+`azlmbr.asset.builder.JobDependency Type` 指定 `azlmbr.asset.builder.JobDependency` 类型，该类型决定何时处理作业依赖关系。
 
-| Type | Description |
+| 类型 | 说明 |
 | - | - |
-| `azlmbr.asset.builder.JobDependency_Fingerprint` | The dependent job should get processed by Asset Processor when the fingerprint of the job it depends on changes. |
-| `azlmbr.asset.builder.JobDependency_Order` | The dependent job should only run after the job it depends on is processed by Asset Processor. |
-| `azlmbr.asset.builder.JobDependency_OrderOnce` | The dependent job should only run after the job it depends on is processed by Asset Processor and only if the dependencies have never been processed by Asset Processor. |
+| `azlmbr.asset.builder.JobDependency_Fingerprint` | 当所依赖的作业的指纹发生变化时，资产处理器应处理从属作业。 |
+| `azlmbr.asset.builder.JobDependency_Order` | 从属作业只能在资产处理器处理完其所依赖的作业后运行。 |
+| `azlmbr.asset.builder.JobDependency_OrderOnce` | 从属作业只能在资产处理器处理完其所依赖的作业后运行，并且只能在资产处理器从未处理过从属作业的情况下运行。 |
 
-## Example: CreateJobs
+## 示例: CreateJobs
 
-The example below demonstrates how the Asset Builder might create jobs when **Asset Processor** detects a new or changed source asset with the registered pattern in a scan directory.
+下面的示例演示了当**资产处理器**检测到扫描目录中带有已注册模式的新源资产或已更改的源资产时，资产生成器如何创建任务。
 
 ```python
 # Creates a single job to compile for each platform

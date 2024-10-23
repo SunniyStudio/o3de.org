@@ -1,16 +1,16 @@
 ---
-linkTitle: Moving/Renaming Assets
-title: Moving/Renaming Assets
-description: In Open 3D Engine (O3DE), files can be moved and renamed freely without breaking existing references by storing a UUID in a side-car file (.meta).
+linkTitle: 移动/重命名资产
+title: 移动/重命名资产
+description: 在 Open 3D Engine (O3DE)中，通过在侧车文件 (.meta)中存储 UUID，可以自由移动和重命名文件，而不会破坏现有的引用。
 weight: 600
 toc: true
 ---
 
-Moving/renaming files freely without breaking existing references is possible through the experimental metadata feature which stores a UUID in a side-car file (.meta).  See the [Asset Metadata Relocation RFC](https://github.com/o3de/sig-content/blob/main/rfcs/rfc-77-metadata-asset-relocation.md) for technical details on how the system works
+通过实验性元数据功能，可以在不破坏现有引用的情况下自由移动/重命名文件，该功能将 UUID 保存在侧载文件（.meta）中。 有关系统工作原理的技术细节，请参阅[资产元数据重定位 RFC](https://github.com/o3de/sig-content/blob/main/rfcs/rfc-77-metadata-asset-relocation.md)。
 
-By default, the metadata system is disabled because not all file types can be relocated without issue currently.  Each asset file type must be enabled individually in the settings.  Once an asset file type is enabled, the Asset Processor will generate a metadata file for every file of the given type on startup.  Any file which has a metadata associated with it can then be moved or renamed.  The Asset Processor does not need to be running when moving or renaming files and there are no special tools required to do so.
+默认情况下，元数据系统是禁用的，因为目前并非所有文件类型都能顺利重新定位。 必须在设置中单独启用每种资产文件类型。 资产文件类型启用后，资产处理器会在启动时为每个指定类型的文件生成一个元数据文件。 任何与元数据关联的文件都可以移动或重命名。 在移动或重命名文件时，资产处理器无需运行，也不需要使用特殊工具。
 
-Example metadata file:
+元数据文件示例：
 ```json
 {
     "FileVersion": 1,
@@ -26,12 +26,12 @@ Example metadata file:
     }
 }
 ```
-Example of metadata files in a source directory:
+源代码目录中的元数据文件示例：
 
 ![Metadata files in directory](/images/user-guide/assets/pipeline/metadata.png)
 
-## How to Enable
-To enable metadata generation for a set of file types, create a .setreg file (`<project or gem directory>/Registry` is suggested) with the following settings:
+## 如何启用
+要为一组文件类型启用元数据生成，请创建一个 .setreg 文件（建议使用`<project or gem directory>/Registry`），并进行以下设置：
 ```json
 {
     "O3DE":
@@ -50,39 +50,39 @@ To enable metadata generation for a set of file types, create a .setreg file (`<
     }
 }
 ```
-EnabledTypes is simply an array of strings of file extension to enable.  For example, `".txt", ".png"`
+EnabledTypes 是一个由要启用的文件扩展名字符串组成的数组。 例如 `".txt", ".png"`
 
-It is highly recommended that this setreg file be placed in a central location, which is shared with other users of the project, to ensure everyone is generating the same metadata files.  For a game project, it should be placed in the project directory; for gem development, it should be placed in the gem directory.  Keep in mind this is an Asset Processor (AP) wide setting, it will apply to all files the AP processes, not just the ones in the project or gem where the setting exists.
+强烈建议将此 setreg 文件放在一个中心位置，与项目的其他用户共享，以确保每个人都生成相同的元数据文件。 对于游戏项目，应将其放在项目目录下；对于 gem 开发，应将其放在 gem 目录下。 请记住，这是一个资产处理器（AP）范围的设置，它将适用于资产处理器处理的所有文件，而不仅仅是存在该设置的项目或 gem 中的文件。
 
-Once a metadata file is generated for an asset and the asset is relocated or any references are saved using the newly generated UUID, the metadata file must be kept alongside the asset.  Not doing so could break references to the file.
+一旦为资产生成了元数据文件，资产被重新定位或使用新生成的 UUID 保存了任何引用，元数据文件必须与资产一起保存。 否则可能会破坏对该文件的引用。
 
 > AssetProcessor will continue to use existing metadata files for assets which have them, regardless of the above settings.
 
-## How to use
-Moving or renaming assets can be done either in the editor via the asset browser or using any file management tool of your choosing, such as the File Explorer in Windows.
+## 如何使用
+移动或重命名资产既可以在编辑器中通过资产浏览器完成，也可以使用您选择的任何文件管理工具，如 Windows 中的文件资源管理器。
 
-There is only one requirement when moving or renaming an asset, which is **the metadata file must be moved or renamed as well**.
+移动或重命名资产时只有一个要求，那就是**元数据文件也必须移动或重命名**。
 
-Folders can be moved or renamed without having to touch metadata files, but all files within a folder **must have a metadata file** to ensure existing references do not break.
+文件夹可以移动或重命名，而无需移动元数据文件，但文件夹内的所有文件**必须有一个元数据文件**，以确保现有引用不会中断。
 
-Examples:
+例如
 
-* If blue.png is renamed to red.png, the metadata file blue.png.meta must be renamed to red.png.meta.
-* If textures/hat.png is moved to character/hat.png, the metadata file must be moved to character/hat.png.meta.
+* 如果 blue.png 重命名为 red.png，元数据文件 blue.png.meta 必须重命名为 red.png.meta。
+* 如果将 textures/hat.png 移至 character/hat.png，元数据文件必须移至 character/hat.png.meta。
 
-If using source control, metadata files **must be checked in** along with the source asset and updated to match any move or rename changes to those assets.
+如果使用源控制，元数据文件**必须与源资产一起签入**，并根据对这些资产的任何移动或重命名更改进行更新。
 
-There is one exception to the above, which is Intermediate Asset metadata files.  These metadata files follow the same rules as Intermediate Assets: they should not be modified or checked into source control.
+上述规定有一个例外，那就是中间资产元数据文件。 这些元数据文件遵循与 “中间资产 ”相同的规则：它们不应被修改或检查到版本控制中。
 
-When relocating an asset, the asset's ID will remain stable, so existing references will continue to work.  Assets are typically referenced using the `Asset<T>` type which includes an asset hint, which is a human readable string containing the last known location of the referenced file.  If a file is moved or renamed, the next time a file referencing it is saved, this may show up as a change which wasn't expected.  For example: File1.ext references File2.ext, and stores the asset reference to File2.ext. This contains both the asset ID, and the human readable asset hint that contains the file name File2.ext. When File2.ext is renamed to FileB.ext, the asset ID will remain the same. The next time File1.ext is saved, the data will change because the asset hint has changed.
+重新定位资产时，资产的 ID 将保持稳定，因此现有的引用将继续有效。 资产通常使用 `Asset<T>` 类型进行引用，该类型包含一个资产提示，这是一个人类可读字符串，包含引用文件的最后已知位置。 如果文件被移动或重命名，下一次保存引用文件时，可能会显示为非预期的更改。 例如 File1.ext 引用 File2.ext，并将资产引用存储到 File2.ext。这既包含资产 ID，也包含文件名 File2.ext 的人可读资产提示。当 File2.ext 重命名为 FileB.ext 时，资产 ID 将保持不变。下次保存 File1.ext 时，数据将发生变化，因为资产提示已更改。
 
-## Renaming while Asset Processor is running
+## 资产处理器运行时重命名
 
-By default, renaming assets manually while Asset Processor is running can prove difficult as AP will try to immediately create a new metadata file for the renamed asset.  To prevent this, AP can be configured to wait for a specified time before it attempts to process a "new" asset, which avoids the automatic creation of an unwanted, new metadata file.  
+默认情况下，在资产处理器运行时手动重命名资产会很困难，因为 AP 会尝试立即为重命名的资产创建一个新的元数据文件。 为避免这种情况，可将资产处理器配置为等待指定时间后再尝试处理 “新 ”资产，从而避免自动创建不必要的新元数据文件。
 
-> This delay will affect all newly created assets for metadata-enabled types and is off by default.  The longer the delay time, the longer it will take AP to start processing any newly created metadata-enabled file type.
+> 此延迟将影响所有启用元数据类型的新创建资产，默认为关闭。 延迟时间越长，AP 开始处理任何新创建的启用元数据的文件类型所需的时间就越长。
 
-In a .setreg file, add the following setting:
+在 .setreg 文件中，添加以下设置：
 
 ```json
 {
@@ -101,16 +101,16 @@ In a .setreg file, add the following setting:
     }
 }
 ```
-The value specified is the milliseconds to wait.  The above example config will wait 5 seconds before processing an asset.  
+指定的值是等待的毫秒数。 上述配置示例在处理资产前将等待 5 秒。
 
->  This setting can be user-specific and does not need to be shared across users if not desired.
+>  该设置可针对特定用户，如果不需要，也无需在用户间共享。
 
-This setting is mainly useful to help allow manual renaming of assets, but can help in some situations of slow file updates on disk, such as copying a large number of files or fetching latest from source control.  These operations can sometimes be ordered in a way that requires a very high delay setting, such as a Git LFS fetch, which may fetch files in groups by type, possibly resulting in metadata files being created on disk long after the source asset was created.  In these situations, it is recommended to close AP first to avoid conflicts caused by AP creating metadata files which already exist in source control.
+此设置主要用于手动重命名资产，但在某些磁盘文件更新缓慢的情况下也有帮助，例如复制大量文件或从源代码控制中获取最新文件。 这些操作的顺序有时需要很高的延迟设置，例如 Git LFS 抓取，可能会按类型分组获取文件，可能导致元数据文件在源资产创建很长时间后才在磁盘上创建。 在这种情况下，建议先关闭 AP，以避免 AP 创建的元数据文件与源代码控制中已经存在的元数据文件发生冲突。
 
 ## Asset Processor Batch
-Since Asset Processor Batch is intended for use with automated processes, it will not create metadata files and will not use the meta creation delay, regardless of what settings are configured.  It will make use of any existing metadata files however.
+由于 Asset Processor Batch 用于自动流程，因此无论配置了什么设置，它都不会创建元数据文件，也不会使用元数据创建延迟。 不过，它会使用任何现有的元数据文件。
 
-## Limitations
-Metadata relocation currently only supports UUID-based references.  That means references from code (C++, Lua, AZSL, etc) which typically reference files by path will break when a file is moved or renamed and will need to be updated through some other means.  This also applies in the case of a file type being enabled when there are still other files which may reference it by path.
+## 限制
+元数据重定位目前只支持基于 UUID 的引用。 这意味着当文件被移动或重命名时，代码（C++、Lua、AZSL 等）中通常通过路径引用文件的引用会中断，需要通过其他方式更新。 这也适用于文件类型被启用，但仍有其他文件可能通过路径引用该文件的情况。
 
-As this feature is still experimental, see the [engine contributors documentation](../../../../engine-dev/assets/metadata) for more information on the current state of file type support.
+由于该功能仍处于试验阶段，有关文件类型支持的更多信息，请参阅[引擎贡献者文档](../../../../engine-dev/assets/metadata)。

@@ -1,6 +1,6 @@
 ---
 title: "Lua 材质函数 API"
-description: "Lua 材料函数允许自定义处理材料属性的逻辑。"
+description: "Lua 材质函数允许自定义处理材质属性的逻辑。"
 toc: true
 ---
 
@@ -16,9 +16,9 @@ Lua 材质函数允许自定义处理材质属性的逻辑。它们可以读取�
 
 材质函数可以在隐式名称上下文中运行，在这种上下文中，脚本中出现的名称会附加某些前缀。这样，同一个 Lua 脚本就可以在不同的上下文中使用。
 
-例如，一种材料类型可能有一个名为 “metallic的组，而另一种材料类型则有一个名为 “metalness ”的组。在这两种情况下，组都具有`texture` 和 `factor`属性。Lua 函数将以简单的`texture` 和 `factor`来引用这些属性，系统会在内部自动预置相应的名称上下文。材质属性、着色器输入（常量或图像）和着色器选项可能各有一个单独的名称上下文。
+例如，一种材质类型可能有一个名为 “metallic的组，而另一种材质类型则有一个名为 “metalness ”的组。在这两种情况下，组都具有`texture` 和 `factor`属性。Lua 函数将以简单的`texture` 和 `factor`来引用这些属性，系统会在内部自动预置相应的名称上下文。材质属性、着色器输入（常量或图像）和着色器选项可能各有一个单独的名称上下文。
 
-有关如何指定名称上下文的详细信息，请在[材料类型文件规范](/docs/atom-guide/look-dev/materials/material-type-file-spec/)中搜索 “前缀”。
+有关如何指定名称上下文的详细信息，请在[材质类型文件规范](/docs/atom-guide/look-dev/materials/material-type-file-spec/)中搜索 “前缀”。
 
 ## 主函数
 
@@ -26,15 +26,15 @@ Lua 材质函数允许自定义处理材质属性的逻辑。它们可以读取�
 
 #### Process(`context`)
 
-这是材料**用于渲染**时运行的主要函数。它在材质首次初始化或相关材质属性值发生变化时运行。 `context` 对象提供了访问 API 的途径，以便访问**材质属性和着色器**。
+这是材质**用于渲染**时运行的主要函数。它在材质首次初始化或相关材质属性值发生变化时运行。 `context` 对象提供了访问 API 的途径，以便访问**材质属性和着色器**。
 
 #### ProcessEditor(`context`)
 
-这是材料**在工具中**编辑时运行的主要函数。它在材料首次初始化或相关材料属性值发生变化时运行。`context`对象提供了访问 API 的途径，以便访问**材料属性及其元数据**。
+这是材质**在工具中**编辑时运行的主要函数。它在材质首次初始化或相关材质属性值发生变化时运行。`context`对象提供了访问 API 的途径，以便访问**材质属性及其元数据**。
 
 #### GetMaterialPropertyDependencies()
 
-返回函数可以读取的所有材料属性的列表。对于未报告依赖关系而访问的属性，将报告错误。
+返回函数可以读取的所有材质属性的列表。对于未报告依赖关系而访问的属性，将报告错误。
 
 #### GetShaderOptionDependencies()
 
@@ -90,7 +90,7 @@ end
 
 ### GetMaterialPropertyValue\_
 
-每个 **GetMaterialPropertyValue\_** 函数都会获取一个`string`属性名称，并返回相应类型的值。必须使用与材料属性的数据类型相匹配的版本。材料属性必须在 [GetMaterialPropertyDependencies](#main-functions) 中列出。
+每个 **GetMaterialPropertyValue\_** 函数都会获取一个`string`属性名称，并返回相应类型的值。必须使用与材质属性的数据类型相匹配的版本。材质属性必须在 [GetMaterialPropertyDependencies](#main-functions) 中列出。
 
   * **GetMaterialPropertyValue_bool**(`string`): 返回`boolean`
   * **GetMaterialPropertyValue_int**(`string`): 返回`number`
@@ -105,11 +105,11 @@ end
 
 ### HasMaterialProperty(`string`)
 
-Returns a boolean whether a property with the given name exists. Note the material property does not have to be listed in [GetMaterialPropertyDependencies](#main-functions) because this function is checking availability only, not *reading values*.
+返回给定名称的属性是否存在的布尔值。请注意，材质属性不必在 [GetMaterialPropertyDependencies](#main-functions) 中列出，因为此函数仅检查可用性，而不是**读取值**。
 
 ### SetShaderConstant\_
 
-Each **SetShaderConstant\_** function takes a `string` shader input name and value to set. You must use the version that matches the data type of the shader input.
+每个 **SetShaderConstant\_** 函数都需要一个 `string` 着色器输入名称和要设置的值。您必须使用与着色器输入数据类型相匹配的版本。
 
   * **SetShaderConstant_bool**(`string`, `boolean`)
   * **SetShaderConstant_int**(`string`, `number`)
@@ -124,39 +124,39 @@ Each **SetShaderConstant\_** function takes a `string` shader input name and val
 
 ### SetShaderOptionValue\_
 
-Each **SetShaderOptionValue\_** function takes a `string` shader option name and value to set. The value will be applied to all shaders in the material type that have an option with the given name. You must use the version that matches the data type of the shader option. The shader option must be listed in [GetShaderOptionDependencies](#main-functions).
+每个**SetShaderOptionValue\_** 函数都会接收一个 `string` 着色器选项名称和要设置的值。该值将应用于材质类型中所有具有给定名称选项的着色器。必须使用与着色器选项的数据类型相匹配的版本。着色器选项必须列在[GetShaderOptionDependencies](#main-functions)中。
 
   * **SetShaderOptionValue_bool**(`string`, `boolean`)
   * **SetShaderOptionValue_uint**(`string`, `number`)
   * **SetShaderOptionValue_enum**(`string`, `number`)
 
 {{< note >}}
-There are similar [SetShaderOptionValue\_](#setshaderoptionvalue_-1) functions in the `ShaderItem` object that operate on a single shader.
+在 `ShaderItem` 对象中也有类似的 [SetShaderOptionValue\_](#setshaderoptionvalue_-1) 函数，可对单个着色器进行操作。
 {{< /note >}}
 
 ### GetShaderCount()
 
-Returns the number of shaders in the material type.
+返回材质类型中着色器的数量。
 
 ### GetShader(`number`)
 
-Returns a `ShaderItem` at a given index, or a dummy `ShaderItem` if the index is out of bounds. See [ShaderItem functions](#shaderitem-functions). 
+返回给定索引处的 `ShaderItem` 或一个虚拟的 `ShaderItem` （如果索引超出范围）。参见 [ShaderItem 函数](#shaderitem-functions)。
 
 ### GetShaderByTag(`string`)
 
-Returns a `ShaderItem` that has a given tag name, or a dummy `ShaderItem` if the name is not found. See [ShaderItem functions](#shaderitem-functions) and [Shader tags in the Material Type File Specification](/docs/atom-guide/look-dev/materials/material-type-file-spec/#shaders). 
+返回具有给定标签名称的`ShaderItem` ，如果未找到该名称，则返回一个虚拟的`ShaderItem` 。请参阅[ShaderItem 函数](#shaderitem-functions)和[材质类型文件规范中的着色器标记](/docs/atom-guide/look-dev/materials/material-type-file-spec/#shaders)。
 
 ### HasShaderWithTag(`string`)
 
- Returns a `boolean` whether a shader with the given tag name exists. See [Shader tags in the Material Type File Specification](/docs/atom-guide/look-dev/materials/material-type-file-spec/#shaders).
+返回一个 `boolean` 值，表示是否存在具有给定标签名称的着色器。请参阅[材质类型文件规范中的着色器标签](/docs/atom-guide/look-dev/materials/material-type-file-spec/#shaders)。
 
-## ProcessEditor(context) functions
+## ProcessEditor(context) 函数
 
-These functions are available in the `context` object that is passed to the `ProcessEditor` function.
+这些函数在传递给 `ProcessEditor` 函数的 `context` 对象中可用。
 
 ### GetMaterialPropertyValue\_
 
-Each **GetMaterialPropertyValue\_** function takes a `string` property name and Returns a value of the appropriate type. You must use the version that matches the data type of the material property. The material property must be listed in [GetMaterialPropertyDependencies](#main-functions).
+每个 **GetMaterialPropertyValue\_** 函数都会获取一个`string`属性名称，并返回相应类型的值。您必须使用与材质属性的数据类型相匹配的版本。材质属性必须在 [GetMaterialPropertyDependencies](#main-functions)中列出。
 
   * **GetMaterialPropertyValue_bool**(`string`): 返回`boolean`
   * **GetMaterialPropertyValue_int**(`string`): 返回`number`
@@ -167,11 +167,11 @@ Each **GetMaterialPropertyValue\_** function takes a `string` property name and 
   * **GetMaterialPropertyValue_Vector3**(`string`): 返回`Vector3`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
   * **GetMaterialPropertyValue_Vector4**(`string`): 返回`Vector4`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
   * **GetMaterialPropertyValue_Color**(`string`): 返回`Color`类型。查看[Lua Math Library](/docs/user-guide/scripting/lua/math-library/).
-  * **GetMaterialPropertyValue_Image**(`string`): 返回generic pointer `userdata` type if an image is available, or `nil` otherwise.
+  * **GetMaterialPropertyValue_Image**(`string`): 返回`userdata`类型的泛型指南，如果图像可用；否则返回`nil`。
 
 ### SetMaterialProperty
 
-Each **SetMaterialProperty** function takes a `string` property name and sets some aspect of the property's editor metadata. See corresponding items in [Property Layout in Material Type File Specification](/docs/atom-guide/look-dev/materials/material-type-file-spec/#propertylayout). Note the material property does not have to be listed in [GetMaterialPropertyDependencies](#main-functions) because these functions are just setting metadata, not *reading values*.
+每个 **SetMaterialProperty** 函数都接收一个`string`属性名，并设置该属性的编辑器元数据的某些方面。请参阅 [材质类型文件规范中的属性布局](/docs/atom-guide/look-dev/materials/material-type-file-spec/#propertylayout) 中的相应项。请注意，材质属性不必在 [GetMaterialPropertyDependencies](#main-functions)中列出，因为这些函数只是设置元数据，而不是**读取数值**。
 
   * **SetMaterialPropertyDescription**(*`string`*, *`string`*)
   * **SetMaterialPropertyMinValue_int**(`string`, `number`)
@@ -186,40 +186,40 @@ Each **SetMaterialProperty** function takes a `string` property name and sets so
   * **SetMaterialPropertySoftMaxValue_int**(`string`, `number`)
   * **SetMaterialPropertySoftMaxValue_uint**(`string`, `number`)
   * **SetMaterialPropertySoftMaxValue_float**(`string`, `number`)
-* **SetMaterialPropertyGroupVisibility**(`string`, [`MaterialPropertyVisibility`](#materialpropertyvisibility)): Similar to `SetMaterialPropertyVisibility`, sets the visibility of an entire group rather than a single property.
+* **SetMaterialPropertyGroupVisibility**(`string`, [`MaterialPropertyVisibility`](#materialpropertyvisibility)): 类似于`SetMaterialPropertyVisibility`，设置整个组而不是单个属性的可见性。
 
 ## ShaderItem functions
 
-ShaderItem is a lua `userdata` item with the following functions:
+ShaderItem 是一个 lua `userdata`项，具有以下功能：
 
 ### GetRenderStatesOverride()
 
-Returns a [`RenderStates`](#renderstates-functions) object that can be used to set overrides for any available render state.
+返回一个 [`RenderStates`](#renderstates-functions) 对象，该对象可用于为任何可用的呈现状态设置重载。
 
 ### SetEnabled(boolean)
 
-Sets whether the shader should be enabled or not.
+设置是否启用着色器。
 
 ### SetDrawListTagOverride(`string`)
 
-Overrides the draw list tag name that the shader will use. Set to empty string to clear the override and restore the value from the *.shader* file. See `DrawList` in the [Shader File Specification](/docs/atom-guide/look-dev/shaders/shader-file-spec/).
+覆盖着色器将使用的绘制列表标签名称。设置为空字符串可清除覆盖并恢复 *.shader* 文件中的值。参见[着色器文件规范](/docs/atom-guide/look-dev/shaders/shader-file-spec/)中的`DrawList`。
 
 ### SetShaderOptionValue\_
 
-Each **SetShaderOptionValue\_** function takes a `string` shader option name and value to update one of this shader's options. You must use the version that matches the data type of the shader option. The shader option must be listed in [GetShaderOptionDependencies](#main-functions).
+每个 **SetShaderOptionValue\_** 函数都使用一个`string`着色器选项名称和值来更新此着色器的一个选项。你必须使用与着色器选项的数据类型相匹配的版本。着色器选项必须在 [GetShaderOptionDependencies](#main-functions)中列出。
   * **SetShaderOptionValue_bool**(`string`, `boolean`)
   * **SetShaderOptionValue_uint**(`string`, `number`)
   * **SetShaderOptionValue_enum**(`string`, `number`)
 
 {{< note >}}
-There are similar [SetShaderOptionValue\_](#setshaderoptionvalue_) functions in `Process(context)` that operate on a single shader.
+在 `Process(context)` 中也有类似的 [SetShaderOptionValue\_](#setshaderoptionvalue_) 函数，可对单个着色器进行操作。
 {{< /note >}}
 
-## RenderStates functions
+## RenderStates 函数
 
-`RenderStates` is a lua `userdata` item with the following functions. For each render state there is a **Set** function for setting an override value and a **Clear** function for clearing the override and restoring the default value. Most of these functions are just light wrappers over lower level render APIs.
+`RenderStates` 是一个具有以下功能的 lua `userdata`项。每个渲染状态都有一个 **Set** 函数用于设置覆盖值，还有一个 **Clear** 函数用于清除覆盖值并恢复默认值。这些函数中的大部分都是对低级渲染 API 的轻量封装。
 
-### Multisample State functions
+### Multisample State 函数
 
   * **SetMultisampleCustomPosition**(`number` multisampleCustomLocationIndex, `number` x, `number` y)
   * ClearMultisampleCustomPosition
@@ -230,7 +230,7 @@ There are similar [SetShaderOptionValue\_](#setshaderoptionvalue_) functions in 
   * **SetMultisampleQuality**(`number`)
   * ClearMultisampleQuality
 
-### Raster State functions
+### Raster State 函数
 
   * **SetFillMode**([`FillMode`](#fillmode))
   * ClearFillMode
@@ -251,7 +251,7 @@ There are similar [SetShaderOptionValue\_](#setshaderoptionvalue_) functions in 
   * **SetForcedSampleCount**(`number`)
   * ClearForcedSampleCount
 
-### Blend State functions
+### Blend State 函数
 
   * **SetAlphaToCoverageEnabled**(`boolean`)
   * ClearAlphaToCoverageEnabled
@@ -274,7 +274,7 @@ There are similar [SetShaderOptionValue\_](#setshaderoptionvalue_) functions in 
   * **SetBlendAlphaOp**([`BlendOp`](#blendop))
   * ClearBlendAlphaOp
 
-### Depth/Stencil State functions
+### Depth/Stencil State 函数
   * **SetDepthEnabled**(`boolean`)
   * ClearDepthEnabled
   * **SetDepthWriteMask**([`DepthWriteMask`](#depthwritemask))
@@ -304,9 +304,9 @@ There are similar [SetShaderOptionValue\_](#setshaderoptionvalue_) functions in 
   * **SetStencilBackFaceFunc**([`ComparisonFunc`](#comparisonfunc))
   * ClearStencilBackFaceFunc
   
-## Enum types
-  
-These enum types are reflected to lua with the following global values:
+## 枚举类型
+
+这些枚举类型通过以下全局值反射到 lua 中：
 
 #### MaterialPropertyVisibility
 

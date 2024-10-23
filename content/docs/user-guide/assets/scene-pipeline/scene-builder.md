@@ -1,28 +1,28 @@
 ---
 linkTitle: Scene Builder
 title: Scene Builder
-description: Specialized asset builder to interact with the scene pipeline.
+description: 与场景管道交互的专用资产生成器。
 weight: 400
 toc: true
 ---
 
-Scene building logic is stored in gems by creating `AZ::SceneAPI::SceneCore::LoadingComponent`, `AZ::SceneAPI::SceneCore::GenerationComponent`, `AZ::SceneAPI::SceneCore::BehaviorComponent`, and `AZ::SceneAPI::SceneCore::ExportingComponent` components. These gems are considered to be scene builder gems.
+通过创建 `AZ::SceneAPI::SceneCore::LoadingComponent`、 `AZ::SceneAPI::SceneCore::GenerationComponent`、 `AZ::SceneAPI::SceneCore::BehaviorComponent`和 `AZ::SceneAPI::SceneCore::ExportingComponent`组件，将场景构建逻辑存储在宝石中。这些 gem 被视为场景构建器 gem。
 
-The SceneAPI processes source scene assets in three main phases: loading, generating, and exporting. During the loading phase, the scene graph is populated, usually from some source file like an FBX. This is done with LoadingComponent components. The LoadingComponent components have three different events where they can do work: PreImport, Import, and PostImport. The SceneGraph is populated during the Import event, but the PostImport event receives an immutable SceneGraph object, so by PostImport, the contents of the SceneGraph are fixed.
+SceneAPI 分三个主要阶段处理源场景资产：加载、生成和导出。在加载阶段，通常从 FBX 等源文件填充场景图。这是通过 LoadingComponent 组件完成的。LoadingComponent 组件有三个不同的事件可以执行工作： 导入前（PreImport）、导入（Import）和导入后（PostImport）。在 Import（导入）事件中，SceneGraph 会被填充，但 PostImport（导入后）事件会接收一个不可变的 SceneGraph 对象，因此在 PostImport（导入后）事件中，SceneGraph 的内容是固定的。
 
-During the exporting phase, the scene graph is inspected by various scene builders, and game-ready product assets are written to disk. This is done with ExportingComponent components. All the events that the ExportingComponent components respond to receive an immutable SceneGraph object, so they also cannot modify the SceneGraph. This means that the only place where the graph is writable is during the import events.
+在导出阶段，各种场景构建器会检查场景图，并将可用于游戏的产品资产写入磁盘。这是通过 ExportingComponent 组件完成的。ExportingComponent 组件响应的所有事件都会接收一个不可变的 SceneGraph 对象，因此它们也不能修改 SceneGraph。这意味着只有在导入事件中才能写入图形。
 
-Additionally, the scene is processed via the LoadingComponent components whenever the user wants to edit "Scene Settings" in the Editor, so it would be sub-optimal to always run the mesh optimizer when the user wants to edit settings. To allow for the mesh optimizer to run before the export happens, the generation events are called. During the generation phase, components can respond to the scene generation event, and apply arbitrary transformations to the Scene graph. The Mesh Optimizer generation component identifies all meshes selected by a Mesh group in the manifest, adds an optimized mesh to the SceneGraph so that other scene builders can reference it.
+此外，每当用户要在编辑器中编辑 “场景设置 ”时，场景都会通过 LoadingComponent 组件进行处理，因此，如果总是在用户要编辑设置时运行网格优化器，则会导致效果不理想。为了让网格优化器在导出之前运行，我们调用了生成事件。在生成阶段，组件可以响应场景生成事件，并对场景图进行任意变换。网格优化器生成组件会识别清单中网格组选择的所有网格，并将优化后的网格添加到场景图中，以便其他场景构建器可以引用。
 
-This design would make it possible to do other types of processes to modify the scene graph, like mesh splitting, or dynamic animation generation.
+通过这种设计，我们可以对场景图进行其他类型的修改处理，如网格分割或动态动画生成。
 
-## Creating a scene builder gem
+## 创建场景生成器 gem
 
-The scene builder framework is used in tool gems called Builder gems. The gem adds classes that derive from the scene building components base classes:  `AZ::SceneAPI::SceneCore::LoadingComponent`, `AZ::SceneAPI::SceneCore::GenerationComponent`, `AZ::SceneAPI::SceneCore::BehaviorComponent`, or `AZ::SceneAPI::SceneCore::ExportingComponent`. The new components use the `BindToCall' method to hook into the desired scene build events. Finally, the class descriptors are added to the gem module description.
+场景构建器框架在称为构建器 gem 的工具 gem 中使用。gem 添加的类派生于场景构建组件基类：`AZ::SceneAPI::SceneCore::LoadingComponent`、`AZ::SceneAPI::SceneCore::GenerationComponent`、`AZ::SceneAPI::SceneCore::BehaviorComponent`或`AZ::SceneAPI::SceneCore::ExportingComponent`。新组件使用`BindToCall'方法挂钩所需的场景构建事件。最后，类描述符被添加到 gem 模块描述中。
 
-### Example scene building class
+### 场景构建类示例
 
-All scene building components derive from one of the base scene building classes.
+所有场景构建组件都源自其中一个基础场景构建类。
 
 ```cpp
 class TheLoadingComponent
@@ -42,7 +42,7 @@ public:
 };
 ```
 
-This class is setting up to hook into the PostImportEventContext event by sub-classing from `AZ::SceneAPI::SceneCore::LoadingComponent` then adding a OnPostImportEventContext method that accepts the PreExportEventContext context.
+该类通过从 `AZ::SceneAPI::SceneCore::LoadingComponent` 子类，然后添加一个接受 PreExportEventContext 上下文的 OnPostImportEventContext 方法，以挂钩 PostImportEventContext 事件。
 
 ```cpp
 TheLoadingComponent::TheLoadingComponent()
@@ -51,9 +51,9 @@ TheLoadingComponent::TheLoadingComponent()
 }
 ```
 
-The example attaches the OnPostImportEventContext function to the OnPostImportEventContext so that this context is sent to the CallProcessorBus at the start of every conversion and import process.
+该示例将 OnPostImportEventContext 函数附加到 OnPostImportEventContext 上，以便在每次转换和导入过程开始时将此上下文发送到 CallProcessorBus。
 
-The scene importing, converting, and exporting processes uses the CallProcessorBus to move data and trigger additional work. The CallProcessorBus operates differently than typical EBuses because it doesn't have a specific set of functions that you can call. Instead, it works like a pseudo-remote procedure call, where the arguments for what would normally be a function are stored in a context. The CallProcessorBus provides a single place to register and trigger the context calls. Based on the type of context, the appropriate functionality is executed. To make it easier to work with, a binding layer called CallProcessorBinder allows binding to a function that takes a context as an argument and performs all the routing. One of the benefits of this approach is that it provides several places to hook custom code into without having to update existing code.
+场景导入、转换和导出过程使用 CallProcessorBus 来移动数据并触发其他工作。CallProcessorBus 的运行方式与典型的 EBuses 不同，因为它没有一组可以调用的特定函数。相反，它的工作方式类似于伪远程过程调用，通常函数的参数存储在上下文中。CallProcessorBus 提供了一个用于注册和触发上下文调用的地方。根据上下文的类型，将执行相应的功能。为了方便使用，一个名为 CallProcessorBinder 的绑定层允许绑定到一个将上下文作为参数并执行所有路由的函数。这种方法的好处之一是，它提供了多个地方来挂接自定义代码，而无需更新现有代码。
 
 ```cpp
 void TheLoadingComponent::Reflect(AZ::ReflectContext* context)
@@ -66,7 +66,7 @@ void TheLoadingComponent::Reflect(AZ::ReflectContext* context)
 }
 ```
 
-The class reflects the TheLoadingComponent as a LoadingComponent so that the scene pipeline can find the component during the export events.
+该类将 TheLoadingComponent 反映为 LoadingComponent，这样场景管道就能在导出事件中找到该组件。
 
 ```cpp
 class SceneBuilderExampleModule
@@ -86,92 +86,92 @@ public:
 };
 ```
 
-The scene builder components are registered in the ```AZ::Module``` class. The SceneBuilderExampleModule is the entry point for gems. To extend the SceneAPI loading, generating, and exporting components must be registered here. The SceneAPI libraries require specialized initialization. As early as possible, be sure to repeat the following two lines for any SceneAPI you want to use. Omitting these calls or making them too late can cause problems such as missing EBus events.
+场景生成器组件在```AZ::Module````类中注册。SceneBuilderExampleModule 是 gem 的入口点。要扩展 SceneAPI，必须在这里注册加载、生成和导出组件。SceneAPI 库需要专门的初始化。对于任何要使用的 SceneAPI，请务必尽早重复以下两行。省略这些调用或过晚调用可能会导致问题，如丢失 EBus 事件。
 
 ## LoadingComponent
 
-The LoadingComponent events are emitted when the scene pipeline is importing a source scene asset file such as `.fbx` or `.stl` files. If the scene builder wants to modify the scene graph, then it should register a LoadingComponent component to hook into the `PreImport`, 'Import', or 'PostImport' events. The SceneGraph is populated during the import events so by PostImport the contents of the SceneGraph are fixed.
+LoadingComponent 事件在场景管道导入源场景资产文件（如 `.fbx` 或 `.stl` 文件）时发生。如果场景生成器想修改场景图，则应注册一个 LoadingComponent 组件，以便挂钩到 `PreImport`,`Import` 或 `PostImport` 事件。场景图是在导入事件期间填充的，因此在导入后，场景图的内容是固定的。
 
-The AZ::SceneAPI::SceneCore::LoadingComponent event contexts:
+AZ::SceneAPI::SceneCore::LoadingComponent事件上下文：
 
-* PreImportEventContext -- Signals an import of the scene graph is about to happen
-* ImportEventContext -- Signals that the scene is ready to import the scene graph from source data; can change the Scene
-* PostImportEventContext -- Signals that an import has completed and the data should be ready to use (if there were no errors); the Scene is immutable
+* PreImportEventContext -- 表示即将导入场景图
+* ImportEventContext -- 表示场景已准备就绪，可以从源数据导入场景图；可以更改场景
+* PostImportEventContext -- 表示导入已完成，数据可以使用（如果没有错误）；场景不可变
 
 ## GenerationComponent
 
-The scene is loaded via the LoadingComponent components. The GenerationComponent events are emitted when the scene pipeline wants scene builders to modify node contents or add nodes to the SceneGraph. The mutable Scene object is sent to each GenerationComponent event.
+场景通过 LoadingComponent 组件加载。当场景流水线希望场景构建器修改节点内容或向 SceneGraph 添加节点时，就会发出 GenerationComponent 事件。每个 GenerationComponent 事件都会发送可变场景对象。
 
-The AZ::SceneAPI::SceneCore::GenerationComponent event contexts:
+AZ::SceneAPI::SceneCore::GenerationComponent 事件上下文：
 
-* PreGenerateEventContext -- Signals the scene generation step is about to happen
-* GenerateEventContext -- Signals that new data such as procedurally generated objects should be added to the Scene
-* GenerateLODEventContext -- Signals that new LODs should be added to the Scene
-* GenerateAdditionEventContext -- Signals that any new data, such as UVs, tangents and bitangents, should be added to the Scene
-* GenerateSimplificationEventContext -- Signals that data simplification / complexity reduction should be run
-* PostGenerateEventContext -- Signals that the generation step is complete
+* PreGenerateEventContext -- 场景生成步骤即将发生的信号
+* GenerateEventContext -- 向 “场景 ”中添加新数据（如程序生成的对象）的信号
+* GenerateLODEventContext -- 场景中应添加新 LOD 的信号
+* GenerateAdditionEventContext -- 将 UV、切线和位切线等新数据添加到 “场景 ”的信号
+* GenerateSimplificationEventContext -- 应运行数据简化/复杂性降低的信号
+* PostGenerateEventContext -- 生成步骤完成的信号
 
 ## ExportComponent
 
-During the exporting phase, the scene graph is inspected by various scene builders, and game-ready product assets are written to disk. This is done with ExportingComponent components. All the events that the ExportingComponent components respond to receive an immutable SceneGraph object, so they also cannot modify the SceneGraph. This means that the only place where the graph is writable is during the import and generation events.
+在导出阶段，各种场景构建器会检查场景图，并将可用于游戏的产品资产写入磁盘。这是通过 ExportingComponent 组件完成的。ExportingComponent 组件响应的所有事件都会接收一个不可变的 SceneGraph 对象，因此它们也不能修改 SceneGraph。这意味着只有在导入和生成事件期间，图形才是可写的。
 
-The `AZ::SceneAPI::SceneCore::ExportComponent` event contexts:
+`AZ::SceneAPI::SceneCore::ExportComponent` 事件上下文：
 
-* `PreExportEventContext` - Signals an export of the contained scene is about to happen.
-* `ExportEventContext` - Signals the scene that the contained scene needs to be exported to the specified directory.
-* `PostExportEventContext` - Signals that an export has completed and written (if successful) to the specified directory.
+* `PreExportEventContext` - 表示即将导出所包含的场景。
+* `ExportEventContext` - 提示场景需要将包含的场景导出到指定目录。
+* `PostExportEventContext` - 导出完成并写入（如果成功）到指定目录的信号。
 
 ## BehaviorComponent
 
-`AZ::SceneAPI::SceneCore::BehaviorComponent` components are small logic units that exist as long as the scene pipeline is initialized and active. These components can react to various events that happen to a scene and make appropriate changes, additions or removals. The main use of the behavior components is to modify the rules and groups in the scene manifest so that export components can be modified, indirectly.
+`AZ::SceneAPI::SceneCore::BehaviorComponent` 组件是小逻辑单元，只要场景管道初始化和激活，它们就会存在。这些组件可以对场景中发生的各种事件做出反应，并进行适当的更改、添加或删除。行为组件的主要用途是修改场景清单中的规则和组，以便间接修改导出组件。
 
-The BehaviorComponent is handled a bit different than the other scene pipeline component types since it does not use the BindCall() method and participates in both the Editor and the Asset Processor. The behavior component is designed to activate the ManifestMetaInfoBus and/or the ManifestMetaInfoBus depending on the scene product asset uses.
+行为组件（BehaviorComponent）的处理方式与其他场景管道组件类型有些不同，因为它不使用 BindCall() 方法，而是同时参与编辑器和资产处理器。行为组件旨在根据资产使用的场景产品激活 ManifestMetaInfoBus 和/或 ManifestMetaInfoBus。
 
 ## AssetImportRequestBus
 
-This bus handles the scene pipeline events that modify the scene manifest. 
+该总线处理修改场景清单的场景管道事件。
 
-The `AZ::SceneAPI::Events::AssetImportRequestBus` events:
+`AZ::SceneAPI::Events::AssetImportRequestBus` 事件：
 
-* `GetGeneratedManifestExtension` - Gets the file extension for the generated manifest
-* `PrepareForAssetLoading` - Before asset loading starts this is called to allow for any required initialization
-* `LoadAsset` - Starts the loading of the asset at the given path in the given scene
-* `FinalizeAssetLoading` - Can be used to do any work to complete loading such as adjusting the loaded content in the SceneGraph
-* `UpdateManifest` - After all loading has completed, this call can be used to adjust the manifest.
+* `GetGeneratedManifestExtension` - 获取生成的清单的文件扩展名
+* `PrepareForAssetLoading` - 在资产加载开始前，将调用此调用以进行所需的初始化
+* `LoadAsset` - 在给定场景中的给定路径处开始加载资产
+* `FinalizeAssetLoading` - 可用于完成加载过程中的任何工作，例如调整场景图中已加载的内容
+* `UpdateManifest` - 所有装载工作完成后，可以使用此调用来调整舱单。
 
-The ``RequestingApplication`` input argument refers to the type of application that sent the event such as the O3DE Editor or the O3DE Asset Processor.
+``RequestingApplication`` 输入参数指发送事件的应用程序类型，如 O3DE 编辑器或 O3DE 资产处理器。
 
-The ``ManifestAction`` input argument refers to the behavior type the application is requesting from the component. The ``ConstructDefault`` value is typically used in the O3DE Editor to generate default scene manifest entries for a source scene. The ``Update`` value is used to indicate the behavior component should generate scene manifest groups and rules based on the existing scene graph.
+``ManifestAction``输入参数指应用程序从组件请求的行为类型。``ConstructDefault``值通常用于 O3DE 编辑器，为源场景生成默认场景清单条目。``Update``值用于指示行为组件应根据现有场景图生成场景清单组和规则。
 
 ## ManifestMetaInfoBus
 
-The ManifestMetaInfoBus is used to gather and manage UX elements in the scene manifest for a source asset scene file. For example, it used in the Editor to fetch the names of the tabs of the group types and the rules the group can manage for the Scene Settings dialog.
+ManifestMetaInfoBus 用于收集和管理源资产场景文件的场景清单中的用户体验元素。例如，它在编辑器中用于获取组类型选项卡的名称以及组在场景设置对话框中可管理的规则。
 
-The `AZ::SceneAPI::Events::ManifestMetaInfoBus` events:
+`AZ::SceneAPI::Events::ManifestMetaInfoBus` 事件：
 
-* `GetCategoryAssignments` - Gets a list of all the categories and the class identifiers that are listed for that category.
-* `GetIconPath` - Gets the path to the icon associated with the given group or rule.
-* `GetAvailableModifiers` - Gets a list of modifiers (such as rules for groups) that the target accepts.
-* `InitializeObject` - Initialized the given manifest group or rule based on the scene.
-* `ObjectUpdated` - Called when an existing group or rule is updated.
+* `GetCategoryAssignments` - 获取所有类别和该类别所列类别标识符的列表。
+* `GetIconPath` - 获取与给定组或规则相关的图标路径。
+* `GetAvailableModifiers` - 获取目标接受的修改器（如分组规则）列表。
+* `InitializeObject` - 根据场景初始化给定的清单组或规则。
+* `ObjectUpdated` - 更新现有组或规则时调用。
 
-## The scene logging example
+## 场景日志示例
 
 [Scene logging example gem](https://github.com/o3de/o3de/tree/development/Gems/SceneLoggingExample)
 
-The Scene Logging Example demonstrates how to extend the SceneAPI by adding additional logging to the pipeline. The SceneAPI is a collection of libraries that handle loading scene files and converting content to data that the Open 3D Engine and its editor can load.
+场景日志示例演示了如何通过在管道中添加额外日志来扩展 SceneAPI。SceneAPI 是一组库，用于处理加载场景文件并将内容转换为Open 3D Engine及其编辑器可以加载的数据。
 
-The following approach is used:
+使用的方法如下：
 
-1. The SceneBuilder and SceneData load and convert the scene file (for example, .fbx) into a graph that is stored in memory.
-2. SceneCore and SceneData are used to create a manifest with instructions about how to export the file.
-3. SceneData analyzes the manifest and memory graph and creates defaults.
-4. Scene Settings allows updates to the manifest through a UI.
-5. The ResourceCompilerScene uses the instructions from the manifest and the data in the graph to create assets. These assets are ready for Open 3D Engine to use.
+1. SceneBuilder 和 SceneData 会加载场景文件（例如 .fbx）并将其转换为存储在内存中的图形。
+2. SceneCore 和 SceneData 用于创建一个清单，其中包含有关如何导出文件的说明。
+3. SceneData 分析清单和内存图形并创建默认值。
+4. 场景设置允许通过用户界面更新清单。
+5. ResourceCompilerScene 使用清单中的指令和内存图中的数据创建资产。这些资产可供 Open 3D Engine使用。
 
-The example gem demonstrates the following key features:
+gem 示例演示了以下主要功能：
 
-* Initialization of the SceneAPI libraries. (See SceneLoggingExampleModule.cpp)
-* Adding a LoadingComponent to hook into the scene loading and react to loading events. (See Processing/LoadingTrackingProcessor)
-* Extension of the Scene Settings UI and ability to set defaults using the BehaviorComponent. (See Groups/LoggingGroup and Behaviors/LoggingGroupBehavior)
-* Adding an ExportingComponent to hook into the scene converting and exporting events. (See Behaviors/ExportTrackingProcessor)
+* 初始化 SceneAPI 库。(参见 SceneLoggingExampleModule.cpp）
+* 添加一个 LoadingComponent 来挂钩场景加载并对加载事件作出反应。(参见Processing/LoadingTrackingProcessor）
+* 扩展场景设置用户界面，使用行为组件设置默认值。(请参阅 Groups/LoggingGroup 和 Behaviors/LoggingGroupBehavior）
+* 添加导出组件（ExportingComponent）以挂钩场景转换和导出事件。(请参阅Behaviors/ExportTrackingProcessor）。

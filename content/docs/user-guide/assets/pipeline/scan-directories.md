@@ -1,58 +1,57 @@
 ---
-linkTitle: Scan Directories 
-title: Scan Directories 
-description: Scan directories are monitored by Asset Processor for new and updated assets.
-
+linkTitle: 扫描目录
+title: 扫描目录
+description: 扫描目录由资产处理器监控，以发现新的和更新的资产。
 weight: 300
 toc: true
 ---
 
-The entry point into the **Asset Pipeline** is to place a source asset into a scan directory. Scan directories are monitored by **Asset Processor** for new and updated source assets and asset dependencies.
+进入**资产管道**的入口是将源资产放入扫描目录。扫描目录由**资产处理器**监控，以查找新的和更新的源资产和资产依赖关系。
 
-The system paths to the scan directories are dependent on your project and O3DE configuration and installation. The list of directories below is in descending order of precedence. Source assets in your project directory override source assets in the Gems and Engine directories with the same relative path.
+扫描目录的系统路径取决于您的项目和 O3DE 配置及安装。下面的目录列表按优先级降序排列。项目目录中的源资产优先于具有相同相对路径的 Gems 和 Engine 目录中的源资产。
 
-By default, the Asset Processor monitors the following scan directories:
+默认情况下，资产处理器监控以下扫描目录：
 
-1. **Project** - The project root directory and subdirectories contain source assets specific to the project.
+1. **Project** - 项目根目录和子目录包含项目专用的源资产。
 
-1. **Gems** - The directories of Gems that have been added to your project might contain source assets including example assets and critical assets.
+1. **Gems** - 已添加到项目中的 Gems 目录可能包含源资产，包括示例资产和关键资产。
 
-1. **Engine & Editor** - The root directory and subdirectories of the engine and editor contain assets that are generally labeled critical and are required to run **O3DE Editor** and **Launcher**.
+1. **Engine & Editor** - 引擎和编辑器的根目录和子目录包含的资产通常被标记为关键资产，是运行 **O3DE Editor** 和 **Launcher** 所必需的。
 
-1. **Intermediate Assets** - The root directory for intermediate assets which are output by other sources.  These files should be treated like the **Asset Cache**, they are generated files which should not be modified, and do not need to be tracked by source control.
+1. **Intermediate Assets** - 其他源输出的中间资产的根目录。 这些文件应与**资产缓存**一样处理，它们是生成的文件，不应被修改，也无需通过源控制进行跟踪。
 
-Additional scan directories can be added with registry keys. In most cases it's better to use Gems as a way to store source assets in additional locations instead of adding scan folders by registry key.
+可以通过注册表键值添加额外的扫描目录。在大多数情况下，最好使用 Gems 将源资产存储到其他位置，而不是通过注册表键值添加扫描文件夹。
 
-## Scan directory locations
+## 扫描目录位置
 
-The engine, the project, and individual Gems can be installed in any location accessible on a user's machine. These may not even be the same locations for multiple contributors to the same project. For example, one user may choose to install the project, engine, and all Gems on the same drive, the C drive. Another contributor may choose to mix these across several drives, putting the project on the C drive, the engine on the D drive, some Gems on the E drive, and more Gems on the F drive.
+引擎、项目和单个 Gems 可以安装在用户机器上任何可访问的位置。对于同一项目的多个贡献者来说，这些位置甚至可能不一样。例如，一个用户可能会选择将项目、引擎和所有 Gems 安装在同一个驱动器（C 盘）上。另一个贡献者可能会选择将它们混合安装在多个驱动器上，将项目安装在 C 驱动器上，将引擎安装在 D 驱动器上，将一些 Gems 安装在 E 驱动器上，将更多的 Gems 安装在 F 驱动器上。
 
-## Files in scan directories
+## 扫描目录中的文件
 
-Scan directories provide the entry point for [asset builders](/docs/user-guide/assets/pipeline/asset-builders/) to read files as source assets, for generating product assets into the asset cache.
+扫描目录为 [资产生成器](/docs/user-guide/assets/pipeline/asset-builders/) 提供了读取文件作为源资产的入口点，以便在资产缓存中生成产品资产。
 
-A file being in a scan directory does not automatically become a source asset. Source assets are files in scan directories that have had jobs created for them. Otherwise, these files are called non-asset source files. A non-asset source file will not have a UUID to identify it, and can only be referenced by path.
+扫描目录中的文件不会自动成为源资产。源资产是扫描目录中已为其创建任务的文件。否则，这些文件称为非资产源文件。非资产源文件没有 UUID 标识，只能通过路径引用。
 
-## Referencing files in scan directories
+## 引用扫描目录中的文件
 
-There are three core points during development where it may be necessary to reference and potentially load a file that is in a scan directory.
+在开发过程中，有三个核心点可能需要引用并可能加载扫描目录中的文件。
 
-In all cases, it's important to make sure [dependencies](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/) are accurate for all assets.
+在所有情况下，都必须确保所有资产的 [依赖](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/) 都准确无误。
 
-### From asset builders
+### 来自资产创建器
 
-When authoring [asset builders,](/docs/user-guide/assets/pipeline/asset-builders/) loading the primary source asset used by the builder is straightforward. The create jobs and process job functions each have a parameter with the path to the relevant source asset.
+在创建 [资产创建器](/docs/user-guide/assets/pipeline/asset-builders/) 时，加载构建器使用的主要源资产非常简单。创建作业和处理作业功能都有一个参数，其中包含相关源资产的路径。
 
-Sometimes it may be necessary to load additional files besides the primary source asset within these builders. See [this documentation on loading other files](/docs/user-guide/assets/pipeline/asset-builders/#loading-other-files) for details on handling these situations.
+有时可能需要在这些构建器中加载主源资产以外的其他文件。有关处理这些情况的详细信息，请参阅[本文档关于加载其他文件](/docs/user-guide/assets/pipeline/asset-builders/#loading-other-files)。
 
-### From external tools
+### 来自外部工具
 
-In many cases, the files intended to be source assets that will be placed into scan folders, are authored by tools external to O3DE. In some cases, these may be standard, portable file formats generated by many different external tools, such as FBX files. In other cases, these may be files generated only by a specific tool. In either case, the asset builder authors may not have the ability to modify the source file format.
+在许多情况下，将被放置到扫描文件夹中的源资产文件是由 O3DE 外部工具创建的。在某些情况下，这些文件可能是由许多不同的外部工具生成的标准、可移植的文件格式，如 FBX 文件。在其他情况下，这些文件可能仅由特定工具生成。无论在哪种情况下，资产创建器作者都可能无法修改源文件格式。
 
-When building out the pipeline, ideally the source asset file format can be designed to avoid relative paths or absolute paths to other files.
+在建立流水线时，最好能设计源资产文件格式，以避免与其他文件的相对路径或绝对路径。
 
-When this can't be done, such as with an existing file format like FBX files referencing textures in materials, then these paths will need to be resolved in some fashion during the asset builder process. Sometimes these paths will be absolute paths from the machine that generated the source asset. Sometimes they will be relative paths that only resolve correctly on the machine that generated the source asset. How to handle this will often come down to specifics about the asset builder being authored, however the most common solution is to ignore all of the path information to the referenced asset except the filename and extension, and then search for a file matching that in the same directory as the asset being processed, dropping the reference entirely if the referenced file isn't found there.
+如果无法做到这一点，例如使用现有的文件格式（如 FBX 文件）引用材质中的纹理，则需要在资产创建过程中以某种方式解决这些路径问题。有时，这些路径是来自生成源资产的机器的绝对路径。有时它们是相对路径，只能在生成源资产的机器上正确解析。如何处理这个问题通常取决于所编写的资产生成器的具体情况，但最常见的解决方案是忽略引用资产的所有路径信息（文件名和扩展名除外），然后在与正在处理的资产相同的目录中搜索与之匹配的文件，如果在该目录中找不到引用文件，则完全放弃引用。
 
-### From in-editor tools
+### 来自编辑器内工具
 
-In most cases, when authoring an in-editor tool that reads and writes source assets, the file format can be fully controlled by the author. In this case, when referencing another asset, the author should keep in mind potential pathing issues when one asset references another. In other cases, if the in-editor tool is loading an pre-existing file format that can't be modified, see the previous section on handling file references from external tools.
+在大多数情况下，在制作可读取和写入源资产的编辑器内工具时，文件格式可由作者完全控制。在这种情况下，当引用另一个资产时，作者应注意一个资产引用另一个资产时可能出现的路径问题。在其他情况下，如果编辑器内工具加载的是无法修改的已有文件格式，请参阅前面关于处理来自外部工具的文件引用的章节。

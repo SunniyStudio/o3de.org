@@ -1,51 +1,51 @@
 ---
-linkTitle: Source Assets 
-title: Source Assets
-description: Source assets and how they are processed in Open 3D Engine (O3DE).
+linkTitle: 源资产
+title: 源资产
+description: 源资产及其在 Open 3D Engine (O3DE) 中的处理方式。
 weight: 200
 toc: true
 ---
 
-Source assets are files that contain unprocessed data that you want to load in **Open 3D Engine (O3DE) Editor** or **Launcher**. You can create source assets such as models, textures, animations, and audio files in digital content creation (DCC) applications. Source assets such as `.material`, `.inputbindings`, and `.scriptcanvas` files are created with O3DE's tools. These source assets must be processed through the **Asset Pipeline** and their product assets must be stored in your project's **Asset Cache** to be used by O3DE.
+源资产是包含未处理数据的文件，您希望将其加载到**Open 3D Engine (O3DE)编辑器**或**启动器**中。您可以在数字内容创建 (DCC) 应用程序中创建源资产，如模型、纹理、动画和音频文件。O3DE工具可创建`.material`, `.inputbindings`, 和 `.scriptcanvas` 文件等源资产。这些源资产必须通过**资产管道**进行处理，其产品资产必须存储在项目的**资产缓存**中才能被O3DE使用。
 
 {{< note >}}
-Some source assets, such as `.xml` files, might not need to be processed as a product asset. **Asset Processor** uses a simple copy operation to copy these assets to the Asset Cache.
+某些源资产，如`.xml`文件，可能不需要作为产品资产处理。**资产处理器**使用简单的复制操作将这些资产复制到资产缓存。
 {{< /note >}}
 
-## Processing source assets
+## 处理源资产
 
-Each source asset type has a customizable set of rules used by their **Asset Builder** to generate product assets. For graphics and animation source assets, O3DE provides tools such as **Scene Settings** and **Texture Settings** that you can use to create custom processing rules for each source asset. With Texture Settings, you can specify how a texture source asset is used, a mipmap chain, and how it's sampled and filtered. With Scene Settings, you can specify what meshes, skeletons, and motions to process from a `.fbx` source asset, and how physics colliders are generated.
+每种源资产类型都有一套可定制的规则，由其**资产生成器**用于生成产品资产。对于图形和动画源资产，O3DE 提供了**场景设置**和**纹理设置**等工具，您可以使用这些工具为每个源资产创建自定义处理规则。通过 “纹理设置”，您可以指定纹理源资产的使用方式、mipmap 链以及采样和过滤方式。通过 “场景设置”，您可以指定从`.fbx`源资产中处理哪些网格、骨骼和运动，以及如何生成物理碰撞器。
 
-When the asset processing rules are customized, the options are stored in a `.assetinfo` sidecar file in the same directory as the source asset. If **Asset Processor** finds a `.assetinfo` file, the associated source asset is processed according to the options in the `.assetinfo` file. Otherwise, Asset Processor uses default rules to process the source asset based on its type.
+自定义资产处理规则时，选项会存储在与源资产相同目录下的`.assetinfo`副卡文件中。如果**资产处理器**找到一个`.assetinfo`文件，就会根据`.assetinfo`文件中的选项处理相关源资产。否则，资产处理器会使用默认规则，根据源资产的类型对其进行处理。
 
-If you have many source assets to process, you might find using the Texture Settings and Scene Settings tools time consuming. The `.assetinfo` sidecar file is in JSON format and can be generated and modified with Python. It is possible, for example, to script the export process from a DCC application to automatically generate a `.assetinfo` file, or run a batch Python script over a source asset repository to add or modify options in the `.assetinfo` files. Many assets in O3DE are JSON formatted: `.material`, `.prefab`, and `.physicsmaterial` files, for example, are all in JSON format and can be automatically generated and modified with Python.
+如果您有许多源资产需要处理，您可能会发现使用 “纹理设置 ”和 “场景设置 ”工具非常耗时。`.assetinfo` sidecar 文件采用 JSON 格式，可以用 Python 生成和修改。例如，可以编写 DCC 应用程序导出过程的脚本，自动生成`.assetinfo`文件，或在源资产库上运行批量 Python 脚本，添加或修改`.assetinfo`文件中的选项。O3DE 中的许多资产都是 JSON 格式：例如，`.material`, `.prefab`, 和.physicsmaterial`文件都是 JSON 格式，可以用 Python 自动生成和修改。
 
-Python can also be used to customize asset processing. Python scripts can be run during asset processing to modify how product assets are produced. **Python Asset Builder** provides a way to create custom asset processing jobs. For more information, refer to [Customize Asset Processing with Python Asset Builder](/docs/user-guide/assets/builder/).
+Python 还可用于定制资产处理。在资产处理过程中，可以运行 Python 脚本来修改产品资产的生成方式。**Python 资产生成器**提供了一种创建自定义资产处理任务的方法。如需了解更多信息，请参阅[使用 Python 资产生成器自定义资产处理](/docs/user-guide/assets/builder/)。
 
 
-With JSON and Python scripting, it's possible to customize and automate the entire asset pipeline, including integrating new tools and asset types.
+利用 JSON 和 Python 脚本，可以对整个资产管道进行自定义和自动化，包括集成新的工具和资产类型。
 
-## Asset reprocessing
+## 资产再处理
 
-Source asset files are tracked by timestamp, file hash, and Asset Builder fingerprint. To ensure the product assets for your project are always up to date, Asset Processor automatically schedules asset processing jobs in the following scenarios:
+源资产文件通过时间戳、文件哈希值和资产生成器指纹进行跟踪。为确保项目的产品资产始终是最新的，资产处理器会在以下情况下自动安排资产处理工作：
 
-### Changes to the source asset
+### 源资产的更改
 
-If a source asset is modified, and the timestamp of a source asset or its `.assetinfo` doesn't match the timestamp information of the last process job, Asset Processor adds a job to reprocess the source asset.
+如果源资产被修改，且源资产或其 `.assetinfo`的时间戳与上次处理任务的时间戳信息不匹配，资产处理器会添加一个任务来重新处理源资产。
 
 {{< note >}}
-Asset Processor has an option to use file hashes instead of timestamps to detect file changes. However, using hashes to detect file changes can significantly increase the analysis time for source assets.
+资产处理器有一个选项，可以使用文件哈希值而不是时间戳来检测文件变化。不过，使用哈希值检测文件更改会大大增加源资产的分析时间。
 {{< /note >}}
 
-### Changes to job dependencies
+### 更改工作依赖关系
 
-Some assets have [job dependencies](asset-dependencies-and-identifiers). Changes to a job dependency trigger Asset Processor to schedule a job to reprocess source assets with that dependency. For example, materials are dependent on shaders. If a shader is modified and reprocessed, then all the materials that reference that shader are automatically reprocessed as well.
+有些资产有 [工作依赖项](asset-dependencies-and-identifiers)。工作依赖关系的更改会触发 “资产处理器 ”安排工作，重新处理具有该依赖关系的源资产。例如，材质依赖于着色器。如果修改并重新处理了着色器，那么引用该着色器的所有材质也会自动重新处理。
 
-### Changes to the Asset Builder
+### 资产生成器的更改
 
-Asset Builders use a *fingerprint* defined in their source code to identify the version of the Asset Builder. The Asset Builder fingerprint is stored in the information about the job that produced the product asset. If an Asset Builder for a particular asset type has been updated and its fingerprint has been modified, it won't match the fingerprint of the jobs that processed the source assets supported by the Asset Builder. This triggers all source assets that use the Asset Builder to be reprocessed.
+资产生成器使用其源代码中定义的**指纹**来识别资产生成器的版本。资产生成器指纹存储在生成产品资产的作业信息中。如果特定资产类型的资产创建器已更新，其指纹也已修改，那么它将与处理资产创建器支持的源资产的作业指纹不匹配。这会触发对使用资产创建器的所有源资产进行重新处理。
 
 
-## Critical assets
+## 关键资产
 
-Some source assets are marked as critical in their Asset Builders and are processed before non-critical assets. Critical assets are required by the engine, so that the engine can function. Shaders are critical assets. If a shader hasn't been processed, materials that use the shader can't be rendered. Critical assets prevent O3DE Editor and Launcher from launching until they have been processed. When you launch O3DE Editor for the first time, the splash screen displays information about asset processing. It might take several minutes for critical assets to process before the initial launch of O3DE Editor.
+某些源资产在其 “资产构建器 ”中被标记为关键资产，并在非关键资产之前进行处理。引擎需要关键资产，这样引擎才能正常运行。着色器就是关键资产。如果着色器尚未处理，则无法渲染使用该着色器的材质。关键资产在被处理之前无法启动 O3DE 编辑器和启动器。当您第一次启动 O3DE Editor 时，闪屏会显示有关资产处理的信息。在首次启动 O3DE 编辑器之前，可能需要几分钟来处理关键资产。

@@ -1,189 +1,189 @@
 ---
-linkTitle: Asset Builders 
-title: Asset Builders
-description: Asset Builders use configurable rules to generate product assets from jobs that are dispatched by Asset Processor in Open 3D Engine (O3DE).
+linkTitle: 资产生成器
+title: 资产生成器
+description: 资产生成器使用可配置的规则，从Open 3D Engine (O3DE)中的 Asset Processor 发送的作业中生成产品资产。
 weight: 400
 toc: true
 ---
 
-An **Asset Builder** is a bundle of code that **Asset Processor** runs to generate product assets. Asset Builders can be distributed as Gems and might use third-party libraries to process assets. The **Scene Processing** Gem, for example, contains the Asset Builders that process `.fbx` files, and uses the [Open Asset Import Library](https://github.com/assimp/assimp) to parse `.fbx` files.
+**资产生成器**是**资产处理器**运行以生成产品资产的代码包。资产生成器可作为 Gem 发布，并可能使用第三方库来处理资产。例如，**Scene Processing** Gem包含处理`.fbx`文件的资产生成器，并使用[Open Asset Import Library](https://github.com/assimp/assimp)来解析`.fbx`文件。
 
 {{< note >}}
-The Open Asset Import Library supports [many scene formats](https://github.com/assimp/assimp/blob/master/doc/Fileformats.md). You can experiment with additional formats by editing `o3de/Registry/sceneassetimporter.setreg` and adding format extensions to the `"SupportedFileTypeExtensions"` list.
+开放式资产导入库支持[多种场景格式](https://github.com/assimp/assimp/blob/master/doc/Fileformats.md)。您可以编辑 `o3de/Registry/sceneassetimporter.setreg` 并在 `“SupportedFileTypeExtensions”`列表中添加格式扩展，尝试使用其他格式。
 {{< /note >}}
 
-## Anatomy of an Asset Builder
+## 资产创建器剖析
 
-Asset Builders have three core components: a **Descriptor** for the builder, and handlers for **Create Jobs** and **Process Job** requests.
+资产创建器有三个核心组件：用于创建器的**描述符**，以及用于**创建作业**和**处理作业**请求的处理程序。
 
 ![Simple Job](/images/user-guide/assets/pipeline/asset_builders/asset_builder_basics.png)
 
-### Descriptor
+### 描述符
 
-The Descriptor provides Asset Processor the information required to identify the Asset Builder and also declares which source file types the Asset Builder can process. The Descriptor contains the file patterns of the supported source assets, a Universally Unique Identifier (UUID), and a version number. Asset Processor uses the Descriptor to filter source assets to the appropriate Asset Builder.
+描述符为资产处理器提供识别资产生成器所需的信息，并声明资产生成器可处理的源文件类型。描述符包含受支持源资产的文件模式、通用唯一标识符（UUID）和版本号。资产处理器使用描述符将源资产筛选到相应的资产生成器。
 
-The Asset Builder UUID is also used to create the sub ID for product assets it generates. The sub ID of the product asset must match the current UUID of its Asset Builder. Changing the UUID of an Asset Builder triggers all source assets that have been previously processed by the Asset Builder to be reprocessed.
+资产生成器 UUID 还用于为其生成的产品资产创建子 ID。产品资产的子 ID 必须与其资产生成器的当前 UUID 一致。更改资产创建器的 UUID 会触发重新处理之前由资产创建器处理过的所有源资产。
 
-### Create Jobs
+### 创建任务
 
-Create Jobs generates asset processing jobs for Asset Processor. When Asset Processor detects a new or updated source asset and determines the appropriate Asset Builder to process the source asset, it sends a `CreateJobsRequest` that contains information about the source asset, including its path, to the Asset Builder. The Asset Builder responds with a `CreateJobsResponse` that contains `JobDescriptor` structures, and source and job dependencies. For example, if the `CreateJobsRequest` is for a material to be processed, the Asset Builder includes a dependency on the referenced shader source asset in the `CreateJobsResponse`, ensuring the shader is processed before the material.
-
-{{< note >}}
-Create Jobs is a single threaded process. There might be instances where you implement an Asset Builder that does specialized processing for a source asset type that is also supported by other Asset Builders. You might need to examine the source asset to determine if the specialized Asset Builder should process the source asset. In these instances, examining the asset as part of Process Job, and exiting the process early depending on the result, can offer better performance because Process Job is multithreaded. 
-{{< /note >}}
-
-### Process Job
-
-Process Job generates the product asset and product dependencies. The Asset Builder receives a `ProcessJobRequest` from Asset Processor containing info on the source asset to process. The Asset Builder responds with a `ProcessJobResponse`. The function of `ProcessJobResponse` is to process the source asset and return information about the product assets it creates, including sub IDs and product dependencies.
-
-`ProcessJobResponse` places the product assets in a temp directory. Asset Processor moves the product assets to the **Asset Cache** and populates the **Asset Database** and **Asset Catalog** with information it uses to track the product assets, product dependencies, and the jobs that produced them.
-
-Process Job is multithreaded. Several Asset Builders can run multiple process jobs simultaneously.
-
-
-### Settings
-You can run Asset Builder in debug mode when develop new features for a builder or to debug issues in the asset pipeline. In debug mode, Asset Builder creates a test job or processes jobs for specified files.
+创建工作会为资产处理器生成资产处理工作。当资产处理器检测到新的或更新的源资产，并确定合适的资产生成器来处理源资产时，它会向资产生成器发送包含源资产信息（包括其路径）的`CreateJobsRequest`。资产创建器会回应一个`CreateJobsResponse`，其中包含`JobDescriptor`结构以及源和作业依赖关系。例如，如果`CreateJobsRequest`是要处理一个素材，那么 Asset Builder 就会在`CreateJobsResponse`中包含对所引用着色器源资产的依赖，以确保着色器在素材之前得到处理。
 
 {{< note >}}
-You must start Asset Processor before you can enter a -debug command for AssetBuilder.
+创建工作是一个单线程流程。在某些情况下，你可能会实现一个资产创建器，对其他资产创建器也支持的源资产类型进行专门处理。您可能需要检查源资产，以确定专门的资产创建器是否应处理源资产。在这种情况下，将检查资产作为流程作业的一部分，并根据结果提前退出流程，可以提供更好的性能，因为流程作业是多线程的。
 {{< /note >}}
 
-To debug with Asset Builder:
-* Use the instructions for setting Asset Processor to just use a single Asset Builder processor: 
-* Navigate to the build folder directory, for example `build\windows\bin\profile`
-* In a command line prompt, enter the following command to get a list of possible options: `AssetBuilder -help`
-* Or use the settings below to aid with debugging the AssetBuilder, for example `AssetBuilder.exe --debug C:\o3de\o3de\Assets\Editor\Materials\ShaderList.xml --platform pc --tags dx12 --project-name AutomatedTesting --project-cache-path C:\o3de\o3de\AutomatedTesting\Cache`
+### 处理任务
 
-| Setting            | Description                                                                                                                                                                                                   |
-|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| help               | Print this help information.                                                                                                                                                                                  |   
-| task               | The task to run.                                                                                                                                                                                              |
-| project-name       | Name of the current project.                                                                                                                                                                                  |
-| project-cache-path | Full path to the project cache folder.                                                                                                                                                                        |
-| module             | For resident mode, the path to the builder dll folder, otherwise the full path to a single builder dll to use.                                                                                                |
-| port               | Optional, port number to use to connect to the Asset Processor.                                                                                                                                               |
-| id                 | UUID string that identifies the builder.  Only used for resident mode when the Asset Processor directly starts up the AssetBuilder.                                                                           |
-| input              | For non-resident mode, full path to the file containing the serialized job request.                                                                                                                           |
-| output             | For non-resident mode, full path to the file to write the job response to.                                                                                                                                    |
-| debug              | Debug mode for the create and process job of the specified file. <br/>Debug mode optionally uses `-input`, `-output`, `-module`, `-port` and `-gameroot`. For example: `-debug Objects\Tutorials\shapes.fbx`. |                                                                                                                                  
-| debug_create       | Debug mode for the create job of the specified file.                                                                                                                                                          |
-| debug_process      | Debug mode for the process job of the specified file.                                                                                                                                                         |
-| tags               | Additional tags to add to the debug platform for job processing. One tag can be supplied per option.                                                                                                          |
-| platform           | Platform to use for debugging, for example, `pc` |
+处理任务生成产品资产和产品依赖关系。资产创建器从资产处理器接收到一个 `ProcessJobRequest`，其中包含要处理的源资产信息。资产生成器会回复一个 `ProcessJobResponse` 。`ProcessJobResponse`的功能是处理源资产并返回其创建的产品资产信息，包括子 ID 和产品依赖关系。
 
-## Loading other files
+`ProcessJobResponse` 会将产品资产放入临时目录。资产处理器将产品资产移动到**资产缓存**，并在**资产数据库**和**资产目录**中填充用于跟踪产品资产、产品依赖关系和生成这些资产的作业的信息。
 
-Sometimes, when authoring a builder, it may be necessary to load other files besides the primary source file to finish a given process.
+流程作业是多线程的。多个资产生成器可同时运行多个流程作业。
 
-### Understanding file locations
+
+### 设置
+在为生成器开发新功能或调试资产管道中的问题时，可以在调试模式下运行 Asset Builder。在调试模式下，Asset Builder 会创建测试作业或处理指定文件的作业。
+
+{{< note >}}
+在输入 AssetBuilder 的 -debug 命令之前，必须先启动 Asset Processor。
+{{< /note >}}
+
+使用资产生成器进行调试：
+* 使用资产处理器设置说明，只使用一个资产创建处理器：
+* 导航至构建文件夹目录，例如 `build\windows\bin\profile`
+* 在命令行提示符下输入以下命令，以获取可能的选项列表： `AssetBuilder -help`
+* 或者使用以下设置来帮助调试 AssetBuilder，例如 `AssetBuilder.exe --debug C:\o3de\o3de\Assets\Editor\Materials\ShaderList.xml --platform pc --tags dx12 --project-name AutomatedTesting --project-cache-path C:\o3de\o3de\AutomatedTesting\Cache`
+
+| 设置                 | 说明                                                                                                                               |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| help               | 打印此帮助信息。                                                                                                                         |   
+| task               | 要运行的任务。                                                                                                                          |
+| project-name       | 当前项目的名称。                                                                                                                         |
+| project-cache-path | 项目缓存文件夹的完整路径。                                                                                                                    |
+| module             | 对于常驻模式，是生成器 dll 文件夹的路径，否则是要使用的单个生成器 dll 的完整路径。                                                                                   |
+| port               | 可选项，用于连接资产处理器的端口号。                                                                                                               |
+| id                 | 标识生成器的 UUID 字符串。 仅用于资产处理器直接启动资产创建器时的常驻模式。                                                                                        |
+| input              | 对于非驻留模式，包含序列化作业请求的文件的完整路径。                                                                                                       |
+| output             | 对于非驻留模式，要写入任务响应的文件的完整路径。                                                                                                         |
+| debug              | 指定文件创建和处理任务的调试模式。 <br/>调试模式可选择使用 `-input`, `-output`, `-module`, `-port` 和 `-gameroot`。例如：`-debug Objects\Tutorials\shapes.fbx`。 |                                                                                                                                  
+| debug_create       | 指定文件创建任务的调试模式。                                                                                                                   |
+| debug_process      | 指定文件进程任务的调试模式。                                                                                                                   |
+| tags               | 添加到调试平台的附加标签，用于任务处理。每个选项可提供一个标签。                                                                                                 |
+| platform           | 用于调试的平台，例如 `pc`                                                                                                                  |
+
+## 加载其他文件
+
+有时，在创建生成器时，除了主要源文件外，可能还需要加载其他文件来完成特定流程。
+
+### 了解文件位置
 
 ![File Locations](/images/user-guide/assets/pipeline/asset_builders/asset_builder_file_locations.png)
 
-Files relevant to asset processing can exist in these locations:
-1. The Asset Cache is where all product assets exist.
-1. Scan directories are the only place source assets can exist.
-1. Source files (not assets) can be on any drive in any location.
+与资产处理相关的文件可能存在于这些位置：
+1. 资产缓存是所有产品资产的存在位置。
+1. 扫描目录是源资产的唯一存在位置。
+1. 源文件（不是资产）可以存在于任何位置的任何驱动器上。
 
-[Scan directories](/docs/user-guide/assets/pipeline/scan-directories/) are monitored by Asset Processor for new and updated source assets. Scan directories can be user defined, however, the primary scan directories are in the following locations:
-1. The current project's directory.
-1. The `Assets` folder for each Gem enabled for the project.
+[扫描目录](/docs/user-guide/assets/pipeline/scan-directories/)由资产处理器监控，以查找新的和更新的源资产。扫描目录可由用户定义，但主要扫描目录位于以下位置：
+1. 当前项目的目录。
+1. 为项目启用的每个 Gem 的 `Assets`文件夹。
 
-Individual Gems, the active O3DE project, and the engine itself can all be installed to different drives.
+单个Gem、活动的 O3DE 项目和引擎本身都可以安装到不同的驱动器中。
 
-#### Types of files in asset processing
+#### 资产处理中的文件类型
 
 ![All files in asset processing](/images/user-guide/assets/pipeline/asset_builders/asset_builder_all_dependencies.png)
 
-* Source assets
-   * Source assets are files that exist in scan directories for an O3DE project, that match an Asset Builder's registered pattern, and result in a job being created when Create Jobs is called with the source asset for the Asset Builder.
-   * Read more about [source assets here](/docs/user-guide/assets/pipeline/source-assets/).
-* Non-asset source files
-   * Non-asset source files are files that may or may not be in a scan directory, that are loaded and referenced when processing a source asset.
-   * The difference between a source asset and a non-asset source file is either:
-      * The file is not in a scan directory,
-      * The file does not match a file pattern for any asset builder descriptor, or
-      * The file does not generate a job when create jobs is called for the file for matching asset builders
-* Intermediate assets
-   * Intermediate assets are source assets that are generated as a product of an asset processing job.
-   * Read more about [intermediate assets here](/docs/user-guide/assets/pipeline/intermediate-assets/).
-* Product assets
-   * Product assets are the runtime ready output of an asset processing job.
+* 源资产
+   * 源资产是存在于 O3DE 项目扫描目录中的文件，与资产创建器的注册模式相匹配，在调用 “创建作业 ”时会创建作业，并带有资产创建器的源资产。
+   * 点击此处阅读有关 [源资产](/docs/user-guide/assets/pipeline/source-assets/) 的更多信息。
+* 非资产源文件
+   * 非资产源文件是在处理源资产时加载和引用的文件，可能在扫描目录中，也可能不在扫描目录中。
+   * 资产源文件与非资产源文件的区别在于：
+     * 文件不在扫描目录中、
+     * 文件与任何资产创建器描述符的文件模式不匹配，或
+     * 在为匹配的资产创建器调用创建任务时，文件没有生成任务
+* 中间资产
+   * 中间资产是作为资产处理工作的产物而生成的源资产。
+   * 点击此处了解更多关于 [中间资产](/docs/user-guide/assets/pipeline/intermediate-assets/)的信息。
+* 产品资产
+   * 产品资产是资产处理任务的运行准备输出。
 
-### References from source assets and non-asset source files to other files
+### 源资产和非资产源文件对其他文件的引用
 
 ![Source asset references](/images/user-guide/assets/pipeline/asset_builders/source_asset_references.png)
 
-Source assets and non-asset source files can reference each other in many different ways, and each case might require unique handling at the time of authoring an asset builder.
+源资产和非资产源文件可以多种不同方式相互引用，在创建资产创建器时，每种情况都可能需要独特的处理方式。
 
-Source assets and non-asset source files may have these references:
-* source assets by UUID
-* source assets by a path
-* non-asset source files in a scan directory by a path
-* non-asset source files outside a scan directory by a path
-* product assets by asset ID
-* product assets by a path
+源资产和非资产源文件可能有这些引用：
+* 按 UUID 列出的源资产
+* 通过路径引用源资产
+  扫描目录中的非资产源文件（按路径） * 扫描目录外的非资产源文件（按路径
+* 扫描目录外的非资产源文件，路径
+* 产品资产，按资产 ID
+* 产品资产，按路径
 
-Path references from source asset and non-asset source files may be defined in these ways:
-* Relative to a scan directory
-* Relative to the asset with the reference
-* Absolute
-* Relative to a directory that may be difficult to infer from the contents or location of the source asset
+资产源文件和非资产源文件的路径引用可以通过以下方式定义：
+* 相对于扫描目录
+* 相对于带有引用的资产
+* 绝对
+* 相对于难以从源资产的内容或位置推断出的目录
 
-Source assets come in two forms, relative to how these references work:
-* A format that the builder author can modify and control.
-  * Example: A custom format defined for O3DE, like prefab files.
-* A format that the builder author has no control over.
-  * Example: A format defined outside of O3DE, like FBX files.
+相对于这些引用的工作方式，源资产有两种形式：
+* 创建者可以修改和控制的格式。
+  * 举例说明： 为 O3DE 定义的自定义格式，如 prefab 文件。
+* 创建者无法控制的格式。
+  * 例如：在 O3DE 之外定义的格式： 在 O3DE 之外定义的格式，如 FBX 文件。
 
-When authoring a builder, if the format of the source asset is something the author has control over, then it's useful to manage how the source asset references other files.
-* When referencing a source asset or product asset, it's preferred to reference by UUID or Asset ID, because these will be more stable than a path. Read more about [asset identifiers here.](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/#asset-identifiers)
+在制作生成器时，如果源资产的格式是作者可以控制的，那么管理源资产如何引用其他文件就非常有用。
+* 在引用源资产或产品资产时，最好使用 UUID 或资产 ID，因为它们比路径更稳定。点击[此处](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/#asset-identifiers)了解更多关于资产标识符的信息。
 
-Resolving paths to find the file on disk is often done within the asset builder. When dealing with path references from the source asset to other files, keep these things in mind:
-* The referenced asset may not be on the same drive as the asset with the reference. This includes scan directories, which can be on different drives. This means relative paths may not be resolvable.
-* Some operating systems have case sensitive paths, some do not. When resolving paths in an asset builder, it's important to do so in a way that will be stable across operating systems.
-* File locations relative to scan directories, and in the asset cache will be stable for all members of a team, but scan directories themselves, and files outside scan directories may not have the same paths for all team members.
-* Path resolving logic should be consistent, and predictable. Content creators will want to understand how paths are resolved when processing assets, so they can better manage their content.
+通常是在资产创建器中解决路径问题，以便在磁盘上找到文件。在处理从源资产到其他文件的路径引用时，请注意以下事项：
+* 被引用的资产可能与引用资产不在同一驱动器上。这包括扫描目录，它们可能位于不同的驱动器上。这意味着相对路径可能无法解析。
+* 有些操作系统的路径区分大小写，有些则没有。在资产生成器中解析路径时，重要的是要在不同操作系统中保持稳定。
+* 与扫描目录相对的文件位置以及资产缓存中的文件位置对于团队中的所有成员来说都是稳定的，但扫描目录本身以及扫描目录之外的文件对于团队中的所有成员来说可能不具有相同的路径。
+* 路径解析逻辑应该是一致的、可预测的。内容创建者希望了解处理资产时如何解析路径，以便更好地管理内容。
 
-### References from product assets to other files
+### 从产品资产到其他文件的引用
 
 ![Product asset references](/images/user-guide/assets/pipeline/asset_builders/product_asset_references.png)
 
-Product assets should only have these references:
-* Product assets by asset ID
-  * This is the prefered way to reference other product assets, references by path should be avoided when possible
-* Product assets by a relative path from the asset with the reference
-* Product assets by a relative path, to a specific root in the asset cache, usually the cache root for the platform
-* Non-product file in the project directory, expected at a specific location
-  * This kind of reference is not common, but there are cases where it may be necessary to reference a file outside the asset folder that will be in the shipped final product.
+产品资产只能有这些引用：
+* 通过资产 ID 引用产品资产
+  * 这是引用其他产品资产的首选方式，应尽可能避免按路径引用
+* 产品资产通过资产的相对路径进行引用
+* 产品资产通过相对路径指向资产缓存中的特定根目录，通常是平台的缓存根目录
+* 项目目录中的非产品文件，预计位于特定位置
+  * 这种引用并不常见，但在某些情况下，可能需要引用资产文件夹之外的文件，而该文件将出现在最终产品中。
 
-While it's technically possible to reference files in other ways in product assets, it may end up causing problems later. The development version of a project, running the Editor or game launcher connected to the Asset Processor is what a team will be most used to interacting with. However, when preparing to deliver a project to end customers, with packaged and bundled content, the layout of the project and placement of assets will be different. References from product assets to other files that worked during development may not work in release builds of projects. For example, if a product asset references a source asset, that source asset likely won't be on the end user's machine in the packaged release build.
+虽然在技术上可以在产品资产中以其他方式引用文件，但最终可能会导致问题。运行与资产处理器连接的编辑器或游戏启动器的项目开发版本，是团队最习惯使用的交互方式。但是，当准备向最终客户交付一个项目时，由于内容已打包和捆绑，项目的布局和资产的放置将有所不同。在开发过程中，产品资产对其他文件的引用在项目发布版本中可能不起作用。例如，如果产品资产引用了源资产，那么在打包的发布构建中，源资产很可能不会出现在最终用户的机器上。
 
-Product assets should never reference other product assets with absolute path because this will result in the hash of the contents of product assets being unique per machine that generates product assets. When authoring a builder, the complete lifecycle of asset management for a project should be kept in mind. Keeping product assets stable across machines will ensure that the gathering modified assets step of generating a patch for a live game is accurate. You can read more about [asset bundling here](/docs/user-guide/packaging/asset-bundler/overview/).
+产品资产绝不能以绝对路径引用其他产品资产，因为这将导致生成产品资产的每台机器的产品资产内容的哈希值都是唯一的。在创建生成器时，应牢记项目资产管理的整个生命周期。保持产品资产在不同机器上的稳定性，可以确保为实时游戏生成补丁时收集修改资产步骤的准确性。您可以在此阅读更多有关[资产捆绑](/docs/user-guide/packaging/asset-bundler/overview/)的信息.
 
-### Load product assets in process job
+### 在流程作业中加载产品资产
 
-If the processing of one job requires loading the output product asset of another job, then a job dependency should be declared against that job, and when possible the specific product should be defined in this dependency.
+如果一项工作的处理需要加载另一项工作的输出产品资产，则应针对该工作声明工作依赖关系，并尽可能在该依赖关系中定义特定产品。
 
-When setting up asset references, the source asset with the outgoing reference and the product asset it references maybe be on two different drive roots, so relative paths may not be possible between the source asset and the referenced product asset.
+在设置资产引用时，具有输出引用的源资产和它所引用的产品资产可能位于两个不同的驱动器根目录上，因此源资产和被引用的产品资产之间可能无法建立相对路径。
 
-Read more about [job dependencies here](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/#job-dependencies).
+点击此处了解更多有关 [工作依赖性](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/#job-dependencies) 的信息。
 
-### Load product assets in create jobs
+### 在创建工作时加载产品资产
 
-It's not recommended to load the product asset of one job during the create jobs step of another job. This is because there aren't straightforward workflows to accomplish this.
+不建议在另一项工作的创建工作步骤中加载一项工作的产品资产。这是因为没有直接的工作流程来实现这一点。
 
-If possible, it's recommended that the information needed is instead loaded from the source asset of the other job instead of the product asset. Then, source dependencies can be used to make sure jobs run in the correct order.
+如果可能，建议从其他作业的源资产而不是产品资产中加载所需的信息。然后，源依赖关系可用于确保作业按正确的顺序运行。
 
-If that isn't possible, then intermediate assets can provide a path to manage this processing order. To do this, the initial job should be updated to output an intermediate asset to be used as the source asset for the job to do the real work. The new job creating this intermediate asset should emit the product asset to be loaded in the middle job's create jobs function as a product specific job dependency.
+如果无法做到这一点，那么中间资产就可以提供管理这种处理顺序的途径。为此，应更新初始作业以输出中间资产，将其用作执行实际工作的作业的源资产。创建该中间资产的新作业应在中间作业的创建作业功能中加载产品资产，将其作为特定产品的作业依赖关系。
 
-Read more about [intermediate assets here](/docs/user-guide/assets/pipeline/intermediate-assets/). Read more about [job dependencies here](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/#job-dependencies).
+在此阅读有关 [中间资产](/docs/user-guide/assets/pipeline/intermediate-assets/) 的更多信息。在此阅读有关 [工作依赖项](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/#job-dependencies) 的更多信息。
 
-If you have a need to load a product asset during the create jobs step of asset processing, its recommended you discuss your use case with the O3DE community. Please create [a ticket](https://github.com/o3de/o3de/issues) or reach out in the [O3DE Discord](https://{{< links/o3de-discord >}})
+如果您需要在资产处理的创建工作步骤中加载产品资产，建议您与 O3DE 社区讨论您的用例。请创建[票据](https://github.com/o3de/o3de/issues)或在[O3DE Discord](https://{{< links/o3de-discord >}})中联系我们。
 
-### Load other source assets or non-asset files
+### 加载其他源资产或非资产文件
 
-Sometimes processing a source asset, either the create jobs or process job steps, requires loading a second source asset or source file. In this situation, a source dependency should be used.
+有时，在处理源资产时，无论是创建作业还是处理作业步骤，都需要加载第二个源资产或源文件。在这种情况下，应使用源依赖关系。
 
-A source dependency is declared during the CreateJob step, and when the file in this dependency changes, the job will be re-run.
+源依赖关系在创建作业步骤中声明，当该依赖关系中的文件发生变化时，作业将重新运行。
 
-Read more about [source dependencies here](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/#source-dependencies).
+点击此处了解更多有关 [源代码依赖性](/docs/user-guide/assets/pipeline/asset-dependencies-and-identifiers/#source-dependencies) 的信息。

@@ -1,6 +1,6 @@
 ---
-linkTitle: PhysX Tab
-title: Scene Settings PhysX Tab
+linkTitle: PhysX 标签页
+title: Scene Settings PhysX 标签页
 description: Modifiers and options available in the Scene Settings PhysX tab to generate PhysX colliders for Open 3D Engine (O3DE). 
 weight: 600
 toc: true

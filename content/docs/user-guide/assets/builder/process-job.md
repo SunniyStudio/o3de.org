@@ -1,130 +1,130 @@
 ---
 linkTitle: ProcessJob
 title: Python Asset Builder ProcessJob
-description: ProcessJob in Python Asset Builder produces job information for Asset Processor and generates product assets. 
+description: Python Asset Builder 中的 ProcessJob 可为 Asset Processor 生成作业信息并生成产品资产。 
 weight: 300
 toc: true
 ---
 
-**Asset Processor** calls the registered callback when it has a job for the **Asset Builder** to process. The callback does the following:
+当**资产处理器**有任务需要**资产生成器**处理时，它就会调用已注册的回调。回调会执行以下操作：
 
-* Processes the source asset.
-* Generates at least one product asset in a temporary directory.
-* Registers the product assets via a `JobProduct` entry inside a `ProcessJobResponse` instance.
-* Returns a success value inside the `ProcessJobResponse`.
+* 处理源资产。
+* 在临时目录中生成至少一个产品资产。
+* 通过 `ProcessJobResponse` 实例中的 `JobProduct` 条目注册产品资产。
+* 在 `ProcessJobResponse` 中返回成功值。
 
 ## ProcessJobRequest
 
-`azlmbr.asset.builder.ProcessJobRequest` is the input into the `OnProcessJobRequest` function that processes a source asset. It contains the input data that's needed for the process job.
+`azlmbr.asset.builder.ProcessJobRequest` 是处理源资产的`OnProcessJobRequest`函数的输入。它包含处理任务所需的输入数据。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| `sourceFile` | String | Source asset name. |
-| `watchFolder` | String | Scan directory for the source asset. |
-| `fullPath` | String | Source asset path. |
+| `sourceFile` | String | 源资产名称。 |
+| `watchFolder` | String | 源资产的扫描目录。 |
+| `fullPath` | String | 源资产路径。 |
 | `builderGuid` | `azlmbr.math.Uuid` | Asset Builder ID. |
-| `jobDescription` | `azlmbr.asset.builder.JobDescriptor` | Job descriptor for this job created in `OnCreateJobs`. |
-| `tempDirPath` | String | Temp directory that the Asset Builder uses to create job outputs for this job request. |
-| `platformInfo` | `azlmbr.asset.builder.PlatformInfo` | Information about the platform for this job. |
-| `sourceFileDependencyList` | List[`azlmbr.asset.builder.SourceFileDependency`] | Source asset dependency information. |
-| `sourceFileUUID` | `azlmbr.math.Uuid` | The universal unique identifier (UUID) of the source asset. |
-| `jobId` | Number | Job ID for this job that also serves as the address for the `JobCancelListener`. |
+| `jobDescription` | `azlmbr.asset.builder.JobDescriptor` | 在 `OnCreateJobs` 中创建的该作业的作业描述符。 |
+| `tempDirPath` | String | 资产创建器为该任务请求创建任务输出时使用的临时目录。 |
+| `platformInfo` | `azlmbr.asset.builder.PlatformInfo` | 有关该工作平台的信息。 |
+| `sourceFileDependencyList` | List[`azlmbr.asset.builder.SourceFileDependency`] | 源资产依赖性信息。 |
+| `sourceFileUUID` | `azlmbr.math.Uuid` | 源资产的通用唯一标识符 (UUID)。 |
+| `jobId` | Number | 此作业的作业 ID，也是 `JobCancelListener` 的地址。 |
 
-The `jobDescription` field contains the job parameters that the `OnCreateJobs` step created for this job.
+`jobDescription`字段包含`OnCreateJobs`步骤为该作业创建的作业参数。
 
-The `tempDirPath` field is the path to the temporary directory that the Asset Builder uses to write out intermediate and final product assets for this job. The output product assets are stored in the temporary directory relative to where the final product asset will be placed in the **Asset Cache** and `.pak` files.
+`tempDirPath`字段是资产创建器用来写出此任务的中间和最终产品资产的临时目录的路径。输出的产品资产存储在临时目录中，与**资产缓存**和`.pak`文件中最终产品资产的位置相对应。
 
-The `sourceFileUUID` field is both the unique ID of the source asset, and the first part of the Asset ID for all the product assets output by this job. The product assets are differentiated by the `subId` used in the `JobProduct` structure.
+`sourceFileUUID`字段既是源资产的唯一 ID，也是该任务输出的所有产品资产的资产 ID 的第一部分。产品资产由 `JobProduct` 结构中使用的 `subId` 区分。
 
 ## ProcessJobResponse 
 
-`azlmbr.asset.builder.ProcessJobResponse` is the class that the `OnProcessJobRequest` callback returns to describe the job's results. The `ProcessJobResponse` contains job data that indicates the outputs from the job in the `outputProducts` field, the result code, and schedules sources to be reprocessed.
+`azlmbr.asset.builder.ProcessJobResponse`是 `OnProcessJobRequest`回调返回的类，用于描述作业结果。`ProcessJobResponse` 包含的作业数据在`outputProducts`字段中显示了作业的输出、结果代码和要重新处理的时间表源。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| `resultCode` | `azlmbr.asset.builder.ProcessJobResponse Result Code` | The result of the process job. |
-| `outputProducts` | List[`azlmbr.asset.builder.JobProduct`] | List of job product assets. |
-| `requiresSubIdGeneration` | Boolean | Determines if legacy product assets need sub IDs generated. |
-| `sourcesToReprocess` | List[String] | Absolute source asset paths to trigger rebuilds. |
+| `resultCode` | `azlmbr.asset.builder.ProcessJobResponse Result Code` | 处理任务的结果。 |
+| `outputProducts` | List[`azlmbr.asset.builder.JobProduct`] | 工作产品资产清单。 |
+| `requiresSubIdGeneration` | Boolean | 确定遗留产品资产是否需要生成子 ID。 |
+| `sourcesToReprocess` | List[String] | 触发重建的绝对源资产路径。 |
 
-The `resultCode` field defaults to `azlmbr.asset.builder.ProcessJobResponse_Failed`. An empty `ProcessJobResponse` indicates that the job failed.
+`resultCode`字段默认为`azlmbr.asset.builder.ProcessJobResponse_Failed`。空的 `ProcessJobResponse` 表示任务失败。
 
-The `outputProducts` field indicates what product assets need to be copied to the Asset Cache. An empty `outputProducts` list indicates that the job failed.
+`outputProducts` 字段表示哪些产品资产需要复制到资产缓存。`outputProducts` 列表为空表示任务失败。
 
-The `sourcesToReprocess` field triggers a rebuild of source assets (via absolute paths) due to the work performed in this job. To reprocess these source assets, the builder updates the fingerprints in `CreateJobs` of those Asset Builders that process them, like changing source dependencies.
+由于在此任务中执行的工作，`sourcesToReprocess`字段会触发源资产（通过绝对路径）的重建。要重新处理这些源资产，构建程序会更新处理这些资产的资产构建程序的 `CreateJobs` 中的指纹，如更改源依赖关系。
 
-### ProcessJobResponse Result Code 
+### ProcessJobResponse 结果代码 
 
-`azlmbr.asset.builder.ProcessJobResponse Result Code` has a 'Success', a 'Failed', and three specific failure cases.
+`azlmbr.asset.builder.ProcessJobResponse Result Code` 有'Success'、'Failed'和三种具体的失败情况。
 
-| Result Code | Description |
+| 结果代码 | 说明 |
 | - | - |
-| `azlmbr.asset.builder.ProcessJobResponse_Success` | The process job has succeeded. |
-| `azlmbr.asset.builder.ProcessJobResponse_Failed` | The process job has not generated all expected product assets and data. |
-| `azlmbr.asset.builder.ProcessJobResponse_Crashed` | A tool or internal API has thrown an exception during the process job. |
-| `azlmbr.asset.builder.ProcessJobResponse_Cancelled` | The process job was canceled during processing. |
-| `azlmbr.asset.builder.ProcessJobResponse_NetworkIssue` | The process job could not reach a remote service or resource. |
+| `azlmbr.asset.builder.ProcessJobResponse_Success` | 处理任务已成功完成。 |
+| `azlmbr.asset.builder.ProcessJobResponse_Failed` | 处理任务未生成所有预期的产品资产和数据。 |
+| `azlmbr.asset.builder.ProcessJobResponse_Crashed` | 工具或内部应用程序接口在处理任务过程中出现异常。 |
+| `azlmbr.asset.builder.ProcessJobResponse_Cancelled` | 处理任务在处理过程中被取消。 |
+| `azlmbr.asset.builder.ProcessJobResponse_NetworkIssue` | 处理任务无法连接远程服务或资源。 |
 
 ### JobProduct 
 
-A successful process job returns one or more `azlmbr.asset.builder.JobProduct` entries in the `outputProducts` field.
+成功的流程作业会在 `outputProducts` 字段中返回一个或多个 `azlmbr.asset.builder.JobProduct` 条目。
 
-The `productSubID` field is a stable and unique product identifier for each product file created by this process job. It can be any unsigned 32-bit integer that disambiguates different output products assets from the same source asset. If the process job for a source asset produces only one product asset, the builder can use `0`.
+`productSubID`字段是该流程任务创建的每个产品文件的稳定且唯一的产品标识符。它可以是任何无符号的 32 位整数，用于区分来自同一源资产的不同输出产品资产。如果源资产的流程任务只生成一个产品资产，则生成器可以使用 `0`。
 
-The `productAssetType` field maps to a C++ `AZ::Data::AssetData` type ID.
+`productAssetType` 字段映射到 C++ 的`AZ::Data::AssetData`类型 ID。
 
-One way to determine the asset type ID from Python is to call the `AssetCatalogRequestBus` using the asset's display name:
+从 Python 确定资产类型 ID 的一种方法是使用资产的显示名称调用 `AssetCatalogRequestBus` ：
 
 ```python
 assetType = azlmbr.asset.AssetCatalogRequestBus(azlmbr.bus.Broadcast, 'GetAssetTypeByDisplayName', "Font")
 print(f'Asset type {assetType}')
 ```
 
-`dependenciesHandled` indicates to Asset Processor that the Asset Builder has output all possible dependencies for this job product asset. This can be true if there are no output product assets. This should be set to `True` only if the Asset Builder outputs its dependencies or the output product doesn't have dependencies. When set to `False`, Asset Processor emits a warning that dependencies have not been handled.
+`dependenciesHandled`向资产处理器表明，资产创建器已输出此作业产品资产的所有可能依赖关系。如果没有输出产品资产，该值也可以为 `True`。只有当资产创建器输出了其依赖项或输出产品没有依赖项时，才应将此设置为  `True`。设置为`False`时，资产处理器会发出未处理依赖关系的警告。
 
-The `JobProduct` constructor takes in a product asset name (relative to the source asset path), an asset type (UUID), and a product sub-ID number.
+`JobProduct` 构造函数接收产品资产名称（相对于源资产路径）、资产类型（UUID）和产品子 ID 编号。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| productFileName | String | A relative or absolute product asset path. |
-| productAssetType | `azlmbr.math.Uuid` | The asset type ID this product asset adds to the **Asset Catalog**. |
-| productSubID | Number | A stable and unique product identifier. |
-| productDependencies | List[`ProductDependency`] | Product asset dependencies for this source asset. |
-| pathDependencies | Set{`ProductPathDependency`} | Specifies product dependencies by relative path to source assets. |
-| dependenciesHandled | Boolean | Indicates whether the Asset Builder has output all possible dependencies. |
+| productFileName | String | 相对或绝对产品资产路径。 |
+| productAssetType | `azlmbr.math.Uuid` | 产品资产添加到**资产目录**的资产类型 ID。 |
+| productSubID | Number | 稳定、唯一的产品标识符。 |
+| productDependencies | List[`ProductDependency`] | 该源资产的产品资产依赖关系。 |
+| pathDependencies | Set{`ProductPathDependency`} | 通过源资产的相对路径指定产品依赖关系。 |
+| dependenciesHandled | Boolean | 表示资产创建器是否已输出所有可能的依赖关系。 |
 | JobProduct | Constructor | Inputs: `productFileName:str`, `productAssetType:azlmbr.math.Uuid`, `productSubID:number` |
 
 ### ProductDependency 
 
-`azlmbr.asset.builder.ProductDependency` contains product dependency information that the Asset Builder sends to Asset Processor to indicate that a product asset depends on another product asset when loaded or packaged.
+`azlmbr.asset.builder.ProductDependency` 包含产品依赖性信息，资产创建器会将该信息发送给资产处理器，以表明产品资产在加载或打包时依赖于另一个产品资产。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
-| `dependencyId` | `azlmbr.math.Uuid` | The asset ID of this product asset dependency. |
+| `dependencyId` | `azlmbr.math.Uuid` | 该产品资产依赖关系的资产 ID。 |
 
 ### ProductPathDependency 
 
-`azlmbr.asset.builder.ProductPathDependency` represents the product's dependency information that the Asset Builder detected on another product asset (relative to the source asset path). If the source asset ID can be determined, we recommend that you use the `productDependencies` instead to indicate the product's dependency information in terms of asset IDs. It's preferable to depend on product assets whenever possible, to avoid introducing unintended dependencies.
+`azlmbr.asset.builder.ProductPathDependency` 表示 Asset Builder 检测到的产品对另一产品资产的依赖信息（相对于源资产路径）。如果源资产 ID 可以确定，我们建议您使用 `productDependencies` 代替以资产 ID 表示产品的依赖信息。最好尽可能依赖产品资产，以避免引入意外依赖。
 
-The `dependencyType` field indicates if the path points to a source asset or a product asset.
+`dependencyType` 字段表示路径指向源资产还是产品资产。
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 | - | - | - |
 | `dependencyPath` | String | Relative path to the asset dependency. |
 | `dependencyType` | `azlmbr.asset.builder.ProductPathDependency Type` | Indicates if the dependency path points to a source asset or a product asset. |
 
-### ProductPathDependency Type 
+### ProductPathDependency 类型 
 
-`azlmbr.asset.builder.ProductPathDependency Type` indicates how to use the dependency path in the `ProductPathDependency`. A dependency on a source asset is converted into dependencies on all product assets produced. It's preferable to depend on product assets whenever possible, to avoid introducing unintended dependencies.
+`azlmbr.asset.builder.ProductPathDependency Type` 表示如何使用 `ProductPathDependency` 中的依赖路径。对源资产的依赖会转换为对所有已生成产品资产的依赖。最好尽可能依赖产品资产，以避免引入意外依赖。
  
-| Type | Description |
+| 类型 | 说明 |
 | - | - |
-| `azlmbr.asset.builder.ProductPathDependency_ProductFile` | If the source asset depends on another product asset file, the value should be `SourceFile`. |
-| `azlmbr.asset.builder.ProductPathDependency_SourceFile` | If the source asset depends on another source asset, the value should be `ProductFile`. |
+| `azlmbr.asset.builder.ProductPathDependency_ProductFile` | 如果源资产依赖于另一个产品资产文件，则值应为 `SourceFile`。 |
+| `azlmbr.asset.builder.ProductPathDependency_SourceFile` | 如果源资产依赖于另一个源资产，则值应为 `ProductFile`。 |
 
-## Example: ProcessJob
+## 示例: ProcessJob
 
-The example below demonstrates how an Asset Builder might process a job when Asset Processor detects a new or changed source asset with the registered pattern in a scan directory.
+下面的示例演示了当资产处理器检测到扫描目录中带有已注册模式的新源资产或已更改的源资产时，资产生成器如何处理作业。
 
 ```python
 # Using the incoming 'request' find the type of job via 'jobKey' to determine what to do

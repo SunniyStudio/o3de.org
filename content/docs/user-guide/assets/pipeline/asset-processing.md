@@ -1,34 +1,32 @@
 ---
-linkTitle: Asset Processing 
-title: Asset Processing and the Asset Pipeline 
-description: An introduction to asset processing and the Asset Pipeline in Open 3D Engine (O3DE).
+linkTitle: 资产处理
+title: 资产处理和资产管道
+description: 介绍Open 3D Engine (O3DE)中的资产处理和资产管道。
 weight: 100
 toc: true
 ---
 
-In **Open 3D Engine (O3DE)**, an asset is a resource file, saved to disk, that is consumed by O3DE in some way. Assets include meshes, textures, animations, and audio files created in third-party applications, as well as assets created with O3DE's tools and automated processes.
+在**Open 3D Engine (O3DE)** 中，资产是保存在磁盘上的资源文件，O3DE以某种方式使用该文件。资产包括在第三方应用程序中创建的网格、纹理、动画和音频文件，以及使用 O3DE 工具和自动流程创建的资产。
+
+大多数资产必须经过某种形式的处理，才能生成可被**O3DE Editor** 和 **Launcher**使用的运行时优化文件。例如，以`.png`文件形式存储的纹理经过处理后生成的文件可以流式传输并有效地存储在显卡（GPU）内存中。这个端到端的过程就是**资产管道**。
+
+在 O3DE 中，资产可分为两类：**源**资产和**产品**资产。源资产是使用第三方应用程序和 O3DE 工具创建的可移植资产。这些是资产管道的输入。产品资产是 O3DE 编辑器和启动器所需的运行优化资产。这些是资产管道的产品。
+
+## 资产管道概述
+
+当您启动 O3DE 编辑器时，**资产处理器**会启动，并在您使用 O3DE 时作为后台服务运行。资产处理器监控一组预先配置的[**扫描目录**](scan-directories)以查找源资产。当资产处理器检测到新的或已更改的源资产时，它会确定需要进行哪些处理。然后，它会排队等待处理源资产的任务。源资产类型的**资产生成器**会生成产品资产。经过运行优化的产品资产存储在项目的**资产缓存中。这样，您的项目资产就会不断更新。新的和更新的资产可以尽快使用，并在运行时热加载到 O3DE 编辑器和启动器中。O3DE Editor 中使用的资产与部署运行时使用的资产相同。
 
 
-Most assets must undergo some form of processing to generate runtime optimized files that can be used by **O3DE Editor** and **Launcher**. For example, a texture stored as a `.png` file is processed and generates a file that can be streamed and efficiently stored in the memory of a video card (GPU). This end to end process is the **Asset Pipeline**.
-
-In O3DE, assets can be divided into two categories; *source* assets and *product* assets. Source assets are portable assets created with third-party applications and with O3DE's tools. These are the inputs for the Asset Pipeline. Product assets are the runtime optimized assets required by O3DE Editor and Launcher. These are the products of the Asset Pipeline.
-
-
-## Asset Pipeline overview
-
-**Asset Processor** launches when you start O3DE Editor and runs as a background service while you work with O3DE. Asset Processor monitors a pre-configured set of [*scan directories*](scan-directories) for source assets. When Asset Processor detects a new or changed source asset, it determines what processing, if any, is required. It then queues a job to process the source asset. An **Asset Builder** for the source asset type generates a product asset. The runtime optimized product asset is stored in the **Asset Cache** for your project. The result is that your project's assets are constantly kept up to date. New and updated assets are ready to use as quickly as possible, and are hot reloaded in O3DE Editor and Launcher during runtime. The assets used in O3DE Editor are the same assets used by your deployment runtime.
-
-
-Below is a simple flowchart showing the process for a mesh file.
+下面是一个简单的流程图，显示了网格文件的处理过程。
 
 ![Mesh processing flowchart example](/images/user-guide/assets/pipeline/mesh-processing.svg)
 
-1. Source assets are placed in scan directories that are monitored by Asset Processor.
-1. Asset Processor detects new or changed source assets.
-1. Asset Processor determines the content of the source asset and how to process it.
-1. Asset Processor creates a job to process the source asset.
-1. An Asset Builder generates runtime optimized product assets for specific deployment platforms.
-1. Asset Processor gathers information about the job and product assets and updates the Asset Cache.
-1. The product assets can be loaded by O3DE Editor and Launcher.
+1. 源资产放置在资产处理器监控的扫描目录中。
+1. 资产处理器检测新的或已更改的源资产。
+1. 资产处理器确定源资产的内容和处理方式。
+1. 资产处理器创建一个任务来处理源资产。
+1. 资产生成器可为特定部署平台生成运行时优化的产品资产。
+1. 资产处理器收集有关任务和产品资产的信息，并更新资产缓存。
+1. 产品资产可由 O3DE 编辑器和启动器加载。
 
-In the mesh processing diagram above, the `.fbx` file containing the mesh (source asset) produces an `.azmodel` and several `.azbuffer` files (product assets) in the Asset Cache. It's common, particularly with art assets, for an Asset Builder to generate multiple product assets from a single source asset.
+在上面的网格处理图中，包含网格的`.fbx`文件（源资产）会在资产缓存中生成一个`.azmodel`和多个`.azbuffer`文件（产品资产）。资产生成器通常会从一个源资产生成多个产品资产，尤其是艺术资产。

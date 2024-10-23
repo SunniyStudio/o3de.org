@@ -1,98 +1,96 @@
 ---
-linkTitle: Asset Dependencies and Identifiers 
-title: Asset Dependencies and Identifiers 
-description: Asset dependencies and identifiers ensure that asset references can be met when assets are processed, loaded, and packaged.
+linkTitle: 资产依赖性和标识符
+title: 资产依赖性和标识符
+description: 资产依赖性和标识符可确保在处理、加载和打包资产时满足资产引用要求。
 weight: 500
 toc: true
 ---
 
-Both source and product assets might have dependencies. Source asset and job dependencies are inputs to the **Asset Pipeline** and asset processing jobs. Product dependencies are outputs from the Asset Pipeline and are used to load and package product assets. Asset identifiers help ensure both types of asset dependencies are met.
+源资产和产品资产都可能有依赖关系。源资产和作业依赖项是**资产管道**和资产处理作业的输入。产品依赖项是资产管道的输出，用于加载和打包产品资产。资产标识符有助于确保满足这两种类型的资产依赖性。
 
-There are four parts of asset processing relevant to source and job dependencies: The source asset being processed, the create jobs and process job steps, and finally the product assets that are produced from the job.
+资产处理有四个部分与源和作业相关： 正在处理的源资产、创建作业和处理作业步骤，以及最后从作业中生成的产品资产。
 
 ![Simple Job](/images/user-guide/assets/pipeline/asset_dependencies/simple_job.png)
 
-## Source dependencies
+## 源依赖关系
 
-Source dependencies are a process time concept. This means that this dependency type is used when processing assets for your project, source dependencies are not used at runtime.
+源依赖关系是一个进程时间概念。这意味着这种依赖类型是在为项目处理资产时使用的，源依赖关系不会在运行时使用。
 
-A source dependency triggers **Asset Processor** to rerun the job process step whenever the file declared as a source dependency changes. For example, image files declare a source dependency on the `.preset` file containing the preset information used to process the image, so if the preset changes the image will be reprocessed and use the new preset settings.
+只要声明为源依赖关系的文件发生变化，源依赖关系就会触发**资产处理器**重新运行作业流程步骤。例如，图像文件声明了对包含用于处理图像的预设信息的`.preset`文件的源依赖性，因此如果预设发生变化，图像将被重新处理并使用新的预设设置。
 
 ![Source Dependency Job](/images/user-guide/assets/pipeline/asset_dependencies/source_dependency.png)
 
-### Declaring source dependencies
+### 声明源依赖关系
 
-In the Job Creation step of asset processing, a `JobDescriptor` is created to describe the work to be done to process a source asset.
+在资产处理的 “任务创建 ”步骤中，会创建一个 `JobDescriptor` 来描述处理源资产所要完成的工作。
 
-One of the fields on the `CreateJobsResponse` is `m_sourceFileDependencyList`, a vector of `SourceFileDependency` objects. A `SourceFileDependency` should be populated with enough information for the Asset Processor to track this dependency, so that it can re-run this job if the declared dependency is changed.
+`CreateJobsResponse`中的一个字段是`m_sourceFileDependencyList`，这是一个由`SourceFileDependency`对象组成的向量。一个 `SourceFileDependency` 对象应填入足够多的信息，以便资产处理器跟踪该依赖关系，从而在所声明的依赖关系发生变化时重新运行该作业。
 
-A `SourceFileDependency` can be created with a path, or the UUID of a source asset. When possible, using a UUID is better because it will be stable in more circumstances.
+`SourceFileDependency`可以通过路径或源资产的 UUID 创建。在可能的情况下，使用 UUID 会更好，因为它在更多情况下都能保持稳定。
 
-Source dependencies do not have to be on other source assets, and can be on other source files. In these cases, a UUID will not be available, because it's not generated for non-asset files.'
+源依赖关系不一定非得是其他源资产，也可以是其他源文件。在这些情况下，UUID 将不可用，因为它不会为非资产文件生成。
 
-If a path must be used, it can be an absolute path or relative, and can make use of wildcards. If a path needs to be used instead of a UUID, absolute paths can be more stable than relative paths here because this data is specific to the local machine, so pathing differences across machines won't matter. Relative paths cannot include directory change markers across root drives, so if a source asset is in a scan folder on one drive root (such as `C:/Projects/MyGame/Assets`) and a source dependency is in a folder on another drive root (such as `E:/Gems/SomeGem/Assets`), a relative path will not be usable.
+如果必须使用路径，可以是绝对路径或相对路径，也可以使用通配符。如果需要使用路径而不是 UUID，绝对路径可能比相对路径更稳定，因为这些数据是本地机器特有的，所以不同机器之间的路径差异并不重要。相对路径不能包含跨根目录的目录更改标记，因此如果源资产在一个驱动器根目录的扫描文件夹中（如 `C:/Projects/MyGame/Assets`），而源依赖项在另一个驱动器根目录的文件夹中（如 `E:/Gems/SomeGem/Assets`），相对路径将无法使用。
 
-If the source dependency is a source asset, it must be in a scan directory. Read more about [scan directories here.](/docs/user-guide/assets/pipeline/scan-directories/)
+如果源依赖是源资产，则必须位于扫描目录中。点击此处了解更多有关 [扫描目录](/docs/user-guide/assets/pipeline/scan-directories/) 的信息。
 
-If the source dependency is not a source asset and is instead a non-asset file, it can be in other locations outside of scan directories.
+如果源依赖项不是源资产，而是非资产文件，那么它可以位于扫描目录之外的其他位置。
 
-## Job dependencies
+## 工作依赖关系
 
-Job dependencies are a process time concept.
+工作依赖关系是一个过程时间概念。
 
-A job dependency is used when a job must read the product asset output of another job. A job dependency is declared against another job. When a job that has a job dependency is run, it first ensures that all of its job dependencies are run. If a job that is a job depenedency is run, it will trigger any jobs that depend on it to run.
+当一个任务必须读取另一个任务的产品资产输出时，就会使用任务依赖关系。作业依赖关系是针对另一个作业声明的。当运行具有作业依赖关系的作业时，首先要确保运行其所有作业依赖关系。如果运行了作业依赖关系中的作业，则会触发任何依赖该作业的作业运行。
 
-The shader and material relationship is an example of a job dependency. The material cannot be processed until the shader job is completed because the material requires information from product assets of the shader job. If the source shader asset is changed, causing the shader job to run, then the material job with that job dependency will run after the shader job finishes.
+着色器和材质的关系就是作业依赖关系的一个例子。在着色器任务完成之前，无法处理材质，因为材质需要着色器任务的产品资产信息。如果源着色器资产发生更改，导致着色器作业运行，那么与该作业相关的材质作业将在着色器作业完成后运行。
 
-Required job dependencies cause the job to fail if the required product asset is not available.
+如果所需的产品资产不可用，则所需的作业依赖关系会导致作业失败。
 
-Jobs can generate multiple product assets, but a job might not need all product assets from another job that was declared as a job dependency. In this scenario, the required product assets are specified for the job dependency. If the hash of any of the specified product assets changes, the job with the dependency is run.
+作业可以生成多个产品资产，但一个作业可能不需要另一个已声明为作业依赖关系的作业的所有产品资产。在这种情况下，会为作业依赖关系指定所需的产品资产。如果任何指定产品资产的哈希值发生变化，就会运行依赖的作业。
 
-A material, for example, has a job dependency on a shader. The shader job generates multiple product assets including assets that contain shader logic and a shader configuration. The material job dependency only needs the configuration from the shader, not the logic. The material job runs when the shader configuration is changed, not when the shader logic is changed.
+例如，材质对着色器具有作业依赖性。着色器任务会生成多个产品资产，包括包含着色器逻辑和着色器配置的资产。素材作业依赖只需要着色器的配置，而不需要逻辑。材质作业会在着色器配置更改时运行，而不是在着色器逻辑更改时运行。
 
 ![Job Dependency Job](/images/user-guide/assets/pipeline/asset_dependencies/job_dependency.png)
 
-### Declaring job dependencies
+### 声明工作依赖关系
 
-One of the fields on the `JobDescriptor` is `m_jobDependencyList`, a vector of `JobDependency` objects. The Job Dependency is populated with the same information as a `SourceFileDependency` to identify what file to track, as well as information to identify the associated job to use as a dependency, the type of job dependency, and the optional list of product sub IDs.
+`JobDescriptor`的字段之一是 `m_jobDependencyList`，这是一个由`JobDependency`对象组成的向量。作业依赖项的填充信息与 `SourceFileDependency` 相同，可用于确定要跟踪的文件，以及确定用作依赖项的相关作业、作业依赖项类型和可选产品子 ID 列表的信息。
 
-Like with source dependencies, the source file for a job dependency can be declared in a few different ways. UUIDs are the most stable way to track these dependencies.
+与源代码依赖关系一样，作业依赖关系的源文件也可以用几种不同的方式声明。UUID 是跟踪这些依赖关系的最稳定方式。
 
-If a path to the source asset must be used, it can be an absolute path or relative, and can make use of wildcards. If a path needs to be used instead of a UUID, absolute paths can be more stable than relative paths here because this data is specific to the local machine, so pathing differences across machines won't matter. Relative paths cannot include directory change markers across root drives, so if a source asset is in a scan folder on one drive root (such as `C:/Projects/MyGame/Assets`) and a source dependency is in a folder on another drive root (such as `E:/Gems/SomeGem/Assets`), a relative path will not be usable.
+如果必须使用源资产的路径，可以是绝对路径或相对路径，也可以使用通配符。如果需要使用路径而不是 UUID，绝对路径比相对路径更稳定，因为这些数据是本地机器特有的，所以不同机器之间的路径差异并不重要。相对路径不能包含跨根目录的目录更改标记，因此如果源资产在一个驱动器根目录的扫描文件夹中（如 `C:/Projects/MyGame/Assets`），而源依赖项在另一个驱动器根目录的文件夹中（如 `E:/Gems/SomeGem/Assets`），相对路径将无法使用。
 
-Source assets, used as the target of a job dependency, must be in scan directories. Read more about [scan directories here.](/docs/user-guide/assets/pipeline/scan-directories/)
+作为作业依赖目标的源资产必须位于扫描目录中。点击此处了解有关 [扫描目录](/docs/user-guide/assets/pipeline/scan-directories/) 的更多信息。
 
-In some cases, a builder requires the output of another builder in order to process the asset it is working on.  If the other builder only outputs a single product, a regular job dependency works just fine.  Sometimes, however, the other builder outputs many products, some of which might not be updated every time the builder runs.  This can result in Asset Processor doing unnecessary work to rebuild dependent assets when their dependencies haven't actually changed.  For these cases, builders can specify the exact set of products they depend on by providing a list of SubIds in the AssetBuilderSDK::JobDependency::m_productSubIds field.  When a builder provides a list of specific products to depend on, Asset Processor will only trigger the dependency when the hash of the contents of any of the specified products changes.
+在某些情况下，一个构建器需要另一个构建器的输出才能处理它正在处理的资产。 如果另一个生成器只输出一个产品，那么常规的作业依赖关系就可以正常工作。 但有时，其他生成器会输出许多产品，其中一些产品可能不会在生成器每次运行时都更新。 这可能导致资产处理器在依赖关系没有实际改变的情况下，做不必要的工作来重建依赖资产。 在这种情况下，生成器可以通过在 `AssetBuilderSDK::JobDependency::m_productSubIds` 字段中提供一个 SubIds 列表来指定它们所依赖的确切产品集。 当创建者提供要依赖的特定产品列表时，资产处理器只会在任何指定产品内容的哈希值发生变化时触发依赖关系。
 
-In some cases, a builder requires the output of another builder in order to process the asset it is working on.  If the other builder only outputs a single product, a regular job dependency works just fine.  Sometimes, however, the other builder outputs many products, some of which might not be updated every time the builder runs.  This can result in Asset Processor doing unnecessary work to rebuild dependent assets when their dependencies haven't actually changed.  For these cases, builders can specify the exact set of products they depend on by providing a list of SubIds in the AssetBuilderSDK::JobDependency::m_productSubIds field.  When a builder provides a list of specific products to depend on, Asset Processor will only trigger the dependency when the hash of the contents of any of the specified products changes.
+## 产品依赖关系
 
-## Product dependencies
+产品依赖关系是一个打包和运行时概念，在处理过程中声明。这意味着这些依赖关系不会在资产处理过程中使用，但会在处理过程中声明。
 
-Product dependencies are a packaging and runtime concept, declared at process time. This means these dependencies are not used during processing of assets, but they are declared there.
+产品依赖项包含产品资产之间关系的数据。产品依赖关系在运行时加载和资产捆绑过程中使用。
 
-Product dependencies contain data on the relationships between product assets. Product dependencies are used during runtime loading and asset bundling.
+在运行时加载产品资产时，产品依赖项会指定该产品资产运行时必须加载的其他产品资产。同样，在捆绑资产时，产品依赖项会指定被捆绑资产所需的其他产品资产。一个简单易懂的例子是关卡预制件。放置在关卡中的实体和预制件所使用的所有网格、着色器、材质、音频文件和脚本都是关卡预制件的依赖项。加载或捆绑关卡预制件时，资产依赖链会指定关卡预制件所需的所有产品资产，以及这些依赖关系所引用的产品资产，依此类推，直到满足所有产品依赖关系。
 
-When a product asset is loaded at runtime, the product dependencies specify other product assets that must be loaded for this product asset to function. Similarly, when bundling assets, the product dependencies specify additional product assets required by the assets being bundled. An easy to understand example is a level prefab. All the meshes, shaders, materials, audio files, and scripts used by entities and prefabs that are placed in the level are dependencies of the level prefab. When you load or bundle a level prefab, the chain of asset dependencies specifies all the product assets required by the level prefab, as well as the product assets referenced by those dependencies, and so on, until all the product dependencies are met.
+产品依赖关系也可标记为必需或可选。如果必需的产品依赖关系不可用，运行时加载流程或捆绑流程就会失败。如果可选的产品依赖关系不可用，则运行时加载流程或捆绑流程可以继续。
 
-Product dependencies can also be marked as required or optional. If a required product dependency is not available, the runtime load process or the bundling process fails. If an optional product dependency is not available, the runtime load process or bundling process can proceed.
+### 声明产品依赖关系
 
-### Declaring product dependencies
+`JobProduct`的一个字段是`m_dependencies`，它是 `ProductDependency` 对象的向量。在资产创建器中创建`JobProduct`时，可在该字段中填入工作产品的产品依赖关系信息。
 
-One of the fields on the `JobProduct` is `m_dependencies`, a vector of `ProductDependency` objects. When creating the `JobProduct` in the asset builder, this field can be populated with information about product dependencies the job product has.
+## 资产标识符
 
-## Asset identifiers
+源资产由通用唯一标识符 (UUID) 标识。在 O3DE 的某些部分，这也被称为全球唯一标识符 (GUID)。源资产 UUID 根据文件名和扫描目录相对路径生成。这可确保源资产 UUID 在项目的任何主机平台机器上都是相同的。
 
-Source assets are identified by a Universally Unique Identifier (UUID). This is also referenced as a Globally Unique Identifier (GUID) in some parts of O3DE. The source asset UUID is generated based on the file name and scan directory relative path. This ensures the source asset UUID is identical on any host platform machine for the project.
+产品资产由源资产的 UUID 和生成产品资产的**资产生成器**定义的子 ID 共同标识。生成器子 ID 必须具有确定性和唯一性，这样才能在更新资产时保持对产品资产的引用。在创建创建器时，请注意以下几点：
 
-Product assets are identified by a combination of the UUID for the source asset and a sub ID defined by the **Asset Builder** that produced the product asset. Builder sub IDs must be deterministic and unique, so that references to the product assets can be maintained when assets are updated. When authoring a builder, keep the following in mind:
+* 其他构建程序可能会处理相同的源资产并生成产品。这是可能发生子 ID 碰撞的地方。
+* 根据源资产的变化，尽可能保持产品资产子 ID 的一致性。
 
-* Other builders may process the same source asset and also generate products. This is an area where sub ID collisions can occur.
-* Keep sub IDs as consistent as possible for product assets based on changes to a source asset.
-
-Downstream references, such as a prefab file referencing a product asset via asset ID, break if the sub ID doesn't resolve, or resolves to a different product asset. In the rare event of a product asset ID collision, Asset Processor notifies you that an asset already exists with the product ID so that you can resolve the issue.
+如果子 ID 无法解析或解析到不同的产品资产，下游引用（如通过资产 ID 引用产品资产的预制板文件）就会中断。在极少数情况下，如果产品资产 ID 发生碰撞，资产处理器会通知您已经存在具有该产品 ID 的资产，以便您解决问题。
 
 {{< note >}}
-Product assets are unique across target platforms. The differences for each target platform most often are platform performance optimizations.
+不同目标平台的产品资产是独一无二的。每个目标平台的差异通常是平台性能的优化。
 
-If you author a builder that outputs product assets for different target platforms, you should consider how the product assets are accessed at runtime. It's recommended to use the same sub ID for similar assets for each target platform. For example, the source asset `_dev_purple.tif` generates a streamingimage file `_dev_purple.tif.streamingimage` , which has the sub ID 1000, for all platforms. This means that any other content that references `_dev_purple.tif.streamingimage` can reference the sub ID and get the same functional image on each target platform.
+如果您创建的生成器可为不同的目标平台输出产品资产，则应考虑如何在运行时访问产品资产。建议对每个目标平台的类似资产使用相同的子 ID。例如，源资产`_dev_purple.tif`会生成一个流式图像文件 `_dev_purple.tif.streamingimage` ，该文件的子 ID 为 1000，适用于所有平台。这意味着引用`_dev_purple.tif.streamingimage`的任何其他内容都可以引用该子 ID，并在每个目标平台上获得相同的功能图像。
 {{< /note >}}

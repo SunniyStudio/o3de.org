@@ -1,28 +1,28 @@
 ---
-linkTitle: Scene Pipeline 
-title: The Scene Pipeline and SceneAPI
-description: The complete guide to scene assets, processing, and the Scene Pipeline in Open 3D Engine (O3DE).
+linkTitle: 场景管道
+title: 场景管道和SceneAPI
+description: Open 3D Engine (O3DE) 中场景资产、处理和场景管道的完整指南。
 weight: 100
 toc: true
 ---
 
-The scene pipeline is a specialized asset builder that imports source scene files and allows scene builders to export scene product assets such as models and animations.
-
-| Topic | Description |
+场景管道是一种专门的资产生成器，可导入源场景文件，并允许场景生成器导出模型和动画等场景产品资产。
+1
+| 主题 | 说明 |
 | --- | --- |
-| [Source API](scene-api) | Describes the set of libraries, rules, and groups to process a source scene files. |
-| [Scene Graph](scene-graph) | Describes the scene graph nodes, hierarchial data, and mechanism of iteration. |
-| [Scene Manifest](scene-manifest) | Contains instructions on what to do with the SceneGraph content. |
-| [Scene Builder](scene-builder) | Asset builders that are designed to manage and export parts of the scene graph. |
-| [User Defined Properties](user_defined_properties.md) | A mechanism to use custom properties set in source scene files in the scene builder pipeline. |
-| [Procedural Prefab](procedural_prefab.md) | Use Python to process prefab assets from scene source files. |
+| [Source API](scene-api) | 描述处理源场景文件的库、规则和组的集合。|
+| [Scene Graph](scene-graph) | 描述场景图节点、分层数据和迭代机制。 |
+| [Scene Manifest](scene-manifest) | 包含有关如何处理 SceneGraph 内容的说明。|
+| [Scene Builder](scene-builder) | 资产构建器，用于管理和导出场景图的部分内容。 |
+| [用户定义的属性](user_defined_properties.md) | 在场景生成器管道中使用源场景文件中设置的自定义属性的机制。 |
+| [Procedural Prefab](procedural_prefab.md) | 使用 Python 处理场景源文件中的预制资产。 |
 
-The following diagram shows the scene pipeline flow:
+下图显示了场景管道流程：
 
 ![Scene pipeline flow.](/images/user-guide/assets/scene-pipeline/scene-pipeline-flow.png)
 
-In the preceding diagram:
+在上图中
 
-* The yellow outlined shapes are asset builder events
-* The blue outlined shapes are scene builder events using BindCall()
-* The green outlined shapes are scene builder events via the Behavior Component
+* 黄色轮廓是资产创建事件
+* 蓝色轮廓是使用 BindCall() 的场景创建事件
+* 绿色轮廓是通过行为组件发生的场景创建事件

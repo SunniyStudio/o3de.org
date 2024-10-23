@@ -1,31 +1,31 @@
 ---
-title: "User Defined Properties"
+title: "用户定义的属性"
 date: 2022-03-08
 slug: scene-api-udp
 author: Allen Jackson
 ---
 
-Artists can store metadata in source scenes to user defined properties (UDP) on scene nodes. This user defined property metadata can be exported into source scene files (i.e. FBX). This metadata is important since it can indicate details about the scene such which mesh nodes to use as level of detail (LOD) and/or physics collision meshes. The best way to store this type of metadata is to use the properties sub-systems used inside the DCC tool then export those user defined properties into file formats that can persist this metadata such as FBX and glTF. This UDP metadata has many uses for engine related pipeline tweaks, but it also has many uses for extending the scene pipeline and generating Editor custom game content.
+艺术家可以将源场景中的元数据存储到场景节点上的用户自定义属性 (UDP)。这种用户定义的属性元数据可以导出到源场景文件（即 FBX）中。这些元数据非常重要，因为它可以显示场景的细节，例如将哪些网格节点用作细节级别（LOD）和/或物理碰撞网格。存储这类元数据的最佳方法是使用 DCC 工具内部使用的属性子系统，然后将这些用户定义的属性导出为 FBX 和 glTF 等可持久保存元数据的文件格式。这种 UDP 元数据在与引擎相关的流水线调整方面有很多用途，但在扩展场景流水线和生成编辑器自定义游戏内容方面也有很多用途。
 
-The O3DE scene pipeline reads in this UDP metadata and added to the scene graph as a node with CustomPropertyData contents. This UDP metadata will do nothing itself since it is meant to be properties that other scene building logic units will access in order to perform build operations and/or modifications.
+O3DE 场景流水线会读取这些 UDP 元数据，并将其作为包含 CustomPropertyData 内容的节点添加到场景图中。这些 UDP 元数据本身没有任何作用，因为它们是其他场景构建逻辑单元访问的属性，以便执行构建操作和/或修改。
 
-Inside the CustomPropertyData there is a PropertyMap that stores a dictionary of string-to-value properties for that node. The scene builders will be able to access this metadata using its PropertyMap. The properties can store value types of string, Boolean, unsigned integer 32-bit, signed integer 64-bit, float, and double. The metadata can be used to modify the scene’s rule manifest, parameterize scene product assets, and set scene parameters downstream. Each node can have a PropertyMap where the keys do not repeat. The PropertyMap is read only like the other elements of the scene graph.
+自定义属性数据（CustomPropertyData）中有一个属性图（PropertyMap），用于存储该节点的字符串到值属性的字典。场景构建器可以使用 PropertyMap 访问这些元数据。这些属性可以存储字符串、布尔、32 位无符号整数、64 位有符号整数、浮点数和双倍值类型。元数据可用于修改场景的规则清单、场景产品资产参数化和下游场景参数设置。每个节点都可以有一个 PropertyMap，其中的键不会重复。PropertyMap 和场景图中的其他元素一样是只读的。
 
-The CustomPropertyData can be accessed by scene builders using either the Python or C++ API by handling any event that takes the scene graph as input. The typical method is to handle the Update Manifest event so that the scene builder can modify the scene manifest rules.
+场景构建器可以使用 Python 或 C++ API 访问 CustomPropertyData，方法是处理任何将场景图作为输入的事件。典型的方法是处理更新清单（Update Manifest）事件，这样场景构建器就可以修改场景清单规则。
 
-## Assigning Materials in Default Procedural Prefab using UDPs
+## 使用 UDP 在默认程序预制中分配材质
 
-The default procedural prefab scene builder inside the Prefab game has an example of how UDP metadata can be used to customize the scene pipeline. The Prefab gem constructs a default prefab for a scene graph, it looks for the UDP ```o3de_default_material``` in a mesh data node to define an O3DE render material for that mesh group inside the prefab. This allows artists to assign O3DE render materials back in the DCC tool. Each time the source scene file (i.e. FBX) is exported, this reference is maintained through the scene pipeline.
+Prefab 游戏中的默认程序预制场景生成器有一个如何使用 UDP 元数据自定义场景管道的示例。Prefab gem 会为场景图构建一个默认预制板，它会在网格数据节点中查找 UDP ```o3de_default_material```，以便在预制板中为该网格组定义 O3DE 渲染材质。这样，美工人员就可以在 DCC 工具中分配 O3DE 渲染材质。每次导出源场景文件（即 FBX）时，都会在场景管道中保留此引用。
 
-## UDP Access in Scene Pipeline
+## 场景管道中的 UDP 访问
 
-Scene builders can access user defined properties using either C++ or Python from the Scene Builder API.
+场景生成器 API 可以使用 C++ 或 Python 访问用户定义的属性。
 
-### C++ Access
+### C++ 访问
 
-When the C++ event is fired it typically sends the request context as input that contains the scene graph of nodes that might have a CustomPropertyData node. There are number of ways to view the nodes in C++ using the node indices. To access a node contents, the scene graph’s GetNodeContent() method is used to return a smart pointer to a ICustomPropertyData. If the smart pointer is not empty, then the GetPropertyMap() can be used to access the string-to-value property dictionary.
+当 C++ 事件被触发时，它通常会将请求上下文作为输入发送，其中包含可能具有 CustomPropertyData 节点的节点场景图。在 C++ 中，有多种使用节点索引查看节点的方法。要访问节点内容，可使用场景图的 GetNodeContent() 方法返回一个指向 ICustomPropertyData 的智能指针。如果智能指针不为空，则可使用 GetPropertyMap() 方法访问字符串到值的属性字典。
 
-C++ code example:
+C++ 代码示例：
 
 ```c++
 const auto customPropertyData = azrtti_cast<const DataTypes::ICustomPropertyData*>(graph.GetNodeContent(propertyDataIndex));
@@ -54,11 +54,11 @@ if (materialAssetPath->empty())
 }
 ```
 
-### Python Access
+### Python 访问
 
-Python scripts use callbacks to access the scene graph nodes to find user defined properties. The CustomPropertyData will come back as a Python dictionary for the script to enumerate to find the key-value pairs.
+Python 脚本使用回调来访问场景图节点，以查找用户定义的属性。CustomPropertyData 将以 Python 字典的形式返回，供脚本枚举以查找键值对。
 
-Python code example:
+Python 代码示例：
 
 ```python
 def print_properties(scene):
@@ -87,8 +87,8 @@ def print_properties(scene):
             node = azlmbr.scene.graph.NodeIndex()
 ```
 
-### An example of car with LODs and a collision mesh
+### 带有 LOD 和碰撞网格的汽车示例
 
-This is an example of a Car.fbx file that was saved with UDP metadata for LOD and PhsyX metadata. The Asset Processor will request the Scene Builder to process the Car.fbx source scene asset. The Scene Builder (running in the Asset Builder process) imports the scene and builds the scene graph with scene graph nodes with CustomPropertyData content. Later on, the default procedural prefab builder will read in the custom properties in order to build out LOD manifest rules and physics manifest rules. Finally, these manifest rules will turn into LOD models and physic mesh product files.
+这是一个 Car.fbx 文件的示例，该文件保存了用于 LOD 的 UDP 元数据和 PhsyX 元数据。资产处理器将请求场景生成器处理 Car.fbx 源场景资产。场景生成器（在资产生成器进程中运行）会导入场景，并用包含 CustomPropertyData 内容的场景图节点构建场景图。随后，默认的程序化预制件生成器将读取自定义属性，以建立 LOD 清单规则和物理清单规则。最后，这些清单规则将转化为 LOD 模型和物理网格产品文件。
 
 ![Car FBX example with UDPs.](/images/user-guide/assets/pipeline/scene_api_udp.jpg)

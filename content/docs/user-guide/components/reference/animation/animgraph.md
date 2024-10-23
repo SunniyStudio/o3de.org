@@ -1,26 +1,25 @@
 ---
 linkTitle: Anim Graph
-description: ' Use the AnimGraph component to adds an animation graph and motion set
-  to your character. '
-title: Anim Graph Component
+description: ' 使用 AnimGraph 组件为角色添加动画图形和动作集。 '
+title: Anim Graph 组件
 ---
 
 
 
-You can use the **Anim Graph** component to add an animation graph and motion set to your character. Add this component to the [Actor](/docs/user-guide/components/reference/animation/actor/) component to control character behavior from an animation graph. For single motions, see the [Simple Motion](/docs/user-guide/components/reference/animation/simple-motion/) component.
+您可以使用**Anim Graph**组件为角色添加动画图和动作集。将此组件添加到[Actor](/docs/user-guide/components/reference/animation/actor/)组件中，即可通过动画图来控制角色行为。有关单个动作，请参阅[Simple Motion](/docs/user-guide/components/reference/animation/simple-motion/) 组件。
 
-## Anim Graph Component Properties 
+## Anim Graph组件属性 
 
-The **Anim Graph** component has the following properties:
+**Anim Graph**组件具有以下属性：
 
 **Anim graph**
-Lets you select the animation graph that was created in the Animation Editor.
+让您选择在动画编辑器中创建的动画图形。
 
 **Motion set asset**
-Lets you select the motion set that was created in the Animation Editor.
+让您选择在动画编辑器中创建的动作集。
 
 **Active motion set**
-Lets you select the motion set that was created in the Animation Editor.
+让您选择在动画编辑器中创建的动作集。
 
 **Parameters**
-Displays the parameters that were created with the Animation Graph.
+显示用动画图形创建的参数。

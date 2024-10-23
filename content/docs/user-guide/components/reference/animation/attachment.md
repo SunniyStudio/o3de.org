@@ -1,58 +1,57 @@
 ---
 linkTitle: Attachment
-description: ' Use the Attachment component to attach an entity''s bone to a bone
-  on the skeleton of another entity in Open 3D Engine. '
-title: Attachment Component
+description: ' 在 Open 3D Engine 中，使用 Attachment 组件可将实体的骨骼连接到另一实体骨骼上的骨骼。'
+title: Attachment 组件
 ---
 
 
 
-The **Attachment** component lets an entity attach to a bone on the skeleton of another entity.
+**Attachment** 组件可让一个实体连接到另一个实体骨架上的骨骼。
 
-## Attachment Component Properties 
+## Attachment组件属性
 
 ![Attachment component properties.](/images/user-guide/component/attachment-component-properties.png)
 
-The **Attachment** component has the following properties.
+**Attachment**组件具有以下属性。
 
 
 ****
-
-| Name | Description |
+1
+| 名称 | 说明 |
 | --- | --- |
-| Target entity |  Specifies the character entity that you want to attach.  |
-| Joint name |  Specifies the joint that you want to attach to the entity.  |
-| Position offset |  Specifies the x, y, and z local position offset from the target bone.  |
-| Rotation offset |  Specifies the x, y, and z local rotation offset from the target bone.  |
-|  **Scale offset**  |  Specifies the x, y, and z local scale offset from the target bone.  |
-| Attached initially |  Specifies whether to attach to the target entity automatically.  |
-|  **Scaling**  |  Specifies how the object scaling is determined. You can specify the following values:   |
+| Target entity |  指定要附加的角色实体。 |
+| Joint name |  指定要附加到实体的关节。  |
+| Position offset |  指定从目标骨骼偏移的 x、y 和 z 本地位置。  |
+| Rotation offset |  指定目标骨骼的 x、y 和 z 局部旋转偏移。 |
+|  **Scale offset**  |  指定目标骨骼的 x、y 和 z 局部比例偏移。  |
+| Attached initially |  指定是否自动附加到目标实体。  |
+|  **Scaling**  |  指定对象缩放的确定方式。可以指定以下值：   |
 
-## EBus Request Bus Interface 
+## EBus 请求总线接口
 
-Use the following request functions with the event bus (EBus) interface to communicate with other components of your game.
+使用事件总线（EBus）接口的下列请求功能可与游戏的其他组件进行通信。
 
-For more information, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
-
-
-****
-
-| Function Name | Description | Parameters | Scriptable |
-| --- | --- | --- | --- |
-| Attach |  Changes the attachment target for an entity. The entity will detach from its previous target.  |  `targetEntityId` - ID of the entity in which to attach. `targetBoneName` - Name of bone in which to attach the entity. If a bone is not found, then attach to target entity's transform origin. `offsetTransform` - Attachment's offset from target.  | Yes |
-| Detach |  Detaches the target from the entity.  | None | Yes |
-| SetAttachmentOffset |  Update entity's offset from target.  | offsetTransform - Attachment's offset from target. | Yes |
-
-## EBus Notification Bus Interface 
-
-Use the following notification functions with the EBus interface to communicate with other components of your game.
-
-For more information, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
 
 ****
 
-| Function Name | Description | Parameters | Scriptable |
+| 函数名称 | 说明 | 参数 | 可脚本化 |
 | --- | --- | --- | --- |
-| OnAttached |  Indicates that the entity has attached to the target.  | targetEntityId - ID of the target in which is being attached. | Yes |
-| OnDetached |  Indicates that the entity is detaching from its target.  |  `targetEntityId` - ID of the target in which is being detached.  | Yes |
+| Attach |  更改实体的连接目标。实体将从先前的目标脱离。  |  `targetEntityId` - 要附加的实体的 ID。 `targetBoneName` - 要附加实体的骨骼名称。如果找不到骨骼，则附加到目标实体的变换原点。 `offsetTransform` - 附件与目标的偏移量。  | 是 |
+| Detach |  将目标与实体分离。 | 无 | 是 |
+| SetAttachmentOffset |  更新实体与目标的偏移量。  | offsetTransform - 附件与目标的偏移量。 | 是 |
+
+## EBus 通知总线接口 
+
+使用 EBus 接口的下列通知功能可与游戏的其他组件进行通信。
+
+更多信息，请参阅[使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
+
+
+****
+
+| 函数名称 | 说明 | 参数 | 可脚本化 |
+| --- | --- | --- | --- |
+| OnAttached |  表示实体已连接到目标。  | targetEntityId - 所连接目标的 ID。 | 是 |
+| OnDetached |  表示实体正在脱离目标。  |  `targetEntityId` - 正在被分离的目标的 ID。 | 是 |

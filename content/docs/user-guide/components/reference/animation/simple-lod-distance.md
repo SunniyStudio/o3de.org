@@ -1,30 +1,30 @@
 ---
 linkTitle: Simple LOD Distance
-title: Simple LOD Distance Component
-description: Use the Simple LOD Distance component to set the distance for each actor LOD in Open 3D Engine (O3DE).
+title: Simple LOD Distance 组件
+description: 在Open 3D Engine (O3DE)中，使用Simple LOD Distance组件来设置每个Actor LOD 的距离。
 ---
 
-The **Simple LOD Distance** component allows you to set the distance and motion sample rate for each level of detail (LOD) of an actor. It requires an **Actor** component that references an actor asset with at least one LOD mesh group in addition to the base actor mesh group.
+通过**Simple LOD Distance**组件，您可以为Actor的每个细节级别（LOD）设置距离和运动采样率。它需要一个**Actor**组件，该组件引用了一个Actor资产，除基本Actor网格群组外，至少还有一个 LOD 网格群组。
 
-The Simple LOD Distance component automatically creates an element in the **LOD distance (Max)** and **Anim graph sample rates** lists for each LOD found in the actor asset. Up to six LODs are supported including the base mesh group. You can set a display distance in meters and a motion sample rate (per second) for each LOD mesh group.
+简单 LOD 距离组件会自动为Actor资产中的每个 LOD 在**LOD distance (Max)**和**Anim graph sample rates**列表中创建一个元素。包括基本网格组在内，最多支持六个 LOD。您可以为每个 LOD 网格组设置以米为单位的显示距离和运动采样率（每秒）。
 
-For more information on actor LODs, refer to the topic [Using Actor LODs to Optimize Performance](/docs/user-guide/visualization/animation/using-actor-lods-optimize-game-performance/).
+有关Actor LOD 的更多信息，请参阅主题 [使用Actor LOD 优化性能](/docs/user-guide/visualization/animation/using-actor-lods-optimize-game-performance/)。
 
-## Provider
+## 提供者
 
 [EMotionFX](/docs/user-guide/gems/reference/animation/emotionfx)
 
-## Dependencies
+## 依赖
 
-* [Actor component](actor)
-* An actor asset with a base mesh group and at least one LOD mesh group.
+* [Actor 组件](actor)
+* Actor资产包含一个基础网格组和至少一个 LOD 网格组。
 
-## Simple LOD Distance properties
+## Simple LOD Distance 属性
 
 ![Add the Simple LOD Distance component to an entity to set display distances for each LOD mesh group.](/images/user-guide/components/reference/animation/simple-lod-distance-component.png)
-
-| Property | Description | Values | Default |
+1
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **LOD distance (Max)** | Sets the max display distance for each LOD of the actor. The distance value is in meters (world units) from the camera. Index 0 is the base mesh group for the actor. | 0 to Infinity | Depends on the LOD index. |
-| **Enable LOD anim graph sampling** | Enable per LOD animation sample rates. When enabled, the **Anim graph sample rate** list is displayed with one element per LOD. | Boolean | `Disabled` |
-| **Anim graph sample rate** | Sets the animation sample rate (per second) for each LOD. Index 0 is the base mesh group for the actor. Setting an LOD's sample rate to `0` maximizes the sample rate, so that animation is sampled as many times as possible per second for the LOD. Any non-zero value specifies a maximum animation sample rate for the LOD. Lower values that are greater than `0` provide better performance. Higher values (or `0`) might decrease performance but produce smoother animation. | 0 to Infinity | Depends on the LOD index. |
+| **LOD distance (Max)** | 设置Actor每个 LOD 的最大显示距离。距离值以米为单位（世界单位）。索引 0 是角色的基本网格组。 | 0 到 无限 | 取决于 LOD 序号。 |
+| **Enable LOD anim graph sampling** | 启用每个 LOD 的动画采样率。启用后，**Anim graph sample rate**列表将显示每个 LOD 的一个元素。| Boolean | `Disabled` |
+| **Anim graph sample rate** | 设置每个 LOD 的动画采样率（每秒）。索引 0 是Actor的基本网格组。将一个 LOD 的采样率设置为 `0`可以最大化采样率，这样每秒就可以对该 LOD 进行尽可能多的动画采样。任何非零值都指定了 LOD 的最大动画采样率。大于 `0` 的较低值可提供更好的性能。较高的值（或 `0`）可能会降低性能，但会产生更流畅的动画。 | 0 到 无限 | 取决于 LOD 序号。 |

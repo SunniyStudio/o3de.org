@@ -1,56 +1,56 @@
 ---
 linkTitle: Simple Motion
-title: Simple Motion Component
-description: ' Use the Simple Motion component to add motion effects to your actor in Open 3D Engine (O3DE). '
+title: Simple Motion 组件
+description: ' 在Open 3D Engine (O3DE)中使用Simple Motion组件为Actor添加运动效果。'
 ---
 
-You can use the **Simple Motion** component to play a motion without an animation graph. Add this component to an entity with the **[Actor](/docs/user-guide/components/reference/animation/actor/)** component to use a single motion for your actor. For complex motions, refer to the **[AnimGraph](/docs/user-guide/components/reference/animation/animgraph/)** component.
+您可以使用**Simple Motion**组件来播放一个没有动画图形的动作。将此组件添加到带有**[Actor](/docs/user-guide/components/reference/animation/actor/)** 组件的实体中，就可以为您的Actor使用单一动作。如需复杂的动作，请参考  **[AnimGraph](/docs/user-guide/components/reference/animation/animgraph/)** 组件。
 
-## Provider
+## 提供者
 
 [EMotionFX](/docs/user-guide/gems/reference/animation/emotionfx)
 
-## Dependencies
+## 依赖
 
-[Actor component](./actor)
+[Actor 组件](./actor)
 
-## Simple Motion properties 
+## Simple Motion 属性 
 
 ![Add the Simple Motion component to an entity to assign a motion for the actor.](/images/user-guide/components/reference/animation/simple-motion-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview In Editor** | Plays the motion in **Open 3D Engine (O3DE) Editor**. | Boolean | `Disabled` |
-| **Motion** | 	Specifies the motion asset that you want to animate the actor with. | Motion asset | None |
-| **Loop motion** | Runs the animation continuously. | Boolean | `Disabled` |
-| **Retarget motion** | Allows motion that was created with an actor that was configured with specific bone lengths to be played on another actor with different bone lengths. When applied, the motion does not affect bone lengths. The skeleton must follow the same hierarchy and the bone names must be identical to work properly. | Boolean | `Disabled` |
-| **Reverse motion** | Runs the animation in reverse. | Boolean | `Disabled` |
-| **Mirror motion** | Mirrors the animation of the character’s body parts. For example, if the actor kicks with the right leg while the left leg is planted, the mirror effect causes the left leg to kick while the right leg is planted. | Boolean | `Disabled` |
-| **Play speed** | Specifies the rate at which the motion is played. | 0 to Infinity | `1.0` |
-| **Blend In Time** | Specifies the blend in time (in seconds) for the motion. You can set this parameter for a motion that you want to start and that is blending from a previous motion. | 0 to Infinity | `0.0` |
-| **Blend Out Time** | Specifies the blend out time (in seconds) for the motion. You can set this parameter for a motion that is currently playing and that will blend into the next motion. | 0 to Infinity | `0.0` |
-| **Play on active** | Start the animation when the entity is activated. | Boolean | `Enabled` |
-| **In-place** | Removes any positional or rotational changes of root joints from the animation. | Boolean | `Disabled` |
+| **Preview In Editor** | 在**Open 3D Engine (O3DE) 编辑器**中播放动作。 | Boolean | `Disabled` |
+| **Motion** | 	指定要为Actor制作动画的运动资产。 | Motion asset | None |
+| **Loop motion** | 连续运行动画。 | Boolean | `Disabled` |
+| **Retarget motion** | 允许在配置了特定骨骼长度的Actor身上创建的动作在另一个具有不同骨骼长度的Actor身上执行。应用时，动作不会影响骨骼长度。骨骼必须遵循相同的层次结构，骨骼名称必须相同才能正常工作。 | Boolean | `Disabled` |
+| **Reverse motion** | 反向播放动画。 | Boolean | `Disabled` |
+| **Mirror motion** | 镜像角色身体部位的动画。例如，如果Actor踢右腿时左腿着地，镜像效果会使右腿着地时左腿踢地。 | Boolean | `Disabled` |
+| **Play speed** | 指定播放动作的速率。 | 0 to Infinity | `1.0` |
+| **Blend In Time** | 指定动作的混合时间（秒）。您可以为要启动的动作设置该参数，该动作是由之前的动作混合而成的。| 0 到 无限 | `0.0` |
+| **Blend Out Time** | 指定动作的混合时间（秒）。您可以为当前正在播放并将与下一个动作混合的动作设置该参数。 | 0 到 无限 | `0.0` |
+| **Play on active** | 当实体被激活时启动动画。 | Boolean | `Enabled` |
+| **In-place** | 删除动画中根节点的位置或旋转变化。 | Boolean | `Disabled` |
 
 ## SimpleMotionComponentRequestBus ##
 
-Use the following request functions with the `SimpleMotionComponentRequestBus` EBus interface to communicate Simple Motion components in your game. For more information, refer to [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
-
-| Request Name | Description | Parameter | Return | Scriptable |
+将以下请求函数与 `SimpleMotionComponentRequestBus` EBus 接口结合使用，可在游戏中与简单运动组件进行通信。更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/).
+1
+| 请求名称| 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `BlendInTime` | Sets the **Blend In Time** of the motion. | Time: Float | None | Yes |
-| `BlendOutTime` | Sets the **Blend Out Time** of the motion. | Time: Float | None | Yes |
-| `GetBlendInTime` | Returns the **Blend In Time** of the motion. | None | Time: Float | Yes |
-| `GetBlendOutTime` | Returns the **Blend Out Time** of the motion. | None | Time: Float | Yes |
-| `GetLoopMotion` | Returns `True` if the motion is set to loop. | None | Boolean | Yes |
-| `GetMotion` | Returns the AssetId of the motion. | None | Motion: AssetId | Yes |
-| `GetPlaySpeed` | Returns the **Play speed**. | None | Speed: Float | Yes |
-| `GetPlayTime` | Returns the amount of time elapsed since the start of the current motion. | None | Time: Float | Yes |
-| `LoopMotion` | If `True`, sets the motion to loop. | Boolean | None | Yes |
-| `MirrorMotion` | If `True`, mirrors the motion. | Boolean | None | Yes |
-| `Motion` | Sets the motion asset. | Motion: AssetId | None | Yes |
-| `PlayMotion` | Starts playing the motion. | None | None | Yes |
-| `PlayTime` | Starts playing the motion from a specific elapsed time. | Time: Float | None | Yes |
-| `RetargetMotion` | If `True`, enables the motion to be retargeted to the current actor. | Boolean | None | Yes |
-| `ReverseMotion` | If `True`, sets the motion to play in reverse. | Boolean | None | Yes |
-| `SetPlaySpeed` | Sets the **Play speed**. | Speed: Float | None | Yes |
+| `BlendInTime` | 设置动作的 **Blend In Time**。 | Time: Float | None | Yes |
+| `BlendOutTime` | 设置动作的 **Blend Out Time**。 | Time: Float | None | Yes |
+| `GetBlendInTime` | 返回动作的 **Blend In Time**。 | None | Time: Float | Yes |
+| `GetBlendOutTime` | 返回动作的**Blend Out Time**。 | None | Time: Float | Yes |
+| `GetLoopMotion` | 如果动作被设置为循环，返回`True`。 | None | Boolean | Yes |
+| `GetMotion` | 返回动作的AssetId。| None | Motion: AssetId | Yes |
+| `GetPlaySpeed` | 返回**Play speed**。 | None | Speed: Float | Yes |
+| `GetPlayTime` | 返回当前动作开始后所经过的时间。 | None | Time: Float | Yes |
+| `LoopMotion` | 如果 `True`，设置动作为循环。 | Boolean | None | Yes |
+| `MirrorMotion` | 如果 `True`， 镜像动作。 | Boolean | None | Yes |
+| `Motion` | 设置动作资产。 | Motion: AssetId | None | Yes |
+| `PlayMotion` | 开始播放动作。 | None | None | Yes |
+| `PlayTime` | 从特定时间开始播放动作。 | Time: Float | None | Yes |
+| `RetargetMotion` | 如果 `True`， 可以将运动重定向到当前Actor。 | Boolean | None | Yes |
+| `ReverseMotion` | 如果 `True`，将动作设置为反向播放。 | Boolean | None | Yes |
+| `SetPlaySpeed` | 设置 **Play speed**。 | Speed: Float | None | Yes |

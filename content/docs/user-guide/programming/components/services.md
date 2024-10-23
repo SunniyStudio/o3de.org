@@ -40,6 +40,6 @@ static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& d
 
 **IncompatibleService** -- 指定不能与组件一起工作的服务。请参考这些示例：
 
-+ 一个实体只能有一种类型的碰撞器。因此，`PrimitiveColliderService`会指定`MeshColliderService`与其不兼容，反之亦然。
-+ 如果两个对撞机组件本身已经提供了 `ColliderService` 服务，并因此将 `ColliderService` 指定为不兼容，也能达到同样的效果。将一个组件标记为与 `ColliderService` 不兼容，可确保不会有其他具有相同服务的组件被添加到实体中。
++ 一个实体只能有一种类型的碰撞体。因此，`PrimitiveColliderService`会指定`MeshColliderService`与其不兼容，反之亦然。
++ 如果两个碰撞体组件本身已经提供了 `ColliderService` 服务，并因此将 `ColliderService` 指定为不兼容，也能达到同样的效果。将一个组件标记为与 `ColliderService` 不兼容，可确保不会有其他具有相同服务的组件被添加到实体中。
 + `IncompatibleService`规范常用于指定一个实体上不能存在多个相同的组件。

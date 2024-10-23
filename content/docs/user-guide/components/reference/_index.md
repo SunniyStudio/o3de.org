@@ -176,14 +176,14 @@ toc: true
 | [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/) | 将可移动实体定义为可移动的刚性物体，它是实体，可以与其他 PhysX 实体发生碰撞。 |
 | [PhysX Fixed Joint](/docs/user-guide/components/reference/physx/fixed-joint/) | 创建一个动态固定关节，将实体约束在关节上，在任何轴上都没有自由度。 |
 | [PhysX Force Region](/docs/user-guide/components/reference/physx/force-region/) | 对指定区域内的物体施加物理力。 |
-  [PhysX Heightfield Collider](/docs/user-guide/components/reference/physx/heightfield-collider/) | 根据Axis-Aligned Box组件创建一个几何碰撞器。 |
+  [PhysX Heightfield Collider](/docs/user-guide/components/reference/physx/heightfield-collider/) | 根据Axis-Aligned Box组件创建一个几何碰撞体。 |
 | [PhysX Hinge Joint](/docs/user-guide/components/reference/physx/hinge-joint/) | 创建动态铰链关节，将实体约束在关节上，并可绕关节的 X 轴自由旋转。|
 | [PhysX Mesh Collider](./physx/mesh-collider/) | 允许您指定用于计算实体间碰撞的 PhysX 网格资产。 |
 | [PhysX Primitive Collider](./physx/collider/) | 允许您指定用于计算实体间碰撞的原始形状。 |
 | [PhysX Prismatic Joint](/docs/user-guide/components/reference/physx/prismatic-joint/) | 创建动态棱柱关节，将实体约束在关节上，保持相同的旋转，但允许实体沿一条轴自由移动。|
 | [PhysX Ragdoll](/docs/user-guide/components/reference/physx/ragdoll/) | 通过创建由关节连接的刚体层次结构来模拟布偶物理。 |
 | [PhysX Static Rigid Body](/docs/user-guide/components/reference/physx/static-rigid-body/) | 将实体定义为不可移动的刚性物体，它是实体，可以与其他 PhysX 实体发生碰撞。 |
-| [PhysX Shape Collider](/docs/user-guide/components/reference/physx/shape-collider/) | 根据**Shape**组件创建一个几何碰撞器。 |
+| [PhysX Shape Collider](/docs/user-guide/components/reference/physx/shape-collider/) | 根据**Shape**组件创建一个几何碰撞体。 |
 
 ### Scripting
 
@@ -224,7 +224,7 @@ toc: true
 
 | 组件 | 说明 |
 | - | - |
-| [Terrain Physics Heightfield Collider](./terrain/terrain-physics-collider) | 以高度场和表面到材质映射的形式向物理对撞机提供地形数据。 |
+| [Terrain Physics Heightfield Collider](./terrain/terrain-physics-collider) | 以高度场和表面到材质映射的形式向物理碰撞体提供地形数据。 |
 | [Terrain Layer Spawner](./terrain/layer_spawner) | 生成一个包含在可配置边界内的地形区域，并允许对重叠的地形层进行优先级排序。 |
 | [Terrain Macro Material](./terrain/terrain-macro-material) | 为地形区域提供低保真色彩数据。 |
 | [Terrain Height Gradient List](./terrain/height_gradient_list) | 根据梯度列表提供地形高度数据。 |

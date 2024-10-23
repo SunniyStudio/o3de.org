@@ -1,268 +1,267 @@
 ---
 linkTitle: Navigation
-description: ' Use the Navigation component to enable an entity to find and follow
-  paths in Open 3D Engine. '
-title: Navigation Component
+description: ' 使用Navigation组件可使实体在 Open 3D Engine中查找和跟踪路径。'
+title: Navigation 组件
 draft: True
 ---
 
 
 
-The **Navigation** component provides path-finding and path-following functionality for AI movement, typically on a navigation mesh.
+**Navigation** 组件为人工智能运动（通常是在导航网格上）提供路径查找和路径跟踪功能。
 
 ![AI can use navigation to move along a path, typically on a navigation mesh.](/images/user-guide/component/component-navigation-path.png)
 
-## Navigation Component Properties 
+## Navigation 组件属性
 
-The **Navigation** component has the following properties:
+**Navigation** 组件具有以下属性：
 
 ![Navigation component properties](/images/user-guide/component/component-navigation-properties.png)
 
 **Agent Type**
-Specifies this AI's entity type for navigation purposes. Defining the agent type determines which [navigation area](/docs/user-guide/components/reference/ai/nav-area/) the entity follows in a scenario where there are different navigation meshes for larger vehicles and smaller humanoid bots. These agent types are defined in the `Scripts\AI\Navigation.xml` file of your project.
-To define an agent type on your navigation area, see the **[Navigation Area](/docs/user-guide/components/reference/ai/nav-area/)** component.
+为导航目的指定该人工智能的实体类型。在大型车辆和小型人形机器人有不同导航网格的情况下，定义代理类型将决定实体所遵循的[导航区域](/docs/user-guide/components/reference/ai/nav-area/)。这些代理类型在项目的 `Scripts\AI\Navigation.xml` 文件中定义。
+要在导航区域定义代理类型，请参阅 **[Navigation Area](/docs/user-guide/components/reference/ai/nav-area/)** 组件。
 
 **Agent Speed**
-Sets the speed of the agent while navigating when using the Transform or Physics movement methods.
-Default value: `1`
+设置代理在使用变换或物理移动方法导航时的速度。
+默认值: `1`
 
 **Agent Radius**
-Sets the entity radius for navigation purposes. Independent of physics or other collision concerns, the pathfinder uses this value to move around an area with obstacles while cutting corners.
-Default value: `4`
+设置用于导航的实体半径。在不考虑物理或其他碰撞问题的情况下，寻路器可利用此值在有障碍物的区域内移动，同时少走弯路。
+默认值: `4`
 
 **Arrival Distance Threshold**
-Sets the minimum distance from an end point when an entity's movement stops and is considered complete.
-Default value: `0.25`
+设置当实体运动停止并被认为完成时，与终点的最小距离。
+默认值: `0.25`
 
 **Repath Threshold**
-Sets the minimum distance from the previously known location before an entity's new path is calculated.
-Default value: `1`
+在计算实体的新路径之前，设置与之前已知位置的最小距离。
+默认值: `1`
 
 **Movement Method**
-Sets the movement method to use when following a path. This can be Transform, Physics, or Custom.
-Default value: `Transform`
-+ **Transform** - Move the entity that this component is on using the Transform bus. This method ignores all physics so the object may go through walls and terrain.
-+ **Physics** - Move the entity using physics if the entity has a PhysX Rigid Body, PhysX Character Controller, Rigid Body Physics or Character Physics component. If the entity does not have one of these valid physics components it will not move.
-+ **Custom** - Provide path updates and let the game logic move the entity however they want. This method is useful when you want to move an animated entity that uses root motion. By listening to the `OnTraversalPathUpdate` notification, you can move your entity toward the next point along a path. Once the entity gets within the arrival distance threshold another `OnTraversalPathUpdate` notification with the next path position will be provided and so on until the end of the path is reached.
+设置沿路径移动时使用的移动方法。可以时 Transform, Physics, 或 Custom。
+默认值: `Transform`
++ **Transform** - 使用变换总线移动该组件所在的实体。这种方法忽略了所有物理特性，因此物体可以穿过墙壁和地形。
++ **Physics** - 如果实体具有PhysX Rigid Body, PhysX Character Controller, Rigid Body Physics 或 Character Physics组件，则使用物理原理移动实体。如果实体没有这些有效的物理组件，则不会移动。
++ **Custom** - 提供路径更新，让游戏逻辑随心所欲地移动实体。当您想移动使用根运动的动画实体时，此方法非常有用。通过监听 `OnTraversalPathUpdate` 通知，您可以将实体沿路径移向下一点。一旦实体到达到达距离阈值，就会收到另一个包含下一个路径位置的 `OnTraversalPathUpdate`通知，以此类推，直到到达路径终点。
 
 **Allow Vertical Navigation**
-Set to true if you want to to allow the navigation agent to include the vertical velocity when navigating a path, or false if you just want the velocity to be constrained to the X and Y plane (2D). Vertical navigation can be used for flying entities or entities that move with the Transform method but must move vertically. Enabling this property can also help prevent "stair stepping" for entities moving down ramps or steep terrain.
-Default value: `false`
+如果希望导航代理在导航路径时包含垂直速度，则设置为 true；如果只希望将速度限制在 X 和 Y 平面（2D）上，则设置为 false。垂直导航可用于飞行实体或使用变换方法移动但必须垂直移动的实体。启用此属性还有助于防止实体在斜坡或陡峭地形上移动时出现 “楼梯踏步 ”现象。
+默认值: `false`
 
-## NavigationComponentRequestBus EBus Interface 
+## NavigationComponentRequestBus EBus 接口 
 
-Use the following request functions with the `NavigationComponentRequestBus` event bus (EBus) interface to communicate with other components of your game.
+将下列请求函数与 `NavigationComponentRequestBus` 事件总线（EBus）接口结合使用，可与游戏中的其他组件进行通信。
 
-For more information about using the EBus interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用 EBus 接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/).
 
 ### FindPath 
 
-Finds a requested path configuration.
+查找请求的路径配置。
 
-**Parameters**
-`request` - Allows the issuer of the request to override one, all, or none of the pathfinding configuration defaults for this entity.
+**参数**
+`request` - 允许请求发出者覆盖该实体的一个、全部或全部寻路配置默认值。
 
-**Return**
-A unique identifier for this pathfinding request.
+**返回值**
+该寻路请求的唯一标识符。
 
-**Scriptable**
-No
+**可脚本化**
+否
 
 ### FindPathToEntity 
 
-Creates a pathfinding request to navigate toward the specified entity.
+创建寻路请求，向指定实体导航。
 
-**Parameters**
-`EntityId` - ID of the entity toward which you want to navigate.
+**参数**
+`EntityId` - 您要导航的实体的 ID。
 
-**Return**
-A unique identifier for the pathfinding request.
+**返回值**
+寻路请求的唯一标识符。
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### FindPathToPosition 
 
-Creates a pathfinding request to navigate towards the specified world position. Note that while this may seem like the obvious simple choice for pathing, it is often more useful to use FindPathToEntity with a dummy entity because then the pathing will automatically update if you move the dummy entity to a new location before pathing is complete.
+创建寻路请求，向指定的世界位置导航。需要注意的是，虽然这看似是简单明了的寻路选择，但使用带有虚拟实体的 FindPathToEntity 通常更有用，因为如果在寻路完成前将虚拟实体移动到新位置，寻路会自动更新。
 
-**Parameters**
-`Destination` - World position you want to navigate to.
+**参数**
+`Destination` - 您要导航到的世界位置。
 
-**Return**
-A unique identifier for the pathfinding request.
+**返回值**
+寻路请求的唯一标识符。
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### Stop 
 
-Stops all pathfinding operations for the provided `requestId`. Use the ID to ensure that the request you want to cancel is the request that is currently processing. If the specified `requestId` is different from the ID of the current request, then the Stop command is ignored.
+停止提供的 `requestId` 的所有寻路操作。使用 ID 确保要取消的请求是当前正在处理的请求。如果指定的 `requestId` 与当前请求的 ID 不同，则 Stop 命令将被忽略。
 
-**Parameters**
-`requestId` - ID of the request to cancel.
+**参数**
+`requestId` - 要取消的请求的 ID。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### GetAgentSpeed 
 
-Returns the current AI Agent's speed.
+返回当前 AI Agent 的速度。
 
-**Parameters**
-None
+**参数**
+无
 
-**Return**
-Returns the current agent's speed as a float.
+**返回值**
+返回当前代理的浮点速度。
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### SetAgentSpeed 
 
-Updates the AI Agent's speed.
+更新 AI Agent 的速度。
 
-**Parameters**
-`agentSpeed` - Specifies the new agent speed as a float.
+**参数**
+`agentSpeed` - 以浮点形式指定新的代理速度。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### GetAgentMovementMethod 
 
-Returns the current AI Agent's movement method.
+返回当前 AI Agent 的移动方式。
 
-**Parameters**
-None
+**参数**
+无
 
-**Return**
-Returns the current agent's movement method.
+**返回值**
+返回当前代理的移动方式。
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### SetAgentMovementMethod 
 
-Updates the AI Agent's movement method.
+更新 AI Agent 的移动方式。
 
-**Parameters**
-`movementMethod` - Specifies the new agent movement method (Transform, Physics or Custom).
+**参数**
+`movementMethod` - 指定新的代理移动方法 (Transform, Physics 或 Custom)。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ## NavigationComponentNotificationBus EBus Interface 
 
-Use the following notification functions with the `NavigationComponentNotificationBus` event bus (EBus) interface to communicate with other components of your game.
+将以下通知函数与`NavigationComponentNotificationBus`事件总线（EBus）接口结合使用，可与游戏中的其他组件进行通信。
 
-For more information about using the EBus interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用 EBus 接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
 ### OnSearchingForPath 
 
-Indicates that the pathfinding request has been submitted to the navigation system.
+表示寻路请求已提交给导航系统。
 
-**Parameters**
-`requestId` - ID of the request for which the path is being searched.
+**参数**
+`requestId` - 正在搜索路径的请求的 ID。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### OnPathFound 
 
-Indicates that a path has been found for the indicated request.
+表示已为指定请求找到路径。
 
-**Parameters**
-`requestID` - ID of the request for which the path has been found.
-`currentPath` - The path calculated by the pathfinder.
+**参数**
+`requestID` - 已找到路径的请求的 ID。
+`currentPath` - 寻路器计算出的路径。
 
-**Return**
-Returns a boolean value indicating whether this path is to be traversed.
+**返回值**
+返回一个布尔值，表示是否要遍历此路径。
 
-**Scriptable**
-No
+**可脚本化**
+否
 
 ### OnTraversalStarted 
 
-Indicates that traversal for the indicated request has started.
+表示已开始对指定请求进行遍历。
 
-**Parameters**
-`requestId` - ID of the request for which traversal has started.
+**参数**
+`requestId` - 已开始遍历的请求的 ID。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### OnTraversalInProgress 
 
-Indicates that traversal for the indicated request is in progress.
+表示正在对指定请求进行遍历。
 
-**Parameters**
-`requestId` - ID of the request for which traversal is in progress.
-`distanceRemaining` - Remaining distance in this path.
+**参数**
+`requestId` - 正在进行遍历的请求的 ID。
+`distanceRemaining` - 这条路径的剩余距离。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### OnTraversalPathUpdate 
 
-Indicates that the path for the traversal has updated. If the `nextPathPosition` and `inflectionPosition` are equal, they represent the end of the path.
+表示遍历路径已更新。如果 `nextPathPosition` 和 `inflectionPosition` 相等，则表示路径的终点。
 
-**Parameters**
-`requestId` - ID of the request for which traversal is in progress.
-`nextPathPosition` - Furthest point on the path we can move to without colliding with anything.
-`inflectionPosition` - Next point on the path beyond `nextPathPosition` that deviates from a straight-line path.
+**参数**
+`requestId` - 正在进行遍历的请求的 ID。
+`nextPathPosition` - 我们在不与任何物体相撞的情况下可以移动到的路径上的最远点。
+`inflectionPosition` - 超越 `nextPathPosition` 的路径上偏离直线路径的下一个点。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### OnTraversalComplete 
 
-Indicates that traversal for the indicated request completed successfully.
+表示对指定请求的遍历成功完成。
 
-**Parameters**
-`requestId` - ID of the request for which traversal has completed.
+**参数**
+`requestId` - 已完成遍历的请求的 ID。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
 ### OnTraversalCancelled 
 
-Indicates that traversal for the indicated request was canceled before succesful completion. A path request may be cancelled if no path could be found or if the request was stopped by the game.
+表示指定请求的遍历在成功完成前被取消。如果找不到路径或请求被游戏停止，路径请求可能会被取消。
 
-**Parameters**
-`requestId` - ID of the request for which traversal was canceled.
+**参数**
+`requestId` - 被取消遍历的请求的 ID。
 
-**Return**
-None
+**返回值**
+无
 
-**Scriptable**
-Yes
+**可脚本化**
+是
 
-## Navigation Pathing Cvars 
+## 导航寻路 Cvars 
 
 **ai\_DrawPathFollower**
-Enables PathFollower debug drawing, displaying agent paths and safe follow target.
-`0` - Off
-`1` - On
+启用 PathFollower 调试绘图，显示代理路径和安全跟随目标。
+`0` - 关闭
+`1` - 开启

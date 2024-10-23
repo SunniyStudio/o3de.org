@@ -1,52 +1,52 @@
 ---
 linkTitle: Navigation Seed
-description: ' Use the Navigation Seed component to generate a color-coded markup
-  that indicates where your AI can travel in Open 3D Engine. '
-title: Navigation Seed Component
+description: ' 使用Navigation Seed组件生成一个彩色编码标记，显示AI在 Open 3D Engine中可以移动的位置。
+'
+title: Navigation Seed 组件
 draft: True
 ---
 
 
 
-The **Navigation Seed** component marks chunks of the [**Navigation Area**](/docs/user-guide/components/reference/ai/nav-area/) that are accessible to AI agents. Game developers can use this component as a visual aid to determine where AI agents can go.
+**Navigation Seed**组件标记了人工智能代理可以访问的[**Navigation Area**](/docs/user-guide/components/reference/ai/nav-area/) 的大块区域。游戏开发人员可以使用该组件作为视觉辅助工具，以确定人工智能代理可以去的地方。
 
-The **[Navigation Area](/docs/user-guide/components/reference/ai/nav-area/)** component can generate a complex-looking mesh with disconnected islands. If this happens, it can be difficult to determine the precise places that your AI can reach. In this case, use the **Navigation Seed** component to render a color-coded map. The blue chunks are accessible to AI and the red chunks are inaccessible.
+[**Navigation Area**](/docs/user-guide/components/reference/ai/nav-area/) 组件可以生成一个看起来很复杂的网格，网格中的岛屿互不相连。如果出现这种情况，就很难确定人工智能可以到达的精确位置。在这种情况下，可以使用**Navigation Seed**组件来渲染彩色编码地图。蓝色区域可供人工智能进入，红色区域则无法进入。
 
 ![Example Navigation Seed component with red and blue chunks.](/images/user-guide/component/component-navigation-mesh-seed-enabled.png)
 
-For example, [static objects](/docs/user-guide/components/reference/ai/nav-area#navigating-around-static-objects), [exclusion areas](/docs/user-guide/components/reference/ai/nav-area#creating-navigation-mesh-exclusion-areas), or terrain features can divide a navigation area into multiple chunks. The **Navigation Seed** component marks in blue where AI can reach if they are already in that chunk (for example, if they spawned there). You might have multiple navigation areas in one location, such as for different agent types. 
+例如，[静态物体](/docs/user-guide/components/reference/ai/nav-area#navigating-around-static-objects)、[排除区域](/docs/user-guide/components/reference/ai/nav-area#creating-navigation-mesh-exclusion-areas)或地形特征可以将导航区域划分为多个小块。导航种子***组件会用蓝色标记人工智能可以到达的区域，如果它们已经在该区域内（例如，如果它们在该区域内生成）。您可能会在一个位置设置多个导航区域，例如不同的代理类型。
 
-**To use the Navigation Seed component**
+**要使用Navigation Seed组件**
 
-1. [Create a navigation area](/docs/user-guide/components/reference/ai/nav-area/).
+1. [创建一个导航区域](/docs/user-guide/components/reference/ai/nav-area/)。
 
-1. Divide the navigation area into multiple chunks using static objects, exclusion areas, or terrain.
+1. 使用静态物体、排除区域或地形将导航区域划分为多个区块。
 
-1. Add the **Navigation Seed** component to the navigation area entity or to a separate entity.
+1. 像导航区域实体或另一个实体添加**Navigation Seed**组件。
 
-2. If you want to specify an agent type, select it in the **Navigation Seed** component.
+2. 如果要指定AI代理类型，在 **Navigation Seed** 组件中选择AI代理类型。
 
-3. Move the seed around.
+3. 移动带此组件的实体。
 
-   If you turned on visualization, all AI-accessible areas render blue in the chunk where you placed the navigation seed. Inaccessible areas render red.
+  如果您开启了可视化功能，那么在您放置导航种子的区块中，所有AI可进入的区域都会呈现蓝色。无法进入的区域则显示为红色。
 
-**To calculate accessibility for agent types**
-+ In the **Navigation Seed** component, do one of the following:
+**计算AI代理类型的可达性**
++ 在**Navigation Seed**组件中，完成以下之一的操作：
 
-  1. To calculate accessibility for all agent types, leave the **Agent Type** field blank.
+  1. 要计算所有AI代理类型的可达性，将 **Agent Type** 字段留空。
 
-  1. To calculate accessibility for a specific agent type, select a type in the **Agent Type** drop-down list.
+  1. 要为指定的AI代理类型计算可达性，在 **Agent Type** 下拉列表中选择一个类型。
 
-By default, the navigation seed visualization system is not enabled. You must use the console to enable some flags.
+默认情况下，导航种子可视化系统未启用。您必须使用控制台启用某些标记。
 
-**To enable Navigation Seed visualization**
-+ Enable the following console variables. To do this, set the value to `1`.
-  + `ai_MNMDebugAccessibility` (In O3DE Editor, you can also choose **Game**, **AI**, **Visualize Navigation Accessibility**./)
+**要启用Navigation Seed可视化**
++ 启用以下控制台变量。为此，请将值设置为 `1`。
+  + `ai_MNMDebugAccessibility` (在 O3DE 编辑器中，你也可以选择 **Game**, **AI**, **Visualize Navigation Accessibility**。/)
   + `ai_DebugDraw`
   + `ai_DebugDrawNavigation`
 
-  For more information, see [Using the Console Window](/docs/user-guide/editor/console/).
+  更多信息，请参阅 [使用控制台窗口](/docs/user-guide/editor/console/)。
 
 {{< note >}}
-The **Navigation Seed** component exists only in O3DE Editor.
+**Navigation Seed**组件仅存在于O3DE编辑器中。
 {{< /note >}}

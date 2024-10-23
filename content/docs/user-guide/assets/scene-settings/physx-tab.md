@@ -1,107 +1,107 @@
 ---
 linkTitle: PhysX 标签页
 title: Scene Settings PhysX 标签页
-description: Modifiers and options available in the Scene Settings PhysX tab to generate PhysX colliders for Open 3D Engine (O3DE). 
+description: 场景设置 PhysX 选项卡中可用的修改器和选项，用于为Open 3D Engine (O3DE)生成 PhysX 碰撞体。
 weight: 600
 toc: true
 ---
 
-You can create PhysX collider product assets for PhysX simulation, hit detection, and triggers by defining PhysX mesh groups. Collider assets can be triangle meshes, or generated as primitives or convex meshes based on meshes contained in the source asset. Multiple PhysX mesh groups can be processed from a single source asset. Each PhysX mesh group produces its own `.pxmesh` product assets. The runtime product assets appear in **Asset Browser** as children of the source asset.
+您可以通过定义 PhysX 网格组创建 PhysX 碰撞体产品资产，用于 PhysX 仿真、碰撞检测和触发。碰撞体资产可以是三角形网格，也可以根据源资产中包含的网格生成基元或凸形网格。单个源资产可处理多个 PhysX 网格组。每个 PhysX 网格组都会生成自己的 `.pxmesh` 产品资产。运行时产品资产作为源资产的子资产出现在**资产浏览器**中。
 
-You can name meshes with the postfix `_phys` in your source asset to automatically process them as PhysX colliders. When a mesh in a source asset has the `_phys` postfix, it is recognized as a collider and automatically added to the default PhysX mesh group.
+您可以在源资产中为网格命名后缀为 `_phys`的网格，以便自动将其作为 PhysX 碰撞体处理。当源资产中的网格后缀名为`_phys`时，它就会被识别为碰撞体，并自动添加到默认的 PhysX 网格组中。
 
 {{< important >}}
-There are many options for creating PhysX colliders. The *best* options in a scenario depend on many factors including mesh complexity, how the collider is used, and whether the entity containing the collider is static (doesn't move), kinematic (animated), or simulated (driven by forces and collisions). In general, primitive colliders offer the best simulation performance, but you might consider trading performance for precision in situations where collider assets that closely match the shape of a visible mesh are desirable.
+创建 PhysX 碰撞体有很多选项。场景中的**最佳**选项取决于许多因素，包括网格复杂度、碰撞体的使用方式以及包含碰撞体的实体是静态（不动）、运动（动画）还是模拟（受力和碰撞驱动）。一般来说，原始碰撞体的仿真性能最好，但在需要碰撞体资产与可见网格的形状非常匹配的情况下，可以考虑用性能换取精度。
 {{< /important >}}
 
-The PhysX tab is available if the source asset contains at least one mesh.
+如果源资产至少包含一个网格，则 PhysX 选项卡可用。
 
-## PhysX tab properties
+## PhysX 标签页属性
 
 ![The Scene Settings PhysX tab properties.](/images/user-guide/assets/scene-settings/physx-tab.png)
-
-| Property | Description |
+1
+| 属性 | 说明 |
 | - | - |
-| **Add another physxmesh** | Add a PhysX mesh group to process as a PhysX collider \(`.pxmesh`\) product asset from the source asset. |
-| **Name PhysX Mesh** | Enter a name for the PhysX mesh group. This is the name of the `.pxmesh` product asset that appears in Asset Browser as a child of the source asset. |
-| **Select Meshes** | Choose the {{< icon browse-edit-select-files.svg >}} **Selection list** button to display a list of meshes found in the source asset file. Select meshes from the list to include them in the PhysX mesh group. The selected meshes can be purpose built as collision meshes, or they can be visible meshes. The selected meshes are used to automatically generate collider product assets. Meshes in the source asset that are named with a `_phys` postfix are automatically selected in the default PhysX mesh group. |
-| **Export As** | The cooking method to apply to this PhysX mesh group. This setting exposes properties for the selected cooking method. The three options: `Triangle Mesh`, `Convex`, and `Primitive`, and detailed in the sections below.  |
-| **Decompose Meshes** | When active, the V-HACD algorithm splits the selected meshes into convex parts which together approximate the original mesh shape. Each part is exported as a convex collider using the properties configured above. Decompose Meshes exposes **Decomposition Properties** which determine how the selected meshes are decomposed into convex parts.  **Decompose Meshes** is only available when `Convex` or `Primitive` is selected in the **Export As** property. For more information and illustrated examples of results, see the [V-HACD library on GitHub](https://github.com/kmammou/v-hacd). |
-| **Physics Materials** | Associate a physics material to each material from the selected meshes. Physics materials define physical surface properties such as friction. |
+| **Add another physxmesh** | 从源资产中添加一个 PhysX 网格组，作为 PhysX 碰撞体\(`.pxmesh`\)产品资产进行处理。 |
+| **Name PhysX Mesh** | 输入 PhysX 网格组的名称。这是作为源资产子资产出现在 “资产浏览器 ”中的`.pxmesh`产品资产的名称。 |
+| **Select Meshes** | 点击 {{< icon browse-edit-select-files.svg >}} **Selection list** 按钮可显示源资产文件中的网格列表。从列表中选择网格，将其包含在 PhysX 网格组中。所选网格可以是作为碰撞网格构建的，也可以是可见网格。所选网格将用于自动生成碰撞产品资产。源资产中以 `_phys` 后缀命名的网格会被自动选入默认的 PhysX 网格组。 |
+| **Export As** | 应用于该 PhysX 网格组的烹饪方法。此设置会显示所选烹饪方法的属性。有三个选项：`Triangle Mesh`, `Convex`, 和 `Primitive`三个选项，详见以下章节。 |
+| **Decompose Meshes** | 激活后，V-HACD 算法会将所选网格分割成多个凸形部分，这些部分共同近似于原始网格形状。每个部分都会使用上面配置的属性以凸碰撞体的形式输出。分解网格 "公开了**Decomposition Properties**，这些属性决定了如何将所选网格分解成凸形部分。 只有在**Export As**属性中选择`Convex` 或 `Primitive`时，**Decompose Meshes**才可用。更多信息和结果示例，请参阅 [GitHub 上的 V-HACD 库](https://github.com/kmammou/v-hacd)。 |
+| **Physics Materials** | A为所选网格中的每种材质关联物理材质。物理材料定义了表面的物理属性，如摩擦力。 |
 
 ## Triangle mesh asset
 
 ![The Scene Settings PhysX triangle mesh asset properties.](/images/user-guide/assets/scene-settings/physx-triangle-mesh-asset.png)
 
-Triangle mesh colliders accurately reproduce the shape of the selected meshes, but cannot be used on simulated entities. Triangle mesh colliders are most suitable for static environment entities that have complex shapes and require colliders that accurately resemble the shape of the visible mesh.
+三角形网格碰撞体能精确再现所选网格的形状，但不能用于模拟实体。三角形网格碰撞体最适用于形状复杂的静态环境实体，这些实体需要与可见网格形状精确相似的碰撞体。
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Merge Meshes** | When active, all selected mesh nodes are merged into a single collider mesh. Otherwise, the selected mesh nodes are exported as separate shapes. It's usually more efficient to have a single collider mesh. |
-| **Weld Vertices** | When active, mesh vertex welding is performed. **Disable clean mesh** must be off when **Weld Vertices** is on or vertex welding is not performed. |
-| **Disable Clean Mesh** | When active, mesh cleaning is not performed. This makes cooking faster. **Disable clean mesh** must be off when **Weld Vertices** is on or vertex welding is not performed. |
-| **Force 32-bit Indices** | When enabled, 32-bit indices are created for the collider asset regardless of triangle count. |
-| **Suppress Triangle Mesh Remap Table** | When active, the face remap table is not created. This saves a significant amount of memory, but without remap information, internal mesh triangles from collisions, sweeps, or raycast hits can't be returned. |
-| **Build Triangle Adjacencies** | When active, triangle adjacency information is created. You can get the adjacency triangles for a given triangle using the `getTriangle` method. |
-| **Mesh Weld Tolerance** | When **Weld Vertices** is active, this value is the distance within which vertices are welded. When **Weld Vertices** is inactive, this value defines the acceptance distance for mesh validation. **Weld Vertices** uses a snap-to-grid approach that truncates each vertex to an integer value using **Mesh Weld Tolerance**. Once these snapped vertices are produced, all vertices that snap to a given vertex on the grid are remapped to a single vertex. All triangle indices are then remapped to reference this subset of clean vertices. Vertices do not have their positions modified. The snap-to-grid is only performed to identify nearby vertices. The mesh validation approach uses the same snap-to-grid approach to identify nearby vertices. If more than one vertex snaps to a given grid coordinate, the distance between the vertices is checked to ensure it is greater than **Mesh Weld Tolerance**. If the vertices are within **Mesh Weld Tolerance**, a warning is emitted. |
-| **Number of Triangles Per Leaf** | Set the mesh cooking hint for max triangles per leaf. Fewer triangles per leaf results in slower cooking speed and produces larger mesh sizes with better runtime performance. More triangles per leaf results in faster cooking speed and produces smaller mesh sizes with decreased runtime performance. |
+| **Merge Meshes** | 激活后，所有选中的网格节点都会合并为一个碰撞网格。否则，选定的网格节点将作为单独的图形导出。通常，使用单个碰撞网格会更有效率。 |
+| **Weld Vertices** | 激活时，将执行网格顶点焊接。当**Weld Vertices**开启时，**Disable clean mesh**必须关闭，否则不会执行顶点焊接。 |
+| **Disable Clean Mesh** | 激活时，不进行网眼清洁。这样可以加快烹饪速度。当**Weld Vertices**开启时，**Disable clean mesh**必须关闭，否则不会执行顶点焊接。 |
+| **Force 32-bit Indices** | 启用后，无论三角形数量多少，都会为碰撞体资产创建 32 位索引。 |
+| **Suppress Triangle Mesh Remap Table** | 激活时，不会创建面重新映射表。这样可以节省大量内存，但如果没有重映射信息，就无法返回碰撞、扫描或射线投射命中的内部网格三角形。 |
+| **Build Triangle Adjacencies** | 激活时，会创建三角形邻接信息。您可以使用 `getTriangle`方法获取给定三角形的三角形邻接信息。 |
+| **Mesh Weld Tolerance** | 当**Weld Vertices**激活时，此值为焊接顶点的距离。当**Weld Vertices**处于非激活状态时，此值定义了网格验证的接受距离。**Weld Vertices**采用网格捕捉方法，使用**Mesh Weld Tolerance**将每个顶点截断为整数值。一旦生成了这些咬合顶点，所有与网格上给定顶点咬合的顶点都会重新映射为一个顶点。然后，所有三角形的索引都会重新映射，以引用这个干净的顶点子集。顶点的位置不会被修改。网格捕捉只是为了识别附近的顶点。网格验证方法使用相同的 “捕捉到网格 ”方法来识别附近的顶点。如果有多个顶点卡入给定的网格坐标，则会检查顶点之间的距离，确保其大于 **Mesh Weld Tolerance**。如果顶点之间的距离在 **Mesh Weld Tolerance** 范围内，系统将发出警告。 |
+| **Number of Triangles Per Leaf** | 设置网格烹饪提示为每叶最大三角形。每叶三角形数越少，烹饪速度越慢，生成的网格尺寸越大，运行性能越好。每叶三角形数越多，烹饪速度越快，生成的网格尺寸越小，运行性能越差。 |
 
 ## Convex asset
 
 ![The Scene Settings PhysX convex asset properties.](/images/user-guide/assets/scene-settings/physx-convex-asset.png)
 
-Convex hulls are generated colliders that can approximate the shape of the selected meshes. Convex hulls can be used with static, kinematic, and simulated entities, and are often used on interactive entities that require rigid body physics and a collider mesh that resembles the shape of the visible mesh.
+凸面船体是生成的碰撞体，可以近似所选网格的形状。凸面船体可用于静态实体、运动实体和模拟实体，通常用于需要刚体物理特性和与可见网格形状相似的碰撞网格的交互式实体。
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Area Test Epsilon** | If the area of a triangle in the hull is below this value, the triangle is  rejected. This test is performed only if **Check Zero Area Triangles** is active. Valid values range from `0` to `100`. |
-| **Plane Tolerance** | This value is used during hull construction. New points added to the hull are rejected if they're closer to the hull than the **Plane Tolerance** value. If the **Plane Tolerance** value is `0.0`, all points are accepted. This can lead to edge cases where the new points are merged into an existing polygon, changing the polygon's plane equation slightly, resulting in failures during polygon merging phase in the hull computation. The **Plane Tolerance** value is increased according to the hull size, and the default value of `0.0006` is recommended. However, if all points must be accepted, or large, thin convex hulls must be created, you can specify a lower value. Valid values range from `0` to `100`.  |
-| **Use 16-bit Indices** | When active, 16-bit triangle or polygon indices are generated. Otherwise, 32-bit vertex indices are generated. |
-| **Check Zero Area Triangles** | Removes triangles that have a smaller area than the value specified in **Area Test Epsilon**. |
-| **Quantize Input** | Quantizes the input vertices using k-means clustering. K-means clustering partitions the input mesh data into Voronoi cells.  |
-| **Use Plane Shifting** | Plane shifting is an alternative algorithm for the scenario when the computed hull has more vertices than the per hull vertex limit. The default algorithm computes the full hull and a bounding box around the input vertices. The bounding box is then sliced with the hull planes until the vertex limit is reached. The default algorithm typically produces results that are much better quality than are produced by plane shifting. When plane shifting is active, the hull computation stops when vertex limit is reached. The hull planes are then shifted to contain all input vertices, and the new plane intersection points are then used to generate the final hull with the given vertex limit. Plane shifting might produce sharp edges to vertices very far away from the input mesh, and doesn't guarantee that all input vertices are inside the resulting hull. |
-| **Shift Vertices** | When active, vertices of the input mesh are shifted around the origin to improve computation stability. Use this when the input mesh is not centered around the origin. |
-| **Gauss Map Limit** | The vertex limit beyond which additional acceleration structures are computed for each convex mesh. Higher values reduce memory usage. Lower values can improve performance dependent on target platform. |
-| **Build GPU Data** | When active, data for GPU-accelerated rigid body simulation is created. This can increase memory usage and cooking time. Internally, the vertex limit is set to 64 and vertex limit per face is set to 32. |
+| **Area Test Epsilon** | 如果船体中三角形的面积小于此值，则剔除该三角形。只有当**Check Zero Area Triangles**处于激活状态时，才会执行此测试。有效值范围从 `0` 到 `100`。|
+| **Plane Tolerance** | 此值用于建造船体。如果添加到船体中的新点比**Plane Tolerance**值更接近船体，则会被拒绝。如果**Plane Tolerance**值为 `0.0`，则所有点都会被接受。这可能会导致边缘情况，即新点被合并到现有的多边形中，使多边形的平面等式发生微小变化，从而导致在弧体计算的多边形合并阶段出现故障。**Plane Tolerance**值会根据船体大小增加，建议使用默认值`0.0006`。但是，如果必须接受所有点，或者必须创建大而薄的凸形船体，则可以指定一个较低的值。有效值范围从 `0` 到 `100`。 |
+| **Use 16-bit Indices** | 激活时，将生成 16 位三角形或多边形索引。否则，将生成 32 位顶点索引。 |
+| **Check Zero Area Triangles** | 删除面积小于 **Area Test Epsilon**中指定值的三角形。 |
+| **Quantize Input** | 使用 K-means 聚类对输入顶点进行量化。K 均值聚类将输入网格数据划分为 Voronoi 单元。  |
+| **Use Plane Shifting** | 平面移动是一种替代算法，适用于计算出的全壳顶点数量超过每个全壳顶点数量限制的情况。默认算法会计算全壳和输入顶点周围的包围盒。然后用全壳平面对边界框进行切分，直到达到顶点限制。默认算法产生的结果通常比平面移动产生的结果质量要好得多。当激活平面移动时，当达到顶点限制时，全壳计算就会停止。然后会移动全图平面以包含所有输入顶点，然后使用新的平面交叉点生成具有给定顶点限制的最终全图。平面移动可能会在远离输入网格的顶点处产生尖锐的边缘，而且不能保证所有输入顶点都在生成的曲面内。 |
+| **Shift Vertices** | 激活后，输入网格的顶点会围绕原点移动，以提高计算的稳定性。当输入网格不是以原点为中心时，请使用此功能。 |
+| **Gauss Map Limit** | 顶点限值，超过此限值将为每个凸网格计算额外的加速结构。数值越大，内存使用量越少。较低的值可提高性能，具体取决于目标平台。|
+| **Build GPU Data** | 激活后，将创建用于 GPU 加速刚体模拟的数据。这会增加内存使用量和烹饪时间。在内部，顶点限制设置为 64，每个面的顶点限制设置为 32。 |
 
 ## Primitive asset
 
 ![The Scene Settings PhysX primitive asset properties.](/images/user-guide/assets/scene-settings/physx-primitive-asset.png)
 
-Primitive colliders are simple parametric shape primitives (box, capsule, sphere) that are fit to the input meshes and can be used with static, kinematic, and simulated entities. Primitive colliders generally provide the best simulation performance, but might not closely match the shape of the visible mesh. They are best suited for simulated entities with simple meshes, as well as projectiles, triggers, and entities where colliders that accurately represent shape of the visible mesh are not necessary.
+原始碰撞体是与输入网格相匹配的简单参数化形状基元（盒状、囊状、球状），可用于静态、运动和模拟实体。原始碰撞体通常能提供最佳的仿真性能，但可能与可见网格的形状不完全匹配。它们最适用于具有简单网格的模拟实体、弹丸、触发器和不需要精确代表可见网格形状的碰撞体的实体。
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Target Shape** | The primitive shape to fit to the input mesh. `Automatic` determines which of the shapes fits best. |
-| **Volume Term Coefficient** | Specify how closely the fitting algorithm will try to fit the primitive shape to the input mesh. A value of `0` (no volume minimization) is recommended for most meshes. If the input mesh has few vertices, or vertices mainly on edges, the result might fit the primitive shape inside the input mesh. Increasing this value can improve the result, but values that are too high can have a negative result. |
+| **Target Shape** | 拟合到输入网格的原始形状。`Automatic`决定哪个形状最适合。 |
+| **Volume Term Coefficient** | 指定拟合算法尝试将原始形状与输入网格拟合的紧密程度。对于大多数网格，建议使用 `0`（无体积最小化）。如果输入网格的顶点较少，或顶点主要位于边缘上，拟合结果可能会使原始形状与输入网格内部相匹配。增加该值可以改善结果，但过高的值可能会产生负面结果。 |
 
 ## Decompose meshes
 
 ![The Scene Settings PhysX decompose meshes properties.](/images/user-guide/assets/scene-settings/physx-decompose-meshes.png)
 
-Exporting a PhysX mesh as a convex or a primitive collider might not produce good results if the mesh's shape is concave or doesn't closely fit one of the primitive shapes. Exporting a PhysX mesh as a triangle mesh collider creates a collider that accurately resembles the original mesh, but won't work with a simulated entity. For these scenarios, O3DE supports approximate convex decomposition. Arbitrary meshes are broken down into convex parts which approximate the original shape before processing each part through the asset pipeline individually.
+如果网格的形状是凹形的，或者与某个基本形状不匹配，那么将 PhysX 网格导出为凸形碰撞体或原始碰撞体可能不会产生很好的效果。将 PhysX 网格导出为三角形网格碰撞体会创建一个与原始网格非常相似的碰撞体，但无法与模拟实体一起工作。针对这些情况，O3DE 支持近似凸分解。在通过资产管道单独处理每个部分之前，任意网格会被分解成近似原始形状的凸形部分。
 
-Decomposing meshes has the advantage that each individual convex part can be exported as a convex or primitive approximation. Since the resulting asset doesn't contain any triangle meshes, it can be used on simulated entities.
+分解网格的优点是，每个单独的凸形部分都可以作为凸形或基元近似输出。由于生成的资产不包含任何三角形网格，因此可用于模拟实体。
 
-For more information and illustrated examples of results, see the [V-HACD library on GitHub](https://github.com/kmammou/v-hacd).
+更多信息和结果示例，请参阅 [GitHub 上的 V-HACD 库](https://github.com/kmammou/v-hacd)。
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Maximum Hulls** | Specify the maximum number of hulls that can be generated. Values range from `1` to `1024`. |
-| **Maximum Vertices Per Hull** | Specify the maximum number of vertices per convex hull. Values range from `4` to `1024`. |
-| **Concavity** | Maximum concavity of each convex hull. |
-| **Resolution** | Maximum number of voxels generated during the voxelization stage. Valid values range from a minimum of `10000` to a maximum value of `64000000`. |
-| **Mode** | Use either a `Voxel-based` (cubic) or `Tetrahedron-based` volume for approximate convex decomposition. |
-| **Alpha** | The bias toward clipping along symmetry planes. Values range from `0.0` to `1.0`. |
-| **Beta** | Specify the bias toward clipping along revolution axes. Values range from `0.0` to `1.0`. |
-| **Minimum Volume Per Hull** | Specify the adaptive sampling of the generated convex hulls. Values range from `0.0` to `0.01`. |
-| **Plane Downsampling** | The granularity of the search for the *best* clipping plane. Values range from `1` to a maximum value of `16`. |
-| **Hull Downsampling** | The precision of the convex hull generation process during the clipping plane selection stage. Values range `1` to `16`. |
-| **Enable PCA** | When active, the input mesh is normalized before applying the convex decomposition. |
-| **Project Hull Vertices** | When active, the output convex hull vertices are projected onto the input mesh to increase the floating point accuracy of the results. |
+| **Maximum Hulls** | 指定可生成的最大船体数量。取值范围从 `1` 到 `1024`。 |
+| **Maximum Vertices Per Hull** | 指定每个凸壳的最大顶点数。数值范围从 `4` 到 `1024`。 |
+| **Concavity** | 每个凸壳的最大凹度。 |
+| **Resolution** | 体素化阶段生成的体素的最大数量。有效值范围从最小值`10000`到最大值`64000000`。 |
+| **Mode** | 使用 `Voxel-based` (cubic) 或 `Tetrahedron-based`的体积进行近似凸分解。|
+| **Alpha** | 沿对称平面剪切的偏差。数值范围从 `0.0` 到 `1.0`。|
+| **Beta** | 指定沿旋转轴剪切的偏差。数值范围从 `0.0` 到 `1.0`。|
+| **Minimum Volume Per Hull** | 指定生成的凸壳的自适应采样。取值范围从 `0.0` 到 `0.01`。 |
+| **Plane Downsampling** | 搜索**最佳**剪切平面的粒度。取值范围从 “1 ”到最大值 “16”。 |
+| **Hull Downsampling** | 剪切平面选择阶段凸壳生成过程的精度。取值范围为 `1` 至 `16`。 |
+| **Enable PCA** | 激活后，在应用凸分解之前会对输入网格进行归一化处理。 |
+| **Project Hull Vertices** | 激活时，输出的凸壳顶点会投影到输入网格上，以提高结果的浮点精度。 |
 
 ## Comment
 
 ![The Scene Settings PhysX tab Comment modifier.](/images/user-guide/assets/scene-settings/comment-modifier.png)
 
-Add a comment to the file for the PhysX mesh group. You can add a comment about changes made to the source asset file for tracking purposes or notes on export options, for example. Comments don't affect how files are processed. Multiple comment modifiers can be added to a PhysX mesh group.
+为 PhysX 网格组文件添加注释。您可以添加对源资产文件所做更改的注释，以便跟踪或注释导出选项等。注释不会影响文件的处理方式。一个 PhysX 网格组可以添加多个注释修改器。

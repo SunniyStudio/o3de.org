@@ -1,72 +1,72 @@
 ---
-linkTitle: Texture Assets
-title: Texture Asset Guidelines
-description: Information about image formats and general guidelines for processing textures with Texture Settings in Open 3D Engine (O3DE).
+linkTitle: 纹理资产
+title: 纹理资产指南
+description: 有关使用Open 3D Engine (O3DE)中的纹理设置处理纹理的图像格式和一般指南的信息。
 weight: 200
 toc: true
 ---
 
-Textures are processed images that are most commonly mapped to meshes as part of a material to create a surface appearance. With physically based rendering (PBR) and image based lighting (IBL), they can also provide specific rendering data such as the diffuse and specular components of a high dynamic range cubemap, or the metallic component of a surface. Textures can be used to create UI elements. Gradient textures can provide distribution and falloff areas for instanced assets such as vegetation. Heightmap textures can be used to generate 3D terrain.
+纹理是经过处理的图像，通常作为材质的一部分映射到网格上，以创建表面外观。通过基于物理的渲染（PBR）和基于图像的照明（IBL），纹理还可以提供特定的渲染数据，例如高动态范围立方体贴图的漫反射和镜面反射成分，或表面的金属成分。纹理可用于创建用户界面元素。渐变纹理可为植被等实例化资产提供分布和衰减区域。高度贴图纹理可用于生成 3D 地形。
 
-Although textures most often contain an image, they can provide a convenient method to get other data into **Open 3D Engine (O3DE)**. If you have data that can be represented in the color and alpha channels of an image, it can be processed as a texture.
+虽然纹理通常包含图像，但它们也是将其他数据导入**Open 3D Engine (O3DE)**的便捷方法。如果您有可以用图像的颜色和 alpha 通道表示的数据，就可以将其作为纹理进行处理。
 
-This topic provides information about the various texture source and product assets, and general guidelines for creating textures for O3DE.
+本主题提供了有关各种纹理源和产品资产的信息，以及为 O3DE 创建纹理的一般指南。
 
-## Source assets
+## 源资产
 
-A _texture source asset_ can be any of the image formats supported by O3DE. Image formats provide varied support for color depths and channels, so it's important to use a format that satisfies the requirements of the texture's intended use.
+**纹理源资产**可以是 O3DE 支持的任何图像格式。图像格式对颜色深度和通道的支持各不相同，因此使用一种满足纹理预期用途要求的格式非常重要。
 
-The following table lists the image formats supported by O3DE:
+下表列出了 O3DE 支持的图像格式：
 
-| **Format** | **Description** | **Max color depth** | **Transparency** |
+| **格式** | **说明** | **最大颜色深度** | **透明度** |
 | - | - | - | - |
-| `.bmp` | An uncompressed RGB image. | 8-bit gray<br>24-bit RGB | Not supported |
-| `.gif` | An image with an indexed color table (256 colors maximum) and support for transparency.  | 8-bit table | 1-bit mask |
-| `.jpg`, `.jpeg` | A compressed RGB image. | 8-bit gray<br>24-bit RGB | Not supported |
-| `.png` | An RGBA image with lossless compression. | 16-bit gray<br>48-bit RGB | 16-bit Alpha |
-| `.tga` | An RGBA image that can be uncompressed or use lossless compression. | 24-bit RGB | 8-bit Alpha |
-| `.tif`, `tiff` | An RGBA image with support for layers that can be uncompressed or use lossless compression. | 16-bit gray<br>96-bit RGB | 32-bit Alpha |
-| `.dds` | A texture container format most often used for normal maps. `.dds` supports a number of layouts and compression algorithms. You can learn more about `.dds` by visiting Microsoft's [Programming Guide for DDS](https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dx-graphics-dds-pguide). | 16-bit luminance<br>96-bit RGB | 32-bit Alpha |
-| `.exr` | A high dynamic range (HDR) image used to generate IBL and skybox cubemaps. `.exr` images can be uncompressed or use one of several lossy or lossless compression methods. | 96-bit RGB | 32-bit Alpha |
+| `.bmp` | 未压缩的 RGB 图像。 | 8-位 灰度<br>24-位 RGB | 未支持 |
+| `.gif` | 带有索引色表（最多 256 种颜色）并支持透明度的图像。 | 8-位 表 | 1-位 mask |
+| `.jpg`, `.jpeg` | 压缩后的 RGB 图像。 | 8-位 灰度<br>24-位 RGB | 未支持 |
+| `.png` | 无损压缩的 RGBA 图像。| 16-位 灰度<br>48-位 RGB | 16-位 Alpha |
+| `.tga` | 可以不压缩或使用无损压缩的 RGBA 图像。 | 24-位 RGB | 8-位 Alpha |
+| `.tif`, `tiff` | 支持图层的 RGBA 图像，可以不压缩或使用无损压缩。 | 16-位 灰度<br>96-位 RGB | 32-位 Alpha |
+| `.dds` | 一种最常用于法线贴图的纹理容器格式。`.dds`支持多种布局和压缩算法。您可以访问微软的[DDS 编程指南](https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dx-graphics-dds-pguide)了解有关`.dds`的更多信息。 | 16-位 luminance<br>96-bit RGB | 32-位 Alpha |
+| `.exr` | 用于生成 IBL 和天空盒立方体贴图的高动态范围 (HDR) 图像。`.exr`图像可以不压缩，也可以使用多种有损或无损压缩方法之一。 | 96-位 RGB | 32-位 Alpha |
 
 {{< note >}}
-Texture source assets often use 8-bits per channel color depth (24-bit RGB or 32-bit RGBA) even when the image format supports 16-bits or 32-bits per channel. Using 8-bits per channel produces smaller source assets that can be processed faster. The texture is compressed when processed, and in most use cases, the product asset has less than 8-bits per channel.
+即使图像格式支持每通道 16 位或 32 位，纹理源资产也经常使用每通道 8 位的色彩深度（24 位 RGB 或 32 位 RGBA）。每个通道使用 8 位可以生成更小的源资产，处理速度也更快。纹理在处理时会被压缩，在大多数情况下，产品资产的每通道色彩深度会低于 8 位。
 
-The exceptions are scenarios where more than 8-bits per channel are required such as textures that are used for IBL cubemaps or terrain heightmaps. Texture source assets with 16-bits and 32-bits per channel should be used when more granular values are needed. An 8-bit heightmap, for example, only provides 256 values. This is insufficient for representing significant transitions in terrain height. A 16-bit heightmap, by contrast, provides 65,536 values which can represent a much larger range of terrain heights and smooth transitions across terrain. 
+但需要每个通道超过 8 位的情况除外，如用于 IBL 立方体贴图或地形高度贴图的纹理。当需要更细粒度的数值时，应使用每通道 16 位和 32 位的纹理源资产。例如，8 位高度贴图只能提供 256 个值。这不足以表现地形高度的显著变化。相比之下，16 位高度贴图可提供 65,536 个值，能表现更大范围的地形高度和平滑的地形过渡。
 {{< /note >}}
 
-## Product assets
+## 产品资产
 
-A texture source asset always generates at least one `.streamingimage` product asset. Some of the available presets in **Texture Settings**, such as the **IBLSkybox** preset, generate multiple `.streamingimage` product assets.
+纹理源资产总是会生成至少一个`.streamingimage`产品资产。**纹理设置**中的某些可用预设（如**IBLSkybox**预设）会生成多个`.streamingimage`产品资产。
 
-If the **Create Mipmaps** toggle in **Texture Settings** is enabled, `.imagemipchain` product assets containing texture *mipmaps* are produced as well. Mipmaps are progressively smaller versions of the texture that are swapped in as the asset that uses the texture moves away from the camera. Lower resolution mipmips are also used on target platforms that have lower performance specifications.
+如果启用了**Texture Settings** 中的**Create Mipmaps**切换，则也会生成包含贴图**mipmaps**的`.imagemipchain`产品资产。贴图是逐渐缩小的纹理版本，当使用纹理的资产远离摄像机时，贴图就会被换入。分辨率较低的 mipmips 也可用于性能规格较低的目标平台。
 
-You can view the texture product assets by expanding the asset list of a texture source asset in **Asset Browser**.
+您可以在**资产浏览器**中展开纹理源资产的资产列表来查看纹理产品资产。
 
-## General texture guidelines
+## 一般纹理指南
 
-Texture product assets can be generated for multiple platforms from a single texture source asset. However, various target platforms might have unique requirements or limitations. A mobile device, for example, might have a lower maximum texture resolution than a desktop computer. You can use the following general guidelines when creating texture source assets to get the best results and to ensure cross-platform compatibility:
+纹理产品资产可从单一纹理源资产生成，用于多个平台。但是，不同的目标平台可能有独特的要求或限制。例如，移动设备的最大纹理分辨率可能低于台式电脑。在创建纹理源资产时，您可以使用以下一般准则，以获得最佳效果并确保跨平台兼容性：
 
-* **Use power of two resolutions.** Texture source asset resolutions should be a power of two such as 256, 512, 1024, or 2048.
-* **Use square aspect ratios.** Square aspect ratios (2048 by 2048) are preferred for most textures. Texture source assets with equirectangular resolutions (2048 by 1024) are required in some use cases such as when IBL cubemaps are generated.
+* **使用2的幂的分辨率。** 纹理源资产分辨率应为 2 的幂次，如 256、512、1024 或 2048。
+* **使用方形纵横比。** 对于大多数纹理来说，正方形长宽比（2048 x 2048）是首选。在某些使用情况下，如生成 IBL 立方体贴图时，需要使用等角分辨率（2048 x 1024）的纹理源资产。
     {{< important >}}
-Though you can successfully process and use textures with arbitrary resolutions and aspect ratios, you should create textures with square aspect ratios and power of 2 resolutions to get the best performance from the available graphics hardware.   
+  虽然您可以成功地处理和使用任意分辨率和纵横比的纹理，但您应该创建具有正方形纵横比和 2 倍分辨率的纹理，以便从可用的图形硬件中获得最佳性能。  
     {{< /important >}}
-* **Use a suitable resolution.** Use a resolution that suits the texture's use case. For example, a texture for a small background entity doesn't require a resolution as high as an interactive entity that appears close to the camera. Similarly, a UI texture might not need to have a higher resolution than its on-screen dimensions.
-* **Use an appropriate image format.** Create texture source assets in a format appropriate for their use case. Using texture source assets that have channel counts and bit depths that closely match their intended use can minimize issues when processing textures.
+* **使用合适的分辨率。** 使用适合纹理使用情况的分辨率。例如，小背景实体的纹理不需要像靠近摄像机的交互实体那样高的分辨率。同样，用户界面纹理可能也不需要比屏幕尺寸更高的分辨率。
+* **使用适当的图像格式。** 以适合其使用情况的格式创建纹理源资产。使用通道数和比特深度与其预期用途非常匹配的纹理源资产，可以最大限度地减少处理纹理时出现的问题。
 
-## Cubemap texture guidelines
+## 立方体贴图纹理指南
 
-Cubemaps are composed of six textures representing the sides, top, and bottom of a cube. Cubemaps are used to create quick environment reflections, skyboxes, and diffuse and specular texture components for IBL.
+立方体贴图由六个纹理组成，分别代表立方体的侧面、顶部和底部。立方体贴图用于为 IBL 创建快速环境反射、天空盒以及漫反射和镜面反射纹理组件。
 
-Presets that generate environment cubemaps, such as the IBL presets, require specialized high dynamic range source assets that are commonly referred to as _HDRIs_. These source assets usually use the `.exr` file format and have the following attributes:
+生成环境立方体贴图的预置（如 IBL 预置）需要专门的高动态范围源资产，通常称为 **HDRI**。这些源资产通常使用 `.exr` 文件格式，并具有以下属性：
 
-* Equirectangular resolution (2048 by 1024 pixels, for example).
-* A 360-degree horizontal by 180-degree vertical projection of an environment.
-* 16-bits or 32-bits per channel color depth. 
+* 等角分辨率（例如 2048 x 1024 像素）。
+* 水平 360 度、垂直 180 度的环境投影。
+* 每通道色深 16 位或 32 位。
 
-The following example image shows a typical environment cubemap texture with a 360-degree by 180-degree projection and an equirectangular resolution.
+下面的示例图片显示的是一个典型的环境立方体贴图纹理，其投影为 360 度乘 180 度，分辨率为等角线。
 
-{{< image-width "/images/user-guide/assets/texture-settings/hdri-example.png" "800" "An equirectangular image with a 360 degree by 180 degree environment projection known as an HDRI." >}}
+{{< image-width "/images/user-guide/assets/texture-settings/hdri-example.png" "800" "等角图像的环境投影为 360 度乘 180 度，称为 HDRI。" >}}
 
-An HDRI like the preceding image can produce several texture product assets including a cubemap texture for the visual skybox and cubemap textures that provide the diffuse and specular lighting components for IBL.
+类似上图的 HDRI 可以生成多种纹理产品资产，包括用于视觉天空盒的立方体贴图纹理，以及为 IBL 提供漫反射和镜面反射照明组件的立方体贴图纹理。

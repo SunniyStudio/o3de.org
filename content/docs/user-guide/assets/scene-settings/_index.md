@@ -1,7 +1,7 @@
 ---
 linkTitle: 场景源资产
 title: 创建和处理场景源资产
-description: 通过 “场景设置”，您可以为网格、Actor、动作和 PhysX 碰撞器设置自定义处理选项。
+description: 通过 “场景设置”，您可以为网格、Actor、动作和 PhysX 碰撞体设置自定义处理选项。
 weight: 400
 toc: true
 ---
@@ -10,7 +10,7 @@ toc: true
 
 ## 源资产和产品资产
 
-在数字内容创建（DCC）应用程序中创建的**场景源资产**（网格、Actor、动作和 PhysX 碰撞器）必须处理为运行时优化的**产品资产**才能在项目中使用。为了对 DCC 应用程序和场景文件格式提供最广泛的支持，O3DE 集成了[Open Asset Import Library](https://github.com/assimp/assimp)。O3DE 使用 `.fbx` 作为场景源资产的主要格式。O3DE 还支持 `.stl`，并启用了对 `.gltf`的支持，目前正在开发中。
+在数字内容创建（DCC）应用程序中创建的**场景源资产**（网格、Actor、动作和 PhysX 碰撞体）必须处理为运行时优化的**产品资产**才能在项目中使用。为了对 DCC 应用程序和场景文件格式提供最广泛的支持，O3DE 集成了[Open Asset Import Library](https://github.com/assimp/assimp)。O3DE 使用 `.fbx` 作为场景源资产的主要格式。O3DE 还支持 `.stl`，并启用了对 `.gltf`的支持，目前正在开发中。
 
 ## 场景设置
 

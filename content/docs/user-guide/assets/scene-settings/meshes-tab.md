@@ -19,7 +19,7 @@ toc: true
 | - | - |
 | **Add another mesh** | 添加要处理的网格组。每个网格组可包含源资产文件中的一个或多个网格。每个网格组都会生成一个`.azmodel`，以及所需数量的`.azlod` 和 `.azbuffer`产品资产。|
 | **Name mesh**  | 网格组的名称。该网格组的所有产品资产都使用该名称作为前缀。该名称会显示在资产浏览器中该网格组的产品资产上。 |
-| **Select meshes** | 选择 {{< icon browse-edit-select-files.svg >}} **Selection list** 按钮。选择**Selection list**按钮，显示源资产中的网格列表。从列表中选择网格，将其包含在网格组中。如果源资产中包含用于 PhysX 对撞机资产的网格，则应在此列表中取消选择，将其排除在网格组之外。 |
+| **Select meshes** | 选择 {{< icon browse-edit-select-files.svg >}} **Selection list** 按钮。选择**Selection list**按钮，显示源资产中的网格列表。从列表中选择网格，将其包含在网格组中。如果源资产中包含用于 PhysX 碰撞体资产的网格，则应在此列表中取消选择，将其排除在网格组之外。 |
 | **Add Modifier** | 修改器为处理源资产添加了专门的选项。选择**Add Modifier**按钮可显示可用修改器列表。除非在项目中启用了提供修改器的 gem，否则某些修改器可能不可用。 |
 
 ## Cloth

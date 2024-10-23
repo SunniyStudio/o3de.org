@@ -1,21 +1,21 @@
 ---
-linkTitle: Texture Settings
-title: Customize Texture Processing with Texture Settings
-description: With Texture Settings, you can set custom processing options for textures, skybox images, and image based lighting (IBL) assets.
+linkTitle: 纹理设置
+title: 使用纹理设置自定义纹理处理
+description: 通过 “纹理设置”，您可以为纹理、天空盒图像和基于图像的照明 (IBL) 资产设置自定义处理选项。
 weight: 400
 toc: true
 ---
 
- Texture source assets must be processed as optimized streaming images for use in **Open 3D Engine (O3DE)**. With **Texture Settings** you can specify how the texture source assets you create in third-party applications are processed. Several source image formats are supported, and there are many texture processing presets provided for various use cases. You can use naming conventions to automatically select a texture processing preset, and use the options provided by Texture Settings to view, troubleshoot, and fine-tune the texture processing results.
+纹理源资产必须作为优化的流式图像处理，以便在**Open 3D Engine (O3DE)** 中使用。通过**纹理设置**，您可以指定如何处理在第三方应用程序中创建的纹理源资产。我们支持多种源图像格式，并为各种使用情况提供了许多纹理处理预置。您可以使用命名约定来自动选择纹理处理预设，并使用 “纹理设置 ”提供的选项来查看、排除故障和微调纹理处理结果。
 
-Texture Settings creates a `.assetinfo` sidecar file containing your custom processing options for a texture source asset. The source asset is not changed. When Asset Processor processes the source asset, it uses the options in the `.assetinfo` file to generate product assets.
+纹理设置 会创建一个`.assetinfo`侧卡文件，其中包含纹理源资产的自定义处理选项。源资产不会改变。当资产处理器处理源资产时，它会使用`.assetinfo`文件中的选项生成产品资产。
 
-## Texture Settings topics
+## Texture Settings 主题
 
-The topics in this section provide information about the image file types supported by Texture Settings and the Texture Settings user interface.
+本节的主题提供了有关纹理设置和纹理设置用户界面所支持的图像文件类型的信息。
 
-| Topic | Description |
+| 主题 | 说明 |
 | - | - |
-| [Texture Asset Guidelines](texture-assets) | Information on image formats supported by O3DE and guidelines for creating texture source assets. |
-| [Texture Settings User Interface](interface) | An overview of the Texture Settings user interface. |
-| [Texture Presets](texture-presets) | Technical information including name conventions for texture settings presets. |
+| [纹理资产指南](texture-assets) | 有关 O3DE 支持的图像格式和创建纹理源资产指南的信息。 |
+| [Texture Settings用户界面](interface) | 纹理设置用户界面概览。 |
+| [纹理设置预设](texture-presets) | 技术信息，包括纹理设置预置的名称约定。 |

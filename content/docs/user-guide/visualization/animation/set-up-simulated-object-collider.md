@@ -1,62 +1,61 @@
 ---
-description: ' Set up simulated object colliders so that the actor''s body interacts
-  with the tassel in Open 3D Engine. '
-title: Setting Up Simulated Object Colliders
+description: ' 在 Open 3D Engine中设置模拟物体碰撞体，使Actor的身体与流苏产生互动。 '
+title: 设置模拟物体碰撞体
 ---
 
- In the following procedure, add a collider to the spine and left arm to reduce the tassel's movement. This ensures that the tassel has something to collide with, which prevents it from moving through the actor's body.
+在以下步骤中，为脊柱和左臂添加碰撞体，以减少流苏的移动。这样可以确保流苏有东西可以碰撞，从而防止它穿过Actor的身体。
 
-**To set up simulated object colliders**
+**设置模拟物体碰撞体**
 
-1. In the **Skeleton Outliner**, select the joint or joints to add a simulated object collider to. In this example, use the `C_spine_04_JNT` joint.
+1. 在**Skeleton Outliner**中，选择要添加模拟物体碰撞体的一个或多个关节。在本例中，使用 `C_spine_04_JNT`关节。
 
-1. Right-click your selection and choose **Simulated object collider**, **Add collider**, **Add capsule**. This creates a shape that defines the collider area for the joint.
+1. 右键单击选区并选择 **Simulated object collider**, **Add collider**, **Add capsule**。这样就会创建一个定义关节碰撞区域的形状。
 
-    You can also add a sphere if that shape fits your actor better.
+   如果球形更适合你的Actor，你也可以添加一个球形。
 
     ![Add a capsule shape to create a collider area for your skeleton.](/images/user-guide/actor-animation/simulated-objects-14.png)
 
-    In the **Skeleton Outliner**, a simulated object collider ![Simulated Object Collider Icon](/images/user-guide/actor-animation/simulated-objects-20.png) icon appears next to the joint.
+    在**Skeleton Outliner**中，模拟对象碰撞体 ![Simulated Object Collider Icon](/images/user-guide/actor-animation/simulated-objects-20.png) 图标出现在关节旁边。
 
-1. In the **Simulated Object Inspector**, adjust the capsule so that it's larger than the actor's geometry.
+1. 在**Simulated Object Inspector**中，调整胶囊，使其大于Actor的几何体。
 
-    In this example, change the **Height** to `0.344` and the **Radius** to `0.162`.
+    在本例中，将**Height**改为`0.344`，**Radius**改为`0.162`。
 
-    By default, the name of the joint \(`C_spine_04_JNT`\) is also the name of the collider.
+    默认情况下，关节的名称\(`C_spine_04_JNT`\)也是碰撞体的名称。
 
     ![Create a simulated object collider for the spine and make changes, so that it's slightly larger than the actor's shape.](/images/user-guide/actor-animation/simulated-objects-15.png)
 
-1. Repeat **Step 1** to add the `L_arm_JNT` joint. This creates another simulated object collider to the upper-left arm.
+1. 重复**步骤 1** 添加`L_arm_JNT`关节。这将为左上臂创建另一个模拟对象碰撞体。
 
-1. Repeat **Step 2** and **3** to set up a collider for the arm.
+1. 重复**步骤 2** 和 **步骤 3**，为手臂设置碰撞体。
 
-1. Adjust the capsule so that it fits the arm. In this example, enter the following values:
+1. 调整胶囊，使其与机械臂相匹配。在本例中，输入以下值：
     + **Height** to `0.322`
     + **Radius** to `0.081`
     + **Rotation: X** to `180`
     + **Radius: Y** to `89.99`
     + **Radius: Z** to `180`
 
-    By default, the name of the joint \(`L_arm_JNT`\) is also the name of the collider.
+   默认情况下，关节的名称\(`L_arm_JNT`\)也是碰撞体的名称。
 
     ![Create a simulated object collider for the arm and make changes, so that it's slightly larger than the actor's shape.](/images/user-guide/actor-animation/simulated-objects-16.png)
 
-1.  In the **Skeleton Outliner**, select the joints where the simulated object colliders are attached.
+1.  在**Skeleton Outliner**中，选择连接模拟对象碰撞体的关节。
 
     {{< tip >}}
-In the render window, deselect the first icon (**Solid**) and select the second (**Wireframe**) to view the capsule colliders.
+    在渲染窗口中，取消选择第一个图标（**Solid**），然后选择第二个图标（**Wireframe**），即可查看胶囊碰撞体。
     {{< /tip >}}
 
-    In the render window, the colliders appear purple. If you deselect the joint, the collider appears gray.
+    在渲染窗口中，碰撞体显示为紫色。如果取消选择关节，对撞器将显示为灰色。
 
-    Now that you added the simulated objects to the spine and arm, add these colliders to the simulated object.
+    现在您已经为脊柱和手臂添加了模拟对象，请为模拟对象添加这些对撞器。
 
     ![View the capsule colliders that you attached to the joints of the actor.](/images/user-guide/actor-animation/simulated-objects-17.png)
 
-1. In the **Simulated Objects** panel, select the simulated object.
+1. 在**Simulated Objects**面板中，选择模拟对象。
 
-1. In the **Simulated Object Inspector**, for **Collides with**, select the available colliders. This enables the simulated object joints (the tassel) to collide with the actor's body (the spine and left arm).
+1. 在**Simulated Object Inspector**中，对**Collides with**，选择可用的碰撞体。这样，模拟物体的关节（流苏）就能与Actor的身体（脊柱和左臂）发生碰撞。
 
     ![Enable the tassel to collide with the actor's body during an animation.](/images/user-guide/actor-animation/simulated-objects-18.gif)
 
-1. In the **Actor Manager**, save the actor. You might have to wait for Asset Processor to finish processing your changes.
+1. 在**Actor Manager**中，保存Actor。您可能需要等待资产处理器处理完您的更改。

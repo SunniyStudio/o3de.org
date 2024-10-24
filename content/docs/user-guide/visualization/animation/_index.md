@@ -1,36 +1,36 @@
 ---
-linkTitle: Animation
-description: ' Learn to animate characters in Open 3D Engine with EMotionFX Animation Editor. '
-title: Animation Overview
+linkTitle: 动画
+description: ' 学习使用 EMotionFX 动画编辑器在 Open 3D Engine中制作角色动画。 '
+title: 动画概述
 ---
 
-Most game projects require an animated character to move around in the environment. This may be a character that the player controls, or an AI-driven entity that interacts with the level.
+大多数游戏项目都需要一个动画角色在环境中移动。这可以是玩家控制的角色，也可以是与关卡互动的人工智能驱动实体。
 
-Use the **EMotion FX Animation Editor** to animate characters in Open 3D Engine. To build a character, you associate one or more skinned models with an animation skeleton (built in a digital content creation tool like Maya). You then import the character into the **Animation Editor** and specify the animations that you want your character to have.
+使用**EMotion FX 动画编辑器**在 Open 3D Engine 中制作角色动画。要创建角色，您需要将一个或多个带皮肤的模型与动画骨架（在 Maya 等数字内容创建工具中创建）关联起来。然后将角色导入**动画编辑器**，并指定您希望角色具有的动画。
 
-You can then blend animations, so that your character transitions from one animation to another, and specify the conditions when an animation occurs for a character. For example, you can specify that your character starts in an idle position. After several seconds, the character starts to walk, run, and then slow down again until the character returns to an idle position.
+然后，您可以混合动画，使角色从一个动画过渡到另一个动画，并指定角色发生动画的条件。例如，您可以指定角色开始时处于空闲状态。几秒钟后，角色开始行走、奔跑，然后再次放慢速度，直到角色回到空闲位置。
 
-In the **Animation Editor**, you can preview the animations and blends between the animations for your characters.
+在**动画编辑器**中，您可以预览角色的动画和动画之间的混合。
 
-O3DE has the **FBX Settings** tool that converts static `.fbx` meshes, skeletons, skins, animations, and materials into O3DE assets. For more information, see [Customize FBX asset export with FBX Settings](/docs/user-guide/assets/scene-settings/).
+O3DE 具有**FBX 设置**工具，可将静态 `.fbx`网格、骨骼、皮肤、动画和材质转换为 O3DE 资产。更多信息，请参阅 [使用 FBX 设置自定义 FBX 资产导出](/docs/user-guide/assets/scene-settings/)。
 
-**Topics**
-+ [Setting up actor entities](actor-component-entity-setup)
-+ [Using multiple skin attachments for an actor](actor-multiple-skin)
-+ [Animation Editor Concepts and Terms](/docs/user-guide/visualization/animation/character-editor/concepts-and-terms/)
-+ [Animation Editor User Interface](/docs/user-guide/visualization/animation/animation-editor/user-interface/)
-+ [Animation Editor File Types](/docs/user-guide/visualization/animation/character-editor/file-types/)
-+ [Getting Started with the Animation Editor](/docs/user-guide/visualization/animation/animation-editor/quick-start/)
-+ [Referencing External Anim Graphs](/docs/user-guide/visualization/animation/referencing-character-animation-editor-anim-graph/)
-+ [Synchronizing Animation Graphs: Example](/docs/user-guide/visualization/animation/character-editor/sync-graph/)
-+ [Animation Editor Components](/docs/user-guide/visualization/animation/character-editor/components/)
-+ [Using Morph Targets to Deform Characters](/docs/user-guide/visualization/animation/animation-editor/using-morph-targets-to-deform-characters/)
-+ [Customizing State Machine Routing with Sparse Motion Sets](/docs/user-guide/visualization/animation/animation-editor/customizing-state-machines-with-sparse-motion-sets/)
-+ [Animation Editor Nodes](/docs/user-guide/visualization/animation/animation-editor/node/)
-+ [Using Tags with Animation Graphs](/docs/user-guide/visualization/animation/animation-editor/using-tags/)
-+ [Customizing EMotion FX Objects](/docs/user-guide/visualization/animation/animation-editor/customizing-emotionfx-objects/)
-+ [Creating Custom Motion Events and Parameters Using C++](/docs/user-guide/visualization/animation/character-editor/custom-events-parameters/)
-+ [Creating and Simulating a PhysX Ragdoll](/docs/user-guide/visualization/animation/animation-editor/ragdoll/)
-+ [Retargeting Motions](/docs/user-guide/visualization/animation/animation-editor/retargeting-animations/)
-+ [Creating Simulated Objects](/docs/user-guide/visualization/animation/animation-editor/creating-simulated-objects/)
-+ [Add Cloth Colliders to actors](/docs/user-guide/visualization/animation/character-editor/cloth-colliders/)
+**主题**
++ [设置Actor实体](actor-component-entity-setup)
++ [为Actor使用多个蒙皮附件](actor-multiple-skin)
++ [动画编辑器概念和术语](/docs/user-guide/visualization/animation/character-editor/concepts-and-terms/)
++ [动画编辑器用户界面](/docs/user-guide/visualization/animation/animation-editor/user-interface/)
++ [动画编辑器文件类型](/docs/user-guide/visualization/animation/character-editor/file-types/)
++ [动画编辑器入门](/docs/user-guide/visualization/animation/animation-editor/quick-start/)
++ [引用外部Anim Graph](/docs/user-guide/visualization/animation/referencing-character-animation-editor-anim-graph/)
++ [同步Anim Graph： 示例](/docs/user-guide/visualization/animation/character-editor/sync-graph/)
++ [动画编辑器组件](/docs/user-guide/visualization/animation/character-editor/components/)
++ [使用Morph Target变形角色](/docs/user-guide/visualization/animation/animation-editor/using-morph-targets-to-deform-characters/)
++ [利用稀疏运动集定制状态机路由](/docs/user-guide/visualization/animation/animation-editor/customizing-state-machines-with-sparse-motion-sets/)
++ [动画编辑器节点](/docs/user-guide/visualization/animation/animation-editor/node/)
++ [在Anim Graph中使用标签](/docs/user-guide/visualization/animation/animation-editor/using-tags/)
++ [自定义EMotion FX对象](/docs/user-guide/visualization/animation/animation-editor/customizing-emotionfx-objects/)
++ [使用C++创建自定义动作事件和参数](/docs/user-guide/visualization/animation/character-editor/custom-events-parameters/)
++ [创建和模拟PhysX Ragdoll](/docs/user-guide/visualization/animation/animation-editor/ragdoll/)
++ [重定向动作](/docs/user-guide/visualization/animation/animation-editor/retargeting-animations/)
++ [创建模拟对象](/docs/user-guide/visualization/animation/animation-editor/creating-simulated-objects/)
++ [向Actor添加布料碰撞体](/docs/user-guide/visualization/animation/character-editor/cloth-colliders/)

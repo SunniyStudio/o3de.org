@@ -1,16 +1,16 @@
 ---
-linkTitle: "Visualization"
-title: "Visualization Systems in Open 3D Engine"
-description: Learn about the various systems that provide animation and rendering in Open 3D Engine (O3DE).
+linkTitle: "可视化"
+title: "Open 3D Engine可视化系统"
+description: 了解在Open 3D Engine (O3DE)中提供动画和渲染的各种系统。
 weight: 1000
 ---
 
-In **Open 3D Engine (O3DE)**, you can bring actors to life with complex animated behaviors, create engaging cinematic sequences, and visualize your creations in stunning realism with O3DE's physically based renderer Atom. The topics in this section cover the concepts, tools, and processes used to achieve your creative vision.
+在 **Open 3D Engine (O3DE)**中，您可以通过复杂的动画行为让演员栩栩如生，创建引人入胜的电影序列，并使用 O3DE 基于物理的渲染器 Atom 将您的创作以惊人的逼真度可视化。本节的主题涵盖了实现创意愿景所使用的概念、工具和流程。
 
-| Topic | Description |
+| 主题 | 说明 |
 | - | - |
-| [Animation Overview](./animation) | With **Animation Editor**, you can visually construct complex animation behaviors and transitions using animation graphs. Behaviors can be driven and blended with events and states. Animation Editor also has tools you can use to create simulated objects and cloth colliders so that objects and clothing dynamically react to actor animation. |
-| [Cinematics](./cinematics) | With **Track View**, you can create cinematics or entire movies rendered in real time with complete control over multiple cameras. You can also add scripted sequences with behaviors, animations, effects, and more, that are camera independent and triggered by events such as input or predefined states. |
-| [Rendering](./rendering) | **Atom Renderer** provides O3DE with a high performance, cross-platform, physically based renderer. Atom also includes tools you can use to add lights, process images, create materials, and add post process effects. With AZSL, Atom's shader language, you have fine control of the rendering process. |
-| [Environments](./environments) | O3DE provides tools to create dense, vibrant environments. The dynamic vegetation system can procedurally populate landscapes with vegetation that responds to actors and other dynamic entities. The terrain system can generate large-scale terrain that interfaces with O3DE's physics system. |
-<!-- | [Cameras](./cameras) | Cameras define the view to be rendered. You can use multiple cameras, switch between cameras, animate cameras through script and keyframes, and create complex camera and lighting rigs that respond to runtime events and simulations. | -->
+| [动画概述](./animation) | 利用**动画编辑器**，您可以使用动画图形直观地构建复杂的动画行为和过渡。行为可以由事件和状态驱动和混合。动画编辑器 "还提供了创建模拟对象和布料碰撞器的工具，这样对象和服装就能对演员的动画做出动态反应。|
+| [影片](./cinematics) | 利用**Track View**，您可以创建实时渲染的电影或整部影片，并完全控制多个摄像机。您还可以添加带有行为、动画、特效等的脚本序列，这些脚本序列与摄像机无关，由输入或预定义状态等事件触发。 |
+| [渲染](./rendering) | **Atom 渲染器**为 O3DE 提供了一个高性能、跨平台、基于物理的渲染器。Atom 还包括用于添加灯光、处理图像、创建材质和添加后期处理效果的工具。利用 Atom 的着色器语言 AZSL，您可以对渲染过程进行精细控制。 |
+| [环境](./environments) | O3DE 提供了创建密集、生动环境的工具。动态植被系统可以程序化地在景观中填充植被，这些植被会对演员和其他动态实体做出反应。地形系统可生成大规模地形，并与 O3DE 的物理系统相连接。|
+<!-- | [摄像机](./cameras) | 摄像机定义了要渲染的视图。您可以使用多个摄像机、在摄像机之间切换、通过脚本和关键帧为摄像机制作动画，还可以创建复杂的摄像机和灯光装备，以响应运行时事件和模拟。 | -->

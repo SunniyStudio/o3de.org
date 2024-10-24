@@ -1,67 +1,67 @@
 ---
-description: ' Use debug mode to refine the simulated object''s movement in Open 3D Engine. '
-title: 'Using Debug Mode to Refine the Simulation '
+description: ' 在 Open 3D Engine中使用调试模式完善模拟对象的运动。 '
+title: '使用调试模式改进模拟 '
 ---
 
-In the following procedure, use the debug mode to refine the simulated object's movement.
+在下面的步骤中，使用调试模式完善模拟对象的运动。
 
-**To use debug mode for the simulation**
+**要在模拟中使用调试模式**
 
-1. In the **Anim Graph** panel, click the play icon to run the anim graph.
+1. 在**Anim Graph**面板中，单击播放图标运行动画图表。
 
-    Use the speed slider to reduce the speed of the animation. Note that the tassel moves through the neck and arm of the actor.
+   使用速度滑块降低动画的速度。注意流苏会穿过Actor的脖子和手臂。
 
     ![Slow down the animation to see how the simulated object moves with the actor.](/images/user-guide/actor-animation/simulated-objects-21.gif)
 
-1. In the **SimulatedObject0** node, click the right-corner box. This enables debug rendering for the node.
+1. 在 **SimulatedObject0** 节点中，单击右角方框。这将启用节点的调试渲染。
 
     ![Enable debug mode for the simulated object in the anim graph.](/images/user-guide/actor-animation/simulated-objects-19.gif)
 
-1. In debug mode, you can do the following.
+1. 在调试模式下，可以执行以下操作。
 
-    1. To turn off the simulated object colliders, click the ![Simulated Objects Icon](/images/user-guide/actor-animation/simulated-objects-20.png) icon.
+    1. 要关闭模拟物体碰撞体，请单击 ![Simulated Objects Icon](/images/user-guide/actor-animation/simulated-objects-20.png)图标。
 
-    1. To turn off joint collision radius, click the ![Joint Collision Radius Icon](/images/user-guide/actor-animation/simulated-objects-5.png) icon.
+    1. 要关闭关节碰撞半径，请单击 ![Joint Collision Radius Icon](/images/user-guide/actor-animation/simulated-objects-5.png)图标。
 
-    In debug mode, the following appear in the render window:
+   在调试模式下，渲染窗口中会出现以下内容：
 
-    + Simulated object colliders - The colliders that the simulated object collides with. The colliders appear in light gray.
+    + Simulated object colliders - 模拟对象与之碰撞的碰撞体。碰撞体显示为浅灰色。
 
-    + Joint angle limit cones - The angle of a joint that simulates. The cones appear in light pink.
+    + Joint angle limit cones - 模拟关节的角度。锥体显示为浅粉色。
 
-    + Joint collision radius - The size of the collision radius on a joint. The radius appears in dark gray.
+    + Joint collision radius - 关节上碰撞半径的大小。半径显示为深灰色。
 
-    In the render window, you can click the first icon to toggle the actor geometry and see only simulated objects.
+   在渲染窗口中，你可以点击第一个图标来切换Actor几何图形，只看到模拟对象。
 
     ![Use the render window to preview how the a tassel moves and collides with the joint colliders.](/images/user-guide/actor-animation/simulated-objects-22.gif)
 
-1. To fix the simulated object (tassel) movement, do the following.
+1. 要固定模拟对象（tassel）的移动，请执行以下操作。
 
-    1. In the **Simulated Object** panel, select `L_tassle_02_JNT`.
+    1. 在**Simulated Object**面板中，找到`L_tassle_02_JNT`。
 
-    1. In the **Simulated Object Inspector**, select Pinned`. This pins the second part of the tassel and prevents it from moving.
+    1. 在**Simulated Object Inspector**中，选择Pinned`. 这将固定住流苏的第二部分，防止其移动。
 
-    1. For **Joint angle limit**, enter `80` to increase the swing of the joint.
+    1. 对于 **Joint angle limit**，输入 `80` 以增加关节的摆动。
 
-    1. In the **Simulated Object** panel, select `L_tassle_03_JNT`.
+    1. 在**Simulated Object**面板中，选择`L_tassle_03_JNT`。
 
-    1. In the **Simulated Object Inspector**, for **Radius**, enter `0.065`.
+    1. 在**Simulated Object Inspector**中，对于**Radius**，输入`0.065`。
 
-1. To fix the simulated joint colliders (chest and arm of the actor), do the following.
+1. 要固定模拟关节碰撞体（Actor的胸部和手臂），请执行以下操作。
 
-    1. In the **Skeleton Outliner** panel, select the `C_spine_04_JNT` where you added the simulated joint collider.
+    1. 在**Skeleton Outliner**中，选择`C_spine_04_JNT` 在这里添加了模拟关节碰撞体。
 
-    1. In the **Simulated Object Inspector**, for **Radius**, enter `0.172`.
+    1. 在**Simulated Object Inspector**中，对于**Radius**，输入`0.172`。
 
-    1. In the **Skeleton Outliner** panel, select the `L_arm_JNT` where you added the simulated joint collider.
+    1. 在**Skeleton Outliner**中，选择`L_arm_JNT` 在这里添加了模拟关节碰撞体。
 
-    1. In the **Simulated Object Inspector**, for **Radius**, enter `0.101`.
+    1. 在**Simulated Object Inspector**中，对于**Radius**，输入`0.101`。
 
-1. If you're satisfied with the results, save the actor.
+1. 如果您对结果满意，请保存Actor。
 
-1. To disable debugging mode, click the upper-right box again on the **SimulatedObject0** node.
+1. 要禁用调试模式，请再次单击**SimulatedObject0**节点上的右上方方框。
 
-    The following animation is the finished debugged version of the actor running. Note that the tassel no longer passes through the actor's body.
+   下面的动画是Actor运行的调试完成版本。请注意，流苏不再穿过Actor的身体。
 
     ![View the final animation of the actor and the simulated object.](/images/shared/simulated-objects-23.gif)
     

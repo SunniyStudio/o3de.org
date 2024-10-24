@@ -1,18 +1,17 @@
 ---
-description: ' Use EventData types to create custom parameters for motion events in
-  Open 3D Engine. '
-title: Creating EventData Types
+description: ' 使用 EventData 类型为 Open 3D Engine 中的动作事件创建自定义参数。'
+title: 创建 EventData 类型
 ---
 
-You create objects deriving from the [`EMotionFX::EventData`](/docs/api/gems/emotionfx/) interface to attach an arbitrary number of data objects to a single event.
+您可以创建派生自 [`EMotionFX::EventData`](/docs/api/gems/emotionfx/) 接口的对象，为单个事件附加任意数量的数据对象。
 
-**To create an EventData type**
+**要创建EventData类型**
 
-1. Using the following criteria, subclass either the `EventData` class or the `EventDataSyncable` class:
-   + For general-purpose parameters, subclass the `EventData` type.
-   + For parameters for the sync track, use the `EventDataSyncable` class. These parameters are for synchronizing blended motions.
+1. 使用以下标准，子类化 `EventData` 类或 `EventDataSyncable` 类：
+   + 对于通用参数，可对 `EventData` 类型进行子类化。
+   + 对于同步轨道的参数，请使用 `EventDataSyncable` 类。这些参数用于同步混合动作。
 
-   The following code snippet subclasses the `EventDataSyncable` class to create a `LeftFootEvent` for a left footstep.
+   下面的代码片段子类化了 `EventDataSyncable` 类，为左脚步声创建了一个 `LeftFootEvent` 事件。
 
    ```
    class LeftFootEvent final
@@ -25,9 +24,9 @@ You create objects deriving from the [`EMotionFX::EventData`](/docs/api/gems/emo
    ...
    ```
 
-1. Implement the `Equal` function in the subclass. The `Equal` function tests whether two `EventData` instances are equal and is used for deduplication of `EventData` instances.
+1. 在子类中实现 `Equal` 函数。`Equal` 函数用于测试两个 `EventData` 实例是否相等，并用于重复删除 `EventData` 实例。
 
-   The following example checks whether the `EventData` passed in is a `LeftFootEvent`.
+   下面的示例会检查传入的 `EventData` 是否为`LeftFootEvent`。
 
    ```
    bool Equal(const EventData& rhs, const bool /*ignoreEmptyFields*/) const override
@@ -38,13 +37,13 @@ You create objects deriving from the [`EMotionFX::EventData`](/docs/api/gems/emo
    }
    ```
 
-For more information about the `Equal` function, refer to [More About the Equal Function](#more-about-the-equal-function).
+有关 `Equal` 函数的更多信息，请参阅 [关于等号函数的更多信息](#more-about-the-equal-function).
 
-1. Implement the `Reflect` method to reflect the type to the [serialization context](/docs/user-guide/programming/components/reflection/serialization-context/) and [edit context](/docs/user-guide/programming/components/reflection/edit-context/).
+1. 实现 `Reflect` 方法，将类型反射到[序列化上下文](/docs/user-guide/programming/components/reflection/serialization-context/)和 [编辑上下文](/docs/user-guide/programming/components/reflection/edit-context/)中。
 
-When you reflect the event to the edit context, add the `Creatable` attribute to `ClassElement`. This makes the `EventData` type visible in **Animation Editor** in the **Motion Events** tab so that users can select it.
+将事件反映到编辑上下文时，请在 `ClassElement` 中添加 `Creatable` 属性。这将使 `EventData` 类型在**动画编辑器**的**Motion Events**选项卡中可见，以便用户选择。
 
-The following code example reflects the `LeftFootEvent` to the serialization and edit contexts.
+下面的代码示例将 `LeftFootEvent` 反映到序列化和编辑上下文中。
 
    ```
    ...
@@ -67,7 +66,7 @@ The following code example reflects the `LeftFootEvent` to the serialization and
    ...
    ```
 
-1. To add the event to a motion, use the `FindOrCreateEventData` template, which accepts any subclass of `EventData`.
+1. 要将事件添加到动作中，请使用 `FindOrCreateEventData` 模板，该模板可接受 `EventData` 的任何子类。
 
    ```
    ...
@@ -76,9 +75,9 @@ The following code example reflects the `LeftFootEvent` to the serialization and
    ...
    ```
 
-## Example 
+## 示例 
 
-The following example shows the completed `LeftFootEvent` sample `EventData` subclass and the code to add the event to a motion.
+下面的示例显示了已完成的 `LeftFootEvent` 示例 `EventData` 子类，以及将事件添加到动作中的代码。
 
 ```
 class LeftFootEvent final
@@ -123,33 +122,33 @@ auto footstepData = GetEMotionFX().GetEventManager()->FindOrCreateEventData<Left
 motion->GetEventTable()->FindTrackByName("Sound")->AddEvent(0.2f, footstepData);
 ```
 
-## More About the Equal Function 
+## 关于 Equal 函数的更多信息 
 
-The `Equal` function tests whether two `EventData` instances are equal.
+`Equal`函数测试两个`EventData`实例是否相等。
 
-**Syntax**
+**语法**
 
 ```
 virtual bool Equal(const EventData& rhs, bool ignoreEmptyFields = false) const = 0;
 ```
 
-EMotion FX uses the `Equal` method to deduplicate instances of `EventData` subclasses. The `AnimGraphMotionCondition` class also uses it for motion event matching logic.
+EMotion FX 使用`Equal`方法来重复`EventData`子类的实例。`AnimGraphMotionCondition` 类也将其用于动作事件匹配逻辑。
 
-When Event Manager loads a `.motion` file and deserializes the motion events on the event tracks, `EventManager::FindOrCreateEventData` processes each `EventData` instance.
+当事件管理器加载`.motion`文件并反序列化事件轨上的动作事件时，`EventManager::FindOrCreateEventData`会处理每个`EventData`实例。
 
-The `EventManager` stores a list of the `EventData` instances in use and attempts to find an `EventData` instance in which the call to `Equal(loadedEventData)` returns true. If the `EventManager` finds an `EventData` instance that is equal, the duplicate data is discarded.
+`EventManager`会存储正在使用的`EventData`实例的列表，并尝试查找调用 `Equal(loadedEventData)`返回 true 的`EventData`实例。如果 `EventManager` 找到一个相等的 `EventData` 实例，重复的数据将被丢弃。
 
-When a call to `AnimGraphMotionCondition` tests a motion event, `AnimGraphMotionCondition::TestCondition` calls the `Equal` method with the `ignoreEmptyFields` parameter set to `true`. The `ignoreEmptyFields` parameter enables partial matching of `EventData` instances. For example, if one of the fields is a string and the string value is empty in the condition, any value in the field matches.
+调用 `AnimGraphMotionCondition` 测试动作事件时，`AnimGraphMotionCondition::TestCondition` 会调用 `Equal` 方法，并将 `ignoreEmptyFields` 参数设置为 `true`。使用 `ignoreEmptyFields` 参数可以对 `EventData` 实例进行部分匹配。例如，如果其中一个字段是字符串，而条件中的字符串值为空，则该字段中的任何值都会匹配。
 
-## Synchronizing Blended Motions
+## 同步混合的动作
 
-The `EMotionFX::EventDataSyncable` class extends the functionality of the base `EventData` class and enables events that drive motion synchronization behavior. Use the `EventDataSyncable` class to specify parameters for synchronizing blended motions. The class calls `HashForSyncing` on the sync tracks of two different motions, compares the results, and finds events that are equal based on their hash value.
+`EMotionFX::EventDataSyncable`类扩展了基础`EventData`类的功能，并启用了驱动动作同步行为的事件。使用 `EventDataSyncable` 类可指定用于同步混合动作的参数。该类会在两个不同动作的同步轨迹上调用 `HashForSynccing`，比较结果，并根据哈希值找出相等的事件。
 
-### Mirroring
+### 镜像
 
-You can use `EMotionFX` to mirror motions programmatically. When a motion is being mirrored, its sync events must also be mirrored. To signal this mirroring, the `HashForSyncing` method accepts an `isMirror` parameter.
+您可以使用 `EMotionFX` 以编程方式镜像动作。镜像动作时，其同步事件也必须被镜像。为了发出镜像信号，`HashForSyncing`方法会接受一个`isMirror`参数。
 
-For example, suppose that you use an `EventDataSyncable` subclass to mirror the gait of a horse. You use an integer field to represent the feet of the horse with the following convention.
+例如，假设使用 `EventDataSyncable` 子类来镜像一匹马的步态。您使用一个整数字段来表示马的脚，其约定如下。
 
 ```
 0=left rear
@@ -158,7 +157,7 @@ For example, suppose that you use an `EventDataSyncable` subclass to mirror the 
 3=right front
 ```
 
-Implement `HashForSyncing` as in the following example.
+按以下示例实施 `HashForSyncing`.
 
 ```
 size_t HashForSyncing(bool isMirror) const
@@ -173,4 +172,4 @@ size_t HashForSyncing(bool isMirror) const
 }
 ```
 
-The default implementation for `HashForSyncing` returns the hash of the type ID of the type and ignores the `isMirror` parameter.
+`HashForSyncing` 的默认实现会返回类型 ID 的哈希值，并忽略 `isMirror` 参数。

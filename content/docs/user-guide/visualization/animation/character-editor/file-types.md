@@ -1,50 +1,50 @@
 ---
-description: ' Learn more about the file types for Animation Editor . '
-title: 'Animation Editor File Types'
+description: ' 进一步了解动画编辑器的文件类型。 '
+title: '动画编辑器文件类型'
 ---
 
-When you import `.fbx` files from your DCC to O3DE Editor, Asset Processor creates files that you use in the **Animation Editor**. The following example shows how the file types are created and modified. For more information about processing files for character and animations, see [Customize FBX asset export with FBX Settings](/docs/user-guide/assets/scene-settings/).
+当您将`.fbx`文件从DCC导入到O3DE编辑器时，Asset Processor会创建您在**动画编辑器**中使用的文件。下面的示例显示了如何创建和修改文件类型。有关处理角色和动画文件的更多信息，请参阅 [使用 FBX 设置自定义 FBX 资产导出](/docs/user-guide/assets/scene-settings/)。
 
 ![See an overview of how Animation Editor files are created and processed in O3DE.](/images/user-guide/actor-animation/animation-editor-asset-processor-files.png)
 
-The following are file types used in the **Animation Editor**:
+以下是**动画编辑器**中使用的文件类型：
 
-## Files Types 
+## 文件类型 
 
-When you import `.fbx` files into O3DE, Asset Processor generates the following file types used for the **Animation Editor**:
-+ `.actor` files are created when the `.fbx` file has at least one bone. You want to use your character's skinned mesh as your `.actor` file. The `.actor` file is the character that displays the animation.
-+ `.motion` files are created when the `.fbx` file with a bone has at least one keyframe. If your `.fbx` file has animation keyframes, a `.motion` file is created. Your `.motion` files contain the animations that are added to your motion set before you build your animation graph.
-+ `.mtl` files are created when the `.fbx` file has at least one material, which is the case for most DCC tools. If you make changes to the material in the **Material Editor**, the `.mtl` file is no longer a child of the `.fbx` file and the `.mtl` file is a sibling in the source directory of the `.fbx` file. You can make other changes to the `.mtl` file with a text editor or the **Material Editor**.
+将`.fbx`文件导入 O3DE 时，Asset Processor 会生成以下用于**动画编辑器**的文件类型：
++ 当`.fbx`文件至少有一个骨骼时，就会创建`.actor`文件。您希望使用角色的蒙皮网格作为`.actor`文件。`.actor`文件是显示动画的角色。
++ 当带有骨骼的`.fbx`文件至少有一个关键帧时，就会创建`.motion`文件。如果您的 `.fbx` 文件有动画关键帧，则会创建一个 `.motion` 文件。您的 `.motion` 文件包含在构建动画图之前添加到动作集的动画。
++ 当`.fbx`文件至少有一个材质时，就会创建`.mtl`文件，大多数 DCC 工具都是这种情况。如果您在**材质编辑器**中对材质进行了更改，`.mtl`文件就不再是`.fbx`文件的子文件，而`.mtl`文件则是`.fbx`文件源目录下的同级文件。您可以使用文本编辑器或**材质编辑器**对`.mtl`文件进行其他修改。
 
-When a `.motion` file is created, an `.actor` file is also created. The `.actor` file that you want to use in the **Animation Editor** is generally the skinned mesh in the bind pose that you export from your DCC. Keep track of your skinned mesh that you want to use as your `.actor` file in the **Animation Editor**. You can go to the **FBX Settings** tool and delete the actor files that you don't need.
+创建`.motion` 文件时，也会创建一个`.actor`文件。您要在**动画编辑器**中使用的`.actor`文件通常是从 DCC 导出的绑定姿势中的蒙皮网格。在**动画编辑器**中跟踪您要用作`.actor`文件的蒙皮网格。您可以进入**FBX 设置**工具，删除不需要的Actor文件。
 
-## File Types Required for Animation Graphs 
+## 动画图形所需的文件类型
 
-When you create your animation graph in the **Animation Editor**, the animation graph must have the following files:
+在**动画编辑器**中创建动画图时，动画图必须包含以下文件：
 + `.actor`
 + `.motion`
 + `.motionset`
 + `.animgraph`
 
-## Saving Animation Editor Files 
+## 保存动画编辑器文件
 
-Saving your project in the **Animation Editor** creates a `.workspace` file. The workspace saves the actor, motion, motion set and animation graphs that you are using. When you open a workspace, the **Animation Editor** loads the files so that you can pick up where you last left off.
+在**动画编辑器**中保存项目会创建一个“.工作区 ”文件。工作区保存了您正在使用的Actor、动作、动作集和动画图。打开工作区时，**动画编辑器**会加载这些文件，这样您就可以从上次离开的地方继续工作。
 
-**To save your workspace**
-+ In the **Animation Editor**, choose **File**, and then choose one of the following:
+**要保存你的工作区**
++ 在**Animation Editor**中，选择 **File**，然后选择以下之一：
   + **Save Workspace**
   + **Save Workspace As**
 
-When `.actor` and `.motion` files are saved, the **Animation Editor** creates an `.assetinfo` file, alongside the source `.fbx` file. The `.assetinfo` files stores the configuration and settings for the `.actor` and `.motion` files.
+保存 `.actor`和`.motion`文件时，**动画编辑器**会在源文件`.fbx`旁边创建一个 `.assetinfo`文件。`.assetinfo`文件存储了`.actor`和`.motion`文件的配置和设置。
 
-Settings saved for `.actor` files include the actor name, motion extraction node, excluded bounds, collision mesh setup, and mirror setup.
+为`.actor`文件保存的设置包括 “角色名称”、“动作提取节点”、“排除边界”、“碰撞网格设置 ”和 “镜像设置”。
 
-Settings saved for `.motion` files include the motion extraction capture height option and motion events.
+为`.motion`文件保存的设置包括动作提取捕捉高度选项和动作事件。
 
-**To save `.actor` and `.motion` files:**
-+ In the **Animation Editor**, do one of the following:
-  + Click **Save All** to saves any changes made to the `.actor`, `.motion`, `.motionset`, and `.animgraph` files. A dialog box prompts you to choose which files to save.
-  + Click **Save Workspace** to saves your current workspace. If you don't have a workspace saved, a dialog box appears so that you can name your workspace and save it to your preferred directory.
-  + Click **Save Workspace As** to saves your workspace with a different name or to another directory.
-  + To save motion files individually, click the save icon in the **Motions** pane.
-  + To save actor files individually, click the save icon in the **Actor Manager** pane.
+**要保存`.actor` 和 `.motion` 文件:**
++ 在 **Animation Editor**中，完成以下之一：
+  + 点击 **Save All** 保存对 `.actor`, `.motion`, `.motionset`, 和 `.animgraph` 文件的修改。 对话框会提示您选择要保存的文件。
+  + 单击**Save Workspace**保存当前工作区。如果没有保存工作区，则会出现一个对话框，让您为工作区命名，并将其保存到首选目录。
+  + 单击 **Save Workspace As**，以不同的名称或将工作区保存到其他目录。
++ 要单独保存动作文件，请单击**Motions** 窗格中的 “保存 ”图标。
++ 要单独保存Actor文件，请单击**Actor Manager**窗格中的保存图标。

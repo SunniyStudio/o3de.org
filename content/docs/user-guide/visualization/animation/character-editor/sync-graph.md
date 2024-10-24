@@ -1,210 +1,208 @@
 ---
-description: ' Use synchronized animation graphs to synchronize animation between
-  actors in Open 3D Engine. '
-title: 'Synchronizing Animation Graphs: Example'
+description: ' 在 Open 3D Engine中，使用同步动画图来同步演员之间的动画。 '
+title: '同步动画图形： 示例'
 ---
 
-You can use synchronized animation graphs to synchronize animation between actors. For example, the animation of one actor might trigger an animation in another actor. An animation graph can be the primary graph and have multiple secondary graphs. Likewise, an animation graph can be both a secondary graph of one graph and a primary graph for another graph.
+您可以使用同步动画图来同步演员之间的动画。例如，一个角色的动画可能会触发另一个角色的动画。一个动画图可以是主要动画图，也可以有多个辅助动画图。同样，一个动画图既可以是一个图的辅助图，也可以是另一个图的主要图。
 
-This topic describes the following main steps for synchronizing two animation graphs:
+本主题介绍同步两个动画图形的以下主要步骤：
 
-1. Add the required components to the entities to be synchronized, including the Anim Graph component.
+1. 为要同步的实体添加所需的组件，包括 Anim Graph 组件。
 
-1. Use Animation Editor to create a motion set and one or more animation graphs.
+1. 使用动画编辑器创建动作集和一个或多个动画图形。
 
-1. Add a parameter to the secondary graph to receive the change event from the primary graph.
+1. 为辅助图形添加一个参数，以便从主图形接收更改事件。
 
-1. Add a parameter to the primary graph.
+1. 为主图表添加一个参数。
 
-1. Add a servant parameter action to the primary graph to send change events to the secondary graph.
+1. 在主图表中添加仆从参数操作，以便向辅助图表发送更改事件。
 
-1. Synchronize the graphs by using O3DE's [Event Bus (EBus)](/docs/user-guide/programming/messaging/ebus/) system and Lua script.
+1. 使用 O3DE 的 [Event Bus (EBus)](/docs/user-guide/programming/messaging/ebus/) 系统和 Lua 脚本同步图形。
 
-This topic illustrates this graph synchronization with an example that has two actors, a robot actor ("Jack") and a gun actor. When the player activates the sync mode and uses the keyboard to fire, the robot makes a firing motion and the gun fires. When the player deactivates the sync mode, the robot makes a firing motion, but the gun does not fire.
+本专题以两个角色（一个机器人角色（“Jack”）和一个枪角色）为例说明图形同步。当玩家激活同步模式并使用键盘开火时，机器人会做出开火动作，枪也会开火。当玩家关闭同步模式时，机器人会做出开火动作，但枪支不会开火。
 
 ![The example game scene.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-1.png)
 
-The robot has a `syncFeature_Jack` animation graph and the gun uses a `syncFeature_Gun` graph. The robot graph is the primary graph and the gun graph is the secondary graph.
+机器人使用`syncFeature_Jack`动画图形，喷枪使用`syncFeature_Gun` 图形。机器人图形是主要图形，喷枪图形是次要图形。
 
-When the sync mode is on, the gun fires in sync with the robot. When the robot fires, the state of the primary graph's `shoot` parameter is received by secondary graph's `gunTrigger` parameter. The secondary graph, which is attached to the gun, receives the parameter change event and fires the gun.
+同步模式开启时，枪会与机器人同步开火。当机器人开火时，辅助图的`shoot`参数将接收主图的 `gunTrigger`参数状态。附属于喷枪的辅助图形会接收参数变化事件并发射喷枪。
 
-## 1. Add Required Components 
+## 1. 添加所需组件
 
-The first step is to add the required components to the entities that you want to synchronize. The robot and gun components that are used by the entities in the example are described in the following sections.
+第一步是为要同步的实体添加所需的组件。示例中实体使用的机器人和喷枪组件将在以下章节中介绍。
 
-### Robot Entity Components 
+### Robot Entity 组件
 
-The robot entity uses the following components:
+机器人实体使用以下组件：
 + **Transform**
 + **Actor**
 + **Anim Graph**
 + **Input**
 + **Lua Script**
 
-The following image shows the configuration of the components for the robot entity in the Entity Inspector.
+下图显示了实体检查器中机器人实体组件的配置。
 
 ![The components for the robot entity.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-robot-components.png)
 
-### Gun Entity Components 
+### Gun Entity 组件
 
-The gun entity uses the following components:
+喷枪实体使用以下组件：
 + **Transform**
 + **Actor**
 + **Lua Script**
 + **Anim Graph**
 + **Input**
 
-The following image shows the configuration of the components for the gun entity in the Entity Inspector.
+下图显示了实体检查器中枪支实体组件的配置。
 
 ![The components for the gun entity in Entity Inspector.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-gun-components.png)
 
-## 2. Create a Motion Set and Animation Graphs 
+## 2. 创建运动集和动画图形
 
-After you set up your entities and components, create a motion set and two animation graphs. The motion set contains the motions that your graphs use, and the secondary and primary animation graphs animate and synchronize the entities.
+设置好实体和组件后，创建一个运动集和两个动画图形。运动集包含图形所使用的运动，而辅助和主要动画图形则对实体进行动画和同步。
 
-**To create a motion set and two animation graphs**
+**创建运动集和两个动画图形**
 
-1. Create a motion set. For information about creating a motion set, see [Getting Started with the Animation Editor](/docs/user-guide/visualization/animation/animation-editor/quick-start/). This example's **MotionSet0** contains the motions `gunshootanimation`, `jack_shoot`, and `jack_idle`.
+1. 创建动作集。有关创建动作集的信息，请参阅[动画编辑器入门](/docs/user-guide/visualization/animation/animation-editor/quick-start/)。本例的**MotionSet0**包含`gunshootanimation`、`jack_shoot`和`jack_idle`动作。
 
 ![Example motion set.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-2.png)
 
-1. Create a secondary animation graph. For information about creating a secondary animation graph, see [Getting Started with the Animation Editor](/docs/user-guide/visualization/animation/animation-editor/quick-start/). The secondary graph controls one or more entities whose actions are determined by the primary graph.
+1. 创建辅助动画图。有关创建辅助动画图的信息，请参阅 [动画编辑器入门](/docs/user-guide/visualization/animation/animation-editor/quick-start/)。辅助图形控制一个或多个实体，其动作由主图形决定。
 
-   This example's `syncFeature_Gun` secondary graph has a **BindPose0** node and a **Motion0** node. The **Motion0** node contains the `gunshootanimation` motion.
+   本例中的`syncFeature_Gun`二级图具有一个 **BindPose0** 节点和一个 **Motion0** 节点。**Motion0** 节点包含 `gunshootanimation` 动作。
 
    ![Motion node with associated animation.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-3.png)
 
-1. Create a primary graph. The primary graph sends control events to the secondary graph.
+1. 创建主图形。主图形向辅助图形发送控制事件。
 
-   This example's `syncFeature_Jack` primary animation graph has a **Motion1** node and a **Motion0** node. The **Motion1** node contains the `jack_idle` motion and the **Motion0** node contains the `jack_shoot` motion.
+   本例的 `syncFeature_Jack` 主动画图中有一个 **Motion1** 节点和一个 **Motion0** 节点。**Motion1** 节点包含 `jack_idle` 动作，而 **Motion0** 节点包含`jack_shoot`动作。
 
    ![Motion node with associated idle motion.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-4.png)
 
    ![Motion node with associated animation.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-5.png)
 
-## 3. Add a Parameter to the Secondary Graph 
+## 3. 在辅助图形中添加参数
 
-You are now ready to add a parameter to the secondary graph that receives the parameter change event from the primary graph. After you add the parameter, add parameter conditions that specify when the animation transitions from one motion to another.
+现在，您已准备好向辅助图形添加参数，该图形将接收来自主图形的参数更改事件。添加参数后，再添加参数条件，指定动画从一个动作过渡到另一个动作的时间。
 
-**To add a parameter to the secondary graph to receive the change event from the primary graph**
+**要在辅助图形中添加一个参数，以接收来自主图形的更改事件**
 
-1. On the **Parameters** tab for the secondary animation graph, click the plus (**+**) icon, and choose **Add parameter**.
+1. 在辅助动画图形的**Parameters**选项卡上，单击加号（**+**）图标，然后选择**Add parameter**。
 
 ![Choose Add parameter in Animation Editor.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-6.png)
 
-1. In the **Create Parameter** dialog box, for **Value type**, choose the data type that you want to use for the parameter. This example uses the **Boolean (checkbox)** value type because the gun trigger is either on or off.
+1. 在**Create Parameter**对话框的**Value type**中，选择要用于参数的数据类型。本例使用 **Boolean (checkbox)** 值类型，因为枪炮触发器要么开要么关。
 
 ![Choose a value type for the parameter.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-7.png)
 
-1. For **Name**, enter a name for the parameter. This example uses `gunTrigger`.
+1. 在 **Name** 中，输入参数的名称。本例使用`gunTrigger`。
 
 ![Enter a parameter name.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-8.png)
 
-1. Click **Create**. The **Parameters** list shows the parameter that you created.
+1. 点击**Create**。**Parameters**列表会显示您创建的参数。
 
 ![Parameter added to the animation graph.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-9.png)
 
-### Add Parameter Conditions to the Secondary Graph 
+### 为辅助图形添加参数条件
 
-In this section, add parameter conditions on the transition lines that specify when the animation changes. In the example, the conditions indicate whether the gun trigger has been pressed.
+在本节中，在过渡线上添加参数条件，指定动画何时发生变化。在示例中，条件表示是否已按下喷枪扳机。
 
-**To add parameter conditions to the secondary graph**
+**为辅助图形添加参数条件**
 
-1. Click the transition line from the **BindPose0** node to the **Motion0** node. Then, in the **Attributes** pane, click **Add condition**, and choose **Parameter Condition**.
+1. 单击从 **BindPose0** 节点到 **Motion0** 节点的过渡线。然后，在**Attributes**窗格中，单击**Add condition**，并选择**Parameter Condition**。
 
 ![Select the transition line to add a parameter condition.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-10.png)
 
-1. Click **Select parameter**.
+1. 点击 **Select parameter**。
 
 ![Click Select parameter.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-11.png)
 
-1. In the **Parameter Selection Window**, choose the parameter that you just created, and click **OK**.
+1. 在**Parameter Selection Window**中，选择刚刚创建的参数，然后点击 **OK**。
 
 ![Choose a parameter for the parameter condition.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-12.png)
 
-   In the **Attributes** pane, a **Parameter Condition** section shows the parameter that you added. On the transition line, a small round node indicates that the line has a parameter condition.
+   在**Attributes**窗格中，**Parameter Condition**部分显示了您添加的参数。在过渡行上，一个小圆节点表示该行有一个参数条件。
 
    ![Small round node indicating a parameter condition.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-13.png)
 
-1. For **Test Function**, use the default value of **param > testValue**. In this example, this means that if the trigger receives a value greater than 0, the gun fires.
-
+1. 对于 **Test Function**，使用 **param > testValue** 的默认值。在本例中，这意味着如果触发器接收到的值大于 0，枪就会发射。
 ![Specifying a test function for the parameter condition.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-14.png)
 
-1. For **Test Value**, keep the default value of 0.0.
+1. 对于 **Test Value**， 保持默认值 0.0。
 
-1. Click the transition line from the **Motion0** node to the **BindPose0** node. Then, in the **Attributes** pane, click **Add condition**, and choose **Parameter Condition**.
+1. 单击从 **Motion0** 节点到 **BindPose0** 节点的过渡线。然后，在**Attributes**窗格中，单击**Add condition**，并选择**Parameter Condition**。
 
 ![Select the opposite transition line to add another parameter condition.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-15.png)
 
-1. Click **Select parameter**.
+1. 点击 **Select parameter**。
 
-1. In the **Parameter Selection Window**, choose the parameter that you are using. The example uses the `gunTrigger` parameter.
+1. 在**Parameter Selection Window**中，选择要使用的参数。示例中使用的是 `gunTrigger` 参数。
 
-1. For **Test Function**, use the default value of **param == testValue**. In this example, this means that if the trigger value is equal to zero, the motion transitions back to idle, and the gun no longer fires.
+1. 对于 **Test Function**，使用 **param == testValue** 的默认值。在本例中，这意味着如果触发值等于零，则运动会转回空闲状态，枪支不再开火。
 
-1. For **Test Value**, keep the default value of 0.0.
+1. 对于 **Test Value**，保持默认值 0.0。
 
-Now the secondary animation graph is ready to receive signals from the primary graph.
+现在，辅助动画图形已准备好接收来自主图形的信号。
 
-## 4. Add a Parameter and Parameter Conditions to the Primary Graph 
+## 4. 在主图表中添加参数和参数条件 
 
-You add a parameter and parameter conditions to the primary graph just as you did with the secondary graph. However, you also add secondary ("servant") parameter actions to the primary graph. The actions signal the secondary graph to mimic the animations of the primary graph.
+在主图表中添加参数和参数条件，就像在辅助图表中一样。不过，您还可以在主图形中添加辅助（“仆人”）参数动作。这些操作会向辅助图形发出信号，使其模仿主图形的动画。
 
-**To add a parameter to the primary graph**
+**向主图形添加参数**
 
-1. On the **Parameters** tab, click the plus (**+**) icon, and choose **Add parameter**.
+1. 在**Parameters**标签页上，点击 (**+**) 图标，选择 **Add parameter**。
 
 ![Adding a parameter to the primary graph.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-16.png)
 
-1. In the **Create Parameter** dialog box, for **Value type**, choose the data type that you want to use for the parameter. This example uses the **Boolean (checkbox)** value type because the gun trigger is either on or off.
+1. 在**Create Parameter**对话框的**Value type**中，选择要用于参数的数据类型。本例使用 **Boolean (checkbox)** 值类型，因为枪炮触发器要么开要么关。
 
 ![Choosing a value type for the parameter.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-17.png)
 
-1. For **Name**, enter a name for the parameter. This example uses `shoot`.
+1. 在 **Name** 中，输入参数的名称。本例使用 `shoot`。
 
 ![Enter a name for the parameter for the primary graph.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-18.png)
 
-1. Click **Create**.
+1. 点击 **Create**。
 
-### Add Parameter Conditions to the Primary Graph 
+### 在主图表中添加参数条件
 
-Now you add parameter conditions on the transition lines in the primary graph as you did on the secondary graph.
+现在，您可以在主图表的过渡线上添加参数条件，就像在辅助图表上一样。
 
-**To add parameter conditions to the primary graph**
+**向主图形添加参数条件**
 
-1. Click the transition line from the **Motion1** node to the **Motion0** node. Then, in the **Attributes** pane, click **Add condition**, and choose **Parameter Condition**.
+1. 单击从 **Motion1** 节点到 **Motion0** 节点的过渡线。然后，在**Attributes**窗格中，单击**Add condition**，并选择**Parameter Condition**。
 
 ![Click the transition line to add a parameter condition.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-19.png)
 
-1. Click **Select parameter**.
+1. 点击 **Select parameter**。
 
-1. In the **Parameter Selection Window**, choose the parameter that you just created. This example uses `shoot`.
+1. 在**Parameter Selection Window**中，选择刚刚创建的参数。本例使用 `shoot`。
 
 ![Choose a parameter for the parameter condition.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-20.png)
 
-1. For **Test Function**, use the default value of **param > testValue**.
+1. 对于 **Test Function**，使用**param > testValue**的默认值。
 
-1. For **Test Value**, use the default value of **0.0**.
+1. 对于 **Test Value**，使用**0.0**的默认值。
 
-1. Click the transition line from the **Motion0** node to the **Motion1** node. Then, in the **Attributes** pane, click **Add condition**, and choose **Parameter Condition**.
+1. 单击从 **Motion0** 节点到 **Motion1** 节点的过渡线。然后，在**Attributes**窗格中，单击**Add condition**，并选择**Parameter Condition**。
 
 ![Add a parameter condition to the other transition line.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-21.png)
 
-1. Click **Select parameter**.
+1. 点击 **Select parameter**。
 
-1. In the **Parameter Selection Window**, choose the parameter that you are using. The example uses `shoot`.
+1. 在**Parameter Selection Window**中，选择要使用的参数。示例中使用的是 `shoot`。
 
-1. For **Test Function**, use the default value of **param == testValue**.
+1. 对于 **Test Function**，使用 **param == testValue** 的默认值。
 
-1. For **Test Value**, use the default value of **0.0**.
+1. 对于 **Test Value**，使用 **0.0** 的默认值。
 
-## 5. Add Servant Parameter Actions to the Primary Graph 
+## 5. 在主图表中添加仆从参数操作
 
-Now you are ready to add secondary ("servant") parameter actions to the primary graph. A script uses these actions to synchronize the two graphs.
+现在，您可以向主图表添加辅助（“仆人”）参数操作。脚本将使用这些操作来同步两个图表。
 
-**To add a servant parameter action to the primary graph**
+**向主图表添加仆从参数操作**
 
-1. In Animation Editor, click to select the first transition line again. This example selects the line from the `jack_idle` node **Motion1** to the `jack_shoot` node **Motion0**.
+1. 在动画编辑器中，再次单击选择第一条过渡线。本例选择了从`jack_idle`节点 **Motion1** 到`jack_shoot`节点 **Motion0** 的线条。
 
 ![Click the transition line to add a servant parameter action.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-22.png)
 

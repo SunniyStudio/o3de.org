@@ -1,11 +1,11 @@
 ---
 description: null
-title: MotionEvent Public Member Functions
+title: MotionEvent 公开成员函数
 ---
 
-The `MotionEvent` class includes the following public member functions.
+`MotionEvent` 类包括以下公共成员函数。
 
-**Topics**
+**主题**
 + [MotionEvent](#char-animation-editor-custom-events-parameters-motionevent)
 + [SetStartTime](#char-animation-editor-custom-events-parameters-setstarttime)
 + [SetEndTime](#char-animation-editor-custom-events-parameters-setendtime)
@@ -19,79 +19,79 @@ The `MotionEvent` class includes the following public member functions.
 
 ## MotionEvent 
 
-You can use the `MotionEvent` function to trigger an event at a specific point in time (a tick event) or during a specified time range (a range event). To specify the data that the event emits, you can use pointers or datasets.
+您可以使用 `MotionEvent` 函数在特定时间点（tick事件）或指定时间范围（范围事件）内触发事件。要指定事件发出的数据，可以使用指针或数据集。
 
-**Syntax**
+**语法**
 
 ```
 MotionEvent (float timeValue, EventDataPtr &&data)
 ```
 
-Creates a tick event and uses a data pointer.
+创建一个 tick 事件并使用一个数据指针。
 
 
 ****
 
-| Parameter | Description |
+| 参数 | 说明 |
 | --- | --- |
-| timeValue | The time value, in seconds, when the motion event should occur. |
-| data | The values to emit when the event is triggered. |
+| timeValue | 动作事件发生的时间值（秒）。 |
+| data | 事件触发时要输出的值。 |
 
-**Syntax**
+**语法**
 
 ```
 MotionEvent (float startTimeValue, float endTimeValue, EventDataPtr &&data)
 ```
 
-Creates a ranged event and uses a data pointer.
+创建一个范围事件并使用一个数据指针。
 
 
 ****
 
-| `Parameter` | Description |
+| `参数` | 说明 |
 | --- | --- |
-| startTimeValue | The start time value, in seconds, when the motion event should start. |
-| endTimeValue | The end time value, in seconds, when the motion event should end. When equal to the start time value, a start event is triggered, but no end event occurs. |
-| data | The values to emit when the event is triggered. |
+| startTimeValue | 动作事件的起始时间（秒）。 |
+| endTimeValue | 动作事件结束时的结束时间（秒）。等于起始时间值时，会触发起始事件，但不会发生结束事件。 |
+| data | 事件触发时要输出的值。 |
 
-**Syntax**
+**语法**
 
 ```
 MotionEvent (float timeValue, EventDataSet &&datas)
 ```
 
-Creates a tick event and uses a dataset.
+创建一个 tick 事件并使用一个数据集。
 
 
 ****
 
-| Parameter | Description |
+| 参数 | 说明 |
 | --- | --- |
-| timeValue | The time value, in seconds, when the motion event should occur. |
-| datas | The values to emit when the event is triggered. |
+| timeValue | 动作事件发生的时间值（秒）。 |
+| datas | 事件触发时要输出的值。|
 
-**Syntax**
+**语法**
 
 ```
 MotionEvent (float startTimeValue, float endTimeValue, EventDataSet &&datas)
 ```
 
-Creates a ranged event and uses a dataset.
+创建一个范围事件并使用一个数据集。
 
 
 ****
-
-| `Parameter` | Description |
+1
+| `参数` | 说明 |
 | --- | --- |
-| startTimeValue | The start time value, in seconds, when the motion event should start. |
-| endTimeValue | The end time value, in seconds, when the motion event should end. When equal to the start time value, a start event is triggered, but no end event occurs. |
-| datas | The values to emit when the event is triggered. |
+| startTimeValue | 动作事件的起始时间（秒）。 |
+| endTimeValue | 动作事件结束时的结束时间（秒）。等于起始时间值时，会触发起始事件，但不会发生结束事件。 |
+| datas | 事件触发时要输出的值。 |
 
 ## SetStartTime 
 
-Sets the start time value of the event, which is when the event should be processed.
+设置事件的起始时间值，即事件的处理时间。
 
-**Syntax**
+**语法**
 
 ```
 void SetStartTime (float timeValue)
@@ -99,9 +99,9 @@ void SetStartTime (float timeValue)
 
 ## SetEndTime 
 
-Sets the end time value of the event, which is when the event should be processed.
+设置事件的结束时间值，即事件的处理时间。
 
-**Syntax**
+**语法**
 
 ```
 void SetEndTime (float timeValue)
@@ -109,9 +109,9 @@ void SetEndTime (float timeValue)
 
 ## GetStartTime 
 
-Gets the start time value of this event, which is when the event should be executed.
+获取该事件的起始时间值，即事件的执行时间。
 
-**Syntax**
+**语法**
 
 ```
 float GetStartTime () const
@@ -119,9 +119,9 @@ float GetStartTime () const
 
 ## GetEndTime 
 
-Gets the end time value of this event, which is when the event should stop.
+获取此事件的结束时间值，即事件应该停止的时间。
 
-**Syntax**
+**语法**
 
 ```
 float GetEndTime () const
@@ -129,9 +129,9 @@ float GetEndTime () const
 
 ## GetIsTickEvent 
 
-Checks whether this is a tick event.
+检查该事件是否为tick事件。
 
-**Syntax**
+**语法**
 
 ```
 bool GetIsTickEvent () const
@@ -139,9 +139,9 @@ bool GetIsTickEvent () const
 
 ## ConvertToTickEvent 
 
-Converts this event into a tick event.
+将此事件转换为 tick 事件。
 
-**Syntax**
+**语法**
 
 ```
 void ConvertToTickEvent ()
@@ -149,9 +149,9 @@ void ConvertToTickEvent ()
 
 ## GetIsSyncEvent 
 
-Checks whether this event is a sync event.
+检查该事件是否为同步事件。
 
-**Syntax**
+**语法**
 
 ```
 bool GetIsSyncEvent () const
@@ -159,9 +159,9 @@ bool GetIsSyncEvent () const
 
 ## SetIsSyncEvent 
 
-Specifies whether this event is a sync event.
+指定此事件是否为同步事件。
 
-**Syntax**
+**语法**
 
 ```
 void SetIsSyncEvent (bool newValue)
@@ -169,9 +169,9 @@ void SetIsSyncEvent (bool newValue)
 
 ## HashForSyncing 
 
-Creates a hash on the sync track of a motion.
+在动作的同步轨上创建哈希值。
 
-**Syntax**
+**语法**
 
 ```
 size_t HashForSyncing (bool isMirror) const

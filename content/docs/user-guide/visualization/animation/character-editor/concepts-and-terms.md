@@ -1,64 +1,64 @@
 ---
 description: null
-title: 'Animation Editor Concepts and Terms'
+title: '动画编辑器概念和术语'
 ---
 
-The following concepts and terms are used in the **Animation Editor**:
+以下概念和术语用于**动画编辑器**：
 
 **Actor**
-A character with at least one bone is called an *actor*. An actor consists of a set of nodes in a hierarchy. Each node is a transformation (position, rotation, and scale) and can contain a mesh.
-Instances of actors are called *actor instances*. For example, one soldier that is instanced 100 times can create an army of the same character. You can animate actor instances separately, so that each instance behaves differently. Each actor instance has unique transformations, but shares the same hierarchy as the actor from which it was instanced.
-Actor files have the `.actor` extension \(for example, `hero.actor`\).
+至少有一个骨骼的角色称为**Actor**。一个Actor由一个层次结构中的一组节点组成。每个节点都是一个变换（位置、旋转和缩放），并可包含一个网格。
+Actor的实例称为*Actor实例*。例如，一个士兵被实例化 100 次，就能创建一支相同角色的军队。您可以分别为Actor实例制作动画，这样每个实例就会有不同的表现。每个Actor实例都有独一无二的变换，但其层次结构与被实例化的Actor相同。
+Actor文件具有`.actor`扩展名 \(例如, `hero.actor`\)。
 
 **Motions**
-Motions are individual animation clips, such as walk loop, an idle motion, and so on. Motions contain transformation animation and/or morph target weight animation. A motion can contain animation data for the skeletal structure and the morph targets.
-Motion files have the `.motion` extension \(for example, `Walk.motion`\).
+动作是单独的动画片段，如行走循环、空闲动作等。动作包含变形动画和/或变形目标权重动画。一个动作可以包含骨骼结构和变形目标的动画数据。
+动作文件具有`.motion` 扩展名 \(例如, `Walk.motion`\)。
 
 **Animation graphs**
-Animation networks are called animation graphs. Animation graphs contain the state machines, transitions, conditions, blend trees, and other nodes. Animation graphs are hierarchical.
-Animation graph files have the .`animgraph` extension \(for example, `Main.animgraph`\).
+动画网络被称为动画图。动画图包含状态机、转换、条件、混合树和其他节点。动画图是分层的。
+Animation graph 文件具有.`animgraph` 扩展名 \(例如, `Main.animgraph`\)。
 
 **Motion sets**
-A motion set contains a list of motions, where each motion has a unique string ID \(for example, `walk`, `idle`, and so on\). Nodes inside an animation graph can reference motions based on their string ID.
-Motion sets can be hierarchical. A child set can override specific motions for a character, while sharing the rest of the motions with the parent set.
-Motion set files have the `.motionset` extension \(for example, `MainSet.motionset`\).
+动作集包含一个动作列表，其中每个动作都有一个唯一的字符串 ID \(例如，`walk`, `idle`等\)。动画图中的节点可以根据字符串 ID 引用动作。
+动作集可以分级。子集可以覆盖角色的特定动作，同时与父集共享其余动作。
+动作集具有`.motionset` 扩展名 \(例如, `MainSet.motionset`\)。
 
 **Motion events**
-Markings at specific time values inside the motion files are called *motion events* (also called notifiers or notifications). A motion event has a type string (for example, "SOUND") and parameter string (for example, "Footstep").
-Motion events can have a fixed time value or range. Events with a single time value are called *tick events*. Events with specified start and end times are called *ranged events*.
-You can specify event presets, which are pre-setup types of events that you drag and drop into the event tracks. An *event track* is a group of events that you enable or disable. For example, you can add all sound effects to an event track specifically for sounds.
-Motion event data is stored in the motion FBX's `.assetinfo` file.
+动作文件中特定时间值的标记称为**动作事件**（也称为通知器或通知）。动作事件有一个类型字符串（如 “SOUND”）和参数字符串（如 “Footstep”）。
+动作事件可以有固定的时间值或范围。具有单一时间值的事件称为**tick events**。具有指定开始和结束时间的事件称为**ranged events**。
+您可以指定事件预设，这是预先设置好的事件类型，您可以将其拖放到事件轨道中。**event track**是一组可以启用或禁用的事件。例如，您可以将所有音效添加到专门用于声音的事件轨道中。
+动作事件数据被存储在动作FBX的`.assetinfo`文件中。
 
 **Synchronization**
-You can use *full clip-base sync* or *sync tracks * to synchronize motion clips to keep a character's motions in sync while blending. For example, if your character is running, synchronization helps keep the right and left feet in sync.
-Full clip-based sync warps the motions so that there is a constant change in playback time of the child motion.
-Sync tracks use motion events, where the events mark specific moments (for example, where the right and left feet are on the floor). This system is also known as phase matching and dynamically controls the playback speed.
+您可以使用 **full clip-base sync** 或 **sync tracks ** 来同步动作片段，以便在混合时保持角色动作同步。例如，如果角色正在奔跑，同步有助于保持左右脚同步。
+基于片段的完全同步会扭曲动作，使子动作的播放时间不断变化。
+同步音轨使用动作事件，事件标记特定时刻（例如，左右脚着地的位置）。这种系统也称为相位匹配，可动态控制播放速度。
 
 **Floats**
-Floats are numbers with decimals (for example 1.35 or 1.0.) Booleans and integers are also floats, so they can be passed as weight float inputs to blending nodes. If floats are rounded, the **Animation Editor** always rounds them down. For example, 2.99 becomes 2.
+浮点数是带小数点的数字（例如 1.35 或 1.0）。布尔数和整数也是浮点数，因此可以作为权重浮点数输入传递给混合节点。如果浮点数被四舍五入，**动画编辑器**总是将其向下舍入。例如，2.99 将变为 2。
 
 **Time**
-All time values and durations are in seconds. For example, you can set the transition time for 0.3 or 300 ms.
+所有时间值和持续时间都以秒为单位。例如，您可以将过渡时间设置为 0.3 或 300 毫秒。
 
-## About Animation Graphs 
+## 关于 Animation Graph 
 
-Animation graphs define the animation behavior for your game characters. Animation graphs contain the states that the character can have and define the transitions between these states. Each transition can have a set of conditions that define the logic behind the transitions.
+动画图定义了游戏角色的动画行为。动画图包含角色可能具有的状态，并定义了这些状态之间的转换。每个过渡都可以有一组条件，这些条件定义了过渡背后的逻辑。
 
-Animation graphs contain nodes and the connections between them. These connections define how data is passed between the nodes or how transitions occur between nodes.
+动画图形包含节点和节点之间的连接。这些连接定义了节点之间的数据传递方式或节点之间的转换方式。
 
-Animation graphs have two main node types:
-+ State machines
-+ Blend trees
+动画图形有两种主要节点类型：
++ 状态机
++ 混合树
 
-Because animation graphs are hierarchical, the nodes can be nested. For example, you can have a state machine inside a state machine inside a blend tree, which contains another blend tree and state machine, and so on. The number of hierarchy levels is limitless, but as a best practice limit your hierarchy to 20 levels or fewer.
+由于动画图是分层的，因此节点可以嵌套。例如，你可以在一个混合树中包含一个状态机，而混合树又包含另一个混合树和状态机，以此类推。层次结构的级数是无限的，但最佳做法是将层次结构限制在 20 级以内。
 
-Each animation graph has one root node, which is a state machine. This root node is the default and cannot be deleted. A simple animation graph can contain one state inside this root state machine. For example, the single state can be a motion node, which outputs a pose that is applied to the character, such as an idle motion.
+每个动画图都有一个根节点，它是一个状态机。这个根节点是默认的，不能删除。一个简单的动画图可以在根状态机中包含一个状态。例如，单个状态可以是一个动作节点，它输出一个应用于角色的姿势，如空闲动作。
 
-Before you can add nodes to an animation graph, you must create a motion set. After you create a motion set, you can create an animation graph and then assign the motion sets to the animation graph using the **Resource Management** pane in the **Anim Graph** window.
+在向动画图形添加节点之前，必须先创建一个动作集。创建动作集后，可以创建动画图形，然后使用**Anim Graph**窗口中的**Resource Management**窗格将动作集分配给动画图形。
 
-### Animation Graph Nodes 
+### Animation Graph 节点 
 
-In a state machine, you can add the following nodes from the **Sources** category:
+在状态机中，可以从**Sources**类别中添加以下节点：
 + **Blend Tree**
 + **Entry**
 + **Exit Node**
@@ -67,7 +67,7 @@ In a state machine, you can add the following nodes from the **Sources** categor
 + **State Machine**
 + **Bind Pose**
 
-In a blend tree, you can add other nodes from the following six categories
+在混合树中，您可以从以下六个类别中添加其他节点
 
 1. **Sources**
    + **Float Constant**
@@ -120,31 +120,31 @@ In a blend tree, you can add other nodes from the following six categories
 1. **Misc**
    + **Mirror Pose**
 
-## About Parameters 
+## 关于参数 
 
-When you create your animation graph, you can use parameters to control how your animations transition between different states.
+创建动画图形时，可以使用参数来控制动画在不同状态之间的转换。
 
-Each transition can have a set of conditions applied to it. These conditions define the logical rules for the transition and how animations blend together.
+每个过渡都可以应用一组条件。这些条件定义了过渡的逻辑规则以及动画如何融合在一起。
 
-Each transition condition is controlled by a set of parameters. Your O3DE game setup sends parameter values to the animation graph. The actor reacts to the incoming parameters. The game sends the parameter values to the animation graph, which then responds to the changes automatically. For example, you can specify parameter values such as speed, direction, weapon type, and so on.
+每个过渡条件都由一组参数控制。您的 O3DE 游戏设置会将参数值发送到动画图形。Actor对传入的参数做出反应。游戏将参数值发送到动画图形，然后动画图形会自动对变化做出反应。例如，您可以指定速度、方向、武器类型等参数值。
 
-You can set this up in a game level by adding an **Actor** and an **Animation** component to an entity with the **Entity Inspector**.
+您可以在游戏关卡中使用**Entity Inspector**为实体添加一个**Actor**和一个**Animation**组件来设置。
 
-For more information, see [Animation Editor Components](/docs/user-guide/visualization/animation/character-editor/components/).
+更多信息，请参阅 [动画编辑器组件](/docs/user-guide/visualization/animation/character-editor/components/)。
 
-### Adding Parameters to an Animation Graph 
+### 向动画图添加参数 
 
-You can add parameters to an animation graph in the **Parameters** pane.
+您可以在**Parameters**窗格中为动画图形添加参数。
 
-**To add a parameter to an animation graph**
+**为动画图形添加参数**
 
-1. In O3DE Editor, choose **Tools**, **Animation Editor**.
+1. 在 O3DE 编辑器中，选择 **Tools**, **Animation Editor**。
 
-1. In the **Parameters** pane, click the green **+** icon.
+1. 在 **Parameters** 面板中，点击绿色的 **+** 图标。
 
-1. In the **Create Parameter** dialog box, specify the parameter name, description, and the value type.
+1. 在 **Create Parameter** 对话框中，指定参数名，描述，和值的类型。
 
-   You can specify the following value types to provide input into animation graph nodes:
+   您可以指定以下值类型，为动画图形节点提供输入：
    + **Float (slider)**
    + **Float (spin box)**
    + **Boolean (checkbox)**
@@ -160,36 +160,36 @@ You can add parameters to an animation graph in the **Parameters** pane.
    + **Rotation**
    + **Group**
 
-You can name parameter types to identify the purpose of the control. For example, you can name parameters such as `movement_speed`, `movement_direction`, `jumping` and `attacking`. As an artist and game designer, you can specify the parameters that best control your animation graph.
+您可以为参数类型命名，以确定控件的用途。例如，您可以为  `movement_speed`, `movement_direction`, `jumping` 和 `attacking`等参数命名。作为艺术家和游戏设计师，您可以指定最能控制动画图形的参数。
 
 ![Create parameters for an animation graph in the Animation Editor.](/images/user-guide/actor-animation/animation-editor-parameters-pane.png)
 
-### Adding a Parameter Node to a Blend Tree 
+### 在混合树中添加参数节点
 
-After you create your parameters in the **Parameter** pane, you can add a parameter node to your blend tree.
+在**Parameter**窗格中创建参数后，您可以将参数节点添加到混合树中。
 
-**To add a parameter node to your blend tree**
+**在混合树中添加参数节点**
 
-1. In the **Animation Editor**, right-click the animation graph grid and choose **Create Node**, **Sources**, **Parameters**.
+1.在 **Animation Editor**中，右击动画图表网格，选择 **Create Node**, **Sources**, **Parameters**.。
 
-1. In the **Attributes** pane, click **select parameter** and specify the parameter that you want.
+1. 在 **Attributes** 面板中，点击 **select parameter** ，并指定你想要的参数。
 
 ![Select your parameter in your animation graph in the Animation Editor.](/images/user-guide/actor-animation/animation-editor-attributes-pane-02.png)
 
-You can rename parameter nodes and specify them to provide input to other nodes. In the following example, the **speed\_parameter** node provides input to the blend tree.
+您可以重命名参数节点，并指定它们为其他节点提供输入。在下面的示例中，**speed\_parameter** 节点为混合树提供了输入。
 
 ![Use parameter nodes in the Animation Editor to specify parameter types and values for your animation graph.](/images/user-guide/actor-animation/animation-editor-blend-tree.png)
 
-## About Motion Sets 
+## 关于 Motion Sets 
 
-A motion set is a collection of motions, where each motion refers to a specific motion file and is identified by a string ID, such as *idle\_motion1*. When you create motion nodes, you specify the string ID for the motion, not the motion file itself. You can use different motion sets in combination with the same animation graph. For example, you can create an animation graph to define animation behavior for a controllable human character and apply the same animation graph to a frog. Because frog movements differ from a human character's, you specify different motion sets for the frog. You can share animation graphs for your characters; you don't need to create unique animation graphs for each character type.
+动作集是动作的集合，其中每个动作指代一个特定的动作文件，并用字符串 ID 标识，如 **idle/\_motion1**。创建动作节点时，指定的是动作的字符串 ID，而不是动作文件本身。您可以将不同的动作集与相同的动画图形结合使用。例如，您可以创建一个动画图形，为可控的人类角色定义动画行为，并将同一动画图形应用于青蛙。由于青蛙的动作与人类角色不同，因此要为青蛙指定不同的动作集。您可以共享角色的动画图形；无需为每种角色类型创建唯一的动画图形。
 
-A combination of an animation graph with a specified motion set being applied to a given actor instance is called an *animation graph instance*. Each animation graph instance has a unique set of parameter values. For example, an army of 100 soldiers is controlled by 100 different animation graph instances, which allows you to animate each soldier independently.
+应用于给定Actor实例的动画图形与指定动作集的组合称为**动画图形实例**。每个动画图形实例都有一组独特的参数值。例如，一支由 100 名士兵组成的军队由 100 个不同的动画图实例控制，这样就可以为每个士兵制作独立的动画。
 
-Motion sets can also be hierarchical. Child motion sets can override certain motions from their parents. When you apply a child motion set to a character, the character uses all the motions shared by the parent except for the motions that are specified for the child motion set. For example, you can have a character that shares 90% of the same motions of the parent, but has custom motions specific to that character.
+动作集也可以分级。子动作集可以覆盖父动作集的某些动作。将子动作集应用到角色时，除了为子动作集指定的动作外，角色将使用父动作集共享的所有动作。例如，一个角色可以共享父角色 90% 的相同动作，但也有该角色特有的自定义动作。
 
-## About State Machines 
+## 关于状态机 
 
-State machines contain a set of states that are linked together by transitions. A transition goes from one node to another node and has properties, such as the time it takes to make the transition. A blend between the outputs of both states is performed during the transition, when the animation moves from one state to another.
+状态机包含一组通过转换连接起来的状态。转换从一个节点到另一个节点，并具有属性，如转换所需的时间。在过渡期间，当动画从一个状态移动到另一个状态时，两个状态的输出之间会进行混合。
 
-Transition conditions are conditions that are linked a given transition. For example, they can compare a parameter value against another value to see if the given parameter is bigger than the specified value. If the condition is met, this signals the trigger for the transition. For example, if the speed parameter is greater than 0, a character transitions from an idle to a run state. You can apply multiple conditions to a single transition. The transition occurs only when all conditions are met.
+过渡条件是与给定过渡相关联的条件。例如，它们可以比较一个参数值和另一个值，看给定参数是否大于指定值。如果满足条件，就会触发转换。例如，如果速度参数大于 0，字符就会从空闲状态过渡到运行状态。您可以对单个过渡应用多个条件。只有当所有条件都满足时，才会发生转换。

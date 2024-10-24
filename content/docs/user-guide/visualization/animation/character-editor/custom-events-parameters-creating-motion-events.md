@@ -1,19 +1,19 @@
 ---
-description: ' Create motion events for your game project in Open 3D Engine. '
-title: Creating Motion Events
+description: ' 在 Open 3D Engine 中为您的游戏项目创建动作事件。 '
+title: 创建动作事件
 ---
 
-The `EMotionFX::MotionEvent` class inherits `EMotionFX::Event` and describes an event that happens at a specified time or range of time during a motion.
+`EMotionFX::MotionEvent` 类继承于 `EMotionFX::Event` ，描述了动作过程中在指定时间或时间范围内发生的事件。
 
-A motion event could be a footstep sound to play, a particle system to spawn, or a script to execute. Because motion events are completely generic, EMotion FX doesn't handle them for you. You must create and handle the events that your game requires.
+动作事件可以是播放的脚步声、生成的粒子系统或执行的脚本。由于动作事件是完全通用的，EMotion FX 不会为您处理它们。您必须创建并处理游戏所需的事件。
 
-Each motion event has a list of [`EventData`](/docs/user-guide/visualization/animation/character-editor/custom-events-parameters-creating-eventdata-types/) instances that are attached to the event. An event handler uses the `EventData` list to perform the required actions.
+每个动作事件都有一个 [`EventData`](/docs/user-guide/visualization/animation/character-editor/custom-events-parameters-creating-eventdata-types/)  实例列表，这些实例附加到事件中。事件处理程序使用 `EventData`列表来执行所需的操作。
 
-All motion events are stored in a motion event table. The motion event table \(see `Motion.h`\) contains data for the event types and parameters that can be shared between events.
+所有动作事件都存储在动作事件表中。动作事件表\(参见 `Motion.h`\)包含事件类型和参数的数据，这些数据可在事件之间共享。
 
-To listen to motion events, connect to the `ActorNotificationBus` and implement `OnMotionEvent()`.
+要监听动作事件，请连接到 `ActorNotificationBus` 并实现 `OnMotionEvent()`。
 
-For information on creating `EventData` instances and adding motion events to a motion, see [Creating EventData Types](/docs/user-guide/visualization/animation/character-editor/custom-events-parameters-creating-eventdata-types/).
+有关创建 `EventData` 实例和向动作添加动作事件的信息，请参阅 [创建事件数据类型](/docs/user-guide/visualization/animation/character-editor/custom-events-parameters-creating-eventdata-types/)。
 
-**Topics**
-+ [MotionEvent Public Member Functions](/docs/user-guide/visualization/animation/character-editor/custom-events-parameters-motionevent-public-member-functions/)
+**主题**
++ [MotionEvent公开成员函数](/docs/user-guide/visualization/animation/character-editor/custom-events-parameters-motionevent-public-member-functions/)

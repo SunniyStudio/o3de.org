@@ -1,4 +1,4 @@
 ---
-title: Animation editor
+title: 动画编辑器
 date: 2021-03-04
 ---

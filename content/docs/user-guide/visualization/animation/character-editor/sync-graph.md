@@ -206,99 +206,99 @@ title: '同步动画图形： 示例'
 
 ![Click the transition line to add a servant parameter action.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-22.png)
 
-1. In the **Attributes** pane for the primary graph, click **Add action**, **Servant Parameter Action**.
+1. 在主图表的**Attributes**窗格中，单击**Add action**，**Servant Parameter Action**。
 
 ![Click Add action, Servant Parameter Action.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-23.png)
 
-1. For **Servant Parameter Action**, in the **Trigger Mode** box, keep the default **On Enter**. **On Enter** specifies that the action is triggered when the state or transition is entered.
+1. 对于**Servant Parameter Action**，在**Trigger Mode**框中，保留默认的**On Enter**。**On Enter**指定在进入状态或转换时触发操作。
 
 ![Use On Enter for Trigger Mode.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-24.png)
 
-1. In the **Servant anim graph** box, click **Browse** (**...**) and choose the secondary animation graph that has the parameter that you want to use. This example chooses a secondary animation graph called **syncFeature\_Gun**.
+1. 在 **Servant anim graph** 框中，单击**Browse** (**...**) ，然后选择具有要使用的参数的辅助动画图。本例选择了一个名为 **syncFeature\_Gun** 的辅助动画图。
 
-1. Click **Select parameter** to choose a parameter from the secondary animation graph that you just chose. This example chooses the **gunTrigger** parameter.
+1. 单击**Select parameter**，从刚才选择的二级动画图形中选择一个参数。本例选择了**gunTrigger**参数。
 
 ![Click Select parameter.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-25.png)
 
 ![Choose a parameter for the servant parameter action.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-12.png)
 
-   On the transition line, a small square node indicates that the transition line has a parameter action. The small round node next to it represents the parameter condition that you added earlier.
+在过渡线上，一个小方块节点表示过渡线有一个参数动作。旁边的小圆节点表示您之前添加的参数条件。
 
    ![Small square node indicating a parameter action.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-26.png)
 
-1. For **Trigger value**, specify the value to emit when the action is triggered. Because **Trigger value** is treated as a single float, you can use it for float, Boolean, and integer parameters. This example specifies `1.0`, which is the value when the gun fires.
+1. 对于 **Trigger value**，指定动作触发时要发出的值。由于 **Trigger value** 被视为单个浮点数，因此可用于浮点数、布尔值和整数参数。本例中指定的是`1.0`，即枪发射时的值。
 
 ![Specify a trigger value.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-27.png)
 
-1. Click the line from **Motion0** to **Motion1** and repeat the steps to add a servant parameter action to the remaining transition line.
+1. 单击从 **Motion0** 到 **Motion1** 的线条，然后重复步骤，为剩余的过渡线条添加仆人参数动作。
 
-1. In the **Trigger value** box, specify a different value. The example specifies a trigger value of `0.0`, which is the value when the gun is idle.
+1. 在 **Trigger value** 框中指定一个不同的值。示例中指定的触发值为 `0.0`，即喷枪空闲时的值。
 
-Now that the animation graphs are ready, you can perform the next steps: gathering user input and writing Lua scripts to synchronize the graphs.
+现在动画图形已经准备就绪，您可以执行下一个步骤：收集用户输入并编写 Lua 脚本以同步图形。
 
-## 6. Synchronize the Primary and Secondary Graphs 
+## 6. 同步主图和辅助图
 
-Synchronizing the primary and secondary graphs involves the following steps:
+同步主图表和辅助图表包括以下步骤：
 
-1. Getting keyboard input from the player.
+1. 从玩家获取键盘输入。
 
-1. Placing a Lua script component and Lua script on the secondary entity.
+1. 在辅助实体上放置 Lua 脚本组件和 Lua 脚本。
 
-1. Placing a Lua script component and Lua script on the primary entity.
+1. 在主实体上放置 Lua 脚本组件和 Lua 脚本。
 
-The Lua scripts synchonize the two graphs by handling animation graph events in O3DE's [Event Bus (EBus)](/docs/user-guide/programming/messaging/ebus/) system.
+Lua 脚本通过在 O3DE 的 [Event Bus (EBus)](/docs/user-guide/programming/messaging/ebus/) 系统中处理动画图形事件来同步两个图形。
 
-### Getting Input from the Player 
+### 获取玩家输入
 
-In the example, the synchronization state of the primary and secondary graphs and the firing of the gun are controlled by the following keyboard inputs, or keystrokes, from the user. The Event Value Multiplier is the actual value sent to the input system and to Lua script.
+在示例中，主图和副图的同步状态以及枪的发射由用户的以下键盘输入或击键控制。事件值乘数是发送到输入系统和 Lua 脚本的实际值。
 
 
 ****
-
-| Keystroke | Description | Event Value Multiplier |
+1
+| 按键 | 说明 | Event Value Multiplier |
 | --- | --- | --- |
-| 1 | Turns on sync mode. | 1 |
-| 2 | Turns off sync mode (off by default). | -1 |
-| S | Fires the gun. | 1 |
-| D | Stops the gun from firing. | -1 |
+| 1 | 开启同步模式 | 1 |
+| 2 | 关闭同步模式 (默认为关闭) | -1 |
+| S | 开枪 | 1 |
+| D | 停止开枪 | -1 |
 
-To gather these inputs, the example adds [Input](/docs/user-guide/components/reference/gameplay/input/) components to the robot entity and to the gun entity.
+为了收集这些输入，示例在机器人实体和枪实体中添加了 [Input](/docs/user-guide/components/reference/gameplay/input/) 组件。
 
-To use the Input component, you must enable the [Starting Point Input](/docs/user-guide/gems/reference/input/starting-point-input) Gem for your project. The Starting Point Input Gem interprets hardware input and converts it into input events such as `pressed`, `released`, and `held`.
+要使用输入组件，必须为项目启用 [Starting Point Input](/docs/user-guide/gems/reference/input/starting-point-input) Gem 。 Starting Point Input Gem 能解释硬件输入，并将其转换为`pressed`, `released`, 和 `held`等输入事件。
 
-Each Input component references an `.inputbindings` file. An `.inputbindings` file binds a set of inputs to an event. These inputs can come from sources such as a mouse, keyboard, or game controller. To create an input bindings file, you can use the **Input Bindings Editor** in O3DE Editor. For more information, refer to [Using Player Input in Open 3D Engine](/docs/user-guide/interactivity/input/using-player-input).
+每个输入组件都引用一个 `.inputbindings` 文件。`.inputbindings` 文件将一组输入绑定到一个事件。这些输入可以来自鼠标、键盘或游戏控制器。要创建输入绑定文件，可以使用 O3DE 编辑器中的**Input Bindings Editor**。更多信息，请参阅[在 Open 3D Engine 中使用玩家输入](/docs/user-guide/interactivity/input/using-player-input)。
 
-**Getting Keyboard Input to Control Graph Synchronization**
-In the example, the gun entity has an Input component. The Input component uses a `synctest.inputbindings` asset to bind keyboard inputs **1** and **2** to the `SyncControl` event. The `SyncControl` event controls the sync mode, which determines whether or not the gun fires when the robot fires.
+**获取键盘输入以控制图表同步**
+在示例中，枪实体有一个输入组件。输入组件使用 `synctest.inputbindings` 资产将键盘输入**1**和**2**绑定到 `SyncControl` 事件。`SyncControl` 事件控制同步模式，该模式决定机器人开火时枪支是否开火。
 
-The following image shows the corresponding input bindings in the **Input Bindings Editor**.
+下图显示了**Input Bindings Editor**中相应的输入绑定。
 
 ![Sample input bindings asset for sync control in the Input Bindings Editor.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-28.png)
 
-**Getting Keyboard Input to Control Shooting**
-The Input component on the robot uses a `syncgun.inputbindings` asset to bind keyboard inputs **S** and **D** to the `ShootControl` event. The `ShootControl` event controls the firing of the gun.
+**获取键盘输入来控制拍摄**
+机器人上的Input组件使用`syncgun.inputbindings`资产将键盘输入**S**和**D**与 `ShootControl`事件绑定。`ShootControl`事件控制枪的发射。
 
-The following image shows the corresponding input bindings in the **Input Bindings Editor**.
+下图显示了**Input Bindings Editor**中相应的输入绑定。
 
 ![Sample input bindings asset for shoot control in the Input Bindings Editor.](/images/user-guide/actor-animation/char-animation-editor-sync-graph-29.png)
 
-### Using a Script on the Secondary Graph to Toggle Synchronization 
+### 在辅助图形上使用脚本切换同步
 
-The example uses Lua Script components on both the primary (robot) and secondary (gun) entities. The script on the primary entity controls the firing of the gun. The script on the secondary entity controls the sync mode. To add a Lua script to an entity, add a [Lua Script component](/docs/user-guide/components/reference/scripting/lua-script/) to the entity and then attach the script to the component.
+该示例在主（机器人）和次（枪）实体上都使用了 Lua 脚本组件。主实体上的脚本控制枪的发射。二级实体上的脚本控制同步模式。要在实体中添加 Lua 脚本，请在实体中添加 [Lua Script 组件](/docs/user-guide/components/reference/scripting/lua-script/) ，然后将脚本附加到组件上。
 
-The Lua script on the gun entity receives the input from the keyboard to toggle the sync mode. To synchronize the secondary graph to the primary graph, the script uses the `SyncAnimGraph` EBus event. In the following example, the `self.entityId` parameter refers to the secondary entity (the gun). The `self.Properties.PrimaryEntity` parameter refers to the robot.
+枪实体上的 Lua 脚本接收来自键盘的输入，以切换同步模式。为了将辅助图形同步到主图形，脚本使用了 `SyncAnimGraph` EBus 事件。在下面的示例中，`self.entityId` 参数指的是辅助实体（枪）。`self.Properties.PrimaryEntity` 参数指的是机器人。
 
 ```
 AnimGraphComponentRequestBus.Event.SyncAnimGraph(self.entityId,self.Properties.PrimaryEntity);
 ```
 
-To desynchronize the secondary graph from the primary graph, the same script uses the `DesyncAnimGraph` EBus event.
+要使辅助图形与主图形不同步，同一脚本会使用 `DesyncAnimGraph` EBus 事件。
 
 ```
 AnimGraphComponentRequestBus.Event.DesyncAnimGraph(self.entityId,self.Properties.PrimaryEntity);
 ```
 
-The full script shows how the `SyncAnimGraph` and `DesyncAnimGraph` methods handle the `SyncControl` input event.
+完整脚本显示了 `SyncAnimGraph` 和 `DesyncAnimGraph` 方法如何处理 `SyncControl` 输入事件。
 
 ```
 -- syncSample.lua
@@ -346,11 +346,11 @@ end
 return syncSample;
 ```
 
-### Using Script on the Primary Graph to Control Shooting 
+### 在主图上使用脚本控制拍摄
 
-The example Lua script on the primary entity (the robot) receives the keyboard input that toggles the firing of the gun. The robot entity's animation graph's `shoot` parameter uses the **Boolean (checkbox)** type. When the gun fires, the `shoot` parameter is true. Because `shoot` is a named Boolean parameter, the Lua script on the primary entity uses the `SetNamedParameterBool` function on the `AnimGraphComponentBus`.
+主实体（机器人）上的 Lua 脚本示例会接收键盘输入，从而切换枪的发射。机器人实体动画图的 “射击 ”参数使用**Boolean (checkbox)** 类型。开枪时`shoot`参数为 “true”。由于`shoot`是一个已命名的布尔参数，因此主实体上的 Lua 脚本使用了 `AnimGraphComponentBus` 上的 `SetNamedParameterBool`函数。
 
-The full script shows how the `SetNamedParameterBool` function is used to toggle the shooting status.
+完整脚本显示了如何使用 `SetNamedParameterBool` 函数切换拍摄状态。
 
 ```
 -- syncGun.lua
@@ -391,12 +391,12 @@ end
 return syncGun;
 ```
 
-## The Example in Action 
+## 行动范例
 
-The following animated image shows the finished example in action when the sync mode is turned off. The robot fires, but the gun does not.
+下面的动画图片展示了同步模式关闭时的成品示例。机器人开火，但枪没有开火。
 
 ![Sync mode off](/images/user-guide/actor-animation/char-animation-editor-sync-graph-example-sync-off.gif)
 
-The following animated image shows the example when the sync mode is turned on. The gun fires when the robot fires.
+下面的动画图片显示了同步模式开启时的示例。机器人开火时，枪也会开火。
 
 ![Sync mode on](/images/user-guide/actor-animation/char-animation-editor-sync-graph-example-sync-on.gif)

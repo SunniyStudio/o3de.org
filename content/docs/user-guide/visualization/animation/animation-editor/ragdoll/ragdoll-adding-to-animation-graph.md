@@ -1,65 +1,64 @@
 ---
-description: ' Adding a ragdoll to an Animation Graph in the Open 3D Engine Animation Editor. '
-title: Adding a Ragdoll to an Animation Graph
+description: ' 在 Open 3D Engine 动画编辑器的动画图形中添加布娃娃。'
+title: 将布娃娃添加到动画图形中
 weight: 200
 ---
 
-When you create an animation graph to control the ragdoll simulation of your character, you do the following:
+创建动画图形来控制角色的布偶模拟时，需要执行以下操作：
 
-+ Prepare the actor asset.
-+ Adjust the animation graph to enable the ragdoll.
-+ Preview.
++ 准备Actor资产。
++ 调整动画图形以启用布偶。
++ 预览。
 
-The animation graph controls the ragdoll simulation of your character. When your character transitions into a blend tree that has a ragdoll node, the ragdoll automatically activates and simulates in game mode in **O3DE Editor**. When your character transitions out of that state, the ragdoll deactivates. The ragdoll node outputs a bind pose in the **Animation Editor**.
+动画图谱可控制角色的布偶模拟。当您的角色过渡到具有布偶节点的混合树时，布偶会自动激活并在**O3DE 编辑器**的游戏模式中模拟。当角色脱离该状态时，布偶会停止激活。布偶节点会在**动画编辑器**中输出一个绑定姿势。
 
-**To create an animation graph to transition from running state to ragdoll state**
+**创建从运行状态过渡到布偶状态的动画图**
 
-1. In the **Animation Editor**, on the right side of the menu bar, choose **AnimGraph** from the drop-down list. This changes the layout.
+1. 在菜单栏右侧的**动画编辑器**中，从下拉列表中选择**AnimGraph**。这将改变布局。
 
     ![Change the Animation Editor layout by choosing AnimGraph from the drop-down list](/images/user-guide/actor-animation/ragdoll-animation-editor-layout-option-animgraph.png)
 
-1. In the **Anim Graph** pane, click the **+** icon to create a new animation graph.
+1. 在**Anim Graph**窗格中，单击**+**图标创建新的动画图形。
 
-1. Right-click the grid and then choose **Sources**, **Motion**. Alternatively, in the **Node Palette**, on the **Sources** section, drag **Motion** into the animation graph.
+1. 右键单击网格，然后选择**Sources**，**Motion**。或者，在**Node Palette**的**Sources**部分，将**Motion**拖入动画图形。
 
     ![Add a Motion node to the animation graph from the context menu or the Node Palette in the Animation Editor](/images/user-guide/actor-animation/ragdoll-anim-graph-context-menu-motion-node.png)
 
-1. Select the **Motion** node in the animation graph.
+1. 在动画图表中选择 **Motion** 节点。
 
-1. In the **Inspector** pane, do the following:
+1. 在 **Inspector** 面板中，完成以下操作：
 
-   1. For **Name**, enter a name for your motion. For example, **Run**.
+   1. 对于 **Name**， 为动作输入名称。例如，**Run**。
 
-   1. Click the **+** icon under **Select motions**. In the **Motion Selection** window, select a motion and then click **OK**.
+   1. 在**Select motions**下点击 **+** 图表。在**Motion Selection**窗口中，选择一个动作，然后点击**OK**。
 
-1. Right-click the grid and then choose **Sources**, **Blend Tree**. Alternatively, in the **Node Palette**, on the **Sources** section, drag **Blend Tree** into the animation graph.
-
+1. 右击网格，然后点击**Sources**, **Blend Tree**。同样，在**Node Palette**中，在**Sources**部分，将**Blend Tree**拖拽到动画图表中。
     ![Add a Blend Tree node to the animation graph from the context menu or the Node Palette in the Animation Editor](/images/user-guide/actor-animation/ragdoll-anim-graph-palette-blend-tree.png)
 
-1. Select the **Blend Tree** node in the animation graph.
+1. 在动画图表中选择 **Blend Tree** 节点。
 
-1. In the **Inspector** pane, enter a name for your blend tree. For example, **Ragdoll**.
+1. 在**Inspector**面板中，为混合树输入名称。例如，**Ragdoll**。
 
-1. In the animation graph, connect the **Motion** node to the **Blend Tree** node. For example, connect the **Run** node to the **Ragdoll** node.
+1. 在动画图表中，连接**Motion**节点到**Blend Tree**节点。例如，连接**Run**节点到**Ragdoll**节点。
 
     ![Connect the Motion node to the Blend Tree node in the animation graph in the Animation Editor](/images/user-guide/actor-animation/ragdoll-animation-graph-connect-motion-and-ragdoll-nodes.png)
 
-1. Double-click the **Blend Tree** node.
+1. 双击**Blend Tree**节点。
 
-1. Right-click the grid and then choose **Physics**, **Activate Ragdoll Joints**. Alternatively, in the **Node Palette**, on the **Physics** section, drag **Activate Ragdoll Joints** into the animation graph.
+1. 右击网格，然后选择**Physics**, **Activate Ragdoll Joints**。同样，在**Node Palette**中，在**Physics**部分，将**Activate Ragdoll Joints**拖拽到动画图表中。
 
-1. Connect the **Output Pose** for the **Activate Ragdoll Joints** node to the **Input Pose** for the **Final Node** node.
+1. 将**Activate Ragdoll Joints**的**Output Pose** 连接到**Final Node**的 **Input Pose**。
 
     ![Connect Activate Ragdoll Joints node to Final Node in the animation graph](/images/user-guide/actor-animation/ragdoll-animation-graph-activate-ragdoll-joints.png)
 
-1. At the root of the animation graph, select the transition line that starts from the **Motion** node and connects to the **Blend Tree** node. For example, select the transition line that connects the **Run** node to the **Ragdoll** node.
+1. 在动画图形的根部，选择从**Motion**节点开始并连接到**Blend Tree**节点的过渡线。例如，选择连接 **Run** 节点和 **Ragdoll** 节点的过渡线。
 
     ![Select the transition line that connects the Motion node to the Blend Tree node in the Animation Editor](/images/user-guide/actor-animation/ragdoll-animation-graph-transition-line.png)
 
-1. In the **Inspector** pane, click **Add condition** and then choose **Time Condition**.
+1. 在**Inspector**面板中，点击 **Add condition** ，然后选择 **Time Condition**。
 
     ![Add a Time Condition from the Attributes pane in the Animation Editor](/images/user-guide/actor-animation/ragdoll-animation-graph-add-time-condition.png)
 
-1. Under **Time Condition**, set the **Countdown Time**.
+1. 在 **Time Condition** 下，设置 **Countdown Time**。
 
-1. In the animation graph, click the **Motion** node for a preview.
+1. 在动画图表中，点击 **Motion** 节点进行预览。

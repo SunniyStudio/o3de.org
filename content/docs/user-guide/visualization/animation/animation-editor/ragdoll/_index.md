@@ -1,15 +1,15 @@
 ---
 title: Ragdoll
-description: Learn how to use a ragdoll to simulate realistic behaviors of a character in the animation system of Open 3D Engine (O3DE).
+description: 学习如何在 Open 3D Engine (O3DE) 动画系统中使用布娃娃模拟角色的逼真行为。
 ---
 
-A ragdoll is a physical representation of a character in the animation system that you can use to simulate behavior, such as hit reactions and character death. The physical representation consists of a hierarchy of rigid bodies with simple shapes that are connected by joints. The animation system and the PhysX system work together to simulate realistic behaviors. While the ragdoll setup occurs in the animation system, the PhysX system is responsible for how a character moves based on environmental interactions and external forces. For example, you can set up your ragdoll so that the character will rotate as it collapses when you apply a force to the character's outer shoulder area.
+布偶是动画系统中角色的物理表现形式，您可以用它来模拟角色的行为，如被击中的反应和角色死亡。物理表示由具有简单形状的刚体层次结构组成，这些刚体通过关节相连。动画系统和 PhysX 系统共同模拟逼真的行为。布娃娃的设置在动画系统中进行，而 PhysX 系统则负责角色如何根据环境交互和外力进行移动。例如，您可以对布偶进行设置，当您对角色的外侧肩部施加外力时，角色会随着倒塌而旋转。
 
-To use the **[PhysX Ragdoll](/docs/user-guide/components/reference/physx/ragdoll/)** component, add it to an entity in O3DE Editor. You can then follow the procedures below to create and control the physical representation of the ragdoll.
+要使用 **[PhysX Ragdoll](/docs/user-guide/components/reference/physx/ragdoll/)**组件，请在O3DE编辑器中将其添加到实体中。然后你就可以按照下面的步骤来创建和控制布娃娃的物理表示。
 
-This topic will teach you how to do the following:
+本主题将教您如何进行以下操作：
 
-+ [Set up the physics configuration for a ragdoll.](/docs/user-guide/visualization/animation/animation-editor/ragdoll/ragdoll-physics-setup.md)
-+ [Add the ragdoll to an animation graph.](/docs/user-guide/visualization/animation/animation-editor/ragdoll/ragdoll-adding-to-animation-graph.md)
-+ [Simulate a ragdoll in O3DE Editor.](/docs/user-guide/visualization/animation/animation-editor/ragdoll/ragdoll-simulating-in-editor.md)
++ [为布娃娃设置物理配置](/docs/user-guide/visualization/animation/animation-editor/ragdoll/ragdoll-physics-setup.md)
++ [将布娃娃添加到动画图形中](/docs/user-guide/visualization/animation/animation-editor/ragdoll/ragdoll-adding-to-animation-graph.md)
++ [在 O3DE 编辑器中模拟布娃娃](/docs/user-guide/visualization/animation/animation-editor/ragdoll/ragdoll-simulating-in-editor.md)
 

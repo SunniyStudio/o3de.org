@@ -1,145 +1,145 @@
 ---
-description: ' Setting up a ragdoll in the Open 3D Engine Animation Editor. '
-title: Setting up a Ragdoll
+description: ' 在 Open 3D Engine 动画编辑器中设置布娃娃。 '
+title: 设置布娃娃
 weight: 100
 ---
 
 {{< important >}}
-There is currently no automatic way to prevent the physics geometry **PhysX Character Controller** component from colliding with the **PhysX Ragdoll** component, which can lead to unexpected behavior for the ragdoll. Collisions can be avoided by using [collision filtering](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/) or by disabling the physics on the **PhysX Character Controller** component when the ragdoll is activated.
+目前无法自动防止物理几何**PhysX Character Controller**组件与**PhysX Ragdoll**组件碰撞，这可能导致布娃娃出现意外行为。可以通过使用[碰撞过滤](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/)或在激活布偶时禁用**PhysX Character Controller** 组件上的物理功能来避免碰撞。
 {{< /important >}}
 
-To set up a ragdoll, do the following:
-+ [Define joints for the ragdoll.](#step-1-define-joints-for-the-ragdoll)
-+ [Set up ragdoll colliders.](#step-2-set-up-ragdoll-colliders)
-+ [Create joint limits.](#step-3-create-joint-limits)
+要设置布娃娃，请执行以下操作：
++ [为布娃娃定义关节](#step-1-define-joints-for-the-ragdoll)
++ [设置布娃娃碰撞体](#step-2-set-up-ragdoll-colliders)
++ [创建关节限制](#step-3-create-joint-limits)
 
-In addition, your actor must have a motion extraction node. Your ragdoll must have a root node that is a direct child of the motion extraction node. For example, the Rin character uses `root` for its motion extraction node. For the ragdoll root node, the Rin character uses `C_pelvis_JNT`, which is a child node of `root`.
+此外，你的演员必须有一个动作提取节点。您的布偶必须有一个根节点，它是动作提取节点的直接子节点。例如，Rin 角色的动作提取节点使用`root`。对于布偶根节点，Rin 角色使用的是 `C_pelvis_JNT`，它是 `root` 的子节点。
 
-While working on ragdoll setup, it can be useful to show or hide certain elements in the **Atom Render Window**. You can use the render options dropdown, represented by the ![Use the render options in the Atom Render Window to show or hide elements such as ragdoll colliders, joint limits and hit detection colliders](/images/user-guide/actor-animation/ragdoll-skeleton-render-options.svg) icon, to show or hide the **Ragdoll Colliders** (rendered in orange), **Ragdoll Joint Limits**, **Hit Detection Colliders** (rendered in blue), **Cloth Colliders** (rendered in purple), **Line Skeleton**, and other elements.
+在进行布偶设置时，显示或隐藏**Atom Render Window**中的某些元素可能非常有用。您可以使用 “渲染选项 ”下拉菜单，该菜单以![Use the render options in the Atom Render Window to show or hide elements such as ragdoll colliders, joint limits and hit detection colliders](/images/user-guide/actor-animation/ragdoll-skeleton-render-options.svg)图标表示，以显示或隐藏**Ragdoll Colliders** (rendered in orange), **Ragdoll Joint Limits**, **Hit Detection Colliders** (rendered in blue), **Cloth Colliders** (rendered in purple), **Line Skeleton** 和其他元素。
 
-## Step 1: Define Joints for the Ragdoll 
+## 第 1 步: 为布娃娃定义关节
 
-Do the following to select the joints for your ragdoll. Usually you will want to include significantly fewer joints in the ragdoll than are present in the animation skeleton, as simulating small joints such as finger bones typically creates little benefit and incurs performance costs.
+按以下步骤为布偶选择关节。通常情况下，您希望布偶中的关节数量大大少于动画骨骼中的关节数量，因为模拟指骨等小关节通常不会产生什么益处，反而会产生性能成本。
 
-**To select joints for the ragdoll**
+**为布偶选择关节**
 
-1. In O3DE Editor, choose **Tools**, **Animation Editor**.
+1. 在 O3DE 编辑器，选择 **Tools**, **Animation Editor**。
 
-1. In the **Animation Editor**, on the right side of the menu bar, choose **Physics** from the drop-down list. This changes the layout.
+1. 在 **Animation Editor**中，在菜单栏右侧，从下拉菜单中选择 **Physics** 。这将改变布局。
 
-1. Choose **File**, **Open Actor** and select your actor.
+1. 选择 **File**, **Open Actor** ，并选择你的Actor。
 
-1. In the **Skeleton Outliner**, multi-select the joints that you want to include in your ragdoll. You can also select individual joints by left clicking on the **Line Skeleton** view in the **Atom Render Window**.
+1. 在 **Skeleton Outliner** 中，多重选择您想包含在布偶中的关节。您也可以通过左键单击**Atom 渲染窗口**中的**Line Skeleton**视图来选择单个关节。
 
-1. Right-click one of the selected joints and then choose **Ragdoll**, **Add to ragdoll**.
+1. 右键单击其中一个选定的关节，然后选择 **Ragdoll**, **Add to ragdoll**。
 
     {{< note >}}
-You can add joints to the ragdoll at any time.
+   您可以随时为布娃娃添加关节。
     {{< /note >}}
     {{< note >}}
-If a joint is added to the ragdoll, all of its ancestors are automatically added as well. This can be useful as a quick way to add a complete hierarchy just by adding a few end effectors, e.g. joints in the hands, feet and head. Similarly if a joint is removed from the ragdoll, all of its descendants are also removed.
+   如果在布偶中添加了一个关节，那么它的所有祖先也会自动添加进来。这种方法非常有用，只需添加几个末端效应器，如手、脚和头部的关节，就能快速添加一个完整的层次结构。同样，如果从布偶中移除一个关节，它的所有后代也会被移除。
     {{< /note >}}
 
     ![Add a selected joint to the ragdoll in the Skeleton Outliner in the Animation Editor](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-add-to-ragdoll.png)
 
-1. Click the filter {{< icon "filter.svg" >}} icon next to the search text box, and select **Ragdoll joints and colliders**. This shows only the joints in the ragdoll and not the full animation skeleton.
+1. 点击搜索文本框旁边的过滤器 {{< icon "filter.svg" >}} 图标，然后选择 **Ragdoll joints and colliders**。这只会显示布偶中的关节，而不会显示整个动画骨架。
 
     ![Use the Ragdoll joints and colliders filter to show only joints in the ragdoll in the Animation Editor](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-ragdoll-joints-colliders-filter.png)
 
-    The **Skeleton Outliner** displays icons to indicate that:  
-    ![Icon showing that a joint is part of the ragdoll](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons-joint-limit.svg) A joint is part of the ragdoll  
-    ![Icon showing that a joint holds ragdoll colliders](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons-collider.svg) A joint holds ragdoll colliders  
-    ![Icon showing that a joint holds hit detection colliders](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons-hit-detection.svg) A joint holds hit detection colliders  
-    ![Icon showing that a joint holds cloth colliders](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons-cloth.svg) A joint holds cloth colliders  
+    **Skeleton Outliner** 显示的图标表示：
+    ![Icon showing that a joint is part of the ragdoll](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons-joint-limit.svg) 关节是布娃娃的一部分  
+    ![Icon showing that a joint holds ragdoll colliders](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons-collider.svg) 一个可容纳布娃娃碰撞体的关节
+    ![Icon showing that a joint holds hit detection colliders](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons-hit-detection.svg) 保存命中碰撞体的关节
+    ![Icon showing that a joint holds cloth colliders](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons-cloth.svg) 保存布料碰撞体的关节  
 
     ![Icons in the Skeleton Outliner show how joints are related to the ragdoll, ragdoll colliders, and hit detection colliders](/images/user-guide/actor-animation/ragdoll-skeleton-outliner-joint-icons.png)
 
-1. In the **Atom Render Window**, use the render options dropdown, represented by the ![Use the render options in the Atom Render Window to show or hide ragdoll colliders and joint limits and hit detection colliders](/images/user-guide/actor-animation/ragdoll-skeleton-render-options.svg) icon, to show or hide the ragdoll colliders (rendered in orange), ragdoll joint limits, hit detection colliders (rendered in blue), and cloth colliders (rendered in purple).
+1. 在 **Atom Render Window**中，然后，使用![Use the render options in the Atom Render Window to show or hide ragdoll colliders and joint limits and hit detection colliders](/images/user-guide/actor-animation/ragdoll-skeleton-render-options.svg)图标表示的渲染选项下拉菜单，显示或隐藏布偶碰撞体（渲染为橙色）、布偶关节限制、命中检测碰撞体（渲染为蓝色）和布料碰撞体（渲染为紫色）。
 
     {{< note >}}
-If your ragdoll colliders, hit detection colliders, or cloth colliders are the same size, you may need to hide the colliders that you are not working on.
+   如果您的布娃娃碰撞体、命中检测碰撞体或布料碰撞体大小相同，您可能需要隐藏不工作的碰撞体。
 {{< /note >}}
 
-1. On the **Inspector** tab, you can view and modify the ragdoll properties for the selected joint. For example, the rigid body mass, sleeping threshold, and colliders.
+1. 在**Inspector**选项卡上，您可以查看和修改所选关节的布偶属性。例如，刚体质量、睡眠阈值和碰撞体。
 
     ![View and modify ragdoll properties for a selected joint on the Inspector tab in the Animation Editor](/images/user-guide/actor-animation/ragdoll-skeleton-ragdoll-tab-properties.png)
 
-## Step 2: Set up Ragdoll Colliders 
+## Step 2: 设置布娃娃碰撞体 
 
-**Adding and removing ragdoll colliders**
+**添加和移除布偶碰撞体**
 
-Each joint in the ragdoll can have 0, 1, or multiple ragdoll colliders, which affect how the ragdoll collides with other physical objects. Box, sphere, and capsule geometries are supported. By default, when a joint is added to the ragdoll, it is automatically created with a capsule collider which roughly approximates the shape of the parts of the actor mesh most heavily influenced by that joint. If a different geometry would work better, you can delete the default collider and add another as described below.
+布偶的每个关节可以有 0 个、1 个或多个布偶碰撞体，这些碰撞体会影响布偶与其他物理对象的碰撞方式。布偶支持盒状、球状和胶囊状几何形状。默认情况下，在向布偶添加关节时，会自动创建一个胶囊碰撞体，该碰撞体大致接近演员网格中受该关节影响最大的部分的形状。如果使用不同的几何体效果更好，可以删除默认的碰撞体，然后按照下文所述添加另一个碰撞体。
 
 ![Deleting a ragdoll collider](/images/user-guide/actor-animation/ragdoll-remove-collider.png)
 
-To add a collider, in the **Animation Editor**, on the **Inspector** tab, click **Add Property** and then under **Ragdoll Collider** section choose **Box**, **Capsule** or **Sphere**. You can also copy colliders from the **Hit Detection** or **Cloth** configurations, if you have already created colliders for them.
+要添加碰撞体，请在**动画编辑器**的**Inspector**选项卡上单击**Add Property**，然后在**Ragdoll Collider**部分选择 **Box**, **Capsule** 或 **Sphere**。如果您已经为**Hit Detection**或**Cloth**配置创建了碰撞体，也可以复制这些配置中的碰撞体。
 
 ![Add a ragdoll collider shape (box, capsule, or sphere) on the Inspector tab in the Animation Editor](/images/user-guide/actor-animation/add-ragdoll-collider-options.png)
 
-**Configuring properties for colliders**
+**为碰撞体配置属性**
 
-Joints in the ragdoll can be selected using the **Skeleton Outliner** or by clicking on the **Line Skeleton** or **Ragdoll Collider** views in the **Atom Render Window**. If a single joint is selected, you can adjust the **Offset** (position) and **Rotation** for colliders, and the **Height** and **Radius** for **Capsule** colliders using manipulators which are accessible from a **Viewport UI Cluster** in the top left of the **Atom Render Window**. Different manipulator modes can be selected by clicking on the following icons in the **Viewport UI Cluster**.
+可以使用**Skeleton Outliner**或点击**Atom Render Window**中的**Line Skeleton**或**Ragdoll Collider**视图来选择布娃娃中的关节。如果选择的是单个关节，则可以使用操纵器调整碰撞体的**Offset** (position) 和 **Rotation**，以及**Capsule**碰撞体的**Height**和**Radius**，操纵器可从**Atom 渲染窗口**左上角的**Viewport UI Cluster**访问。通过点击**Viewport UI Cluster**中的以下图标，可以选择不同的操纵器模式。
 
-| Mode | Icon | Description
+| 模式 | 图标 | 说明 |
 | - | - | - |
-| **Offset** | ![Viewport UI ragdoll collider translation icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-collider-translation.svg) | Activates manipulators allowing the position of the collider relative to its joint to be modified. This mode will be available if the joint has at least one ragdoll collider. |
-| **Rotation** | ![Viewport UI ragdoll collider rotation icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-collider-rotation.svg) | Activates manipulators allowing the rotation of the collider relative to its joint to be modified. This mode will be available if the joint has at least one ragdoll collider. |
-| **Dimensions** | ![Viewport UI ragdoll collider dimensions icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-collider-dimensions.svg) | Activates manipulators allowing the **Height** and **Radius** of a **Capsule** collider to be modified. This mode will be available if the joint has at least one ragdoll collider and its first collider has **Capsule** geometry. |
+| **Offset** | ![Viewport UI ragdoll collider translation icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-collider-translation.svg) | 激活操纵器，允许修改碰撞体相对于其关节的位置。如果关节上至少有一个布偶碰撞体，则可使用该模式。 |
+| **Rotation** | ![Viewport UI ragdoll collider rotation icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-collider-rotation.svg) | 激活操纵器，允许修改碰撞体相对于其关节的旋转角度。如果关节中至少有一个布偶碰撞体，则可使用该模式。|
+| **Dimensions** | ![Viewport UI ragdoll collider dimensions icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-collider-dimensions.svg) | 激活操纵器，允许修改**Capsule**碰撞体的**Height**和**Radius**。如果关节中至少有一个布偶碰撞体，且其第一个碰撞体具有**Capsule**几何形状，则该模式可用。 |
 
 {{< note >}}
-Currently, if a joint has more than one ragdoll collider, manipulators only support editing the first collider.
+目前，如果一个关节有多个布偶碰撞体，操纵器只支持编辑第一个碰撞体。
 {{< /note >}}
 
-If you have more than one ragdoll collider, or if you prefer to edit values directly, you can also configure collider properties in the property editor. 
+如果您有多个布偶碰撞体，或者您更喜欢直接编辑值，也可以在属性编辑器中配置碰撞体属性。
 
-1. On the **Inspector** tab, do the following in the ragdoll collider properties:
+1. 在**Inspector** 选项卡，在布偶碰撞体属性中执行以下操作：
 
-   1. Set the **Offset** and **Rotation** to move the collider to the correct location. The **Offset** and **Rotation** are relative to the joint transform.
+   1. 设置**Offset**和**Rotation**，将碰撞体移动到正确位置。**Offset**和**Rotation**是相对于关节变换而言的。
 
-   1. Adjust the collider dimensions (for example, set the **Height** and **Radius** for a **Capsule**) to resize the collider.
+   1. 调整碰撞体尺寸（例如，为**Capsule**设置**Height**和**Radius**），以调整碰撞体的大小。
 
    ![Set the Offset, Rotation, Height, and Radius properties for the ragdoll collider on the Inspector tab in the Animation Editor](/images/user-guide/actor-animation/ragdoll-collider-options-offset-rotation-height-radius.png)
 
-You can also set up other properties in the property editor, such as the [physics material](/docs/user-guide/interactivity/physics/nvidia-physx/materials/) and [collision filtering](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/).
+您还可以在属性编辑器中设置其他属性，例如 [物理材料](/docs/user-guide/interactivity/physics/nvidia-physx/materials/) 和 [碰撞过滤](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/)。
 
-**Saving changes**
+**保存更改**
 
-Choose **File**, **Save Selected Actors**. This saves the ragdoll data to the `.assetinfo` file for the character. The Asset Processor then bakes the ragdoll data into the `.actor` file.
+选择 **File**，**Save Selected Actors**。这将把布偶数据保存到角色的`.assetinfo`文件中。然后，“资产处理器 ”会将布偶数据保存到`.actor`文件中。
 
-**Avoiding self-collision**
+**避免自我碰撞**
 
-The ragdoll automatically suppresses collisions between joints that are adjacent in the skeleton. This means that adjacent colliders can overlap, but a pair of colliders that are not adjacent should not intersect. If the pair of colliders intersects, they'll collide when the ragdoll is simulated. This leads to unstable behavior, because the colliding bodies are trying to separate, while the joints are trying to keep the ragdoll together. If two joints which are not adjacent in the hierarchy have overlapping colliders, the colliders will be rendered in red, as shown below.
+布偶会自动抑制骨架中相邻关节之间的碰撞。这意味着相邻的碰撞体可以重叠，但不相邻的一对碰撞体不应相交。如果这对碰撞体相交，它们就会在模拟布偶时发生碰撞。这将导致不稳定的行为，因为碰撞体试图分离，而关节则试图将布娃娃保持在一起。如果在层次结构中不相邻的两个关节有重叠的碰撞体，碰撞体将以红色显示，如下图所示。
 
 ![Example of ragdoll self-collision](/images/user-guide/actor-animation/ragdoll-self-collision-example.png)
 
-To resolve the overlap, you can resize the colliders or use [collision filtering](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/) so that they do not collide with each other.
+要解决重叠问题，可以调整碰撞体的大小或使用 [碰撞过滤](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/) ，这样它们就不会相互碰撞。
 
-## Step 3: Create Joint Limits
+## Step 3: 创建关节限制
 
-Joint limits allow the range of motion of joints to be restricted to avoid unrealistic poses. For example, a human character's knee joint will appear unnatural if it extends past the position where the leg becomes straight. In **PhysX**, joint limits are separated into two parts, **Swing Limits** and **Twist Limits**. To understand these two limits, consider an elbow joint as a concrete example. The elbow creates a joint between two body parts, the upper arm (referred to below as the parent) and the forearm (child). 
+关节限制可以限制关节的活动范围，避免摆出不真实的姿势。例如，如果人类角色的膝关节超过了腿伸直的位置，就会显得不自然。在**PhysX**中，关节限制分为两个部分，即**Swing Limits**和**Twist Limits**。要理解这两个限制，请以肘关节为例。肘关节是上臂（以下称为母体）和前臂（子体）这两个身体部位之间的关节。
 
-The **Twist Limit** describes rotations around an axis rigidly attached to the child. That axis can be orientated arbitarily relative to the child during the setup of the joint limit, but it is usually easiest to visualize if it points directly along the child (from the elbow to the wrist in the example). If you imagine holding your arm out straight in front of you, you can rotate around the forearm so that your palm is face up or face down, but it is uncomfortable to rotate much further in either direction, i.e. there is a limit to how much you can twist around that axis. If you were holding a pen between your fingers at right angles to your palm, then the pen would describe a fan shape as you rotate your forearm.
+**Twist Limit** 描述的是围绕与子刚性连接的轴的旋转。在设置关节限位时，该轴线可以相对于子任意定向，但如果该轴线直接指向子（在示例中从肘部到手腕），通常最容易想象。如果想象一下将手臂伸直放在面前，就可以围绕前臂旋转，使手掌朝上或朝下，但无论朝哪个方向旋转都会很不舒服，也就是说，围绕该轴线旋转的幅度是有限制的。如果你用手指夹着一支笔，与手掌成直角，那么当你旋转前臂时，笔会呈现扇形。
 
-The **Swing Limit** describes how the axis attached to the child can move relative to the parent. Continuing with the elbow example, if you consider holding your upper arm still, you can bend your elbow so that your hand touches your shoulder, or extend it so that the arm is straight. There is also a range of motion to the left or right (think about arm wrestling). Overall, you can imagine a cone rigidly attached to the upper arm which describes the full range of possible orientations for the forearm. Note that because the range of motion of the forearm is not symmetrical (you can bend your elbow more in some directions than in others), the cone needs to be rotated relative to the direction of the upper arm. 
+**Swing Limit** 描述了与子代相连的轴可以如何相对于父代移动。继续以肘部为例，如果你考虑保持上臂不动，你可以弯曲肘部使手接触到肩膀，也可以伸展肘部使手臂伸直。此外，还可以向左或向右运动（想想掰手腕）。总之，你可以想象一个固定在上臂上的圆锥体，它描述了前臂所有可能的运动方向。需要注意的是，由于前臂的运动范围并不对称（在某些方向上肘部的弯曲幅度会大于其他方向），因此锥体需要相对于上臂的方向进行旋转。 
 
-Putting all this together, there are several parameters which can be configured for each joint limit:
-+ The axis attached to the child body of the joint, which is rendered as a long arrow. It is usually easiest to align this to point along the child body, and joint limits will automatically be configured that way when they are first created. 
-+ The orientation of the **Swing Limit**, which is rendered as a cone, relative to the parent body.
-+ The angular extents of the **Swing Limit** cone.
-+ The minimum and maximum values for the **Twist Limit**, which is rendered as a fan shape.
+综上所述，每个关节限位都可以配置几个参数：
++ 连接到关节子实体的轴，呈现为一个长箭头。通常最简单的方法是将其沿子主体对齐，关节限位在首次创建时会自动这样配置。
++ 相对于父体的**Swing Limit**的方向，它被渲染为一个圆锥体。
++ **Swing Limit**锥体的角度范围。
++ **Twist Limit**的最小值和最大值，呈现为扇形。
 
-If a single joint is selected, these parameters can be modified using manipulators accessible through a **Viewport UI Cluster** at the top left of the **Atom Render Window** (below the collider cluster if it is available). Different manipulator modes can be selected by clicking on the following icons in the **Viewport UI Cluster**.
+如果选择的是单个关节，则可以通过**Atom 渲染窗口**左上方的**Viewport UI Cluster**（如果有碰撞体集群，则位于其下方）访问操纵器来修改这些参数。点击**Viewport UI Cluster**中的以下图标可选择不同的操纵器模式。
 
-| Mode | Icon | Description
+| 模式 | 图标 | 说明 |
 | - | - | - |
-| **Parent local rotation** | ![Viewport UI ragdoll joint parent local rotation icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-parent-frame.svg) | Activates manipulators allowing the rotation of the joint parent frame to be modified. This allows the cone for the swing limit cone and the arc for the twist limit to be orientated relative to the frame of the joint's parent. |
-| **Child local rotation** | ![Viewport UI ragdoll joint child local rotation icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-child-frame.svg) | Activates manipulators allowing the rotation of the joint child frame to be modified. This allows the axis which moves around inside the joint limit to be orientated relative to the joint's frame. |
-| **Swing Limit** | ![Viewport UI ragdoll joint swing limits icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-swing-limits.svg) | Activates manipulators allowing the size of the swing limits in the Y and Z directions to be modified. |
-| **Twist Limit** | ![Viewport UI ragdoll joint twist limits icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-twist-limits.svg) | Activates manipulators allowing the mininum and maximum twist limits to be modified. |
-| **Joint Limit Automatic Fit** | ![Viewport UI ragdoll joint automatic fit icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-auto-fit.svg) | Computes an optimal joint limit based on sampling poses from a loaded **Motion Set**. In order to use this feature, you will need to load a **Motion Set** in the [**Motion Sets**](/docs/user-guide/visualization/animation/animation-editor/motion-set-user-interface/) panel. |  
+| **Parent local rotation** | ![Viewport UI ragdoll joint parent local rotation icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-parent-frame.svg) | 激活操纵器，允许修改关节母框架的旋转。这样，摆动限位锥的锥形和扭转限位的弧形就可以相对于关节的父框架定向。 |
+| **Child local rotation** | ![Viewport UI ragdoll joint child local rotation icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-child-frame.svg) | 激活操纵器，允许修改关节子框架的旋转。这样，在关节限制内移动的轴就可以相对于关节框架调整方向。 |
+| **Swing Limit** | ![Viewport UI ragdoll joint swing limits icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-swing-limits.svg) | 激活操纵器，允许修改 Y 和 Z 方向摆动限制的大小。 |
+| **Twist Limit** | ![Viewport UI ragdoll joint twist limits icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-twist-limits.svg) | 激活操纵器，允许修改最小和最大扭转限制。|
+| **Joint Limit Automatic Fit** | ![Viewport UI ragdoll joint automatic fit icon](/images/user-guide/actor-animation/ragdoll-viewport-ui-joints-auto-fit.svg) | 根据从已加载的**Motion Set**中的姿势采样计算最佳关节极限。要使用此功能，需要在[**Motion Sets**](/docs/user-guide/visualization/animation/animation-editor/motion-set-user-interface/) 面板中加载一个**Motion Set**。|  
 
-The joint limit configuration can also be adjusted using the property editor.
+关节限位配置也可以使用属性编辑器进行调整。
 
-If the current pose for the **Actor** causes the **Swing Limit** or **Twist Limit** to be violated, that limit will be rendered in red.
+如果**Actor**的当前姿势导致**Swing Limit**或**Twist Limit**被违反，该限制将以红色显示。
 
 

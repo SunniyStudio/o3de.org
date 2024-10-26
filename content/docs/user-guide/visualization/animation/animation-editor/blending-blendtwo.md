@@ -1,24 +1,23 @@
 ---
-description: ' Use the Blend Two node in Open 3D Engine Animation Editor to blend two
-  nodes that do not need additive blending. '
-title: Blend Two Node
+description: ' 在Open 3D Engine 动画编辑器中使用 Blend Two 节点来混合两个不需要叠加混合的节点。 '
+title: Blend Two 节点
 ---
 
-With the **Blend Two** node, you can blend between two input poses based on a weight value. For example, the **Blend Two** node can blend smoothly between a walk and a run based on the character's speed.
+使用 **Blend Two** 节点，可以根据权重值在两个输入姿势之间进行混合。例如，**Blend Two** 节点可以根据角色的速度在走和跑之间进行平滑混合。
 
-The **Blend Two** is similar to the **Blend Two Additive** node, except that it doesn't support **Additive Blend** mode.
+除了不支持**Additive Blend**模式外，**Blend Two**与**Blend Two Additive**节点类似。
 
-**To use the **Blend Two** node**
+**要使用Blend Two节点**
 
-1. In O3DE Editor, choose **Tools**, **Animation Editor**.
+1. 在 O3DE 编辑器中，选择 **Tools**, **Animation Editor**。
 
-1. Create a [blend tree](/docs/user-guide/visualization/animation/animation-editor/creating-blend-trees/).
+1. 创建一个[混合树](/docs/user-guide/visualization/animation/animation-editor/creating-blend-trees/)。
 
-1. Double-click the blend tree node that you created.
+1. 双击您创建的混合树节点。
 
-1. Select the **Anim Graph Palette** tab and then select the **Blending** tab.
+1. 选择 **Anim Graph Palette** 标签页，然后选择 **Blending** 标签页。
 
-1. Drag the **Blend Two** node into the animation graph.
+1. 拖拽 **Blend Two** 节点到动画图表中。
 
 ![On the Anim Graph Palette tab, select the Blending tab, and then drag Blend Two into the animation graph.](/images/user-guide/actor-animation/char-animation-editor-blendposes-animgraphpalette-blendtwo.png)
 
@@ -26,28 +25,28 @@ The **Blend Two** is similar to the **Blend Two Additive** node, except that it 
 
 ![Blend Two node on the animation graph with inputs and outputs exposed.](/images/user-guide/actor-animation/char-animation-editor-blendposes-inoutputs-blendtwo.png)
 
-   Connect nodes to the following inputs and output:
-   + **Pose 1** - The first pose.
-   + **Pose 2** - The second pose.
-   + **Weight** - Blend weight.
+   连接节点到以下输入和输出：
+   + **Pose 1** - 第1个姿势。
+   + **Pose 2** - 第2个姿势
+   + **Weight** - 混合权重。
 
-     You can use a **Float Constant** node, for example, to specify a float value between `0.0` and `1.0`. A value of `0.0` means 100% of **Pose 1** and 0% of **Pose 2**. A value of `0.6` weights 40% of **Pose 1** and 60% of **Pose 2**. Other nodes that can specify **Weight** include the **Parameter** node, the **Smoothing** node, and so on.
-   + **Output Pose** - The result of the pose blending.
+     例如，您可以使用**Float Constant**节点来指定一个介于`0.0`和 `1.0`之间的浮点值。`0.0`表示 100% 的**Pose 1** 和 0% 的**Pose 2**。`0.6`的值表示 **Pose 1** 的 40% 和 **Pose 2** 的 60%。可以指定**Weight**的其他节点包括**Parameter**节点、**Smoothing**节点等。
+   + **Output Pose** - 姿势混合的结果。
 
-## Blend Two Node Attributes 
+## Blend Two 节点属性
 
-For attribute settings that are shared among the blend node types, see [Blend Node Attributes](/docs/user-guide/visualization/animation/animation-editor/blending-poses/#animation-editor-blending-attributes).
+有关混合节点类型共享的属性设置，请参阅 [Blend 节点属性](/docs/user-guide/visualization/animation/animation-editor/blending-poses/#animation-editor-blending-attributes)。
 
-The **Extraction Mode** for the **Blend Two** node is calculated as follows.
-+ `S` = Source transform delta
-+ `T` = Target transform delta
+用于**Blend Two**节点的**Extraction Mode**的计算方法如下：
++ `S` = 源变换delta
++ `T` = 目标变换delta
 
-Root included in mask (or no mask provided):
+蒙板中包含Root（或未提供蒙板）：
 + **Blend** = `S` + \(`T` - `S`\) \* weight
 + **Source** = `S`
 + **Target** = `T`
 
-Additive, root excluded from mask:
+另外，Root不包括在蒙板中：
 + **Blend** = `S`
 + **Source** = `S`
 + **Target** = `Zero`

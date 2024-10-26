@@ -3,63 +3,63 @@ description: ' Learn how to use the Blend N node in Open 3D Engine Animation Edi
 title: Blend N 节点
 ---
 
-The **Blend N** node accepts up to ten inputs and uses the **Weight** parameter to determine which inputs to use and their weights. You can specify any type of parameter into the **Weight** input of a **Blend N** node.
+**Blend N** 节点最多可接受 10 个输入，并使用**Weight**参数来决定使用哪些输入及其权重。您可以在**Blend N** 节点的**Weight**输入中指定任何类型的参数。
 
 ![The Blend N node properties.](/images/user-guide/actor-animation/animation-editor-blending-blendn.png)
 
-**To use the **Blend N** node**
+**要使用Blend N 节点**
 
-1. In O3DE Editor, choose **Tools**, **Animation Editor**.
+1. 在 O3DE 编辑器中，选择 **Tools**, **Animation Editor**。
 
-1. Create a [blend tree](/docs/user-guide/visualization/animation/animation-editor/creating-blend-trees/).
+1. 创建一个 [混合树](/docs/user-guide/visualization/animation/animation-editor/creating-blend-trees/)。
 
-1. Double-click the blend tree node that you created.
+1. 双击你创建的混合树节点。
 
-1. Select the **Anim Graph Palette** tab and then select the **Blending** tab.
+1. 选择 **Anim Graph Palette** 标签页，然后选择 **Blending** 标签页。
 
-1. Drag the **Blend N** node into the animation graph.
+1. 拖拽 **Blend N** 节点到动画图表中。
 
 ![On the Anim Graph Palette tab, select the Blending tab, and then drag Blend N into the animation graph.](/images/user-guide/actor-animation/animation-editor-blending-blendn-select.png)
 
-1. Connect nodes to the following inputs and output:
-   + **Pose 0 to 9** - Pose inputs. Connect one or more inputs.
-   + **Weight** - Input that determines which pose inputs to use and their weights.
-   + **Output Pose** - Result of the blended poses.
+1. 连接节点到以下输入和输出：
+   + **Pose 0 to 9** - 姿势输入。连接一个或多个输入端。
+   + **Weight** - 决定使用哪些姿势输入及其权重的输入。
+   + **Output Pose** - 混合姿势的结果。
 
    ![Blend N node on the animation graph with inputs and outputs exposed.](/images/user-guide/actor-animation/animation-editor-blending-blendn-inoutputs.png)
 
-1. Select the **Blend N** node.
+1. 选择 **Blend N** 节点。
 
-1. For each pose, enter the **Max weight trigger** in ascending order.
-**Example**
+1. 对于每个姿势，按升序排列输入**Max weight trigger**。
+**例如**
 
-   If you have three poses, You must specify values in ascending order. The first pose should have the lowest value and the last pose must have the highest.
+   如果有三个姿势，必须按升序指定数值。第一个姿势的值应该最低，最后一个姿势的值必须最高。
 
    ![Example of ascending order for Max weight trigger values.](/images/user-guide/actor-animation/animation-editor-blending-blendn-example.png)
 
-If you enter a series of values in an invalid order, the value box turns red and displays a warning.
+如果输入的一系列数值顺序无效，数值框会变红并显示警告。
 
 ![Example of ascending order for Max weight trigger values.](/images/user-guide/actor-animation/animation-editor-blending-blendn-error.png)
 
-You can use the **Evenly Distribute** feature to automatically calculate an even distribution of weights.
+您可以使用**Evenly Distribute**功能自动计算权重的平均分配。
 
-**To distribute weights using the **Evenly Distribute** feature**
+**使用Evenly Distribute功能分配权重**
 
-1. In the first input's **Max weight trigger**, enter the lowest value.
+1. 在第一个输入的**Max weight trigger**中，输入最低值。
 
-1. In the last input's **Max weight trigger**, enter the highest value.
+1. 在最后一个输入的**Max weight trigger**中，输入最高值。
 
-1. Click **Evenly Distribute**. This function calculates and evenly spaces the values.
-**Example**
+1. 单击 **Evenly Distribute**。此功能计算并平均分配数值。
+**示例**
 
-   You have four inputs. The lowest input is set to `0.0` and the highest input is set to `1.0`. Once you click **Evenly Distribute**, your middle values are automatically calculated to be spaced evenly between `0` and `1`. The final values would be `0.0`,` 0.33`, `0.66`, and `1.0`.
+   您有四个输入端。最低输入值设置为`0.0`，最高输入值设置为 “1.0”。点击 **Evenly Distribute**后，中间值将自动计算为平均分布在 `0`和 `1`之间。最终值为 `0.0`、`0.33`、`0.66` 和 `1.0`。
 
-The value of the **Weight** parameter determines which inputs to blend by its value with respect to the **Max weight trigger** values. The **Weight** value naturally falls either before the lowest **Max weight trigger** values, between two values, or after the highest **Max weight trigger** value. If it's lower than the lowest **Max weight trigger** value, then only that pose is used in the calculation. If it's higher than the highest **Max weight trigger** value, then only that pose is used. If it's between two values, then those two poses are used.
+**Weight**参数的值通过其相对于**Max weight trigger**值的值来决定混合哪些输入。**Weight**值自然落在最低**Max weight trigger**值之前、两个值之间或最高**Max weight trigger**值之后。如果低于最低**Max weight trigger**值，那么计算中只使用该姿势。如果高于最高**Max weight trigger**值，则只使用该姿势。如果在两个值之间，则使用这两个姿势。
 
-**Example**
-Input ports **Pose 5**, **Pose 7**, and **Pose 9** are connected, with **Max weight trigger** values of `-2.0`, `4.0`, and `8.0`. If the input value is less than or equal to -2.0, then only the port **Pose 5** is used to calculate the output pose. If the input is between -2.0 and 4.0, both ports **Pose 5** and port **Pose 7** are used to calculate the output pose. If the weight is greater than `8.0`, then only port **Pose 9** is used.
+**示例**
+输入端口**Pose 5**、**Pose 7**和**Pose 9**相连，**最大权重触发**值为`-2.0`, `4.0`, 和 `8.0`。如果输入值小于或等于 -2.0，则只使用端口 **Pose 5** 计算输出姿势。如果输入值介于 -2.0 和 4.0 之间，则 **Pose 5** 端口和 **Pose 7** 端口都用于计算输出姿势。如果权重大于`8.0`，则只使用端口**Pose 9**。
 
-The weight assigned to each value in a pair depends on where the **Weight** parameter falls with respect to the pose values. It calculates the respective distances and assigns a weight based on its position.
+分配给一对中每个值的权重取决于 **Weight** 参数相对于姿态值的位置。它计算各自的距离，并根据其位置分配权重。
 
-**Example**
-The **Weight** input is set to `0.0`. **Pose 5** is set to `-1.0`, and **Pose 7** is set to `3.0`, which is a difference of 4.0. Because the value of `0.0` is at the 25% point between `-1.0` and `3.0`, a weight of `0.25` is assigned to **Pose 5**. The remainder \(`0.75`\) is assigned to **Pose 7**.
+**示例**
+**Weight** 输入设置为 `0.0`。**Pose 5** 设置为`-1.0`，**Pose 7** 设置为`3.0`，两者相差 4.0。由于 `0.0` 的值处于 `-1.0` 和 `3.0` 之间的 25% 点，因此给 **位置 5** 分配了 `0.25` 的权重。余下的\(`0.75`\)配给**Pose 7**。

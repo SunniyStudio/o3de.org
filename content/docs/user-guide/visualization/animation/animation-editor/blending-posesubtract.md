@@ -1,26 +1,25 @@
 ---
-description: ' Use the Pose Subtract node in Open 3D Engine Animation Editor to subtract
-  one pose from another. '
-title: Pose Subtract Node
+description: ' 使用Open 3D Engine动画编辑器中的 Pose Subtract 节点从另一个姿势中减去一个姿势。 '
+title: Pose Subtract 节点
 ---
 
-The **Pose Subtract** node subtracts **Pose 2** from **Pose 1**. The output of a **Pose Subtract** node is the delta between them (**Pose 1** - **Pose 2**).
+**Pose Subtract** 节点从**Pose 1** 减去 **Pose 2**。**Pose Subtract** 节点的输出是 (**Pose 1** - **Pose 2**)之间的Delta。
 
 {{< note >}}
-With the **Pose Subtract** node, you can generate an additive pose. You can then supply it to the **Blend Two Additive** node at runtime without manually generating it from a [DCC](/docs/user-guide/appendix/glossary#dcc). The output of the **Pose Subtract** node cannot be used as an input to the **Blend Two (Legacy)** node. This is because **Blend Two (Legacy)** does not expect a pose that is already a delta or additive pose, but expects a bind pose.
+使用**Pose Subtract**节点，您可以生成一个添加姿势。然后，您可以在运行时将其提供给**Blend Two Additive**节点，而无需从[DCC](/docs/user-guide/appendix/glossary#dcc)中手动生成。**Pose Subtract** 节点的输出不能用作 **Blend Two（Legacy）** 节点的输入。这是因为**Blend Two（Legacy）** 并不期望一个已经是三角或加法姿势的姿势，而是期望一个绑定姿势。
 {{< /note >}}
 
-**To use the **Pose Subtract** node**
+**要使用 **Pose Subtract** 节点**
 
-1. In O3DE Editor, choose **Tools**, **Animation Editor**.
+1. 在 O3DE 编辑器中，选择**Tools**, **Animation Editor**。
 
-1. Create a [blend tree](/docs/user-guide/visualization/animation/animation-editor/creating-blend-trees/).
+1. 创建一个[混合树](/docs/user-guide/visualization/animation/animation-editor/creating-blend-trees/)。
 
-1. Double-click the blend tree node that you created.
+1. 双击你创建的混合树节点。
 
-1. Select the **Anim Graph Palette** tab and then select the **Blending** tab.
+1. 选择 **Anim Graph Palette** 标签页，然后选择 **Blending** 标签页。
 
-1. Drag the **Pose Subtract** node into the animation graph.
+1. 拖拽 **Pose Subtract** 节点到动画图表中。
 
 ![On the Anim Graph Palette tab, select the Blending tab, and then drag Pose Subtract into the animation graph.](/images/user-guide/actor-animation/char-animation-editor-blendposes-animgraphpalette-posesubtract.png)
 
@@ -28,11 +27,11 @@ With the **Pose Subtract** node, you can generate an additive pose. You can then
 
 ![Pose Subtract node on the animation graph with inputs and outputs exposed.](/images/user-guide/actor-animation/char-animation-editor-blendposes-inoutputs-posesubtract.png)
 
-   Connect nodes to the following inputs and output:
-   + **Pose 1** - The base pose.
-   + **Pose 2** - The pose to be subtracted from the base pose.
-   + **Output Pose** - The result of the pose subtraction (**Pose 1** - **Pose 2**).
+   连接节点到以下输入和输出：
+   + **Pose 1** - 基础姿势。
+   + **Pose 2** - 此姿势将从基础姿势减去。
+   + **Output Pose** - 姿势减法 (**Pose 1** - **Pose 2**)的结果。
 
-## Pose Subtract Node Attributes 
+## Pose Subtract 节点属性 
 
-For attribute settings that are shared among the blend node types, see [Blend Node Attributes](blending-poses/#blend-node-attributes).
+有关混合节点类型共享的属性设置，请参阅 [Blend 节点属性](blending-poses/#blend-node-attributes)。

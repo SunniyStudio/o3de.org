@@ -1,35 +1,35 @@
 ---
-description: ' Create simulated objects that move with your character (actor) in Open 3D Engine. '
-title: Creating Simulated Objects
+description: ' 在 Open 3D 引擎中创建可随角色（Actor）移动的模拟对象。 '
+title: 创建模拟对象
 ---
 
-When you animate a character (actor), your actor might wear objects that move differently from the primary motion. For example, if your actor runs and wears a backpack, the backpack might sway back and forth. To create this dynamic movement, you create a simulated object. A simulated object acts as a container for the bones on your actor. In the **Animation Editor**, you can specify how loose objects, such as chains, backpacks, or long hair, move in relation to the actor.
+在制作角色（Actor）的动画时，演员可能会穿戴一些与主运动不同的物体。例如，如果演员边跑边背着背包，背包可能会前后摇晃。要创建这种动态运动，需要创建一个模拟对象。模拟对象是演员身上骨骼的容器。在**动画编辑器**中，您可以指定松散物体（如链条、背包或长发）相对于演员的运动方式。
 
 {{< note >}}
-Simulated objects don't collide with ragdoll colliders or PhysX entities in the level.
+模拟物体不会与关卡中的布娃娃碰撞器或 PhysX 实体发生碰撞。
 {{< /note >}}
 
-In this procedure, you'll do the following:
+在此程序中，您将执行以下操作：
 
-1. Create a simulated object that's attached to an actor.
+1. 创建一个连接到演员的模拟对象。
 
-1. Add colliders to the skeleton so that the object collides with the actor's body.
+1. 为骨架添加碰撞器，使对象与Actor的身体发生碰撞。
 
-1. Adjust your settings so that the animation appears more smooth and realistic.
+1. 调整设置，使动画看起来更加流畅逼真。
 
-1. View the simulation in the render window.
+1. 在渲染窗口中查看模拟效果。
 
-## Prerequisites 
+## 先决条件 
 
-Before you begin, you must do the following:
-+ In the **Animation Editor**, complete the following:
-  + Import your actor, such as the `rinActor.fbx` file
-  + Create a motion set
-  + Import your motions, such as the `rin_Run.fbx`
+在开始前，你必须完成以下事项：
++ 在**动画编辑器**中完成以下操作：
+  + 导入actor，如 `rinActor.fbx` 文件
+  + 创建动作集
+  + 导入动作，如 `rin_Run.fbx` 文件
 
-**Topics**
-+ [Setting Up a Simulated Object](/docs/user-guide/visualization/animation/set-up-a-simulated-object/)
-+ [Setting Up the Simulated Object Anim Graph Node](/docs/user-guide/visualization/animation/set-up-simulated-object-anim-graph-node/)
-+ [Setting Up Simulated Object Colliders](/docs/user-guide/visualization/animation/set-up-simulated-object-collider/)
-+ [Using Debug Mode to Refine the Simulation](/docs/user-guide/visualization/animation/refine-simulationg-using-debug-mode/)
-+ [Using Parameters to Adjust the Animation During Runtime](/docs/user-guide/visualization/animation/use-parameters-to-adjust-animation-during-runtime/)
+**主题**
++ [设置模拟对象](/docs/user-guide/visualization/animation/set-up-a-simulated-object/)
++ [设置模拟对象Anim Graph节点](/docs/user-guide/visualization/animation/set-up-simulated-object-anim-graph-node/)
++ [设置模拟对象碰撞体](/docs/user-guide/visualization/animation/set-up-simulated-object-collider/)
++ [使用调试模式改进模拟](/docs/user-guide/visualization/animation/refine-simulationg-using-debug-mode/)
++ [在运行期间使用参数调整动画](/docs/user-guide/visualization/animation/use-parameters-to-adjust-animation-during-runtime/)

@@ -1,28 +1,27 @@
 ---
-description: ' Learn how to use the Blend Two Additive node in Open 3D Engine Animation Editor
-  to additively blend two input poses. '
-title: Blend Two Additive Node
+description: ' 了解如何使用 Open 3D Engine 动画编辑器中的Blend Two Additive来添加混合两个输入姿势。  '
+title: Blend Two Additive 节点
 ---
 
-The **Blend Two Additive** node blends a pose 2 input additively on top of a pose 1 input.
+**Blend Two Additive** 节点将姿势 2 输入与姿势 1 输入进行相加混合。
 
 ![Blend Two Additive node.](/images/user-guide/actor-animation/char-animation-editor-blendposes-blendtwoadditive.png)
 
 {{< note >}}
-This node functions similarly to the **Blend Two (Legacy)** node with **Additive** enabled. The key difference is that the **Blend Two (Legacy)** node subtracts the bind pose when applying an additive blend. Furthermore, **Blend Two Additive** expects pose 2 to be an additive pose. This means that if you wanted **Blend Two Additive** to function like the **Blend Two (Legacy)** node, you must first subtract the bind pose from pose 2.
+该节点的功能类似于启用**Additive**后的**Blend Two (Legacy)**节点。主要区别在于，**Blend Two（Legacy）** 节点在应用叠加混合时会减去绑定姿势。此外，**Blend Two Additive**节点希望姿势 2 是一个叠加姿势。这意味着，如果您希望**“Blend Two Additive**的功能与**Blend Two (Legacy)**节点相同，您必须首先从姿势 2 中减去绑定姿势。
 {{< /note >}}
 
-**To use the **Blend Two Additive** node**
+**要使用Blend Two Additive节点**
 
-1. In O3DE Editor, choose **Tools**, **Animation Editor**.
+1. 在 O3DE 编辑器中，选择**Tools**, **Animation Editor**。
 
-1. Create a [blend tree](/docs/user-guide/visualization/animation/animation-editor/creating-blend-trees/).
+1. 创建一个[混合树](/docs/user-guide/visualization/animation/animation-editor/creating-blend-trees/)。
 
-1. Double-click the blend tree node that you created.
+1. 双击您创建的混合树节点。
 
-1. Select the **Anim Graph Palette** tab and then select the **Blending** tab.
+1. 选择 **Anim Graph Palette** 标签页，然后选择 **Blending** 标签页。
 
-1. Drag the **Blend Two Additive** node into the animation graph.
+1. 拖拽 **Blend Two Additive** 节点到动画图表中。
 
 ![On the Anim Graph Palette tab, select the Blending tab, and then drag Blend Two Additive into the animation graph.](/images/user-guide/actor-animation/char-animation-editor-blendposes-animgraphpalette.png)
 
@@ -30,30 +29,30 @@ This node functions similarly to the **Blend Two (Legacy)** node with **Additive
 
 ![Blend Two Additive node on the animation graph with inputs and outputs exposed.](/images/user-guide/actor-animation/char-animation-editor-blendposes-inoutputs.png)
 
-   Connect nodes to the following inputs and output:
-   + **Pose 1** - The base pose.
-   + **Pose 2** - The pose to be added to **Pose 1**.
-   + **Weight** - Weight of additive.
+连接节点到以下输入和输出：
+   + **Pose 1** - 基础姿势。
+   + **Pose 2** - 叠加到**Pose 1**的姿势。
+   + **Weight** - 叠加的权重。
 
-     You can use a **Float Constant** node, for example, to specify a float value between `0.0` and `1.0`. A value of `0.0` means **Pose 2** does not affect **Pose 1** at all. A value of `1.0` means that **Pose 2** is fully added on top of **Pose 1**. Other nodes that can specify **Weight** include the **Parameter** node, the **Smoothing** node, and so on.
-   + **Output Pose** - The result of the blended poses, which you can visualize as `Pose 1 + (Pose 2 * Weight)`.
+     例如，您可以使用 **Float Constant** 节点指定一个介于 `0.0` 和 `1.0` 之间的浮点数值。`0.0`表示**Pose 2** 完全不影响**Pose 1**。数值为 `1.0`表示 **Pose 2** 完全添加到 **Pose 1** 上。可以指定**Weight**的其他节点包括**Parameter**节点、**Smoothing**节点等。
+   + **Output Pose** - 混合姿势的结果，可以想象为 `Pose 1 + (Pose 2 * Weight)`。
 
-## Blend Two Additive Node Attributes 
+## Blend Two Additive 节点属性 
 
-For attribute settings that are shared among the blend node types, see [Blend Node Attributes](/docs/user-guide/visualization/animation/animation-editor/blending-poses/#animation-editor-blending-attributes).
+有关混合节点类型共享的属性设置，请参阅 [Blend Node 属性](/docs/user-guide/visualization/animation/animation-editor/blending-poses/#animation-editor-blending-attributes)。
 
-The **Extraction Mode** for the **Blend Two Additive** node features masking and additive blending, which adds complexity over **Extraction Mode** for transitions.
+ **Blend Two Additive**节点的**Extraction Mode**具有遮罩和叠加混合功能，与**Extraction Mode**相比，增加了转场的复杂性。
 
- The output from motion extraction with the **Blend Two Additive** node is calculated as follows.
-+ `S` = Source transform delta
-+ `T` = Target transform delta
+使用**Blend Two Additive**节点进行运动提取的输出计算如下。
++ `S` = 源变换delta
++ `T` = 目标变换delta
 
-Additive, root included in mask (or no mask provided):
+蒙板中包含Root（或未提供蒙板）：
 + **Blend** = `S` + `T` \* weight
 + **Source** = `S`
 + **Target** = `T`
 
-Additive, root excluded from mask:
+另外，Root不包括在蒙板中：
 + **Blend** = `S`
 + **Source** = `S`
 + **Target** = `S`

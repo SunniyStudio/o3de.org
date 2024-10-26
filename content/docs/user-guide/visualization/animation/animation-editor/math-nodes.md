@@ -1,57 +1,56 @@
 ---
-description: ' Use the Animation Editor ''s math nodes to perform math operations
-  in Open 3D Engine. '
-title: Using Math Nodes
+description: ' 使用动画编辑器的数学节点在 Open 3D Engine中执行数学运算。 '
+title: 使用数学节点
 ---
 
-O3DE's **Animation Editor** features a set of math nodes that perform math operations on various types of input. The math nodes pass on the result(s) of the operation as output.
+O3DE 的**动画编辑器**具有一组数学节点，可对各种输入执行数学运算。数学节点将运算结果作为输出。
 
-**Topics**
-+ [Rotation Math 2 Node](#rotation-math)
-+ [Rotation Limit Node](#rotation-limit)
-+ [Vector Decompose Nodes](#vector-conversion)
-+ [Boolean Logic Node](#boolean-logic-node)
+**主题**
++ [Rotation Math 2 节点](#rotation-math)
++ [Rotation Limit 节点](#rotation-limit)
++ [Vector Decompose 节点](#vector-conversion)
++ [Boolean Logic 节点](#boolean-logic-node)
 
-## Rotation Math 2 Node 
+## Rotation Math 2 节点 
 
-With the **Rotation Math 2** node, you can apply math operations to input rotations, which are represented by [quaternions](/docs/user-guide/appendix/glossary#quarternion).
+使用 **Rotation Math 2** 节点，可以对输入旋转进行数学运算，输入旋转用 [四元数](/docs/user-guide/appendix/glossary#quarternion) 表示。
 
-This node multiplies the input rotation and the specified **Default Value** to express an output rotation. The **Default Value** specifies the rotation of an unconnected input. This rotation value is expressed in Euler angle degrees (rotation about the X, Y, and Z axes).
+该节点将输入旋转与指定的**Default Value**相乘，以表示输出旋转。**Default Value**指定未连接输入的旋转。该旋转值以欧拉角度数表示（绕 X、Y 和 Z 轴旋转）。
 
 ![Example of the Rotation Math 2 node in an animation graph.](/images/user-guide/actor-animation/rotation-math.png)
 
-**To use the Rotation Math 2 node**
+**要使用Rotation Math 2节点**
 
-1. Connect the **Output Rotation** output rotation output(s) to the input(s) of the **RotationMath2** node.
+1. 连接**Output Rotation**输出rotation输出到**RotationMath2**节点的输入。
 
-1. Select the **RotationMath2** node.
+1. 选择 **RotationMath2** 节点。
 
-1. In the right pane, on the **Attributes** tab,specify the **Math Function**. You can specify the following:.
+1. 在右侧面板中，在**Attributes**标签页上，指定**Math Function**。你可以指定以下内容：
 **Rotate**
-Multiplies two input quaternions or one input with the **Default Value**.
+将两个输入四元数或一个输入四元数与**Default Value**相乘。
 **Inverse rotate**
-Multiplies the **x** input with the inverse of the **y** input. You can also use this to calculate the relative rotation of X with respect to Y.
+将 **x** 输入值与 **y** 输入值的倒数相乘。您也可以用它来计算 X 相对于 Y 的相对旋转。
 
-1. If only one input rotation exists, specify the unconnected rotation values (X, Y, Z) for the **Default Value**.
+1. 如果只有一个输入旋转，则为 **Default Value**指定未连接的旋转值（X、Y、Z）。 
 
-## Rotation Limit Node 
+## Rotation Limit 节点 
 
 ![Figure of Rin in the Animation Editor with a rotated foot.](/images/user-guide/actor-animation/rotation-limit-figure.png)
 
-With the **Rotation Limit** node, you can limit an input rotation. To do this, the node decomposes the rotations of the quaternion along relevant axes and limits their angles to a range. You define the minimum and the maximum possible angle values to remove ambiguity between the shortest or longest path angle defined by two values.
+使用 **Rotation Limit** 节点，可以限制输入的旋转。为此，节点会沿着相关轴分解四元数的旋转，并将其角度限制在一定范围内。您可以定义可能的最小和最大角度值，以消除由两个值定义的最短或最长路径角度之间的歧义。
 
 ![Example of the Rotation Limit node in an animation graph.](/images/user-guide/actor-animation/rotation-limit-graph.png)
 
-**To use the **Rotation Limit** node**
+**要使用 **Rotation Limit** 节点**
 
-1. Connect a rotation output to the **Input Rotation** of the **RotationLimit** node.
+1. 连接rotation输出到**RotationLimit**节点的**Input Rotation**。
 
-1. Select the **RotationLimit** node.
+1. 选择 **RotationLimit** 节点。
 
-1. IIn the right pane, on the **Attributes** tab for **Rotation limits**, enter **Min angle** and **Max angle** values for **X**, **Y**, and **Z**.
+1. 在右侧面板中，在**Rotation limits**的**Attributes**面板上，为 **X**, **Y**, 和 **Z** 输入**Min angle** 和 **Max angle** 的值。
 
     {{< note >}}
-The **Min angle** can't exceed the **Max angle**. If it does, the error is displayed in red and the value doesn't commit to the graph.
+**Min angle** 不能大于 **Max angle**。. If it does, the error is displayed in red and the value doesn't commit to the graph.
 {{< /note >}}
 
 1. For **Twist axis**, select the **X**, **Y**, or **Z Axis**.

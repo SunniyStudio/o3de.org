@@ -1,21 +1,21 @@
 ---
-description: ' Learn how Open 3D Engine supports cinematics and scripted event sequences. '
-linktitle: Cinematics
-title: Create cinematic sequences
+description: ' 了解 Open 3D Engine 如何支持电影和脚本事件序列。 '
+linktitle: 影片
+title: 创建电影序列
 ---
 
-Cinematics, also known as sequences or cutscenes, are interactive movie animations with time-dependent control over objects and events. You can use O3DE to add cutscenes to your game.
+电影动画，也称为序列或场景，是一种交互式电影动画，可对对象和事件进行随时间变化的控制。您可以使用 O3DE 为游戏添加场景。
 
-You can also add scripted events so that a sequence of objects, animations, and sounds are triggered in the game. The player can view these sequences from their own (first person) or another's (third person) perspective.
+您还可以添加脚本事件，以便在游戏中触发一系列对象、动画和声音。玩家可以从自己（第一人称）或他人（第三人称）的视角查看这些序列。
 
-Sequences consist of the following elements (listed in hierarchical order), which are created and managed from the Track View:
-+ **Node** - Each sequence comprises a top-level director (scene) node, one or more camera nodes, image effects nodes, and entity nodes.
-+ **Track** - Depending on the type, each node consists of multiple tracks, such as position, animation, sound, lighting, text, and events. Tracks are displayed in the track timeline pane.
-+ **Key** - A key is a setting for a property at a specific time. As the sequence plays, keys are interpolated based on their in and out tangent values set in the Track View.
+序列由以下元素组成（按层次顺序排列），通过Track View创建和管理：
++ **Node** - 每个序列包括一个顶级director（场景）节点、一个或多个摄像机节点、图像效果节点和实体节点。
++ **Track** - 根据类型的不同，每个节点都由多个轨道组成，如位置、动画、声音、灯光、文本和事件。轨迹显示在轨迹时间线窗格中。
++ **Key** - 键是特定时间的属性设置。在播放序列时，键会根据在Track View中设置的出入切线值进行插值。
 
-**Topics**
-+ [Using the Track View Editor](/docs/user-guide/visualization/cinematics/track-view/)
-+ [Populating a Scene](/docs/user-guide/visualization/cinematics/populating-a-scene/)
-+ [Animating Characters in Scenes](/docs/user-guide/visualization/cinematics/animation-intro/)
-+ [Capturing Image Frames](/docs/user-guide/visualization/cinematics/image-capture/)
-+ [Debugging Cinematic Scenes with Console Variables](/docs/user-guide/visualization/cinematics/debugging/)
+**主题**
++ [使用Track View 编辑器](/docs/user-guide/visualization/cinematics/track-view/)
++ [填充场景](/docs/user-guide/visualization/cinematics/populating-a-scene/)
++ [为场景中的角色制作动画](/docs/user-guide/visualization/cinematics/animation-intro/)
++ [采集图像帧](/docs/user-guide/visualization/cinematics/image-capture/)
++ [使用控制台变量调试电影场景](/docs/user-guide/visualization/cinematics/debugging/)

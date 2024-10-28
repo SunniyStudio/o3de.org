@@ -1,12 +1,11 @@
 ---
-description: ' Use the Curve Editor in <guilabel>Track View</guilabel> editor to manage animations in
-  Open 3D Engine. '
+description: ' 使用 <guilabel>Track View</guilabel> 编辑器中的曲线编辑器管理 Open 3D Engine中的动画。 '
 title: Using Animation Curves
 ---
 
-The **Curve Editor** displays animations as function curves. Each track's curves represent an animation of a property value, such as anchor, offset, color, or any property of a UI element.
+**Curve Editor**将动画显示为函数曲线。每个轨迹的曲线代表一个属性值的动画，如锚点、偏移、颜色或用户界面元素的任何属性。
 
-**To open the **Curve Editor****
+打开**Curve Editor**
 
 1. Do one of the following:
    + In the Track View, choose **View**, **Curve Editor**.

@@ -1,43 +1,42 @@
 ---
-description: ' Use the Track View editor to create and manage cinematic sequences
-  in Open 3D Engine. '
-title: Using the Track View Editor
+description: ' 使用轨迹视图编辑器在 Open 3D Engine中创建和管理电影序列。'
+title: 使用Track View编辑器
 ---
 
-The Track View is the primary tool to create and manage cinematic sequences. A *[sequence](/docs/user-guide/appendix/glossary#sequence)* is the content generated from the Track View for cutscenes or other canned animation triggers. When you create a sequence, this creates a component entity in the level. The component entity stores all of the animation key data that you specified in the Track View.
+轨迹视图是创建和管理电影序列的主要工具。一个  **[sequence](/docs/user-guide/appendix/glossary#sequence)**是从轨迹视图中生成的内容，用于剪辑或其他预制动画触发。创建序列时，会在关卡中创建一个组件实体。该组件实体存储了您在轨迹视图中指定的所有动画关键数据。
 
-If you want to generate cutscenes for games or create a script to trigger an animation, you can use the Track View to control cameras, component entities, global variables in a level, and so on.
+如果您想为游戏生成剪辑或创建脚本来触发动画，您可以使用轨迹视图来控制摄像机、组件实体、关卡中的全局变量等。
 
-**To create a sequence in the Track View**
+**在音轨视图中创建序列**
 
-1. Do one of the following:
-   + In O3DE Editor, choose **Tools**, **Track View**.
-   + Press **T**.
+1. 执行以下操作之一：
+   + 在 O3DE 编辑器中，选择 **Tools**, **Track View**。
+   + 按下 **T**。
 
-1. To create a sequence, do one of the following:
-   + Choose **Sequences**, **New Sequence**.
-   + Click the **Add Sequence** icon ![Add track view sequence icon](/images/user-guide/cinematics/cinematics-track-view-simple-motion-component-2.png).
+1. 要创建序列，请执行以下操作之一：
+   + 选择 **Sequences**, **New Sequence**。
+   + 点击 **Add Sequence** 图标 ![Add track view sequence icon](/images/user-guide/cinematics/cinematics-track-view-simple-motion-component-2.png).
 
-1. Enter a sequence name, such as *Example Sequence* and click **OK**.
+1. 输入序列名称，如*Example Sequence*，然后单击**OK**。
 
-1. In the **Entity Outliner**, a component entity appears with the same name as your sequence. This component entity has a **Sequence** component that stores your sequence data from the Track View.
+1. 在**Entity Outliner**中，会出现一个与序列名称相同的组件实体。该组件实体有一个 **Sequence** 组件，用于存储来自轨迹视图的序列数据。
 
 ![Sequence component entity in the Entity Outliner.](/images/user-guide/cinematics/track-view-editor-sequence-entity.png)
 
-After you create a sequence, you can add properties to it. Any part of the sequence is considered a *node*. Nodes can be a reference to existing component entities or added to a sequence. For example, if you want to include an active camera for your sequence, you can add the **Director** node. Each node can have one or more tracks, depending your animation sequence. A *track* displays animation keys on a timeline in relation to the property that is animated on a node.
+创建序列后，可以为其添加属性。序列的任何部分都被视为**节点**。节点可以是对现有组件实体的引用，也可以添加到序列中。例如，如果您想在序列中加入一个活动摄像机，您可以添加**导演**节点。根据动画序列的不同，每个节点可以有一个或多个轨道。轨道*在时间轴上显示与节点上动画属性相关的动画键。
 
-**To add a node to a sequence**
+**在序列中添加节点**
 
-1. In the Track View, right-click the sequence or the node browser and select **Add *<Name\>* Node**.
+1. 在轨迹视图中，右键单击序列或节点浏览器，然后选择 **Add *<Name\>* Node**。
 
-1. Select the node to update its properties.
+1. 选择节点以更新其属性。
 
-   For more information, see [Track View Editor Nodes](/docs/user-guide/visualization/cinematics/trackview-nodes/).
+   要了解更多信息，查看 [Track View 编辑器节点](/docs/user-guide/visualization/cinematics/trackview-nodes/).
 
-**Topics**
-+ [Track View Editor Toolbars](/docs/user-guide/visualization/cinematics/track-view/editor-toolbars/)
-+ [Track View Editor Nodes](/docs/user-guide/visualization/cinematics/trackview-nodes/)
-+ [Adding and Removing Animation Keys on Tracks](/docs/user-guide/visualization/cinematics/adding-removing-animation-keys-on-tracks/)
-+ [Controlling the Playhead](/docs/user-guide/visualization/cinematics/controlling-the-playhead/)
-+ [Using Record Mode](/docs/user-guide/visualization/cinematics/using-record-mode/)
-+ [Using Animation Curves](/docs/user-guide/visualization/cinematics/track-view/editor-animation-curves/)
+**主题**
++ [Track View 编辑器工具栏](/docs/user-guide/visualization/cinematics/track-view/editor-toolbars/)
++ [Track View 编辑器节点](/docs/user-guide/visualization/cinematics/trackview-nodes/)
++ [在轨道上添加和移动动画关键帧](/docs/user-guide/visualization/cinematics/adding-removing-animation-keys-on-tracks/)
++ [控制播放头](/docs/user-guide/visualization/cinematics/controlling-the-playhead/)
++ [使用录制模式](/docs/user-guide/visualization/cinematics/using-record-mode/)
++ [使用动画曲线](/docs/user-guide/visualization/cinematics/track-view/editor-animation-curves/)

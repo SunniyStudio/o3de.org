@@ -1,16 +1,16 @@
 ---
-description: ' Set track view sequence properties in the <guilabel>Track View</guilabel> editor in Open 3D Engine. '
-title: Setting Sequence Properties
+description: ' 在 Open 3D 引擎的 <guilabel>Track View</guilabel>编辑器中设置轨迹视图序列属性。  '
+title: 设置序列属性
 ---
 
-You can set properties in the Track View to control how the track view sequence appears. For example, you can specify **Autostart** so that the track view sequence starts playing as soon as the game starts.
+您可以在轨迹视图中设置属性，以控制轨迹视图序列的显示方式。例如，您可以指定**Autostart**，这样游戏一开始，轨道视图序列就会开始播放。
 
-**To set sequence properties**
+**设置序列属性**
 
-1. In the Track View, select the applicable sequence and click the **Edit Sequence** ![Edit Sequence Icon](/images/user-guide/cinematics/cinematics-sequence-props-edit-icon.png) icon.
+1. 在轨道视图中，选择适用的序列，然后单击**Edit Sequence** ![Edit Sequence Icon](/images/user-guide/cinematics/cinematics-sequence-props-edit-icon.png) 图标。
 
-1. In the **Sequence Properties** dialog box, you can specify the following properties.
+1. 在**Sequence Properties**对话框中，您可以指定以下属性。
 
-    ![Specify track view sequence properties.](/images/user-guide/cinematics/cinematics-sequence-props.png)
+   ![Specify track view sequence properties.](/images/user-guide/cinematics/cinematics-sequence-props.png)
 
-1. When you are finished, click **OK**.
+1. 完成后，单击 **OK**。

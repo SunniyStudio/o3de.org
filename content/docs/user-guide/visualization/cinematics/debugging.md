@@ -1,18 +1,17 @@
 ---
-description: ' Use the Open 3D Engine console variables (CVARs) to debug your cinematic
-  scenes. '
-title: Debugging Cinematic Scenes with Console Variables
+description: ' 使用 Open 3D Engine控制台变量（CVAR）调试电影场景。 '
+title: 使用控制台变量调试电影场景
 ---
 
-You can specify the following console variables when profiling a scene. For more information, see [Using the Console Window](/docs/user-guide/editor/console/).
+剖析场景时可以指定以下控制台变量。有关详细信息，请参阅 [使用控制台窗口](/docs/user-guide/editor/console/)。
 
 
-**Cinematic Scene Console Variables**
+**电影场景控制台变量**
 
-| Console Variable | Description | Valid Values |
+| 控制台变量 | 说明 | 有效的值 |
 | --- | --- | --- |
-| e\_DisplayInfo |  Displays basic performance information. The console variable also displays a warning if you exceed texture streaming memory.  |  `0` = Off `1` = On `2` = Enhanced `3` = Compact  |
-| p\_profile\_entities |  Runs your scene and looks for fluctuations. You can use this console variable to identify which entities are causing large peaks.  |  `0` = Off (default) `1` = On   |
-| r\_Stats |  Toggles render statistics. Specify a value of `6` to finds assets with large draw calls or excessive materials.  For example, this can help you find where shadows can be disabled, and so on.  |  `0` = Off `1` = Displays per-frame and global render statistics. `2` = Displays shaders for selected object. `3` = Displays the CPU times for render passes and video memory usage. `4` = Displays CPU times for render passes only. `5` = Displays occlusion query calls. `6` = Displays per-instance draw call count. `8` = Displays information about the total number of instances and batches. `13` = Displays information about cleared render targets.  |
-| e\_DebugDraw |  Displays helpers with information for each object. Specify a value of `2` to display polycount. Specify a value of `3` to display the current level of detail ([LOD](/docs/user-guide/appendix/glossary#lod)) for the selected entity. For example, in the console window you can enter the following command:  e\_DebugDraw 2 \| 3  |   `1` = Name of the used `.cgf` file, polycount, and used LOD.  `2` = Displays color coded polygon count.  `3` = Displays color coded LODs count. Flashing colors indicate a single LOD.  `4` = Displays object texture memory usage.  `5` = Displays color coded number of render materials.  `6` = Displays ambient color.  `7`= Displays triangle count, number of render materials, and texture memory `10` = Renders geometry with simple lines and triangles `13` = Displays occlusion amount.   This can take a long time to calculate, depending on level size.   `15` = Displays exported helpers. `16` = Displays the debug gun. Select an object for more information. `17` = Displays streaming information (buffer sizes). `19` = Displays physics proxy triangle count for each object. `20` = Displays the texture memory usage for character attachments. `21` = Displays an animated object distance to the camera. `22` = Displays an object's current LOD vertex count. `23` = Displays an object in red if it's casting a shadow. `24` = Displays objects with 0 LOD with red text. `25` = Display objects with 0 LOD with red text and objects with 1 LOD with blue text.  |
-| e\_CameraFreeze |  Locks your current view, so that you can look around without redrawing any elements. You can use this console variable to locate problems and fix them, such as object culling and LOD. The view frustum is drawn in a white frame.  |  `0` = Off (default) `1` = On   |
+| e\_DisplayInfo |  显示基本性能信息。如果超过纹理流内存，控制台变量还会显示警告。  |  `0` = 关闭 `1` = 开启 `2` = 增强 `3` = 紧凑  |
+| p\_profile\_entities |  运行场景并查找波动。您可以使用这个控制台变量来确定是哪些实体导致了较大的峰值。 |  `0` = 关闭 (默认值) `1` = 开启   |
+| r\_Stats |  切换渲染统计。指定值为`6`时，可以发现有大量绘制调用或过多材质的资产。 例如，这可以帮助你找到哪些地方可以禁用阴影等。 |  `0` = 关闭 `1` = 显示每帧和全局渲染统计信息。 `2` = 显示所选对象的着色器。 `3` = 显示渲染通道的 CPU 时间和视频内存使用情况。 `4` = 仅显示渲染通道的 CPU 时间。 `5` = 显示闭塞查询调用。 `6` = 显示每个实例的绘制调用次数。 `8` = 显示有关实例和批次总数的信息。 `13` = 显示已清除的渲染目标的相关信息。  |
+| e\_DebugDraw |  显示每个对象的帮助信息。指定 `2` 值可显示多边形数量。指定值`3`可显示所选实体的当前详细程度([LOD](/docs/user-guide/appendix/glossary#lod))。例如，您可以在控制台窗口中输入以下命令：  e\_DebugDraw 2 \| 3  |   `1` = 使用的 `.cgf` 文件名称、多边形数量和使用的 LOD。  `2` = 显示彩色编码的多边形数量。  `3` = 显示彩色编码的 LOD 计数。闪烁的颜色表示一个 LOD。  `4` = 显示对象纹理内存使用情况。  `5` = 以彩色编码显示渲染材质的数量。  `6` = 显示环境颜色。  `7`= 显示三角形数量、渲染材质数量和纹理内存 `10` = 用简单线条和三角形渲染几何图形 `13` = 显示闭塞量。  根据关卡大小，计算时间可能会很长。   `15` = 显示已导出的帮助程序。 `16` = 显示调试枪。选择对象以获取更多信息。 `17` = 显示流媒体信息（缓冲区大小）。 `19` = 显示每个对象的物理代理三角形计数。 `20` = 显示角色附件的纹理内存使用量。 `21` = 显示动画对象与摄像机的距离。 `22` = 显示对象当前的 LOD 顶点数。 `23` = 如果物体投射阴影，则用红色显示。 `24` = 用红色文字显示 LOD 为 0 的对象。 `25` = 用红色文字显示 0 LOD 的对象，用蓝色文字显示 1 LOD 的对象。 |
+| e\_CameraFreeze |  锁定当前视图，这样就可以在不重绘任何元素的情况下环顾四周。您可以使用这个控制台变量来查找问题并加以解决，例如对象剔除和 LOD。视图轮廓将绘制在一个白色框架中。  |  `0` = 关闭 (默认值) `1` = 开启   |

@@ -1,64 +1,63 @@
 ---
-description: ' Capture image frames in Open 3D Engine with render output, a capture track,
-  or console variables. '
-title: Capturing Image Frames
+description: ' 在 Open 3D Engine中通过渲染输出、捕捉轨迹或控制台变量捕捉图像帧。 '
+title: 采集图像帧
 ---
 
-You can capture image frames using render output, a capture track, or console variables.
+你可以使用渲染输出、捕捉轨迹或控制台变量捕捉图像帧。
 
-## Capturing Image Frames with Render Output 
+## 使用渲染输出捕捉图像帧
 
-You can use the **Render Output** tool in the Track View to capture image frames.
+你可以使用轨迹视图中的**Render Output**工具来捕捉图像帧。
 
-**To capture image frames using Render Output**
+**使用渲染输出捕捉图像帧**
 
-1. In O3DE Editor, choose **Tools**, **Track View**.
+1. 在 O3DE 编辑器中，选择 **Tools**, **Track View**。
 
-1. In the Track View, click **Tools**, **Render Output**.
+1. 在 Track View 中，点击 **Tools**, **Render Output**。
 
-1. In **Render Output**, set the input and out properties, and then click **Add**. You will see the capture added under **Batch**.
+1. 在**Render Output**中，设置输入和输出属性，然后单击**Add**。您将看到捕捉添加到**Batch**下。
 
-1. Click **Start** to start the capture.
+1. 单击 **Start** 开始捕捉。
 
     {{< note >}}
-You may need to adjust the aspect ratio for captured image frames.
+   您可能需要调整采集图像帧的宽高比。
 {{< /note >}}
 
-**To change the aspect ratio for image frame captures**
+**更改图像帧捕获的宽高比**
 
-1. In O3DE Editor, choose **Edit**, **Editor Settings**, **Global Preferences**.
+1. 在 O3DE 编辑器中，选择 **Edit**、**Editor Settings**、**Global Preferences**。
 
-1. In **Preferences**, click **Viewports**.
+1. 在**Preferences**中，单击**Viewports**。
 
-1. Under **General Viewport Settings**, change the value for **Perspective View Aspect Ratio**. The default value is `1.3333`.
+1. 在**General Viewport Settings**下，更改**Perspective View Aspect Ratio**的值。默认值为 `1.3333`。
 
-## Capturing Image Frames using a Capture Track 
+## 使用捕捉轨道捕捉图像帧
 
-You can capture image frames when a sequence is played in game mode.
+在游戏模式下播放序列时，您可以捕捉图像帧。
 
-**To capture image frames using a capture track**
+**使用捕捉轨道捕捉图像帧**
 
-1. In O3DE Editor, choose **Tools**, **Track View**.
+1. 在 O3DE 编辑器中，选择 **Tools**，**Track View**。
 
-1. In the Track View, right-click the **Director** node and choose **Add Track**, **Capture**.
+1. 在轨迹视图中，右键单击**Director**节点，然后选择**Add Track**，**Capture**。
 
-1. Double-click the created track to add a capture keyframe. You can set the following key properties:
+1. 1. 双击创建的轨道，添加捕捉关键帧。您可以设置以下关键帧属性：
 ****
 
 
-1. Set up a Script Canvas graph to play the sequence on game start.
+1. 设置一个 Script Canvas 图形，在游戏开始时播放序列。
 
-## Capturing Image Frames with Console Variables 
+## 使用控制台变量捕捉图像帧
 
-Capture image frames with the following console variables. For more information, see [Using the Console Window](/docs/user-guide/editor/console/).
+使用以下控制台变量捕捉图像帧。更多信息，请参阅 [使用控制台窗口](/docs/user-guide/editor/console/)。
 
 
-**Capture Image Frames Console Variables**
+**捕捉图像帧控制台变量**
 
-| Console Variable | Description |
+| 控制台变量 | 说明 |
 | --- | --- |
-| fixed\_time\_step |  Lowers the game speed to achieve a constant frame rate throughout the sequence. For example, a time step value of `0.04` specifies a 25 fps gameplay speed. Default value: `0.0`  |
-| capture\_frames |  Enables frame capture, if the value is set to `1`.  |
-| capture\_file\_format |  Sets the output format for the images. Valid values: `.jpg`, `.tga`, `.tif`  |
-| capture\_file\_prefix |  Sets a file name prefix to use for captured frames. Default: `Frame`  |
-| capture\_buffer |  Sets the type of buffer to capture. Valid values:  `0` = Color (RGB pixels) `1` = Color with Alpha (RGBA pixels where the alpha channel is set to 255 where geometry exists)  |
+| fixed\_time\_step |  降低游戏速度，以在整个序列中达到恒定的帧速率。例如， `0.04`的时间步长值表示 25 帧/秒的游戏速度。默认值： `0.0`  |
+| capture\_frames |  启用帧捕捉，如果值设置为 `1`。  |
+| capture\_file\_format |  设置图像的输出格式。有效值： `.jpg`, `.tga`, `.tif`  |
+| capture\_file\_prefix |  为捕获的帧设置文件名前缀。默认值： `Frame`  |
+| capture\_buffer |  设置要捕获的缓冲区类型。有效值：  `0` = Color (RGB pixels) `1` = Color with Alpha (存在几何体的 RGBA 像素，其中 alpha 通道设置为 255)  |

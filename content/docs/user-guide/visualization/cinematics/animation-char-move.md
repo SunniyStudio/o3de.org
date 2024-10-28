@@ -1,20 +1,20 @@
 ---
-description: ' Move an entity in a scene Open 3D Engine. '
-title: Moving an Entity in a Scene
+description: ' Open 3D Engine在场景中移动实体. '
+title: 在场景中移动实体
 ---
 
-You can use the Track View to move or rotate any entity in a scene.
+您可以使用轨迹视图移动或旋转场景中的任何实体。
 
-**To move a character in a scene**
+**移动场景中的角色**
 
-1. In the Track View, add the character to the desired sequence, then click the red record button.
+1. 在Track View中，将角色添加到所需序列中，然后单击红色的录制按钮。
 
-1. In the O3DE viewport, click the character, then move or rotate as desired. This automatically updates keys at the current position of the slider in the track view sequence timeline slider.
+1. 在 O3DE 视口中单击角色，然后根据需要移动或旋转。这会自动更新Track View序列时间线滑块当前位置上的按键。
 
-1. Double-click the key to access **Key Properties**, then adjust values as needed.
+1. 双击按键以访问**Key Properties**，然后根据需要调整数值。
 
-1. Click the ****Curve Editor**** button, then select the tracks where the curve needs to be adjusted.
+1. 单击 ****Curve Editor**** 按钮，然后选择需要调整曲线的轨道。
 
-1. Drag a selection box around all the keys you want to change.
+1. 在所有需要更改的按键周围拖动一个选择框。
 
-1. Click the **Set In/Out Tangents to Auto** button.
+1. 单击 **Set In/Out Tangents to Auto** 按钮。

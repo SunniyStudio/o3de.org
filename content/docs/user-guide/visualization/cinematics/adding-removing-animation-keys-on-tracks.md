@@ -1,31 +1,31 @@
 ---
-description: ' Add and remove animation keys on tracks in Open 3D Engine''s <guilabel>Track View</guilabel> editor. '
-title: Adding and Removing Animation Keys on Tracks
+description: ' 在 Open 3D Engine的<guilabel>Track View</guilabel>编辑器中添加和删除轨道上的动画键。 '
+title: 在轨道上添加和删除动画关键帧
 ---
 
-You can add a keyframe to a track in the timeline with one of the following:
+您可以使用以下方法之一为时间线中的轨道添加关键帧：
 
-**Double-click the track**
-This is the quickest way to add an animation key to the track. This adds a key exactly where you click and stores the data at the exact point in the timeline.
+**双击轨道**
+这是向轨道添加动画关键帧的最快方法。这将在您点击的位置添加一个关键帧，并将数据存储在时间轴上的准确位置。
 
-**Add Keys**
-In the **Keys** toolbar, click the **Add Keys** icon ![Add Keys button](/images/user-guide/cinematics/cinematic-add-keys-track-view-editor.png) and then click the timeline. This is useful if you need to add many keys to the timeline. To stop adding keys, choose the move, scale, or slide icon ![Move, scale, and slide buttons](/images/user-guide/cinematics/cinematics-move-scale-slide-keys-icon-track-view-editor.png).
+**添加关键帧
+在**Keys**工具栏中，点击**Add Keys** 图标![Add Keys button](/images/user-guide/cinematics/cinematic-add-keys-track-view-editor.png)，然后点击时间轴。如果需要在时间轴上添加许多按键，这将非常有用。要停止添加按键，请选择移动、缩放或滑动图标![Move, scale, and slide buttons](/images/user-guide/cinematics/cinematics-move-scale-slide-keys-icon-track-view-editor.png)。
 
 **Record Mode**
-In the **Play** toolbar, click the **Record Mode** icon ![Record button](/images/user-guide/cinematics/cinematics-record-icon-track-view-editor.png) and then makes changes directly to your components.
-When you enter record mode, you can update the component entities that are part of the sequence in the viewport. Animation keys are added automatically to the appropriate node tracks in the timeline, based on the current location of the timeline playhead.
-For example, if you specify a different value for the **Transform** component at three seconds, the key for this update appears in the timeline.
-To specify an animation to play over time, move the playhead to different places along the timeline. Otherwise, you will overwrite the keys at the same location of the timeline as you update the component entities in the level.
-To stop recording, click the **Record Mode** icon again.
-For more information, see [Using Record Mode](/docs/user-guide/visualization/cinematics/using-record-mode/).
+在**Play**工具栏中，点击**Record Mode**图标![Record button](/images/user-guide/cinematics/cinematics-record-icon-track-view-editor.png)，然后直接对组件进行更改。
+进入记录模式后，您可以更新视口中属于序列一部分的组件实体。动画键会根据时间线播放头的当前位置，自动添加到时间线中相应的节点轨道上。
+例如，如果您在三秒时为 **Transform** 组件指定了一个不同的值，则该更新的键就会出现在时间轴上。
+要指定动画随时间播放，请将播放头移动到时间轴上的不同位置。否则，当您更新关卡中的组件实体时，将覆盖时间轴同一位置的按键。
+要停止录制，请再次单击**Record Mode**图标。
+更多信息，请参阅 [使用录制模式](/docs/user-guide/visualization/cinematics/using-record-mode/)。
 
-You can delete individual keys or click and drag to select multiple animation keys.
+您可以删除单个动画键，也可以单击并拖动来选择多个动画键。
 
-**To delete keys from your timeline**
+**删除时间轴上的按键**
 
-1. In the timeline, select a key.
+1. 在时间轴中，选择一个动画键。
 
-1.  Do one of the following:
-   + Right-click the key and choose **Delete**.
-   + Press **Delete** on your keyboard.
-   + In the **Keys** toolbar, click the **Delete Keys** icon ![Delete keys button](/images/user-guide/cinematics/cinematics-delete-keys-icon-track-view-editor.png).
+1.  完成以下之一：
+   + 右击关键帧，选择 **Delete**。
+   + 按下键盘上的 **Delete** 键。
+   + 在 **Keys** 工具栏中，点击 **Delete Keys** 图标 ![Delete keys button](/images/user-guide/cinematics/cinematics-delete-keys-icon-track-view-editor.png)。

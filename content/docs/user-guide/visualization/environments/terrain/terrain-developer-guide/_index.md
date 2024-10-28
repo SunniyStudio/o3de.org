@@ -1,15 +1,15 @@
 ---
-linktitle: Terrain Developer Guide
-title: Terrain Developer Guide
-description: Developer documentation that explains the general architecture, philosophy, and design of the terrain system.
+linktitle: 地形开发者指南
+title: 地形开发者指南
+description: 开发人员文档，解释地形系统的总体结构、理念和设计。
 ---
-The Terrain Developer Guide provides documentation for the general architecture, philosophy, and design of the terrain system.
-
-| Topic | Description |
+《地形开发指南》为地形系统的总体结构、理念和设计提供了文档。
+1
+| 主题 | 说明 |
 | :-- | :-- |
-| [Introduction](./introduction) | Introduction to the terrain system. |
-| [Architecture](./architecture) | High-level description of the terrain system architecture. |
-| [Using the terrain system](./system-usage) | How to use the terrain system from a developer's perspective. |
-| [Extending the terrain system](./system-extensions) | How to extend the terrain system to add new capabilities. |
-| [Future work](./future-work) | Possible future improvements that could be made to the terrain system. |
-| [Glossary](./glossary) | Glossary of system-specific words and phrases. |
+| [介绍](./introduction) | 地形系统介绍。 |
+| [架构](./architecture) | 地形系统结构的高级描述。 |
+| [使用地形系统](./system-usage) | 从开发者的角度看如何使用地形系统。 |
+| [扩展地形系统](./system-extensions) | 如何扩展地形系统以增加新功能。 |
+| [未来的工作](./future-work) | 未来可能对地形系统做出的改进。 |
+| [术语](./glossary) | 系统专用词汇和短语。 |

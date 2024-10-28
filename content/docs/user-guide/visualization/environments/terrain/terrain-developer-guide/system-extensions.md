@@ -1,48 +1,46 @@
 ---
-linktitle: Extending the Terrain System
-title: Extending the Terrain System
-description: Information on how to extend the terrain system to accomplish various goals.
+linktitle: 扩展地形系统
+title: 扩展地形系统
+description: 有关如何扩展地形系统以实现各种目标的信息。
 weight: 400
 ---
-The terrain system is designed to be highly decoupled and easily extensible at a number of different layers.
+地形系统的设计高度解耦，易于在多个不同层面进行扩展。
 
-## Gradient Components
+## Gradient 组件
 
-Gradient components are the underlying data source for height data and surface weight data. New gradient component types can be created as needed to provide data from different sources, such as streaming satellite data, or to modify existing gradient data, such as adding complex erosion filters.
+Gradient组件是高度数据和表面重量数据的基础数据源。可根据需要创建新的梯度组件类型，以提供不同来源的数据（如流式卫星数据），或修改现有的梯度数据（如添加复杂的侵蚀过滤器）。
 
-New gradient components need to support the following at a minimum:
+新的Gradient组件至少需要支持以下内容：
+* 实现 `GradientRequestBus` 以通用地返回输入世界位置的浮点输出值。
+* 在 `GetProvidedServices` 中声明它实现了 `GradientService`。
+* 支持线程安全。理想情况下，这将意味着在查询 API 中使用带有`shared_lock`的`shared_mutex`，并在更改查询 API 方法中使用的底层数据的任何地方使用`unique_lock`。这将允许多个查询并行运行，同时安全地阻塞数据更改。
+* 只要梯度中的任何数据发生变化，就调用 `DependencyNotificationBus::Events::OnCompositionChanged` 或 `DependencyNotificationBus::Events::OnCompositionRegionChanged` 。这将通知梯度 “上方 ”的所有内容需要刷新。
 
-* Implement the `GradientRequestBus` to generically return a floating-point output value for an input world position.
-* Declare that it implements the `GradientService` in `GetProvidedServices`.
-* Support thread safety. Ideally, this will mean using a `shared_mutex` with a `shared_lock` in the query APIs and a `unique_lock` for any places that change the underlying data used in the query API methods. This will let multiple queries run in parallel while safely blocking on data changes.
-* Call `DependencyNotificationBus::Events::OnCompositionChanged` or `DependencyNotificationBus::Events::OnCompositionRegionChanged` whenever any data within the gradient changes. This notifies everything "above" the gradient that it will need to refresh itself.
+此外，新的梯度组件还应支持以下功能：
 
-In addition, new gradient components should also support the following:
+* 使用**Shape**组件来定义如何将梯度数据映射到世界空间。
+* 支持**Gradient Transform Modifier**组件，以便对梯度数据执行任意变换。
+* 按照惯例，目前所有渐变效果都会侦听`OnEntityVisibilityChanged`，并使用它来启用或禁用编辑器中的渐变数据。这样就可以在编辑时轻松打开或关闭渐变，但重要的是要认识到，无论编辑时的可见性设置如何，渐变在运行时仍处于活动状态。
 
-* Use the **Shape** components to define how the gradient data maps into world space.
-* Support the **Gradient Transform Modifier** component for performing arbitrary transforms to the gradient data.
-* By convention, all gradients currently listen to `OnEntityVisibilityChanged` and use that to enable or disable the gradient data in the Editor. This makes it easy to turn gradients on and off while authoring, though it's important to recognize that they are still active at runtime regardless of the authoring visibility setting.
+## 地形组件
 
-## Terrain Components
+每个地形组件都可以用满足相同要求的新组件替换。例如，一个能向下传输真实世界卫星高度数据的新组件可以取代**Terrain Height Gradient List**。也可以将组件组合在一起，如简化的地形生成器组件，在一个组件中实现**Terrain Layer Spawner**、**Terrain Height Gradient List**和**Terrain Surface Gradient List**的功能。
 
-Each of the terrain components can be replaced with new components that meet the same requirements. For example, a new component that streams down real-world satellite height data can replace the **Terrain Height Gradient List**. It's also possible to combine components together, such as a simplified Terrain Spawner component that implements the functionality of the **Terrain Layer Spawner**, **Terrain Height Gradient List**, and **Terrain Surface Gradient List** in one single component.
+任何替换组件都需要支持以下功能：
+* 执行与被替换组件相匹配的请求总线。例如，`TerrainSpawnerRequestBus`、`TerrainAreaHeightRequestBus` 或`TerrainAreaSurfaceRequestBus`。
+* 声明它实现了与`GetProvidedServices`中被替换的组件相匹配的每个服务。例如，`TerrainAreaService`、`TerrainHeightProviderService` 或`TerrainSurfaceProviderService`。
+* 支持线程安全。
+* 只要组件中的任何数据发生变化，就调用 `OnCompositionChanged` 或 `OnCompositionRegionChanged`。
+* 调用 `TerrainSystemServiceRequestBus` 上相应的 API 来注册/取消注册/刷新地形区域。
 
-Any replacement components need to support the following:
+## 地形物理集成
 
-* Implement the request bus that matches the component being replaced. For example, `TerrainSpawnerRequestBus`, `TerrainAreaHeightRequestBus`, or `TerrainAreaSurfaceRequestBus`.
-* Declare that it implements each service that matches the component being replaced in `GetProvidedServices`. For example, `TerrainAreaService`, `TerrainHeightProviderService`, or `TerrainSurfaceProviderService`.
-* Support thread safety.
-* Call `OnCompositionChanged` or `OnCompositionRegionChanged` whenever any data within the component changes.
-* Call the appropriate APIs on the `TerrainSystemServiceRequestBus` to register/unregister/refresh a terrain region.
+地形物理支持是通过一个分割的组件系统提供的。一半是`TerrainPhysicsCollider`，它了解用于地形数据的通用`TerrainDataRequestBus`和用于物理通信的通用 `HeightfieldProvider`总线。另一半是 `PhysXHeightfieldCollider`，它了解 PhysX 和高度场，但不了解地形。要将地形与新的物理系统集成，就需要实现一个新的 `HeightfieldCollider` 组件，以取代与 `HeightfieldProvider` 总线和新物理系统一起工作的 PhysX 版本。
 
-## Terrain physics integration
+## 地形渲染器
 
-The terrain physics support is provided through a divided component system. One half is the `TerrainPhysicsCollider`, which knows about the generic `TerrainDataRequestBus` for terrain data and the generic `HeightfieldProvider` buses for physics communication. The other half is the `PhysXHeightfieldCollider`, which knows about PhysX and heightfields, but not about terrain. To integrate terrain with a new physics system, a new `HeightfieldCollider` component needs to be implemented to replace the PhysX version that works with the `HeightfieldProvider` buses and with the new physics system.
+可以通过创建新的渲染级别组件、渲染实体组件、特征处理器和着色器来替换整个地形渲染器。更换呈现器不会影响基础地形系统或地形物理集成。
 
-## Terrain renderer
+## 地形系统
 
-The entire terrain renderer can be replaced by creating new rendering level components, rendering entity components, feature processors, and shaders. Replacing the renderer doesn't affect the base terrain system or the terrain physics integrations.
-
-## Terrain system
-
-The underlying terrain system can be replaced entirely as well, as long as it implements the `TerrainDataRequestBus` and `TerrainSystemServiceRequestBus`, and it uses the `TerrainDataNotificationBus` to send change notifications. There's no obvious reason to replace the terrain system itself in isolation though, as it mostly just routes data requests and notifications.
+底层的地形系统也可以完全替换，只要它实现了`TerrainDataRequestBus``TerrainSystemServiceRequestBus`，并使用`TerrainDataNotificationBus`发送更改通知即可。虽然没有明显的理由单独替换地形系统本身，因为它主要只是路由数据请求和通知。

@@ -1,46 +1,47 @@
 ---
-linktitle: Introduction
-title: Introduction
-description: Developer documentation that introduces the terrain system.
+linktitle: 介绍
+title: 介绍
+description: 介绍地形系统的开发人员文档。
 weight: 100
 ---
 
 ![Example terrain image.](/images/user-guide/visualization/environments/terrain/terrain-example.png)
 
-## What is a "terrain system"?
+## 什么是 “地形系统”？
 
-A "terrain system" is a system that defines the geometry, color, and surface types for a ground surface. More specifically, a terrain system contains:
+"地形系统 "是一个定义地面几何形状、颜色和表面类型的系统。更具体地说，地形系统包含
 
-* Height, color, and surface data mapped to regions of the world
-* Authoring tools and workflows that support creating / modifying data and mapping it to regions
-* Queryable data that can be used by both simulation and rendering
-* Specialized rendering as needed to support efficient, high-quality terrain visualization across the view distance
-* One or more physics surfaces that can provide a "physical" simulation of the terrain in the virtual world
+* 映射到世界各区域的高度、颜色和表面数据
+* 支持创建/修改数据并将其映射到区域的创作工具和工作流程
+* 模拟和渲染均可使用的可查询数据
+* 根据需要进行专门的渲染，以支持在视距范围内实现高效、高质量的地形可视化
+* 一个或多个物理表面，可对虚拟世界中的地形进行 “物理 ”模拟
 
-## Design tenets
+## 设计原则
 
-The O3DE terrain system was built with specific design tenets in mind. Enhancements and changes to the system should continue to use these tenets as guiding principles:
-
-| | |
-| - | - |
-| **Enjoyable** | Content creators and engineers are delighted to use the terrain system and excited by the power and flexibility the tools provide.|
-| **Familiar** | The design is familiar to content creators that use external terrain authoring tools and should follow similar design patterns used in other O3DE workflows.|
-| **Fast** | Iteration is rapid and responsive, and the runtime is optimized to a production-ready state.|
-| **Reusable** | Every aspect of the system is optional, reusable, and replaceable, and the system reuses existing functionality in O3DE as much as possible. Content is authorable as optional, reusable, and replaceable pieces.|
-| **Scalable** | The system scales to allow for worlds of arbitrary size and density without enforcing any hard limits.|
-| **Dynamic** | Portions of the terrain are dynamically loadable, unloadable, and modifiable at runtime.|
-
-Note that **Simplicity** is _not_ a design tenet.  While we should always strive for simplicity, we also acknowledge that we're accepting an initial learning curve for the sake of the other tenets.
-
-## Design goals
-
-The terrain system adheres to the following design goals:
+O3DE 地形系统在设计时考虑到了特定的设计原则。系统的改进和变更应继续将这些原则作为指导原则：
 
 | | |
 | - | - |
-| **Workflow parallelization** | Multiple content creators can work on different terrain locations or different aspects of the terrain content at the same time.|
-| **System / workflow reuse** | The terrain system leverages the existing Shape components, Surface Data components, Gradient Signal components, Landscape Canvas system, and the entity/component authoring workflows.|
-| **Data flow transparency** | Source data exists as external assets in common editable formats that hot-reload when changed. The output data used in the game should always be in sync with the inputs and traceable back to them.|
-| **Non-destructive editing** | Terrain data is modifiable either through layered changes or through direct data changes that don't require the original source data to change. |
-| **Round-trip data flows** | Terrain data changes are easy to export to external content tools. The data can be modified further and re-imported. |
-| **Reusable data** | The same terrain data is reusable for multiple different locations in the world. |
+| **有兴趣** | 内容创作者和工程师都非常乐意使用地形系统，并对这些工具提供的强大功能和灵活性感到兴奋。|
+| **更熟悉** | 对于使用外部地形创作工具的内容创建者来说，这种设计并不陌生，而且应遵循其他 O3DE 工作流程中使用的类似设计模式。|
+| **快速** | 迭代速度快、反应灵敏，运行时间经过优化，可随时投入生产。|
+| **可重用** | 系统的每个方面都是可选、可重用和可替换的，系统尽可能重用 O3DE 中的现有功能。内容可授权为可选、可重复使用和可替换的片段。|
+| **可扩展** | 该系统可以扩展到任意大小和密度的世界，而不会强制执行任何硬性限制。|
+| **动态** | 地形的部分内容可在运行时动态加载、卸载和修改。|
+
+请注意，**简单**并非设计宗旨。 虽然我们应该始终追求简单，但我们也承认，为了其他原则，我们必须接受初期的学习曲线。
+
+## 设计目标
+
+地形系统遵循以下设计目标：
+
+| | |
+| - | - |
+| - | - |
+| **工作流并行化** | 多个内容创建者可同时处理不同的地形位置或地形内容的不同方面。|
+| **系统 / 工作流重用** | 地形系统利用现有的Shape组件、Surface Data组件、Gradient Signal 组件、Landscape Canvas 系统以及实体/组件创作工作流。|
+| **数据流透明度** | 源数据以通用可编辑格式的外部资产形式存在，更改时可热加载。游戏中使用的输出数据应始终与输入数据同步，并可追溯到输入数据。
+| **非破坏性编辑** | 地形数据可通过分层更改或直接更改数据进行修改，无需更改原始源数据。|
+| **循环数据流** |  地形数据更改可轻松导出到外部内容工具。数据可进一步修改并重新导入。|
+| **可重复使用的数据** | 同一地形数据可在世界上多个不同地点重复使用。|

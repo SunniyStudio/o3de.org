@@ -1,55 +1,55 @@
 ---
-linktitle: Future Work
-title: Future Work
-description: Possible future improvements to the terrain system.
+linktitle: 未来的工作
+title: 未来的工作
+description: 未来可能对地形系统进行的改进。
 weight: 500
 toc: true
 ---
 
-There are a number of improvements that can potentially be made to the terrain system for anyone interested in taking the system further. You can reach out to the O3DE community to talk about any terrain enhancements or ideas on the #sig-content channel on [Discord](https://discord.com/invite/o3de). We are happy to help!
+对于任何有兴趣进一步发展地形系统的人来说，地形系统都有许多可以改进的地方。您可以通过[Discord](https://discord.com/invite/o3de) 上的 #sig-content 频道与 O3DE 社区联系，讨论任何地形改进或想法。我们很乐意提供帮助！
 
-## Large-scale improvements
+## 大规模改进
 
-This category of improvements requires architecting solutions to provide extensive new capabilities.
+这类改进需要架构解决方案，以提供广泛的新功能。
 
-### 3D geometry support
+### 支持 3D 几何图形
 
-Instead of a heightfield-based approach, the APIs and renderer can be extended to use a full 3D approach, whether it's through voxels, displacement maps, mesh ingestion, raytracing, or some other technology. This would enable the system to support caves, arches, cliff geometry, and other vertical or overlapping terrain features that can't be supported through a pure heightfield approach.
+无论是通过体素、位移贴图、网格摄取、光线追踪还是其他技术，都可以将应用程序接口和渲染器扩展为使用全 3D 方法，而不是基于高度场的方法。这将使系统能够支持洞穴、拱门、悬崖几何以及其他垂直或重叠地形特征，而这些特征是纯粹的高场方法所无法支持的。
 
-The API extensions will likely consist of redefining the current APIs to provide the _highest elevation_ terrain data that appears below the given query input positions, and then adding more APIs to provide _all_ the terrain data that exists at or below the given query positions.
+应用程序接口扩展可能包括重新定义当前的应用程序接口，以提供出现在给定查询输入位置下方的**最高海拔**地形数据，然后添加更多的应用程序接口，以提供存在于给定查询位置或其下方的_所有_地形数据。
 
-### GPU calculation support
+### GPU 计算支持
 
-The terrain system is built on top of the gradient components, which perform all of their calculations on the CPU. However, a GPU can perform bulk computations like these far more optimally. An overhaul or replacement of the gradient system that supports GPU-side calculations can improve the terrain system's performance by orders of magnitude. The primary caveats are that the data is still needed on the CPU to feed to physics, generalized raycasts, and other systems, and that it should be possible to still use the terrain system on devices with limited or no GPU capabilities (low-end phones, headless servers, etc).
+地形系统建立在梯度组件之上，而梯度组件的所有计算都在 CPU 上进行。然而，GPU 可以以更优化的方式执行类似的批量计算。对支持 GPU 端计算的梯度系统进行全面检查或更换，可以将地形系统的性能提高几个数量级。需要注意的主要问题是，CPU 仍需要向物理、广义光线投射和其他系统提供数据，而且在 GPU 功能有限或不具备 GPU 功能的设备（低端手机、无头服务器等）上仍有可能使用地形系统。
 
-## Additional features
+## 附加功能
 
-This category of improvements may be incrementally added to the system without fundamentally altering anything about how the system currently works.
+这类改进可逐步添加到系统中，而不会从根本上改变系统目前的运行方式。
 
-### Triangle split direction
+### 三角形分割方向
 
-Currently, the terrain always triangulates each quad in the same uniform direction. This can be replaced with heuristics for choosing the best direction for each quad. This can even be exposed as multiple heuristics: same direction for every quad, alternating directions per quad, or best choice per quad based on vertex heights. This decision should be controlled at the terrain system level, so that the information can be provided consistently to the terrain debugger, terrain physics, terrain rendering, terrain raycasting, etc.
+目前，地形总是以相同的统一方向对每个四边形进行三角剖分。可以用启发式方法为每个四边形选择最佳方向。甚至可以采用多种启发式方法：每个四边形相同的方向、每个四边形交替的方向或基于顶点高度的每个四边形最佳选择。这一决定应在地形系统级别进行控制，以便向地形调试器、地形物理、地形渲染、地形光线投射等提供一致的信息。
 
-### Improved shape to height workflows
+### 改进形状到高度的工作流程
 
-Currently, it's somewhat non-intuitive to create terrain heights directly from primitive shape components. The best options are to use either the Shape Falloff Gradient or the Surface Altitude Gradient, but they're both problematic. The Shape Falloff Gradient creates falloff based on a shape's distance from the bottom of a box instead of falloff from the shape's world position, making it hard to control. The Surface Altitude Gradient doesn't support falloff and the auto-refresh doesn't work. Either of these components can be improved or a new component can be added, to make it easier to place a shape with falloff into the world and turn it into a height gradient.
+目前，直接从原始形状组件创建地形高度有些不直观。最好的选择是使用Shape Falloff Gradient或Surface Altitude Gradient，但这两种方法都存在问题。Shape Falloff Gradient根据形状与方框底部的距离创建落差，而不是根据形状的世界位置创建落差，因此很难控制。表面高度渐变不支持落差，自动刷新也不起作用。可以改进这两个组件中的任何一个，或者添加一个新的组件，以便更轻松地将具有落差的形状放置到世界中，并将其转化为高度渐变。
 
-### Masking / blending
+### 遮罩/混合
 
-Add controls to the Terrain Layer Spawner and the Terrain Macro Material to allow each one to mask and blend instead of completely replacing the data. This would make it much easier to create small terrain "stamps" for things like craters.
+在Terrain Layer Spawner和Terrain Macro Material添加控制，允许对每个图层进行遮罩和混合，而不是完全替换数据。这样就能更轻松地为弹坑等创建小型地形 “印记”。
 
-### First-class "hole" support
+### 一流的 “洞 ”支持
 
-Holes can be created right now by authoring a high-priority terrain layer spawner with no ground plane for whatever size is desired. However, it would be nice to have additional authoring controls to make it possible to put holes directly into gradient data, possibly either through a second alpha channel, or through a separate gradient on the Terrain Height Gradient List component.
+现在可以通过创建一个没有地平面的高优先级地形层生成器来创建孔洞，无论孔洞的大小如何。不过，如果能有额外的创作控制，可以直接将洞放入渐变数据中，或者通过第二个 alpha 通道，或者通过Terrain Height Gradient List 组件上的单独渐变，那就更好了。
 
-### Improved terrain texturing
+### 改进地形纹理
 
-There are a number of features that would be nice to add to the terrain texturing:
+在地形纹理中增加一些功能会更好：
 
-* Decals - both stamps for surface marks and textures that can repeat directionally along a spline or shape for things like paths and roads.
-* Parallax Occlusion Mapping (POM) support - improves the lighting of small surface details.
-* Triplanar mapping - improves the application of textures on vertical surfaces.
+* Decals - 既有用于表面标记的印记，也有可沿样条线方向重复的纹理，或用于路径和道路等形状的纹理。
+* Parallax Occlusion Mapping (POM) 支持 - 改善小表面细节的照明。
+* Triplanar mapping - 改进垂直表面纹理的应用。
 
-### Mesh blending
+### 网格混合
 
-Arbitrary meshes should be able to be "planted" into the terrain surface with height, color, and surface blending to help the meshes integrate more seamlessly into the terrain.
+任意网格应能通过高度、颜色和表面混合 “植入 ”地形表面，以帮助网格与地形更完美地融合。

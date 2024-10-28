@@ -1,20 +1,20 @@
 ---
-linkTitle: Terrain
-title: Terrain
-description: Create terrain through a combination of proceduralism and authored content.
+linkTitle: 地形
+title: 地形
+description: 通过程序化和自主内容相结合的方式创建地形。
 weight: 100
 toc: true
 ---
 
-The terrain system uses a series of components to enable terrain authoring, simulation, and visualization for levels of aribtrary size. To use the terrain system, you must enable the Terrain Gem for your project.
+地形系统使用一系列组件为不同大小的关卡进行地形创作、模拟和可视化。要使用地形系统，必须为项目启用Terrain Gem。
 
-## System Requirements
+## 系统要求
 
-To use the full capabilities of the terrain system, enable the following Gems:
+要使用地形系统的全部功能，请启用以下Terrain Gem：
 
 | | | |
 | - | - | - |
-| **Terrain Gem** | Required | Provides the terrain system and the core terrain components. These are the foundation for enabling the terrain system and creating terrain areas. |
-| **Gradient Signal Gem** | Dependency | Provides gradient and gradient modifier components, which are used to express height and surface type data to the terrain system. The gradient components generate various gradient signals, such as random noise and Perlin noise, or enable the use of authored data such as height maps or weight maps. The gradient modifier components modify and mix the gradient signals. |
-| **Surface Data Gem** | Dependency | Enables the terrain system to emit signals, or tags, that communicate its surface characteristics. This system enables the Dynamic Vegetation system to place objects on the terrain surface without having any direct knowledge or dependency on the terrain system itself. |
-| **FastNoise Gem** | Optional | Provides an expressive **FastNoise Gradient** component that generates many procedural noise variations. In **Entity Inspector**, the **FastNoise Gradient** component appears in the **Gradient** category. You use it like any other gradient component. |
+| **Terrain Gem** | 必须 | 提供地形系统和核心地形组件。这些是启用地形系统和创建地形区域的基础。 |
+| **Gradient Signal Gem** | 依赖 | 提供梯度和梯度修改器组件，用于向地形系统表达高度和表面类型数据。梯度组件可生成各种梯度信号（如随机噪音和佩林噪音），也可使用自动生成的数据（如高度图或重量图）。梯度修改器组件可修改和混合梯度信号。 |
+| **Surface Data Gem** | 依赖 | 使地形系统能够发射信号或标签，传达其表面特征。该系统可使动态植被系统在地形表面放置物体，而无需直接了解或依赖地形系统本身。 |
+| **FastNoise Gem** | 可选 | 提供了一个表现力极强的**FastNoise Gradient**组件，可生成多种程序噪点变化。在**Entity Inspector**中，**FastNoise Gradient**组件出现在**Gradient**类别中。您可以像使用其他渐变组件一样使用它。  |

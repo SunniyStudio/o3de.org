@@ -1,10 +1,10 @@
 ---
-linktitle: Architecture
-title: Architecture
-description: Developer documentation explaining the terrain system architecture
+linktitle: 架构
+title: 架构
+description: 解释地形系统架构的开发人员文档
 weight: 200
 ---
-At the highest level, the terrain system consists of a Terrain Gem that relies on a number of other Gems:
+最高级别的地形系统由一个地形宝石组成，它依赖于其他一些Gem：
 
 ```goat
                          .--------------.
@@ -31,106 +31,106 @@ At the highest level, the terrain system consists of a Terrain Gem that relies o
 
 ```
 
-The **Gradient Signal Gem** provides components that map data in the 0-1 range to world positions. The gradient components are used for defining height data and surface weight data. In particular, the **Image Gradient** component provides a convenient workflow for importing and using heightmaps and "splat maps" (surface weight maps) that are generated from external terrain authoring tools.
+**Gradient Signal Gem** 提供了将 0-1 范围内的数据映射到世界位置的组件。梯度组件用于定义高度数据和表面权重数据。特别是，**Image Gradient**组件为导入和使用外部地形制作工具生成的高度映射和 “溅射映射”（表面权重映射）提供了便捷的工作流程。
 
-The **Surface Data Gem** provides a way to define conceptual geometric volumes with sets of arbitrary tags which can then be referenced from other systems (like Dynamic Vegetation) that operate on generic surfaces. The terrain system uses the Surface Data tags as the naming system for terrain surface types. It also implements a Surface Data component to make the terrain show up as a surface within the Surface Data system. This enables the Dynamic Vegetation system to treat terrain as a "plantable surface".
+**Surface Data Gem** 提供了一种用任意标签集定义概念性几何体积的方法，这些标签集可以被其他系统（如动态植被系统）引用，这些系统可以在通用地表上运行。地形系统使用表面数据标签作为地形表面类型的命名系统。它还实现了一个地表数据组件，使地形显示为地表数据系统中的一个地表。这样，动态植被系统就能将地形视为 “可种植表面”。
 
-The **LmbrCentral Gem** defines all of the base shape components. Shape components are used by Terrain, Gradients, and Surface Data as a way to attach data to geometric volumes in the world. These volumes provide an easy way to author location, size, scale, and data density in easily-modifiable ways.
+**LmbrCentral Gem** 定义了所有基本形状组件。地形、渐变和表面数据使用形状组件，将数据附加到世界中的几何体上。这些体量提供了一种简便的方法，可以以易于修改的方式授权位置、大小、比例和数据密度。
 
-The **Atom Gem** contains the base rendering system that the terrain system uses to the render the terrain.
+**Atom Gem** 包含地形系统用于渲染地形的基本渲染系统。
 
-**AzFramework** contains the abstract terrain system request and notification API definitions.
+**AzFramework** 包含抽象地形系统请求和通知 API 定义。
 
-By putting the API definitions in AzFramework, but the implementation in the Terrain Gem, we're defining a general API contract that any terrain system should implement for O3DE, but we're providing our implementation as an optional implementation that can be fully replaced. Since only one implementation exists, it's difficult to guarantee that the API is truly agnostic. If the API is ever proven out to be too specific, the existing API definitions could get moved to the Terrain Gem as well.
+通过将 API 定义放在 AzFramework 中，而将实现放在 Terrain Gem 中，我们定义了一个通用的 API 契约，任何地形系统都应为 O3DE 实现该契约，但我们将我们的实现作为可选实现提供，并可完全替换。由于目前只有一种实现方式，因此很难保证应用程序接口是真正不可知的。如果 API 被证明过于特殊，现有的 API 定义也会被转移到地形宝石中。
 
-## Data provider / data consumer pattern
+## 数据提供者/数据消费者模式
 
-The base terrain system design follows a data provider / data consumer pattern:
+基础地形系统的设计遵循数据提供者/数据消费者模式：
 
-* **Data Providers**: generalized data providers that simply "serve up" data to be consumed by other systems. On their own, they don't do anything.  They need to be queried and consumed to have a purpose. Gradient components are an example of data providers - they define height or surface data, but they don't perform any actions.
-* **Data Consumers**: systems and components that actively query the terrain data and take action on the results. Terrain Physics Heightfield is a data-consuming component, and the Terrain Renderer is a data-consuming system. They query the terrain APIs to spawn physical or rendered representations of terrain in an area.
+* **Data Providers**: 通用数据提供者只是 “提供 ”数据给其他系统使用。就其本身而言，它们什么也做不了。 它们需要被查询和消费才有意义。梯度组件就是数据提供者的一个例子--它们定义高度或表面数据，但不执行任何操作。
+* **Data Consumers**: 这些系统和组件会主动查询地形数据并对结果采取行动。地形物理高度场（Terrain Physics Heightfield）是一个消耗数据的组件，而地形渲染器（Terrain Renderer）则是一个消耗数据的系统。它们通过查询地形应用程序接口来生成区域内地形的物理或渲染表示。
 
-With this design pattern, the terrain system is essentially a "passive" system that provides a single API entry point with a unified view of all of the terrain data. It simply routes data requests from data consumers to data providers and change notifications from data providers to data consumers. The terrain system is completely dormant except for the times when data changes or something requests terrain data.
+通过这种设计模式，地形系统本质上是一个 “被动 ”系统，它提供了一个单一的应用程序接口入口点，可统一查看所有地形数据。它只是将数据消费者的数据请求路由到数据提供者，并将数据提供者的变更通知路由到数据消费者。除了在数据发生变化或有东西请求地形数据时，地形系统完全处于休眠状态。
 
-There are some pros and cons to this design. The main benefits are design simplicity for each individual piece, decoupled systems, and easy extensibility. The main downside is that it's very easy to have redundant computations caused from multiple decoupled systems that all request the same set of terrain data at the same time. There is also a heavier set of design requirements on each piece of the system to ensure that they work well in parallel, asynchronous environments.
+这种设计有利有弊。主要优点是设计简单、系统解耦和易于扩展。主要缺点是，多个解耦系统同时请求同一组地形数据，很容易造成冗余计算。此外，系统中的每一部分都需要满足更多的设计要求，以确保它们在并行、异步环境中运行良好。
 
-This diagram shows a sample communication flow as a Gradient component used for height gets activated. This particular example demonstrates both change notifications and data requests in a single series of actions.
+本图显示了一个用于高度的梯度组件被激活时的通信流示例。该示例在一系列操作中同时展示了更改通知和数据请求。
 
 {{< image-width src="/images/user-guide/visualization/environments/terrain/terrain-communication-flow.svg" width="1200" alt="Terrain communication flow." >}}
 
-It starts with a series of notification events to tell the terrain system that data needs to refresh. The terrain system then broadcasts outward that data has changed, which causes the Terrain Mesh Renderer to take action and refresh itself. The Terrain Mesh Renderer then queries the terrain system for the height data that it needs to refresh itself. Other systems can listen to the OnTerrainDataChanged() notification and refresh themselves in parallel.
+它首先通过一系列通知事件告诉地形系统数据需要刷新。然后，地形系统会向外广播数据已更改，这将导致地形网格渲染器采取行动并刷新自身。然后，地形网格渲染器会向地形系统查询它需要刷新的高度数据。其他系统可以监听 OnTerrainDataChanged() 通知，并同时刷新自己。
 
-## Internal system communication
+## 系统内部通信
 
-Communication within the terrain system is all abstracted through EBus requests and notifications. EBus abstractions were chosen for a few reasons:
+地形系统内部的通信全部通过 EBus 请求和通知进行抽象。选择 EBus 抽象有几个原因：
+'
+1. EBus 提供线程安全。我们希望能从任何线程查询地形数据，但底层实体和组件可以同时生成、解散和更改数据。
+2. EBus 鼓励解耦。我们希望系统的每个部分都能独立运行，并且只通过 EBus 上定义的 API 合约进行交互。
+3. EBus 支持功能替换。只要组件或系统符合 EBus 合约，就可以分块替换功能。
 
-1. EBus provides thread safety. We want to be able to query terrain data from any thread, but the underlying entities and components can spawn, despawn, and change their data at the same time.
-2. EBus encourages decoupling. We want each piece of the system to be able to operate independently and only interact through the API contracts defined on the EBus.
-3. EBus enables functional replacements. As long as a component or system meets the EBus contract, it's possible to replace the functionality in discrete chunks.
+对系统的查询以并行方式运行，仅在数据修改时阻塞；数据修改以串行方式运行，在数据查询和数据修改时阻塞。锁定模式是根据地形数据大部分时间以只读方式查询，而数据加载、卸载或修改只占一小部分时间的假设进行优化的。
 
-Queries to the system run in parallel and only block on data modifications, and data modifications run serially and block on both data queries and data modifications. The locking pattern is optimized around the assumption that terrain data is queried in a read-only fashion most of the time, and the data is loaded, unloaded, or modified just a small fraction of the time.
+## 单一系统，多个组件
 
-## Single system, multiple components
+地形系统设计的另一个关键方面是，它提供了一个单一系统，作为所有地形查询和全局地形设置管理的单一入口点。然而，为该系统提供数据的所有地形数据和组件都被分割成独立的部分。做出这两个设计决定有很多原因。
 
-Another key aspect to the terrain system design is that it provides a singleton system as a single entry point for all terrain queries and management of global terrain settings. However, all of the terrain data and components that feed the system are split apart into discrete pieces. There are many reasons for both of these design decisions.
+单一地形系统：
 
-Single terrain system:
+* 为整个地形定义一个单一的 “世界网格”，使各处的地形网格具有一致的分辨率和对齐方式。这样就可以轻松查询系统，因为无论输入数据的分辨率和定位如何，都可以在世界的任何地方以一致的间距行走。
+  * 这也意味着渲染器不需要解决不同分辨率相邻网格的接缝问题，不需要管理不同分辨率的 LOD，也不需要处理重叠的地形网格等等。
+* 为管理重叠地形数据区域的优先级提供了一种方法。
+* 为查询和通知提供了一个定义明确的 API 连接点，而不会强迫所有使用地形的人了解用于组合地形的所有单独数据。
 
-* Defines a single "world grid" for the entire terrain, which presents a consistent resolution and alignment for the terrain grid everywhere. This makes it easy to query the system, since it's possible to walk through the world at consistently-spaced positions everywhere, regardless of the input data resolution and positioning.
-  * This also means the renderer doesn't need to solve seams with adjacent meshes of different resolutions, manage LODs across different resolutions, deal with overlapping terrain meshes, and so on.
-* Provides a way to manage priorities for overlapping terrain data regions.
-* Gives a single well-defined API connection point for queries and notifications, without forcing everything that uses terrain to know about all of the individual data pieces that have been used to assemble the terrain.
+多种地形组件
 
-Multiple terrain components:
+* 通过**Terrain Layer Spawners**可将世界划分为任意矩形区域。矩形区域的大小可以不同，没有地形的区域也可以保持空白。
+  * 这样，多个内容创建者就可以同时在不同的区域工作，因为他们是在物理上分离的数据上工作。
+  * 只在需要的地方放置数据，可以优化数据使用。
+  * 区域可单独动态加载和卸载，从而轻松实现粗粒度地形流。
+* 每个区域可以有不同的特征子集。
+  * 进行游戏的区域可以生成地形物理表示，但只用于视觉效果的远处地形区域则不需要启用物理表示。
+  * 在服务器端或机器学习模拟中，如果不需要地形的可视化显示，可以禁用地形渲染的某些方面。
+* 不同的组件可以有不同的输入数据分辨率。地形系统定义了单一的_输出_地形网格和分辨率，但输入数据的分辨率可以根据该区域的需要而变化，以优化数据大小和复杂程度。即使在一个区域内，两个不同的数据提供者（如高度和表面类型）也可以根据适合该数据类型的情况使用两种不同的分辨率。
+* 功能可以逐个组件替换。
+  * 可将 PhysX Heightfield 组件替换为连接到其他物理系统的组件，如[Jolt Physics](https://github.com/jrouwe/JoltPhysics) 或 [Bullet Physics SDK](https://github.com/bulletphysics/bullet3)。
+  * Image Gradients可用于有作者输入数据的区域，而Fast Noise Gradients可用于在其他区域程序化地生成数据。
+  * 可以创建新的数据提供程序，用于流式传输卫星数据、执行复杂的程序生成等，而且无需更换地形系统的其他部分。
 
-* The world can be divided into arbitrary rectangular regions via **Terrain Layer Spawners**. The rectangles can be different sizes, and areas of the world without terrain can remain empty.
-  * This enables multiple content creators to work on different regions at the same time, since they're working on physically separated data.
-  * Data usage can be optimized by only placing data where it's needed.
-  * Regions can be dynamically loaded and unloaded individually, making it easy to implement coarse-grained terrain streaming.
-* Each region can have different subsets of features.
-  * Regions where gameplay occurs can spawn terrain physics representations, but distant terrain regions that are for visuals only don't need to have physics enabled.
-  * Aspects of terrain rendering can be disabled for server-side or machine learning simulations that don't require a visual representation of terrain.
-* Different components can have different input data resolutions. The terrain system defines a single _output_ terrain grid and resolution, but the input data resolutions can be varied to optimize the data size and complexity based on the need for that region. Even within a region, two different data providers (such as height and surface type) can use two different resolutions based on what's appropriate for that type of data.
-* The functionality can be replaced at a component-by-component level.
-  * The PhysX Heightfield component can be replaced with one that connects to another physics system such as [Jolt Physics](https://github.com/jrouwe/JoltPhysics) or [Bullet Physics SDK](https://github.com/bulletphysics/bullet3).
-  * Image Gradients can be used for areas with authored input data, and Fast Noise Gradients can be used to procedurally generate data in other areas.
-  * New data providers can be created for streaming satellite data, performing complex procedural generation, etc, and swapped in without needing to replace the rest of the terrain system.
+简而言之，单一地形系统为需要地形数据的运行系统提供了一个简化的应用程序接口。分离的组件通过多层数据调整和优化，为内容作者提供了更好的工作流程和灵活性。
 
-In short, the singleton terrain system provides a single simplified API for runtime systems that need terrain data. The separated components provide better workflows and flexibility for content authors with multiple layers of data tuning and optimization.
+## 组件设计
 
-## Component design
+在地形组件设计中选择特定的功能和数据分隔，是为了便于控制哪些功能处于活动状态，并为更换可能有用的功能提供明确的接触点。
 
-The specific functional and data separations in the terrain component design have been chosen to make it easy to control what functionality is active and to provide clear touchpoints for replacing functionality everywhere that it's likely to be useful.
+### 关卡组件
 
-### Level components
+地形系统使用三级组件：
 
-The terrain system uses three level components:
-
-| Component | Description |
+| 组件 | 说明 |
 | - | - |
-| **Terrain World** | Controls the base terrain system. The entire system is enabled or disabled by adding or removing this component. The configuration parameters that affect the entire terrain world exist on this component as well.|
-| **Terrain World Renderer** | Controls the terrain rendering. It requires the **Terrain World** component to exist, and it provides all of the rendering configuration settings that apply globally to the entire terrain. This component is separated from **Terrain World** so that it's possible to define a conceptual terrain without requiring the overhead of rendering. This is useful for cases where a visual representation simply isn't necessary. Also, this provides a "replacement touchpoint" for creating different terrain renderers, such as a voxel-based implementation or a raytracing-based implementation.|
-| **Terrain World Debugger** | Provides helpful debugging features for visualizing aspects of the terrain system. This component is separated from **Terrain World** so that it's easy to completely remove it from shipping products.|
+| **Terrain World** | 控制基础地形系统。通过添加或删除该组件可以启用或禁用整个系统。影响整个地形世界的配置参数也存在于该组件中。|
+| **Terrain World Renderer** | 控制地形渲染。它需要**Terrain World**组件的存在，并提供适用于整个地形的所有渲染配置设置。该组件与**Terrain World**分离，因此可以定义概念地形，而无需渲染。这对于不需要视觉呈现的情况非常有用。此外，这还为创建不同的地形渲染器（如基于体素的实施或基于光线跟踪的实施）提供了一个 “替代接触点”。 |
+| **Terrain World Debugger** | 为可视化地形系统的各个方面提供有用的调试功能。该组件与**Terrain World**分离，因此很容易将其从发货产品中完全删除。|
 
-### Entity components
+### 实体组件
 
-There are two types of terrain entity components - the "core" components that are used to define a terrain region and "auxiliary" components that operate on an area that can contain terrain regions.
+有两种类型的地形实体组件--用于定义地形区域的 “核心 ”组件和在可包含地形区域的区域上运行的 “辅助 ”组件。
 
-Core Components:
+核心组件：
 
-| Component | Description |
+| 组件 | 说明 |
 | - | - |
-| **Axis-Aligned Box Shape** | Defines the shape of a terrain region, including the min/max heights. |
-| **Terrain Layer Spawner** | Declares that a terrain region exists in the shape bounds, and it has a specified priority. |
-| **Terrain Height Gradient List** | (Optional) Defines the height data for the terrain region. |
-| **Terrain Surface Gradient List** | (Optional) Defines the surface type and weight data for the terrain region. |
+| **Axis-Aligned Box Shape** | 定义地形区域的形状，包括最小/最大高度。 |
+| **Terrain Layer Spawner** | 声明形状边界中存在一个地形区域，该区域具有指定的优先级。 |
+| **Terrain Height Gradient List** | (可选) 定义地形区域的高度数据。 |
+| **Terrain Surface Gradient List** | (可选) 定义地形区域的表面类型和权重数据。 |
 
-Auxiliary Components:
+辅助组件：
 
-The "auxiliary" components only require a Box Shape on their entity, but not a Terrain Layer Spawner, so they can span across multiple terrain regions instead of being tied to a single one. They _can_ still appear on an entity with a Terrain Layer Spawner, it just isn't required.
+辅助 “组件只需要在其实体上有一个 Box Shape ，而不需要Terrain Layer Spawner，因此它们可以跨越多个地形区域，而不是只与一个区域绑定。它们仍然可以出现在带有地形层生成器的实体上，只是不需要而已。
 
-| Component | Description |
+| 组件 | 说明 |
 | - | - |
-| **Terrain Macro Material** | Applies a terrain base color texture to all terrain regions that fall within its volume. Macro materials aren't directly attached to single terrain regions so that they can be authored and streamed at different world resolutions than the terrain regions. |
-| **Terrain Surface Materials List** | Defines the mapping between surface types and rendering materials. By keeping this separate from terrain regions, if the list of surface materials and type mappings are constant throughought the world, this can just be authored once with a box large enough to contain the world, instead of duplicated on each terrain region. |
-| **Terrain Physics Collider** / **PhysX Heightfield Collider** | Defines volumes that contains physics heightfield colliders. These have been separated from terrain regions so that they can easily be spawned and despawned at different sizes and times than the rest of the terrain data. |
+| **Terrain Macro Material** | 将地形基色纹理应用到其范围内的所有地形区域。宏材质不会直接附着在单个地形区域上，这样它们就能以与地形区域不同的世界分辨率进行创作和流式传输。 |
+| **Terrain Surface Materials List** | 定义表面类型和渲染材质之间的映射。通过将其与地形区域分开，如果整个世界的表面材质列表和类型映射都是不变的，那么只需在一个足够大的包含整个世界的框中编写一次即可，而无需在每个地形区域中重复编写。 |
+| **Terrain Physics Collider** / **PhysX Heightfield Collider** | 定义包含物理高场对撞机的体积。它们已从地形区域中分离出来，以便于以不同于其他地形数据的大小和时间生成和解散。 |

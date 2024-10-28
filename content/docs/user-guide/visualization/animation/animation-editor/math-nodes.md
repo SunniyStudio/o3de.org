@@ -50,53 +50,53 @@ O3DE 的**动画编辑器**具有一组数学节点，可对各种输入执行�
 1. 在右侧面板中，在**Rotation limits**的**Attributes**面板上，为 **X**, **Y**, 和 **Z** 输入**Min angle** 和 **Max angle** 的值。
 
     {{< note >}}
-**Min angle** 不能大于 **Max angle**。. If it does, the error is displayed in red and the value doesn't commit to the graph.
+**Min angle** 不能大于 **Max angle**。如果出现这种情况，则会以红色显示错误，并且该值不会提交到图表中。
 {{< /note >}}
 
-1. For **Twist axis**, select the **X**, **Y**, or **Z Axis**.
+1. 对于 **Twist axis**, 选择 **X**, **Y**, 或 **Z Axis**。
 
-   The **Twist axis** specifies which axis the **Rotation Limit** node is to decompose and apply edited constraints.
+   **Twist axis**指定**Rotation Limit**节点要分解和应用已编辑约束的轴。
 
 ![Rotation Limit attributes panel.](/images/user-guide/actor-animation/rotation-limit-properties.png)
 
-## Vector Decompose Nodes 
+## Vector Decompose 节点 
 
-Using **Vector Decompose** nodes, you can output one or more specific values of a vector.
+通过使用 **Vector Decompose** 节点，可以输出向量的一个或多个特定值。
 
-**Example**
-You have a 3D vector XYZ that indicates a position in a 3D world, but you only need its height (Z) for a computation. You would input your vector into a **Vector3Decompose** node and use only the Z output for your calculation.
+**示例**
+您有一个表示三维世界中某个位置的三维向量 XYZ，但您只需要它的高度（Z）来进行计算。您可以将矢量输入一个 **Vector3Decompose** 节点，然后只使用 Z 输出进行计算。
 
 ![Example of the Vector Decompose nodes in an animation graph.](/images/user-guide/actor-animation/vector-decompose.png)
 
-You don't need to use **Vector Decompose** nodes if you are simply adding or subtracting one of the X, Y, Z, or W positions. For typical **Vector3** to **Vector2** (and vice versa) conversion, or **Vector3** to **Vector4** (and vice versa) conversion, the **Animation Editor** automatically converts vectors in the following way:
-+ **Vector2** to **Vector3** - Adds the **Z** component set to `0`.
-+ **Vector3** to **Vector2** - Ignores the **Z** component from **Vector3**.
-+ **Vector3** to **Vector4** - Adds the **W** component set to `0`.
-+ **Vector4** to **Vector3** - Ignores the **W** component from **Vector4**.
+如果只是添加或减去 X、Y、Z 或 W 位置中的一个，则无需使用**Vector Decompose**节点。对于典型的 **Vector3** 到 **Vector2**（反之亦然）的转换，或 **Vector3** 到 **Vector4**（反之亦然）的转换，**动画编辑器**会按以下方式自动转换矢量：
++ **Vector2** to **Vector3** - 添加 **Z** 分量，设置为 `0`。
++ **Vector3** to **Vector2** - 忽略**Vector3**的**Z**分量。
++ **Vector3** to **Vector4** - 添加**W**分量，设置为 `0`。
++ **Vector4** to **Vector3** - 忽略**Vector4**的**W**分量。
 
-## Boolean Logic Node 
+## Boolean Logic 节点 
 
-Using the **Boolean Logic** node, you can apply a function to two boolean inputs. Boolean values are always `1` or `0` (true or false), such as a check box item. The **Boolean Logic** node sees any non-zero value as true \(`1`\) and any zero value as false \(`0`\). For example, values `0.54`, `10.43` or -`2.25` are all true \(`1`\). Only `0.0` values are false \(`0`\).
+使用**Boolean Logic**节点，您可以对两个布尔输入应用一个函数。布尔值总是 `1` 或 `0`（真或假），例如复选框项。布尔逻辑**节点将任何非零值视为真\(`1`\)，将任何零值视为假\(`0`\)。例如，值 `0.54`、`10.43` 或 -`2.25` 都是 true \(`1`\)。只有`0.0`的值是假的\(`0`\)。
 
-When choosing an output type, you can output from the **Float** output or the **Bool** output. The **Bool** output passes on a `0` or `1`. The **Float** output passes on a float value that you specify in the attributes.
+选择输出类型时，可以使用 **Float** 输出或 **Bool** 输出。**Bool**输出传递`0`或`1`。而 **Float** 输出则传递您在属性中指定的浮点数值。
 
 ![Example of a Boolean Logic node in an animation graph.](/images/user-guide/actor-animation/boolean-logic-node.png)
 
-### Boolean Logic Node Attributes 
+### Boolean Logic 节点属性 
 
 ![Boolean Logic node attributes pane.](/images/user-guide/actor-animation/boolean-logic-node-attributes.png)
 
-The **Boolean Logic** node features a set of attributes that performs operations on boolean values.
+**Boolean Logic** 节点具有一组属性，可对布尔值执行操作。
 
 
 ****
 
-| Attribute | Description |
+| 属性 | 说明 |
 | --- | --- |
-|  **Name**  |  Name of the node.  |
-|  **Logic Function**  |  You can set the following functions on boolean inputs:   |
-|  **Default Value**  |  Used as a second value when only one input value is specified.  |
-|  **Float Result When True**  |  Sets a float value to output when the result of the boolean function is true \(`1`\). You must also use the **Float** output connector to output this value.  |
-|  **Float Result When False**  |  Sets a float value to output when the result of the boolean function is false \(`0`\). You must also use the **Float** output connector to output this value.  |
+|  **Name**  |  节点的名称。  |
+|  **Logic Function**  |  您可以在布尔输入上设置以下功能：   |
+|  **Default Value**  |  当只指定一个输入值时，用作第二个值。  |
+|  **Float Result When True**  |  设置布尔函数结果为 true \(`1`\)时输出的浮点值。您还必须使用 **Float** 输出连接器来输出该值。  |
+|  **Float Result When False**  |  设置布尔函数结果为 false \(`0`\) 时输出的浮点值。您还必须使用 **Float** 输出连接器来输出该值。  |
 
 ![Example of the Boolean Logic nodes in an animation graph.](/images/user-guide/actor-animation/boolean-logic-node-attributes-1.png)

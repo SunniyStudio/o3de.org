@@ -1,15 +1,15 @@
 ---
-description: ' Learn more about the user interface for motion sets in the Animation Editor
+description: ' 进一步了解动画编辑器中动作场景的用户界面
   . '
-title: Motion Sets Interface
+title: Motion Sets 界面
 ---
 
-Use the **Motion Set** pane to create motion set files and add motion files to it.
+使用**Motion Sets**窗格创建动作集文件并向其中添加动作文件。
 
 ![Create and manage motion sets in the Animation Editor.](/images/user-guide/actor-animation/animation-editor-motion-set-user-interface.png)
 
-In the **Motion Sets** pane, you can do the following:
+在**Motion Sets**面板中，你可以完成以下事项：
 
-1. **Motion Sets Management** - Add, open, save, or delete motion sets.
+1. **Motion Sets Management** - 添加、打开、保存或删除动作集。
 
-1. **Motion Sets** - Add, open, or delete the motion files in the selected motion set.
+1. **Motion Sets** - 添加、打开或删除所选动作集中的动作文件。

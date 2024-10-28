@@ -1,176 +1,176 @@
 ---
-description: ' Use the Animation Editor quick start to animate a character in Open 3D Engine. '
-title: Getting Started with the Animation Editor
+description: ' 使用动画编辑器快速启动，在 Open 3D Engine 中为角色制作动画。 '
+title: 动画编辑器入门
 ---
 
-See the following procedures to get started with the **Animation Editor**.
+请参阅以下程序，开始使用 ** 动画编辑器**。
 
-In this procedure, you do the following:
-+ Import your actor file and create a motion set to specify the motions that you want for your character.
-+ Create a basic animation graph using nodes.
-+ Create a blend tree to combine the motions and use a slider to control character movement from idle to walking and then running.
+在此过程中，您需要执行以下操作：
++ 导入Actor文件并创建动作集，为角色指定所需的动作。
++ 使用节点创建基本动画图。
++ 创建一个混合树来组合动作，并使用滑块控制角色从空闲到行走再到奔跑的运动。
 
-## Step 1: Creating a Motion Set
+## 第 1 步: 创建一个动作集
 
-In the following procedure, you import your character, Jack the robot, select the motions that you want, and then add those motions to a motion set.
+在以下步骤中，您将导入角色、为机器人插孔、选择所需的动作，然后将这些动作添加到动作集中。
 
-**To create a motion set**
+**创建一个动作集**
 
-1. In O3DE Editor, choose **Tools**, **Animation Editor**.
+1. 在 O3DE 编辑器，选择 **Tools**, **Animation Editor**。
 
-1. In Animation Editor, choose **Layouts**, **AnimGraph**.
+1. 在动画编辑器中，选择 **Layouts**, **AnimGraph**。
 
-1. In the **Animation Editor**, choose **File**, **Open Actor** and navigate to the `AnimationSamples\Simple_JackLocomotion` directory.
+1. 在 **Animation Editor** 中，选择 **File**, **Open Actor** 并导航到 `AnimationSamples\Simple_JackLocomotion` 目录。
 
-1. Select the `JackBind_ZUp.fbx` file and then click **OK**.
+1. 选择 `JackBind_ZUp.fbx` 文件，然后点击 **OK**。
 
-   Your character Jack appears in the **Animation Editor**.
+   您的角色 Jack 将出现在**动画编辑器**中。
 
    ![Import the JackBind_ZUp.fbx file into the Animation Editor.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-jack-idle.png)
 
-1. On the **Motion Sets** tab, under **Motion Set Management**, click the **+** icon to add a motion set.
+1. 在 **Motion Sets** 标签页上，在 **Motion Set Management**下，点击 **+** 图标添加动作集。
 
-1. Select the **MotionSet0** node.
+1. 选择 **MotionSet0** 节点。
 
-1. In the **Motion Set** pane, click the folder icon to add motions.
+1. 在 **Motion Set** 面板中，点击文件夹图标添加动作。
 
-1. Navigate to the `AnimationSamples/Simple_JackLocomotion` directory, and select the following files:
+1. 导航到 `AnimationSamples/Simple_JackLocomotion` 目录。并选择以下文件：
    + `Jack_Idle_ZUp.fbx`
    + `Jack_Strafe_Run_Forwards_ZUp.fbx`
    + `Jack_Strafe_Walk_Forwards_ZUp.fbx`
 
-1. Click **OK**.
+1. 点击 **OK**。
 
-1. In the **Motion Set Management** pane, click the **Save** icon.
+1. 在**Motion Set Management**面板中，点击**Save**图标。
 
-1. Navigate to the `/SamplesProject/AnimationSamples/Simple_JackLocomotion` directory. For the file name, type **quickstart** and then click **Save** to save the `quickstart.motionset` file.
+1. 导航到`/SamplesProject/AnimationSamples/Simple_JackLocomotion`目录。对于文件名，输入**quickstart**，然后点击**Save** 保存 `quickstart.motionset` 文件。
 
 ![Create a motion set and add motion files in the Animation Editor.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-motion-set.png)
 
-## Step 2: Creating an Animation Graph
+## 第 2 步: 创建一个Animation Graph
 
-In the following procedure, create an animation graph and nodes.
+在以下步骤中，创建动画图形和节点。
 
-**To create an animation graph**
+**创建一个Animation Graph**
 
-1. On the **Anim Graph** tab, click the **+** icon to create an animation graph.
+1. 在**Anim Graph**标签页上，点击 **+** 图标创建一个Animation Graph。
 
-1. Click the **Save** icon.
+1. 点击 **Save** 图标。
 
-1. Navigate to the `/SamplesProject/AnimationSamples/Simple_JackLocomotion` directory. For the file name, enter **quickstart** and then click **Save** to save the `quickstart.animgraph` file.
+1. 导航到 `/SamplesProject/AnimationSamples/Simple_JackLocomotion` 目录。对于文件名，输入 **quickstart** ，然后点击 **Save** 保存 `quickstart.animgraph` 文件。
 
-1. On the **Anim Graph** tab, right-click the grid, and then select **Create Node**, **Sources**, **Motion**.
+1. 在 **Anim Graph** 标签页中，右击网格，然后选择 **Create Node**, **Sources**, **Motion**。
 
 ![Create a motion node in the animation graph.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-anim-graph-node.png)
 
-1. Select the **Motion0** node and in the **Attributes** pane, click **Select motions**. In the dialog box, select `Jack_Idle_ZUp.fbx` and then choose **OK**.
+1. 选择**Motion0**节点，在**Attributes**窗格中单击**Select motions**。在对话框中选择 “Jack_Idle_ZUp.fbx”，然后选择 “OK”。
 
-1. Right-click the grid and then choose **Create Node**, **Sources**, **Blend Tree**.
+1. 右键单击网格，然后选择**Create Node**、**Sources**、**Blend Tree**。
 
-1. From the **Motion0** node, click and drag a line to the **BlendTree0** node. A transition line with an arrow connects the nodes.
+1. 从 **Motion0** 节点，单击并拖动一条线到 **BlendTree0** 节点。一条带有箭头的过渡线将节点连接起来。
 
-1. From the **BlendTree0** node, click and drag a line to the **Motion0** node.
+1. 从 **BlendTree0** 节点，单击并拖动一条线到 **Motion0** 节点。
 
 ![Connect the motion and blend tree nodes in the animation graph.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-motion-blend-tree-nodes.png)
 
-1. In the **Parameters** pane, click the **+** icon to create a parameter.
+1. 在**Parameters**面板中，点击 **+** 图标创建一个参数。
 
-   1. Leave the **Value type** parameter to the default, **Float (slider)**.
+   1. 将 **Value type** 参数保留为默认值，**Float (slider)**。
 
-   1. For **Name**, rename `Parameter0` to **speed**.
+   1. 对于 **Name**，重命名 `Parameter0` 为 **speed**。
 
-   1. Click **Create**.
+   1. 点击 **Create**。
 
-1. In the animation graph, select the transition line that starts from the **Motion0** node and connects to the **BlendTree0** node.
+1. 在动画图表中，选择从**Motion0**节点连接到**BlendTree0**节点的过渡线。
 
-   1. In the **Attributes** pane, click **Add condition**.
+   1. 在**Attributes**面板中，点击**Add condition**。
 
-   1. In the **Select a Condition** dialog box, select **Parameter Condition** and then click **Add Condition**.
+   1. 在**Select a Condition**对话框中，选择**Parameter Condition**，然后点击**Add Condition**。
 
-   1. In the **Attributes** pane, under **Parameter Condition**, click **Select parameter** and select **speed**.
+   1. 在**Attributes**面板中，在 **Parameter Condition**下，点击 **Select parameter** 并选择 **speed**。
 
-   1. For **Test Function**, leave the default value of **param > testValue**. This means that if the speed is greater than zero, the idle motion transitions to the blend tree, and the character starts to move.
+   1. 对于 **Test Function**，保留**param > testValue**的默认值。这意味着，如果速度大于零，空闲运动就会过渡到混合树，角色就会开始移动。
 
    ![Add parameter conditions to specify when the character starts moving.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-add-condition.png)
 
-1. In the animation graph, select the transition line that starts from the **BlendTree0** node and connects to the **Motion0** node.
+1. 在动画图形中，选择从 **BlendTree0** 节点开始并连接到 **Motion0** 节点的过渡线。在动画图形中，选择从 **BlendTree0** 节点开始并连接到 **Motion0** 节点的过渡线。
 
-   1. In the **Attributes** pane, click **Add condition**.
+   1. 在**Attributes**窗格中，单击**Add condition**。
 
-   1. In the **Select a Condition** dialog box, select **Parameter Condition** and then click **Add Condition**.
+   1. 在**Select a Condition**对话框中，选择**Parameter Condition**，然后单击**Add Condition**。
 
-   1. In the **Attributes** pane, under **Parameter Condition**, click **Select parameter**. Select **speed** and then click **OK**.
+   1. 在**Attributes**窗格中，在**Parameter Condition**下，单击**Select parameter**。选择**speed**，然后单击**OK**。
 
-   1. For **Test Function**, select **param == testValue**. This means that if the speed is equal to zero, the motion transitions back to idle, and the character stops moving.
+   1. 在**Test Function**中，选择**param == testValue**。这意味着，如果速度等于零，运动将转回空闲状态，角色停止运动。
 
-   ![Add parameter conditions to specify when the character stops moving.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-add-condition-02.png)
+      ![Add parameter conditions to specify when the character stops moving.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-add-condition-02.png)
 
-## Step 3: Blending the Animations
+## 第 3 步: 混合动画
 
-In the following procedure, you use the blend tree node to build your blend tree, which blends the walk and run animations together.
+在以下步骤中，您将使用混合树节点构建混合树，将行走和运行动画混合在一起。
 
-**To blend the animations**
+**混合动画**
 
-1. In the animation graph, double-click the **BlendTree0** node.
+1. 在动画图形中，双击 **BlendTree0** 节点。
 
-1. Right-click the grid and choose **Create Node**, **Sources**, **Motion**.
+1. 右键单击网格并选择 **Create Node**、**Sources**、**Motion**。
 
-1. Select the **Motion1** node.
+1. 选择 **Motion1** 节点。
 
-   1. In the **Attributes** pane, choose **Select motions**.
+   1. 在 **Attributes** 面板，选择 **Select motions**。
 
-   1. In the **Motion Selection Window**, select `jack_strafe_walk_forwards_zup` and then click **OK**.
+   1. 在**Motion Selection Window**中，选择`jack_strafe_walk_forwards_zup`，然后点击 **OK**。
 
-      The attributes for the **Motion1** node should look like this:
+      **Motion1** 节点的属性应如下所示：
 
       ![Add the walk motion file to the Motion1 node.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-motion-node-walk.png)
 
-1. In the animation graph, right-click the grid and choose **Create Node**, **Sources**, **Motion**.
+1. 在动画图形中，右键单击网格，选择**Create Node**、**Sources**、**Motion**。
 
-1. Select the **Motion2** node.
+1. 选择 **Motion2** 节点。
 
-   1. In the **Attributes** pane, click **Select motions**.
+   1. 在**Attributes**面板中，点击**Select motions**。
 
-   1. In the dialog box, select `jack_strafe_run_forwards_zup` and then click **OK**.
+   1. 在对话框中，选择 `jack_strafe_run_forwards_zup` ，然后点击 **OK**。
 
-      The attributes for the **Motion2** node should look like this:
+      **Motion2** 节点的属性应如下所示：
 
       ![Add the run motion file to the Motion2 node.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-motion-node-run.png)
 
-1. Right-click the grid and choose **Create Node**, **Blending**, **Blend Two**.
+1. 右键单击网格，选择 **Create Node**、**Blending**、**Blend Two**。
 
-1. Select the **BlendTwo0** node.
+1. 选择 **BlendTwo0** 节点。
 
-   1. In the **Attributes** pane, for **Sync Mode**, select **Full Clip Based**.
+  1. 在**Attributes** 窗格中的**Sync Mode**，选择**Full Clip Based**。
 
-1. For **Motion1** node, select the **Output Pose** box and drag the connector to the **Pose 1** input of the **BlendTwo0** node.
+1. 对于 **Motion1** 节点，选择 **Output Pose** 框，然后将连接器拖到 **BlendTwo0** 节点的 **Pose 1** 输入端。
 
-1. For **Motion2** node, select the **Output Pose** box and drag the connector to the **Pose 2** input of the **BlendTwo0** node.
+1. 对于**Motion2**节点，选择**Output Pose**框并将连接器拖到**BlendTwo0**节点的**Pose 2**输入端。
 
-1. For the **BlendTwo0** node, select the **Output Pose** box and drag the connector to the **Input Pose** of the **FinalNode0** node.
+1. 对于 **BlendTwo0** 节点，选择 **Output Pose** 框，然后将连接器拖到 **FinalNode0** 节点的 **Input Pose** 上。
 
-   Your blend tree should look like the following:
+   您的混合树应该如下所示：
 
    ![Create your blend tree in the animation graph.](/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-blend-tree-node.png)
 
-1. Right-click the grid and choose **Create Node**, **Sources**, **Parameters**.
+1. 右键单击网格，选择 **Create Node**、**Sources**、**Parameters**。
 
-1. Right-click the grid and choose **Create Node**, **Math**, **Smoothing**.
+1. 右键单击网格并选择 **Create Node**，**Math**，**Smoothing**。
 
-1. For **Parameters0** node, select the **speed** output box and drag the connector to the **Dest** input box of the **Smoothing0** node.
+1. 对于 **Parameters0** 节点，选择 **speed** 输出框，并将连接器拖到 **Smoothing0** 节点的 **Dest** 输入框。
 
-1. For the **Smoothing0** node, select the **Result** output box and drag the connector to the **Weight** input box of the **BlendTwo0** node.
+1. 对于 **Smoothing0** 节点，选择 **Result** 输出框，并将连接器拖至 **BlendTwo0** 节点的 **Weight** 输入框。
 
-   Your blend tree should look like the following:
+   您的混合树应该如下所示：
 
    ![Create a blend tree for your animation graph.](/images/user-guide/actor-animation/animationeditorquickstart/animation-graph-quick-start-blend-tree-final.gif)
 
-1. In the **Animation Editor**, choose **File**, **Save All**. Then in the dialog box, click **OK**.
+1. 在**动画编辑器**中，选择**File**，**Save All**。然后在对话框中点击**OK**。
 
-1. Navigate to the `/SamplesProject/AnimationSamples/Simple_JackLocomotion` directory. For the file name, enter **quickstart** and then click **Save** to save the workspace.
+1. 导航至`/SamplesProject/AnimationSamples/Simple_JackLocomotion`目录。在文件名中输入 **quickstart**，然后单击**Save**保存工作区。
 
-1. In the **Anim Graph** tab, click the **Play** button. The character should now be animated in the idle mode.
+1. 在**Anim Graph**选项卡中，单击**Play**按钮。现在角色应在空闲模式下显示动画。
 
-1. In the **Parameters** pane, move the **speed** slide control to the right to make Jack walk. Move the slider further to the right to make Jack run.
+1. 在**Parameters**窗格中，将**speed**滑动控制向右移动，使杰克行走。再向右移动滑块，使杰克跑起来。
 
 {{< video src="/images/user-guide/actor-animation/animationeditorquickstart/animation-editor-quick-start-jack-running.mp4" info="Animate Jack the robot in the Animation Editor." autoplay="true" loop="true" width="300" >}}

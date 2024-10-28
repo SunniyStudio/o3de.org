@@ -1,31 +1,30 @@
 ---
-description: ' Use the Screen Fader node to fade the screen in and out in a Open 3D Engine
-  track view sequence. '
-title: Screen Fader Node
+description: ' 使用Screen Fader节点在 Open 3D 引擎轨道视图序列中淡入淡出屏幕。'
+title: Screen Fader 节点
 ---
 
-Use the **Screen Fader** node to fade the screen in and out in a scene.
 
-**To add a Screen Fader node in the Track View**
+使用**Screen Fader**节点在场景中淡入淡出屏幕。
 
-1. In the Track View, right-click the sequence (top node) or the **Director** node in the tree as applicable, and then choose **Add Screen Fader**.
+**在轨道视图中添加屏幕渐变器节点**
 
-1. Click the **Fader** key under the **ScreenFader** node.
+1. 在轨道视图中，右键单击序列（顶部节点）或树中的**Director**节点（如适用），然后选择 **dd Screen Fader**。
 
-1. Double-click to position the key on its highlighted row in the timeline.
+1. 单击 **ScreenFader** 节点下的 **Fader** 键。
 
-1. Double-click the green marker, and under **Key Properties**, enter a value for **Value**.
+1. 双击该键，将其定位在时间线上突出显示的行上。
+
+1. 双击绿色标记，并在**Key Properties**下输入**Value**。
 
 
 
+**Screen Fader节点关键属性**
 
-**Screen Fader Node Key Properties**
-
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-| Type | Specifies either FadeIn or FadeOut values. |
-| ChangeType |  For this transition type, you can specify one of the following:    |
-| Color | Specifies the RGB value used for fading. |
-| Duration | Specifies how long it takes to fade in or out the screen. |
-| Texture |  Specifies a texture file to use as a screen overlay. An alpha texture is commonly used for effects like dirt or blood. The texture is multiplied by the color value to allow you to animate the brightness during the fade.  |
-| Use Current Color | Ignores the Color property and uses the color of the previous key instead. |
+| Type | 指定 FadeIn 或 FadeOut 值。 |
+| ChangeType |  对于这种过渡类型，您可以指定以下其中一种：    |
+| Color | 指定用于渐变的 RGB 值。 |
+| Duration | 指定淡入或淡出屏幕的时间。 |
+| Texture |  指定用作屏幕叠加的纹理文件。Alpha 纹理通常用于制作污垢或血迹等效果。纹理将乘以颜色值，以便在渐变过程中对亮度进行动画处理。 |
+| Use Current Color | 忽略Color属性，使用前一个键的颜色。 |

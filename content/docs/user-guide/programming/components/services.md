@@ -36,7 +36,7 @@ static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& d
 
 **RequiredService** -- 指定组件所需的服务。在激活该组件之前，提供所需服务的组件必须保证存在并处于活动状态。例如，音频组件可能需要知道它的位置，因此需要一个`TransformService`。由于这一要求，音频组件只能添加到拥有提供 `TransformService` 的组件的实体中。
 
-**DependentService** -- 指定组件依赖但不需要的服务。组件实体系统保证，在组件本身被激活之前，提供依赖服务的组件已被激活。例如，音频组件可能依赖于 `physics`组件。如果实体具有物理特性，音频组件就可以向 `physics`组件查询物理材料信息。但是，音频组件并不要求物理材料存在。
+**DependentService** -- 指定组件依赖但不需要的服务。组件实体系统保证，在组件本身被激活之前，提供依赖服务的组件已被激活。例如，音频组件可能依赖于 `physics`组件。如果实体具有物理特性，音频组件就可以向 `physics`组件查询物理材质信息。但是，音频组件并不要求物理材质存在。
 
 **IncompatibleService** -- 指定不能与组件一起工作的服务。请参考这些示例：
 

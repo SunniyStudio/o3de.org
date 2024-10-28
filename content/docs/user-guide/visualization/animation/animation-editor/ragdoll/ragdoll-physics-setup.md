@@ -100,7 +100,7 @@ weight: 100
 
    ![Set the Offset, Rotation, Height, and Radius properties for the ragdoll collider on the Inspector tab in the Animation Editor](/images/user-guide/actor-animation/ragdoll-collider-options-offset-rotation-height-radius.png)
 
-您还可以在属性编辑器中设置其他属性，例如 [物理材料](/docs/user-guide/interactivity/physics/nvidia-physx/materials/) 和 [碰撞过滤](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/)。
+您还可以在属性编辑器中设置其他属性，例如 [物理材质](/docs/user-guide/interactivity/physics/nvidia-physx/materials/) 和 [碰撞过滤](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/)。
 
 **保存更改**
 

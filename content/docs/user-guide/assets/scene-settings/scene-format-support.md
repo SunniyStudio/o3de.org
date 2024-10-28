@@ -125,7 +125,7 @@ PhysX 碰撞体资产生成器可以从三角形网格、基元或凸壳生成�
 
 {{< feature-in-progress "glTF support" "https://github.com/o3de/o3de/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+gltf" "https://github.com/o3de/o3de/pulls?q=is%3Apr+is%3Aopen+in%3Atitle+gltf">}}
 
-glTF 是一种开源三维场景传输格式，在实时应用中越来越受欢迎。glTF 支持包含多个资产的完整 3D 场景，每个资产由多个网格、材料、骨骼、动画、顶点属性等组成。
+glTF 是一种开源三维场景传输格式，在实时应用中越来越受欢迎。glTF 支持包含多个资产的完整 3D 场景，每个资产由多个网格、材质、骨骼、动画、顶点属性等组成。
 
 glTF 源资产可以三种不同的方式存储：
 

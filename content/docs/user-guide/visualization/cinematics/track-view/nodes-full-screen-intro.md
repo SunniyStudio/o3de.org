@@ -1,13 +1,12 @@
 ---
-description: ' See the following full screen effect nodes in the <guilabel>Track View</guilabel> editor
-  in Open 3D Engine. '
-title: Full Screen Effect Nodes
+description: ' 请参阅 Open 3D Engine 中<guilabel>Track View</guilabel>编辑器中的以下全屏效果节点。 '
+title: Full Screen Effect 节点
 ---
 
-Full Screen Effect nodes create post-processing effects for a sequence. They are added by using the context menu for a Sequence or Director node.
+Full Screen Effect 节点为序列创建后期处理效果。这些效果可通过Sequence 或Director 节点的上下文菜单添加。
 
-**Topics**
-+ [Radial Blur Node](/docs/user-guide/visualization/cinematics/track-view/nodes-blur/)
-+ [Color Correction Node](/docs/user-guide/visualization/cinematics/track-view/nodes-color-correction/)
-+ [Adding a Depth of Field Node](/docs/user-guide/visualization/cinematics/track-view/nodes-dof/)
-+ [Screen Fader Node](/docs/user-guide/visualization/cinematics/track-view/nodes-screen-fader/)
+**主题**
++ [Radial Blur 节点](/docs/user-guide/visualization/cinematics/track-view/nodes-blur/)
++ [Color Correction 节点](/docs/user-guide/visualization/cinematics/track-view/nodes-color-correction/)
++ [添加Depth of Field 节点](/docs/user-guide/visualization/cinematics/track-view/nodes-dof/)
++ [Screen Fader 节点](/docs/user-guide/visualization/cinematics/track-view/nodes-screen-fader/)

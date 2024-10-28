@@ -7,57 +7,58 @@ title: Using Animation Curves
 
 打开**Curve Editor**
 
-1. Do one of the following:
-   + In the Track View, choose **View**, **Curve Editor**.
-   + In the **View** toolbar, choose the **Curve Editor** icon ![Curve editor button](/images/user-guide/cinematics/cinematics-curve-icon-track-view-editor.png).
+1. 完成以下之一：
+   + 在Track View中，选择 **View**, **Curve Editor**。
+   + 在 **View** 工具栏中，选择 **Curve Editor** 图标 ![Curve editor button](/images/user-guide/cinematics/cinematics-curve-icon-track-view-editor.png)。
 
-1. Select a keyframe in the timeline to view it in the **Curve Editor**.
+1. 在时间轴中选择一个关键帧，在**Curve Editor**中查看。
 
     {{< note >}}
-You can have the Track View and **Curve Editor** open simultaneously if you prefer to access both tools.
+如果您希望同时使用两个工具，可以同时打开Track View 和 **Curve Editor** 。
 {{< /note >}}
 
-A curve has the following three parts:
+曲线由以下三个部分组成
 
-1. Curve or spline.
+1. 曲线或样条线
 
-1. Keys on the curve/spline.
+1. 曲线或样条曲线上的关键键
 
-1. Tangent handles for the keys.
+1. 键的切线手柄
 
 ![Elements of a curve in Track View for the Curve Editor](/images/user-guide/cinematics/cinematics-track-view-editor-curves.png)
 
-**To edit elements in a curve**
+**编辑曲线中的元素**
 
-1. Select a key to see the associated tangent handles and then drag the boxes on the keys or the ends of the tangent handles (including unify tangents and automatic tangents) to manipulate them.
+1. 选择一个键，查看相关的切线手柄，然后拖动键上的方框或切线手柄的两端（包括统一切线和自动切线）进行操作。
 
-1. When moving keyframes, press and hold **Shift** to constrain the movement to time only.
+1. 移动关键帧时，按住**Shift**键可将移动限制在时间范围内。
 
-1. Press and hold **Alt** to scale the selected keyframes around the playhead location.
+1. 按住**Alt**可在播放头位置周围缩放选定的关键帧。
 
-The path of the curve represents the transition of the value between the keyframes. If the value changes in a straight line between each keyframe (linear), transitions between keyframes aren't smooth. The default curve causes the value to smoothly ease in and ease out. Each key has an in tangent and an out tangent. Depending on the preferred effect, you can use the toolbar icons to switch the tangents to auto, zero, step, or linear. You can also manually drag the tangent handles.
+曲线的路径表示关键帧之间数值的过渡。如果数值在每个关键帧之间呈直线变化（线性），关键帧之间的过渡就不平滑。默认曲线会使数值平滑地缓入缓出。每个关键帧都有一个输入切线和一个输出切线。根据喜欢的效果，可以使用工具栏图标将切线切换为自动、零、阶跃或线性。您还可以手动拖动切线手柄。
 
-By default, animation tracks are recorded with a smooth transition. You can use the buttons in the toolbar at the top of the **Curve Editor** to change how the curves behave on either side of the selected key. You can also drag spline keys to a different point in the timeline.
+默认情况下，动画轨迹以平滑过渡的方式录制。你可以使用**Curve Editor**顶部工具栏中的按钮来更改选定键两侧的曲线行为。您还可以将样条曲线键拖动到时间轴上的不同点。
 
-See the following tips for working in the **Curve Editor**:
-+ To zoom in or out, scroll the mouse wheel
-+ To pan the view, click and drag the middle mouse wheel
-+ To select multiple spline keys, click and drag to select the keys
+请参阅以下在**Curve Editor**中工作的提示：
++ 要放大或缩小，请滚动鼠标滚轮
++ 要平移视图，单击并拖动鼠标中间的滚轮
++ 要选择多个样条曲线键，请单击并拖动选择键
 
-**To adjust a spline key**
+**调整样条线关键帧**
 
-  1. In the **Node Pane**, select a track. The curves for that track appear in the **Curve Editor**.
+1. 在**Node Pane**中，选择一条轨道。该轨道的曲线将显示在**Curve Editor**中。
 
-  1. In the **Curve Editor**, select a spline key.
+1. 在**Curve Editor**中，选择一个样条键。
 
-  1. Do one of the following:
-     + Drag the spline key to a different point on the timeline.
-     + Use the toolbar buttons to select a preset: auto, zero, step, or linear.
+1. 执行以下操作之一：
+  + 将样条线键拖动到时间线上的不同点。
+  + 使用工具栏按钮选择预设：自动、零、阶跃或线性。
 
-**To edit multiple elements at once**
+**一次编辑多个元素** 
 
-  1. In the **Node** browser, select the parent track or sub-track.
+1. 在**Node**浏览器中，选择父轨道或子轨道。
 
-  1. Drag the spline key to a different point on the timeline.
+1. 将样条键拖动到时间轴上的不同点。
 
-  1. Use the toolbar buttons to select a preset: auto, zero, step, or linear.
+1. 使用工具栏按钮选择预设：自动、零、阶跃或线性。
+

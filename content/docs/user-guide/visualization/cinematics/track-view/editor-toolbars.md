@@ -1,25 +1,25 @@
 ---
-description: ' Create sequences for animations using the <guilabel>Track View</guilabel> editor''s toolbars
-  in Open 3D Engine. '
-title: Track View Editor Toolbars
+description: ' 使用 Open 3D Engine 中的 <guilabel>Track View</guilabel> 编辑器工具栏创建动画序列。 '
+title: Track View 编辑器工具栏
 ---
 
-See the following main sections of the Track View:
+请参见Track View的以下主要部分：
 
-1. **Main toolbar** - Tools to create and modify sequences and the tracks in a sequence. The main toolbar includes the **Sequence/Node**, **View**, **Play**, **Keys**, and **Tracks** toolbars. To add or remove toolbars, right-click the main toolbar and select your preferred options.
+1. **主工具栏** - 用于创建和修改序列以及序列中音轨的工具。主工具栏包括**Sequence/Node**, **View**, **Play**, **Keys**, 和 **Tracks**工具栏。要添加或删除工具栏，请右键单击主工具栏并选择您喜欢的选项。
 
-1. **Node browser** - Tree pane of all nodes and associated tracks. Nodes can be in reference to existing component entities or nodes that you can add to a sequence such as a **Director** Node.
+1. **节点浏览器** - 包含所有节点和相关轨道的树形窗格。节点可以是指现有的组件实体，也可以是您可以添加到序列中的节点，如**Director**节点。
 
-1. **Track Editor** - Track timeline of all node tracks specified for animation keys. Each row in the timeline corresponds to a track listed in the node browser.
+1. **轨道编辑器** - 为动画键指定的所有节点轨道的轨道时间轴。时间轴上的每一行都与节点浏览器中列出的轨道相对应。
 
-1. **Key properties** - Pane that shows more information for a selected animation key. It also provides information about the key number on the track and its location in the timeline, in seconds. Common properties are color (RGB) values and floats.
 
-1. ****Curve Editor**** - Pane for controlling keys and their interpolation for all sequence nodes. The ****Curve Editor**** provides more control over easing in or out of curves, setting some curves to be linear, and so on, depending on your animation requirements.
+1. **键属性** - 显示所选动画键更多信息的窗格。它还提供了轨道上的关键字编号及其在时间轴上的位置信息（以秒为单位）。常用属性包括颜色 (RGB) 值和浮点数。
 
-   For more information, see [Using Animation Curves](/docs/user-guide/visualization/cinematics/track-view/editor-animation-curves/).
+1. ****Curve Editor**** - 用于控制所有序列节点的键及其插值的窗格。****Curve Editor**** 可根据您的动画需求，对曲线的缓入缓出、将某些曲线设置为线性等提供更多控制。
+
+   更多信息，请参阅 [使用动画曲线](/docs/user-guide/visualization/cinematics/track-view/editor-animation-curves/)。
 
     {{< note >}}
-You can pause over buttons in the Track View to view their descriptions.
+您可以在Track View中暂停按钮，查看其说明。
 {{< /note >}}
 
 ![Track View toolbar.](/images/user-guide/cinematics/cinematics-trackview-editor.png)

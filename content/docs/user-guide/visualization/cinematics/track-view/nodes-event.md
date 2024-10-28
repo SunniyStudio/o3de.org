@@ -1,33 +1,32 @@
 ---
-description: ' Use the event node to trigger and send values to Script Canvas in
-  Open 3D Engine. '
-title: Event Node
+description: ' 使用Event节点触发并向 Open 3D Engine 中的 Script Canvas 发送值。 '
+title: Event 节点
 ---
 
-You can add an **Event** node to your sequence to trigger and send values to Script Canvas. You create **Track Events** using the **Track View Events** window. You then assign the **Track Event** to an animation key that is added to the track for the **Event** node. When the key is played during the sequence, the event is triggered. Script Canvas then uses the **Track Event** to trigger additional script logic.
+您可以在序列中添加**Event**节点，以触发并向 Script Canvas 发送值。您可以使用**Track View Events**窗口创建**Track Events**。然后将**Track Event**分配给一个动画键，该动画键已添加到**Event**节点的音轨中。当按键在序列中播放时，事件就会被触发。然后，Script Canvas 将使用***Track Event**来触发其他脚本逻辑。
 
-**To add an Event node**
+**添加Event节点**
 
-1. In the Track View, select or create a sequence.
+1. 在 Track View 中，选择或创建一个序列。
 
-1. In the node browser, right-click and choose **Add Event Node**.
+1. 在节点浏览器中，右键单击并选择**Add Event Node**。
 
-1. In the **Track Event Name** window, enter a name for the track and choose **OK**.
+1. 在**Track Event Name**窗口中，输入轨道名称，然后选择**OK**。
 
-   This creates a **Track Event** node and a **Track Event** track is automatically added to that node.
+   这样就创建了一个**Track Event**节点，并自动为该节点添加了一个**Track Event**音轨。
 
    ![Creating track event nodes in a sequence.](/images/user-guide/cinematics/cinematics-track-view-editor-track-event-nodes.png)
 
-**To create a Track Event**
+**创建Track Event**
 
-1. In the node browser, right-click and choose **Edit Events**. This opens the **Track View Events** window.
+1.  在节点浏览器中，右键单击并选择**Edit Events**。这将打开**Track View Events**窗口。 
 
     ![Creating a track event for a sequence.](/images/user-guide/cinematics/cinematics-track-view-editor-track-event-nodes-2.png)
 
-1. In the **Track View Events** window, click **Add** to create an event.
+1. 在 **Track View Events** 窗口中，点击 **Add** 创建一个事件。
 
-1. Enter an event name and choose **OK**. Your track event appears in the window.
+1. 输入事件名称并选择 **OK**。您的轨道事件就会出现在窗口中。
 
     ![Enter a name for a track event in your sequence.](/images/user-guide/cinematics/cinematics-track-view-editor-track-event-nodes-3.png)
 
-1. When you are done, close the window. You can now specify this track event in Script Canvas.
+1. 完成后，关闭窗口。现在，您可以在 Script Canvas 中指定此轨道事件。

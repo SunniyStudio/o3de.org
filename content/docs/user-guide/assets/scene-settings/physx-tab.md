@@ -27,7 +27,7 @@ toc: true
 | **Select Meshes** | 点击 {{< icon browse-edit-select-files.svg >}} **Selection list** 按钮可显示源资产文件中的网格列表。从列表中选择网格，将其包含在 PhysX 网格组中。所选网格可以是作为碰撞网格构建的，也可以是可见网格。所选网格将用于自动生成碰撞产品资产。源资产中以 `_phys` 后缀命名的网格会被自动选入默认的 PhysX 网格组。 |
 | **Export As** | 应用于该 PhysX 网格组的烹饪方法。此设置会显示所选烹饪方法的属性。有三个选项：`Triangle Mesh`, `Convex`, 和 `Primitive`三个选项，详见以下章节。 |
 | **Decompose Meshes** | 激活后，V-HACD 算法会将所选网格分割成多个凸形部分，这些部分共同近似于原始网格形状。每个部分都会使用上面配置的属性以凸碰撞体的形式输出。分解网格 "公开了**Decomposition Properties**，这些属性决定了如何将所选网格分解成凸形部分。 只有在**Export As**属性中选择`Convex` 或 `Primitive`时，**Decompose Meshes**才可用。更多信息和结果示例，请参阅 [GitHub 上的 V-HACD 库](https://github.com/kmammou/v-hacd)。 |
-| **Physics Materials** | A为所选网格中的每种材质关联物理材质。物理材料定义了表面的物理属性，如摩擦力。 |
+| **Physics Materials** | A为所选网格中的每种材质关联物理材质。物理材质定义了表面的物理属性，如摩擦力。 |
 
 ## Triangle mesh asset
 

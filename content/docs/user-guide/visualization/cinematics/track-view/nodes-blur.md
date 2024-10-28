@@ -1,29 +1,28 @@
 ---
-description: ' Add a Radial Blur node to blur the animation outward in a radial pattern
-  in Open 3D Engine''s <guilabel>Track View</guilabel> editor. '
+description: ' 在 Open 3D Engine 的<guilabel>Track View</guilabel>编辑器中添加Radial Blur节点，以径向模式向外模糊动画。 '
 title: Radial Blur Node
 ---
 
-You can use the **Radial Blur** node to blur the animation radially outward from a center point.
+你可以使用**Radial Blur**节点，从中心点向外径向模糊动画。
 
-**To add a Radial Blur node in the Track View**
+**在轨迹视图中添加Radial Blur节点**
 
-1. In the Track View, right-click the sequence (top node) or the **Director** node in the tree as applicable, and then choose **Add Radial Blur Node**.
+1. 在轨道视图中，右键单击序列（顶部节点）或树中的**Director**节点（如适用），然后选择**Add Radial Blur Node**。
 
-1. For each of the keys in the following list, click the applicable key listed under the **RadialBlur** node.
+1. 对于以下列表中的每个键，单击 **RadialBlur** 节点下列出的适用键。
 
-1. Double-click to position the key on its highlighted row in the timeline.
+1. 双击该键，将其定位在时间线中突出显示的行上。
 
-1.  Double-click the green marker, and under **Key Properties**, enter a value for **Value**.
-
-
+1.  双击绿色标记，并在**Key Properties**下输入**Value**。
 
 
-**Radial Blur Node Key Properties**
 
-| Property | Description |
+
+**Radial Blur 节点关键属性**
+
+| 属性 | 说明 |
 | --- | --- |
-| Amount | Intensity of the blur effect. Range is 0 to 1. |
-| ScreenPosX | X-axis position of the effect's center. The range is -1 to 1, with 0.5 being the center of the screen. |
-| ScreenPosY | Y-axis position of the effect's center. Range is -1 to 1, with 0.5 being the center of the screen. |
-| Blurring Radius | Size of the blur effect. The range is 0 (not visible) to 1 (covers the entire screen). |
+| Amount | 模糊效果的强度。范围是 0 到 1。 |
+| ScreenPosX | 效果中心的 X 轴位置。范围为-1 至 1，0.5 为屏幕中心。 |
+| ScreenPosY | 效果中心的 Y 轴位置。范围为-1 至 1，0.5 为屏幕中心。 |
+| Blurring Radius | 模糊效果的大小。范围从 0（不可见）到 1（覆盖整个屏幕）。 |

@@ -1,5 +1,5 @@
 ---
-title: "Camera Setup and Rigging"
+title: "Camera 设置和装配"
 date: 2021-03-02T00:23:55-05:00
 ---
 

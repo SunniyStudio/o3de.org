@@ -53,7 +53,7 @@ Reflection Probes反射探头
 
 
  Subsurface Scattering 次表面散射
- : 描述进入半透明物体的光线如何通过材质发生散射。次表面散射是在材料属性中实现的。   
+ : 描述进入半透明物体的光线如何通过材质发生散射。次表面散射是在材质属性中实现的。   
 
 关联: [Material System](/docs/atom-guide/dev-guide/materials)
 
@@ -81,7 +81,7 @@ Global Skylight (IBL) 全球天光 (IBL)
 
 
  Decal   
-: 投射到物体表面的非重复材料。贴花可用于涂抹各种独特的表面细节，包括油漆徽章、碎裂、污垢、锈迹等。
+: 投射到物体表面的非重复材质。贴花可用于涂抹各种独特的表面细节，包括油漆徽章、碎裂、污垢、锈迹等。
 
 *关联: [Decal component](/docs/user-guide/components/reference/atom/decal/), [Decal Feature Processor API](/docs/api/gems/Atom/class_a_z_1_1_render_1_1_decal_feature_processor_interface.html)*
 

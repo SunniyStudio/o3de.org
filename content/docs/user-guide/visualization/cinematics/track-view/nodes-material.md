@@ -1,56 +1,55 @@
 ---
-description: ' Use material nodes in O3DE Editor''s <guilabel>Track View</guilabel> editor to animate
-  commonly used material properties. '
-title: Material Node
+description: ' 在 O3DE 编辑器的<guilabel>Track View</guilabel>编辑器中使用材质节点，将常用的材质属性制成动画。 '
+title: Material 节点
 ---
 
-**Material** nodes help you animate commonly used material properties that you would normally set in the **Material Editor**. You can add **Material** nodes through a sequence or from the **Director** node.
+**Material**节点可帮助您将通常在**材质编辑器**中设置的常用材质属性制作成动画。您可以通过序列或**Director**节点添加**Material**节点。
 
 {{< note >}}
-The name of the **Material** node must be the full path of the material that you want to animate, as shown in the **Material Editor**.
+**Material**节点的名称必须是要制作动画的材质的完整路径，如**材质编辑器**所示。
 {{< /note >}}
 
-A recommended workflow is to select the material inside the **Material Editor** that you want to animate.
+推荐的工作流程是在**材质编辑器**中选择要制作动画的材质。
 
-**To add a Material node in the Track View**
+**在轨迹视图中添加材质节点**
 
-1. In O3DE Editor, choose **Tools**, **Material Editor**.
+1. 在 O3DE 编辑器中，选择**Tools**，**Material Editor**。
 
-1. Navigate to the material that you want to animate.
+1. 导航到要制作动画的材质。
 
-1. Right-click the selected material and choose **Copy Path to Clipboard**. If the material is in a material group, select the group and copy the group name to the clipboard.
+1. 右键单击选中的材质，然后选择**Copy Path to Clipboard**。如果材质在材质组中，请选择该组并将组名复制到剪贴板。
 
     ![Copy the material name path in the Material Editor.](/images/user-guide/cinematics/cinematics-track-view-nodes-material-4.png)
 
-1. Choose **Tools**, **Track View**.
+1. 选择**Tools**、**Track View**。
 
-1. Create or select an existing sequence or **Director** node that you want to contain the animation.
+1. 创建或选择要包含动画的现有序列或 **Director** 节点。
 
-1. In the node tree, right-click and choose **Add Material Node** and then in the **Material Name** dialog box, press **Ctrl+V** to paste the full path to the material that you copied in step 3 and then click **OK**.
+1. 在节点树中，右键单击并选择**Add Material Node**，然后在**Material Name**对话框中，按**Ctrl+V**粘贴在步骤 3 中复制的材质的完整路径，然后单击**OK**。
 
-1. If the material is in a material group, the text appears red on the **Material** node in the Track View. This means that a submaterial hasn't been selected.
+1. 如果该材质在材质组中，则文字会显示在轨迹视图的**Material**节点上，显示为红色。这意味着尚未选择子材质。
 
-   To add a submaterial, do the following:
+   要添加子材质，请执行以下操作：
 
-   1. In the Track View, right-click the **Material** node.
+   1. 在轨迹视图中，右键单击**Material**节点。
 
-   1. Select the submaterial that you want to animate.
+   1. 选择要制作动画的子材质。
 
-   1. The **Material** node text should no longer appear in red.
+   1. 材**Material** 节点文本应不再显示为红色。
 
-1. To add tracks to the **Material** node, right-click the node name and choose **Add Track**. See the following table for the available tracks.
+1. 要为**Material**节点添加轨道，请右键单击节点名称并选择**Add Track**。有关可用轨道，请参见下表。
 
 
-**Material Node Tracks**
-
-| Track | Key Property | Description |
+**Material 节点轨道**
+1
+| 轨道 | 关键属性 | 说明 |
 | --- | --- | --- |
-| Diffuse  | Color (RGB) |  RGB values to specify the base color of a material.  |
-| Emissive Color  | Color (RGB) |  RGB values to enable objects to emit light and be visible in the dark.  |
-| Emissive Intensity | Float (0.00 to 1.0) |  Float value that controls the brightness simulating light emitting from the surface that makes an object glow.  |
-| Emittance Map Gamma | Float (1.0 to 2.0) |  Float value that expands the lower range of the emittance map. This makes darker colors appear less bright.  |
-| Glossiness  | Float (0 to 255) | Acuity or sharpness of the specular reflection. Values of `10` or less create a scattered reflection. Values greater than `10` create a sharp reflection.  |
-| Indirect Color | Color (RBG) |  RGB values to specify that tints the bounce light from global illumination.  |
-| Opacity  | Float (0.00 to 1.0) | Degree of transparency. Values less than `50` fall more to the white end of the alpha channel map. Values greater than `50` fall more to the black end of the alpha channel map. |
-| SSSIndex  | Float (0.00 to 3.99) |  Controls subsurface scattering profile and amount.  For marble, specify a value between `0.01` to `0.99`.  For skin, specify a value between `1.00` to `1.99`.  |
-| Specular  | Color (RGB) |  Reflective brightness and color of a material when light shines on the object. The greater the value, the shinier the material.  To apply reflections in degrees of black and white, specify the same values for R, G, and B. For colored reflections, specify different values for each.  |
+| Diffuse  | Color (RGB) |  RGB 值，用于指定材质的基色。  |
+| Emissive Color  | Color (RGB) |  RGB 值可使物体发光并在黑暗中可见。  |
+| Emissive Intensity | Float (0.00 to 1.0) |  浮点数值，用于控制模拟物体表面发光的亮度。  |
+| Emittance Map Gamma | Float (1.0 to 2.0) |  浮点数值，用于扩展幅射图的下限范围。这会使较暗的颜色显得不那么明亮。  |
+| Glossiness  | Float (0 to 255) | 镜面反射的清晰度或锐利度。`10`或更小的值会产生散射反射。大于 `10`的值会产生锐利的反射。  |
+| Indirect Color | Color (RBG) |  RGB 值，用于指定全局照明反弹光线的色调。  |
+| Opacity  | Float (0.00 to 1.0) | 透明度。小于 `50`的值更偏向阿尔法通道图的白色端。大于 `50`的值更偏向阿尔法通道图的黑色一端。 |
+| SSSIndex  | Float (0.00 to 3.99) |  控制次表层散射轮廓和数量。 对于大理石，请指定一个介于 `0.01` 到 `0.99` 之间的值。 对于皮肤，请在`1.00` 到 `1.99`之间指定一个值。  |
+| Specular  | Color (RGB) |  当光线照射在物体上时，材质的反射亮度和颜色。数值越大，材质越闪亮。 要应用黑白反射，请为 R、G 和 B 指定相同的值。  |

@@ -6,20 +6,20 @@ weight: 650
 toc: true
 ---
 
-The **Vegetation Distribution Filter** component creates the look of random placement by limiting the amount of vegetation that the **Vegetation Layer Spawner** component produces.
+**Vegetation Distribution Filter** 组件通过限制**Vegetation Layer Spawner**组件生成的植被数量，来创建随机放置的外观。
 
-Before completing the following procedure, you must have the following:
-+ At least one asset defined in your vegetation layer.
-+ An entity that contains a gradient component. For instructions, see [Creating a Gradient Entity](./gradient-random).
+在完成以下步骤之前，您必须具备以下条件：
++ 植被层中至少定义了一个资产。
++ 一个包含渐变组件的实体。有关说明，请参阅 [创建渐变实体](./gradient-random).
 
-**To create random distribution**
+**创建随机分布**
 
-1. In the **Entity Outliner**, select the entity that contains the **Vegetation Layer Spawner** component.
+1. 在 **Entity Outliner** 中，选择包含 **Vegetation Layer Spawner** 组件的实体。
 
-1. In the **Entity Inspector**, click **Add Component** and select **Vegetation Distribution Filter**.
+1. 在 **Entity Inspector** 中，点击 **Add Component** 并选择 **Vegetation Distribution Filter**。
 
-1. In the **Vegetation Distribution Filter** component's properties, next to **Gradient Entity Id**, click the target button.
+1. 在 **Vegetation Distribution Filter** 组件的属性中，在 **Gradient Entity Id** 中，点击目标按钮。
 
-1. In the **Entity Outliner**, select the **Gradient** entity.
+1. 在 **Entity Outliner** 中，选择 **Gradient** 实体。
 
-1. (Optional) Adjust the values for **Threshold Min** and **Threshold Max** to specify how much of the gradient can appear in the vegetation.
+1. (可选) 调整**Threshold Min**和**Threshold Max**的值，以指定植被中可以出现多少渐变。 

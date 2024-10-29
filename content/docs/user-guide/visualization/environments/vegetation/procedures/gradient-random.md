@@ -1,21 +1,21 @@
 ---
-linkTitle: Using Gradients
-title: Using Gradients to Create Random Distribution
-description: Link gradient entities to vegetation entities to create random distribution in Open 3D Engine dynamic vegetation.
+linkTitle: 使用 Gradient
+title: 使用 Gradient 创建随机分布
+description: 将Gradient实体链接到植被实体，在 Open 3D Engine 动态植被中创建随机分布。
 weight: 600
 toc: true
 ---
 
-You can use gradients in different areas of O3DE, such as with audio and AI. Gradients are particularly helpful in dynamic vegetation, where they create a realistically random look in the distribution of your vegetation.
+您可以在 O3DE 的不同区域使用渐变，例如音频和人工智能。Gradient在动态植被中尤其有用，它可以在植被的分布中创建真实的随机外观。
 
-You can achieve the appearance of random distribution by using gradients to create both random selection and random placement.
+您可以通过使用渐变来创建随机选择和随机放置，从而实现随机分布的外观。
 
-Before you can complete these procedures, you must first [create a vegetation layer](./layer).
+在完成这些步骤之前，您必须先 [创建植被层](./layer)。
 
-Random selection means that the vegetation that is selected for each point on the grid is variable. Each asset's chance of being selected depends on the weight that is assigned to it. You create weight-based random selection using the **Vegetation Asset Weight Selector** component.
+随机选择意味着网格上每个点被选中的植被是可变的。每个植被被选中的几率取决于分配给它的权重。您可以使用**Vegetation Asset Weight Selector**组件创建基于权重的随机选择。
 
-Random placement means that some points on the grid have vegetation on them and some don't. The **Vegetation Distribution Filter** limits the amount of vegetation that the **Vegetation Layer Spawner** component produces.
+随机放置意味着网格上有些点有植被，有些点没有。**Vegetation Distribution Filter**会限制**Vegetation Layer Spawner**组件生成的植被数量。
 
-**Topics**
-+ [Creating Weight-Based Random Selection](./selection-random)
-+ [Random Placement Using the Vegetation Distribution Filter](./place-random)
+**主题**
++ [创建基于权重的随机选择](./selection-random)
++ [使用Vegetation Distribution Filter随机放置](./place-random)

@@ -1,43 +1,43 @@
 ---
-linkTitle: Concepts
-title: Dynamic vegetation concepts
-description: Learn about dynamic vegetation concepts and ideas in Open 3D Engine.
+linkTitle: 概念
+title: 动态植被概念
+description: 了解 Open 3D Engine 中的动态植被概念和想法。
 ---
 
-The dynamic vegetation system operates around the following ideas:
-+ **What** - To specify the type of vegetation that appears, you must have prebuilt vegetation assets, such as `.cgf` or `.fbx` files. If you don't have your own, you can use O3DE's vegetation assets, which are in the Starter Game project.
-+ **Where** - You can create small patches of flowers or populate a massive area with convincing varieties of plants and objects. To do this, use local area clusters in the foreground layer or coverage areas in the background layers, respectively.
+动态植被系统围绕以下理念运行：
++ **什么** - 要指定出现的植被类型，您必须有预制的植被资产，如`.cgf`或`.fbx`文件。如果您没有自己的植被资产，可以使用 O3DE 的植被资产，这些资产位于 “Starter Game”项目中。
++ **哪里** - 您可以创 您可以创建小片的花朵，也可以在大面积区域内填充各种植物和物体。为此，可分别使用前景图层中的局部区域集群或背景图层中的覆盖区域。建小片的花朵，也可以在大面积区域内填充各种植物和物体。为此，可分别使用前景图层中的局部区域集群或背景图层中的覆盖区域。
 
-  Using vegetation filters, you can set up rules that specify the surface angles, altitudes, distances from objects, and surface types where vegetation grows.
+  使用植被过滤器，您可以设置规则，指定植被生长的表面角度、高度、与物体的距离和表面类型。
 
-  Vegetation blockers block out areas of vegetation. For example, to create a border free of vegetation around a house, use a vegetation blocker that is slightly larger than the base of the house.
-+ **How** - Pairing vegetation modifiers with an appropriate gradient makes vegetation appear random in position, scale, rotation, and alignment to the slope. Gradients also customize how frequently each vegetation asset appears when you use multiple assets for one area.
-+ **If** - You can use surface tag emitters to tag certain types of surfaces, such as roads, rivers, oceans, and meshes. The dynamic vegetation system reads the tags to recognize these surfaces and acts on a set of rules that you create in the form of inclusion and exclusion lists. For example, to make water lilies to appear on all water surfaces, add the water volume surface tag to the inclusion list. To ensure that they never appear on roads, add the road surface tag to the exclusion list.
+  植被遮挡器可以遮挡植被区域。例如，要在房屋周围形成无植被的边界，可使用比房屋底座稍大的植被遮挡物。
++ **如何** - 将植被修改器与适当的梯度搭配，可使植被在位置、比例、旋转和与斜坡的对齐上显得随意。当您在一个区域使用多个植被资产时，梯度还可以自定义每个植被资产出现的频率。
++ **如果** - 您可以使用表面标签发射器来标记特定类型的表面，如道路、河流、海洋和网格。动态植被系统会读取标签来识别这些表面，并根据您以包含和排除列表的形式创建的一系列规则采取行动。例如，要让睡莲出现在所有水面上，可在包含列表中添加水量表面标签。要确保睡莲永远不会出现在道路上，可将路面标签添加到排除列表中。
 
-**Example**
-The following image shows grass excluded from the river and road surfaces, and pebble clusters included only on road surfaces.
+**示例**
+下图显示的是河面和路面不包括草地，路面只包括卵石群。
 
 ![Grass is excluded from the river and road surfaces, and pebble clusters appear only on road surfaces.](/images/user-guide/vegetation/dynamic/dynamic-vegetation-concepts-lilies.png)
 
-You can customize your vegetation in the following ways:
-+ Assign priorities to your vegetation areas. Priorities determine the order in which the vegetation system fills the areas.
-+ Use customizable gradients such as the **Perlin Noise Gradient** to mimic the types of vegetation groupings often found in nature.
-+ Save your customized vegetation areas as slices so that you can easily reuse them in other levels or share them with collaborators. Use slice overrides to make small or large changes to individual instances of the slice.
+您可以通过以下方式定制植被：
++ 为植被区域指定优先级。优先级决定植被系统填充区域的顺序。
++ 使用可定制的梯度（如**Perlin Noise Gradient**）来模仿自然界中常见的植被分组类型。
++ 将自定义的植被区域保存为切片，以便在其他关卡中重复使用或与合作者共享。使用切片重载功能，对切片的单个实例进行或大或小的更改。
 
-## Dynamic Vegetation Components
+## 动态植被组件
 
-The common workflow for creating a new vegetation area starts with creating an entity and adding a **Vegetation Layer Spawner** component to it. Then you add to that entity the two required components, which define the area's shape and the assets to display. From there, you can add optional components such as vegetation filters and modifiers.
+创建新植被区域的常见工作流程首先是创建一个实体，并为其添加一个**Vegetation Layer Spawner**组件。然后在该实体中添加两个必备组件，这两个组件定义了区域的形状和要显示的资产。在此基础上，您可以添加可选组件，如植被过滤器和修改器。
 
-Any other components that further modify the vegetation area, such as gradients, blockers, and blenders, must be contained on separate entities. These separate entities can be sibling or child entities of the entity that has the **Vegetation Layer Spawner** component.
+任何进一步修改植被区域的其他组件，如渐变、遮挡和混合器，都必须包含在单独的实体中。这些独立实体可以是具有**Vegetation Layer Spawner**组件的实体的同级实体或子实体。
 
-The following table summarizes the functions of dynamic vegetation components and the components that they typically interact with. The most commonly used components are at the top of the table. Components that appear in a category, such as vegetation filters, are referenced as such rather than individually named. The optional and incompatible columns aren't comprehensive of all components from every category, only those related to dynamic vegetation.
+下表概括了动态植被组件的功能以及通常与之交互的组件。最常用的组件位于表格顶部。出现在一个类别中的组件，如植被过滤器，将作为该类别而不是单独命名。可选和不兼容列并不包括每个类别的所有组件，只包括与动态植被相关的组件。
 
 
 ****
 
-| Primary Component Attached to an Entity | Description | Required Components | Optional Components | Incompatible Components |
+| 附加到实体的组件 | 说明 | 所需的组件 | 可选的组件 | 不兼容的组件 |
 | --- | --- | --- | --- | --- |
-| Vegetation Layer Spawner | Primary component for creating a vegetation area. Determines layer priority and filter stage. |  | | |
-| Gradients category (only one per entity) | Creates a gradient that other components such as the **Vegetation Distribution Filter** and the **Vegetation Asset Weight Selector** can reference. Provides a gradient that the referencing components use to distribute vegetation or other environmental ornaments. Gradient types include Perlin noise, white noise, image, and so on. | Some components in this category require another component. For example:  | You can add certain Gradient Modifier components alongside the Gradient component. | Certain Gradient Modifier components are incompatible. For a better workflow, add Gradient Modifier components to a separate entity and then reference the Gradient entity ID. |
-| Gradient Modifiers category (only one per entity) | Modifies a gradient. Reference the Gradient entity ID in the Gradient Modifiers component's properties. | Some components in this category require another component. For example:  | None | |
+| Vegetation Layer Spawner | 创建植被区域的主要组件。确定图层优先级和过滤阶段。 |  | | |
+| Gradients category (每个实体只能有一个) | 创建一个梯度，供**Vegetation Distribution Filter**和**Vegetation Asset Weight Selector**等其他组件参考。提供一个梯度，供引用组件用来分布植被或其他环境装饰物。梯度类型包括佩林噪声、白噪声、图像等。  | 该类别中的某些组件需要另一个组件。例如：  | 您可以在添加Gradient 组件的同时添加某些Gradient Modifier组件。 | 某些Gradient Modifier修改器组件不兼容。为了获得更好的工作流程，请将Gradient Modifier组件添加到单独的实体中，然后引用渐变实体 ID。 |
+| Gradient Modifiers category (每个实体只能有一个) | 修改渐变效果。在Gradient Modifiers组件的属性中引用渐变实体 ID。 | 该类别中的某些组件需要另一个组件。例如：  | None | |
 

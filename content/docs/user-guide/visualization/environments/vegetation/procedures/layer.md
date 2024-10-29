@@ -1,77 +1,77 @@
 ---
-linkTitle: Layers
-title: Creating a Vegetation Layer
-description: Create a basic vegetation layer in Open 3D Engine.
+linkTitle: 图层
+title: 创建植被图层
+description: 在 Open 3D Engine中创建一个基本植被层。
 weight: 100
 toc: true
 ---
 
-Creating a vegetation layer is the most basic step in creating your dynamic vegetation, however a few requirements must be met in order to spawn vegetation successfully.
+创建植被层是创建动态植被的最基本步骤，但要成功生成植被，必须满足一些要求。
 
 
-**Prerequisites**
+**先决条件**
 
-To spawn vegetation assets using a **Vegetation Layer Spawner** component, you must have a surface to plant on. You can establish a surface by doing any of the following:
+要使用**Vegetation Layer Spawner**组件生成植被资产，您必须有一个可以种植的表面。您可以通过以下方式建立一个表面：
 
-* Add a **Mesh Surface Tag Emitter** component to the *Ground* entity that exists as a part of the *Atom Default Environment* entity hierarchy that is included with each new level. (This technique is used in the example that follows.)
-* Add a **Mesh Surface Tag Emitter** component to any other entity that has a Mesh component.
-* Add a **Shape Surface Tag Emitter** component to an entity that has a Shape component.
-* Add [Terrain](/docs/user-guide/components/reference/terrain/layer_spawner) to the level.
+* 在 *Ground* 实体中添加一个 **Mesh Surface Tag Emitter** 组件，该组件作为 *Atom Default Environment* 实体层次结构的一部分存在，每个新层次都包含该组件。(在下面的示例中使用了这种技术）。
+* 在任何其他有网格组件的实体上添加一个**Mesh Surface Tag Emitter**组件。
+* 在有形状组件的实体上添加一个**Mesh Surface Tag Emitter**组件。
+* 在关卡中添加 [Terrain](/docs/user-guide/components/reference/terrain/layer_spawner)。
 
-You must also have vegetation assets that the **Vegetation Layer Spawner** can spawn. For the example that follows, we created a prefab named `DryGrassLarge.prefab` using the following steps:
+您还必须拥有**Vegetation Layer Spawner**可以生成的植被资产。在下面的示例中，我们使用以下步骤创建了一个名为`DryGrassLarge.prefab`的预制件：
 
-1. Create a new entity.
-2. Add a **Mesh** component.
-3. Assign a vegetation `.fbx` file to the **Mesh** component.
-4. Save the entity as a prefab.
+1. 创建一个新实体。
+2. 添加一个**Mesh**组件。
+3. 为**Mesh**组件分配一个植被`.fbx`文件。
+4. 将实体保存为Prefab。
 
-Now that the basic requirements for spawning vegetation are met, we can create our vegetation layer.
+现在，生成植被的基本要求已经满足，我们可以创建植被层了。
 
 
-**To create a vegetation layer**
+**创建植被层**
 
-1. Create an entity and name it.
+1. 创建一个实体并命名。
 
-    In this example, the entity is named *BasicCoverage*.
+   在本例中，实体名为 *BasicCoverage*。
 
     ![Create an entity and name it BasicCoverage.](/images/user-guide/vegetation/dynamic/create-vegetation-layer-basic-coverage.png)
 
-2. Add the **Vegetation Layer Spawner** component to your entity.
+2. 添加**Vegetation Layer Spawner** 组件到你的实体。
 
     ![Add the Vegetation Layer Spawner component to your entity.](/images/user-guide/vegetation/dynamic/create-vegetation-layer-layer-spawner.png)
 
-    The **Vegetation Layer Spawner** component is the core component that initializes the engine that spawns vegetation.
+    **Vegetation Layer Spawner** 组件是初始化生成植被的引擎的核心组件。
 
-3. Click **Add Required Component** and choose **Shape Reference**.
+3. 点击 **Add Required Component** 并选择 **Shape Reference**。
 
     ![Choose the Shape Reference for your Vegetation Layer Spawner.](/images/user-guide/vegetation/dynamic/create-vegetation-layer-add-shape.png)
 
-    The **Shape Reference** has no shape on its own. You must next create a child entity and add a **Shape component**, which you will reference in the **Shape Reference**.
+    **Shape Reference** 自身没有形状。接下来，您必须创建一个子实体，并添加一个**Shape组件**，您将在**Shape Reference**中引用该组件。 
 
-4. Right-click **BasicCoverage**, select **Create Entity**, and name it *TestBox*.
+4. 右击**BasicCoverage**，选择**Create Entity**，并命名为 *TestBox*。
 
-5. Select *TestBox*, click **Add Component**, and select the **Box Shape** component.
+5. 选择 *TestBox*, 点击 **Add Component**, 并选择 **Box Shape** 组件。
 
-6. Adjust the size and position of the shape so that it's large enough for your purposes and intersects with the ground.
+6. 调整形状的大小和位置，使其足够大，并与地面相交。
 
     ![Adjust your shape to cover a sufficient area and intersect with the ground.](/images/user-guide/vegetation/dynamic/create-vegetation-layer-adjust-shape.png)
 
-7. Select *BasicCoverage* and, in the **Shape Reference** component, click the {{< icon "picker.svg" >}} **entity picker** icon and select the *TestBox* entity.
+7. 选择 **BasicCoverage** 并在 **Shape Reference** 组件中，单击 {{< icon "picker.svg" >}} **实体选择器** 图标，然后选择 **TestBox** 实体。
 
-8. Click **Add Required Component** and choose **Vegetation Asset List**.
+8. 点击 **Add Required Component** 并选择 **Vegetation Asset List**。
 
-    The **Vegetation Asset List** component defines what to plant. This is where you specify vegetation assets.
+    **Vegetation Asset List** 组件定义要种植的植物。在这里您可以指定植被资产。
 
     ![On the Vegetation Layer Spawner, click Add Component and select Vegetation Asset List.](/images/user-guide/vegetation/dynamic/create-vegetation-layer-asset-list.png)
 
-9. In the **Vegetation Asset List** component, change the **Instance Spawner** type to Prefab, and then next to **Prefab Asset**, click the {{< icon "file-folder.svg" >}} **folder** icon to browse for your asset.
+9. 在 **Vegetation Asset List** 组件中，选择 **Instance Spawner** 类型为 Prefab，然后在 **Prefab Asset** 旁，点击 {{< icon "file-folder.svg" >}} **文件夹** 图标浏览找到你的资产。
 
     ![Click the Folder icon to select a Prefab Asset.](/images/user-guide/vegetation/dynamic/create-vegetation-layer-browse.png)
 
-10. In the **Pick a Prefab** window, enter *grass* into the search bar to filter the list of available prefabs. Select the `DryGrassLarge.prefab` asset in the results.
+10. 在**Pick a Prefab**窗口中，在搜索框中输入 **grass**，筛选可用的Prefab。在结果中选择 `DryGrassLarge.prefab` 资产。
 
      ![Use search to find a prefab asset.](/images/user-guide/vegetation/dynamic/create-vegetation-layer-asset-grass.png)
 
-     You should have a uniform grassy field with the grass in a grid formation.
+    你应该有一块均匀的草地，草地呈网格状。
 
      ![After selecting your grass asset, you have a grassy field with a grid-like appearance.](/images/user-guide/vegetation/dynamic/create-vegetation-layer-grass-grid.png)

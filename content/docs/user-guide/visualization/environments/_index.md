@@ -1,10 +1,10 @@
 ---
-title: "Environments"
+title: "环境"
 ---
 
-Create beautiful landscapes and vegetation throughout your world in **Open 3D Engine (O3DE)**.
+在**Open 3D Engine (O3DE)**中，在你的世界中创造美丽的风景和植被。
 
-| Topic | Description |
+| 主题 | 说明 |
 | :-- | :-- |
-| [Terrain](./terrain/) | Create terrain through a combination of proceduralism and authored content using the Terrain Gem. |
-| [Vegetation](./vegetation/) | Procedurally place vegetation using the Vegetation Gem. |
+| [地形](./terrain/) | 使用Terrain Gem，结合程序设计和自制内容创建地形。 |
+| [植被](./vegetation/) | 使用Vegetation Gem按程序放置植被。 |

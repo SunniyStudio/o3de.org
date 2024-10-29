@@ -1,22 +1,22 @@
 ---
-linkTitle: Procedures
-title: Dynamic vegetation procedures
-description: Learn the basic procedures to create realistic-looking dynamic vegetation in Open 3D Engine.
+linkTitle: 程序化
+title: 动态植被程序
+description: 学习在Open 3D Engine中创建逼真动态植被的基本程序。
 ---
 
-Creating realistic dynamic vegetation in O3DE starts with a few basic procedures that you can follow up with endless customizations.
+在 O3DE 中创建逼真的动态植被始于几个基本程序，您可以对其进行无尽的自定义。
 
-You can perform these procedures in the order that they appear, which presents a basic workflow. Or you can pick and choose the procedures that you need. The examples in these procedures use assets in the Starter Game project.
+您可以按照出现的顺序执行这些程序，这样就形成了一个基本的工作流程。或者，您也可以选择您需要的程序。这些程序中的示例使用了 Starter Game 项目中的资产。
 
-The following table summarizes each documented procedure, its purpose, and the components used.
+下表总结了每个记录的程序、其目的和使用的组件。
 
 
 ****
-
-| Procedure | Purpose | Components Used |
+1
+| 程序 | 目的 | 使用的组件 |
 | --- | --- | --- |
-| [Creating a Vegetation Layer](./layer) | The first basic step in creating dynamic vegetation. Establishes the size and shape of your vegetation area and adds vegetation assets. | Vegetation Layer Spawner, a Shape component, and Vegetation Asset List |
-| [Using Gradients to Create Random Distribution](./gradient-random) | Gradients can create a random, natural look in the selection and placement of your vegetation. You add a Gradient component to a separate entity and reference it from the Vegetation Layer Spawner entity. | On the **Gradient** entity: **Perlin Noise Gradient** and **Gradient Transform Modifier** On the **Vegetation Layer Spawner** entity: **Vegetation Asset Weight Selector** and **Vegetation Distribution Filter** |
-| [Adding Scale, Rotation, and Position Modifiers](./adding-modifiers) | Changes the look of your vegetation even more by adding scale, rotational, and positional variances. Uses the gradient that you created in the previous procedure. | Vegetation Rotation Modifier, Vegetation Scale Modifier, and Vegetation Position Modifier |
-| [Expanding Vegetation Coverage](./coverage) |  Expand your vegetation coverage to use in another area or to cover your entire level.  |  **Vegetation Reference Shape** or **Shape** component  |
-| [Blocking Vegetation in Select Areas](./blockers) |  Create a vegetation blocker to prevent vegetation from appearing in a specific area of your level.  |  **Vegetation Layer Blocker** and a **Shape** component  |
+| [创建植被图层](./layer) | 创建动态植被的第一步。确定植被区域的大小和形状，并添加植被资产。 | Vegetation Layer Spawner, 一个Shape component, 和 Vegetation Asset List |
+| [使用渐变创建随机分布](./gradient-random) | 渐变效果可以在选择和放置植被时创造出随机、自然的外观。您可以将 Gradient 组件添加到一个单独的实体中，并从Vegetation Layer Spawner实体中引用它。 | 在 **Gradient** 实体上: **Perlin Noise Gradient** 和 **Gradient Transform Modifier** 在 **Vegetation Layer Spawner** 实体上: **Vegetation Asset Weight Selector** 和 **Vegetation Distribution Filter** |
+| [添加缩放、旋转和位置修改器](./adding-modifiers) | 通过添加比例、旋转和位置变化，进一步改变植被的外观。使用您在上一步骤中创建的渐变效果。 | Vegetation Rotation Modifier, Vegetation Scale Modifier, 和 Vegetation Position Modifier |
+| [扩大植被覆盖范围](./coverage) |  扩大植被覆盖范围，用于其他区域或覆盖整个关卡。  |  **Vegetation Reference Shape** 或 **Shape** 组件  |
+| [在选择区域内阻挡植被](./blockers) |  创建植被阻挡器，防止植被出现在关卡的特定区域。  |  **Vegetation Layer Blocker** 和一个 **Shape** 组件  |

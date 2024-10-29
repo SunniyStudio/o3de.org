@@ -1,29 +1,29 @@
 ---
-linkTitle: Expanding Coverage
-title: Expanding Vegetation Coverage
-description: Expand your vegetation to cover your level in Open 3D Engine.
+linkTitle: 扩大覆盖范围
+title: 扩大植被覆盖范围
+description: 在 Open 3D Engine中扩展植被，覆盖整个关卡。
 weight: 200
 toc: true
 ---
 
-After you create a vegetation patch, you can expand it so that your vegetation covers the entire level.
+创建植被块后，您可以扩展它，使植被覆盖整个关卡。
 
-**To expand vegetation coverage**
+**扩大植被覆盖范围**
 
-1. Create an entity and name it *WorldBox*.
+1. 创建一个实体并将其命名为 *WorldBox*。
 
-1. Click **Add Component** and select the Box Shape component.
+1. 点击**Add Component**，选择 “方框形状 ”组件。
 
-1. In the **Box Shape** component, specify values for the x-, y-, and z-axes to match your level. For example, if you created a level with a texture dimension of 512 x 512, specify similar values such as `512.0`, `512.0`, and `64.0`.
+1. 在**Box Shape**组件中，指定 x 轴、y 轴和 z 轴的值以匹配您的关卡。例如，如果您创建了一个纹理尺寸为 512 x 512 的关卡，请指定类似的值，如 `512.0`、`512.0` 和 `64.0`。
 
     ![Create an entity to cover your level.](/images/user-guide/vegetation/dynamic/expanding-vegetation-coverage-1.png)
 
-1. Select the **BasicCoverage** entity.
+1. 选择 **BasicCoverage** 实体。
 
-1. On the **Shape Reference** component, for **Shape Entity Id**, select the **WorldBox** entity.
+1. 在 **Shape Reference** 组件上，对于 **Shape Entity Id**，选择 **WorldBox** 实体。
 
     ![Specify the WorldBox entity for the Shape Reference component.](/images/user-guide/vegetation/dynamic/expanding-vegetation-coverage-2.png)
 
-    **Example:** The vegetation appears for the entire level. As you move through the level, the vegetation dynamically appears.
+    **示例:** 植被会出现在整个关卡中。在关卡中移动时，植被会动态出现。
 
     ![Specify a world box entity so that vegetation appears for the entire level.](/images/user-guide/vegetation/dynamic/expanding-vegetation-coverage-3.png)

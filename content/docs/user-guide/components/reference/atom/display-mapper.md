@@ -1,19 +1,19 @@
 ---
-title: Display Mapper Component
+title: Display Mapper 组件
 linktitle: Display Mapper
-description: 'Open 3D Engine (O3DE) Display Mapper component reference.'
+description: 'Open 3D Engine (O3DE) Display Mapper组件参考。'
 toc: true
 ---
 
-The **Display Mapper** component provides settings to configure tone mapping and color grading.
+**Display Mapper**  组件提供了用于配置色调映射和调色的设置。
 
 
-## Provider ##
+## 提供方 ##
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Properties
+## 属性
 
 {{< todo issue=https://github.com/o3de/o3de.org/issues/717 >}}
 Add properties.

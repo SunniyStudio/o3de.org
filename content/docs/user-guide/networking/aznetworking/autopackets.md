@@ -1,66 +1,66 @@
 ---
-linktitle: Auto-packets
-title: Networking Auto-packets
-description: Learn how to define Open 3D Engine (O3DE) networking packets through auto-packets.
+linktitle: 自动数据包
+title: 网络自动数据包
+description: 了解如何通过自动数据包定义 Open 3D Engine (O3DE) 网络数据包。
 weight: 200
 ---
 
-*Auto-packets* provide a convenient way to define network packets used to communicate data between endpoints in an `AzNetworking` session. Using the [AzAutoGen](/docs/user-guide/programming/autogen) system, auto-packet files found inside of your project are processed during builds to create C++ classes and handlers for packets with defined payloads.
+**自动数据包**提供了一种定义网络数据包的便捷方法，用于在 `AzNetworking` 会话中在端点之间进行数据通信。通过使用 [AzAutoGen](/docs/user-guide/programming/autogen) 系统，在构建过程中会对项目中的自动数据包文件进行处理，从而为定义了有效载荷的数据包创建 C++ 类和处理程序。
 
-In order to enable auto-packet builds for your project, you must add AZ::AzNetworking as a build dependency of your project.
+要启用项目的自动数据包编译功能，必须将 AZ::AzNetworking 添加为项目的编译依赖项。
 
-## Auto-packet file structure
+## 自动数据包文件结构
 
-Auto-packets are defined in XML files, placed in the `Code\Source\Autogen` directory of the relevant project or Gem.
+自动数据包在 XML 文件中定义，放置在相关项目或 Gem 的 `Code\Source\Autogen` 目录中。
 
-### PacketGroup attributes
+### PacketGroup 属性
 
-The top-level element of an auto-packet definition is a `PacketGroup`. Packet groups associate different types of individual packet definitions together. Packets defined as part of a packet group are placed into the same namespace.
+自动数据包定义的顶级元素是`PacketGroup`。数据包组将不同类型的单个数据包定义联系在一起。作为数据包组一部分定义的数据包被置于同一命名空间。
 
-| Property | Description | Type |
+| 属性 | 说明 | 类型 |
 |---|---|---|
-| Name | The namespace for generated auto-packets. | A valid C++ namespace identifier. |
-| PacketStart | The value at which to start sequencing packet type identifiers for this packet group. To avoid conflicts with the core `AzNetworking` framework, use `CorePackets::PacketType::Max`. | `const int32` |
+| Name | 生成的自动数据包的命名空间。 | 一个有效的 C++ 命名空间标识符。 |
+| PacketStart | 对此数据包组的数据包类型标识符开始排序的值。为避免与核心 `AzNetworking` 框架冲突，请使用 `CorePackets::PacketType::Max`。  | `const int32` |
 
-### Packet attributes
+### Packet 属性
 
-The `Packet` tag defines a new packet.
+`Packet` 标签定义了一个新的数据包。
 
-| Property | Description | Type |
+| 属性 | 说明 | 类型 |
 |---|---|---|
-| Name | The class name of the generated auto-packet. | A valid C++ class identifier. |
-| Desc | The description of the generated auto-packet. | `string` |
-| HandshakePacket | If enabled, the packet is part of a connection handshake. | `bool` |
+| Name | 生成的自动数据包的类名。 | 一个有效的 C++ 类标识符。 |
+| Desc | 对生成的自动数据包的描述。 | `string` |
+| HandshakePacket | 如果启用，则数据包是连接握手的一部分。 | `bool` |
 
 {{< note >}}
-Packets with `HandshakePacket` set as true are processed only if the user-implemented `IsHandshakeComplete` function for the packet returns `false`.
+只有当用户为数据包执行的 `IsHandshakeComplete` 函数返回`false`时，才会处理将`HandshakePacket`设置为 true 的数据包。
 {{< /note >}}
 
-### Member attributes
+### Member 属性
 
-The `Member` tag defines data on the packet. This is the primary mechanism for defining a packet's payload.
+`Member` 标签定义数据包上的数据。这是定义数据包有效载荷的主要机制。
 
-| Property | Description | Type |
+| 属性 | 说明 | 类型 |
 |---|---|---|
-| Name | The name of the packet member. | A valid C++ variable name. |
-| Type | The type of the packet member. | A valid C++ type. |
-| Init | The initial value of the packet member. | `<Type>` |
-| Container | If provided, the member is a container of `<Type>`. | `Vector`, `Array`|
-| | **Vector**: A resizeable vector. |
-| | **Array**: A fixed size array. | |
-| Count | If Container is provided, the size of the container. | `uint` |
+| Name | 数据包成员的名称。 | 一个有效的 C++ 变量名。 |
+| Type | 数据包成员的类型。| 有效的 C++ 类型。 |
+| Init | 数据包成员的初始值。 | `<Type>` |
+| Container | 如果提供，则该成员是一个 `<Type>`. | `Vector`, `Array`|
+| | **Vector**: 可调整大小的vector。|
+| | **Array**: 大小固定的数组。| |
+| Count | 如果提供了容器，则指容器的大小。 | `uint` |
 
 ### Include
 
-AzAutoGen uses the `Include` tag to generate the `#includes` of the C++ code. Use an `Include` tag for each header used by the generated classes.
+AzAutoGen 使用 `Include`标记来生成 C++ 代码的`#includes`。为生成的类所使用的每个头文件使用一个 `Include` 标记。
 
-| Property | Description | Type |
+| 属性 | 说明 | 类型 |
 |---|---|---|
-| File | The path to a header to add as an `#include` of the generated source. | `string` |
+| File | 要添加到生成的源代码中作为 `#include` 的头文件的路径。 | `string` |
 
-### Example
+### 示例
 
-The following is an example of an [auto-packet group used for the Multiplayer Gem](https://github.com/o3de/o3de/blob/main/Gems/Multiplayer/Code/Source/AutoGen/Multiplayer.AutoPackets.xml).
+以下是用于Multiplayer Gem的[自动数据包组](https://github.com/o3de/o3de/blob/main/Gems/Multiplayer/Code/Source/AutoGen/Multiplayer.AutoPackets.xml)示例。
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -112,9 +112,9 @@ The following is an example of an [auto-packet group used for the Multiplayer Ge
 </PacketGroup>
 ```
 
-### Packet Handling
+### 数据包处理
 
-With the exception of CorePackets defined in AzNetworking, packets are handled via the IConnectionListener interface. Implementers of this interface typically define the following:
+除 AzNetworking 中定义的 CorePackets 外，数据包均通过 IConnectionListener 接口处理。该接口的实现者通常会定义以下内容：
 
 ```C++
     //! IConnectionListener interface
@@ -127,7 +127,7 @@ With the exception of CorePackets defined in AzNetworking, packets are handled v
     //! @}
 ```
 
-OnPacketReceived is of interest here as it will forward to your PacketGroup's dispatcher in the fashion of:
+这里值得注意的是 OnPacketReceived，因为它将按以下方式转发给 PacketGroup 的调度程序：
 
 ```C++
     AzNetworking::PacketDispatchResult MultiplayerSystemComponent::OnPacketReceived(AzNetworking::IConnection* connection, const IPacketHeader& packetHeader, ISerializer& serializer)
@@ -136,18 +136,18 @@ OnPacketReceived is of interest here as it will forward to your PacketGroup's di
     }
 ```
 
-The dispatcher expects the IConnectionListener implementer to implement an IsHandshakeComplete function and for each packet, a HandleRequest function. The above example of MultiplayerPackets is handled in [MultiplayerSystemComponent](https://github.com/o3de/o3de/blob/main/Gems/Multiplayer/Code/Source/MultiplayerSystemComponent.h).
+调度器希望 IConnectionListener 实现者实现一个 IsHandshakeComplete 函数，并为每个数据包实现一个 HandleRequest 函数。上面的 MultiplayerPackets 示例是在 [MultiplayerSystemComponent](https://github.com/o3de/o3de/blob/main/Gems/Multiplayer/Code/Source/MultiplayerSystemComponent.h) 中处理的。
 
 #### IsHandshakeComplete
 
-This function checks if handshake logic for the IConnectionListener is complete. This is useful for specifying any additional handshake logic beyond that in AzNetworking. For example, Multiplayer uses this to check with ISessionProvider before beginning to process gameplay traffic. While IsHandshakeComplete returns false, only packets designated as HandshakePackets will process. All other packet types will be skipped.
+该函数检查 IConnectionListener 的握手逻辑是否完成。这对于指定 AzNetworking 以外的任何额外握手逻辑非常有用。例如，Multiplayer 在开始处理游戏流量前会使用此函数与 ISessionProvider 进行检查。当 IsHandshakeComplete 返回 false 时，只有指定为 HandshakePackets 的数据包才会被处理。所有其他类型的数据包都将被跳过。
 
 #### HandleRequest
 
-HandleRequest defines a callback for each packet type.
+HandleRequest 定义了每种数据包类型的回调。
 
-| Property | Description | Type |
+| 属性 | 说明 | 类型 |
 |---|---|---|
-| connection | The connection the packet was sent on. | `AzNetworking::IConnection*` |
-| packetHeader | The header of the packet. | `const IPacketHeader&` |
-| packet | The packet itself as defined by AzCodeGen. | `<Type>`: Must be a valid packet type of the related packet group. |
+| connection | 数据包发送的连接。 | `AzNetworking::IConnection*` |
+| packetHeader | 数据包的报头。 | `const IPacketHeader&` |
+| packet | AzCodeGen 所定义的数据包本身。 | `<Type>`: 必须是相关数据包组的有效数据包类型。 |

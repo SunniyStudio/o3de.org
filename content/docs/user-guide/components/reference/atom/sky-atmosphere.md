@@ -19,7 +19,7 @@ The sky is rendered by sampling points on rays that start at the camera and inte
 
 ![sky-atmosphere-component-properties](/images/user-guide/components/reference/atom/sky-atmosphere/sky-atmosphere-component-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Origin** | The origin to use for the atmosphere.  When `Ground at world origin` (default) is selected, the bottom of the atmosphere - the ground - will be at the world origin, or `0,0,0`.  If `Ground at local origin` is used, then the bottom of the atmosphere will be at the world position of the Transform Component for the entity the Sky Atmosphere component is on.  Using `Ground at local origin` gives you an easy way to control the position of the bottom of the atmosphere.  One practical use for `Ground at local origin` is to move the ground position down so you have a more gradual gradient transition from surface to sky.  Try using `Ground at local origin` and moving the entity transform down by setting the `Z` value to `-100` to get a smoother transition. The `Planet center at local origin` setting makes the center of the planet for the atmosphere at the world position of the Transform component for the entity the Sky Atmosphere component is on.  The `Planet center at local origin` is useful when you want to have atmosphere for planets. | `Ground at world origin`,`Ground at local origin`, `Planet center at local origin`| `Ground at world origin` |
 | **Ground radius** | The ground radius for planet in kilometers. | `0.0 km` - `100000.0 km`  | `6360.0 km`  |

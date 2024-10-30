@@ -1,92 +1,92 @@
 ---
-title: Debug Rendering Component
+title: Debug Rendering 组件
 linktitle: Debug Rendering
-description: 'Use the Debug Rendering level component with Atom Renderer in Open 3D Engine (O3DE) '
+description: '在Open 3D Engine (O3DE)中使用 Atom 渲染器的Debug Rendering关卡组件  '
 toc: true
 ---
 
-The **Debug Rendering level component** is used to visualize rendering information about the scene, such as material properties like albedo and roughness or lighting factors like direct/indirect and diffuse/specular.
+**Debug Rendering 关卡组件** 用于可视化场景的渲染信息，如反照率和粗糙度等材质属性，或直接/间接、漫反射/镜面等照明因素。
 
 
-## Provider ##
+## 提供方 ##
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Properties
+## 属性
 
 {{< image-width "/images/user-guide/components/reference/atom/debug-rendering/debug-rendering-component.jpg" "500" "Debug Render Component" >}}
 
 
-## Base properties
+## Base 属性
 
-| Property | Description | Value | Default Value |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Enable Render Debugging** | If enabled, uses render debugging. If disabled, properties in this component have no effect. | Boolean | `Enabled` |
-| **Debug View Mode** | Specifies what debug information to display in the Viewport. For metallic materials, the `Base Color` displays the color that's used for metal reflectance, and `Albedo` displays black because there's no diffuse reflection. | `None`,  `Base Color`, `Albedo`, `Roughness`, `Metallic`, `Normal`, `Tangent`, `Bitangent`, `CascadeShadows` | `None` |
+| **Enable Render Debugging** | 如果启用，则使用渲染调试。如果禁用，该组件中的属性将不起作用。 | Boolean | `Enabled` |
+| **Debug View Mode** | 指定在视口中显示的调试信息。对于金属材料，`Base Color`显示用于金属反射的颜色，`Albedo`显示黑色，因为没有漫反射。 | `None`,  `Base Color`, `Albedo`, `Roughness`, `Metallic`, `Normal`, `Tangent`, `Bitangent`, `CascadeShadows` | `None` |
 
 
-## Lighting properties
+## Lighting 属性
 
-It can be difficult to judge whether normals on objects are correct by only outputting them as color to the screen. The **Lighting Source** property `Debug Light` option disables all lighting in the scene except for a single directional light that doesn't cast shadows. You can use and rotate this light to carefully inspect the normals and other material properties of an object in the scene.
+如果只将物体的法线以颜色的形式输出到屏幕上，就很难判断物体的法线是否正确。**Lighting Source**属性中的 `Debug Light` 选项会关闭场景中的所有照明，只有一束不会投射阴影的定向光除外。您可以使用和旋转这束光来仔细检查场景中物体的法线和其他材质属性。
 
-| Property | Description | Value | Default Value |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Lighting Type** | Whether to display diffuse lighting, specular lighting, or both. | `Diffuse + Specular`, `Diffuse`, `Specular` | `Diffuse + Specular` |
-| **Lighting Source** | Choose to display the level lights ( `Direct + Indirect`), isolated contributions of the level lights (`Direct` or `Indirect`), or disable the level lights and display a debug directional light that doesn't cast shadows (`Debug Light`). The debug directional light can be configured with the **Debug Light-** properties below. | `Direct + Indirect`, `Direct`, `Indirect`, `Debug Light` | `Direct + Indirect` |
-| **Debug Light Azimuth** | Sets the azimuth of the light by rotating the light around the Z axis. The rotation value is in degrees. | -360.0 to 360.0 | `0.0` |
-| **Debug Light Elevation** | Sets the elevation of the light by rotating the light around the X axis. The rotation value is in degrees. Positive values aim the light downward. Negative values aim the light upward. | -90.0 to 90.0 | `60.0` |
-| **Debug Light Color** | The color of the debug directional light. | Color | (`255`, `255`, `255`) |
-| **Debug Light Intensity** | The intensity of the debug directional light. | 0.0 - 25.0 | `2.0` |
+| **Lighting Type** | 是显示漫反射照明、镜面反射照明，还是两者兼而有之。 | `Diffuse + Specular`, `Diffuse`, `Specular` | `Diffuse + Specular` |
+| **Lighting Source** | 您可以选择显示水平仪灯光（`Direct + Indirect`）、隔离水平仪灯光的贡献（`Direct` 或 `Indirect`），或者禁用水平仪灯光并显示不投射阴影的调试方向灯（`Debug Light`）。调试方向灯可以通过下面的 **Debug Light-** 属性进行配置。  | `Direct + Indirect`, `Direct`, `Indirect`, `Debug Light` | `Direct + Indirect` |
+| **Debug Light Azimuth** | 通过围绕 Z 轴旋转灯光来设置灯光的方位角。旋转值单位为度。 | -360.0 to 360.0 | `0.0` |
+| **Debug Light Elevation** | 通过围绕 X 轴旋转灯光来设置灯光的仰角。旋转值单位为度。正值使灯光向下。负值则使灯光向上。 | -90.0 to 90.0 | `60.0` |
+| **Debug Light Color** | 调试方向灯的颜色。 | Color | (`255`, `255`, `255`) |
+| **Debug Light Intensity** | 调试方向灯的强度。 | 0.0 - 25.0 | `2.0` |
 
 
-## Material Override properties
+## Material Override 属性
 
-The Debug Render component allows you to override material values for all materials in the scene. These extra options can help you visualize and debug lighting and materials. For example, to get a better sense of the lighting in the scene, you may override the color of all objects to white or grey.
+ebug Render组件允许您覆盖场景中所有材质的材质值。这些额外的选项可以帮助您可视化和调试光照和材质。例如，为了更好地了解场景中的光照情况，您可以将所有物体的颜色覆盖为白色或灰色。
 
-**Base Color**, **Roughness**, and **Metallic** values can be overriden. **Normal Maps** and **Detail Normal Maps** can be enabled or disabled, but cannot be overridden. If both are disabled, then materials in the scene use only vertex normals.
+可以覆盖**Base Color**, **Roughness**, 和 **Metallic**值。可以启用或禁用**Normal Maps**和**Detail Normal Maps**，但不能覆盖。如果两者都禁用，那么场景中的材质将只使用顶点法线。
 
-| Property | Description | Value | Default Value |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Override Base Color** | If enabled, overrides the base color for all materials in the scene to the value specified below. | Boolean | Disabled |
-| **Base Color Value** | The value used to override the base color on all materials in the scene. For example, set this to red to see your scene entirely red. | Eight bits per channel color: 0-255 | (`128`, `128`, `128`) |
-| **Override Roughness** | If enabled, overrides the roughness for all materials in the scene to the value specified below. | Boolean | Disabled |
-| **Roughness Value** | The value used to override roughness on all materials in the scene. For example, set this to `0.0` if you want to visualize a very glossy and reflective scene. | 0.0 - 1.0 | `1.0` |
-| **Override Metallic** | If enabled, overrides the metallic property for all materials in the scene to the value specified below. | Boolean | Disabled |
-| **Metallic Value** | The value used to override metallic on all materials in the scene. For example, you can set this to `1.0` to make all materials in your scene into metals. | 0.0 - 1.0 | `0.0` |
-| **Enable Normal Maps** | If enabled, activates normal maps on all materials in the scene. If disabled, it also disables detail normal maps, and thus only the vertex normal is used in shading calculations. | Boolean | Enabled |
-| **Enable Detail Normal Maps** | If enabled, activates detail normal maps on all materials in the scene. Materials that don't provide or support detail normal maps are unaffected by this option. Detail normal maps are deactivated if **Enable Normal Maps** is disabled. | Boolean | Enabled |
+| **Override Base Color** | 如果启用，会将场景中所有材质的基色覆盖为下面指定的值。 | Boolean | Disabled |
+| **Base Color Value** | 用于覆盖场景中所有材质基色的值。例如，将其设置为红色，场景就会完全变成红色。 | 每个通道八位色彩: 0-255 | (`128`, `128`, `128`) |
+| **Override Roughness** | 如果启用，会将场景中所有材质的粗糙度覆盖为下面指定的值。 | Boolean | Disabled |
+| **Roughness Value** | 用于覆盖场景中所有材质粗糙度的值。例如，如果您想使场景变得非常光滑和反光，请将其设置为 `0.0`。 | 0.0 - 1.0 | `1.0` |
+| **Override Metallic** | 如果启用，会将场景中所有材质的金属属性覆盖为下面指定的值。 | Boolean | Disabled |
+| **Metallic Value** | 用于覆盖场景中所有材质的金属效果的值。例如，您可以将其设置为 `1.0`，使场景中的所有材质都变成金属。 | 0.0 - 1.0 | `0.0` |
+| **Enable Normal Maps** | 如果启用，会激活场景中所有材质的法线贴图。如果禁用，它也会禁用细节法线贴图，因此在着色计算中只使用顶点法线。 | Boolean | Enabled |
+| **Enable Detail Normal Maps** | 如果启用，将激活场景中所有材质的细节法线贴图。不提供或不支持细节法线贴图的材质不受此选项影响。如果禁用了**Enable Normal Maps**，细节法线贴图将被停用。 | Boolean | Enabled |
 
 
-## Custom Debug properties
+## Custom Debug 属性
 
-When debugging shaders, it can be useful to have immediate access to tweakable values. The Debug Render component provides access to four _debug booleans_ and four _debug floats_. These values are passed into the Scene Shader Resource Group (SRG) and are accessible from any shader that includes `SceneSRG`. For more information on SRGs, see [Shader Resource Groups](/docs/atom-guide/dev-guide/shaders/azsl/#shader-resource-groups).
+在调试着色器时，立即访问可调整的值可能非常有用。调试渲染组件提供了对四个**调试布尔值**和四个**调试浮点值**的访问。这些值被传递到场景着色器资源组（SRG）中，任何包含 `SceneSRG` 的着色器都可以访问这些值。有关 SRG 的更多信息，请参阅[Shader Resource Groups](/docs/atom-guide/dev-guide/shaders/azsl/#shader-resource-groups)。
 
-The custom debug float and boolean properties are exposed to shaders via the [SceneSrg.azsli](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/ShaderResourceGroups/SceneSrg.azsli) and [Debug.azsli](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/ShaderLib/Atom/Features/Debug.azsli) files.
+自定义调试浮点和布尔属性通过[SceneSrg.azsli](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/ShaderResourceGroups/SceneSrg.azsli) 和 [Debug.azsli](https://github.com/o3de/o3de/blob/development/Gems/Atom/Feature/Common/Assets/ShaderLib/Atom/Features/Debug.azsli)文件暴露给着色器。
 
 {{< important >}}
-These variables are only meant to help you debug your shaders locally. For best practice, when you are done debugging, we recommend that you delete any usage of these variables. It's especially important to delete them if you are contributing shader code either to the source repo or your team's own repo. If you don't, another shader author may experience unwanted side effects when using the same variables.
+这些变量仅用于帮助您在本地调试着色器。出于最佳实践的考虑，当你完成调试后，我们建议你删除对这些变量的任何使用。如果你正在向源代码库或你团队自己的代码库贡献着色器代码，删除这些变量尤为重要。否则，其他着色器作者在使用相同变量时可能会遇到不必要的副作用。
 {{< /important >}}
 
 
-## Examples
+## 示例
 
-Example with **Debug View Mode** set to `Albedo`:
+**Debug View Mode** 设置为 `Albedo`的示例:
 
 {{< image-width "/images/user-guide/components/reference/atom/debug-rendering/albedo.jpg" "1500" "Screeshot with Debug View Mode set to Albedo" >}}
 
 
-Example of debug lighting, with **Lighting Type** set to `Diffuse` and **Lighting Source** set to `Indirect`:
+调试光照的示例。通过将 **Lighting Type** 设置为 `Diffuse` 和 **Lighting Source** 设置为`Indirect`:
 
 {{< image-width "/images/user-guide/components/reference/atom/debug-rendering/indirect-diffuse.jpg" "1500" "Screeshot with Lighting Type set to Diffuse and Lighting Source set to Indirect" >}}
 
 
-Example of debug lighting:
+调试光照的示例：
 
 {{< image-width "/images/user-guide/components/reference/atom/debug-rendering/debug-light.jpg" "1500" "Screenshot using the Debug Light" >}}
 
 
-Example of debug materials, with **Override Base Color** set to grey (`128`, `128`, `128`):
+调试材质的示例，将 **Override Base Color** 设置为灰色 (`128`, `128`, `128`):
 
 {{< image-width "/images/user-guide/components/reference/atom/debug-rendering/color-override.jpg" "1500" "Screenshot overriding the base color in the scene to grey" >}}
 

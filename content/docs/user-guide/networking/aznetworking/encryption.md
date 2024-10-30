@@ -1,40 +1,40 @@
 ---
-linktitle: UDP Encryption
-title: UDP with Datagram Transport Layer Security (DTLS)
-description: Learn about the encryption capabilities of the Open 3D Engine (O3DE) `AzNetworking` framework and how to use them in your project.
+linktitle: UDP 加密
+title: 带数据报传输层安全（DTLS）的 UDP
+description: 了解Open 3D Engine (O3DE) `AzNetworking` 框架的加密功能以及如何在您的项目中使用这些功能。
 weight: 300
 ---
 
-To provide encryption to secure UDP packets, **Open 3D Engine (O3DE)** uses [OpenSSL](https://www.openssl.org/) to implement *Datagram Transport Layer Security (DTLS)*. The O3DE `AzNetworking` framework provides the [DtlsSocket](/docs/api/frameworks/aznetworking/class_az_networking_1_1_dtls_socket.html) and [DtlsEndpoint](/docs/api/frameworks/aznetworking/class_az_networking_1_1_dtls_endpoint.html) classes to enable DTLS over UDP. When encryption is enabled and configured in the O3DE networking system, the transport layer automatically uses `DtlsSocket` objects rather than `UdpSocket`. The role of `DtlsEndpoint` is to capture the connection target and handle SSL operations.
+为了提供加密以确保 UDP 数据包的安全，**Open 3D Engine (O3DE)** 使用  [OpenSSL](https://www.openssl.org/) 来实现*数据报传输层安全 (DTLS)*。O3DE 的`AzNetworking` 框架提供了[DtlsSocket](/docs/api/frameworks/aznetworking/class_az_networking_1_1_dtls_socket.html) 和 [DtlsEndpoint](/docs/api/frameworks/aznetworking/class_az_networking_1_1_dtls_endpoint.html)类，用于在 UDP 上启用 DTLS。在 O3DE 网络系统中启用和配置加密后，传输层会自动使用 `DtlsSocket` 对象，而不是 `UdpSocket`。`DtlsEndpoint` 的作用是捕获连接目标并处理 SSL 操作。
 
-## Handshake
+## 握手
 
-One reason to be wary of using DTLS is that the handshake process for establishing a connection is an expensive operation. The following image[^1] shows the process by which the client and server negotiate before data transmission.
+谨慎使用 DTLS 的一个原因是，建立连接的握手过程是一项昂贵的操作。下图[^1]显示了客户端和服务器在数据传输前进行协商的过程。
 
 ![DTLS handshake diagram. 'Hello' is exchanged and verified, certificates are sent to the client, the server verifies the request, the server establishes the cipher, and data transmission begins.](/images/user-guide/networking/dtls-handshake.png)
 
-The O3DE Network Transport Layer takes the approach of simply repeating the handshake process until the underlying OpenSSL library says that the connection is established. By using this approach, O3DE can enable and store cookies without having to any additional configuration past the handshake.
+O3DE 网络传输层采用的方法是简单地重复握手过程，直到底层 OpenSSL 库表示连接已建立。通过使用这种方法，O3DE 可以启用和存储 cookie，而无需在握手后进行任何额外配置。
 
-The packet types used to complete the handshake operation are:
+用于完成握手操作的数据包类型有
 
-* `InitiateConnectionPacket` - Signals intent to perform the unencrypted connection. After the connection is established, sends the request to enable SSL, initiating the DTLS handshake.
-* `ConnectionHandshakePacket` - Transmits handshake data from the underlying OpenSSL handshake calls.
-* `FragmentedPacket` - Fragmented packets used by `ConnectionHandshakePacket` to allow the SSL data exchanged in handshake to exceed MTU.
+* `InitiateConnectionPacket` - 发出执行未加密连接的信号。建立连接后，发送启用 SSL 的请求，启动 DTLS 握手。
+* `ConnectionHandshakePacket` - 从底层 OpenSSL 握手调用中传输握手数据。
+* `FragmentedPacket` - 由 `ConnectionHandshakePacket` 使用的碎片包，允许握手过程中交换的 SSL 数据超出 MTU。
 
-To ensure only these types transmit, all other packets are queued to be sent after authentication. This occurs prior to any packet fragmentation so the only `FragmentedPackets` generated are of `ConnectionHandshakePacket`.
+为确保只传输这些类型的数据包，所有其他数据包都会在验证后排队发送。这发生在任何数据包分片之前，因此生成的唯一`FragmentedPackets`是`ConnectionHandshakePacket`。
 
 {{< note >}}
-These classes have no API reference as they're generated during the Open 3D Engine build by [AzAutoGen](/docs/user-guide/programming/autogen/) from the contents of `Code/Framework/AzNetworking/AzNetworking/AutoGen`.
+这些类没有 API 引用，因为它们是在[AzAutoGen](/docs/user-guide/programming/autogen/)的 `Code/Framework/AzNetworking/AzNetworking/AutoGen`内容中生成的。
 {{< /note >}}
 
-Once one side of the handshake has confirmed initialization of SSL, it immediately begins transmitting encrypted traffic. If the other side of the handshake process hasn't yet completed its SSL initialization, this presents a problem where encrypted traffic needs to be blocked while the handshake completes. In order to handle this issue, an encrypted socket will drop data it believes to be garbage **only** while connecting. Once the handshake has completed, receiving garbage data will lead to a disconnect.
+一旦握手的一方确认 SSL 初始化，就会立即开始传输加密流量。如果握手过程的另一方尚未完成 SSL 初始化，就会出现在完成握手过程时需要阻止加密流量的问题。为了解决这个问题，加密套接字会**在连接时**丢弃它认为是垃圾的数据。一旦握手完成，收到垃圾数据将导致断开连接。
 
-## Application Data Transmission
+## 应用数据传输
 
-Once authenticated, encryption is the last step performed when sending a packet. This is largely due to the assumption that any packet received by an authenticated endpoint is already encrypted. As long as the `DtlsEndpoint` is viewed as connected, all packets are encrypted.
+一旦通过身份验证，加密就是发送数据包时执行的最后一步。这主要是因为假定已通过身份验证的端点收到的任何数据包都已加密。只要 `DtlsEndpoint` 被视为已连接，所有数据包都会被加密。
 
-Encryption can often increase the payload size of a packet. In order to ensure this tax doesn't increase packet size over the MTU, O3DE subtracts an amount of available data for the application to accommodate the encryption size. The result is that packets close to MTU prior to encryption can end up being preemptively fragmented with encryption enabled.
+加密通常会增加数据包的有效载荷大小。为了确保这种税收不会使数据包的大小超过 MTU，O3DE 会为应用程序减去一定量的可用数据，以适应加密大小。其结果是，在加密前接近 MTU 的数据包最终会在启用加密后被抢先分片。
 
-## References
+## 参考
 
-[^1]: [DTLS performance in duty-cycled networks - Scientific Figure on ResearchGate](https://www.researchgate.net/figure/Message-exchange-during-a-DTLS-handshake-Messages-in-parentheses-are-not-sent-for_fig1_308815075) \[accessed 31 May, 2021\]
+[^1]: [负载循环网络中的 DTLS 性能 - ResearchGate 上的科学图谱](https://www.researchgate.net/figure/Message-exchange-during-a-DTLS-handshake-Messages-in-parentheses-are-not-sent-for_fig1_308815075) \[accessed 31 May, 2021\]

@@ -19,7 +19,7 @@ Stars are rendered as billboards that have a white center that fades out to the 
 
 ![stars-component-base-properties](/images/user-guide/components/reference/atom/stars/stars-base-properties-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Exposure** | Specifies the exposure to use when rendering the stars in the scene so you can control how bright the stars are. | `0.0` - `32.0` | `1.0` |
 | **Radius Factor** | Specifies the factor to multiply every star width and height by so you can set the size of stars. | `0.0` - `64.0`  | `7.0`  |

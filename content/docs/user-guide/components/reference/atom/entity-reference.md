@@ -1,29 +1,29 @@
 ---
-title: Entity Reference Component
+title: Entity Reference 组件
 linktitle: Entity Reference
-description: 'Open 3D Engine (O3DE) Entity Reference component reference.'
+description: 'Open 3D Engine (O3DE) Entity Reference 组件参考。'
 toc: true
 ---
 
-The **Entity Reference** component allows you to track one or more entity IDs that you can conveniently access through script or C++ code during editor mode.
+**Entity Reference** 组件允许您跟踪一个或多个实体 ID，您可以在编辑器模式下通过脚本或 C++ 代码方便地访问这些 ID。
 
-## Provider ##
+## 提供方 ##
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Properties
+## 属性
 
 ![Entity Reference Component UI](/images/user-guide/components/reference/atom/entity-reference-ui.png)
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **EntityIdReferences** | Contains a list of entities whose IDs will be tracked. |
+| **EntityIdReferences** | 包含 ID 将被跟踪的实体列表。 |
 
-## Usage ##
+## 用法 ##
 
-During editor mode, call the `EntityReferenceRequestBus` to retrieve the list of entities being referenced by the component.
-This example uses the O3DE's Python Console to retrieve a list of entity IDs.
+在编辑器模式下，调用`EntityReferenceRequestBus`来检索组件引用的实体列表。
+本例使用 O3DE 的 Python 控制台来检索实体 ID 列表。
 ```python
 # entityId contains the Entity Reference component.
 entityIdReferences = azlmbr.entity.EntityReferenceRequestBus(azlmbr.bus.Event, 'GetEntityReferences', entityId)

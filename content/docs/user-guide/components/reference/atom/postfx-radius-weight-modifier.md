@@ -22,6 +22,6 @@ The **PostFx Radius Weight Modifier** component weights post-processing effects 
 
 ![PostFX Radius Weight Modifier base properties](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-radius-weight-modifier.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Radius** | Controls the radius of PostFX's volume's spherical bounds. | `0.0` to infinity |`0.0` |

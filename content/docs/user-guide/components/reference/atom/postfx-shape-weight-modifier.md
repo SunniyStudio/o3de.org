@@ -22,6 +22,6 @@ The **PostFX Shape Weight Modifier** component limits post-processing effects (P
 
 ![PostFX Shape Weight Modifier base properties](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-shape-weight-modifier.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Fall-off Distance** | Distance from the outer bounds of the Shape component. Within this distance, the PostFX weight is linearly interpolated (lerped). While approaching the outer bounds of the Shape component from the fall-off distance, the weight modifier smoothly transitions from `0.0` to `1.0`. | `0.0` to infinity | `1.0` |

@@ -21,7 +21,7 @@ None
 
 ![PostFX Layer base properties](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-layer.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 | **Layer Category** | Specifies the layer where PostFX Layer components exist. | Layer Category element | `Default` |
 | **Priority in Default** | A priority value that determines the order of this component when blending with multiple PostFX. PostFX Layers with the same Layer Category cannot have the same priority. | `0` to `20` | `0` |

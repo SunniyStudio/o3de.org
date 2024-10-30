@@ -18,7 +18,7 @@ The **Occlusion Culling Plane** component adds a plane, known as an **Occluder**
 
 ![occlusion-culling-plane-component-base-properties](/images/user-guide/components/reference/atom/occlusion-culling-plane/occlusion-culling-plane-base-properties-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Show Visualization** | Displays the occlusion culling plane in the scene as a green plane for debugging.  | Boolean | `Enabled` |
 | **Transparent Visualization** | Displays the visualization as a semi-transparent plane.  | Boolean |  `Disabled` |

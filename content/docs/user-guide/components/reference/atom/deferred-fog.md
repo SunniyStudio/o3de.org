@@ -1,49 +1,49 @@
 ---
-title: Deferred Fog Component
+title: Deferred Fog 组件
 linktitle: Deferred Fog
-description: Create a scene fog or layered/ground fog effect with the Deferred Fog component in Open 3D Engine (O3DE).
+description: 使用 Open 3D Engine (O3DE) 中的Deferred Fog组件创建场景雾或分层/地面雾效果。
 toc: true
 ---
 
-The **Deferred Fog** component creates a screen space fog effect that can be used as scene fog or layered/ground fog. You can add optional *cloud turbulence* to the fog using a noise texture.
+**Deferred Fog**组件可创建屏幕空间雾效果，可用作场景雾或分层/地面雾。您可以使用噪点纹理为雾添加可选的**云湍流**效果。
 
-Cloud turbulence is implemented by ray marching along the fog layer and combining two moving noise octaves, creating a "cloudy" fog look. You can configure each octave by scaling the UV coordinates of the noise texture and defining the velocity of the texture's movement. You can also specify the amount of blend between the two octaves.
+云湍流是通过沿着雾层的光线行进并结合两个移动噪声倍频程来实现的，从而产生**云雾**效果。您可以通过缩放噪点纹理的 UV 坐标和定义纹理的移动速度来配置每个八度音阶。您还可以指定两个八度音阶之间的混合程度。
 
 {{< note >}}
-At this time, Deferred Fog does not interact with lighting.
+目前，Deferred Fog不会与照明产生交互作用。
 {{< /note >}}
 
 
 ![Example of fog layer with turbulence](/images/user-guide/components/reference/atom/deferred-fog/basic-example.png)
 
-## Provider ##
+## 提供方 ##
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Dependencies
+## 依赖
 
-[PostFX Layer component](./postfx-layer)
+[PostFX Layer 组件](./postfx-layer)
 
 
-## Properties
+## 属性
 
 
 ![Deferred Fog component interface](/images/user-guide/components/reference/atom/deferred-fog/deferred-fog-component-ui.png)
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Fog Color** | The color of the fog that gradually blends with the scene. The color becomes more opaque as the fog blends towards the **Fog End Distance**.  | Color | R: `115`, G: `115`, B: `153` |
-| **Fog Start Distance** | The distance from the viewer, measured in meters, at which the fog starts. At this distance, the fog begins to gradually blend with the scene until it completely masks the background scene at the **Fog End Distance**. | Float: 0.0 - 5000.0 | `1.0` |
-| **Fog End Distance** | The distance from the viewer, measured in meters, at which the fog completely masks out the background scene. From the **Fog Start Distance** to the **Fog End Distance**, the fog blends with the scene, creating a gradual transition between the scene and the masked layer of fog. At and beyond this distance, the scene appears a solid color, completely masked by the fog layer.  | Float: 0.0 - 5000.0 | `5.0` |
-| **Fog Bottom Height** | The height of the bottom of the fog layer, measured in meters, when **Enable Fog Layer** is activated. | Float: -5000.0 - 5000.0 | `0.01` |
-| **Fog Max Height** | The height of the top of the fog layer, measured in meters, when **Enable Fog Layer** is activated. | Float: -5000.0 - 5000.0 | `1.0` |
-| **Noise Texture** | A single-channel noise texture that defines the appearance of the fog turbulence, when **Enable Turbulence Properties** is activated. | A `.streamingimage` product asset.  | `textures/cloudnoise_01.jpg.streamingimage` |
-| **Noise Texture First Octave** | Scales the UV coordinates of the **Noise Texture** for the first octave. | Vector2: -Infinity to Infinity | X: `0.01`, Y: `0.01` |
-| **Noise Texture First Octave Velocity** | The velocity of the noise texture's movement for the first octave, measured in meters per second. | Vector2: -Infinity to Infinity | X: `0.002`, Y:`0.0032` |
-| **Noise Texture Second Octave** | Scales the UV coordinates of the **Noise Texture** for the second octave. | Vector2: -Infinity to Infinity | X: `0.0239`, Y: `0.0239` |
-| **Noise Texture Second Octave Velocity** | The velocity of the noise texture's movement for the second octave, measured in meters per second. | Vector2: -Infinity to Infinity | X: `0.00275`, Y: `-0.004` |
-| **Octaves Blend Factor** |The amount of blend between the first and second octaves. A value of `1` displays only the first octave, while a value of `0` displays only the second octave. | Float: 0.0 - 1.0 | `0.4` |
-| **Enable Fog Layer** | If enabled, the fog is constrained between two points along the Z-axis, from **Fog Bottom Height** to **Fog Max Height**. | Boolean | `False` |
-| **Enable Deferred Fog** | If enabled, activates the fog effect in the scene. | Boolean | `False` |
-| **Enable Turbulence Properties** | If enabled, creates cloud turbulence in the fog by using **Noise Texture**. Generate variations of cloud turbulence by configuring the first and second octaves.  | Boolean  | `False`  |
+| **Fog Color** |  逐渐与场景融合的雾的颜色。当雾向**Fog End Distance**融合时，颜色会变得更加不透明。  | Color | R: `115`, G: `115`, B: `153` |
+| **Fog Start Distance** | 雾开始时与观众的距离，以米为单位。在这个距离上，雾开始逐渐与场景融合，直到在**Fog End Distance**上完全遮蔽背景场景。 | Float: 0.0 - 5000.0 | `1.0` |
+| **Fog End Distance** | 雾完全遮蔽背景场景的距离（以米为单位）。从**Fog Start Distance**到**Fog End Distance**，雾会与场景融合，在场景和遮蔽的雾层之间形成渐变过渡。在此距离内外，场景呈现纯色，完全被雾层遮盖。  | Float: 0.0 - 5000.0 | `5.0` |
+| **Fog Bottom Height** | 激活**Enable Fog Layer**时，雾层底部的高度（以米为单位）。 | Float: -5000.0 - 5000.0 | `0.01` |
+| **Fog Max Height** | 激活**Enable Fog Layer**时，雾层顶部的高度，以米为单位。 | Float: -5000.0 - 5000.0 | `1.0` |
+| **Noise Texture** | 单通道噪音纹理，用于在激活**Enable Turbulence Properties** 时定义雾湍流的外观。 | A `.streamingimage` 产品资产。  | `textures/cloudnoise_01.jpg.streamingimage` |
+| **Noise Texture First Octave** | 缩放第一个八度的**Noise Texture**的 UV 坐标。 | Vector2: -Infinity to Infinity | X: `0.01`, Y: `0.01` |
+| **Noise Texture First Octave Velocity** | 第一个八度噪音纹理的移动速度，单位为米/秒。 | Vector2: -Infinity to Infinity | X: `0.002`, Y:`0.0032` |
+| **Noise Texture Second Octave** | 缩放第二个八度的**Noise Texture**的 UV 坐标。 | Vector2: -Infinity to Infinity | X: `0.0239`, Y: `0.0239` |
+| **Noise Texture Second Octave Velocity** | 第二个八度噪音纹理的移动速度，单位为米/秒。 | Vector2: -Infinity to Infinity | X: `0.00275`, Y: `-0.004` |
+| **Octaves Blend Factor** |第一个八度音和第二个八度音之间的混合程度。`1`的值只显示第一个八度音阶，而`0`的值只显示第二个八度音阶。 | Float: 0.0 - 1.0 | `0.4` |
+| **Enable Fog Layer** | 如果启用，雾会被限制在沿 Z 轴的两点之间，从**Fog Bottom Height**到**Fog Max Height**。 | Boolean | `False` |
+| **Enable Deferred Fog** | 如果启用，则激活场景中的雾化效果。 | Boolean | `False` |
+| **Enable Turbulence Properties** | 如果启用，可通过使用**Noise Texture**在雾中产生云湍流。通过配置第一和第二倍频程来生成不同的云湍流。  | Boolean  | `False`  |

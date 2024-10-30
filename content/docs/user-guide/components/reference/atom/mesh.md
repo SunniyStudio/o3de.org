@@ -16,7 +16,7 @@ The **Mesh** component specifies a model to render in the scene. Model assets ar
 
 ![mesh-component-base-properties](/images/user-guide/components/reference/atom/mesh/mesh-base-properties-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Model Asset** | Sets the model asset for this component. | Model Asset | None |
 | **Sort Key** | Transparent models are first drawn by sort key, then depth. Use this to force certain transparent models to draw before or after others. | -2,147,483,648 to 2,147,483,647 | `0` |
@@ -45,7 +45,7 @@ The **Mesh** component specifies a model to render in the scene. Model assets ar
 
 **LOD Type**: `Screen Coverage` determines which LOD to render based on the approximate proportion of the screen that the LOD covers.
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **LOD Configuration - Minimum Screen Coverage** | Minimum proportion of screen area that the entity will cover. If the entity is smaller than the minimum coverage, it is culled. | 0.0 to 1.0 | 1.0f / 1080.0f |
 | **LOD Configuration - Quality Decay Rate** | Rate at which the mesh quality decays. <br><br>`0` - Always stays at highest quality LOD. <br><br>`1` - Immediately falls off to lowest quality LOD. | 0.0 to 1.0 | 0.5 |
@@ -57,7 +57,7 @@ The **Mesh** component specifies a model to render in the scene. Model assets ar
 
 **LOD Type**: `Specific LOD` specifies the LOD to render, overriding the automatic LOD calculations.
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **LOD Configuration - LOD Override** | Sets the specific LOD to render. The number of LODs depends on how many LODs the asset has. | LOD 0 (Highest Detail) to LOD *n*, where *n* is the lowest detail LOD | LOD 0 (Highest Detail) |
 

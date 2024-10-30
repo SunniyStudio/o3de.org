@@ -1,108 +1,108 @@
 ---
-title: HDR Color Grading Component
+title: HDR Color Grading 组件
 linktitle: HDR Color Grading
-description: 'Open 3D Engine (O3DE) HDR Color Grading component reference.'
+description: 'Open 3D Engine (O3DE) HDR Color Grading 组件参考。'
 toc: true
 ---
 
-The **HDR Color Grading** component is a post-process effect that enables users to color grade scenes to match a desired look and feel. This component uses a shader behind the scenes to perform the color grading logic on each frame's pixel.
+**HDR Color Grading**组件是一种后期处理效果，可让用户对场景进行调色，以匹配所需的外观和感觉。该组件在幕后使用着色器对每个帧的像素执行色彩分级逻辑。
 
-To reduce compute time:
-1. Generate a look-up texture (LUT) from the current color grading settings by clicking the **Generate LUT** button on the component. 
+为减少计算时间，请执行以下操作
+1. 点击组件上的 **Generate LUT** 按钮，根据当前调色设置生成查找纹理（LUT）。
 
     ![HDR Color Grading Generate LUT](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-generate-lut-ui.png)
 
-2. Then, activate the generated LUT by clicking the **Activate LUT** button. 
+2. 然后，点击 **Activate LUT** 按钮激活生成的LUT。 
 
     ![HDR Color Grading Activate LUT](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-activate-lut-ui.png)
 
-Upon activation, a **Look Modification** component is added to the current entity and subsequently the **HDR Color Grading** component is disabled. 
+激活后，当前实体将添加**Look Modification**组件，随后**HDR Color Grading**组件将被禁用。
 
-## Provider ##
+## 提供方 ##
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
-## Dependencies
+## 依赖
 
 [PostFX Layer component](/docs/user-guide/components/reference/atom/postfx-layer/)
 
-## Properties
+## 属性
 ### Color Adjustment ###
 
 ![HDR Color Grading Color Adjustment](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-component-color-adjustment-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Weight** | Strength of the color adjustment properties. | Float: 0.0 - 1.0 | `1.0` |
-| **Exposure** | Controls the amount of light entering the camera. | Float: -Infinity to Infinity | `0.0` |
-| **Contrast** | Controls the clarity of detail. | Float: -100.0 - 100.0 | `0.0` |
-| **Pre Saturation** | Controls the intensity of colors during color adjustment. | Float: -100.0 - 100.0 | `0.0` |
-| **Filter Swatch** | Applies a color filter. | Eight bits per channel color: 0 - 255 | `255,128,128` |
-| **Filter Multiply** | Strength of the color filter effect. | Float: 0.0 - 1.0 | `0.0` |
-| **Filter Intensity** | Controls the intensity of the color filter swatch. | Float: -Infinity to Infinity | `1.0` |
+| **Weight** | 色彩调整属性的强度。| Float: 0.0 - 1.0 | `1.0` |
+| **Exposure** | 控制进入相机的光量。 | Float: -Infinity to Infinity | `0.0` |
+| **Contrast** | 控制细节的清晰度。 | Float: -100.0 - 100.0 | `0.0` |
+| **Pre Saturation** | 在色彩调整过程中控制色彩强度。| Float: -100.0 - 100.0 | `0.0` |
+| **Filter Swatch** | 应用滤色器。 | 每通道八位色彩: 0 - 255 | `255,128,128` |
+| **Filter Multiply** | 滤色效果的强度。 | Float: 0.0 - 1.0 | `0.0` |
+| **Filter Intensity** | 控制滤色片色块的强度。 | Float: -Infinity to Infinity | `1.0` |
 
 ### White Balance ###
 
 ![HDR Color Grading White Balance](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-component-white-balance-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Weight** | Strengh of the white balance. | Float: 0.0 - 1.0 | `0.0` |
-| **Temperature** | Controls the warmness or coolness of the white balance. | Float: 1000.0 - 40000.0 | `6600.0` |
-| **Tint** | Shifts the white balance from magenta to green. | Float: -100.0 - 100.0 | `0.0` |
-| **Luminance Preservation** | Preserves the apparent brightness when manipulating the white balance. | Float: 0.0 - 1.0 | `1.0` |
+| **Weight** | 白平衡的强度。 | Float: 0.0 - 1.0 | `0.0` |
+| **Temperature** | 控制白平衡的冷暖度。| Float: 1000.0 - 40000.0 | `6600.0` |
+| **Tint** | 将白平衡从洋红色转为绿色。 | Float: -100.0 - 100.0 | `0.0` |
+| **Luminance Preservation** | 在操作白平衡时保留表观亮度。 | Float: 0.0 - 1.0 | `1.0` |
 
 ### Split Toning ###
 
 ![HDR Color Grading Split Toning](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-component-split-toning-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Weight** | Strength of the split toning properties. | Float: 0.0 - 1.0 | `0.0` |
-| **Balance** | Controls how shadow and highlight colors are mixed. | Float: -1.0 - 1.0 | `0.0` |
-| **Shadows Color** | Controls the color of areas classified as shadows. | Eight bits per channel color: 0 - 255 | `255,128,128` |
-| **Highlights Color** | Controls the color of areas classified as highlights. | Eight bits per channel color: 0 - 255 | `26,255,26` |
+| **Weight** | 切分调色特性的强度。 | Float: 0.0 - 1.0 | `0.0` |
+| **Balance** | 控制阴影和高光颜色的混合方式。 | Float: -1.0 - 1.0 | `0.0` |
+| **Shadows Color** | 控制阴影区域的颜色。 | 每通道八位色彩: 0 - 255 | `255,128,128` |
+| **Highlights Color** | 控制高光区域的颜色。 | 每通道八位色彩: 0 - 255 | `26,255,26` |
 
 ### Shadows Midtones Highlights ###
 
 ![HDR Color Grading Shadows Midtones Highlights](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-component-shadow-midtones-higlights-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Weight** | Strength of the **Shadow Midtones Highlights** properties. | Float: 0.0 - 1.0 | `0.0` |
-| **Shadows Start** | Controls the start of pixel brightness values that constitute as shadows. | Float: 0.0 - 16.0 | `0.0` |
-| **Shadows End** | Controls the end of pixel brightness values that constitute as shadows. | Float: 0.0 - 16.0 | `0.3` |
-| **Highlights Start** | Controls the start of pixel brightness values that constitute as highlights. | Float: 0.0 - 16.0 | `0.55` |
-| **Highlights End** | Controls the end of pixel brightness values that constitute as highlights. | Float: 0.0 - 16.0 | `1.0` |
-| **Shadows Color** | Color to apply to shadows. | Eight bits per channel color: 0 - 255 | `255,64,64` |
-| **Midtones Color** | Color to apply to midtones, which are the pixel brightness values in between shadows and highlights. | Eight bits per channel color: 0 - 255 | `26`,`26`,`255` |
-| **Highlights Color** | Color to apply to highlights. | Eight bits per channel color: 0 - 255 | `255,0,255` |
+| **Weight** | **Shadow Midtones Highlights**属性的强度。 | Float: 0.0 - 1.0 | `0.0` |
+| **Shadows Start** | 控制构成阴影的像素亮度值的起始值。 | Float: 0.0 - 16.0 | `0.0` |
+| **Shadows End** | 控制构成阴影的像素亮度值的终点。 | Float: 0.0 - 16.0 | `0.3` |
+| **Highlights Start** | 控制构成高光的像素亮度值的起始值。 | Float: 0.0 - 16.0 | `0.55` |
+| **Highlights End** | 控制构成高光的像素亮度值的终点。 | Float: 0.0 - 16.0 | `1.0` |
+| **Shadows Color** | 用于阴影的颜色。 | 每通道八位色彩: 0 - 255 | `255,64,64` |
+| **Midtones Color** | 用于中间调的颜色，即介于阴影和高光之间的像素亮度值。 | 每通道八位色彩: 0 - 255 | `26`,`26`,`255` |
+| **Highlights Color** | 用于高光的颜色。| 每通道八位色彩: 0 - 255 | `255,0,255` |
 
 ### Channel Mixing ###
 
 ![HDR Color Grading Channel Mixing](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-component-channel-mixing-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Channel Mixing Red** | Transforms the red color channel into a different color. | Vector3: 0.0 to infinity | X:`1`,Y:`0`,Z:`0` |
-| **Channel Mixing Green** | Transforms the green color channel into a different color. | Vector3: 0.0 to infinity | X:`0`,Y:`1`,Z:`0` |
-| **CHannel Mixing Blue** | Transforms the blue color channel into a different color. | Vector3: 0.0 to infinity | X:`0`,Y:`0`,Z:`1` |
+| **Channel Mixing Red** | 将红色通道转换成不同的颜色。 | Vector3: 0.0 to infinity | X:`1`,Y:`0`,Z:`0` |
+| **Channel Mixing Green** | 将绿色通道转换成不同的颜色。 | Vector3: 0.0 to infinity | X:`0`,Y:`1`,Z:`0` |
+| **CHannel Mixing Blue** | 将蓝色通道转换成不同的颜色。| Vector3: 0.0 to infinity | X:`0`,Y:`0`,Z:`1` |
 
 ### Final Adjustment ###
 
 ![HDR Color Grading Final Adjustment](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-component-final-adjustment-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Weight** | Strength of the **Final Adjustment** properties. | Float: 0.0 - 1.0 | `1.0` |
-| **Post Saturation** | Controls the intensity of colors applied at the end of the color grading process. | Float: -100.0 - 100.0 | `0.0` |
-| **Hue Shift** | Transforms colors into a different hue.  | Float: 0.0 - 1.0 | `0.0` |
+| **Weight** | **Final Adjustment**属性的强度。 | Float: 0.0 - 1.0 | `1.0` |
+| **Post Saturation** | 控制调色过程结束时应用的色彩强度。 | Float: -100.0 - 100.0 | `0.0` |
+| **Hue Shift** | 将色彩转换成不同的色调。  | Float: 0.0 - 1.0 | `0.0` |
 
 ### LUT Generation ###
 
 ![HDR Color Grading LUT Generation](/images/user-guide/components/reference/atom/post-processing-modifiers/hdr-color-grading/hdr-color-grading-component-lut-generation-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **LUT Resolution** | Sets the resolution of the generated LUT. The higher the resolution, the more accurate the results are to the original color graded settings. | `16x16x16`, `32x32x32`, or `64x64x64` | `16x16x16` |
-| **Shaper Type** | Applies a shaper function during LUT generation to match a monitor's brightness. | `Linear Custom Range`, `Log2 48 Nits`, `Log2 1000 Nits`, `Log2 2000 Nits`, `log2 4000 Nits`, `Log2 Custom Range`, `PQ (SMPTE ST 2084)` | `None` |
+| **LUT Resolution** | 设置生成 LUT 的分辨率。分辨率越高，生成的结果越接近原始色阶设置。 | `16x16x16`, `32x32x32`, or `64x64x64` | `16x16x16` |
+| **Shaper Type** | 在 LUT 生成过程中应用整形功能，以匹配显示器的亮度。 | `Linear Custom Range`, `Log2 48 Nits`, `Log2 1000 Nits`, `Log2 2000 Nits`, `log2 4000 Nits`, `Log2 Custom Range`, `PQ (SMPTE ST 2084)` | `None` |

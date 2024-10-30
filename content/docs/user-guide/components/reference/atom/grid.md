@@ -1,50 +1,50 @@
 ---
-title: Grid Component
+title: Grid 组件
 linktitle: Grid
-description: 'Open 3D Engine (O3DE) Grid component reference.'
+description: 'Open 3D Engine (O3DE) Grid组件参考。'
 toc: true
 ---
 
-The **Grid** component renders a wireframe grid. It is primarily used in scene-building workflows to set a frame of reference and visualize relative sizes and distances between objects.
+**Grid** 组件渲染线框网格。它主要用于场景构建工作流，以设定参考框架，并直观显示物体之间的相对大小和距离。
 
-## Provider ##
+## 提供方 ##
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Grid Component Properties
-The Grid component has simple properties for changing its size and appearance.
+## Grid 组件属性
+Grid 组件具有简单的属性，可以改变其大小和外观。
 
 ![grid-component-base-properties](/images/user-guide/components/reference/atom/grid/grid-base-properties-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Grid Size** | The total grid size in meters. | 0.0 - 1,000,000 | 32.0 |
-| **Axis Color** | The color used for drawing grid lines for the main axis. | (0-255, 0-255, 0-255) | (0, 0, 255) |
-| **Primary Grid Spacing** | The distance between grid lines drawn in the primary color. | 0.1 to Infinity | 1.0 |
-| **Primary Color** | The color used for drawing primary grid lines. | (0-255, 0-255, 0-255) | (64, 64, 64) |
-| **Secondary Grid Spacing** | The distance between grid lines drawn in the secondary color. | 0.1 to Infinity | 0.25 |
-| **Secondary Color** | The color used for drawing secondary grid lines. | (0-255, 0-255, 0-255) | (128,128,128) |
+| **Grid Size** | 网格总面积（米）。 | 0.0 - 1,000,000 | 32.0 |
+| **Axis Color** | 用于绘制主轴网格线的颜色。 | (0-255, 0-255, 0-255) | (0, 0, 255) |
+| **Primary Grid Spacing** | 用主色调绘制的网格线之间的距离。 | 0.1 to Infinity | 1.0 |
+| **Primary Color** | 用于绘制主网格线的颜色。 | (0-255, 0-255, 0-255) | (64, 64, 64) |
+| **Secondary Grid Spacing** | 用辅助颜色绘制的网格线之间的距离。 | 0.1 to Infinity | 0.25 |
+| **Secondary Color** | 用于绘制辅助网格线的颜色。 | (0-255, 0-255, 0-255) | (128,128,128) |
 
 ## GridComponentRequestBus
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| 'SetSize' | Sets the size of the entire grid. | Size: Float | None | Yes |
-| 'SetPrimarySpacing' | Sets spacing between primary grid lines. | Spacing: Float | None | Yes |
-| 'SetSecondarySpacing' | Sets spacing between secondary grid lines. | Spacing: Float | None | Yes |
-| 'SetAxisColor' | Sets the color of the grid axis lines. | Line Color: Color | None | Yes |
-| 'SetPrimaryColor' | Sets the color of primary grid lines. | Line Color: Color | None | Yes |
-| 'SetSecondaryColor' | Sets the color of secondary gridlines. | Line Color: Color | None | Yes |
-| 'GetSize' | Gets the size of the entire grid. | None | Size: Float | Yes |
-| 'GetPrimarySpacing' | Gets spacing between primary grid lines. | None | Spacing: Float | Yes |
-| 'GetSecondarySpacing' | Gets spacing between secondary grid lines. | None | Spacing: Float | Yes |
-| 'GetAxisColor' | Gets the color of the grid axis lines. | None | Line Color: Color | Yes |
-| 'GetPrimaryColor' | Gets the color of primary grid lines. | None | Line Color: Color | Yes |
-| 'GetSecondaryColor' | Gets the color of secondary gridlines. | None | Line Color: Color | Yes |
+| 'SetSize' | 设置整个网格的大小。 | Size: Float | None | Yes |
+| 'SetPrimarySpacing' | 设置主网格线之间的间距。 | Spacing: Float | None | Yes |
+| 'SetSecondarySpacing' | 设置辅助网格线之间的间距。 | Spacing: Float | None | Yes |
+| 'SetAxisColor' | 设置网格轴线的颜色。 | Line Color: Color | None | Yes |
+| 'SetPrimaryColor' | 设置主网格线的颜色。 | Line Color: Color | None | Yes |
+| 'SetSecondaryColor' | 设置辅助网格线的颜色。 | Line Color: Color | None | Yes |
+| 'GetSize' | 获取整个网格的大小。 | None | Size: Float | Yes |
+| 'GetPrimarySpacing' | 获取主网格线之间的间距。 | None | Spacing: Float | Yes |
+| 'GetSecondarySpacing' | 获取辅助网格线之间的间距。 | None | Spacing: Float | Yes |
+| 'GetAxisColor' | 获取网格轴线的颜色。 | None | Line Color: Color | Yes |
+| 'GetPrimaryColor' | 获取主网格线的颜色。 | None | Line Color: Color | Yes |
+| 'GetSecondaryColor' | 获取辅助网格线的颜色。 | None | Line Color: Color | Yes |
 
 ## GridComponentNotificationBus
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| 'OnGridChanged' | Notify any handlers that the grid has been modified. | None | None | No |
+| 'OnGridChanged' | 通知任何处理程序网格已被修改。 | None | None | No |

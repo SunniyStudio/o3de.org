@@ -1,36 +1,36 @@
 ---
-linktitle: Multiplayer
-title: Multiplayer Framework
-description: Learn about multiplayer support in Open 3D Engine (O3DE) and how to use the multiplayer framework that the Multiplayer Gem provides.
+linktitle: 多人游戏
+title: 多人游戏框架
+description: 了解 Open 3D Engine (O3DE) 中的多人游戏支持，以及如何使用Multiplayer Gem 提供的多人游戏框架。
 weight: 200
 ---
 
-The multiplayer framework that the **Multiplayer Gem** provides is built on top of `AzNetworking`. The Multiplayer Gem supports entity-based asynchronous networking in **Open 3D Engine (O3DE)**, using event-driven network properties and remote procedure calls to synchronize O3DE components and entities across a network, giving you tools to make a multiplayer game.
+**Multiplayer Gem**提供的多人游戏框架建立在 `AzNetworking`之上。Multiplayer Gem支持**Open 3D Engine (O3DE)**中基于实体的异步联网，使用事件驱动的网络属性和远程过程调用在网络上同步O3DE组件和实体，为您提供制作多人游戏的工具。
 
-The Multiplayer Gem supports the following:
+Multiplayer Gem 支持以下内容：
 
-* Server authoritative networking model
-* Player spawners
-* Entity replication
-* Push-based synchronization
-* Event-driven network properties
-* Reliable and unreliable remote procedure calls
-* Local prediction
-* Network input handlers
+* 服务器权威网络模型
+* 玩家生成器
+* 实体复制
+* 基于推送的同步
+* 事件驱动网络属性
+* 可靠和不可靠的远程过程调用
+* 本地预测
+* 网络输入处理程序
 
-## Section topics
-
-| Topic | Description |
+## 章节主题
+1
+| 主题 | 说明 |
 |---|---|
-| [Overview](overview) | An overview of the O3DE Multiplayer Gem. Includes an introduction to multiplayer components, which provide network state synchronization. |
-| [Configuring a Project](configuration) | How to add and enable the O3DE Multiplayer Gem in a project. |
-| [Running Multiplayer Projects](running) | How to run projects that use the O3DE Multiplayer Gem. |
-| [Multiplayer Auto-components](autocomponents) | How to automatically create components for use with the Multiplayer Gem using the AzAutoGen system. |
-| [Separating Client and Server](code_separation) | How to separate client and server logic and build dependencies.
-| [Testing Multiplayer Projects in the Editor](test-in-editor) | How to automatically launch local servers or connect to a remote persistent server when working on a multiplayer project in the **O3DE Editor**. |
-| [Network Entity Hierarchies](hierarchy) | How to group network entities into hierarchies that process their input together. |
-| [Spawning Players](spawning) | How to spawn an entity for a connecting player to control. |
-| [Debugging Multiplayer Desyncs](debug-desync) | How to analyze and debug multiplayer desynchronizations using the built-in Desync Audit Trail tool. |
+| [概述](overview) | O3DE Multiplayer Gem概述。包括提供网络状态同步的多人游戏组件介绍。 |
+| [配置项目](configuration) | 如何在项目中添加并启用 O3DE Multiplayer Gem。 |
+| [运行多人游戏项目](running) | 如何运行使用 O3DE Multiplayer Gem 的项目。 |
+| [自动创建多人游戏组件](autocomponents) | 如何使用 AzAutoGen 系统自动创建用于Multiplayer Gem 的组件。 |
+| [分离客户端和服务器](code_separation) | 如何分离客户端和服务器逻辑并建立依赖关系。|
+| [在编辑器中测试多人游戏项目](test-in-editor) | 在**O3DE 编辑器**中处理多人游戏项目时，如何自动启动本地服务器或连接到远程持久服务器。 |
+| [网络实体层次结构](hierarchy) | 如何将网络实体划分为层次，共同处理其输入。 |
+| [生成玩家实体](spawning) | 如何生成一个实体供连接玩家控制。 |
+| [Debugging Multiplayer Desyncs](debug-desync) | 如何使用内置的 Desync Audit Trail 工具分析和调试多人不同步现象。 |
 
 ## Related topics
 

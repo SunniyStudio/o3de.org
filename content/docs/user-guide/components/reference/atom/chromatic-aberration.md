@@ -1,29 +1,29 @@
 ---
 linkTitle: Chromatic Aberration
-title: Chromatic Aberration Component
-description: The Chromatic Aberration component, which simulates a lens effect that focuses wavelengths of light to different points, is provided by the Atom Gem in Open 3D Engine (O3DE). 
+title: Chromatic Aberration 组件
+description: Chromatic Aberration组件是由Open 3D Engine (O3DE) 中的 Atom Gem 提供的，它可以模拟将波长不同的光线聚焦到不同点的透镜效应。
 toc: true
 ---
 
-The **Chromatic Aberration** component is a post-processing effect that simulates a lens that focuses different wavelengths of light at different points, creating fringes of color around edges in the image.
+**Chromatic Aberration** 组件是一种后期处理效果，它模拟镜头将不同波长的光线聚焦在不同的点上，从而在图像边缘产生色彩条纹。
 
 ![Example of chromatic aberration effect](/images/user-guide/components/reference/atom/chromatic-aberration-example.png)
 
-## Provider
+## 提供方
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom)
 
-## Dependencies
+## 依赖
 
-[PostFX Layer component](./postfx-layer)
+[PostFX Layer 组件](./postfx-layer)
 
-## Properties
+## 属性
 
 ![Bloom component interface](/images/user-guide/components/reference/atom/chromatic-aberration-component.png)
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Enable** | If enabled, activates the chromatic aberration effect. | Boolean | `Disabled` |
-| **Overrides - Enabled Override** | If enabled, all component properties will be set to the values specified in the **Overrides** property group. | Boolean | `Enabled` |
-| **Strength** | Controls the magnitude of the color displacement.  | Float: 0.0 - 1.0 | `0.01` |
-| **Blend** | Scales the blending of the effect with the original image which reduces the sharpness of the effect. | Float: 0.0 - 1.0 | `0.5` |
+| **Enable** | 如果启用，则激活色差效果。 | Boolean | `Disabled` |
+| **Overrides - Enabled Override** | 如果启用，所有组件属性都将设置为**Overrides**属性组中指定的值。 | Boolean | `Enabled` |
+| **Strength** | 控制色彩位移的大小。  | Float: 0.0 - 1.0 | `0.01` |
+| **Blend** | 调整特效与原始图像的混合比例，从而降低特效的清晰度。 | Float: 0.0 - 1.0 | `0.5` |

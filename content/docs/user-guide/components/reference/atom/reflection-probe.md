@@ -27,7 +27,7 @@ Each Reflection Probe consists of two volumes: an outer volume, specified using 
 
 ### Inner Extents properties
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Height** | The height of the reflection probe's inner volume. The height is dependent on the **Box Shape** component's dimension along the z-axis. | `0` to the Box Shape component's `Dimensions`-`Z` property | The value of the Box Shape component's `Dimensions`-`Z` property. |
 | **Length** | The length of the reflection probe's inner volume. The length is dependent on the Box Shape component's dimension along the y-axis. | `0` to the Box Shape component's `Dimensions`-`Y` property| The value of the Box Shape component's `Dimensions`-`Y` property. |
@@ -35,7 +35,7 @@ Each Reflection Probe consists of two volumes: an outer volume, specified using 
 
 ### Settings properties
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Parallax Correction** | Corrects the reflection by adjusting an offset from the capture position. | Boolean | `Enabled` |
 | **Show Visualization** |  Shows a sphere to visualize the probe. |  Boolean | `Enabled` |
@@ -43,14 +43,14 @@ Each Reflection Probe consists of two volumes: an outer volume, specified using 
 
 ### Cubemap Bake properties
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Bake Reflection Probe** | Bakes the surrounding environment to a cubemap. | - | - |
 | **Bake Exposure** |  The exposure to use when baking the reflection cubemap. | `-16.0` to `16.0` | `0.0` |
 
 ### Cubemap properties
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Use Baked Cubemap** | If enabled, uses a baked cubemap to create reflections. | Boolean | `Enabled` |
 | **Baked Cubemap Quality** | The resolution of the baked cubemap. | `Very Low`, `Low`, `Medium`, `High`, `Very High` | `Medium` |

@@ -1,25 +1,25 @@
 ---
-title: CubeMap Capture Component
+title: CubeMap Capture 组件
 linktitle: CubeMap Capture
-description: Captures a Specular IBL or Diffuse IBL cubemap at the entity location.
+description: 捕捉实体位置的Specular IBL 或Diffuse IBL 立方图。
 toc: true
 ---
 
-The **CubeMap Capture** component captures a Specular IBL or Diffuse IBL cubemap at a specific location in the scene. You can use the resulting cubemap with the **Global Skylight (IBL)** and **Reflection Probe** components.
+**CubeMap Capture**组件可捕捉场景中特定位置的镜面 IBL 或漫反射 IBL 立方体贴图。您可以将生成的立方体地图与**Global Skylight (IBL)**和**Reflection Probe**组件一起使用。
 
-## Provider
+## 提供方
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Properties
+## 属性
 
 ![cubemap-capture-component-base-properties](/images/user-guide/components/reference/atom/cubemap-capture/cubemap-capture-base-properties-ui.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Capture CubeMap** | Button to begin the capture process and generate the cubemap at the entity position. |  |  |
-| **Capture Type** | Specifies the type of cubemap to be generated. | `Specular IBL`, `Diffuse IBL` | `Specular IBL` |
-| **Specular IBL CubeMap Quality** | Specifies the quality level of the Specular IBL cubemap.  Only visible when **Capture Type** is set to `Specular IBL`. | `Very Low`, `Low`, `Medium`, `High`, `Very High` | `Medium` |
-| **CubeMap Path** | Displays the output cubemap path and file name.  This is a read-only field for information purposes only.
-| **Exposure** | Specifies the exposure to use when generating the cubemap. | `-16.0` to `16.0` | `0.0` |
+| **Capture CubeMap** | 开始捕捉过程的按钮，并在实体位置生成立方图。 |  |  |
+| **Capture Type** | 指定生成的 cubemap 类型。 | `Specular IBL`, `Diffuse IBL` | `Specular IBL` |
+| **Specular IBL CubeMap Quality** | 指定Specular IBL 立方体贴图的质量级别。 仅当**Capture Type**设置为 `Specular IBL`。 | `Very Low`, `Low`, `Medium`, `High`, `Very High` | `Medium` |
+| **CubeMap Path** | 显示输出的 cubemap 路径和文件名。 这是一个只读字段，仅供参考。| | |
+| **Exposure** | 指定生成立方图时使用的曝光量。 | `-16.0` to `16.0` | `0.0` |

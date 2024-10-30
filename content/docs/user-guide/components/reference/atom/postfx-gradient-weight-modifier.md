@@ -22,7 +22,7 @@ The **PostFX Gradient Weight Modifier** component modifies the blending weight o
 
 ![PostFX Gradient Weight Modifier base properties](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-gradient-weight-modifier.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | A reference to a separate entity that provides a gradient. | EntityId | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |

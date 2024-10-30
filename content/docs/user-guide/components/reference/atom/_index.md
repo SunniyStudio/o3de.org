@@ -1,5 +1,5 @@
 ---
-title: Atom Components
+title: Atom 组件
 linktitle: Atom
-description: ' Using Atom lighting and rendering components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用Atom光照和渲染组件。'
 ---

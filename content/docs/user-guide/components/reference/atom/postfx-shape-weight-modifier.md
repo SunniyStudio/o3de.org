@@ -1,27 +1,27 @@
 ---
-title: PostFX Shape Weight Modifier Component
+title: PostFX Shape Weight Modifier 组件
 linktitle: PostFX Shape Weight Modifier
-description: 'Open 3D Engine (O3DE) PostFX Shape Weight Modifier component reference.'
+description: 'Open 3D Engine (O3DE) PostFX Shape Weight Modifier组件参考。'
 toc: true
 ---
 
-The **PostFX Shape Weight Modifier** component limits post-processing effects (PostFX) modifications to a volume that's defined by a **Shape** component. The weight of the PostFX remains constant within the shape component's bounds and falls off to `0.0` outside of the bounds according to the **Fall-off Distance**.
+**PostFX Shape Weight Modifier**组件将后处理特效（PostFX）的修改限制在**Shape**组件所定义的体积内。后期特效的权重在形状组件的范围内保持不变，在范围外则根据**Fall-off Distance**降至`0.0`。
 
-## Provider ##
+## 提供方 ##
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Dependencies
+## 依赖
 
-[PostFX Layer component](/docs/user-guide/components/reference/atom/postfx-layer/)
+[PostFX Layer 组件](/docs/user-guide/components/reference/atom/postfx-layer/)
 
-[Shape component](/docs/user-guide/components/reference/#shape)
+[Shape 组件](/docs/user-guide/components/reference/#shape)
 
-## Base properties
+## Base 属性
 
 ![PostFX Shape Weight Modifier base properties](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-shape-weight-modifier.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Fall-off Distance** | Distance from the outer bounds of the Shape component. Within this distance, the PostFX weight is linearly interpolated (lerped). While approaching the outer bounds of the Shape component from the fall-off distance, the weight modifier smoothly transitions from `0.0` to `1.0`. | `0.0` to infinity | `1.0` |
+| **Fall-off Distance** | 与形状组件外部边界的距离。在此距离内，PostFX 权重采用线性插值（lerped）。当从下降距离接近Shape分量的外部界限时，权重修改器会从`0.0`平滑过渡到`1.0`。 | `0.0` to infinity | `1.0` |

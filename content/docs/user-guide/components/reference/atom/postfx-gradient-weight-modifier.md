@@ -1,49 +1,49 @@
 ---
-title: PostFX Gradient Weight Modifier Component
+title: PostFX Gradient Weight Modifier 组件
 linktitle: PostFX Gradient Weight Modifier
-description: 'Open 3D Engine (O3DE) PostFX Gradient Weight Modifier component reference.'
+description: 'Open 3D Engine (O3DE) PostFX Gradient Weight Modifier 组件参考。'
 toc: true
 ---
 
-The **PostFX Gradient Weight Modifier** component modifies the blending weight of post-processing effects (PostFX) by using another entity's gradient signal as a masking operation.
+**PostFX Gradient Weight Modifier** 组件通过使用另一个实体的梯度信号作为遮蔽操作，来修改后处理特效（PostFX）的混合权重。
 
 
-## Provider
+## 提供方
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Dependencies
+## 依赖
 
-[PostFX Layer component](/docs/user-guide/components/reference/atom/postfx-layer/)
+[PostFX Layer 组件](/docs/user-guide/components/reference/atom/postfx-layer/)
 
 
-## Gradient Sampler properties
+## Gradient Sampler 属性
 
 ![PostFX Gradient Weight Modifier base properties](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-gradient-weight-modifier.png)
-
+1
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Gradient Entity Id** | A reference to a separate entity that provides a gradient. | EntityId | None |
-| **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Invert Input** | Inverts the values of the input gradient. | Boolean | `Disabled` |
-| **Preview (Inbound)** | Displays the gradient provided by the entity set in **Gradient Entity Id**. |  |  |
-| **Enable Transform** | If `Enabled`, the translation, scale, and rotation of the input gradient may be modified. | Boolean | `Disabled` |
-| **Translate** | Sets the translation of the input gradient. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Scale** | Sets the scale of the input gradient. | Vector3: 0.0001 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Rotate** | Sets the rotation of the input gradient. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Enable Levels** | If `Enabled`, the input and output values of the input gradient may be modified. | Boolean | `Disabled` |
-| **Input Mid** | Sets the median value of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Input Min** | Sets a minimum value for the input gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Input Max** | Sets a maximum value for the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Output Min** | Sets a minimum value for the output gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Output Max** | Sets a maximum value for the output gradient. | Float: 0.0 - 1.0 | `1.0` |
+| **Gradient Entity Id** | 对提供梯度的独立实体的引用。 | EntityId | None |
+| **Opacity** | 设置输入渐变的不透明度。 | Float: 0.0 - 1.0 | `1.0` |
+| **Invert Input** | 反转输入梯度的值。 | Boolean | `Disabled` |
+| **Preview (Inbound)** | 显示由 **Gradient Entity Id** 中设置的实体提供的渐变。 |  |  |
+| **Enable Transform** | 如果`Enabled`，则可以修改输入梯度的平移、缩放和旋转。 | Boolean | `Disabled` |
+| **Translate** | 设置输入梯度的平移。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Scale** | 设置输入梯度的比例。 | Vector3: 0.0001 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Rotate** | 设置输入梯度的旋转角度。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Enable Levels** | 如果 `Enabled`，输入梯度的输入值和输出值可能会被修改。 | Boolean | `Disabled` |
+| **Input Mid** | 设置输入梯度的中值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Input Min** | 设置输入梯度的最小值。| Float: 0.0 - 1.0 | `0.0` |
+| **Input Max** | 设置输入梯度的最大值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Output Min** | 设置输出梯度的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Output Max** | 设置输出梯度的最大值。 | Float: 0.0 - 1.0 | `1.0` |
 
-## Usage
+## 用法
 
-In this example, there are two entities: ShaderBall and GradientSignalProvider. The ShaderBall entity's PostFX Gradient Weight Modifier component references the GradientSignalProvider entity in its `Gradient Entity Id` property. The weight of the PostFX depends on the gradient that GradientSignalProvider inputs.
+本例中有两个实体： ShaderBall 和 GradientSignalProvider。ShaderBall 实体的 PostFX 梯度权重修改器组件在其 `Gradient Entity Id` 属性中引用了 GradientSignalProvider 实体。PostFX 的权重取决于 GradientSignalProvider 输入的渐变。
 
-For more information on gradient signal providers, refer to the list of [Gradient components](/docs/user-guide/components/reference/#gradients) and [Gradient Signal Gem](/docs/user-guide/gems/reference/utility/gradient-signal/).
+有关梯度信号提供者的更多信息，请参阅 [Gradient 组件](/docs/user-guide/components/reference/#gradients)列表 和 [Gradient Signal Gem](/docs/user-guide/gems/reference/utility/gradient-signal/)。
 
 ![Using PostFX Gradient Weight Modifier example](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-gradient-weight-modifier-example-1.png)
 

@@ -1,27 +1,27 @@
 ---
-title: PostFX Radius Weight Modifier Component
+title: PostFX Radius Weight Modifier 组件
 linktitle: PostFX Radius Weight Modifier
-description: 'Open 3D Engine (O3DE) PostFx Radius Weight Modifier component reference.'
+description: 'Open 3D Engine (O3DE) PostFx Radius Weight Modifier 组件参考。'
 toc: true
 ---
 
-The **PostFx Radius Weight Modifier** component weights post-processing effects (PostFX) along the radius of a sphere. The sphere is defined by the **Radius** property from the origin of the entity. The PostFX weight is `0.0` at the perimeter of the sphere and linearly interpolates (lerps) as the camera approaches the center, where the PostFX weight is `1.0`.
+**PostFx Radius Weight Modifier**组件可根据球体的半径对后处理特效（PostFX）进行加权。球体由**Radius**属性从实体的原点定义。球体周边的后置特效权重为`0.0`，当摄像机接近球体中心时，后置特效权重为`1.0`。
 
 
-## Provider
+## 提供方
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Dependencies
+## 依赖
 
-[PostFX Layer component](/docs/user-guide/components/reference/atom/postfx-layer/)
+[PostFX Layer 组件](/docs/user-guide/components/reference/atom/postfx-layer/)
 
 
-## Base properties
+## Base 属性
 
 ![PostFX Radius Weight Modifier base properties](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-radius-weight-modifier.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Radius** | Controls the radius of PostFX's volume's spherical bounds. | `0.0` to infinity |`0.0` |
+| **Radius** | 控制 PostFX Volume球形边界的半径。 | `0.0` to infinity |`0.0` |

@@ -1,31 +1,31 @@
 ---
-title: SSAO Component
+title: SSAO 组件
 linktitle: SSAO
-description: 'Open 3D Engine (O3DE) SSAO component reference.'
+description: 'Open 3D Engine (O3DE) SSAO 组件参考。'
 toc: true
 ---
 
-The screen-space ambient occlusion (**SSAO**) component approximates the occlusion of light in a scene by using the depth buffer. This occlusion is sometimes referred to as *Contact Shadows*.
+屏幕空间环境遮蔽（**SSAO**）组件通过使用深度缓冲区来近似场景中的光线遮蔽。这种遮蔽有时被称为**Contact Shadows**。
 
 {{< image-width "/images/user-guide/components/reference/atom/ssao-bistro.png" "700" "Image of SSAO applied to the Bistro scene" >}}
 
 
-## Provider
+## 提供方
 
 [Atom Gem](/docs/user-guide/gems/reference/rendering/atom/atom/)
 
 
-## Properties
+## 属性
 
 {{< image-width "/images/user-guide/components/reference/atom/ssao-component.jpg" "500" "SSAO Component Properties" >}}
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Enable SSAO** | If enabled, activates SSAO. By default, SSAO is activated, even if the level does not contain an SSAO component. To deactivate SSAO, add the SSAO component and disable this property. | Boolean | Enabled |
-| **SSAO Strength** | The strength of the SSAO effect. The higher this value, the darker the SSAO appears. | 0.0 - 2.0 | 1.0 |
-| **Sampling Radius** | The sampling radius of the SSAO effect in screen UV space. Decrease or increase this value to have a more local or global SSAO effect, respectively. | 0.0 - 0.25 | 0.05 |
-| **Enable Blur** | If enabled, applies a blur to the computed SSAO buffer. Activating blur results in a smoother-looking SSAO image. | Boolean | Enabled |
-| **Blur Strength** | How strong of a blur to apply to the SSAO. Lower values leads to a weaker blur, resulting in a sharper, noisier image. | 0.0 - 0.95 | 0.85 |
-| **Blur Sharpness** |  The sharpness of the blur effect. A higher value results in a sharper-looking blur, whereas a lower value results in a softer-looking blur. SSAO blur tries to respect geometric edges to avoid smearing the SSAO across edges or objects. | 0.0 - 400.0 | 200.0 |
-| **Blur Edge Threshold** | An edge threshold, in which the blur ignores depth changes at the specified value. This has the most effect with smaller values. | 0.0 - 1.0 | 0.0 |
-| **Enable Downsample** | If enabled, first downsamples the depth buffer and performs SSAO and blur on the downsampled result, then upsamples the result. This is an optimization that results in a less detailed SSAO. | Boolean | Enabled |
+| **Enable SSAO** | 如果启用，则激活 SSAO。默认情况下，即使关卡不包含 SSAO 组件，也会激活 SSAO。要停用 SSAO，请添加 SSAO 组件并禁用此属性。 | Boolean | Enabled |
+| **SSAO Strength** | SSAO 效果的强度。该值越大，SSAO 的颜色越深。| 0.0 - 2.0 | 1.0 |
+| **Sampling Radius** | 屏幕 UV 空间中 SSAO 效果的采样半径。减小或增大该值可分别获得更局部或全局的 SSAO 效果。 | 0.0 - 0.25 | 0.05 |
+| **Enable Blur** | 如果启用，将对计算出的 SSAO 缓冲区进行模糊处理。激活模糊后，SSAO 图像看起来会更平滑。 | Boolean | Enabled |
+| **Blur Strength** | 对 SSAO 采用多强的模糊效果。数值越低，模糊效果越弱，图像越清晰，噪点越少。| 0.0 - 0.95 | 0.85 |
+| **Blur Sharpness** |  模糊效果的清晰度。数值越大，模糊效果越清晰，数值越小，模糊效果越柔和。SSAO 模糊会尽量尊重几何边缘，以避免 SSAO 在边缘或物体上模糊。 | 0.0 - 400.0 | 200.0 |
+| **Blur Edge Threshold** | 边缘阈值，模糊效果会忽略指定值的深度变化。这个值越小，效果越好。 | 0.0 - 1.0 | 0.0 |
+| **Enable Downsample** | 如果启用，则首先对深度缓冲区进行下采样，并对下采样结果执行 SSAO 和模糊处理，然后再对结果进行上采样。这种优化会使 SSAO 的细节更少。 | Boolean | Enabled |

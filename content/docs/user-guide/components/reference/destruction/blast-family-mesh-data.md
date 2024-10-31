@@ -1,29 +1,29 @@
 ---
 linkTitle: Blast Family Mesh Data
-description: ' Learn about the Open 3D Engine Blast Family Mesh Data component. '
-title: Blast Family Mesh Data Component
+description: ' 了解 Open 3D Engine中的Blast Family Mesh Data 组件。 '
+title: Blast Family Mesh Data 组件
 draft: true
 ---
 
 
 
 
-With the **Blast Family Mesh Data** component, you can set the mesh and material assets for NVIDIA Blast entities. The **Blast Family Mesh Data** component is used with the **Blast Family** component. This topic describes the properties of the **Blast Family Mesh Data** component.
+通过**Blast Family Mesh Data** 组件，您可以为 NVIDIA Blast 实体设置网格和材质资产。**Blast Family Mesh Data**组件与**Blast Family**组件一起使用。本主题将介绍**Blast Family Mesh Data**组件的属性。
 
-The **Blast Family Mesh Data** component is provided by the [NVIDIA Blast gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-blast/).
+**Blast Family Mesh Data**组件由[NVIDIA Blast gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-blast/)提供。
 
-For information on using the **Blast Family Mesh Data** component see [Simulated destruction with NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/).
+有关使用**Blast Family Mesh Data**组件的信息，请参阅[使用NVIDIA Blast模拟破坏](/docs/user-guide/interactivity/physics/nvidia-blast/)。
 
-## Blast Family Mesh Data component properties 
+## Blast Family Mesh Data 组件属性
 
 ![Properties of the Blast Family Mesh Data component](/images/user-guide/physx/blast/ui-blast-family-mesh-data-component.png)
 
 **Show mesh assets**
-When enabled, you can manually add mesh assets to this **Blast Family Mesh Data** component.
-The **Show mesh assets** property exposes the **Mesh assets** list. Choose the **+** button to the right of **Mesh assets** to add a list entry. Choose the **Folder** button to select a mesh for the list entry.
+启用后，您可以手动将网格资产添加到此**Blast Family Mesh Data**组件中。
+**Show mesh assets**属性会显示**Mesh assets** 列表。选择**Mesh assets**右侧的 **+** 按钮可添加一个列表条目。选择**Folder**按钮，为列表条目选择网格。
 
 **Material**
-The material that supplies the visual appearance for the meshes in this **Blast Family Mesh Data** component.
+在此**Blast Family Mesh Data**组件中，为网格提供视觉外观的材质。
 
 **Blast Slice**
-A blast slice for this **Blast Family Mesh Data** component. Blast slices are generated when blast assets are processed by the Python asset builder for NVIDIA Blast. A blast slice will automatically add the mesh assets and material to the **Blast Family Mesh Data** component.
+该**Blast Family Mesh Data**组件的爆炸切片。NVIDIA Blast 的 Python 资产生成器在处理爆炸资产时会生成爆炸切片。爆破片会自动将网格资产和材质添加到**Blast Family Mesh Data**组件中。

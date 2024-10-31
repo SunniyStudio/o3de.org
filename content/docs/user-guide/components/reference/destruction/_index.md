@@ -1,6 +1,6 @@
 ---
-title: Destruction Components
+title: Destruction 组件
 linktitle: Destruction
-description: ' Using Destruction components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用Destruction组件 '
 draft: true
 ---

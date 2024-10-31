@@ -1,46 +1,45 @@
 ---
 linkTitle: Blast Family
-title: Blast Family Component
-description: ' Learn about the Open 3D Engine Blast Family component. '
+title: Blast Family 组件
+description: ' 了解 Open 3D Engine 中的 Blast Family 组件。 '
 draft: true
 ---
 
 
 
+通过**Blast Family** 组件，您可以使用NVIDIA Blast 库启用破坏模拟，并为模拟设置属性。**Blast Family**组件与**Blast Family Mesh Data**组件一起使用。本主题将介绍**Blast Family**组件的属性。
 
-With the **Blast Family** component, you can enable destruction simulation using the NVIDIA Blast library, and set properties for the simulation. The **Blast Family** component is used with the **Blast Family Mesh Data** component. This topic describes the properties of the **Blast Family** component.
+**Blast Family**组件由[NVIDIA Blast Gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-blast/)提供。
 
-The **Blast Family** component is provided by the [NVIDIA Blast Gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-blast/).
+有关使用**Blast Family**组件的信息，请参阅 [使用 NVIDIA Blast 模拟破坏](/docs/user-guide/interactivity/physics/nvidia-blast/).
 
-For information on using the **Blast Family** component see [Simulated destruction with NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/).
-
-## Blast Family component properties 
+## Blast Family 组件属性
 
 ![Properties of the Blast Family component](/images/user-guide/physx/blast/ui-blast-family-component.png)
 
 **Blast Asset**
-The blast asset that will be used for the destruction simulation.
+用于模拟破坏的blast资产。
 
 **Blast Material**
-A blast material from the blast material library. Blast materials define how much damage various forces cause to the bonds holding the fractured asset together, and how much damage is required to trigger destruction. For more information, see [Specify destruction properties with Blast materials](/docs/user-guide/interactivity/physics/nvidia-blast/materials/).
+blast材料库中的爆炸材料。blast材料定义了各种力对固定断裂资产的键造成的破坏程度，以及触发破坏所需的破坏程度。更多信息，请参阅[使用Blast材料指定破坏属性](/docs/user-guide/interactivity/physics/nvidia-blast/materials/)。
 
 **Physics Material**
-The physics material for the blast asset. Physics materials define physical properties such as friction.
+Blast资产的物理材料。物理材料定义了摩擦等物理属性。
 
 **Collision Layer**
-The collision layer for this **Blast Family**.
+此**Blast Family**的碰撞层。
 
 **Collides With**
-The collision group containing the layers that this **Blast Family** collides with.
+碰撞组，包含与该**Blast Family**碰撞的层。
 
 **Simulated**
-When enabled, this **Blast Family**'s collision will be part of the PhysX simulation.
+启用后，该**Blast Family**的碰撞将成为 PhysX 模拟的一部分。
 
 **In Scene Queries**
-When enabled, this **Blast Family**'s colliders will be available for scene queries.
+启用后，该**Blast Family**的碰撞器将可用于场景查询。
 
 **CCD Enabled**
-When enabled, this **Blast Family** will use continuous collision detection. **CCD** is useful for ensuring accurate collision detection for high-speed objects.
+启用后，该**Blast Family**将使用连续碰撞检测。**CCD**可确保对高速物体进行精确的碰撞检测。
 
-**Tag**
-Set a tag for this **Blast Family**. Tags can be used to quickly identify components in script or code.
+  **Tag**
+  为该**Blast Family**设置标签。标签可用于快速识别脚本或代码中的组件。

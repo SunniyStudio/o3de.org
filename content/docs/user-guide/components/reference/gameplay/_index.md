@@ -1,5 +1,5 @@
 ---
-title: Gameplay Components
+title: Gameplay 组件
 linktitle: Gameplay
-description: ' Using Gameplay components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用Gameplay组件。 '
 ---

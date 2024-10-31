@@ -1,11 +1,11 @@
 ---
-description: ' Work with the Input component EBus (event bus) in Open 3D Engine. '
-title: Input Component EBus Interface
+description: ' 在 Open 3D Engine 中使用Input 组件 EBus（事件总线）。 '
+title: Input 组件 EBus 接口
 ---
 
 
 
-Input subcomponents are objects that have the same lifetime as components and must override `Activate` and `Deactivate`.
+输入子组件是与组件具有相同生命周期的对象，必须覆盖 `Activate` 和 `Deactivate`。
 
 ```
 //////////////////////////////////////////////////////////////////////////
@@ -14,26 +14,26 @@ void Activate(const AZ::InputEventNotificationId& channelId) override;
 void Deactivate(const AZ::InputEventNotificationId& channelId) override;
 ```
 
-You can use the `GameplayNotificationBus` to work with the `InputSubComponent`. You can find example Lua scripts and code in the `Gems\StartingPointInput\Assets\Scripts\Input` directory.
+您可以使用 `GameplayNotificationBus`与 `InputSubComponent` 协同工作。你可以在`Gems\StartingPointInput\Assets\Scripts\Input` 目录中找到示例 Lua 脚本和代码。
 
-## Input Event Notification Bus 
+## Input时间通知总线 
 
-Use the following notification functions with the event notification bus interface to communicate with other components of your game.
+通过事件通知总线接口使用以下通知功能与游戏的其他组件进行通信。
 
-For more information about using the event bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
 ###  
 
 
 ****
 
-| Request Name | Description | Parameters | Return | Scriptable |
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 | --- | --- | --- | --- | --- |
-| OnPressed |  Event sent when an input surpasses the threshold.  | Float | None | Yes |
-| OnHeld |  Event sent when an input continues to surpass the threshold.  | Float | None | Yes |
-| OnReleased |  Event sent when an input no longer surpasses the threshold.  | Float | None | Yes |
+| OnPressed |  当输入超过阈值时发出的事件。  | Float | None | Yes |
+| OnHeld |  当输入持续超过阈值时发出的事件。  | Float | None | Yes |
+| OnReleased |  当输入不再超过阈值时发出的事件。  | Float | None | Yes |
 
-**Example**
+**示例**
 
 ```
 local held =
@@ -66,26 +66,26 @@ end
 return held
 ```
 
-## Input Request Bus 
+## Input 请求总线 
 
-Use the following functions with the input request bus interface to communicate with other components of your game.
+使用输入请求总线接口的下列功能可与游戏的其他组件进行通信。
 
-For more information about using the event bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
 
 ****
 
-| Request Name | Description | Parameters | Return | Scriptable |
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 | --- | --- | --- | --- | --- |
-| PushContext |  Pushes a new context onto the stack, which becomes the active context.  | String | None | Yes |
-| PopContext |  Removes the top context from the input context stack.  | None | None | Yes |
-| PopAllContexts |  Clears the context stack, and the active context becomes the empty string: `""`  | None | Empty string | Yes |
-| GetCurrentContext |  Returns the context at the top of the stack. If the stack is empty, returns: `""`  | None | String | Yes |
+| PushContext |  将新的上下文推入堆栈，成为活动上下文。  | String | None | Yes |
+| PopContext |  从输入上下文堆栈中移除顶层上下文。 | None | None | Yes |
+| PopAllContexts |  清除上下文堆栈，活动上下文变为空字符串： `""`  | None | Empty string | Yes |
+| GetCurrentContext |  返回堆栈顶部的上下文。如果堆栈为空，则返回： `""`  | None | String | Yes |
 
-**Example Input Contexts**
-You can use the **Input contexts** parameter to specify what context asset binding is available. For example, you can switch contexts so that when a character is under water, the input events are different than when the character is on the ground.
-For example, for the **Input** component, you can specify **Input contexts**, such as an empty string, `"under water`", and `"run"`. When you add a **Lua** component to the entity, you can specify the different **Input contexts**, `"under water"`, and `"run"` in your Lua script.
-This means that when your Lua script runs, the Lua script tells the **Input** component which context to use.
+**输入上下文**示例
+您可以使用**Input contexts**参数来指定可用的资产绑定上下文。例如，您可以切换上下文，使角色在水下时的输入事件与角色在地面上时的输入事件不同。
+例如，对于**Input**组件，您可以指定**Input contexts**，如空字符串、`"under water"`和`"run"`。在实体中添加**Lua**组件时，您可以在 Lua 脚本中指定不同的**Input contexts**、`"under water"`, 和 `"run"`。
+这意味着当您的 Lua 脚本运行时，Lua 脚本会告诉 **Input** 组件使用哪种上下文。
 
 ```
 local foo

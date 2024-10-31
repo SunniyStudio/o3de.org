@@ -1,46 +1,45 @@
 ---
 linkTitle: Simple State
-title: Simple State Component
-description: Use the Simple State component in Open 3D Engine (O3DE) to provide a simple state
-  machine.
+title: Simple State 组件
+description: 使用 Open 3D Engine (O3DE) 中的 Simple State 组件提供一个简单的状态机。
 ---
 
-The **Simple State** component provides a simple state machine. Each state is represented by a name and an array of zero or more entities. The entities are activated upon entering the state and deactivated upon exiting it. A simple state component may be in `NullState`, which means no state is active.
+**Simple State**组件提供了一个简单的状态机。每个状态由一个名称和一个包含零个或多个实体的数组表示。实体在进入状态时被激活，在退出状态时被停用。简单状态组件可能处于`NullState`，即没有激活状态。
 
-## Provider
+## 提供方
 
 [O3DE Core (LmbrCentral) Gem](/docs/user-guide/gems/reference/o3de-core)
 
-## Simple State properties
+## Simple State 属性
 
 ![Simple State component properties](/images/user-guide/components/reference/gameplay/simple-state-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 名称 | 值 | 默认值 |
 |-|-|-|-|
-| **Initial state** | The active state when the Simple State component is first activated. | `<None>` or state **Name** | `<None>` |
-| **Reset on activate** | If enabled, Simple State component returns to the **Initial state** when activated, and not the state held before deactivating. | Boolean | `Enabled` |
-| **States** | An array of states. |  |  |
-| **States** - **Name** | Defines the name of the state. | String | `New State` |
-| **States** - **Entities** | An array of entities that are associated with a state. | EntityId | None |
+| **Initial state** | Simple State组件首次激活时的活动状态。 | `<None>` or state **Name** | `<None>` |
+| **Reset on activate** | 如果启用，Simple State组件会在激活时返回**Initial state**，而不是停用前的状态。 | Boolean | `Enabled` |
+| **States** | 状态数组。 |  |  |
+| **States** - **Name** | 定义状态的名称。 | String | `New State` |
+| **States** - **Entities** | 与状态相关联的实体数组。 | EntityId | None |
 
 ## SimpleStateComponentRequestBus
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `GetCurrentState` | Returns the **Name** of the current state. | None | State: String | Yes |
-| `GetNumStates` | Returns the total number of states. | None | Count: Integer | Yes |
-| `SetState` | Sets the component to a specific state by **Name**. | State: String | None | Yes |
-| `SetStateByIndex` | Sets the component to a specific state by its index in the **States** array. | State Index: Integer | None | Yes |
-| `SetToFirstState` | Sets the component to State[0], the first state in the **States** array. | None | None | Yes |
-| `SetToLastState` | Sets the component to the last state in the **States** array. | None | None | Yes |
-| `SetToNextState` | Sets the component to the next state in the **States** array. | None | None | Yes |
-| `SetToPreviousState` | Sets the component to the previous state in the **States** array. | None | None | Yes |
+| `GetCurrentState` | 返回当前状态的**Name**。 | None | State: String | Yes |
+| `GetNumStates` | 返回状态总数。 | None | Count: Integer | Yes |
+| `SetState` | 根据**Name**将组件设置为特定状态。 | State: String | None | Yes |
+| `SetStateByIndex` | 根据组件在 **States** 数组中的索引，将组件设置为特定状态。 | State Index: Integer | None | Yes |
+| `SetToFirstState` | 将组件设置为 State[0]，即 **States** 数组中的第一个状态。 | None | None | Yes |
+| `SetToLastState` | 将组件设置为 **States** 数组中的最后一个状态。 | None | None | Yes |
+| `SetToNextState` | 将组件设置为 **States** 数组中的下一个状态。 | None | None | Yes |
+| `SetToPreviousState` | 将组件设置为 **States** 数组中的前一个状态。 | None | None | Yes |
 
 
 ## SimpleStateComponentNotificationBus
 
-| Notification Name | Description | Parameter | Return | Scriptable |
+| 通知名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `OnStateChanged` | Notifies listeners that the state has changed. | None | Old State: String, New State: String | Yes |
+| `OnStateChanged` | 通知侦听器状态已更改。 | None | Old State: String, New State: String | Yes |
 
-For more information, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+更多信息，请参阅 [使用事件总线 (EBus) 系统](/docs/user-guide/programming/messaging/ebus/)。

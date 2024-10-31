@@ -1,36 +1,36 @@
 ---
 linkTitle: Look-At
-title: Look-At Component
-description: Use the Look-At component to force an entity to face another entity in your Open 3D Engine (O3DE) level.
+title: Look-At 组件
+description: 在Open 3D Engine (O3DE)关卡中，使用 Look-At 组件可强制一个实体面向另一个实体。
 ---
 
-Use the **Look-At** component to force an entity to face another entity or position in your Open 3D Engine (O3DE) level.
+使用**Look-At**组件可在Open 3D Engine (O3DE)关卡中强制一个实体面向另一个实体或位置。
 
-## Provider
+## 提供方
 
 [O3DE Core (LmbrCentral) Gem](/docs/user-guide/gems/reference/o3de-core)
 
-## Look-At properties
+## Look-At 属性
 
 ![Look-At component properties](/images/user-guide/components/reference/gameplay/look-at-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Target** | Sets a target entity, the **Forward Axis** of the entity with the Look-At component will always point towards the **Target** entity. | EntityId | None |
-| **Forward Axis** | Sets the axis that will always point towards **Target** entity. | `Y+`, `Y-`, `X+`, `X-`, `Z+`, `Z-` | None |
+| **Target** | 设置目标实体后，带有Look-At 组件的实体的**Forward Axis**将始终指向**Target**实体。 | EntityId | None |
+| **Forward Axis** | 设置始终指向**Target**实体的轴。 | `Y+`, `Y-`, `X+`, `X-`, `Z+`, `Z-` | None |
 
 ## LookAt
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `SetAxis` | Sets the **Forward Axis** of the Look-At component. | Axis: 0 - 5; 0 = `X+`, 1 = `X-`, 2 = `Y+`, 3 = `Y-`, 4 = `Z+`, 5 = `Z-`| None | Yes |
-| `SetTarget` | Sets the **Target** entity of the Look-At component. | Target Entity: EntityId | None | Yes |
-| `SetTargetPosition` | Sets the Look-At component to always point to a specific position. | Target Position: Vector3 | None | Yes |
+| `SetAxis` | 设置Look-At组件的**Forward Axis**。 | Axis: 0 - 5; 0 = `X+`, 1 = `X-`, 2 = `Y+`, 3 = `Y-`, 4 = `Z+`, 5 = `Z-`| None | Yes |
+| `SetTarget` | 设置 Look-At 组件的 **Target** 实体。 | Target Entity: EntityId | None | Yes |
+| `SetTargetPosition` | 设置 Look-At 组件始终指向特定位置。 | Target Position: Vector3 | None | Yes |
 
 ## LookAtNotification
 
-| Notification Name | Description | Parameter | Return | Scriptable |
+| 通知名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `OnTargetChanged` | Notifies listeners when the **Target** entity of the Look-At component changes. | None | Target Entity: EntityId | Yes |
+| `OnTargetChanged` | 当Look-At组件的 **Target** 实体发生变化时通知侦听器。 | None | Target Entity: EntityId | Yes |
 
-For more information, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+更多信息，请参阅 [使用事件总线 (EBus) 系统](/docs/user-guide/programming/messaging/ebus/)。

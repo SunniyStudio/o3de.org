@@ -1,55 +1,55 @@
 ---
 linkTitle: Tag
-title: Tag Component
-description: Use the Tag component to apply labels to entities in Open 3D Engine (O3DE).
+title: Tag 组件
+description: 使用Tag组件可将标签应用到Open 3D Engine (O3DE)中的实体。
 ---
 
-Use the **Tag** component to apply one or more labels, or *tags*, to an entity. Use these tags to find or filter entities with particular labels.
+使用 **Tag** 组件可将一个或多个标签或 *tags* 应用于实体。使用这些标签可查找或过滤具有特定标签的实体。
 
-## Provider
+## 提供方
 
 [O3DE Core (LmbrCentral) Gem](/docs/user-guide/gems/reference/o3de-core)
 
-## Tag properties
+## Tag 属性
 
 ![Tag component properties](/images/user-guide/components/reference/gameplay/tag-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Tags** | An array of tags that are added to the entity. | Array: Tag | None |
+| **Tags** | 添加到实体中的标签数组。 | Array: Tag | None |
 
 ## TagHelper
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `GetEntitiesbyTag` | Returns the array of entities with a specific tag. | Tag: Crc32 | Array: EntityIds | Yes |
+| `GetEntitiesbyTag` | 返回具有特定标记的实体数组。 | Tag: Crc32 | Array: EntityIds | Yes |
 
 ## TagComponentRequestBus
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `AddTag` | Adds a tag to the entity. | Tag: Crc32 | None | Yes |
-| `HasTag` | Returns `True` if the entity has a specific tag. | Tag: Crc32 | Boolean | Yes |
-| `RemoveTag` | Removes a specific tag from the entity. | Tag: Crc32 | None | Yes |
+| `AddTag` | 为实体添加一个标签。 | Tag: Crc32 | None | Yes |
+| `HasTag` | 如果实体有特定标签，则返回 `True`。 | Tag: Crc32 | Boolean | Yes |
+| `RemoveTag` | 从实体中删除特定标签。 | Tag: Crc32 | None | Yes |
 
 ## TagComponentNotificationsBus
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `OnTagAdded` | Notifies listeners when any tag is added to a specific entity. | Entity: EntityId | Tag: Crc32 | Yes |
-| `OnTagRemoved` | Notifies listeners when any tag is removed from a specific entity. | Entity: EntityId | Tag: Crc32 | Yes |
+| `OnTagAdded` | 在特定实体添加任何标记时通知侦听器。 | Entity: EntityId | Tag: Crc32 | Yes |
+| `OnTagRemoved` | 当从特定实体移除任何标记时通知侦听器。 | Entity: EntityId | Tag: Crc32 | Yes |
 
 ## TagGlobalRequestBus
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `RequestTaggedEntities` | Returns the first entity to respond with a specific tag. | Tag: Crc32 | Tagged Entity: EntityId | Yes |
+| `RequestTaggedEntities` | 返回第一个响应特定标记的实体。 | Tag: Crc32 | Tagged Entity: EntityId | Yes |
 
 ## TagGlobalNotificationBus
-
-| Request Name | Description | Parameter | Return | Scriptable |
+1
+| 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `OnEntityTagAdded` | Notifies listeners when a specific tag is added to any entity. | Tag: Crc32 | Tagged Entity: EntityId | Yes |
-| `OnEntityTagRemoved` | Notifies listeners when a specific tag is removed from any entity. | Tag: Crc32 | Untagged Entity: EntityId | Yes |
+| `OnEntityTagAdded` | 当特定标记被添加到任何实体时通知侦听器。 | Tag: Crc32 | Tagged Entity: EntityId | Yes |
+| `OnEntityTagRemoved` | 当特定标记从任何实体中移除时，通知侦听器。 | Tag: Crc32 | Untagged Entity: EntityId | Yes |
 
-For more information, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+更多信息，请参阅 [使用事件总线 (EBus) 系统](/docs/user-guide/programming/messaging/ebus/)。

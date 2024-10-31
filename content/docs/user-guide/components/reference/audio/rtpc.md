@@ -1,27 +1,27 @@
 ---
 linkTitle: Audio RTPC
-title: Audio RTPC Component
-description: Use the Audio RTPC component to set values at runtime that produce real-time tweaking of sounds in Open 3D Engine.
+title: Audio RTPC 组件
+description: 使用Audio RTPC 组件可在运行时设置数值，从而实时调整 Open 3D Engine 中的声音。
 toc: true
 ---
 
-The **Audio RTPC** component provides basic [Real-Time Parameter Control (RTPC)](/docs/user-guide/interactivity/audio/atl-default-controls) functionality. An RTPC is a named variable that the audio system can interpret in many different ways. It allows game developers to set the value from the game at run time to produce real-time tweaking of sounds.
+**Audio RTPC** 组件提供基本的 [实时参数控制（RTPC）](/docs/user-guide/interactivity/audio/atl-default-controls)功能。RTPC 是一个命名变量，音频系统可以用多种不同的方式对其进行解释。它允许游戏开发人员在运行时从游戏中设置值，从而对声音进行实时调整。
 
 ![Audio Rtpc component](/images/user-guide/component/audio/component-audio-rtpc1.png)
 
-## Audio RTPC Component Properties
+## Audio RTPC 组件属性
 
-| Name | Description | Default |
+| 名称 | 说明 | 默认值 |
 |------|-------------|---------|
-| **Default Rtpc** | Enter the name of the audio RTPC to use by default. You can associate any RTPC name with the entity, typically one that is meant to affect a particular trigger. | `<Empty>` |
+| **Default Rtpc** | 输入默认使用的音频 RTPC 名称。您可以将任何 RTPC 名称与实体关联，通常是要影响特定触发器的名称。 | `<Empty>` |
 
-## EBus Request Bus Interface
+## EBus  请求总线接口
 
-Use the following request functions with the EBus interface to communicate with other components of your game.
+使用 EBus 接口的下列请求功能可与游戏的其他组件进行通信。
 
-For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus)。
 
-| Name | Description | Parameters | Return | Scriptable |
+| 名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |------|-------------|------------|--------|------------|
-| **SetValue** | Sets the value of the default RTPC. | `value` - Float value of the RTPC | None | Yes |
-| **SetRtpcValue** | Sets the value of the specified RTPC. | `rtpcName` - Name of the RTPC to set; `value` - Float value to set | None | Yes |
+| **SetValue** | 设置默认 RTPC 的值。 | `value` - RTPC 的浮点数值 | None | Yes |
+| **SetRtpcValue** | 设置指定 RTPC 的值。 | `rtpcName` - 要设置的 RTPC 名称； `value` - 要设置的浮点数值 | None | Yes |

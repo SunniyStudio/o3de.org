@@ -1,28 +1,28 @@
 ---
 linkTitle: Audio Switch
-title: Audio Switch Component
-description: Use the Audio Switch component to set up a default switch and switch states for an entity in O3DE.
+title: Audio Switch 组件
+description: 使用Audio Switch组件为 O3DE 中的实体设置默认开关和开关状态。
 toc: true
 ---
 
-The **Audio Switch** component provides basic [Audio Translation Layer (ATL)](/docs/user-guide/interactivity/audio/audio-translation-layer) switch functionality. With switches (and switch states), you can specify the state of an entity. The audio middleware interprets states, modifies the behavior of sounds, and plays the appropriate sounds.
+**Audio Switch**组件提供了基本的[音频转换层（ATL）](/docs/user-guide/interactivity/audio/audio-translation-layer) 开关功能。通过开关（和开关状态），您可以指定实体的状态。音频中间件会解释状态、修改声音行为并播放相应的声音。
 
 ![Audio Switch component](/images/user-guide/component/audio/component-audio-switch1.png)
 
-## Audio Switch Properties
+## Audio Switch 属性
 
-| Name | Description | Default |
+| 名称 | 说明 | 默认值 |
 |------|-------------|---------|
-| **Default Switch** | Enter the name of the audio switch to use by default. You can associate any audio switch with the entity. | `<Empty>` |
-| **Default State** | Enter the name of the audio switch state to use by default. Use the [Audio Controls Editor](/docs/user-guide/interactivity/audio/audio-controls-editor) to assign the state to the switch. When this component is activated, the **Default Switch** is set to the **Default State**. | `<Empty>` |
+| **Default Switch** | 输入默认使用的音频交换机名称。您可以将任何音频交换机与实体关联。 | `<Empty>` |
+| **Default State** | 输入默认使用的音频开关状态名称。使用 [Audio Controls Editor](/docs/user-guide/interactivity/audio/audio-controls-editor) （音频控制编辑器）为开关分配状态。激活此组件时，**Default Switch**将设置为**Default State**。 | `<Empty>` |
 
-## EBus Request Bus Interface
+## EBus 请求总线接口
 
-Use the following request functions with the EBus interface to communicate with other components of your game.
+使用 EBus 接口的下列请求功能可与游戏的其他组件进行通信。
 
-For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus)。
 
-| Name | Description | Parameters | Return | Scriptable |
+| 名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |------|-------------|------------|--------|------------|
-| **SetState** | Sets the specified state of the default switch. | `stateName` - Name of the state to set  | None | Yes |
-| **SetSwitchState** | Sets a specified switch to a specified state. | `switchName` - Name of the switch to set; `stateName` - Name of the state to set | None | Yes |
+| **SetState** | 设置默认开关的指定状态。 | `stateName` - 要设置的状态名称  | None | Yes |
+| **SetSwitchState** | 将指定开关设置为指定状态。 | `switchName` - 要设置的开关名称； `stateName` - 要设置的状态名称 | None | Yes |

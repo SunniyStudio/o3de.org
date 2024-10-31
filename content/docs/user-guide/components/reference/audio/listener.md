@@ -1,81 +1,81 @@
 ---
 linkTitle: Audio Listener
-title: Audio Listener Component
-description: Use the Audio Listener component to add a virtual microphone in the Open 3D Engine environment.
+title: Audio Listener 组件
+description: 使用 Audio Listener 组件在Open 3D Engine环境中添加虚拟麦克风。
 toc: true
 ---
 
-With the **Audio Listener** component, you can place a virtual microphone in the environment. An audio listener acts as a sink for sound sources in the virtual world, and 3D audio rendering is processed with respect to the listener's world transform. You can specify the audio listener's position and rotation independently.
+通过**Audio Listener**组件，您可以在环境中放置一个虚拟麦克风。音频监听器充当虚拟世界中的声源汇，三维音频渲染会根据监听器的世界变换进行处理。您可以独立指定音频监听器的位置和旋转。
 
-## Audio Listener Properties
+## Audio Listener 属性
 
-The **Audio Listener** component has the following properties:
+**Audio Listener** 组件具有以下属性：
 
 **Rotation Entity**
-Link this property to an entity where the audio listener adopts the rotational part of the transform. The current entity is used if a value is not specified.
+将此属性链接到音频监听器采用变换旋转部分的实体。如果未指定值，则使用当前实体。
 
 **Position Entity**
-Link this property to an entity where the audio listener adopts the positional part of the transform. The current entity is used if a value is not specified.
+将此属性链接到音频监听器采用变换位置部分的实体。如果未指定值，则使用当前实体。
 
 **Fixed Offset**
-Link this property to an entity where the audio listener adopts the offset part of the transform. The current entity is used if a value is not specified.
+将此属性链接到音频监听器采用偏移部分变换的实体。如果未指定值，则使用当前实体。
 
 **Listener Enabled**
-Controls the initial state of the listener.
+控制监听器的初始状态。
 
-## Using the Audio Listener Component
+## 使用 Audio Listener 组件
 
-Only one audio listener is supported in a game. You can add the **Audio Listener** component to an entity that contains the game camera.
+一个游戏只支持一个音频监听器。您可以将**Audio Listener**组件添加到包含游戏摄像头的实体中。
 
-**To set up the Audio Listener component**
+**设置Audio Listener组件**
 
-1. In O3DE Editor, right-click the viewport in your level, and click **Create new component entity**.
+1. 在 O3DE 编辑器中，在关卡中右击视口，选择 **Create new component entity**。
 
-1. Click **Tools**, **Entity Inspector**. Be sure that your new component entity is selected in the viewport.
+1. 点击 **Tools**, **Entity Inspector**。确保在视口中选中你的新的组件实体。
 
-1. In the **Entity Inspector**, click **Add Component**, **Audio**, **Audio Listener**.
+1. 在 **Entity Inspector**中，点击 **Add Component**, **Audio**, **Audio Listener**。
 
-## EBus Request Bus Interface
+## EBus 请求总线接口
 
-Use the following request functions with the EBus interface to communicate with other components of your game.
+使用 EBus 接口的下列请求功能可与游戏的其他组件进行通信。
 
-For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
 ### SetRotationEntity
 
-Specify the entity with the rotational part of the transform that the audio listener will adopt.
+指定音频监听器将采用的具有变换旋转部分的实体。
 
-**Parameters**
-`entityId` - Entity to use for the rotational part of the transform
+**参数**
+`entityId` - 用于变换旋转部分的实体
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes
 
 ### SetPositionEntity
 
-Specify the entity with the positional part of the transform that the audio listener will adopt.
+指定具有音频监听器将采用的变换位置部分的实体。
 
-**Parameters**
-`entityId` - Entity to use for the positional part of the transform
+**参数**
+`entityId` - 用于变换位置部分的实体
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes
 
 ### SetFullTransformEntity
 
-Specify the entity with the full transform that the audio listener will adopt.
+指定音频监听器将采用的具有完整变换的实体。
 
-**Parameters**
-`entityId` - Entity to use for the transform
+**参数**
+`entityId` - 用于转换的实体
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 No

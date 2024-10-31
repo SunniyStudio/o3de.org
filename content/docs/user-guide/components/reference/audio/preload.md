@@ -1,83 +1,83 @@
 ---
 linkTitle: Audio Preload
-title: Audio Preload Component
-description: Use the Audio Area Environment component in Open 3D Engine to apply an environment effect to sounds that an entity triggers.
+title: Audio Preload 组件
+description: 使用 Open 3D Engine 中的Audio Area Environment组件，可将环境效果应用于实体触发的声音。
 toc: true
 ---
 
-Using the **Audio Preload** component, you can load and unload ATL preloads, which contain references to soundbanks. You can specify the loading type as automatic or manual. The automatic loading type means that preloads load when the component activates and unloads when it deactivates. The manual loading type means the component does not take any action until the user makes a request.
+使用**Audio Preload**组件，您可以加载和卸载 ATL 预加载，其中包含对声音库的引用。您可以将加载类型指定为自动或手动。自动加载类型是指在组件激活时加载预载，停用时卸载预载。手动加载类型是指在用户提出请求之前，组件不采取任何行动。
 
-## Audio Preload Properties
+## Audio Preload 属性
 
-The **Audio Preload** component has the following properties:
+**Audio Preload** 组件具有以下属性：
 
 **Preload Name**
-Name of the default ATL Preload that this component loads or unloads. Modify this property to define a custom default ATL preload.
-Default: Blank
+该组件加载或卸载的默认 ATL 预载的名称。修改此属性可定义自定义默认 ATL 预加载。
+默认值: Blank
 
 **Load Type**
-Set to **Auto** or **Manual**.
-If set to **Auto**, preloads load when component activates and unload when component deactivates.
-If set to **Manual**, preloads load and unload only when the user makes the request to the interface.
-Default: Auto
+设置为 **Auto** 或 **Manual**.
+如果设置为 **Auto**，当组件激活时加载预加载，当组件停用时卸载预加载。
+如果设置为 **Manual**，只有当用户向界面提出请求时，预载才会加载和卸载。
+默认值: Auto
 
-## EBus Request Bus Interface
+## EBus请求总线接口
 
-Use the following request functions with the EBus interface to communicate with other components of your game.
+使用 EBus 接口的下列请求功能可与游戏的其他组件进行通信。
 
-For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus).
-
-
-**Load**
-
-|  |  |
-| --- |--- |
-| Name | Load |
-| Description | Loads the default ATL preload (if it is set) |
-| Parameters | None |
-| Return | None |
-| Scriptable | Yes |
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus)。
 
 
 **Load**
 
 |  |  |
 | --- |--- |
-| Name | Unload |
-| Description | Unloads the default ATL preload (if it is set) |
-| Parameters | None |
-| Return | None |
-| Scriptable | Yes |
+| 名称 | Load |
+| 说明 | 加载默认 ATL 预加载（如果已设置） |
+| 参数 | None |
+| 返回值 | None |
+| 可脚本化 | Yes |
 
 
 **Load**
 
 |  |  |
 | --- |--- |
-| Name | LoadPreload |
-| Description | Loads an ATL preload by name |
-| Parameters |  **preloadName**  Name of an ATL Preload to load  |
-| Return | None |
-| Scriptable | Yes |
+| 名称 | Unload |
+| 说明 | 卸载默认 ATL 预加载（如果已设置）。 |
+| 参数 | None |
+| 返回值 | None |
+| 可脚本化 | Yes |
 
 
 **Load**
 
 |  |  |
 | --- |--- |
-| Name | UnloadPreload |
-| Description | Unloads an ATL preload by name |
-| Parameters |  **preloadName**  Name of an ATL Preload to unload  |
-| Return | None |
-| Scriptable | Yes |
+| 名称 | LoadPreload |
+| 说明 | 按名称加载 ATL 预加载 |
+| 参数 |  **preloadName**  要加载的 ATL Preload 的名称  |
+| 返回值 | None |
+| 可脚本化 | Yes |
 
 
 **Load**
 
 |  |  |
 | --- |--- |
-| Name | IsLoaded |
-| Description | Returns whether this component has loaded an ATL preload |
-| Parameters |  **preloadName**  Name of an ATL Preload to check  |
-| Return | bool True if this component has already loaded the specified preload, false otherwise |
-| Scriptable | Yes |
+| 名称 | UnloadPreload |
+| 说明 | 按名称卸载 ATL 预加载 |
+| 参数 |  **preloadName**  要卸载的 ATL Preload 的名称  |
+| 返回值 | None |
+| 可脚本化 | Yes |
+
+
+**Load**
+
+|  |  |
+| --- |--- |
+| 名称 | IsLoaded |
+| 说明 | 返回该组件是否已加载 ATL 预加载 |
+| 参数 |  **preloadName**  要检查的 ATL Preload的名称  |
+| 返回值 | bool 如果该组件已加载指定的预加载，则为 true，否则为 false |
+| 可脚本化 | Yes |

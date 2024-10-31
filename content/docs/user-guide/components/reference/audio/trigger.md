@@ -1,131 +1,131 @@
 ---
 linkTitle: Audio Trigger
-title: Audio Trigger Component
-description: Use the Audio Trigger component to set up play and stop triggers in your game in O3DE.
+title: Audio Trigger 组件
+description: 在 O3DE 中使用Audio Trigger组件在游戏中设置播放和停止触发器。
 toc: true
 ---
 
-The **Audio Trigger** component provides basic play and stop features so that you can set up [Audio Translation Layer (ATL)](/docs/user-guide/interactivity/audio/audio-translation-layer) play and stop triggers that can be executed on demand. With an audio trigger, you can also enable the player to run or stop audio triggers by name on entities.
+**Audio Trigger** 组件提供了基本的播放和停止功能，因此您可以设置[音频翻译层（ATL）](/docs/user-guide/interactivity/audio/audio-translation-layer)播放和停止触发器，以便按需执行。有了音频触发器，你还可以让播放器在实体上按名称运行或停止音频触发器。
 
-## Audio Trigger Properties
+## Audio Trigger 属性
 
-The Audio Trigger component has the following properties.
+Audio Trigger 组件具有以下属性。
 
 **Default 'play' Trigger**
-Enter the name of the audio trigger that this component runs when **'play'** is called. You can change this property to specify a different default audio trigger.
+输入该组件在调用 **'play'**时运行的音频触发器名称。您可以更改此属性，指定不同的默认音频触发器。
 
 **Default 'stop' Trigger**
-Enter the name of the audio trigger that this component runs when **'stop'** is called. You can specify any trigger here; you do not need to specify a **'stop'** trigger in order to stop audio, but it is a best practice to pair the two triggers. If you leave this setting blank, the **'stop'** trigger simply stops the audio trigger specified for **'play'**.
+输入调用 **'stop'**时该组件运行的音频触发器名称。您可以在此指定任何触发器；您不需要指定**'stop'**触发器来停止音频，但最好将两个触发器配对使用。如果将此设置留空，**'stop'** 触发器只会停止为 **'play'** 指定的音频触发器。
 
 **Obstruction Type**
-Select an option for the raycasts used in calculation of obstruction and occlusion.
+为用于计算阻塞和闭塞的射线信号选择一个选项。
 
 * **Ignore**
 * **SingleRay**
 * **MultiRay**
 
 **Play immediately**
-Select this option to run upon component activation the audio **'play'** trigger.
+选择此选项可在组件激活时运行音频**'play'**触发器。
 
-## EBus Request Bus Interface 
+## EBus 请求总线接口
 
-Use the following request functions with the EBus interface to communicate with other components of your game.
+使用 EBus 接口的下列请求功能可与游戏的其他组件进行通信。
 
-For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus)。
 
 ### Play
 
-Runs the default **'play'** trigger, if set.
+运行默认的 **'play'** 触发器（如果已设置）。
 
-**Parameters**
+**参数**
 None
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes
 
 ### Stop
 
 Runs the default **'stop'** trigger, if set. If no **'stop'** trigger is set, ends the default **'play'** trigger.
 
-**Parameters**
+**参数**
 None
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes
 
 ### ExecuteTrigger
 
-Runs the specified audio trigger.
+运行指定的音频触发器。
 
-**Parameters**
-`triggerName` - Name of the audio trigger to run.
+**参数**
+`triggerName` - 要运行的音频触发器名称。
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes
 
 ### KillTrigger
 
-Cancels the specified audio trigger.
+取消指定的音频触发。
 
-**Parameters**
-`triggerName` - Name of the audio trigger to cancel.
+**参数**
+`triggerName` - 要取消的音频触发器名称。
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes
 
 ### KillTrigger
 
-Cancels all audio triggers that are active on an entity.
+取消实体上激活的所有音频触发器。
 
-**Parameters**
+**参数**
 None
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes
 
 ### SetMovesWithEntity
 
-Specifies whether triggers should update position as the entity moves.
+指定触发器是否应在实体移动时更新位置。
 
-**Parameters**
-`shouldTrackEntity` - Boolean indicating whether triggers should track the entity's position.
+**参数**
+`shouldTrackEntity` - Boolean 表示触发器是否应跟踪实体的位置。
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes
 
-## EBus Response Bus Interface
+## EBus 响应总线接口
 
-Use the following response functions with the EBus interface to communicate with other components of your game.
+使用 EBus 接口的下列响应功能可与游戏的其他组件进行通信。
 
-For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
 ### OnTriggerFinished
 
-Informs all listeners about an audio trigger that has finished playing (the sound has ended).
+通知所有听众音频触发器已播放完毕（声音已结束）。
 
-**Parameters**
-`triggerId` - ID of trigger that was successfully executed.
+**参数**
+`triggerId` - 成功执行的触发器的 ID。
 
-**Return**
+**返回值**
 None
 
-**Scriptable**
+**可脚本化**
 Yes

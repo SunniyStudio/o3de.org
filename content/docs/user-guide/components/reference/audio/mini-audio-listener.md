@@ -1,28 +1,28 @@
 ---
 linkTitle: MiniAudio Listener 
-title: MiniAudio Listener Component
-description: Use the MiniAudio Listener component to play audio in your game in O3DE.
+title: MiniAudio Listener 组件
+description: 使用 MiniAudio Listener 组件在 O3DE 游戏中播放音频。
 toc: true
 ---
 
-The **MiniAudio Listener** component provides the ability to designate an entity whose position is used for spatial audio playback, or let the user manually control the audio listener position through the `MiniAudioListenerRequestBus`.  Typically, the entity with an active camera is designated as the audio listener entity so that spatial audio playback is relative to the viewer's location and orientation.
+**MiniAudio Listener**组件可指定用于空间音频播放的实体位置，或让用户通过 `MiniAudioListenerRequestBus` 手动控制音频监听器的位置。 通常情况下，带有活动摄像头的实体会被指定为音频监听器实体，这样空间音频播放就会相对于观看者的位置和方向。
 
-## MiniAudio Listener Properties
+## MiniAudio Listener 属性
 
-The MiniAudio Listener component has the following properties.
+MiniAudio Listener 组件具有以下属性：
 
-| Name | Description | Default |
+| 名称 | 说明 | 默认值 |
 |------|-------------|---------|
-| **Follow Entity** | The entity to use as the listener for spatial audio playback. | `<Empty>` |
-| **Listener Index** | MiniAudio listener index.  When a sound is spatialized, it will be done so relative to the closest listener.  | `0` |
+| **Follow Entity** | 用作空间音频播放监听器的实体。 | `<Empty>` |
+| **Listener Index** | MiniAudio Listener索引。 当声音被空间化时，它将相对于最近的Listener进行空间化。  | `0` |
 
-## EBus Request Bus Interface 
+## EBus 请求总线接口
 
-Use the `MiniAudioListenerRequestBus` EBus interface to communicate with the MiniAudio Listener component.
+使用 `MiniAudioListenerRequestBus` EBus 接口与 MiniAudio Listener组件通信。
 
-For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus)。
 
-| Name | Description | Parameters | Return | Scriptable |
+| 名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |------|-------------|------------|--------|------------|
-| SetFollowEntity | Set the entity for the audio listener to use for position and orientation. | `followEntity` - EntityId of the entity to follow. | None | Yes |
-| SetPosition | Set the position for the audio listener. | `position` - Vector3 world coordinates to use. | None | Yes |
+| SetFollowEntity | 为音频监听器设置用于位置和方向的实体。 | `followEntity` - 要跟踪的实体的 EntityId。 | None | Yes |
+| SetPosition | 设置音频监听器的位置。 | `position` - 要使用的世界坐标 Vector3。 | None | Yes |

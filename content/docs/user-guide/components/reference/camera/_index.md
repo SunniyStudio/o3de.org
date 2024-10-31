@@ -1,5 +1,5 @@
 ---
-title: Camera Components
+title: Camera 组件
 linktitle: Camera
-description: ' Using Camera components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用 Camera 组件 '
 ---

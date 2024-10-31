@@ -1,46 +1,46 @@
 ---
 linkTitle: Audio Area Environment
-title: Audio Area Environment Component
-description: Use the Audio Area Environment component in O3DE to apply an environment effect to sounds that an entity triggers.
+title: Audio Area Environment 组件
+description: 使用 O3DE 中的Audio Area Environment组件，可对实体触发的声音应用环境效果。
 toc: true
 ---
 
-Using the **Audio Area Environment** component, you can apply environment effects to sounds that an entity triggers. You must also add a shape component to use the audio area environment component.
+使用 **Audio Area Environment** 组件，您可以对实体触发的声音应用环境效果。要使用音频区域环境组件，还必须添加形状组件。
 
-## Audio Area Environment Properties
+## Audio Area Environment 属性
 
-The **Audio Area Environment** component has the following properties:
+**Audio Area Environment** 组件具有以下属性：
 
 **Broad-phase Trigger Area**
-Link this property to an entity that includes a trigger area and shape. This trigger area is used for broad-phase checks. The **Audio Area Environment** component tracks any entity that moves inside the trigger area.
-Default: None
+将此属性链接到包含触发区域和形状的实体。该触发区域用于宽相位检查。**Audio Area Environment**组件会跟踪在触发区域内移动的任何实体。
+默认值: None
 
 **Environment name**
-The name of the [Audio Translation Layer (ATL)](/docs/user-guide/interactivity/audio/audio-translation-layer) environment to apply to entities in the area.
-Default: None
+[Audio Translation Layer (ATL)](/docs/user-guide/interactivity/audio/audio-translation-layer)环境的名称，用于该区域的实体。
+默认值: None
 
 **Environment fade distance**
-The distance around a shape where the environment amounts will fade based on an entity's distance from the shape. Only positive, non-zero values are valid.
-Default: 1.0
+根据实体与形状的距离，环境量会逐渐减弱的形状周围的距离。只有非零的正值才有效。
+默认值: 1.0
 
-## Using the Audio Area Environment Component
+## 使用 Audio Area Environment 组件
 
-Setting up the **Audio Area Environment** component requires two entities. The second entity is linked to the **Audio Area Environment** component in the first entity, acting as a broad-phase trigger area. When these entities are configured properly, any entity that passes near or through the inner shape of the first entity will have an environment amount applied to any triggered sounds.
+设置**Audio Area Environment**组件需要两个实体。第二个实体与第一个实体中的**Audio Area Environment**组件相连，充当宽相位触发区域。当这些实体配置正确时，任何靠近或穿过第一个实体内部形状的实体都会对任何触发的声音应用环境量。
 
-**To set up the Audio Area Environment component**
+**设置Audio Area Environment 组件**
 
-1. In O3DE Editor, right-click the viewport in your level, and click **Create new component entity**.
+1. 在 O3DE 编辑器中，右键单击关卡中的视口，然后单击**Create new component entity**。
 
-1. Click **Tools**, **Entity Inspector**. Be sure that your new component entity is selected in the viewport.
+1. 点击**Tools**，**Entity Inspector**。确保在视口中选中了新的组件实体。
 
-1. In the **Entity Inspector**, click **Add Component**, **Shape**, and then select one of the shape options.
+1. 在**Entity Inspector**中，单击**Add Component**、**Shape**，然后选择其中一个形状选项。
 
-1. Click **Add Component**, **Audio**, **Audio Area Environment**.
+1. 单击 **Add Component**，**Audio**，**Audio Area Environment**。
 
-1. Repeat steps 1 - 4 to add another entity with a **Shape** (any) component and a **Trigger Area** component (located under **Scripting**).
+1. 重复步骤 1 - 4，添加另一个具有 **Shape**（任意）组件和 **Trigger Area**组件（位于 **Scripting**下）的实体。
 
-1. Place and size the two entities so that the following conditions are met:
-   + The second entity's shape completely encompasses the first entity's shape.
-   + The second entity's shape is larger than the first entity's shape by at least the value for the **Environment fade distance**. This allows the **Audio Area Environment** component to track an entity's distance from the inner shape when the entity enters the outer trigger area.
+1. 放置两个实体并确定其大小，以满足以下条件：
+  + 第二个实体的形状完全包含第一个实体的形状。
+  + 第二个实体的形状至少比第一个实体的形状大**Environment fade distance**的值。这样，当实体进入外部触发区域时，**Audio Area Environment**组件就可以跟踪实体与内部形状的距离。
 
-1. (Optional) In the **Entity Inspector**, for the **Trigger Area** component, use the **Tag Filters** to filter entities that you don't want the **Audio Area Environment** component to process.
+1. （可选）在**Entity Inspector**中，对于**Trigger Area**组件，使用**Tag Filters**过滤不想让**Audio Area Environment**组件处理的实体。

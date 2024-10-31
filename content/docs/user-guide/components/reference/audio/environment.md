@@ -1,27 +1,27 @@
 ---
 linkTitle: Audio Environment
-title: Audio Environment Component
-description: Use the Audio Environment component to set up a default environment for an entity in Open 3D Engine.
+title: Audio Environment 组件
+description: 使用 Audio Environment 组件为 Open 3D Engine中的实体设置默认环境。
 toc: true
 ---
 
-The **Audio Environment** component provides access to features of the [Audio Translation Layer (ATL)](/docs/user-guide/interactivity/audio/audio-translation-layer) environments. Environments are used to apply environmental effects such as reverb or echo.
+**Audio Environment**组件提供对[Audio Translation Layer (ATL)](/docs/user-guide/interactivity/audio/audio-translation-layer)环境功能的访问。环境用于应用混响或回声等环境效果。
 
 ![Audio Environment component](/images/user-guide/component/audio/component-audio-environment1.png)
 
-## Audio Environment Properties
+## Audio Environment 属性
 
-| Name | Description | Default |
+| 名称 | 说明 | 默认值 |
 |------|-------------|---------|
-| **Default Environment** | Enter the name of the audio environment to use by default when setting amounts. | `<Empty>` |
+| **Default Environment** | 输入设置量时默认使用的音频环境名称。 | `<Empty>` |
 
-## EBus Request Bus Interface
+## EBus请求总线接口
 
-Use the following request functions with the EBus interface to communicate with other components of your game.
+使用 EBus 接口的下列请求功能可与游戏的其他组件进行通信。
 
-For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用事件总线（EBus）接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
-| Name | Description | Parameters | Return | Scriptable |
+| 名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |------|-------------|------------|--------|------------|
-| **SetAmount** | Sets the amount of environmental **'send'** to apply to the default environment, if set. | `amount` - Float value of the amount to set | None | Yes |
-| **SetEnvironmentAmount** | Sets the amount of environmental **'send'** to apply to the specified environment. | `environmentName` - Name of ATL Environment to set an amount on; `amount` - Float value of the amount to set | None | Yes |
+| **SetAmount** | 设置应用于默认环境的环境**'发送'**量（如果已设置）。 | `amount` - 要设置的量的浮点数值 | None | Yes |
+| **SetEnvironmentAmount** | 设置应用于指定环境的环境**'发送'**量。 | `environmentName` - 要设置量的 ATL 环境名称； `amount` - 要设置的量的浮点数值 | None | Yes |

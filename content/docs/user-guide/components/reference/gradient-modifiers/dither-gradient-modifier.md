@@ -1,65 +1,65 @@
 ---
 linktitle: Dither Gradient Modifier
-title: Dither Gradient Modifier Component
-description: Use the Dither Gradient Modifier component to apply a dither effect to a gradient in Open 3D Engine (O3DE).
+title: Dither Gradient Modifier 组件
+description: 在Open 3D Engine (O3DE)中，使用Dither Gradient Modifier组件对渐变应用抖动效果。
 ---
 
-The **Dither Gradient Modifier** component applies an [ordered dithering](https://en.wikipedia.org/wiki/Ordered_dithering) algorithm to a gradient.
+**Dither Gradient Modifier**  组件将[有序抖动](https://en.wikipedia.org/wiki/Ordered_dithering) 算法应用于梯度。
 
-## Provider
+## 提供方
 
 [Gradient Signal Gem](/docs/user-guide/gems/reference/utility/gradient-signal)
 
-## Dither Gradient Modifier properties
+## Dither Gradient Modifier 属性
 
 ![Dither Gradient Modifier component properties](/images/user-guide/components/reference/gradient-modifiers/dither-gradient-modifier-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Pattern Offset** | Shifts the pattern's lookup indexes. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Pattern Type** | Sets the pattern of the dithering effect. | `4x4` or `8x8` | `4x4` |
-| **Sample Settings - Use System Points Per Unit** | If `Enabled`, **Points Per Unit** is set automatically to the sector's density divided by the sector's size. | Booelan | `Enabled` |
-| **Sample Settings - Points Per Unit** | Sets the value to scale the input position by before the gradient is sampled. | 0.001 to Infinity | `1.0` |
-| **Gradient** | Refer to [Gradient properties](#gradient-properties) below. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容Shape组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中没有选择实体时，此字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Pattern Offset** | 移动模式的查找索引。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Pattern Type** | 设置抖动效果的模式。 | `4x4` or `8x8` | `4x4` |
+| **Sample Settings - Use System Points Per Unit** |  如果`Enabled`，**Points Per Unit** 会自动设置为扇区密度除以扇区大小。 | Booelan | `Enabled` |
+| **Sample Settings - Points Per Unit** | 设置梯度采样前缩放输入位置的值。| 0.001 to Infinity | `1.0` |
+| **Gradient** | 请参阅下面的 [Gradient 属性](#gradient-properties)。 | | |
 
-### Gradient properties
+### Gradient 属性
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | EntityId | None |
-| **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Invert Input** | Inverts the values of the input gradient. | Boolean | `Disabled` |
-| **Preview (Input)** | Displays the gradient provided by the entity set in **Gradient Entity Id**. |  |  |
-| **Enable Transform** | If `Enabled`, the translation, scale, and rotation of the input gradient may be modified. | Boolean | `Disabled` |
-| **Translate** | Sets the translation of the input gradient. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Scale** | Sets the scale of the input gradient. | Vector3: 0.0001 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Rotate** | Sets the rotation of the input gradient. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Enable Levels** | If `Enabled`, the input and output values of the input gradient may be modified. | Boolean | `Disabled` |
-| **Input Mid** | Sets the median value of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Input Min** | Sets a minimum value for the input gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Input Max** | Sets a maximum value for the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Output Min** | Sets a minimum value for the output gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Output Max** | Sets a maximum value for the output gradient. | Float: 0.0 - 1.0 | `1.0` |
+| **Gradient Entity Id** | 设置具有活动 **Gradient** 组件的实体。 | EntityId | None |
+| **Opacity** | 设置输入渐变的不透明度。 | Float: 0.0 - 1.0 | `1.0` |
+| **Invert Input** | 反转输入梯度的值。 | Boolean | `Disabled` |
+| **Preview (Input)** | 显示由 **Gradient Entity Id** 中设置的实体提供的渐变。 |  |  |
+| **Enable Transform** | 如果`Enabled`，则可以修改输入梯度的平移、缩放和旋转。 | Boolean | `Disabled` |
+| **Translate** | 设置输入梯度的平移。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Scale** | 设置输入梯度的比例。 | Vector3: 0.0001 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Rotate** | 设置输入梯度的旋转角度。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Enable Levels** | 如果 `Enabled`，则可以修改输入梯度的输入值和输出值。 | Boolean | `Disabled` |
+| **Input Mid** | 设置输入梯度的中值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Input Min** | 设置输入梯度的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Input Max** | 设置输入梯度的最大值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Output Min** | 设置输出梯度的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Output Max** | 设置输出梯度的最大值。 | Float: 0.0 - 1.0 | `1.0` |
 
 ## DitherGradientRequestBus
 
-Use the following request functions with the `DitherGradientRequestBus` EBus interface to communicate with Dither Gradient Modifier components in your game.
+使用以下带有 `DitherGradientRequestBus` EBus 接口的请求函数与游戏中的 Dither Gradient Modifier 组件进行通信。
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `GetGradientSampler` | Returns the gradient sampler object of the dither gradient. | None | Gradient Sampler | Yes |
-| `GetPatternOffset` | Returns the value of **Pattern Offset**. | None | Offset: Vector3 | Yes |
-| `GetPatternType` | Returns the value of **Pattern Type**. | None | Pattern Type Index: Integer | Yes |
-| `GetPointsPerUnit` | Returns the value of **Points Per Unit**. | None | Points: Float | Yes |
-| `GetUseSystemPointsPerUnit` | Returns the value of **Use System Points Per Unit**. | None | Boolean | Yes |
-| `SetPatternOffset` | Sets the value of **Pattern Offset**. | Offset: Vector3 | None | Yes |
-| `SetPatternType` | Sets the value of **Pattern Type**. | Pattern Type Index: Integer | None | Yes |
-| `SetPointsPerUnit` | Sets the value of **Points Per Unit**. | Points: Float | None | Yes |
-| `SetUseSystemPointsPerUnit` | Sets the value of **Use System Points Per Unit**. | Boolean | None | Yes |
+| `GetGradientSampler` | 返回抖动梯度的梯度采样器对象。 | None | Gradient Sampler | Yes |
+| `GetPatternOffset` | 返回**Pattern Offset**的值。 | None | Offset: Vector3 | Yes |
+| `GetPatternType` | 返回**Pattern Type**的值。 | None | Pattern Type Index: Integer | Yes |
+| `GetPointsPerUnit` | 返回**Points Per Unit**的值。 | None | Points: Float | Yes |
+| `GetUseSystemPointsPerUnit` | 返回 **Use System Points Per Unit**的值。 | None | Boolean | Yes |
+| `SetPatternOffset` | 设置**Pattern Offset**的值。 | Offset: Vector3 | None | Yes |
+| `SetPatternType` | 设置**Pattern Type**的值。 | Pattern Type Index: Integer | None | Yes |
+| `SetPointsPerUnit` | 设置**Points Per Unit**的值。 | Points: Float | None | Yes |
+| `SetUseSystemPointsPerUnit` | 设置**Use System Points Per Unit**的值。 | Boolean | None | Yes |

@@ -1,5 +1,5 @@
 ---
-title: Gradient Modifiers Components
+title: Gradient Modifiers 组件
 linktitle: Gradient Modifiers
-description: ' Using Gradient Modifiers components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用Gradient Modifiers。 '
 ---

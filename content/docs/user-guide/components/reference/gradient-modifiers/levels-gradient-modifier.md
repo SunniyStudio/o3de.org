@@ -1,68 +1,68 @@
 ---
 linktitle: Levels Gradient Modifier
-title: Levels Gradient Modifier Component
-description: Use the Levels Gradient Modifier component to modify input and output gradient values in Open 3D Engine (O3DE).
+title: Levels Gradient Modifier 组件
+description: 使用Levels Gradient Modifier组件可修改Open 3D Engine (O3DE)中的输入和输出梯度值。
 ---
 
-The **Levels Gradient Modifier** component modifies the high, mid, and low values of an input gradient and sets the minimum and maximum values of the output gradient.
+**Levels Gradient Modifier** 组件修改输入梯度的高、中、低值，并设置输出梯度的最小值和最大值。
 
-## Provider
+## 提供方
 
 [Gradient Signal Gem](/docs/user-guide/gems/reference/utility/gradient-signal)
 
-## Levels Gradient Modifier properties
+## Levels Gradient Modifier 属性
 
 ![Levels Gradient Modifier component properties](/images/user-guide/components/reference/gradient-modifiers/levels-gradient-modifier-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Input Mid** | Sets the median value of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Input Min** | Sets a minimum value for the input gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Input Max** | Sets a maximum value for the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Output Min** | Sets a minimum value for the output gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Output Max** | Sets a maximum value for the output gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Gradient** | Refer to [Gradient properties](#gradient-properties) below. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中未选择实体时，该字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Input Mid** | 设置输入梯度的中值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Input Min** | 设置输入梯度的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Input Max** | 设置输入梯度的最大值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Output Min** | 设置输出梯度的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Output Max** | 设置输出梯度的最大值。. | Float: 0.0 - 1.0 | `1.0` |
+| **Gradient** | 请参阅下方的 [Gradient 属性](#gradient-properties)。 | | |
 
 ### Gradient properties
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | EntityId | None |
+| **Gradient Entity Id** | 设置具有活动 **Gradient** 组件的实体。 | EntityId | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Invert Input** | Inverts the values of the input gradient. | Boolean | `Disabled` |
-| **Preview (Input)** | Displays the gradient provided by the entity set in **Gradient Entity Id**. |  |  |
-| **Enable Transform** | If `Enabled`, the translation, scale, and rotation of the input gradient may be modified. | Boolean | `Disabled` |
-| **Translate** | Sets the translation of the input gradient. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Scale** | Sets the scale of the input gradient. | Vector3: 0.0001 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Rotate** | Sets the rotation of the input gradient. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Enable Levels** | If `Enabled`, the input and output values of the input gradient may be modified. | Boolean | `Disabled` |
-| **Input Mid** | Sets the median value of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Input Min** | Sets a minimum value for the input gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Input Max** | Sets a maximum value for the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Output Min** | Sets a minimum value for the output gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Output Max** | Sets a maximum value for the output gradient. | Float: 0.0 - 1.0 | `1.0` |
+| **Invert Input** | 反转输入梯度的值。 | Boolean | `Disabled` |
+| **Preview (Input)** | 显示由 **Gradient Entity Id** 中设置的实体提供的渐变。 |  |  |
+| **Enable Transform** | 如果`Enabled`，则可以修改输入梯度的平移、缩放和旋转。 | Boolean | `Disabled` |
+| **Translate** | 设置输入梯度的平移。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Scale** | 设置输入梯度的比例。 | Vector3: 0.0001 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Rotate** | 设置输入梯度的旋转角度。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Enable Levels** | 如果`Enabled`，则可以修改输入梯度的输入值和输出值。 | Boolean | `Disabled` |
+| **Input Mid** | 设置输入梯度的中值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Input Min** | 设置输入梯度的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Input Max** | 设置输入梯度的最大值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Output Min** | 设置输出梯度的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Output Max** | 设置输出梯度的最大值。 | Float: 0.0 - 1.0 | `1.0` |
 
 ## LevelsGradientRequestBus
 
-Use the following request functions with the `LevelsGradientRequestBus` EBus interface to communicate with Levels Gradient Modifier components in your game.
+使用以下带有`LevelsGradientRequestBus` EBus 接口的请求函数与游戏中的 Levels Gradient Modifier组件进行通信。
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `GetGradientSampler` | Returns the gradient sampler object of the inverted gradient. | None | Gradient Sampler | Yes |
-| `GetInputMax` | Returns the value of **Input Max**. | None | Max: Float | Yes |
-| `GetInputMid` | Returns the value of **Input Mid**. | None | Mid: Float | Yes |
-| `GetInputMin` | Returns the value of **Input Min**. | None | Min: Float | Yes |
-| `GetOutputMax` | Returns the value of **Output Max**. | None | Max: Float | Yes |
-| `GetOutputMin` | Returns the value of **Output Min**. | None | Min: Float | Yes |
-| `SetInputMax` | Sets the value of **Input Max**. | Max: Float | None | Yes |
-| `SetInputMid` | Sets the value of **Input Mid**. | Mid: Float | None | Yes |
-| `SetInputMin` | Sets the value of **Input Min**. | Min: Float | None | Yes |
-| `SetOutputMax` | Sets the value of **Output Max**. | Max: Float | None | Yes |
-| `SetOutputMin` | Sets the value of **Output Min**. | Min: Float | None | Yes |
+| `GetGradientSampler` | 返回反转梯度的梯度采样器对象。 | None | Gradient Sampler | Yes |
+| `GetInputMax` | 返回 **Input Max**的值。 | None | Max: Float | Yes |
+| `GetInputMid` | 返回 **Input Mid**的值。 | None | Mid: Float | Yes |
+| `GetInputMin` | 返回 **Input Min**的值。 | None | Min: Float | Yes |
+| `GetOutputMax` | 返回 **Output Max**的值。 | None | Max: Float | Yes |
+| `GetOutputMin` | 返回 **Output Min**的值。 | None | Min: Float | Yes |
+| `SetInputMax` | 设置 **Input Max**的值。 | Max: Float | None | Yes |
+| `SetInputMid` | 设置 **Input Mid**的值。 | Mid: Float | None | Yes |
+| `SetInputMin` | 设置 **Input Min**的值。 | Min: Float | None | Yes |
+| `SetOutputMax` | 设置 **Output Max**的值。 | Max: Float | None | Yes |
+| `SetOutputMin` | 设置 **Output Min**的值。 | Min: Float | None | Yes |

@@ -29,7 +29,7 @@ Because White Box is implemented as a component, you can create well-defined ent
 {{% /tab %}}
 {{< /tabs >}}
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Save as asset** | Choose this button to save the proxy mesh to a white box mesh \(`.wbm`\) asset. You can load the saved \(`.wbm`\) asset in other White Box components. The `.wbm` file functions like an instance, and any changes made to the mesh propagate to all White Box components that use the `.wbm` file. |||
 | **Export** | Choose the **Export** button to export the mesh to a `.obj` file. The `.obj` file can be loaded into a 3D modeling application and used as a template for creating the production mesh asset for the entity. |||
@@ -43,7 +43,7 @@ Because White Box is implemented as a component, you can create well-defined ent
 ### Mesh Asset properties
 *Mesh Asset properties are available only for the Mesh Asset **Default Shape** type.*
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Mesh Asset** | A pre-existing white box mesh \(`.wbm`\) asset to use for the default white box primitive shape. | The path to the mesh asset.  | None |
 

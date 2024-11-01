@@ -17,7 +17,7 @@ The **Capsule Shape** component creates a transparent capsule that's oriented on
 
 ![Capsule Shape component properties](/images/user-guide/components/reference/shape/capsule-shape-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the shape in the viewport, even when the entity is not selected. Disable to hide the shape when the entity is not selected. | Boolean | `Enabled` |
 | **Game View** | Enable to display the shape while in game mode. | Boolean | `Disabled` |
@@ -42,7 +42,7 @@ The edit mode provides two sub-modes. You can switch between sub-modes using the
 
 Use the following request functions with the `CapsuleShapeComponentRequestsBus` EBus interface to communicate with Capsule Shape components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetCapsuleConfiguration` | Returns the configuration of the capsule shape. | None | `CapsuleShapeConfig` object that contains the properties `Height` and `Radius`. | Yes |
 | `SetHeight` | Sets the **Height** of the capsule shape. | Height: Float | None | Yes |

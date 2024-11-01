@@ -21,6 +21,6 @@ When applying Mesh Surface Tag Emitter to an entity, the entity is required to h
 
 ![Mesh Surface Tag Emitter component properties](/images/user-guide/components/reference/surface-data/mesh-surface-tag-emitter-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Generated Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that the static mesh will emit. | Array: Surface Tags | None |

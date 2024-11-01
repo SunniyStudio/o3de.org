@@ -17,7 +17,7 @@ The **Polygon Prism Shape** component creates a transparent cuboid volume. The p
 
 ![Polygon Prism Shape component properties](/images/user-guide/components/reference/shape/polygon-prism-shape-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the shape in the viewport, even when the entity is not selected. Disable to hide the shape when the entity is not selected. | Boolean | `Enabled` |
 | **Game View** | Enable to display the shape while in game mode. | Boolean | `Disabled` |
@@ -44,7 +44,7 @@ The **Polygon Prism Shape** component creates a transparent cuboid volume. The p
 
 Use the following request functions with the `PolygonPrismShapeComponentRequestBus` EBus interface to communicate with Polygon Prism Shape components in your game. The Polygon Prism Shape component also uses `VertexContainer` functions. See [Vertex Container](/docs/user-guide/components/reference/shape/vertex-container/) for more information.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `AddVertex` | Adds a vertex to the polygon prism shape. | Vertex: Vector2 | None | Yes |
 | `ClearVertices` | Removes all vertices from the polygon prism shape.  | None | None | Yes |

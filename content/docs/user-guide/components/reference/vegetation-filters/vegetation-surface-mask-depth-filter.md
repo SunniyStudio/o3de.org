@@ -23,7 +23,7 @@ Add one of the following required components when using the Vegetation Surface M
 
 ![Vegetation Surface Mask Depth Filter component properties](/images/user-guide/components/reference/vegetation-filters/vegetation-surface-mask-depth-filter-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Filter Stage** | Defines if filters are applied before or after modifiers. | `PreProcess`, `PostProcess`, or `Default` | `Default` |
 | **Allow Per-Item Overrides** | If `Enabled`, vegetation descriptor properties that are enabled can override this component's properties. | Boolean | `Disabled` |

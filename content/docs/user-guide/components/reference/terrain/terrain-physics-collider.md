@@ -22,7 +22,7 @@ The PhysX Heightfield Collider is only a dependency when using this component wi
 
 ![Terrain Physics Heightfield Collider component properties](/images/user-guide/components/reference/terrain/terrain-physics-heightfield-collider-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Default Surface Physics Material** | Selects a [physics material](/docs/user-guide/interactivity/physics/nvidia-physx/materials) to be used by unmapped surfaces by default. | Material: Physics Material | (default) |
 | **Surface to Material Mappings** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) and physics materials to map together. |  |  |
@@ -43,7 +43,7 @@ You can assign which terrain surface types map to specific physics materials by 
 
 The `HeightfieldProviderRequestsBus` is an internal system bus that is only intended for communication between the physics system and the heightfield component. You should only typically need to use this EBus if you are implementing a new Heightfield Collider component for an alternate physics system. Use the following request functions with the `HeightfieldProviderRequestsBus` EBus interface to communicate with a Terrain Physics Heightfield Collider component.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetHeightfieldGridSpacing` | Returns the resolution of the heightfield. | None | Resolution: Vector2 | No |
 | `GetHeightfieldGridSize` | Returns the size of the heightfield in the form of a row and column count. | None | Row Count: Integer; Column Count: Integer | No |

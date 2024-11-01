@@ -17,7 +17,7 @@ The **Disk Shape** component creates a transparent circular surface that's orien
 
 ![Disk Shape component properties](/images/user-guide/components/reference/shape/disk-shape-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the shape in the viewport, even when the entity is not selected. Disable to hide the shape when the entity is not selected. | Boolean | `Enabled` |
 | **Game View** | Enable to display the shape while in game mode. | Boolean | `Disabled` |
@@ -29,7 +29,7 @@ The **Disk Shape** component creates a transparent circular surface that's orien
 
 Use the following request functions with the `DiskShapeComponentRequestsBus` EBus interface to communicate with Disk Shape components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetDiskConfiguration` | Returns the configuration of the disk shape. | None | `DiskShapeConfig` object that contains the property `Radius`. | Yes |
 |`GetRadius`| Returns the **Radius** of the disk shape. | None | Radius: Float | Yes |

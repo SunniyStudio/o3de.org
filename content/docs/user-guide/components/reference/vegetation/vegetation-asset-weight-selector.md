@@ -15,7 +15,7 @@ The **Vegetation Asset Weight Selector** component uses the values of a gradient
 
 ![Vegetation Asset Weight Selector component properties](/images/user-guide/components/reference/vegetation/vegetation-asset-weight-selector-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Sort By Weight** | Determines if asset descriptors are sorted by weight before the gradient is used to select assets. | `Unsorted`, `Ascending`, or `Descending` | `Unsorted` |
 | **Gradient** | Refer to [Gradient properties](#gradient-properties) below. |  |  |
@@ -24,7 +24,7 @@ The **Vegetation Asset Weight Selector** component uses the values of a gradient
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | Entity | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |

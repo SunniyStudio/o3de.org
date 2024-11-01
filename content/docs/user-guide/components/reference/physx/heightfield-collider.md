@@ -23,7 +23,7 @@ The PhysX Heightfield Collider component attached to an entity with an **Axis-Al
 
 ![\[PhysX Heightfield Collider component interface.\]](/images/user-guide/component/physx/physx/ui-physx-heightfield-collider-A.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 | Collision Layer | The collision layer that's assigned to this collider. For more information, see [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/). | Collision layer | `Default` |
 | Collides With | The collision group containing the layers that this collider collides with. For more information, see [Collision Groups](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). | Collision group | `All` |

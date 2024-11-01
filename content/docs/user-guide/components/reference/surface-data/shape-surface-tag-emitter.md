@@ -30,7 +30,7 @@ When applying Shape Surface Tag Emitter to an entity, the entity is required to 
 
 ![Shape Surface Tag Emitter component properties](/images/user-guide/components/reference/surface-data/shape-surface-tag-emitter-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Generated Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that the exterior surface of the shape will emit. | Array: Surface Tags | None |
 | **Extended Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that the interior of the shape will emit. | Array: Surface Tags | None |

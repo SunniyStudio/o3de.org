@@ -27,7 +27,7 @@ More than one gradient to surface type mapping can be defined in this component.
 
 ![Terrain Surface Gradient List component properties](/images/user-guide/components/reference/terrain/terrain-surface-gradient-list-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient to Surface Mappings** | An array of gradient entities and surface tags to map together. |  |  |
 | **GradientEntity** | The gradient entity to assign to this layer. | Gradient Entity | None |
@@ -38,7 +38,7 @@ More than one gradient to surface type mapping can be defined in this component.
 
 The `TerrainAreaSurfaceRequestBus` is an internal EBus used by the terrain system to query individual **Terrain Surface Gradient List** components. Other systems generally do not need to use this EBus since nothing outside the terrain system should need any information from the individual component instances. However, if a use case arises, the following request functions on the `TerrainAreaSurfaceRequestBus` EBus interface can be used to query the individual **Terrain Surface Gradient List** components.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetSurfaceWeights` | Returns all of the surfaces that are assigned to this component, along with the gradient's weight value at a specific position. | Position: Vector3 | Surface Weights: Surface Tag Weight List | No |
 | `GetSurfaceWeightsFromList` | Returns all of the surfaces that are assigned to this component, along with the gradient's weight value at a list of positions. | Position: Vector3 List | Surface Weights: Surface Tag Weight List of Lists | No |

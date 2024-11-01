@@ -23,7 +23,7 @@ Add one of the following required components when using the Vegetation Slope Ali
 
 ![Vegetation Slope Alignment Modifier component properties](/images/user-guide/components/reference/vegetation-modifiers/vegetation-slope-alignment-modifier-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Allow Per-Item Overrides** | If `Enabled`, vegetation descriptor properties that are enabled can override this component's properties. | Boolean | `Disabled` |
 | **Alignment Coefficient Min** | Sets the minimum slope alignment coefficient. | Float: 0.0 - 1 | `1.0` |
@@ -34,7 +34,7 @@ Add one of the following required components when using the Vegetation Slope Ali
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | Entity | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |

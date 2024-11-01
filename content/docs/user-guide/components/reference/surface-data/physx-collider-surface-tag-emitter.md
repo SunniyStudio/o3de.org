@@ -23,7 +23,7 @@ When applying PhysX Collider Surface Tag Emitter to an entity, the entity is req
 
 ![PhysX Collider Surface Tag Emitter component properties](/images/user-guide/components/reference/surface-data/physx-collider-surface-tag-emitter-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Generated Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that the exterior surface of the PhysX collider will emit. | Array: Surface Tags | None |
 | **Extended Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that the interior of the PhysX collider will emit. | Array: Surface Tags | None |

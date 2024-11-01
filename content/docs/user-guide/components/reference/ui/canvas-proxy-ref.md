@@ -24,7 +24,7 @@ For more information, refer to [Placing UI Canvases in the 3D World](/docs/user-
 
 ![UI Canvas Proxy Ref properties](/images/user-guide/components/reference/ui/ui-proxy-ref-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Canvas Asset Ref entity** | Selects an entity with a **UI Canvas Asset Ref** component. | EntityId | None |
 

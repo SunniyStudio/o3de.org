@@ -22,7 +22,7 @@ This is a system component, meaning it already exists when you add the vegetatio
 
 ## Parameters
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | --- | --- | --- | --- |
 | **View Area Grid Size** | The number of sectors, for each side, of a managed grid in a scrolling view centered around the camera | 1 to 128 | 13  |
 | **Sector Point Density** | The number of equally spaced vegetation instance grid placement points, for each side, within a sector | 1 to 64 | 20 |

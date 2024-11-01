@@ -14,7 +14,7 @@ Add the **Shape Falloff Gradient** component to generate a gradient of a shape s
 
 ![Shape Falloff Gradient component properties](/images/user-guide/components/reference/gradients/shape-falloff-gradient-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -28,7 +28,7 @@ Add the **Shape Falloff Gradient** component to generate a gradient of a shape s
 
 Use the following request functions with the `ShapeAreaFalloffGradientRequestBus` EBus interface to communicate with Shape Falloff Gradient components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetFalloffType` | Returns the value of the **Falloff Type** property. | None | Falloff Type Index: Integer | Yes |
 | `GetFalloffWidth` | Returns the value of the **Falloff Width** property. | None | Float | Yes |

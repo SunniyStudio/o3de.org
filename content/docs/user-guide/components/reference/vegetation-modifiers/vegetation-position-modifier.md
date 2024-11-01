@@ -23,7 +23,7 @@ Add one of the following required components when using the Vegetation Position 
 
 ![Vegetation Position Modifier component properties](/images/user-guide/components/reference/vegetation-modifiers/vegetation-position-modifier-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Allow Per-Item Overrides** | If `Enabled`, vegetation descriptor properties that are enabled can override this component's properties. | Boolean | `Disabled` |
 | **Auto Snap to Surface** | If `Enabled`, automatically snaps the modified vegetation instance position to the nearest valid surface tag.  Valid surface tags include those selected in the **Surface Tags To Snap To** property, as well as any surface tags already associated with the vegetation instance. | Boolean | `Enabled` |
@@ -42,7 +42,7 @@ Add one of the following required components when using the Vegetation Position 
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | Entity | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |

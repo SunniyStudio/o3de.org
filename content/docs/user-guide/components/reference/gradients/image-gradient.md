@@ -18,7 +18,7 @@ Add the **Image Gradient** component to generate a gradient from an image. The c
 
 ![Image Gradient component properties](/images/user-guide/components/reference/gradients/image-gradient-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. | | |
 | **Pin Preview to Shape** | Uses the bounding box of a compatible Shape component from the given entity to determine the world size of the preview. If **Constrain to Shape** is `Enabled`, the preview will constrain to the actual shape, not just the shape bounds. | EntityId | Current Entity |
@@ -70,7 +70,7 @@ The **Save Mode** determines where the image will be saved.
 
 Use the following request functions with the `ImageGradientRequestBus` EBus interface to communicate with Image Gradient components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetImageAssetPath` | Returns the path of the `AZ::RPI::StreamingImageAsset` property. | None | String | Yes |
 | `GetTilingX` | Returns the value of the **Tiling X** property. | None | Float | Yes |

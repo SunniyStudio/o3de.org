@@ -23,7 +23,7 @@ Add one of the following required components when using the Vegetation Distance 
 
 ![Vegetation Distance Between Filter component properties](/images/user-guide/components/reference/vegetation-filters/vegetation-distance-between-filter-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Allow Per-Item Overrides** | If `Enabled`, vegetation descriptor properties that are enabled can override this component's properties. | Boolean | `Disabled` |
 | **Bound Mode** | If set to `Radius`, **Radius Min** defines the minimum radius between vegetation instances. If set to `MeshRadius`, the radius of an attached **Mesh** component defines the radius of the filter. | `Radius` or `MeshRadius` | `Radius` |

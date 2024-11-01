@@ -41,7 +41,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise value gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-value.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -67,7 +67,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise value fractal gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-value-fractal.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -104,7 +104,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise perlin gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-perlin.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -130,7 +130,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise perlin fractal gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-perlin-fractal.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -168,7 +168,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise simplex gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-simplex.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -185,7 +185,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise simplex fractal gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-simplex-fractal.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -214,7 +214,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise cellular gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-cellular.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -254,7 +254,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise white noise gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-white-noise.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -270,7 +270,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise cubic gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-cubic.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -287,7 +287,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 ![FastNoise cubic fractal gradient properties](/images/user-guide/components/reference/gradients/fastnoise-gradient-component-cubic-fractal.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -318,7 +318,7 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 Use the following request functions with the `FastNoiseGradientRequestBus` EBus interface to communicate with FastNoise Gradient components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetFractalType` | Returns the value of the **FastNoise Advanced Settings - Fractal Type** property. | None | Fractal Type Index: Integer | Yes |
 | `GetFrequency` | Returns the value of the **Frequency** property. | None | Float | Yes |

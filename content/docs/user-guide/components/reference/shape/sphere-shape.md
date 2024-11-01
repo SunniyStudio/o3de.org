@@ -17,7 +17,7 @@ The **Sphere Shape** component creates a transparent sphere. The dimensions of t
 
 ![Sphere Shape component properties](/images/user-guide/components/reference/shape/sphere-shape-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the shape in the viewport, even when the entity is not selected. Disable to hide the shape when the entity is not selected. | Boolean | `Enabled` |
 | **Game View** | Enable to display the shape while in game mode. | Boolean | `Disabled` |
@@ -41,7 +41,7 @@ The edit mode provides two sub-modes. You can switch between sub-modes using the
 
 Use the following request functions with the `SphereShapeComponentRequestsBus` EBus interface to communicate with Sphere Shape components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetSphereConfiguration` | Returns the configuration of the sphere shape. | None | `SphereShapeConfig` object that contains the property `Radius`. | Yes |
 | `SetRadius` | Sets the **Radius** of the sphere shape. | Radius: Float | None | Yes |

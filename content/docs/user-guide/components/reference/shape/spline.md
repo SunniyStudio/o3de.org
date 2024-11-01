@@ -20,7 +20,7 @@ The **Spline** component creates a line that is 8 meters long, with 4 points. Th
 
 ![Linear Spline](/images/user-guide/components/reference/shape/linear-spline-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the spline in the viewport, even when the entity is not selected. Disable to hide the spline when the entity is not selected. | Boolean | `Enabled` |
 | **Configuration - Spline Type** | The interpolation type that defines the spline's segments. Linear splines have straight segments. Bezier splines interpolate a curve with uniform steps through the spline's segments. Catmull-Rom splines are defined by control points. A Catmull-Rom spline needs four control points to define each segment, so the default spline with four points will only generate one segment.  | [Linear,](#linear-spline-type-properties) [Bezier,](#bezier-spline-type-properties) [Catmull-Rom](#catmull-rom-spline-type-properties) | `Linear` |
@@ -33,7 +33,7 @@ The **Spline** component creates a line that is 8 meters long, with 4 points. Th
 
 ![Bezier Spline](/images/user-guide/components/reference/shape/bezier-spline-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the spline in the viewport, even when the entity is not selected. Disable to hide the spline when the entity is not selected. | Boolean | `Enabled` |
 | **Configuration - Spline Type** | The interpolation type that defines the spline's segments. Linear splines have straight segments. Bezier splines interpolate a curve with uniform steps through the spline's segments. Catmull-Rom splines are defined by control points. A Catmull-Rom spline needs four control points to define each segment, so the default spline with four points will only generate one segment.  | [Linear,](#linear-spline-type-properties) [Bezier,](#bezier-spline-type-properties) [Catmull-Rom](#catmull-rom-spline-type-properties) | `Linear` |
@@ -47,7 +47,7 @@ The **Spline** component creates a line that is 8 meters long, with 4 points. Th
 
 ![Catmull-Rom Spline](/images/user-guide/components/reference/shape/catmull-rom-spline-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the spline in the viewport, even when the entity is not selected. Disable to hide the spline when the entity is not selected. | Boolean | `Enabled` |
 | **Configuration - Spline Type** | The interpolation type that defines the spline's segments. Linear splines have straight segments. Bezier splines interpolate a curve with uniform steps through the spline's segments. Catmull-Rom splines are defined by control points. A Catmull-Rom spline needs four control points to define each segment, so the default spline with four points will only generate one segment.  | [Linear,](#linear-spline-type-properties) [Bezier,](#bezier-spline-type-properties) [Catmull-Rom](#catmull-rom-spline-type-properties) | `Linear` |
@@ -77,7 +77,7 @@ The **Spline** component creates a line that is 8 meters long, with 4 points. Th
 
 Use the following request functions with the `SplineComponentRequestBus` EBus interface to communicate with Spline components in your game. The Spline component also uses `VertexContainer` functions. See [Vertex Container](/docs/user-guide/components/reference/shape/vertex-container/) for more information.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetSpline` | Returns a constant pointer to the underlying spline type. You can use this function to query the spline against raycasts and positions. You can also request information, such as the length of the spline, its position, normal, and tangent at various points along the spline. | None | Spline: `AZ::ConstSplinePtr` | No |
 | `ChangeSplineType` | Changes the type of the spline to Linear, Bezier, or Catmull-Rom. | Spline Type: `AZ::u64` containing RTTI hash of the **Spline Type**. | None | No |
@@ -85,6 +85,6 @@ Use the following request functions with the `SplineComponentRequestBus` EBus in
 
 ## SplineComponentNotificationBus
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `OnSplineChanged` | Notifies listeners that the spline has been updated. | None | None | Yes |

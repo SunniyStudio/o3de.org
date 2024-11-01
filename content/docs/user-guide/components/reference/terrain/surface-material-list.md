@@ -34,7 +34,7 @@ Select the surface type tag using the **SurfaceTag** drop-down menu, then assign
 
 ![Terrain Surface Materials List component properties](/images/user-guide/components/reference/terrain/terrain-surface-materials-list-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Default Material** | The default material to fall back to when no other material surface mappings exist.<br><br>**NOTE:** The default material doesn't blend with other materials because it has no surface weight. The primary intended uses of the default material are either as an error material to see every place that a detail material hasn't been mapped, or to quickly cover an entire terrain surface with a single material without setting up more complicated mappings. | Material Asset | None |
 | **Material Mappings** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) and material assets to map together. |  |  |
@@ -46,7 +46,7 @@ Select the surface type tag using the **SurfaceTag** drop-down menu, then assign
 Use the following request functions with the `TerrainAreaMaterialRequestBus` EBus interface to communicate with Surface Material List components of your game.
 
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetTerrainSurfaceMaterialRegion` | Retrieves the Aabb for the region where a `TerrainSurfaceMaterialMapping` exists.  | None | Aabb | No |
 | `GetSurfaceMaterialMappings` | Retrieves all the assigned surface types, the materials that you have assigned to them, and the bounds that are set for this entity.  | None | Terrain Surface Material Mapping: Vector | No |

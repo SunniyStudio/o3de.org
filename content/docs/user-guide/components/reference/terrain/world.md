@@ -19,7 +19,7 @@ You must add this component to the *Level* entity, the parent of all entities in
 
 ![Terrain World component interface.](/images/user-guide/components/reference/terrain/terrain-world-A.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 | Min Height | The minimum value for the height of terrain. The **Min Height** value must be less than the **Max Height** value.<br><br>Any terrain layer spawners with a height below this height will have their minimum height clipped to the **Min Height** value. | `-65536.0` - `65536.0` | `0.0` |
 | Max Height | The maximum value for the height of terrain. The **Max Height** value must be greater than the **Min Height** value.<br><br>Any terrain layer spawners with a height above this height will have their maximum height clipped to the **Max Height** value. | `-65536.0` - `65536.0` | `1024.0` |

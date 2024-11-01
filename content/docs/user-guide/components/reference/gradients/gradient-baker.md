@@ -26,7 +26,7 @@ The final optimization step is to select all of the gradients in your chain and 
 
 ## Gradient Baker properties
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the gradient image that will be baked out of this component after all properties are applied. | | |
 | **Input Bounds** | An entity with a shape component for where to sample the data from. | EntityId | None |
@@ -36,7 +36,7 @@ The final optimization step is to select all of the gradients in your chain and 
 
 ### Gradient properties
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | EntityId | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
@@ -57,7 +57,7 @@ The final optimization step is to select all of the gradients in your chain and 
 
 Use the following request functions with the `GradientBakerRequestBus` EBus interface to communicate with the **Gradient Baker** component.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `BakeImage` | Bake the image to the output path. | None | None | Yes |
 | `GetInputBounds` | Returns AZ::EntityId of the input bounds to sample from. | None | AZ::EntityId | Yes |

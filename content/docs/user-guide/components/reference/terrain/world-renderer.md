@@ -25,7 +25,7 @@ You must add this component to the *Level* entity, the parent of all entities in
 
 ### Mesh Configuration properties
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 | **Mesh render distance** | The distance in meters from the camera that terrain meshes render to. | 1.0 - 100000.0 | `4096.0` |
 | **First LOD distance** | The distance in meters from the camera that the first LOD renders to. Subsequent LODs are located at double the distance from the previous LOD. | 1.0 - 10000.0 | `128.0` |
@@ -34,7 +34,7 @@ You must add this component to the *Level* entity, the parent of all entities in
 
 ### Detail Configuration
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 | **Height based texture blending** | If enabled, detail materials use the height texture for blending. | Boolean | `Disabled` |
 | **Detail material render distance** | The distance in meters from the camera that the detail material renders to. | 1.0 - 2048.0 | `512.0` |
@@ -43,7 +43,7 @@ You must add this component to the *Level* entity, the parent of all entities in
 
 ### Clipmap Configuration
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 | **Clipmap Enabled** | If enabled, renders terrain materials with clipmaps, instead of rendering the materials directly every frame. | Boolean | `Disabled` |
 | **Clipmap image size** | The size of the clipmap image in each layer. | `512`, `1024`, or `2048` | `1024` |

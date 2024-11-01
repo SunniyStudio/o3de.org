@@ -23,7 +23,7 @@ Add one of the following required components when using the Vegetation Rotation 
 
 ![Vegetation Rotation Modifier component properties](/images/user-guide/components/reference/vegetation-modifiers/vegetation-rotation-modifier-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Allow Per-Item Overrides** | If `Enabled`, vegetation descriptor properties that are enabled can override this component's properties. | Boolean | `Disabled` |
 | **Rotation X - Range Min** | Sets the minimum modified rotation of the vegetation instance on the X-axis. | Float: -Infinity to Infinity | `0.0` |
@@ -40,7 +40,7 @@ Add one of the following required components when using the Vegetation Rotation 
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | Entity | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |

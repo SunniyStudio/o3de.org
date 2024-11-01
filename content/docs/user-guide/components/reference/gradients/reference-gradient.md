@@ -14,7 +14,7 @@ Add the **Reference Gradient** component to reference and re-use gradients in yo
 
 ![Reference Gradient component properties](/images/user-guide/components/reference/gradients/reference-gradient-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -26,7 +26,7 @@ Add the **Reference Gradient** component to reference and re-use gradients in yo
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | EntityId | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
@@ -47,6 +47,6 @@ Add the **Reference Gradient** component to reference and re-use gradients in yo
 
 Use the following request functions with the `ReferenceGradientRequestBus` EBus interface to communicate with Reference Gradient components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetGradientSampler` | Returns the gradient sampler object of the entity selected in **Gradient Entity Id**. | None | Gradient Sampler | Yes |

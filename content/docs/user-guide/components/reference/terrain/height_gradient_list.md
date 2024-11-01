@@ -22,7 +22,7 @@ The [Terrain Layer Spawner](/docs/user-guide/components/reference/terrain/layer_
 
 ![Terrain Height Gradient List component properties](/images/user-guide/components/reference/terrain/terrain-height-gradient-list-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entities** | An array of entities with a **Gradient** component. | Array: EntityId | None |
 
@@ -30,7 +30,7 @@ The [Terrain Layer Spawner](/docs/user-guide/components/reference/terrain/layer_
 
 Use the following request functions with the `TerrainAreaHeightRequestBus` EBus interface to communicate with Terrain Height Gradient List components of your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetHeight` | Returns a Vector3 of the Query Position with the Z-value updated to the terrain's height at the query position.  Also returns a boolean value indicating if terrain exists at the Query Position. | Query Position: Vector3 | Terrain Height: Vector3, Terrain Exists: Boolean | No |
 | `GetHeights` | Takes in a list of Vector3s as input and returns the Vector3s with Z-value updated to the terrain's height at the query position.  Also updates the list of boolean values indicating if terrain exists at each Query Position. | Query Positions: List of Vector3 | Terrain Height: List of Vector3, Terrain Exists: List of Boolean | No |

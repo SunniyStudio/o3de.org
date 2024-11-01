@@ -17,7 +17,7 @@ The **Cylinder Shape** component creates a transparent cylinder that's oriented 
 
 ![Capsule Shape component properties](/images/user-guide/components/reference/shape/cylinder-shape-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the shape in the viewport, even when the entity is not selected. Disable to hide the shape when the entity is not selected. | Boolean | `Enabled` |
 | **Game View** | Enable to display the shape while in game mode. | Boolean | `Disabled` |
@@ -30,7 +30,7 @@ The **Cylinder Shape** component creates a transparent cylinder that's oriented 
 
 Use the following request functions with the `CylinderShapeComponentRequestsBus` EBus interface to communicate with Cylinder Shape components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetCylinderConfiguration` | Returns the configuration of the cylinder shape. | None | `CylinderShapeConfig` object that contains the properties `Height` and `Radius`. | Yes |
 | `SetHeight` | Sets the **Height** of the cylinder shape. | Height: Float | None | Yes |

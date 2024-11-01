@@ -18,7 +18,7 @@ Add the **Perlin Noise Gradient** component to generate a gradient with perlin n
 
 ![Perlin Noise Gradient properties](/images/user-guide/components/reference/gradients/perlin-noise-gradient-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Generate Random Seed** | Sets the **Random Seed** property below to a random value. | | |
 | **Preview** | Displays the output gradient of this component after all properties are applied. | | |
@@ -35,7 +35,7 @@ Add the **Perlin Noise Gradient** component to generate a gradient with perlin n
 
 Use the following request functions with the `PerlinGradientRequestBus` EBus interface to communicate with Perlin Noise Gradient components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetAmplitude` | Returns the value of the **Amplitude** property. | None | Float | Yes |
 | `GetFrequency` | Returns the value of the **Frequency** property. | None | Float | Yes |

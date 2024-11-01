@@ -25,7 +25,7 @@ In the image above, the White Box Collider component is added to an entity with 
 
 ![White Box Collider component interface.](/images/user-guide/components/reference/shape/white-box-collider-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Collision Layer** | The collision layer that's assigned to the collider. For more information, see [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/). || `Default` |
 | **Collides With** | The collision group containing the layers that this collider collides with. For more information, see [Collision Groups](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). || `All` |

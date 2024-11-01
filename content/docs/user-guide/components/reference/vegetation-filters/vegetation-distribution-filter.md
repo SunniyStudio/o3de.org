@@ -23,7 +23,7 @@ Add one of the following required components when using the Vegetation Distribut
 
 ![Vegetation Distribution Filter component properties](/images/user-guide/components/reference/vegetation-filters/vegetation-distribution-filter-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient with the **Threshold** properties applied. | | |
 | **Filter Stage** | Defines if filters are applied before or after modifiers. | `PreProcess`, `PostProcess`, or `Default` | `Default` |
@@ -35,7 +35,7 @@ Add one of the following required components when using the Vegetation Distribut
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | Entity | None |
 | **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |

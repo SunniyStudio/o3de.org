@@ -14,7 +14,7 @@ Add the **Slope Gradient** component to generate a normalized gradient from a sl
 
 ![Slope Gradient component properties](/images/user-guide/components/reference/gradients/slope-gradient-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -30,7 +30,7 @@ Add the **Slope Gradient** component to generate a normalized gradient from a sl
 ### Smooth Step Settings properties
 *Smooth Step Settings properties are available only for **Ramp Type** `Smooth Step`.*
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Falloff Midpoint** | Sets the midpoint of falloff values. | Float: 0.0 - 1.0 | `0.5` |
 | **Falloff Range** | Sets the range of falloff. | Float: 0.0 - 1.0 | `0.5` |
@@ -40,7 +40,7 @@ Add the **Slope Gradient** component to generate a normalized gradient from a sl
 
 Use the following request functions with the `SurfaceSlopeGradientRequestBus` EBus interface to communicate with Slope Gradient components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `AddTag` | Adds a surface tag to the **Surface Tags to track** array. | Surface Tag: String | None | Yes |
 | `GetNumTags` | Returns the number of tags in the **Surface Tags to track** array. | None | Count: Integer | Yes |

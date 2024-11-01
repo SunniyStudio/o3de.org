@@ -17,7 +17,7 @@ The **Quad Shape** component creates a transparent square plane that's oriented 
 
 ![Quad Shape component properties](/images/user-guide/components/reference/shape/quad-shape-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the shape in the viewport, even when the entity is not selected. Disable to hide the shape when the entity is not selected. | Boolean | `Enabled` |
 | **Game View** | Enable to display the shape while in game mode. | Boolean | `Disabled` |
@@ -29,7 +29,7 @@ The **Quad Shape** component creates a transparent square plane that's oriented 
 
 Use the following request functions with the `QuadShapeComponentRequestsBus` EBus interface to communicate with Quad Shape components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetQuadConfiguration` | Returns the configuration of the quad shape. | None | `LmbrCentral_QuadShapeConfig` object that contains the properties `Height` and `Width`. | Yes |
 |`GetQuadHeight`| Returns the **Height** of the quad shape. | None | Height: Float | Yes |

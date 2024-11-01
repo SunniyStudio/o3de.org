@@ -15,7 +15,7 @@ The **Axis Aligned Box Shape** component creates a transparent box that is alway
 
 ![Axis Aligned Box Shape component properties](/images/user-guide/components/reference/shape/axis-aligned-box-shape-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the shape in the viewport, even when the entity is not selected. Disable to hide the shape when the entity is not selected. | Boolean | `Enabled` |
 | **Game View** | Enable to display the shape while in game mode. | Boolean | `Disabled` |
@@ -39,7 +39,7 @@ The edit mode provides two sub-modes. You can switch between sub-modes using the
 
 Use the following request functions with the `BoxShapeComponentRequestsBus` EBus interface to communicate with Axis Aligned Box Shape components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetBoxConfiguration` | Returns the configuration of the box shape. | None | `BoxShapeConfiguration` object that contains the property `Dimensions`. | Yes |
 |`GetBoxDimensions`| Returns the **Dimensions** of the box shape. | None | Dimensions: Vector3 | Yes |

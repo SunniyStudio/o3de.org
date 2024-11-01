@@ -15,7 +15,7 @@ Combine vegetation layers with the **Vegetation Layer Blender** component.
 
 ![Vegetation Layer Blender component properties](/images/user-guide/components/reference/vegetation/vegetation-layer-blender-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Override Preview Settings** | If `Enabled`, the **Preview Settings** properties determine the shape of the vegetation layer preview.  If `Disabled`, the bounds of the vegetation layer preview are set by the Shape components of the vegetation layers selected in **Vegetation Areas**.  | Boolean | `Disabled` |
 | **Pin Preview to Shape** | Sets an entity with a compatible shape component to use as the bounds of the vegetation layer preview if **Constrain to Shape** is `Enabled`.<br> <br>*This field is available only if **Override Preview Settings** is `Enabled`.* | EntityId | Current Entity |

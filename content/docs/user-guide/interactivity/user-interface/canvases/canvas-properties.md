@@ -13,7 +13,7 @@ The canvas properties are displayed in the **UI Editor** **Properties** pane whe
 
 The following properties define how a canvas is rendered:
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Draw order** | The value of this property determines the order that this canvas draws relative to other canvases. Higher numbers draw on top of lower numbers. When canvases have the same draw order, O3DE draws them in the order that they are loaded. | Int | `0` |
 | **Is pixel aligned** | If enabled, makes textures look sharper by rounding the position of the elements' corners to the nearest exact pixel. For example, if the position of a corner of an element rectangle is at (123.45, 678.90), then it is rounded to (123.00, 679.00). | Boolean | `Enabled` |
@@ -59,7 +59,7 @@ For more detail about the AttachmentImageAsset class, refer to the following ref
 
 The following properties define how a canvas handles inputs:
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Handle positional** | Causes an automatic response to positional input such as mouse movement, mouse button clicks, and touch screen input. Keyboard inputs also cause an automatic response when an interactive UI element is active (such as an elemental with a **Text Input** component on it). <br><br> Common reasons to de-select this property are if the canvas doesn't require input, or if you configure your game to handle all inputs and pass selected inputs to the UI system.| Boolean | `True` |
 | **Consume all input** | If enabled, this canvas consumes *all* input events, regardless of whether the canvas handles a specific input event. For example, if you have canvas A covering canvas B, you probably don't want canvas B handling any input while canvas A is obstructing it, so you would select this property on canvas A. Modal dialog boxes are another example of a canvas that should have this property selected. <br><br> Note that any time a canvas is loaded, if it's set to consume all input, then it steals the inputs from any other loaded canvas. This includes canvases that are set to consume all inputs themselves. | Boolean | `False` |
@@ -73,7 +73,7 @@ The following properties define how a canvas handles inputs:
 ## Tooltips Properties 
 
 The following property defines how a canvas displays tooltips:
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Tooltip display element** | Controls which element the game displays when a user hovers over an interactive element. Select an element from the drop-down list. This list is composed of the elements on your current canvas that contain the **TooltipDisplay** component. For more information about the **Tooltips** components, see [Tooltip Components](/docs/user-guide/interactivity/user-interface/components/components-tooltips). | UI Elements with a TooltipDisplay component. | None |
 
@@ -81,7 +81,7 @@ The following property defines how a canvas displays tooltips:
 
 The following properties define UI Editor behavior:
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Snap distance** | The distance between positions on the grid when **Snap to grid** is selected in the toolbar. | Float: 1.0 to infinity | `10.0` |
 | **Snap rotation** | The number of degrees between each step of rotation when you use the rotation gizmo to rotate an element in the viewport. **Snap to grid** must be enabled in the toolbar. | Float: 1.0 to 359.0 | `10.0` |

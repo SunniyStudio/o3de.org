@@ -14,7 +14,7 @@ Add the **Surface Mask Gradient** component to generate a normalized gradient fr
 
 ![Surface Mask Gradient component properties](/images/user-guide/components/reference/gradients/surface-mask-gradient-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays the output gradient of this component after all properties are applied. | | |
 | **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
@@ -27,7 +27,7 @@ Add the **Surface Mask Gradient** component to generate a normalized gradient fr
 
 Use the following request functions with the `SurfaceMaskGradientRequestBus` EBus interface to communicate with Surface Mask Gradient components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `AddTag` | Adds a surface tag to the **Surface Tag List** array. | Surface Tag: String | None | Yes |
 | `GetNumTags` | Returns the number of tags in the **Surface Tag List** array. | None | Count: Integer | Yes |

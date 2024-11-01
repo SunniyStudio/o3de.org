@@ -33,7 +33,7 @@ The [Terrain World Renderer](/docs/user-guide/components/reference/terrain/world
 
 ![Terrain Layer Spawner component properties](/images/user-guide/components/reference/terrain/terrain-layer-spawner-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Layer Priority** | The priority of the spawner. Foreground has a higher priority than Background. | Foreground or Background | `Foreground` |
 | **Sub Priority** | Sets the priority of this spawner within the layer. Higher numbers will override lower. | 0 - 10000 | 0 |
@@ -43,7 +43,7 @@ The [Terrain World Renderer](/docs/user-guide/components/reference/terrain/world
 
 The `TerrainSpawnerRequestBus` is an internal EBus used by the terrain system to query Terrain Layer Spawner settings. Other systems generally do not need to use this EBus since nothing outside the terrain system should need any information about individual Terrain Layer Spawners. However, if a use case arises, the following request functions on the `TerrainSpawnerRequestBus` EBus interface can be used to query the individual Terrain Layer Spawner components.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetPriority` | Returns the **Layer Priority** and **Sub Priority** of the Terrain Layer Spawner. | None | Layer Priority: Integer; Sub Priority: Integer | No |
 | `GetUseGroundPlane` | Returns the value of **Use Ground Plane**. | None | Boolean | No |

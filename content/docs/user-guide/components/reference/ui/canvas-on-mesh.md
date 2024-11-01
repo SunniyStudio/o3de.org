@@ -42,6 +42,6 @@ Select one of the following required components to provide a reference to a UI c
 
 ![UI Canvas Asset Ref properties](/images/user-guide/components/reference/ui/ui-canvas-on-mesh-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Render target override** | Selects an `.attimage` [Attachment Image asset](/docs/user-guide/interactivity/user-interface/canvases/canvas-properties/#attachment-image-assets) that will override a UI Canvas' **Render Target** property. | Attachment Image asset | None |

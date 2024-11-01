@@ -172,7 +172,7 @@ The **Smoothing Radius** is separate from the Paint Brush **Size**. The Paint Br
 
 The PaintBrush provides an EBus that exposes high-level painting APIs for any component that supports runtime painting.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `StartPaintSession` | Starts a runtime paint session and creates the temporary data buffers needed for modification. | PaintableEntityId: The entity that contains a paintable component.  | `Uuid`: The new paint session ID. | Yes |
 | `EndPaintSession` | Ends the runtime paint session for the given ID and cleans up the temporary data buffers. | sessionId: The paint session ID to end. | None | Yes |

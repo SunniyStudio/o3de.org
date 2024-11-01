@@ -54,7 +54,7 @@ You can use the following functions with the event bus interface to communicate 
 
 ## ShapeComponentRequestsBus
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `DistanceFromPoint` | Returns the minimum distance between a specified point and the shape. | Point: Vector3 point to calculate distance from.  | Float - Distance from point to shape. | Yes |
 | `DistanceSquaredFromPoint` | Returns the minimum squared distance between a specified point and the shape. | Point: Vector3 point to calculate squared distance from. | Float: Squared distance from point to shape. | Yes |

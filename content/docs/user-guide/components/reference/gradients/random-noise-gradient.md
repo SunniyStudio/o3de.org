@@ -18,7 +18,7 @@ Add the **Random Noise Gradient** component to generate a gradient with random n
 
 ![Random Noise Gradient properties](/images/user-guide/components/reference/gradients/random-noise-gradient-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Generate Random Seed** | Sets the **Random Seed** property below to a random value. | | |
 | **Preview** | Displays the output gradient of this component after all properties are applied. | | |
@@ -32,7 +32,7 @@ Add the **Random Noise Gradient** component to generate a gradient with random n
 
 Use the following request functions with the `RandomGradientRequestBus` EBus interface to communicate with Random Noise Gradient components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetRandomSeed` | Returns the value of the **Random Seed** property. | None | Seed: Integer | Yes |
 | `SetRandomSeed` | Sets the value of the **Random Seed** property. | Seed: Integer | None | Yes |

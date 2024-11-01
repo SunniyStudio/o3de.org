@@ -15,7 +15,7 @@ Use the **Vegetation Asset List Combiner** component to group multiple vegetatio
 
 ![Vegetation Asset List Combiner component properties](/images/user-guide/components/reference/vegetation/vegetation-asset-list-combiner-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Descriptor Providers** | An array of vegetation asset lists that will be combined by this component. | Array: Vegetation Asset List | None |
 

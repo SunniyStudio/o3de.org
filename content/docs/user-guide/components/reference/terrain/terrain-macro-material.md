@@ -23,7 +23,7 @@ The **Terrain Macro Material** also depends on at least one **Terrain Layer Spaw
 
 ![Terrain Macro Material component properties](/images/user-guide/components/reference/terrain/terrain-macro-material-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Color Texture** | The image that will be rendered on the terrain. | Texture | None |
 | **Normal Texture** | The texture that will be used as the normal map. | Texture | None |
@@ -80,7 +80,7 @@ This structure is used when sending out information about the macro material set
 
 The `TerrainMacroMaterialRequestBus` is an internal system bus that is only intended for communication between the terrain rendering and editing systems and the Terrain Macro Material component. Other systems generally do not need to use this EBus since nothing outside the terrain system should need any information from the individual component instances. However, if a use case arises, the following request functions on the `TerrainMacroMaterialRequestBus` EBus interface can be used to query individual Terrain Macro Material components.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetTerrainMacroMaterialData` | Returns the `MacroMaterialData` structure assigned to the **Terrain Macro Material** component. | None | [MacroMaterialData](#macromaterialdata) | Yes |
 | `GetTerrainMacroColorImageSize` | Returns the height/width/depth of the color texture in pixels. | None | RHI::Size | No |

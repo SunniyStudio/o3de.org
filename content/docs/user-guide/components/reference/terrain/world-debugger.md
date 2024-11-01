@@ -23,7 +23,7 @@ You must add this component to the *Level* entity, the parent of all entities in
 
 ![Terrain World Debugger component interface.](/images/user-guide/components/reference/terrain/terrain-world-debugger.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 | Show Wireframe | Displays a wireframe representation of the Terrain World. | Boolean | `Enabled` |
 | Show World Bounds | Displays the Terrain World bounds. | Boolean | `Enabled` |
@@ -32,7 +32,7 @@ You must add this component to the *Level* entity, the parent of all entities in
 
 ### Terrain Queries Configuration
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 | **Sampler** | The type of query sampler to use for querying the terrain values. | `Exact`, `Clamp`, or `Bilinear` | `Bilinear` |
 | **Point count** | The number of points in each direction to visualize. | 1.0 - 64.0 | `32.0` |

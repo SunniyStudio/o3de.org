@@ -18,14 +18,14 @@ Use the **Vegetation Asset List** component to combine your vegetation assets in
 
 ![Vegetation Asset List component properties](/images/user-guide/components/reference/vegetation/vegetation-asset-list-component-embedded.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Source Type** | If set to `Embedded`, vegetation asset descriptors are defined in this component's interface.  If set to `External`, descriptors are defined in a Vegetation Descriptor List asset. | `Embedded` or `External` | `Embedded` |
 | **Embedded Assets** | An array of vegetation asset descriptors. |  |  |
 
 ### Asset properties
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Instance Spawner** | Sets the type of asset to spawn. | `Dynamic Slice`, `Empty Space`, or `Prefab` | `Dynamic Slice` |
 | **Asset** | Selects the source asset to spawn.<br> <br>*This field is available only if **Instance Spawner** is set to `Dynamic Slice` or `Prefab`.* | Dynamic Slice or Prefab Asset | None |
@@ -37,7 +37,7 @@ Use the **Vegetation Asset List** component to combine your vegetation assets in
 
 ![Vegetation Asset List component properties](/images/user-guide/components/reference/vegetation/vegetation-asset-list-component-external.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Source Type** | If set to `Embedded`, vegetation asset descriptors are defined in this component's interface.  If set to `External`, descriptors are defined in a Vegetation Descriptor List asset. | `Embedded` or `External` | `Embedded` |
 | **External Assets** | Selects the Vegetation Descriptor List asset that provides descriptors for this component. | Vegetation Descriptor List Asset | None |

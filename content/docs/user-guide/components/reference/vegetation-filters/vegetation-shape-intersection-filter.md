@@ -23,7 +23,7 @@ Add one of the following required components when using the Vegetation Shape Int
 
 ![Vegetation Shape Intersection Filter component properties](/images/user-guide/components/reference/vegetation-filters/vegetation-shape-intersection-filter-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Filter Stage** | Defines if filters are applied before or after modifiers. | `PreProcess`, `PostProcess`, or `Default` | `Default` |
 | **Shape Entity Id** | Selects an entity with a shape component. Instances are placed only within the bounds of the shape. | EntityId | None |

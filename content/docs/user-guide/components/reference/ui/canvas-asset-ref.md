@@ -24,7 +24,7 @@ If you want to place a UI canvas on a 3D mesh that a user can interact with, use
 
 ![UI Canvas Asset Ref properties](/images/user-guide/components/reference/ui/ui-canvas-asset-ref-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Canvas pathname** | Selects the canvas asset to load. | `.uicanvas` | None |
 | **Load automatically** | If enabled, the canvas will automatically load in an enabled state when this component activates.  | Boolean | `Disabled` |

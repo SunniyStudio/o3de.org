@@ -20,7 +20,7 @@ Add one of the following required components when using the Vegetation Layer Blo
 
 ![Vegetation Layer Blocker (Mesh) component properties](/images/user-guide/components/reference/vegetation/vegetation-layer-blocker-mesh-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Override Preview Settings** | If `Enabled`, the **Preview Settings** properties determine the shape of the blocker.  If `Disabled`, the bounds of the blocker are set by the attached Mesh or Actor component.  | Boolean | `Disabled` |
 | **Pin Preview to Shape** | Sets an entity with a compatible shape component to use as the bounds of the blocker if **Constrain to Shape** is `Enabled`.<br> <br>*This field is available only if **Override Preview Settings** is `Enabled`.* | EntityId | Current Entity |

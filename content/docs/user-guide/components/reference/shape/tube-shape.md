@@ -21,7 +21,7 @@ The **Tube Shape** component creates a transparent, enclosed cylindrical volume 
 
 ![Tube Shape component properties](/images/user-guide/components/reference/shape/tube-shape-component-ui-01.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | Enable to always display the shape in the viewport, even when the entity is not selected. Disable to hide the shape when the entity is not selected. | Boolean | `Enabled` |
 | **Game View** | Enable to display the shape while in game mode. | Boolean | `Disabled` |
@@ -39,7 +39,7 @@ The **Tube Shape** component creates a transparent, enclosed cylindrical volume 
 
 Use the following request functions with the `TubeShapeComponentRequestsBus` EBus interface to communicate with Tube Shape components in your game.
 
-| Request Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
 | `GetRadius` | Returns the **Radius** of the tube. | None | Radius: Float | Yes |
 | `GetTotalRadius` | Returns the total interpolated radius of the tube. This is the sum of the radius and the variable radius. | Index: Integer | Total Radius: Float | Yes |

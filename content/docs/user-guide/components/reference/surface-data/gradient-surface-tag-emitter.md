@@ -36,7 +36,7 @@ When applying Gradient Surface Tag Emitter to an entity, the entity is required 
 
 ![Gradient Surface Tag Emitter component properties](/images/user-guide/components/reference/surface-data/gradient-surface-tag-emitter-component.png)
 
-| Property | Description | Values | Default |
+| 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Preview** | Displays a visual preview of the input gradient with **Surface Bounds** and **Threshold** properties applied. |  |  |
 | **Surface Bounds** | Optionally constrains the gradient to the bounds of an entity with a Shape component. | Shape Entity: EntityId | None |

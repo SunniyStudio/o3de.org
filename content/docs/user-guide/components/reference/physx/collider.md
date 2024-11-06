@@ -1,156 +1,156 @@
 ---
 linkTitle: PhysX Primitive Collider
-title: PhysX Primitive Collider Component
-description: The PhysX Primitive Collider component adds a PhysX collider to an entity so that the entity can be included in PhysX simulation.
+title: PhysX Primitive Collider 组件
+description: PhysX Primitive Collider 组件将 PhysX 碰撞器添加到实体，以便该实体可以包含在 PhysX 模拟中。
 toc: true
 ---
 
-The **PhysX Primitive Collider** component adds a PhysX collider to an entity so that the entity can be included in PhysX simulation. The collider is defined by a simple shape primitive selected in the the PhysX Primitive Collider component. The PhysX Primitive Collider component can also define a trigger area or a force region.
-
+**PhysX Primitive Collider** 组件将 PhysX 碰撞器添加到实体中，以便该实体可以包含在 PhysX 模拟中。碰撞器由在 PhysX Primitive Collider组件中选择的简单形状基元定义。PhysX Primitive Collider 组件还可以定义触发区域或力区域。
 {{< note >}}
-Add a [PhysX Static Rigid Body](/docs/user-guide/components/reference/physx/static-rigid-body/) component with a PhysX Primitive Collider component to create a *static* entity that will never move. Add a [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/) component to create a *simulated* or a *kinematic* entity. Simulated entities move in response to collisions and forces. Kinematic entities aren't affected by collisions or forces, but are driven by scripted movement.
+添加一个带有 PhysX Primitive Collider 组件的 [PhysX Static Rigid Body](/docs/user-guide/components/reference/physx/static-rigid-body/)组件，以创建永不移动的 **静态** 实体。添加 [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/) 组件以创建 **模拟simulated** 或 **运动学kinematic** 实体。模拟实体会随着碰撞和力而移动。运动实体不受碰撞或力的影响，但受脚本化运动驱动。
+
 {{< /note >}}
 
-## Provider
+## 提供者
 
 [PhysX Gem](/docs/user-guide/gems/reference/physics/nvidia/physx/)
 
-## Properties 
+## 属性 
 
 ![PhysX Primitive Collider component interface.](/images/user-guide/components/reference/physx/physx-collider-ui-01.png)
 
-### Base properties
+### Base 属性
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Collision Layer** | Assigns the collider to a collision layer. Collision layers can be used to restrict physical interactions between PhysX objects. | Any collision layer defined in the project's [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/).  | `Default` |
-| **Collides With** | Assigns the collider to a collision group. Collision groups contain the collision layers that this collider can collide with. | Any collision group defined in the project's [Collision Groups](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). | `All` |
-| **Trigger** | If enabled, this collider functions as a trigger. Triggers perform quick overlap tests with other colliders. Triggers don't apply forces or return contact point information. Use this to speed up PhysX computations in which a simple overlap test between colliders is sufficient. | Boolean | `Disabled` |
-| **Simulated** | If enabled, this collider is included in the physics simulation. | Boolean | `Enabled` |
-| **In Scene Queries** | If enabled, this collider can be queried for raycasts, shapecasts, and overlap. | Boolean | `Enabled` |
-| **Offset** | Sets the collider's local offset position relative to the entity. | Vector3: -Infinity to Infinity | X: `0.0`, Y: `0.0`, Z: `0.0` |
-| **Rotation** | Sets a local rotation for the collider around the **Offset** of the PhysX Primitive collider component. | Vector3: -180.0 to 180.0 | X: `0.0`, Y: `0.0`, Z: `0.0` |
-| **Physics Materials** | Choose a physics material for each material of this collider. Physics materials define physical properties for the surface such as dynamic and static friction, and density. A primitive collider has a single physics material for the entire collider. | A `.physxmaterial` asset assigned. | `(default)` |
-| **Tag** | Sets a tag for this collider. Tags can be used to quickly identify components in script or code. | String | None |
-| **Rest offset** | Sets the minimum distance between this collider and other colliders. Although this property applies to all colliders, it is particularly important for dynamic colliders. Dynamic colliders are at rest when the forces affecting them drop below the **Sleep threshold** of their rigid body component. When a dynamic collider comes to rest while in contact with any other collider, the colliders are separated by the sum of their **Rest offset** values. **Rest offset** values that are too large might make dynamic entities appear to float. Negative **Rest offset** values might make dynamic entities appear to intersect. You might need to adjust this value in scenarios where the collider does not closely match the render mesh of the entity. The **Rest offset** value must be less than the **Contact offset** value. | Float: -Infinity to 50.0 | `0.0` |
-| **Contact offset** | Sets the distance from the collider where collisions are detected. PhysX bodies generate contacts when they are within the sum of their **Contact offset** values. The **Contact offset** value must be greater than the **Rest offset** value. | Float: 0.0 to 50.0 | `0.02` |
-| **Shape** | See [Shape properties](#shape-properties) | `Sphere`, `Box`, `Capsule`, `Cylinder` | `Box` |
-| **Draw Collider** | If enabled, the collider is displayed in the viewport. | Boolean | `Enabled` |
-| **Edit** | Enter collider component edit mode to adjust properties of the collider with manipulators in the viewport. |  |  |
+| **Collision Layer** | 将碰撞器分配给碰撞层。碰撞层可用于限制 PhysX 对象之间的物理交互。 | 在项目的 [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/) 中定义的任何碰撞图层。  | `Default` |
+| **Collides With** | 将碰撞器分配给碰撞组。Collision group （碰撞组） 包含此碰撞器可以与之碰撞的碰撞层。 | 在工程的 [Collision Groups（碰撞组）](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/) 中定义的任何碰撞组。 | `All` |
+| **Trigger** | 如果启用，此碰撞器将用作触发器。Trigger 执行与其他碰撞器的快速重叠测试。触发器不施加力或返回接触点信息。使用此选项可加快 PhysX 计算速度，其中碰撞器之间的简单重叠测试就足够了。 | Boolean | `Disabled` |
+| **Simulated** | 如果启用，此碰撞器将包含在物理模拟中。 | Boolean | `Enabled` |
+| **In Scene Queries** | 如果启用，则可以查询此碰撞器的光线投射、形状投射和重叠。 | Boolean | `Enabled` |
+| **Offset** | 设置碰撞器相对于实体的局部偏移位置。 | Vector3: -Infinity to Infinity | X: `0.0`, Y: `0.0`, Z: `0.0` |
+| **Rotation** | 为 PhysX Primitive collider 碰撞器组件的 **Offset** （偏移） 设置碰撞器的局部旋转。 | Vector3: -180.0 to 180.0 | X: `0.0`, Y: `0.0`, Z: `0.0` |
+| **Physics Materials** | 为此碰撞器的每个材质选择一种物理材质。物理材质定义表面的物理属性，例如动态和静态摩擦以及密度。原始碰撞体具有整个碰撞体的单个物理材质。 | A `.physxmaterial` asset assigned. | `(default)` |
+| **Tag** | 为此碰撞器设置一个标签。标签可用于快速识别脚本或代码中的组件。 | String | None |
+| **Rest offset** | 设置此碰撞器与其他碰撞器之间的最小距离。尽管此属性适用于所有碰撞器，但对于动态碰撞器尤其重要。当影响动态碰撞体的力低于其刚体组件的 **Sleep threshold** 时，动态碰撞体处于静止状态。当动态碰撞体在与任何其他碰撞体接触时停止时，碰撞体将按其 **Rest offset** 值之和分隔。太大的 **Rest offset** 值可能会使动态实体显示为浮动。负的 **Rest offset** 值可能会使动态实体看起来相交。在碰撞器与实体的渲染网格不匹配的情况下，您可能需要调整此值。**Rest offset** 值必须小于 **Contact offset ** 值。 | Float: -Infinity to 50.0 | `0.0` |
+| **Contact offset** | 设置与检测到碰撞的碰撞体的距离。当 PhysX 实体位于其 **Contact offset** 值之和内时，PhysX 实体会生成接触。**Contact offset** 值必须大于 **Rest offset** 值。| Float: 0.0 to 50.0 | `0.02` |
+| **Shape** | 见 [Shape 属性](#shape-properties) | `Sphere`, `Box`, `Capsule`, `Cylinder` | `Box` |
+| **Draw Collider** | 如果启用，碰撞器将显示在视区中。 | Boolean | `Enabled` |
+| **Edit** | 进入碰撞器组件编辑模式以调整具有视区中操纵器的碰撞器的属性。 |  |  |
 
-### Shape properties
-Sets the collider for the collider component. Primitive shape colliders are not meshes. They are defined by simple dimension parameters that describe a box, sphere, capsule or cylinder. Primitive shape colliders are high performance, but they may not accurately represent the surface of the mesh provided by a **Mesh** component.
+### Shape 属性
+设置碰撞器组件的碰撞器。基元形状碰撞器不是网格。它们由描述长方体、球体、胶囊体或圆柱体的简单尺寸参数定义。基元形状碰撞器具有高性能，但它们可能无法准确表示 **Mesh** 组件提供的网格表面。
 
 {{< tabs name="shape-ui" >}}
 {{% tab name="Sphere" %}}
 
 ![PhysX Primitive Collider component interface, Sphere.](/images/user-guide/components/reference/physx/physx-collider-ui-03.png)
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Radius** | Radius multiplier of the sphere collider. The size of the sphere primitive is the **Radius** value multiplied by the largest value in the **Scale** property in the entity's [Transform](/docs/user-guide/components/reference/transform/) component. | Float: 0.0 to Infinity | `0.5` |
+| **Radius** | 球体碰撞体的半径乘数。球体基元的大小是 **Radius** 值乘以实体的[Transform](/docs/user-guide/components/reference/transform/)组件中 **Scale** 属性中的最大值。 | Float: 0.0 to Infinity | `0.5` |
 
 {{% /tab %}}
 {{% tab name="Box" %}}
 
 ![PhysX Primitive Collider component interface, Box.](/images/user-guide/components/reference/physx/physx-collider-ui-04.png)
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Dimensions** | Width, depth, and height of the box collider. | Vector3: 0.0 to Infinity | X: `1.0`, Y: `1.0`, Z: `1.0` |
+| **Dimensions** | 盒体碰撞体的宽度、深度和高度。| Vector3: 0.0 to Infinity | X: `1.0`, Y: `1.0`, Z: `1.0` |
 
 {{% /tab %}}
 {{% tab name="Capsule" %}}
 
 ![PhysX Primitive Collider component interface, Capsule.](/images/user-guide/components/reference/physx/physx-collider-ui-05.png)
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Height** | Height of the capsule collider. The **Height** value of the capsule must be at least twice the **Radius** value. For example, if the **Radius** of the capsule is `5.0`, the minimum **Height** is `10.0`. | Float: 0.0 to Infinity | `1.0` |
-| **Radius** | Radius of the capsule collider. The **Radius** value of the capsule must be no greater than half the **Height** value. For example, if the **Height** of the capsule is `10.0`, the maximum **Radius** is `5.0`. | Float: 0.0 to Infinity | `0.25` |
+| **Height** | 胶囊碰撞器的高度。胶囊体的 **Height** 值必须至少是 **Radius** 值的两倍。例如，如果胶囊体的 **Radius** 为 `5.0`，则最小 **Height** 为 `10.0`。 | Float: 0.0 to Infinity | `1.0` |
+| **Radius** | 胶囊碰撞器的半径。胶囊的 **Radius** 值不能大于 **Height** 值的一半。例如，如果胶囊体的 **Height** 为`10.0`，则最大 **Radius** 为`5.0`。 | Float: 0.0 to Infinity | `0.25` |
 
 {{% /tab %}}
 {{% tab name="Cylinder" %}}
 
 ![PhysX Primitive Collider component interface, Cylinder.](/images/user-guide/components/reference/physx/physx-collider-ui-06.png)
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Subdivision** | Cylinder subdivision count. | Int: `3` to `125` | `16` |
-| **Height** | Height of the cylinder collider. | Float: 0.0 to Infinity | `1.0` |
-| **Radius** | Radius of the cylinder collider. | Float: 0.0 to Infinity | `1.0` |
+| **Subdivision** | 圆柱体细分计数。 | Int: `3` to `125` | `16` |
+| **Height** | 圆柱体碰撞体的高度。 | Float: 0.0 to Infinity | `1.0` |
+| **Radius** | 圆柱体碰撞体的半径。 | Float: 0.0 to Infinity | `1.0` |
 
 {{% /tab %}}
 {{< /tabs >}}
 
 ## Collider component mode
 
-In collider component mode, you can edit colliders with manipulators in the viewport. To enter collider component mode, choose the **Edit** button at the bottom of the PhysX Primitive Collider component properties in the **Entity Inspector**.
+在 collider （碰撞器） 组件模式下，您可以在视区中使用操纵器编辑碰撞器。要进入碰撞器组件模式，请在 **Entity Inspector** 中选择 PhysX Primitive Collider （PhysX 基元碰撞器） 组件属性底部的 **Edit** （编辑） 按钮。
 
 ### Sub component modes
 
-There are three editing modes available in collider component mode.
+碰撞器组件模式中提供了三种编辑模式。
 
-| Mode | Description |
+| 模式 | 说明 |
 | - | - |
-| **Resize** | Edits the collider dimensions. The resize manipulator handles are represented as black squares. |
-| **Offset** | Translates the collider relative to its entity transform. |
-| **Rotation** | Rotates the collider around the component's **Offset**. |
+| **Resize** | 编辑碰撞器尺寸。调整大小操纵器控制柄表示为黑色方块。|
+| **Offset** | 相对于碰撞体的实体变换平移碰撞体。 |
+| **Rotation** | 围绕组件的 **Offset** 旋转碰撞器。|
 
 ### Resize (Sphere Shape)
 
-Sphere resize mode has one linear manipulator that controls the **Radius** property.
+Sphere resize （球体大小调整） 模式具有一个线性操纵器，用于控制 **Radius （半径） 属性。
 
 ![PhysX Primitive Collider component mode sphere resize manipulator](/images/user-guide/components/reference/physx/physx-collider-resize-sphere.png)
 
 ### Resize (Box Shape)
 
-Box resize mode has six linear manipulators, one on each side of the box. The manipulators control the width, depth, and height aspects of the **Dimensions** property. By default, each face of the box can be separately edited. Hold **Shift** to edit opposite pairs of faces symmetrically.
+长方体调整大小模式有六个线性操纵器，长方体的每一侧各一个。操纵器控制 **Dimensions** 属性的宽度、深度和高度方面。默认情况下，可以单独编辑长方体的每个面。按住 **Shift** 可对称地编辑相对的面对。
 
 ![PhysX Primitive Collider component mode box resize manipulator](/images/user-guide/components/reference/physx/physx-collider-resize-box.png)
 
 ### Resize (Capsule Shape)
 
-Capsule resize mode has three linear manipulators. The manipulators at the top and bottom of the capsule control the **Height** property. By default, each end of the capsule can be separately edited. Hold **Shift** to edit both ends symmetrically. The manipulator on the side controls the **Radius** property.
+Capsule resize （胶囊大小调整大小） 模式具有三个线性操纵器。胶囊顶部和底部的操纵器控制 **Height** 属性。默认情况下，胶囊的每一端都可以单独编辑。按住 **Shift** 可对称地编辑两端。侧面的操纵器控制 **Radius** 属性。
 
 ![PhysX Primitive Collider component mode capsule resize manipulator](/images/user-guide/components/reference/physx/physx-collider-resize-capsule.png)
 
 ### Resize (Cylinder Shape)
 
-Cylinder resize mode has three linear manipulators. The manipulators at the top and bottom of the cylinder control the **Height** property. By default, each end of the cylinder can be separately edited. Hold **Shift** to edit both ends symmetrically. The manipulator on the side controls the **Radius** property.
+圆柱体调整大小模式具有三个线性操纵器。圆柱体顶部和底部的操纵器控制 **Height** 属性。默认情况下，可以单独编辑圆柱体的每一端。按住 **Shift** 可对称地编辑两端。侧面的操纵器控制 **Radius** 属性。
 
 ![PhysX Primitive Collider component mode cylinder resize manipulator](/images/user-guide/components/reference/physx/physx-collider-resize-cylinder.png)
 
 ### Offset
 
-Offset mode has a three-axis translate manipulator.
+Offset （偏移） 模式具有三轴平移操纵器。
 
 ![PhysX Primitive Collider component mode offset manipulator](/images/user-guide/components/reference/physx/physx-collider-offset-mode.png)
 
 ### Rotation
 
-Rotation mode has a three-axis rotate manipulator.
+旋转模式具有三轴旋转操纵器。
 
 ![PhysX Primitive Collider component mode rotate manipulator](/images/user-guide/components/reference/physx/physx-collider-rotate-mode.png)
 
-### Collider component mode hotkeys
+### Collider component mode 快捷键
 
-The following navigation hotkeys are available in collider component mode.
-
-| Hotkey | Action |
+以下导航热键在 Collider 组件模式下可用。
+1
+| 快捷键 | 操作 |
 | - | - |
-| **1** | Offset mode. |
-| **2** | Rotation mode. |
-| **3** | Resize mode. |
-| **Ctrl + Mouse Wheel Down** | Next mode. |
-| **Ctrl + Mouse Wheel Up** | Previous mode. |
-| **R** | Reset current mode. This is effectively an undo operation. You can step through the Resize, Offset, and Rotation modes and press **R** to reset changes to the current mode. |
-| **ESC** | Exit component mode. |
+| **1** | 偏移模式。 |
+| **2** | 旋转模式。 |
+| **3** | 调整大小模式。 |
+| **Ctrl + Mouse Wheel Down** | 下一个模式。 |
+| **Ctrl + Mouse Wheel Up** | 上一个模式。 |
+| **R** | 重置当前模式。这实际上是撤消操作。您可以逐步完成 Resize、Offset 和 Rotation 模式，然后按 **R** 将更改重置为当前模式。 |
+| **ESC** | 退出组件模式。 |
 
-## Colliders as triggers
+## Colliders as triggers将碰撞体用作触发器
 
-Triggers allow colliders to perform efficient overlap tests. Colliders marked as triggers won't be affected by forces when they intersect with another collider. This is useful for detecting when something enters a certain area or when two objects overlap. Use Lua or Script Canvas to detect overlap. 
+触发器允许碰撞器执行高效的重叠测试。标记为触发器的碰撞体在与其他碰撞体相交时不会受到力的影响。这对于检测某物何时进入特定区域或两个对象何时重叠非常有用。使用 Lua 或 Script Canvas 检测重叠。
 
 {{< note >}}
-Because triggers don't perform contact resolution, the contact points between a trigger and another collider aren't available.
+由于触发器不执行触点解析，因此触发器与另一个碰撞器之间的触点不可用。
 {{< /note >}}

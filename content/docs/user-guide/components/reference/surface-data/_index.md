@@ -1,5 +1,5 @@
 ---
-title: Surface Data Components
+title: Surface Data 组件
 linktitle: Surface Data
-description: ' Using Surface Data components in Open 3D Engine (O3DE). '
+description: ' 在 Open 3D Engine （O3DE） 中使用 Surface Data 组件。 '
 ---

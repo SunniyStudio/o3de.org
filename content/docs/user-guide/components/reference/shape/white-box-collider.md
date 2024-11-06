@@ -1,36 +1,36 @@
 ---
 linkTitle: White Box Collider
-title: 'White Box Collider Component'
-description: ' Use the White Box Collider component to add PhysX collision to white box meshes in Open 3D Engine (O3DE). '
+title: 'White Box Collider 组件'
+description: ' 使用 White Box Collider （白盒碰撞器） 组件将 PhysX 碰撞添加到 Open 3D Engine （O3DE） 中的白盒网格。 '
 ---
 
 
 
 
-You can enable collision on white box meshes in **Open 3D Engine (O3DE)** by adding the **White Box Collider** component to an entity that has a **White Box** component mesh. The White Box Collider component supports collision layers and physics materials. It can be used with static and kinematic white box meshes. The White Box Collider component uses the white box mesh as the collision surface. Unlike the **PhysX Primitive Collider** or **PhysX Mesh Collider** components, there is no need to specify a collision shape or provide a PhysX mesh asset.
+您可以通过将 **White Box Collider** 组件添加到具有 **White Box** 组件网格的实体，在 **Open 3D Engine （O3DE）** 中启用白盒网格上的碰撞。White Box Collider （白盒碰撞器） 组件支持碰撞层和物理材质。它可以与静态和运动白色盒体网格一起使用。White Box Collider （白盒碰撞器） 组件使用白盒网格作为碰撞表面。与 **PhysX Primitive Collider** 或 **PhysX Mesh Collider** 组件不同，无需指定碰撞形状或提供 PhysX 网格资产。
 
 ![White Box static collider.](/images/user-guide/components/reference/shape/white-box-collider-A.gif)
 
-In the image above, the White Box Collider component is added to an entity with a static White Box component. You can test for changes in collision immediately after editing the white box mesh.
+在上图中，White Box Collider （白盒碰撞器） 组件被添加到具有静态 White Box （白盒） 组件的实体中。您可以在编辑白盒网格后立即测试碰撞的变化。
 
-## Provider
+## 提供者
 
 [White Box Gem](/docs/user-guide/gems/reference/design/white-box)
 
-## Dependencies
+## 依赖
 
 [White Box component](./white-box)
 
-## White Box Collider properties 
+## White Box Collider 属性 
 
 ![White Box Collider component interface.](/images/user-guide/components/reference/shape/white-box-collider-component-ui-01.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Collision Layer** | The collision layer that's assigned to the collider. For more information, see [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/). || `Default` |
-| **Collides With** | The collision group containing the layers that this collider collides with. For more information, see [Collision Groups](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). || `All` |
-| **Physics Materials** | Choose a physics material for this white box collider. | A `.physxmaterial` asset assigned. | `(default)` |
-| **Tag** | Set a tag for this collider. Tags can be used to quickly identify components in script or code. | Crc32 | None |
-| **Rest offset** | Bodies will come to rest separated by the sum of their **Rest offset** values. Must be less than **Contact offset**. | -Infinity to 50.0 | `0.0` |
-| **Contact offset** | Bodies will begin to generate contacts when within the sum of their **Contact offset** values.  Must be greater than **Rest offset** | 0.0 - 50.0 | `0.02` |
-| **Body Type** | Select `Static` for non-moving entities. Select `Kinematic` for animated entities. The White Box collider must be set to `Static` to interact with the **PhysX Character Controller**. | Static, Kinematic | `Static` |
+| **Collision Layer** | 分配给碰撞器的碰撞层。有关详细信息，请参阅 [碰撞图层](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/). || `Default` |
+| **Collides With** | 包含此碰撞器与之碰撞的图层的碰撞组。有关详细信息，请参阅 [碰撞组](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). || `All` |
+| **Physics Materials** | 为此白盒碰撞器选择物理材质。 | A `.physxmaterial` asset assigned. | `(default)` |
+| **Tag** | 为此碰撞器设置标签。标签可用于快速识别脚本或代码中的组件。 | Crc32 | None |
+| **Rest offset** | 实体将按其 **Rest offset** 值的总和分隔。必须小于 **Contact offset**。 | -Infinity to 50.0 | `0.0` |
+| **Contact offset** | 当实体位于其 **Contact offset** 值之和内时，将开始生成触点。 必须大于 **Rest offset** | 0.0 - 50.0 | `0.02` |
+  | **Body Type** | 为非移动实体选择 '`Static`'。为动画实体选择 '`Kinematic`'。必须将 White Box collider （白盒碰撞器） 设置为 '`Static`' （静态） ） 才能与 **PhysX Character Controller （PhysX 角色控制器）** 交互。 | Static, Kinematic | `Static` |

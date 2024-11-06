@@ -1,9 +1,9 @@
 ---
-title: ROS 2 Core Components
+title: ROS 2 Core 组件
 linktitle: Core
-description: Core components for Robot Operating System (ROS 2) in Open 3D Engine (O3DE).
+description: Open 3D Engine （O3DE） 中机器人操作系统 （ROS 2） 的核心组件。
 ---
 
-The following pages describe the ROS 2 Gem core components:
--  [System Components](ros2-system-component.md). 
--  [Frame components](ros2-frame).
+以下页面介绍了 ROS 2 Gem 核心组件：
+-  [System 组件](ros2-system-component.md). 
+-  [Frame 组件](ros2-frame).

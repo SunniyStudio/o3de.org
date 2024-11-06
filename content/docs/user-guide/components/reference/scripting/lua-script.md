@@ -1,7 +1,7 @@
 ---
 linkTitle: Lua Script
-title: Lua Script Component
-description: Open 3D Engine (O3DE) Lua Script component reference.
+title: Lua Script 组件
+description: Open 3D Engine (O3DE) Lua Script组件参考。
 ---
 
-Use the **Lua Script** component to add arbitrary Lua logic to an entity in the form of a Lua script. For information on the **Lua Script** component and writing Lua scripts, see [Writing Lua Scripts](/docs/user-guide/scripting/lua/).
+使用 **Lua Script** 组件以 Lua 脚本的形式向实体添加任意 Lua 逻辑。有关 **Lua Script** 组件和编写 Lua 脚本的信息，请参阅 [编写 Lua 脚本](/docs/user-guide/scripting/lua/)。

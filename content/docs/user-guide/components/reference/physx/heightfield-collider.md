@@ -1,53 +1,53 @@
 ---
 linkTitle: PhysX Heightfield Collider
-title: PhysX Heightfield Collider Component
-description: Use the PhysX Heightfield Collider component to create collision for heightfields such as terrain in Open 3D Engine (O3DE).
+title: PhysX Heightfield Collider 组件
+description: 使用 PhysX Heightfield Collider  组件为 Open 3D Engine （O3DE） 中的地形等高度场创建碰撞。
 toc: true
 ---
 
-The **PhysX Heightfield Collider** component creates NVIDIA PhysX simulation collider geometry based on the shape definition supplied by an [Axis-Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape/) component.
+**PhysX Heightfield Collider** 组件根据 [Axis-Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape/)组件提供的形状定义创建 NVIDIA PhysX 模拟碰撞器几何体。
 
 {{< note >}}
-The PhysX Heightfield Collider component attached to an entity with an **Axis-Aligned Box Shape component** and a **Terrain Physics Collider** creates a static (non-moving) entity.
+附加到具有 **Axis-Aligned Box Shape 组件** 和 **Terrain Physics Collider** 的实体的 PhysX Heightfield Collider （PhysX 高度场碰撞器） 组件将创建静态（非移动）实体。
 {{< /note >}}
 
-## Provider
+## 提供者
 
 [PhysX](/docs/user-guide/gems/reference/physics/nvidia/physx/)
 
-## Dependencies
+## 依赖
 
 [Axis-Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape)
 
-## PhysX Heightfield Collider properties 
+## PhysX Heightfield Collider 属性 
 
 ![\[PhysX Heightfield Collider component interface.\]](/images/user-guide/component/physx/physx/ui-physx-heightfield-collider-A.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| Collision Layer | The collision layer that's assigned to this collider. For more information, see [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/). | Collision layer | `Default` |
-| Collides With | The collision group containing the layers that this collider collides with. For more information, see [Collision Groups](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). | Collision group | `All` |
-| Tag |  Set a tag for this heightfield collider. Tags can be used to quickly identify components in script or code. | String | |
-| Rest offset |  PhysX bodies come to rest separated by the sum of their rest offset values. The **Rest offset** value must be less than the **Contact offset** value. | -Infinity to `50.0` | `0.0` |
-| Contact offset | PhysX bodies generate contacts when they are within the sum of their contact offset values. The **Contact offset** value must be greater than the **Rest offset** value. | `0.0` to `50.0` | `0.02` |
-| Draw collider |  Render this heightfield collider in the viewport. Disabled by default. | Boolean | `Disabled` |
-| Use Baked Heightfield |  Selects between a dynamically generated or a baked heightfield. A baked heightfield can't be modified at runtime. A dynamic heightfield can be modified at runtime by changes to the heightfield provider. Disabled by default. | Boolean | `Disabled` |
-| Baked Heightfield Relative Path |  Read-only field displaying the path to the generated baked heightfield asset. | String | |
-| Bake Heightfield | Bakes the heightfield asset. | - | - |
+| Collision Layer | 分配给此碰撞器的碰撞层。有关详细信息，请参阅 [碰撞图层](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/). | Collision layer | `Default` |
+| Collides With | 包含此碰撞器与之碰撞的图层的碰撞组。有关详细信息，请参阅 [碰撞组](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). | Collision group | `All` |
+| Tag |  为此高度场碰撞器设置标签。标签可用于快速识别脚本或代码中的组件。 | String | |
+| Rest offset |  PhysX 形体静止时，由其静止偏移值的总和分隔。**Rest offset **值必须小于**Contact offset**值。 | -Infinity to `50.0` | `0.0` |
+| Contact offset | 当 PhysX 实体位于其接触偏移值的总和内时，它们会生成接触。**Contact offset** 值必须大于 **Rest offset** 值。 | `0.0` to `50.0` | `0.02` |
+| Draw collider |  在视区中渲染此高度场碰撞器。默认情况下处于禁用状态。 | Boolean | `Disabled` |
+| Use Baked Heightfield |  在动态生成的高度场或烘焙的高度场之间进行选择。烘焙高度场无法在运行时修改。动态 heightfield 可以在运行时通过更改 heightfield 提供程序来修改。默认情况下处于禁用状态。 | Boolean | `Disabled` |
+| Baked Heightfield Relative Path |  显示生成的烘焙高度场资产路径的只读字段。 | String | |
+| Bake Heightfield | 烘焙高度场资产。 | - | - |
 
-## Colliders as triggers 
+## 作为触发器的碰撞体
 
-Triggers allow colliders to perform efficient overlap tests. Colliders marked as triggers won't have forces applied when they intersect with another collider. This is useful for detecting when something enters a certain area or when two objects overlap. Use Lua or Script Canvas to detect overlap.
+触发器允许碰撞器执行高效的重叠测试。标记为触发器的碰撞体在与其他碰撞体相交时不会施加力。这对于检测某物何时进入特定区域或两个对象何时重叠非常有用。使用 Lua 或 Script Canvas 检测重叠。
 
 {{< note >}}
-Because triggers don't perform contact resolution, the contact points between a trigger and another collider aren't available.
+由于触发器不执行触点解析，因此触发器与另一个碰撞器之间的触点不可用。
 {{< /note >}}
 
-## Console variables
+## 控制台变量
 
-There are following console variables available for PhysX Heightfield Collider:
+PhysX Heightfield Collider （PhysX 高度场碰撞器） 有以下控制台变量可用：
 
-| Name | Description | Values | Default |
+| 名称 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| physx_heightfieldDebugDrawDistance | Distance for PhysX Heightfields debug visualization | Float | 50.0 |
-| physx_heightfieldDebugDrawBoundingBox | Draw the bounding box used for heightfield debug visualization | Boolean | False |
+| physx_heightfieldDebugDrawDistance | Distance for PhysX Heightfields （PhysX 高度场） 调试可视化 | Float | 50.0 |
+| physx_heightfieldDebugDrawBoundingBox | 绘制用于高度场调试可视化的边界框 | Boolean | False |

@@ -1,49 +1,49 @@
 ---
-title: Terrain Layer Spawner Component
+title: Terrain Layer Spawner 组件
 linktitle: Terrain Layer Spawner
-description: Open 3D Engine (O3DE) Terrain Layer Spawner reference.
+description: Open 3D Engine (O3DE) Terrain Layer Spawner 参考。
 weight: 100
 ---
 
-The **Terrain Layer Spawner** component spawns a terrain layer within the given bounds and controls the priority of its data relative to other overlapping terrain layers.  
+**Terrain Layer Spawner** 组件在给定边界内生成一个地形图层，并控制其数据相对于其他重叠地形图层的优先级。
 
-## Usage
+## 用法
 
-The [Terrain World](/docs/user-guide/components/reference/terrain/world) component enables the terrain system for the level, but the level will not contain any terrain until you add a Terrain Layer Spawner. The Terrain Layer Spawner spawns a terrain region into the level within a given set of world bounds. Other components can then optionally provide a combination of height, color, and surface data to the terrain region.
+[Terrain World](/docs/user-guide/components/reference/terrain/world) 组件为关卡启用地形系统，但在添加 Terrain Layer Spawner 之前，关卡将不包含任何地形。Terrain Layer Spawner 在给定的世界边界集内将地形区域生成到关卡中。然后，其他组件可以选择性地为 terrain 区域提供高度、颜色和表面数据的组合。
 
-You can configure the world dimensions of the terrain region by modifying the [Axis Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape) component that exists on the same entity. The XY dimensions of the box are the XY dimensions of the terrain region, and the Z dimension represents the minimum and maximum heights of the terrain for that region. Modify the range of heights for the terrain by adjusting the height of the box. If the height range falls outside the minimum or maximum terrain world heights defined on the [Terrain World](/docs/user-guide/components/reference/terrain/world) component, the heights will be clamped to stay within the terrain system limits.
+您可以通过修改同一实体上的[Axis Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape) 组件来配置地形区域的世界维度。框的 XY 维度是 terrain 区域的 XY 维度，Z 维度表示该区域 terrain 的最小和最大高度。通过调整长方体的高度来修改地形的高度范围。如果高度范围超出 [Terrain World](/docs/user-guide/components/reference/terrain/world) 组件上定义的最小或最大地形世界高度，则高度将被限制以保持在地形系统限制范围内。
 
-By default, the terrain region will spawn with a flat ground surface that fills the XY dimensions at the minimum Z height of the box. You can enable or disable this with the **Use Ground Plane** setting. If the entity with the Terrain Layer Spawner contains a component that provides terrain heights, such as the [Terrain Height Gradient List](/docs/user-guide/components/reference/terrain/height_gradient_list), then the setting will be ignored, and the provided heights will be used instead.
+默认情况下，地形区域将生成一个平坦的地面，该表面在框的最小 Z 高度处填充 XY 维度。您可以使用 **Use Ground Plane** 设置来启用或禁用此功能。如果具有 Terrain Layer Spawner 的实体包含提供地形高度的组件，例如[Terrain Height Gradient List](/docs/user-guide/components/reference/terrain/height_gradient_list)，则将忽略该设置，并改用提供的高度。
 
-The Terrain Layer Spawner's layer settings control which spawner's data takes precedence wherever there are overlapping terrain regions. The priority is controlled by first assigning a layer, either **Foregound** (higher priority) or **Background** (lower priority), and then by using the **Priority** setting, with a higher number representing a higher priority within that layer. A high-priority Terrain Layer Spawner will completely override all of the terrain data provided by a lower-priority Terrain Layer Spawner in the overlapping area, whether or not the higher-priority terrain has any valid terrain data. For example, a high-priority Terrain Layer Spawner can create holes in other lower-priority terrain regions by disabling the **Use Ground Plane** setting.
+Terrain Layer Spawner 的图层设置控制在存在重叠地形区域的地方，哪个 Spawner 的数据优先。通过首先分配一个图层（**Foregound**（较高优先级）或 **Background**（较低优先级）），然后使用 **Priority** 设置来控制优先级，较高的数字表示该图层中的优先级较高。高优先级的 Terrain Layer Spawner 将完全覆盖重叠区域中低优先级 Terrain Layer Spawner 提供的所有地形数据，无论高优先级地形是否具有任何有效的地形数据。例如，高优先级的 Terrain Layer Spawner 可以通过禁用 **Use Ground Plane** 设置在其他低优先级地形区域中创建洞。
 
-## Provider
+## 提供者
 
 [Terrain Gem](/docs/user-guide/gems/reference/environment/terrain)
 
-## Dependencies
+## 依赖
 
-The [Axis-Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape) component is required on the entity to define the world bounds of the terrain layer.
+[Axis-Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape) 组件来定义 terrain 图层的世界边界。
 
-The [Terrain World](/docs/user-guide/components/reference/terrain/world) level component is required for the Terrain Layer Spawner to function. Without it, the terrain system will be disabled for the level, and the Terrain Layer Spawner will have no effect.
+[Terrain World](/docs/user-guide/components/reference/terrain/world) level 组件才能使 Terrain Layer Spawner 正常运行。没有它，关卡的地形系统将被禁用，并且 Terrain Layer Spawner 将不起作用。
 
-The [Terrain World Renderer](/docs/user-guide/components/reference/terrain/world-renderer) level component is optional, but it is necessary to exist for the Terrain Layer Spawner to be visible. Without it, the terrain layer data won't render, though the underlying data will still exist in the world and can be queried via the terrain APIs.
+[Terrain World Renderer](/docs/user-guide/components/reference/terrain/world-renderer) level 组件是可选的，但必须存在才能使 Terrain Layer Spawner 可见。没有它，地形图层数据将不会渲染，但底层数据仍将存在于世界中，并且可以通过 terrain API 进行查询。
 
-## Properties
+## 属性
 
 ![Terrain Layer Spawner component properties](/images/user-guide/components/reference/terrain/terrain-layer-spawner-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Layer Priority** | The priority of the spawner. Foreground has a higher priority than Background. | Foreground or Background | `Foreground` |
-| **Sub Priority** | Sets the priority of this spawner within the layer. Higher numbers will override lower. | 0 - 10000 | 0 |
-| **Use Ground Plane** | Enable this setting to provide a default ground plane where no terrain is defined. | Boolean | `True` |
+| **Layer Priority** | 刷怪箱的优先级。Foreground 的优先级高于 Background。 | Foreground or Background | `Foreground` |
+| **Sub Priority** | 设置此生成器在层中的优先级。较高的数字将覆盖较低的数字。 | 0 - 10000 | 0 |
+| **Use Ground Plane** | 启用此设置可提供未定义地形的默认地平面。 | Boolean | `True` |
 
 ## TerrainSpawnerRequestBus
 
-The `TerrainSpawnerRequestBus` is an internal EBus used by the terrain system to query Terrain Layer Spawner settings. Other systems generally do not need to use this EBus since nothing outside the terrain system should need any information about individual Terrain Layer Spawners. However, if a use case arises, the following request functions on the `TerrainSpawnerRequestBus` EBus interface can be used to query the individual Terrain Layer Spawner components.
+“`TerrainSpawnerRequestBus`”是地形系统用于查询 Terrain Layer Spawner 设置的内部事件总线。其他系统通常不需要使用此事件总线，因为地形系统之外的任何内容都不需要有关单个 Terrain Layer Spawner 的任何信息。但是，如果出现使用案例，可以使用“`TerrainSpawnerRequestBus`”事件总线接口上的以下请求函数来查询各个 Terrain Layer Spawner 组件。
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `GetPriority` | Returns the **Layer Priority** and **Sub Priority** of the Terrain Layer Spawner. | None | Layer Priority: Integer; Sub Priority: Integer | No |
-| `GetUseGroundPlane` | Returns the value of **Use Ground Plane**. | None | Boolean | No |
+| `GetPriority` | 返回地形图层生成器的 **Layer Priority** 和 **Sub Priority**。 | None | Layer Priority: Integer; Sub Priority: Integer | No |
+| `GetUseGroundPlane` | 返回 **Use Ground Plane** 的值。 | None | Boolean | No |

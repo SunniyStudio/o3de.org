@@ -1,18 +1,18 @@
 ---
 linktitle: Gradient Surface Tag Emitter
-title: Gradient Surface Tag Emitter Component
-description: Use the Gradient Surface Tag Emitter component to enable a gradient to emit surface tags in your Open 3D Engine (O3DE) level.
+title: Gradient Surface Tag Emitter 组件
+description: 使用 Gradient Surface Tag Emitter 组件使渐变能够在 Open 3D Engine （O3DE） 关卡中发射表面标签。
 ---
 
-Add the **Gradient Surface Tag Emitter** component to an entity to enable a gradient to emit surface tags.
+将 **Gradient Surface Tag Emitter** 组件添加到实体，以使渐变能够发出表面标签。
 
-## Provider
+## 提供者
 
 [Surface Data Gem](/docs/user-guide/gems/reference/environment/surface-data)
 
-## Dependencies
+## 依赖
 
-When applying Gradient Surface Tag Emitter to an entity, the entity is required to have one of the following components:
+将 Gradient Surface Tag Emitter 应用于实体时，该实体需要具有以下组件之一：
 
 - [Dither Gradient Modifier](../gradient-modifiers/dither-gradient-modifier)
 - [Gradient Mixer](../gradient-modifiers/gradient-mixer)
@@ -32,14 +32,14 @@ When applying Gradient Surface Tag Emitter to an entity, the entity is required 
 - [Slope Gradient](../gradients/slope-gradient)
 - [Surface Mask Gradient](../gradients/surface-mask-gradient)
 
-## Gradient Surface Tag Emitter properties
+## Gradient Surface Tag Emitter 属性
 
 ![Gradient Surface Tag Emitter component properties](/images/user-guide/components/reference/surface-data/gradient-surface-tag-emitter-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays a visual preview of the input gradient with **Surface Bounds** and **Threshold** properties applied. |  |  |
-| **Surface Bounds** | Optionally constrains the gradient to the bounds of an entity with a Shape component. | Shape Entity: EntityId | None |
-| **Threshold Min** | Sets the minimum value from the input gradient that allows tags to be applied. | 0.0 - 1.0 | `0.1` |
-| **Threshold Max** | Sets the maximum value from the input gradient that allows tags to be applied. | 0.0 - 1.0 | `1.0` |
-| **Extended Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that the gradient will emit.| Array: Surface Tags | None |
+| **Preview** | 显示应用了 **Surface Bounds** 和 **Threshold** 属性的输入渐变的可视化预览。 |  |  |
+| **Surface Bounds** | （可选）将渐变约束到具有 Shape 组件的实体的边界。 | Shape Entity: EntityId | None |
+| **Threshold Min** | 设置允许应用标签的输入渐变的最小值。 | 0.0 - 1.0 | `0.1` |
+| **Threshold Max** | 设置允许应用标签的输入渐变的最大值。 | 0.0 - 1.0 | `1.0` |
+| **Extended Tags** | 渐变将发出的[surface tags](/docs/user-guide/gems/reference/environment/surface-data) 数组。| Array: Surface Tags | None |

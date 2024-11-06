@@ -85,5 +85,5 @@ The following properties define UI Editor behavior:
 |-|-|-|-|
 | **Snap distance** | The distance between positions on the grid when **Snap to grid** is selected in the toolbar. | Float: 1.0 to infinity | `10.0` |
 | **Snap rotation** | The number of degrees between each step of rotation when you use the rotation gizmo to rotate an element in the viewport. **Snap to grid** must be enabled in the toolbar. | Float: 1.0 to 359.0 | `10.0` |
-| **Guide color** | The color of the guide lines on this canvas. For more information about using guides in **UI Editor**, see [Rulers and Guides](/docs/user-guide/interactivity/user-interface/editor/rulers-guides). |   Eight bits per channel color: 0 - 255 | `61,255,64`
+| **Guide color** | The color of the guide lines on this canvas. For more information about using guides in **UI Editor**, see [Rulers and Guides](/docs/user-guide/interactivity/user-interface/editor/rulers-guides). |   每通道 8 位颜色： 0 - 255 | `61,255,64`
 | **Texture atlases** | The texture atlas that this canvas loads. Using a texture atlas can reduce the number of draw calls in certain situations, resulting in better performance for your UI. For more information about *texture atlases*, see [Using Texture Atlases](/docs/user-guide/interactivity/user-interface/canvases/texture-atlases). | Array of `.texatlas` | None |

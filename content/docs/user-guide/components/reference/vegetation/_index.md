@@ -1,5 +1,5 @@
 ---
-title: Vegetation Components
+title: Vegetation 组件
 linktitle: Vegetation
-description: ' Using Vegetation components in Open 3D Engine (O3DE). '
+description: ' 在 Open 3D Engine （O3DE） 中使用植被组件。 '
 ---

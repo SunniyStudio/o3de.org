@@ -1,43 +1,43 @@
 ---
 linkTitle: UI Canvas Proxy Ref
-title: UI Canvas Proxy Ref Component
-description: Use the UI Canvas Proxy Ref component to share a UI canvas reference between entities in Open 3D Engine (O3DE).
+title: UI Canvas Proxy Ref 组件
+description: 使用 UI Canvas Proxy Ref 组件在 Open 3D Engine （O3DE） 中的实体之间共享 UI 画布引用。
 ---
 
-With the UI Canvas Proxy Ref component, you can reference a UI canvas that a different entity manages. Use this component in conjunction with the [**UI Canvas on Mesh**](/docs/user-guide/components/reference/ui/canvas-on-mesh/) component if you want to place a UI canvas on a [**Mesh**](/docs/user-guide/components/reference/atom/mesh) or [**Actor**](/docs/user-guide/components/reference/animation/actor) component that a player can interact with in multple places in a level.
+使用 UI Canvas Proxy Ref 组件，您可以引用由其他实体管理的 UI 画布。如果要将 UI 画布放置在 [**网格**](/docs/user-guide/components/reference/atom/mesh) 或 [**Actor**](/docs/user-guide/components/reference/animation/actor) 组件上，以便玩家可以在关卡中的多个位置与之交互，请将此组件与 [**UI Canvas on Mesh**](/docs/user-guide/components/reference/ui/canvas-on-mesh/) 组件结合使用。
 
-## Usage
+## 用法
 
-Use of this component is often a special case, as it supports displaying the same UI canvas on multiple entities in the 3D world. The **UI Canvas Proxy Ref** component allows the entity that it is on to act as if it had a [**UI Canvas Asset Ref**](/docs/user-guide/components/reference/ui/canvas-asset-ref/) component but without having to load another copy of the UI canvas. This means that, as the user interacts with one UI canvas on a 3D object, the other 3D object shows the same changes.
+使用此组件通常是一种特殊情况，因为它支持在 3D 世界中的多个实体上显示相同的 UI 画布。**UI Canvas Proxy Ref** 组件允许它所在的实体像具有 [**UI Canvas Asset Ref**](/docs/user-guide/components/reference/ui/canvas-asset-ref/) 组件一样运行，但不必加载 UI 画布的另一个副本。这意味着，当用户与 3D 对象上的一个 UI 画布交互时，另一个 3D 对象会显示相同的更改。
 
-The following picture shows three entities that share the same loaded canvas. The curved plane entity has a **UI Canvas Asset Ref** component and the egg and the sphere both have **UI Canvas Proxy Ref** components:
+下图显示了共享同一加载画布的三个实体。曲面平面实体具有 **UI Canvas Asset Ref** 组件，蛋和球体都具有 **UI Canvas Proxy Ref** 组件：
 
 ![Three entities with shared canvas](/images/user-guide/component/ui_canvas/component-ui-canvas-proxy-ref-screenshot.png)
 
-For more information, refer to [Placing UI Canvases in the 3D World](/docs/user-guide/interactivity/user-interface/canvases/placing-canvases-3d).
+有关更多信息，请参阅 [在 3D 世界中放置 UI 画布](/docs/user-guide/interactivity/user-interface/canvases/placing-canvases-3d)。
 
-## Provider ##
+## 提供者 ##
 
 [LyShine Gem](/docs/user-guide/gems/reference/ui/lyshine/)
 
-## UI Canvas Proxy Ref properties 
+## UI Canvas Proxy Ref 属性 
 
 ![UI Canvas Proxy Ref properties](/images/user-guide/components/reference/ui/ui-proxy-ref-component.png)
-
+1
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Canvas Asset Ref entity** | Selects an entity with a **UI Canvas Asset Ref** component. | EntityId | None |
+| **Canvas Asset Ref entity** | 选择具有 **UI Canvas Asset Ref** 组件的实体。 | EntityId | None |
 
 ## UiCanvasProxyRefBus
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `SetCanvasRefEntity` | Sets a target entity with a UI canvas to associate with the current entity. | Target Entity: EntityId, Current Entity: EntityId | None | Yes |
+| `SetCanvasRefEntity` | 使用 UI 画布设置目标实体，以便与当前实体关联。 | Target Entity: EntityId, Current Entity: EntityId | None | Yes |
 
 ## UiCanvasRefNotificationBus
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `OnCanvasRefChanged` | Notifies listeners that the canvas reference has changed. | None | Old Reference: EntityId, New Reference: EntityId | Yes |
+| `OnCanvasRefChanged` | Notifies listeners that the canvas reference has changed.通知侦听器画布引用已更改。 | None | Old Reference: EntityId, New Reference: EntityId | Yes |
 
-For more information, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关更多信息，请参阅 [使用事件总线 （EBus） 系统](/docs/user-guide/programming/messaging/ebus/)。

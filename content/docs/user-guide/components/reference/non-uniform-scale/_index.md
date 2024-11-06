@@ -1,5 +1,5 @@
 ---
-title: Non-uniform Scale Components
+title: Non-uniform Scale 组件
 linktitle: Non-uniform Scale
-description: ' Using Non-uniform Scale components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用Non-uniform Scale组件。 '
 ---

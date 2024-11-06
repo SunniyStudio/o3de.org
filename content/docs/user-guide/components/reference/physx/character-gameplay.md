@@ -1,9 +1,9 @@
 ---
 linkTitle: PhysX Character Gameplay
-description: ' The PhysX Character Gameplay component provides example implementations of gameplay features such as gravity. '
-title: PhysX Character Gameplay Component
+description: ' PhysX Character Gameplay 组件提供了 重力等游戏功能的示例实现。 '
+title: PhysX Character Gameplay 组件
 ---
 
 
 
-The **PhysX Character Gameplay** component builds on top of the **[PhysX Character Controller](/docs/user-guide/components/reference/physx/character-controller/)** component. The components are separated so that the **PhysX Character Controller** component provides basic behavior which is expected to be more universal, while the **PhysX Character Gameplay** component provides example implementations of logic which is likely to be more game-specific, such as gravity.
+**PhysX Character Gameplay** 组件建立在 **[PhysX Character Controller](/docs/user-guide/components/reference/physx/character-controller/)** 组件之上。这些组件是分开的，以便 **PhysX Character Controller** 组件提供基本行为，这些行为应该会更加通用，而 **PhysX Character Gameplay** 组件提供可能更特定于游戏的逻辑示例实现，例如重力。

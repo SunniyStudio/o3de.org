@@ -1,98 +1,98 @@
 ---
 linkTitle: PhysX Mesh Collider
-title: PhysX Mesh Collider Component
-description: The PhysX Mesh Collider component uses a PhysX Mesh asset to add a PhysX collider to an entity so that the entity can be included in PhysX simulation.
+title: PhysX Mesh Collider 组件
+description: PhysX Mesh Collider （PhysX 网格碰撞器） 组件使用 PhysX 网格资产将 PhysX 碰撞器添加到实体，以便该实体可以包含在 PhysX 模拟中。
 toc: true
 ---
 
-The **PhysX Mesh Collider** component adds a PhysX collider to an entity so that the entity can be included in PhysX simulation. The collider can be defined by a physics asset you create, automatically generated convex meshes or shapes that have been automatically fit to a decomposed mesh. The PhysX Mesh Collider component can also define a trigger area or a force region.
+**PhysX 网格碰撞器** 组件将 PhysX 碰撞器添加到实体，以便该实体可以包含在 PhysX 模拟中。碰撞器可以由您创建的物理资产、自动生成的凸面网格或已自动适应分解网格的形状来定义。PhysX Mesh Collider （PhysX 网格碰撞器） 组件还可以定义触发区域或力区域。
 
-**PhysX Mesh Collider** components can accurately represent the shape of the mesh provided by a Mesh component, but incur a higher performance cost compared to **PhysX Primitive Collider** components. Physics collider assets are based on meshes that are processed by **Asset Processor**. For information about the various PhysX collider asset types and how to process them, refer to [Process PhysX Collider Assets](/docs/learning-guide/tutorials/assets/physx-colliders/).
+**PhysX Mesh Collider** 组件可以准确地表示 Mesh 组件提供的网格形状，但与 **PhysX Primitive Collider** 组件相比，性能成本更高。物理碰撞器资产基于由 Asset Processor 处理的网格。有关各种 PhysX 碰撞器资产类型以及如何处理它们的信息，请参阅 [处理 PhysX 碰撞器资产](/docs/learning-guide/tutorials/assets/physx-colliders/)。
 
 {{< note >}}
-Add a [PhysX Static Rigid Body](/docs/user-guide/components/reference/physx/static-rigid-body/) component with a PhysX Mesh Collider component to create a *static* entity that will never move. Add a [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/) component to create a *simulated* or a *kinematic* entity. Simulated entities move in response to collisions and forces. Kinematic entities aren't affected by collisions or forces, but are driven by scripted movement.
+添加一个带有 PhysX Mesh Collider （PhysX 网格碰撞器） 组件的 [PhysX Static Rigid Body](/docs/user-guide/components/reference/physx/static-rigid-body/)组件，以创建永不移动的 **静态** 实体。添加 [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/) 组件以创建 **simulated模拟** 或 **kinematic运动学** 实体。模拟实体会随着碰撞和力而移动。运动实体不受碰撞或力的影响，但受脚本化运动驱动。
 {{< /note >}}
 
-## Provider
+## 提供者
 
 [PhysX Gem](/docs/user-guide/gems/reference/physics/nvidia/physx/)
 
-## Properties 
+## 属性 
 
 ![PhysX Mesh Collider component interface.](/images/user-guide/components/reference/physx/physx-mesh-collider-ui-01.png)
 
-### Base properties
+### Base 属性
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Collision Layer** | Assigns the collider to a collision layer. Collision layers can be used to restrict physical interactions between PhysX objects. | Any collision layer defined in the project's [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/).  | `Default` |
-| **Collides With** | Assigns the collider to a collision group. Collision groups contain the collision layers that this collider can collide with. | Any collision group defined in the project's [Collision Groups](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). | `All` |
-| **Trigger** | If enabled, this collider functions as a trigger. Triggers perform quick overlap tests with other colliders. Triggers don't apply forces or return contact point information. Use this to speed up PhysX computations in which a simple overlap test between colliders is sufficient. Triangle meshes are not supported as triggers. | Boolean | `Disabled` |
-| **Simulated** | If enabled, this collider is included in the physics simulation. | Boolean | `Enabled` |
-| **In Scene Queries** | If enabled, this collider can be queried for raycasts, shapecasts, and overlap. | Boolean | `Enabled` |
-| **Offset** | Sets the collider's local offset position relative to the entity. | Vector3: -Infinity to Infinity | X: `0.0`, Y: `0.0`, Z: `0.0` |
-| **Rotation** | Sets a local rotation for the collider around the **Offset** of the PhysX Mesh collider component. | Vector3: -180.0 to 180.0 | X: `0.0`, Y: `0.0`, Z: `0.0` |
-| **Physics Materials** | Choose a physics material for each material of this collider. Physics materials define physical properties for the surface such as dynamic and static friction, and density. A mesh collider can have multiple physics materials assigned. | A `.physxmaterial` asset assigned. | `(default)` |
-| **Tag** | Sets a tag for this collider. Tags can be used to quickly identify components in script or code. | String | None |
-| **Rest offset** | Sets the minimum distance between this collider and other colliders. Although this property applies to all colliders, it is particularly important for dynamic colliders. Dynamic colliders are at rest when the forces affecting them drop below the **Sleep threshold** of their rigid body component. When a dynamic collider comes to rest while in contact with any other collider, the colliders are separated by the sum of their **Rest offset** values. **Rest offset** values that are too large might make dynamic entities appear to float. Negative **Rest offset** values might make dynamic entities appear to intersect. You might need to adjust this value in scenarios where the collider does not closely match the render mesh of the entity. The **Rest offset** value must be less than the **Contact offset** value. | Float: -Infinity to 50.0 | `0.0` |
-| **Contact offset** | Sets the distance from the collider where collisions are detected. PhysX bodies generate contacts when they are within the sum of their **Contact offset** values. The **Contact offset** value must be greater than the **Rest offset** value. | Float: 0.0 to 50.0 | `0.02` |
-| **PhysX Mesh** | Assigns a `.pxmesh` collider product asset for this collider. This property is set automatically if a `.pxmesh` product asset exists for the associated mesh or actor asset. For more information on creating PhysX mesh asset colliders, refer to [Process PhysX Collider Assets](/docs/learning-guide/tutorials/assets/physx-colliders/). | Product asset `.pxmesh` PhysX mesh. |  |
-| **Asset Scale** | Scales the collider shape independent of the entity. | Vector3: 0.0 to Infinity | X: `1.0`, Y: `1.0`, Z: `1.0` |
-| **Physics Materials from Asset** | If enabled, the physics materials for this collider are automatically set based on the Physics Materials from the mesh's PhysX asset. Physics material assignments cannot be edited while this option is enabled. | Boolean | `Enabled`|
-| **Draw Collider** | If enabled, the collider is displayed in the viewport. | Boolean | `Enabled` |
-| **Edit** | Enter collider component edit mode to adjust properties of the collider with manipulators in the viewport. |  |  |
+| **Collision Layer** | 将碰撞器分配给碰撞层。碰撞层可用于限制 PhysX 对象之间的物理交互。 | 在项目的 [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/) 中定义的任何碰撞图层。  | `Default` |
+| **Collides With** | 将碰撞器分配给碰撞组。Collision group （碰撞组） 包含此碰撞器可以与之碰撞的碰撞层。 | 在工程的 [Collision Groups（碰撞组）](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/) 中定义的任何碰撞组。 | `All` |
+| **Trigger** | 如果启用，此碰撞器将用作触发器。Trigger 执行与其他碰撞器的快速重叠测试。触发器不施加力或返回接触点信息。使用此选项可加快 PhysX 计算速度，其中碰撞器之间的简单重叠测试就足够了。不支持将三角形网格作为触发器。 | Boolean | `Disabled` |
+| **Simulated** | 如果启用，此碰撞器将包含在物理模拟中。 | Boolean | `Enabled` |
+| **In Scene Queries** | 如果启用，则可以查询此碰撞器的光线投射、形状投射和重叠。 | Boolean | `Enabled` |
+| **Offset** | 设置碰撞器相对于实体的局部偏移位置。 | Vector3: -Infinity to Infinity | X: `0.0`, Y: `0.0`, Z: `0.0` |
+| **Rotation** | 设置碰撞器围绕 PhysX Mesh collider （PhysX 网格碰撞器） 组件的 **Offset** （偏移） 的局部旋转。 | Vector3: -180.0 to 180.0 | X: `0.0`, Y: `0.0`, Z: `0.0` |
+| **Physics Materials** | 为此碰撞器的每个材质选择一种物理材质。物理材质定义表面的物理属性，例如动态和静态摩擦以及密度。网格碰撞体可以分配多个物理材质。 | 分配一个 `.physxmaterial` 资产 | `(default)` |
+| **Tag** | 为此碰撞器设置一个标签。标签可用于快速识别脚本或代码中的组件。 | String | None |
+| **Rest offset** | 设置此碰撞器与其他碰撞器之间的最小距离。尽管此属性适用于所有碰撞器，但对于动态碰撞器尤其重要。当影响动态碰撞体的力低于其刚体组件的 **Sleep threshold** 时，动态碰撞体处于静止状态。当动态碰撞体在与任何其他碰撞体接触时停止时，碰撞体将按其 **Rest offset （静止偏移） 值之和分隔。太大的 **Rest offset** 值可能会使动态实体显示为浮动。负的 **Rest offset**值可能会使动态实体看起来相交。在碰撞器与实体的渲染网格不匹配的情况下，您可能需要调整此值。**Rest offset**值必须小于**Contact offset**值。 | Float: -Infinity to 50.0 | `0.0` |
+| **Contact offset** | 设置与检测到碰撞的碰撞体的距离。当 PhysX 实体位于其 **Contact offset** 值之和内时，PhysX 实体会生成接触。**Contact offset** 值必须大于 **Rest offset** 值。 | Float: 0.0 to 50.0 | `0.02` |
+| **PhysX Mesh** | 为此碰撞器分配一个 `.pxmesh` 碰撞器产品资产。如果关联的网格或角色资产存在 `.pxmesh` 产品资产，则会自动设置此属性。有关创建 PhysX 网格资产碰撞器的更多信息，请参阅[处理 PhysX 碰撞器资产](/docs/learning-guide/tutorials/assets/physx-colliders/). | 产品资产 `.pxmesh` PhysX mesh. |  |
+| **Asset Scale** | 独立于实体缩放碰撞器形状。 | Vector3: 0.0 to Infinity | X: `1.0`, Y: `1.0`, Z: `1.0` |
+| **Physics Materials from Asset** | 如果启用，则此碰撞器的物理材质将根据网格的 PhysX 资产中的物理材质自动设置。启用此选项后，无法编辑 Physics 材质分配。 | Boolean | `Enabled`|
+| **Draw Collider** | 如果启用，碰撞器将显示在视区中。 | Boolean | `Enabled` |
+| **Edit** | 进入 collider component edit mode （碰撞器组件编辑模式） 以调整具有视区中操纵器的碰撞器的属性。 |  |  |
 
-## Collider component mode
+## Collider component mode碰撞组件模式
 
-In collider component mode, you can edit colliders with manipulators in the viewport. To enter collider component mode, choose the **Edit** button at the bottom of the PhysX Mesh Collider component properties in the **Entity Inspector**.
+在 collider （碰撞器） 组件模式下，您可以在视区中使用操纵器编辑碰撞器。要进入碰撞器组件模式，请在 Entity Inspector （实体检查器） 中选择 PhysX Mesh Collider （PhysX 网格碰撞器） 组件属性底部的 **Edit** （编辑） 按钮。
 
-### Sub component modes
+### Sub component modes 子组件模式
 
-There are three editing modes available in collider component mode.
+碰撞器组件模式中提供了三种编辑模式。
 
-| Mode | Description |
+| 模式 | 说明 |
 | - | - |
-| **Resize** | The resize manipulator is represented as a scale manipulator which modifies the **Asset Scale**. |
-| **Offset** | Translates the collider relative to its entity transform. |
-| **Rotation** | Rotates the collider around the component's **Offset**. |
+| **Resize** | 调整大小操纵器表示为修改 **Asset Scale** 的缩放操纵器。|
+| **Offset** | 相对于碰撞体的实体变换平移碰撞体。 |
+| **Rotation** | 围绕组件的 **Offset** 旋转碰撞器。 |
 
 ### Resize
 
-Physics Asset resize mode has a three-axis scale manipulator.
+Physics Asset resize （物理资产大小调整） 模式具有三轴缩放操纵器。
 
 ![PhysX Mesh Collider component mode physics asset resize manipulator](/images/user-guide/components/reference/physx/physx-mesh-collider-resize.png)
 
 ### Offset
 
-Offset mode has a three-axis translate manipulator.
+Offset （偏移） 模式具有三轴平移操纵器。
 
 ![PhysX Mesh Collider component mode offset manipulator](/images/user-guide/components/reference/physx/physx-mesh-collider-offset-mode.png)
 
 ### Rotation
 
-Rotation mode has a three-axis rotate manipulator.
+旋转模式具有三轴旋转操纵器。
 
 ![PhysX Mesh Collider component mode rotate manipulator](/images/user-guide/components/reference/physx/physx-mesh-collider-rotate-mode.png)
 
 ### Collider component mode hotkeys
 
-The following navigation hotkeys are available in collider component mode.
+以下导航热键在 Collider 组件模式下可用。
 
-| Hotkey | Action |
+| 快捷键 | 操作 |
 | - | - |
-| **1** | Offset mode. |
-| **2** | Rotation mode. |
-| **3** | Resize mode. |
-| **Ctrl + Mouse Wheel Down** | Next mode. |
-| **Ctrl + Mouse Wheel Up** | Previous mode. |
-| **R** | Reset current mode. This is effectively an undo operation. You can step through the Resize, Offset, and Rotation modes and press **R** to reset changes to the current mode. |
-| **ESC** | Exit component mode. |
+| **1** | 偏移模式。 |
+| **2** | 旋转模式。 |
+| **3** | 调整大小模式。 |
+| **Ctrl + Mouse Wheel Down** | 下一个模式。 |
+| **Ctrl + Mouse Wheel Up** | 上一个模式。 |
+| **R** | 重置当前模式。这实际上是撤消操作。您可以逐步浏览 Resize、Offset 和 Rotation 模式，然后按 **R** 将更改重置为当前模式。 |
+| **ESC** | 退出组件模式。 |
 
 ## Colliders as triggers
 
-Triggers allow colliders to perform efficient overlap tests. Colliders marked as triggers won't be affected by forces when they intersect with another collider. This is useful for detecting when something enters a certain area or when two objects overlap. Use Lua or Script Canvas to detect overlap.
+触发器允许碰撞器执行高效的重叠测试。标记为触发器的碰撞体在与其他碰撞体相交时不会受到力的影响。这对于检测某物何时进入特定区域或两个对象何时重叠非常有用。使用 Lua 或 Script Canvas 检测重叠。
 
 {{< note >}}
-Because triggers don't perform contact resolution, the contact points between a trigger and another collider aren't available.
-Triangle meshes are not supported as triggers.
+由于触发器不执行触点解析，因此触发器与另一个碰撞器之间的触点不可用。
+不支持将三角形网格作为触发器。
 {{< /note >}}

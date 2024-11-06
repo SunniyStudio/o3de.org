@@ -1,30 +1,30 @@
 ---
 linktitle: Shape Reference
-title: Shape Reference Component
-description: Use the Shape Reference component to reference and re-use shape components in your Open 3D Engine (O3DE) level.
+title: Shape Reference 组件
+description: 使用 Shape Reference （形状参考） 组件在 Open 3D Engine （O3DE） 关卡中引用和重复使用形状组件。
 weight: 100
 ---
 
-Add the **Shape Reference** component to reference and re-use shape components in your **Open 3D Engine (O3DE)** level.
+添加 **Shape Reference** 组件以引用和重用 **Open 3D Engine （O3DE）** 关卡中的形状组件。
 
-## Provider
+## 提供者
 
 [O3DE Core (LmbrCentral) Gem](/docs/user-guide/gems/reference/o3de-core)
 
-## Sphere Shape properties
+## Sphere Shape 属性
 
 ![Shape Reference component properties](/images/user-guide/components/reference/shape/shape-reference-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Shape Entity Id** | Selects an entity with a valid Shape component. | Entity Id | None |
+| **Shape Entity Id** | 选择具有有效 Shape 组件的实体。 | Entity Id | None |
 
 
 ## ReferenceShapeRequestBus
 
-Use the following request functions with the `ReferenceShapeRequestBus` EBus interface to communicate with Shape Reference components in your game.
+将以下请求函数与 '`ReferenceShapeRequestBus`' 事件总线接口结合使用，以便与游戏中的 Shape Reference 组件进行通信。
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `GetShapeEntityId` | Returns the value of **Shape Entity Id**. | None | Entity Id | Yes |
-| `SetShapeEntityId` | Sets the value of **Shape Entity Id**. | Entity Id | None | Yes |
+| `GetShapeEntityId` | 返回 **Shape Entity ID**的值。 | None | Entity Id | Yes |
+| `SetShapeEntityId` | 设置 **Shape Entity ID**的值。 | Entity Id | None | Yes |

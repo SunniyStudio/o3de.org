@@ -1,25 +1,25 @@
 ---
 linkTitle: Vegetation Layer Blender
-title: Vegetation Layer Blender Component
-description: Combine vegetation layers with the Vegetation Layer Blender component in Open 3D Engine (O3DE).
+title: Vegetation Layer Blender 组件
+description: 将植被图层与 Open 3D Engine （O3DE） 中的 Vegetation Layer Blender 组件组合在一起。
 weight: 300
 ---
 
-Combine vegetation layers with the **Vegetation Layer Blender** component.
+将植被图层与 **Vegetation Layer Blender** 组件组合在一起。
 
 ## Provider
 
 [Vegetation Gem](/docs/user-guide/gems/reference/environment/vegetation/)
 
-## Vegetation Layer Blender properties
+## Vegetation Layer Blender 属性
 
 ![Vegetation Layer Blender component properties](/images/user-guide/components/reference/vegetation/vegetation-layer-blender-component.png)
-
+2
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Override Preview Settings** | If `Enabled`, the **Preview Settings** properties determine the shape of the vegetation layer preview.  If `Disabled`, the bounds of the vegetation layer preview are set by the Shape components of the vegetation layers selected in **Vegetation Areas**.  | Boolean | `Disabled` |
-| **Pin Preview to Shape** | Sets an entity with a compatible shape component to use as the bounds of the vegetation layer preview if **Constrain to Shape** is `Enabled`.<br> <br>*This field is available only if **Override Preview Settings** is `Enabled`.* | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the vegetation layer preview.<br> <br>*This field is available only if **Override Preview Settings** is `Enabled` and there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Override Preview Settings** | 如果为`Enabled`，则 **Preview Settings** 属性将确定植被图层预览的形状。 如果为`Disabled`，则植被图层预览的边界由在**Vegetation Areas**中选择的植被图层的Shape组件设置。  | Boolean | `Disabled` |
+| **Pin Preview to Shape** | 如果 **Constrain to Shape** 为 `Enabled`，则设置具有兼容形状组件的实体，以用作植被图层预览的边界。<br> <br>仅当 **Override Preview Settings** 为`Enabled`时，此字段才可用。 | EntityId | Current Entity |
+| **Preview Position** | 设置植被图层预览的世界位置。<br> <br>仅当 **Override Preview Settings** 为`Enabled`， 并且未在 **Pin Preview to Shape** 中选择任何实体时，此字段才可用。* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
 | **Preview Size** | Sets the dimensions of the vegetation layer preview if **Constrain to Shape** is `Disabled`.<br> <br>*This field is available only if **Override Preview Settings** is `Enabled`.* | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
 | **Constrain to Shape** | If `Enabled`, the vegetation layer preview will use the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if **Override Preview Settings** is `Enabled` and an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
 | **Layer Priority** | Defines a high level order that vegetation areas are applied. | `Background` or `Foreground` | `Foreground` |
@@ -27,6 +27,7 @@ Combine vegetation layers with the **Vegetation Layer Blender** component.
 | **Inherit Behavior** | Allow shapes, modifiers and filters of a parent entity to affect this vegetation layer. | Boolean | `Enabled` |
 | **Propagate Behavior** | Allow shapes, modifiers and filters of this vegetation layer to affect child entities. | Boolean | `Enabled` |
 | **Vegetation Areas** | An ordered list of vegetation layers. | Array: EntityId | None |
+
 
 ## AreaBlenderRequestBus
 

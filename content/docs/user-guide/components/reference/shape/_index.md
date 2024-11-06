@@ -1,69 +1,69 @@
 ---
-title: Shape Components
+title: Shape 组件
 linktitle: Shape
-description: ' Using Shape components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用Shape组件。 '
 ---
 
 
 
-**Shape** components generate helper geometries that can be used to define shapes for area lights and shape gradients, as well as volumes and areas for AI, audio, fog, spawners, vegetation, and PhysX.
+**Shape**组件生成辅助几何体，这些几何体可用于定义区域光和形状渐变的形状，以及 AI、音频、雾、生成器、植被和 PhysX 的体积和区域。
 
-## Available Shapes
+## 可用的形状
 
-| Shape Component | Shape type | Used for |
+| Shape 组件 | 形状 | 用于 |
 |-|-|-|
-| [Axis Aligned Box Shape](axis-aligned-box-shape) | Axis-aligned box geometry | Terrain, Volume, Triggers |
-| [Box Shape](box-shape) | Box geometry | Volumes, Triggers |
-| [Capsule Shape](capsule-shape) | Capsule (cylinder with half-sphere at ends) geometry | Volumes, Triggers |
-| [Compound Shape](compound-shape) | Aggregate geometry defined by other Shape components | Volumes, Triggers |
-| [Cylinder Shape](cylinder-shape) | Cylinder geometry | Volumes, Triggers |
-| [Disk Shape](disk-shape) | Disk geometry | Areas, Triggers |
-| [Polygon Prism Shape](polygon-prism-shape) | N-sided prism geometry | Volumes, Triggers |
-| [Quad Shape](quad-shape) | Quad-plane geometry | Areas, Triggers |
-| [Sphere Shape](sphere-shape) | Sphere geometry | Volumes, Triggers |
-| [Spline](spline) | Lines and curves | Paths |
-| [Tube Shape](tube-shape) | Tube geometry | Volumes, Triggers |
+| [Axis Aligned Box Shape](axis-aligned-box-shape) | 轴对齐的长方体几何体 | Terrain, Volume, Triggers |
+| [Box Shape](box-shape) | 箱体几何体 | Volumes, Triggers |
+| [Capsule Shape](capsule-shape) | 胶囊体（末端有半球体的圆柱体）几何体 | Volumes, Triggers |
+| [Compound Shape](compound-shape) | 聚合由其他 Shape 组件定义的几何体 | Volumes, Triggers |
+| [Cylinder Shape](cylinder-shape) | 圆柱体几何体 | Volumes, Triggers |
+| [Disk Shape](disk-shape) | 圆盘几何 | Areas, Triggers |
+| [Polygon Prism Shape](polygon-prism-shape) | N 边棱柱几何形状 | Volumes, Triggers |
+| [Quad Shape](quad-shape) | 四平面几何| Areas, Triggers |
+| [Sphere Shape](sphere-shape) | 球体几何体 | Volumes, Triggers |
+| [Spline](spline) | 直线和曲线 | Paths |
+| [Tube Shape](tube-shape) | 管材几何形状 | Volumes, Triggers |
 
 {{< note >}}
-The **White Box** component does not share the same functionality as other Shape components.  The sections that follow do not apply to the White Box component.  For more information, refer to the [White Box](white-box) documentation.
+**White Box**组件与其他 Shape 组件不共享相同的功能。 以下各节不适用于 White Box 组件。 有关更多信息，请参阅 [White Box](white-box)文档。
 {{< /note >}}
 
-## Using Shape components
+## 使用 Shape 组件
 
-An entity can have only one Shape component.
+一个实体只能有一个 Shape 组件。
 
 {{< important >}}
-Always use the Shape's component properties to scale the shape, such as the **Dimensions**, **Height**, and **Radius** properties. Do not use the entity's Transform component to scale a Shape component.
+始终使用 Shape 的组件属性来缩放形状，例如 **Dimensions**、**Height** 和 **Radius** 属性。请勿使用实体的 Transform （变换） 组件来缩放 Shape （形状） 组件。
 {{< /important >}}
 
-An entity containing a Shape component should have a uniform and normalized scale; that is, the **Scale** property of the Transform component should be **X:** `1.0`, **Y:** `1.0`, **Z:** `1.0`. If a shape component is scaled non-uniformly, rendering and intersection tests use the largest vector of the Transform component's **Scale** property, yielding undesirable results.
+包含 Shape 组件的实体应具有统一且标准化的缩放;也就是说，Transform 组件的 **Scale** 属性应为 **X：** `1.0`， **Y：** `1.0`， **Z：** `1.0`。如果形状组件的缩放不均匀，则渲染和交集测试将使用 Transform 组件的 **Scale** 属性的最大向量，从而产生不需要的结果。
 
-By default, shapes are always visible in the **Open 3D Engine (O3DE) Editor**. You can hide shapes on non-selected entities by disabling the **Visible** property in the shape component.
+默认情况下，形状在 **Open 3D Engine （O3DE） 编辑器**中始终可见。您可以通过禁用形状组件中的 **Visible** 属性来隐藏未选定实体上的形状。
 
-To display a Shape component for debugging purposes while in game mode, enable the **Game View** property.
+要在游戏模式下显示 Shape 组件以进行调试，请启用 **Game View** 属性。
 
-Each Shape component provides a generic `ShapeService` that exposes functionality common to all shapes. Each shape also provides a more specific service, such as `BoxShapeService` or `SphereShapeService`.
+每个 Shape 组件都提供了一个通用的 `ShapeService`，它公开了所有形状的通用功能。每个形状还提供更具体的服务，例如 `BoxShapeService` 或 `SphereShapeService`。
 
-## Shape component EBus interface
+## Shape组件 EBus 接口
 
-All Shape components provide access to two separate request buses. The first bus is the `ShapeComponentRequestsBus` that returns general information about the Shape component. The second bus is the `ShapeNameComponentRequestsBus` that returns property configurations for the specific shape. Information on the `ShapeNameComponentRequestsBus` can be found on the reference pages for each Shape component.
+所有 Shape 组件都提供对两个单独请求总线的访问。第一条总线是 '`ShapeComponentRequestsBus`'，它返回有关 Shape 组件的一般信息。第二个总线是 '`ShapeNameComponentRequestsBus`'，它返回特定形状的属性配置。有关`ShapeNameComponentRequestsBus`的信息，可以在每个 Shape 组件的参考页上找到。
 
-All shapes share a single notification bus named `ShapeComponentNotificationsBus`.
+所有形状共享一个名为 '`ShapeComponentNotificationsBus`' 的通知总线。
 
-You can use the following functions with the event bus interface to communicate with other components in your game.
+您可以将以下函数与事件总线接口结合使用，以便与游戏中的其他组件进行通信。
 
 ## ShapeComponentRequestsBus
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `DistanceFromPoint` | Returns the minimum distance between a specified point and the shape. | Point: Vector3 point to calculate distance from.  | Float - Distance from point to shape. | Yes |
-| `DistanceSquaredFromPoint` | Returns the minimum squared distance between a specified point and the shape. | Point: Vector3 point to calculate squared distance from. | Float: Squared distance from point to shape. | Yes |
-| `GetEncompassingAabb` | Returns an AABB (Axis Aligned Bounding Box) that encompasses the entire shape. | None | `AZ::Aabb` that encompasses the shape.  | Yes |
-| `GetShapeType` | Returns the specified **Shape Type** for the component. | None | `AZ::Crc32(<shape_type_name>)`: for example, `AZ::Crc32("Sphere")` | Yes |
-| `IsPointInside` | Checks if a specified point is inside the shape.  | Point: Vector3 point to check. | Boolean: Returns `True` if the specified point is inside the shape. Returns `False` if the point is not inside the shape. | Yes |
+| `DistanceFromPoint` | 返回指定点与形状之间的最小距离。 | Point: Vector3 点来计算距离。  | Float - 从点到形状的距离。 | Yes |
+| `DistanceSquaredFromPoint` | 返回指定点与形状之间的最小平方距离。| Point: Vector3 点，用于计算平方距离。 | Float: 从点到形状的平方距离。 | Yes |
+| `GetEncompassingAabb` | 返回包含整个形状的 AABB（轴对齐边界框）。 | None | 包住形状的`AZ::Aabb`。  | Yes |
+| `GetShapeType` | 返回组件的指定 **Shape Type**。 | None | `AZ::Crc32(<shape_type_name>)`: 例如。 `AZ::Crc32("Sphere")` | Yes |
+| `IsPointInside` | 检查指定的点是否在形状内部。  | Point: Vector3 指向进行检查。 | Boolean: 如果指定的点位于形状内部，则返回 '`True`'。如果点不在形状内部，则返回 '`False`'。 | Yes |
 
 ## ShapeComponentNotificationsBus
 
-| Notification Name | Description | Parameter | Return | Scriptable |
+| 通知名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `OnShapeChanged` | Notifies listeners that the shape has been updated. | `ShapeChangeReasons`: Indicates whether the shape was updated by a transform change or a shape property change. | Void | Yes |
+| `OnShapeChanged` | 通知侦听器形状已更新。 | `ShapeChangeReasons`: 指示形状是由转换更改还是形状属性更改更新。 | Void | Yes |

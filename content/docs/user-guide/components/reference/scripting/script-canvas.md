@@ -1,14 +1,14 @@
 ---
 linkTitle: Script Canvas
-title: Script Canvas Component
-description: ' Use the Script Canvas component to add a script to an entity in Open 3D Engine (O3DE). '
+title: Script Canvas 组件
+description: ' 使用 Script Canvas 组件将脚本添加到 Open 3D Engine （O3DE） 中的实体。'
 ---
 
-Use the **Script Canvas** component to add a script to an entity.  For information on the Script Canvas component, refer to [Creating Gameplay and Other Behaviors with Script Canvas](/docs/user-guide/scripting/script-canvas/).
+使用 **Script Canvas** 组件将脚本添加到实体。 有关 Script Canvas 组件的信息，请参阅 [使用 Script Canvas 创建游戏和其他行为](/docs/user-guide/scripting/script-canvas/)。
   
-## Script Canvas Component Properties 
+## Script Canvas 组件属性
 
-The **Script Canvas** component has the following properties:
+**Script Canvas** 组件具有以下属性：
 
 **Script Canvas Asset**
-Specify the script file that you want to add to the component.
+指定要添加到组件的脚本文件。

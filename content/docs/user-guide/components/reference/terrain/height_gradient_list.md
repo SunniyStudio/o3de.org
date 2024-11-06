@@ -1,36 +1,36 @@
 ---
-title: Terrain Height Gradient List Component
+title: Terrain Height Gradient List 组件
 linktitle: Terrain Height Gradient List
-description: Use the Terrain Height Gradient List component in your Open 3D Engine (O3DE) level to convert gradients to height data.
+description: 使用 Open 3D Engine （O3DE） 关卡中的 Terrain Height Gradient List （地形高度渐变列表） 组件将渐变转换为高度数据。
 ---
 
-The **Terrain Height Gradient List** provides height data for the terrain system from a list of one or more gradients. The range of heights is adjusted by scaling the height of the [Axis Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape) component on the same entity.
+**Terrain Height Gradient List** 从一个或多个梯度列表中提供地形系统的高度数据。通过缩放同一实体上[Axis Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape)组件的高度来调整高度范围。
 
-The [Terrain Layer Spawner](/docs/user-guide/components/reference/terrain/layer_spawner) that exists on the same Entity will query the **Terrain Height Gradient List** via the `TerrainAreaHeightRequestBus`. If the list contains multiple gradients, the highest point per position queried will be used from each gradient.
+存在于同一实体上的 [Terrain Layer Spawner](/docs/user-guide/components/reference/terrain/layer_spawner) 将通过“`TerrainAreaHeightRequestBus`”查询 **Terrain Height Gradient List**。如果列表包含多个梯度，则将使用每个梯度中查询的每个位置的最高点。
 
-## Provider
+## 提供者
 
 [Terrain Gem](/docs/user-guide/gems/reference/environment/terrain)
 
-## Dependencies
+## 依赖
 
 [Axis Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape)
 
 [Terrain Layer Spawner](/docs/user-guide/components/reference/terrain/layer_spawner)
 
-## Terrain Height Gradient List properties
+## Terrain Height Gradient List 属性
 
 ![Terrain Height Gradient List component properties](/images/user-guide/components/reference/terrain/terrain-height-gradient-list-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Gradient Entities** | An array of entities with a **Gradient** component. | Array: EntityId | None |
+| **Gradient Entities** | 具有 **Gradient** 组件的实体数组。 | Array: EntityId | None |
 
 ## TerrainAreaHeightRequestBus
 
-Use the following request functions with the `TerrainAreaHeightRequestBus` EBus interface to communicate with Terrain Height Gradient List components of your game.
+将以下请求函数与 '`TerrainAreaHeightRequestBus`' 事件总线接口结合使用，以便与游戏的 Terrain Height Gradient List 组件进行通信。
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `GetHeight` | Returns a Vector3 of the Query Position with the Z-value updated to the terrain's height at the query position.  Also returns a boolean value indicating if terrain exists at the Query Position. | Query Position: Vector3 | Terrain Height: Vector3, Terrain Exists: Boolean | No |
-| `GetHeights` | Takes in a list of Vector3s as input and returns the Vector3s with Z-value updated to the terrain's height at the query position.  Also updates the list of boolean values indicating if terrain exists at each Query Position. | Query Positions: List of Vector3 | Terrain Height: List of Vector3, Terrain Exists: List of Boolean | No |
+| `GetHeight` | 返回 Query Position 的 Vector3，其中 Z 值更新为查询位置处的地形高度。 此外，还返回一个布尔值，该值指示 Query Position 处是否存在地形。 | Query Position: Vector3 | Terrain Height: Vector3, Terrain Exists: Boolean | No |
+| `GetHeights` | 将 Vector3 列表作为输入，并返回 Vector3，其中 Z 值更新为查询位置的地形高度。 此外，还会更新布尔值列表，指示每个 Query Position 处是否存在地形。 | Query Positions: List of Vector3 | Terrain Height: List of Vector3, Terrain Exists: List of Boolean | No |

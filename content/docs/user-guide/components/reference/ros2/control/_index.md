@@ -1,9 +1,9 @@
 ---
-title: ROS 2 Control Components
+title: ROS 2 控制组件
 linktitle: Control
-description: Components for robot control with Robot Operating System (ROS 2) in Open 3D Engine (O3DE).
+description: 在Open 3D Engine（O3DE） 中使用机器人操作系统 （ROS 2） 进行机器人控制的组件。
 ---
 
-Refer to the [Robotics](/docs/user-guide/interactivity/robotics) documentation to learn more about robotics simulation features of O3DE.
+请参阅 [Robotics](/docs/user-guide/interactivity/robotics) 文档，了解有关 O3DE 的机器人仿真功能的更多信息。
 
--  [GeoReference Level Component](ros2-georeference.md)
+-  [GeoReference Level组件](ros2-georeference.md)

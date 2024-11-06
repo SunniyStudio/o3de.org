@@ -23,7 +23,7 @@ description: ' 使用Camera组件可将实体用作Open 3D Engine (O3DE)中的�
 | **Far clip distance** | 到视锥近远平面的距离，以米为单位。必须大于 **Near clip distance**。 | 0.001 to Infinity | `1024` |
 | **Make active camera on activation** | 如果设置为启用，则在组件激活时，该摄像机将成为活动的渲染摄像机。 | Boolean | `Enabled` |
 | **Debug - Frustrum length**| 圆锥曲线形状的长度占**Far clip distance**的百分比。 | 0.01 - 100.0 | `1.0` |
-| **Debug - Frustrum color** | 蘑菇头形状的颜色。 | Eight bits per channel color: 0-255 | `255,255,0` |
+| **Debug - Frustrum color** | 蘑菇头形状的颜色。 | 每通道 8 位颜色： 0-255 | `255,255,0` |
 
 ## CameraRequestBus
 

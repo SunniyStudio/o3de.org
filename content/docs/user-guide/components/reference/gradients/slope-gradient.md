@@ -1,54 +1,54 @@
 ---
 linktitle: Slope Gradient
-title: Slope Gradient Component
-description: Use the Slope Gradient component to generate a gradient from a range of surface slopes in Open 3D Engine (O3DE).
+title: Slope Gradient 组件
+description: 在Open 3D Engine (O3DE)中使用Slope Gradient组件从一系列曲面坡度中生成梯度。
 ---
 
-Add the **Slope Gradient** component to generate a normalized gradient from a slope range.  The output gradient may be optionally constrained by surface tags.
+添加**Slope Gradient**组件，从坡度范围生成归一化梯度。 输出的梯度可选择受曲面标记的限制。
 
-## Provider
+## 提供者
 
 [Gradient Signal Gem](/docs/user-guide/gems/reference/utility/gradient-signal)
 
-## Slope Gradient properties
+## Slope Gradient 属性
 
 ![Slope Gradient component properties](/images/user-guide/components/reference/gradients/slope-gradient-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Surface Tags to track** | An optional array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data).  This component will generate a gradient only where these surface tags exist. | Array: Surface Tags | None |
-| **Slope Min** | Sets the minimum surface slope angle that generates a gradient value. | Float: 0.0 - 90.0 | `0.0` |
-| **Slope Max** | Sets the maximum surface slope angle that generates a gradient value. | Float: 0.0 - 90.0 | `20.0` |
-| **Ramp Type** | Sets the function used to interpolate between slope ranges. | `Linear Ramp Down`, `Linear Ramp Up`, or `Smooth Step` | `Linear Ramp Down` |
-| **Smooth Step Settings** | Refer to [Smooth Step Settings properties](#smooth-step-settings-properties) below. 
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。 | | |
+| **Pin Preview to Shape** | 如果**Constrain to Shape**为 `Enabled`，则设置一个具有兼容形状组件的实体作为预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中未选择实体时，该字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。 <br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Surface Tags to track** | [surface tags](/docs/user-guide/gems/reference/environment/surface-data)的可选数组。 该组件只在存在这些表面标记的地方生成梯度。 | Array: Surface Tags | None |
+| **Slope Min** | 设置产生梯度值的最小表面坡度角。 | Float: 0.0 - 90.0 | `0.0` |
+| **Slope Max** | 设置产生梯度值的最大表面坡度角。 | Float: 0.0 - 90.0 | `20.0` |
+| **Ramp Type** | 设置斜率范围之间的内插函数。 | `Linear Ramp Down`, `Linear Ramp Up`, 或 `Smooth Step` | `Linear Ramp Down` |
+| **Smooth Step Settings** | 请参阅下面的 [Smooth Step Settings 属性](#smooth-step-settings-properties) 。| 
 
-### Smooth Step Settings properties
-*Smooth Step Settings properties are available only for **Ramp Type** `Smooth Step`.*
+### Smooth Step Settings 属性
+Smooth Step Settings属性仅适用于**Ramp Type** `Smooth Step`。
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Falloff Midpoint** | Sets the midpoint of falloff values. | Float: 0.0 - 1.0 | `0.5` |
-| **Falloff Range** | Sets the range of falloff. | Float: 0.0 - 1.0 | `0.5` |
-| **Falloff Softness** | Sets the amount of smoothing applied to falloff values. | Float: 0.0 - 1.0 | `0.25` |
+| **Falloff Midpoint** | 设置衰减值的中点。 | Float: 0.0 - 1.0 | `0.5` |
+| **Falloff Range** | 设置衰减范围。| Float: 0.0 - 1.0 | `0.5` |
+| **Falloff Softness** | 设置应用于衰减值的平滑量。 | Float: 0.0 - 1.0 | `0.25` |
 
 ## SurfaceSlopeGradientRequestBus
 
-Use the following request functions with the `SurfaceSlopeGradientRequestBus` EBus interface to communicate with Slope Gradient components in your game.
+将以下请求函数与`SurfaceSlopeGradientRequestBus` EBus 接口结合使用，可与游戏中的斜率渐变组件进行通信。
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `AddTag` | Adds a surface tag to the **Surface Tags to track** array. | Surface Tag: String | None | Yes |
-| `GetNumTags` | Returns the number of tags in the **Surface Tags to track** array. | None | Count: Integer | Yes |
-| `GetRampType` | Returns the value of the **Ramp Type** property. | None | Ramp Type Index: Integer | Yes |
-| `GetSlopeMax` | Returns the value of the **Slope Max** property. | None | Float | Yes |
-| `GetSlopeMin` | Returns the value of the **Slope Min** property. | None | Float | Yes |
-| `GetTag` | Returns the surface tag at the specified index of the **Surface Tags to track** array. | Surface Tag Index: Integer | Surface Tag: String | Yes |
-| `RemoveTag` | Removes the surface tag at the specified index of the **Surface Tags to track** array. | Surface Tag Index: Integer | None | Yes |
-| `SetRampType` | Sets the value of the **Ramp Type** property. | Ramp Type Index: Integer | None | Yes |
-| `SetSlopeMax` | Sets the value of the **Slope Max** property. | Float | None | Yes |
-| `SetSlopeMin` | Sets the value of the **Slope Min** property. | Float | None | Yes |
+| `AddTag` | 在**Surface Tags to track**数组中添加一个曲面标记。 | Surface Tag: String | None | Yes |
+| `GetNumTags` | 返回**Surface Tags to track**数组中标签的数量。  | None | Count: Integer | Yes |
+| `GetRampType` | 返回 **Ramp Type** 属性的值。| None | Ramp Type Index: Integer | Yes |
+| `GetSlopeMax` | 返回 **Slope Max** 属性的值。| None | Float | Yes |
+| `GetSlopeMin` | 返回 **Slope Min** 属性的值。| None | Float | Yes |
+| `GetTag` | 返回**Surface Tags to track**数组中指定索引处的表面标签。  | Surface Tag Index: Integer | Surface Tag: String | Yes |
+| `RemoveTag` | 删除**Surface Tags to track**数组中指定索引处的表面标签。 | Surface Tag Index: Integer | None | Yes |
+| `SetRampType` | 设置 **Ramp Type** 属性的值。| Ramp Type Index: Integer | None | Yes |
+| `SetSlopeMax` | 设置 **Slope Max** 属性的值。| Float | None | Yes |
+| `SetSlopeMin` | 设置 **Slope Min** 属性的值。| Float | None | Yes |

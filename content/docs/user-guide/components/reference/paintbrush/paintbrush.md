@@ -1,109 +1,109 @@
 ---
 linkTitle: Paint Brush
 title: Paint Brush
-description: ' The Paint Brush is a generalized tool for manipulating arbitrary data in world space using standard painting controls. '
+description: ' Paint Brush 是一种通用工具，用于使用标准绘制控件在世界空间中处理任意数据。 '
 ---
 
-In O3DE, many different components attach data to world space positions and regions. You can edit this data externally in content creation tools, but sometimes it can be easier to edit the data directly in the context of the assembled world inside of O3DE.
+在 O3DE 中，许多不同的组件将数据附加到世界空间位置和区域。您可以在内容创建工具中从外部编辑此数据，但有时直接在 O3DE 内部的组装世界上下文中编辑数据会更容易。
 
-The Paint Brush is an editing mode available on some types of components to enable standard painting controls for editing the component's data in world space.
+Paint Brush是某些类型的组件上可用的一种编辑模式，用于启用标准绘制控件，以便在世界空间中编辑组件的数据。
 
-Some components directly map pixels from a source image into world space, but other components might have a more indirect mapping, such as weights stored on vertices on a mesh. The Paint Brush is designed to allow painting in world space for any arbitrary type of data. For that reason, the descriptions below refer more generically to values instead of pixels, even though painting is generally considered to be an image-based operation. Also, the mapping of data values into world space can be at different densities, so the descriptions below make a distinction between *world space* and *value space*. World space represents a number of meters in the virtual world. Value space represents a quantity of adjacent data values in the data source being edited.
+某些组件将像素从源图像直接映射到世界空间，但其他组件可能具有更间接的映射，例如存储在网格上顶点上的权重。Paint Brush （绘制笔刷） 旨在允许在世界空间中为任意类型的数据进行绘制。因此，下面的描述更通用地指值而不是像素，即使通常将绘制视为基于图像的操作。此外，数据值到世界空间的映射可以具有不同的密度，因此下面的描述区分了 **世界空间** 和 **值空间**。世界空间表示虚拟世界中的米数。值空间表示正在编辑的数据源中相邻数据值的数量。
 
-## Using the Paint Brush
+## 使用Paint Brush
 
-The Paint Brush is enabled by clicking the **Edit** button on the component or selecting the component's icon in the **Component Switcher** in the viewport.
+通过单击组件上的 **Edit** 按钮或在视区的 **Component Switcher** 中选择组件的图标来启用 Paint Brush。
 
-Once the Paint Brush is active, there are three sets of controls:
+激活 Paint Brush 后，有三组控件：
 
 ![Paint Brush Tool image.](/images/user-guide/components/reference/paintbrush/paintbrush-tool.png)
 
-1. A dockable **Paint Brush Settings** window
-2. Paint Brush mode selection icons in the viewport
-3. The Paint Brush circle in the viewport
+1. 一个可停靠的 **Paint Brush Settings** 窗口
+2. 视口中的Paint Brush模式选择图标
+3. 在视口中循环切换Paint Brush
 
-Painting consists of moving the mouse in the viewport while holding down the left mouse button. A brush stroke begins once the left mouse button is pressed down and ends once the left mouse button is released. Undo/redo commands work on each brush stroke.
+绘制包括在视口中移动鼠标，同时按住鼠标左键。按下鼠标左键后，画笔笔触开始，释放鼠标左键后结束。撤消/重做命令适用于每个画笔笔触。
 
-A brush stroke consists of a series of overlapping circles applied with constant spacing as the mouse moves. The Paint Brush Settings control the color, opacity, size, and spacing of the circles.
+画笔描边由一系列重叠的圆圈组成，这些圆圈在鼠标移动时以恒定的间距应用。Paint Brush Settings 控制圆圈的颜色、不透明度、大小和间距。
 
 ![Example brush stroke.](/images/user-guide/components/reference/paintbrush/paintbrush-brush-stroke.png)
 
-End Paint Brush mode by pressing **Esc**, clicking the **Done** button on the component, or selecting a different component's icon in the **Component Switcher** in the viewport.
+通过按 **Esc**、单击组件上的 **Done** 按钮或在视区的 **Component Switcher** 中选择其他组件的图标来结束 Paint Brush 模式。
 
-## Paint Brush modes
+## Paint Brush 模式
 
-The Paint Brush has three separate modes - **Paint**, **Eyedropper**, and **Smooth**.
+Paint Brush 具有三种模式 - **Paint**, **Eyedropper**, 和 **Smooth**。
 
-| Mode | Description |
+| 模式 | 说明 |
 | - | - |
-| Paint | The Paint Brush blends new values onto whatever data is being painted based on the Paint Brush Settings. |
-| Eyedropper | The Paint Brush reads the current value from underneath the exact center of the brush and sets the **Intensity**, **Color**, and **Opacity** in the Paint Brush Settings to that value. The Eyedropper always uses the exact center to read a single value; the brush size does not affect it. |
-| Smooth | The Paint Brush smooths the existing data and blends the results back in based on the Paint Brush Settings. |
+| Paint | Paint Brush （绘制画笔） 根据 Paint Brush Settings （绘制画笔设置） 将新值混合到正在绘制的任何数据上。 |
+| Eyedropper | Paint Brush 从画笔的确切中心下方读取当前值，并将 Paint Brush Settings 中的 **Intensity**、**Color** 和 **Opacity** 设置为该值。吸管始终使用精确的中心来读取单个值;画笔大小不会影响它。 |
+| Smooth | Paint Brush （绘制画笔） 平滑现有数据，并根据 Paint Brush Settings （绘制画笔设置） 将结果混合回来。 |
 
 ## Paint Brush Settings
 
-There are three types of Paint Brush Settings - settings that affect brush strokes, settings that affect the individual circles within a brush stroke, and settings that only apply to smoothing operations.
+有三种类型的 Paint Brush Settings - 影响画笔笔触的设置、影响画笔笔触中各个圆圈的设置以及仅适用于平滑操作的设置。
 
-### Settings that affect brush strokes
+### 影响画笔描边的设置
 
 #### Color / Intensity
 
-The Paint Brush Settings provides a **Color** setting for components that support full-color values or an **Intensity** setting for components that only support a single-channel greyscale value.
+**Paint Brush Settings**为支持全色值的组件提供 **Color** 设置，或为仅支持单通道灰度值的组件提供 **Intensity** 设置。
 
-**Color** controls the color and opacity for the entire brush stroke. **Intensity** controls the greyscale value for the entire brush stroke.
+**Color** 控制整个画笔描边的颜色和不透明度。**Intensity** 控制整个画笔描边的灰度值。
 
 #### Opacity
 
-**Opacity** controls the opacity of the entire brush stroke. Conceptually, if the entire brush stroke was painted into a separate paint layer, **Opacity** is the alpha value used to blend that layer back into the main layer. If a brush stroke crosses itself, it will not double-blend.
+**Opacity** 控制整个画笔描边的不透明度。从概念上讲，如果将整个画笔描边绘制到单独的绘画图层中，则 **Opacity** 是用于将该图层混合回主图层的 Alpha 值。如果画笔笔触与自身交叉，则不会进行双重混合。
 
-If the component supports full-color values, the opacity can either be edited as a part of the color or via the **Opacity** slider. The same value is exposed in both places for convenience.
+如果组件支持全色值，则可以将不透明度作为颜色的一部分进行编辑，也可以通过 **Opacity** 滑块进行编辑。为方便起见，在两个位置都公开了相同的值。
 
-An example of a brush stroke crossing itself with medium opacity:
+画笔笔触与中等不透明度交叉的示例：
 ![Example of brush stroke crossing itself with medium opacity.](/images/user-guide/components/reference/paintbrush/paintbrush-opacity-overlap.png)
 
 #### Blend Mode
 
-**Blend Mode** controls how the entire brush stroke is blended back into the main layer. In the following table, `a` is the main layer value, `b` is the painted value, and `c` is the value blended back into the main layer using linear interpolation based on the **Opacity** setting.
+**Blend Mode** 控制如何将整个画笔描边混合回主图层。在下表中，`a` 是主图层值，`b`是绘制的值，`c`是使用基于 **Opacity** 设置的线性插值混合回主图层的值。
 
-| Blend Mode | Math Function | Description |
+| 混合模式 | 数学函数 | 说明 |
 | - | - | - |
-| Normal | $$c = b$$ | Directly uses the painted value for blending. |
-| Multiply | $$c = ab$$ | Multiplies the main value and painted value before blending, which results in darker values. |
-| Screen | $$c = 1 - (1 - a)(1 - b)$$ | Performs an inverted multiply between the main value and painted value before blending, which results in lighter values. |
-| Linear Dodge (Add) | $$c = a + b$$ | Adds the main value and painted value before blending, which results in lighter values. |
-| Subtract | $$c = a - b$$ | Subtracts the main value and painted value before blending, which results in darker values. |
-| Darken (Min) | $$c = min(a, b)$$ | Keeps the minimum value between the main and painted value before blending. This results in values that are always the same or darker than the main value. |
-| Lighten (Max) | $$c = max(a, b)$$ | Keeps the maximum value between the main and painted value before blending. This results in values that are always the same or lighter than the main value. |
-| Average | $$c = (a + b) / 2$$ | Uses the average of the main and painted values for blending. |
-| Overlay | $$a < 1/2 : c = 2ab$$<br>$$a >= 1/2 : c = 1 - 2(1 - a)(1 - b)$$ | If the main value is dark, apply Multiply mode and darken; if the main value is light, apply Screen mode and lighten. |
+| Normal | $$c = b$$ | 直接使用绘制值进行混合。 |
+| Multiply | $$c = ab$$ | 在混合之前将 main 值和 painted 值相乘，这将产生较暗的值。 |
+| Screen | $$c = 1 - (1 - a)(1 - b)$$ | 在混合之前，在 main 值和 painted 值之间执行反转乘法，从而产生较轻的值。 |
+| Linear Dodge (Add) | $$c = a + b$$ | 在混合之前添加 main 值和 painted 值，这将产生较轻的值。 |
+| Subtract | $$c = a - b$$ | 在混合之前减去 main 值和 Painted 值，这会导致值更暗。 |
+| Darken (Min) | $$c = min(a, b)$$ | 在混合之前保持 main 值和 painted 值之间的最小值。这会导致值始终与主值相同或更暗。 |
+| Lighten (Max) | $$c = max(a, b)$$ | 在混合之前保持 main 和 painted 值之间的最大值。这会导致值始终等于或小于主值。 |
+| Average | $$c = (a + b) / 2$$ | 使用 main 和 painted 值的平均值进行混合。 |
+| Overlay | $$a < 1/2 : c = 2ab$$<br>$$a >= 1/2 : c = 1 - 2(1 - a)(1 - b)$$ | 如果主值为深色，则应用正片叠底模式并变暗;如果 Main 值为 Light，则应用 Screen mode 和 lighten。 |
 
-### Settings that affect brush circles
+### 影响画笔圆圈的设置
 
 #### Size
 
-**Size** controls the diameter of each brush circle. The size is specified in meters in world space coordinates, not in pixels or the number of values affected in the component.
+**Size** 控制每个画笔圆的直径。大小在世界空间坐标中以米为单位指定，而不是以像素或组件中受影响的值的数量指定。
 
 #### Flow
 
-**Flow** controls the maximum opacity of each brush circle. A **Flow** value of 0% is completely transparent, and 100% is completely opaque.
+**Flow**控制每个画笔圆圈的最大不透明度。**Flow** 值为 0% 是完全透明的，而 100% 是完全不透明的。
 
 | Flow | Illustration |
 | - | - |
 | 1% | ![Paintbrush flow of 1%.](/images/user-guide/components/reference/paintbrush/paintbrush-flow-1.png) |
 | 100% | ![Paintbrush flow of 100%.](/images/user-guide/components/reference/paintbrush/paintbrush-flow-100.png) |
 
-Because the **Flow** opacity affects each brush circle, overlapping circles in the same brush stroke will blend with each other.
+由于 **Flow** 不透明度会影响每个画笔圆圈，因此同一画笔描边中重叠的圆圈将相互混合。
 
-An example of a brush stroke crossing itself with medium flow:
+画笔笔触与中等流向交叉的示例：
 ![Example of brush stroke crossing itself with medium flow.](/images/user-guide/components/reference/paintbrush/paintbrush-flow-overlap.png)
 
 #### Hardness
 
-**Hardness** controls the opacity falloff of each brush circle. The **Hardness** is the percentage of distance along the circle's radius to begin the falloff at. The falloff always ends at the outer radius. For example, a **Hardness** value of 50% means that the inner 50% of the brush circle will use the maximum opacity specified by **Flow**, and the outer 50% of the brush circle will drop in opacity until it is completely transparent. A value of 100% will make the entire brush circle use the maximum opacity.
+**Hardness** 控制每个画笔圆圈的不透明度衰减。**Hardness** 是开始衰减时沿圆半径的距离百分比。衰减始终在外半径处结束。例如，**Hardness** 值为 50% 意味着画笔圆圈的内侧 50% 将使用 **Flow** 指定的最大不透明度，而画笔圆圈的外侧 50% 的不透明度将下降，直到它完全透明。值为 100% 将使整个画笔圆圈使用最大不透明度。
 
-An illustration of Hardness 50% - the inner circle shows where the falloff begins, and the outer circle shows where the falloff ends. The outer circle is the brush size:![Illustration of hardness opacity falloff.](/images/user-guide/components/reference/paintbrush/paintbrush-falloff-50-percent.png)
+硬度 50% 的插图 - 内圈显示衰减开始的位置，外圈显示衰减结束的位置。外圆是画笔大小：![Illustration of hardness opacity falloff.](/images/user-guide/components/reference/paintbrush/paintbrush-falloff-50-percent.png)
 
-The following chart shows how the overall circle opacity changes through different combinations of **Hardness** and **Flow**. Although the circles appear to be different sizes, they are all the same brush size with differing amounts of opacity between the center and the outer edge. Lower **Flow** values have a lower maximum opacity which causes the falloff to reach 0 more quickly.
+下图显示了整体圆圈的不透明度如何通过 **Hardness** 和 **Flow** 的不同组合而变化。尽管圆圈看起来大小不同，但它们都是相同的画笔大小，但中心和外边缘之间的不透明度不同。较低的 **Flow** 值具有较低的最大不透明度，这会导致衰减更快地达到 0。
 
 | | Flow 1% | Flow 50% | Flow 100% |
 | - | - | - | - |
@@ -111,13 +111,13 @@ The following chart shows how the overall circle opacity changes through differe
 | Hardness 50% | ![50% Hardness 1% Flow.](/images/user-guide/components/reference/paintbrush/paintbrush-hardness-50-flow-1.png) | ![50% Hardness 50% Flow.](/images/user-guide/components/reference/paintbrush/paintbrush-hardness-50-flow-50.png) | ![50% Hardness 100% Flow.](/images/user-guide/components/reference/paintbrush/paintbrush-hardness-50-flow-100.png) |
 | Hardness 100% | ![100% Hardness 1% Flow.](/images/user-guide/components/reference/paintbrush/paintbrush-hardness-100-flow-1.png) | ![100% Hardness 50% Flow.](/images/user-guide/components/reference/paintbrush/paintbrush-hardness-100-flow-50.png) | ![100% Hardness 100% Flow.](/images/user-guide/components/reference/paintbrush/paintbrush-hardness-100-flow-100.png) |
 
-Because the **Hardness** opacity affects each brush circle, overlapping circles in the same brush stroke will blend with each other.
+由于 **Hardness** 不透明度会影响每个画笔圆圈，因此同一画笔笔触中的重叠圆圈将相互混合。
 
-An example of a brush stroke crossing itself with medium hardness:![Example of brush stroke crossing itself with medium hardness.](/images/user-guide/components/reference/paintbrush/paintbrush-hardness-overlap.png)
+画笔笔触以中等硬度交叉自身的示例：![Example of brush stroke crossing itself with medium hardness.](/images/user-guide/components/reference/paintbrush/paintbrush-hardness-overlap.png)
 
 #### Distance
 
-**Distance** controls the spacing of each circle within the brush stroke as the mouse moves. Specifically, the **Distance** value represents the total distance the mouse needs to move before applying another circle, so small back-and-forth movements with the mouse can produce circles that are closer together than the **Distance** value. **Distance** is a percentage of the circle's size, so a value of 50% will overlap each circle by 50% and a value of 100% will produce exactly non-overlapping circles. Values greater than 100% will leave space between each circle.
+**Distance** 控制鼠标移动时画笔描边内每个圆的间距。具体来说，**Distance**值表示鼠标在应用另一个圆圈之前需要移动的总距离，因此使用鼠标来回小幅移动可以产生比**Distance**值更近的圆圈。**Distance** 是圆大小的百分比，因此值 50% 将使每个圆重叠 50%，值 100% 将产生完全不重叠的圆。大于 100% 的值将在每个圆圈之间留出空间。
 
 | Distance | Illustration |
 | - | - |
@@ -127,58 +127,58 @@ An example of a brush stroke crossing itself with medium hardness:![Example of b
 | 100% | ![Paintbrush distance of 100%.](/images/user-guide/components/reference/paintbrush/paintbrush-distance-100.png) |
 | 200% | ![Paintbrush distance of 200%.](/images/user-guide/components/reference/paintbrush/paintbrush-distance-200.png) |
 
-### Settings that apply to smoothing operations
+### 应用于平滑操作的设置
 
-The following settings only apply to the smoothing brush.
+以下设置仅适用于平滑画笔。
 
 #### Smooth Mode
 
-**Smooth Mode** is the method for combining an NxN set of values together into a single smoothed value for use at the center of the NxN square.
+**Smooth Mode** 是将一组 NxN 值组合成一个平滑值，以便在 NxN 正方形的中心使用的方法。
 
-| Mode | Description | Example 1 | Example 2 |
+| 模式 | 说明 | 示例 1 | 示例 2 |
 | - | - | - | - |
 |  | (Input images) |![Sample smoothing input image.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-input.png) |![Sample smoothing input image 2.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-input2.png) |
-| `Gaussian` | Takes a weighted average of the NxN values using a Gaussian bell curve distribution function. This is the most common smoothing method used by paint programs. It provides a good balance of smoothing out noise and preserving details. |![Sample smoothing Gaussian image.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-gaussian.png) |![Sample smoothing Gaussian image 2.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-gaussian2.png) |
-| `Mean` | Takes an unweighted average of the NxN values. This method smooths out noise and is the method least likely to preserve sharp details. |![Sample smoothing mean image.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-mean.png) |![Sample smoothing mean image 2.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-mean2.png) |
-| `Median` | Takes the middle value from the sorted set of NxN values. This method preserves sharper edges than the other smoothing methods and can completely eliminate noise, but it also produces less smooth results in general and might introduce noticeable artifacts. |![Sample smoothing median image.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-median.png) |![Sample smoothing median image 2.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-median2.png) |
+| `Gaussian` | 使用高斯钟形曲线分布函数取 NxN 值的加权平均值。这是绘制程序最常用的平滑方法。它在平滑噪点和保留细节之间提供了良好的平衡。 |![Sample smoothing Gaussian image.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-gaussian.png) |![Sample smoothing Gaussian image 2.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-gaussian2.png) |
+| `Mean` | 取 NxN 值的未加权平均值。此方法可消除杂色，并且是最不可能保留清晰细节的方法。 |![Sample smoothing mean image.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-mean.png) |![Sample smoothing mean image 2.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-mean2.png) |
+| `Median` | 从排序的 NxN 值集中获取中间值。与其他平滑方法相比，此方法保留更锐利的边缘，并且可以完全消除杂色，但它通常也会产生不太平滑的结果，并且可能会引入明显的伪影。 |![Sample smoothing median image.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-median.png) |![Sample smoothing median image 2.](/images/user-guide/components/reference/paintbrush/paintbrush-smooth-mode-median2.png) |
 
 #### Smoothing Radius
 
-**Smoothing Radius** is the number of values to use in each direction from the center value when computing the smoothed value. The smoothing methods use NxN values, where `N = (radius * 2) + 1`. A radius of 1 is a 3x3 set of values, a radius of 2 is a 5x5 set of values, a radius of 3 is a 7x7 set of values, and so on.
+**Smoothing Radius** 是在计算平滑值时，从中心值开始在每个方向上使用的值数。平滑方法使用 NxN 值，其中`N = (radius * 2) + 1`。半径 1 是一组 3x3 的值，半径 2 是一组 5x5 的值，半径 3 是一组 7x7 的值，依此类推。
 
-This number is expressed in *value space*. In other words, it describes the number of adjacent values to use in each direction regardless of how the values are mapped into world space.
+这个数字以 **value space** 表示。换句话说，它描述在每个方向上使用的相邻值的数量，而不管这些值是如何映射到世界空间的。
 
-A larger radius will generally cause a smoother result across larger distances, but it also has an increased performance cost.
+较大的半径通常会在较远的距离上产生更平滑的结果，但也会增加性能成本。
 
-The **Smoothing Radius** is separate from the Paint Brush **Size**. The Paint Brush **Size** controls how many values will get smoothed, and the **Smoothing Radius** controls how many adjacent values are used to smooth each value. Only values within the Paint Brush will get smoothed, but values outside of the Paint Brush might be used for calculating the smoothed results.
+**Smoothing Radius**与Paint Brush**Size**是分开的。画笔 **Size** 控制将平滑的值数量，而 **Smoothing Radius** 控制用于平滑每个值的相邻值的数量。只有 Paint Brush （绘制画笔） 中的值才会被平滑，但 Paint Brush （绘制画笔） 之外的值可能用于计算平滑的结果。
 
-## Hotkeys and CVars
+## 快捷键和CVars
 
-| Hotkey | Description |
+| 快捷键 | 说明 |
 | - | - |
-| **[** | Decreases the Paint Brush **Size**. |
-| **]** | Increases the Paint Brush **Size**. |
-| **{** | Decreases the Paint Brush **Hardness**. |
-| **}** | Increases the Paint Brush **Hardness**. |
+| **[** | 减小画笔 **Size**。 |
+| **]** | 增加画笔 **Size**。 |
+| **{** | 降低画笔 **Hardness**。 |
+| **}** | 增加画笔 **Hardness**。 |
 
-| CVar | Description |
+| CVar | 说明 |
 | - | - |
-| `ed_paintBrushSizeAdjustAmount` | Controls how much the `[` and `]` hotkeys adjust the Paint Brush Size in meters. |
-| `ed_paintBrushHardnessPercentAdjustAmount` | Controls how much the `{` and `}` hotkeys adjust the Paint Brush Hardness in percent (0 - 100). |
-| `ed_paintBrushManipulatorInnerColor` | The color of the inner circle of the Paint Brush, which is used to show where the hardness falloff begins. |
-| `ed_paintBrushManipulatorOuterColor` | The color of the outer circle of the Paint Brush, which shows the overall Paint Brush size and where the hardness falloff ends. |
+| `ed_paintBrushSizeAdjustAmount` | 控制 `[` 和 `]` 热键以米为单位调整 Paint Brush Size 的程度。 |
+| `ed_paintBrushHardnessPercentAdjustAmount` | 控制 `{` 和 `}` 热键以百分比 （0 - 100） 调整 Paint Brush Hardity（绘制笔刷硬度）的程度。 |
+| `ed_paintBrushManipulatorInnerColor` | Paint Brush （绘制笔刷） 内圆的颜色，用于显示硬度衰减的开始位置。 |
+| `ed_paintBrushManipulatorOuterColor` | Paint Brush 外圆的颜色，显示整体 Paint Brush 大小和硬度衰减结束的位置。 |
 
 ## PaintBrushSessionBus
 
-The PaintBrush provides an EBus that exposes high-level painting APIs for any component that supports runtime painting.
+PaintBrush 提供了一个 EBus，该 EBus 为支持运行时绘制的任何组件公开高级绘制 API。
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `StartPaintSession` | Starts a runtime paint session and creates the temporary data buffers needed for modification. | PaintableEntityId: The entity that contains a paintable component.  | `Uuid`: The new paint session ID. | Yes |
-| `EndPaintSession` | Ends the runtime paint session for the given ID and cleans up the temporary data buffers. | sessionId: The paint session ID to end. | None | Yes |
-| `BeginBrushStroke` | Starts a brush stroke for a paint session with the given brush settings for color/intensity/opacity. | sessionId: The paint session ID, brushSettings: The paint brush settings for this brush stroke. | None  | Yes |
-| `EndBrushStroke` | Ends a brush stroke for a paint session. | sessionId: The paint session ID. | None  | Yes |
-| `IsInBrushStroke` | Returns whether or not a paint session is currently in the middle of a brush stroke. | sessionId: The paint session ID. | `bool`: True if a brush stroke has been started, false if not.  | Yes |
-| `ResetBrushStrokeTracking` | Resets the brush tracking so that the next action will be considered the start of a stroke movement instead of a continuation. | sessionId: The paint session ID. | None  | Yes |
-| `PaintToLocation` | Applies a paint color to the underlying data from the previous location to the provided location using the given brush settings. | sessionId: The paint session ID, brushCenter: The location to move the center of the brush to, brushSettings: The paint brush settings for this brush stroke. | None  | Yes |
-| `SmoothToLocation` | Smooths the underlying data from the previous location to the provided location using the given brush settings. | sessionId: The paint session ID, brushCenter: The location to move the center of the brush to, brushSettings: The paint brush settings for this brush stroke. | None  | Yes |
+| `StartPaintSession` | 启动运行时绘制会话并创建修改所需的临时数据缓冲区。 | PaintableEntityId: 包含可绘制组件的实体。  | `Uuid`: 新的绘制会话 ID。 | Yes |
+| `EndPaintSession` | 结束给定 ID 的运行时绘制会话并清理临时数据缓冲区。 | sessionId: 要结束的绘制会话 ID。 | None | Yes |
+| `BeginBrushStroke` | 使用给定的颜色/强度/不透明度画笔设置启动绘画会话的画笔描边。 | sessionId: 绘制会话 ID, brushSettings: 此画笔描边的画笔设置。 | None  | Yes |
+| `EndBrushStroke` | 结束绘制会话的画笔描边。 | sessionId: 绘制会话 ID。 | None  | Yes |
+| `IsInBrushStroke` | 返回绘制会话当前是否位于画笔描边的中间。 | sessionId: 绘制会话 ID。 | `bool`: 如果已启动画笔笔触，则为 True，否则为 false。  | Yes |
+| `ResetBrushStrokeTracking` | 重置画笔跟踪，以便将下一个操作视为笔触移动的开始，而不是延续。 | sessionId: 绘制会话 ID。 | None  | Yes |
+| `PaintToLocation` | 使用给定的画笔设置，将绘制颜色应用于从上一个位置到提供位置的基础数据。 | sessionId: 绘制会话 ID, brushCenter: 将画笔中心移动到的位置，brushSettings：此画笔描边的画笔设置。 | None  | Yes |
+| `SmoothToLocation` | 使用给定的画笔设置将基础数据从上一个位置平滑到提供的位置。 | sessionId: 绘制会话 ID, brushCenter: 将画笔中心移动到的位置, brushSettings: 此画笔描边的画笔设置。 | None  | Yes |

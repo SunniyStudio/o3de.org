@@ -1,57 +1,57 @@
 ---
 linkTitle: Cloth
-description: ' The Open 3D Engine Cloth component. '
-title: Cloth Component
+description: ' Open 3D Engine Cloth 组件。 '
+title: Cloth 组件
 ---
 
 
 
-The **Cloth** component treats the vertices of any mesh that it references as cloth particles and applies physical properties, forces, and constraints to simulate the behavior of cloth. You can add this component to any entity that has **Mesh** or **Actor** components. You can add multiple cloth components to an entity.
+**Cloth** 组件将其引用的任何网格的顶点视为布料粒子，并应用物理属性、力和约束来模拟布料的行为。您可以将此组件添加到具有 **Mesh** 或 **Actor** 组件的任何实体。您可以向一个实体添加多个 Cloth 组件。
 
-The **Cloth** component is provided by the [NVIDIA Cloth gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-cloth/).
+**Cloth** 组件是由 [NVIDIA Cloth gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-cloth/) 提供的。
 
-For information on using the **Cloth** component see [Simulate cloth with NVIDIA Cloth](/docs/user-guide/interactivity/physics/nvidia-cloth/).
+对于使用**Cloth**组件的信息，请查看[使用NVIDIA Cloth模拟布料](/docs/user-guide/interactivity/physics/nvidia-cloth/)。
 
-**Contents**
-+ [Base properties](#base-properties)
-+ [Motion constraints properties](#motion-constraints-properties)
-+ [Backstop properties](#backstop-properties)
-+ [Damping properties](#damping-properties)
-+ [Inertia properties](#inertia-properties)
-+ [Wind properties](#wind-properties)
-+ [Collision properties](#collision-properties)
-+ [Self Collision properties](#self-collision-properties)
-+ [Fabric stiffness properties](#fabric-stiffness-properties)
-+ [Fabric compression properties](#fabric-compression-properties)
-+ [Fabric stretch properties](#fabric-stretch-properties)
-+ [Tether constraints properties](#tether-constraints-properties)
-+ [Quality properties](#quality-properties)
+**内容**
++ [Base 属性](#base-properties)
++ [Motion constraints 属性](#motion-constraints-properties)
++ [Backstop 属性](#backstop-properties)
++ [Damping 属性](#damping-properties)
++ [Inertia 属性](#inertia-properties)
++ [Wind 属性](#wind-properties)
++ [Collision 属性](#collision-properties)
++ [Self Collision 属性](#self-collision-properties)
++ [Fabric stiffness 属性](#fabric-stiffness-properties)
++ [Fabric compression 属性](#fabric-compression-properties)
++ [Fabric stretch 属性](#fabric-stretch-properties)
++ [Tether constraints 属性](#tether-constraints-properties)
++ [Quality 属性](#quality-properties)
 
-## Base properties 
+## Base 属性 
 
 ![Base properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-A.png)
 
 **Simulate in editor**
-Enable to simulate cloth in editor.
+启用此选项可在编辑器中模拟布料。
 
 **Mesh node**
-The mesh node to simulate as cloth. The meshes available in the list have **Cloth** modifiers applied in **FBX Settings**.
+要模拟为 Cloth 的网格节点。列表中可用的网格在 **FBX Settings** 中应用了 **Cloth** 修改器。
 
 **Mass**
-Scale multiplier applied to the mass of all cloth particles. A value of **0.0** in this property makes all cloth particles static.
+应用于所有布料粒子质量的 Scale multiplier。此属性中的值 **0.0** 使所有布料粒子变为静态。
 
 **Custom Gravity**
-Enable to override global gravity and set a custom gravity value for this cloth.
+启用此选项可覆盖全局重力并为此布料设置自定义重力值。
 
 **Gravity**
-Set gravity for this cloth. The default, **-9.81** on the **Z** axis, is standard gravity.
-The **Gravity** property is enabled by the **Custom Gravity** property.
+设置此布料的重力。默认值 **Z** 轴上的 **-9.81** 为标准重力。
+**Gravity** 属性由 **Custom Gravity** 属性启用。
 
 **Gravity Scale**
-Scale multiplier applied to the gravity of cloth particles.
+应用于布料粒子重力的 Scale multiplier。
 
 **Stiffness frequency**
-Stiffness exponent that adjusts the overall stiffness of the cloth simulation. This exponent is applied per second to these properties:
+调整布料模拟的整体刚度的刚度指数。此指数每秒应用于以下属性：
 + **Damping**
 + **Damping - Linear drag**
 + **Damping - Angular drag**
@@ -63,248 +63,248 @@ Stiffness exponent that adjusts the overall stiffness of the cloth simulation. T
 + **Fabric stretch**
 + **Tether - Stretch**
 
-## Motion constraints properties 
+## Motion constraints 属性 
 
 ![Motion constraints properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-B.png)
 
 **Max distance**
-Maximum distance limit in meters for cloth particle movement.
+布料粒子移动的最大距离限制（以米为单位）。
 
 **Scale**
-Scale value applied to all motion constraints.
-**0.0**: Motion constraints have no effect.
-**1.0**: Motion constraints are fully applied.
+应用于所有运动约束的 Scale 值。
+**0.0**: 运动约束不起作用。
+**1.0**: 运动约束已完全应用。
 
 **Bias**
-Bias value in meters added to all motion constraints. Valid values range from **-Infinity** to **Infinity**.
+添加到所有运动约束的 Bias 值（以米为单位）。有效值范围从 **-Infinity** 到 **Infinity**。
 
 **Stiffness**
-Stiffness for motion constraints.
-**0.0**: Stiffness is not applied to motion constraints.
-**1.0**: Stiffness is fully applied to motion constraints.
+运动约束的刚度。
+**0.0**: 刚度 （Stiffness） 不应用于运动约束。
+**1.0**: 刚度完全应用于运动约束。
 
-## Backstop properties 
+## Backstop 属性 
 
 ![Backstop properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-C.png)
 
 {{< note >}}
-Backstop properties are only available when a **Backstop** vertex color stream is specified in the **Cloth** modifier for the selected **Mesh node** in **FBX Settings**.
+仅当在 **FBX Settings** 中所选 **Mesh node** 的 **Cloth** 修改器中指定了 **Backstop** 顶点颜色流时，Backstop 属性才可用。
 {{< /note >}}
 
 **Radius**
-The radius in meters of the backstop sphere.
+逆止球体的半径（以米为单位）。
 
 **Back offset**
-The offset in meters for backstop spheres behind the cloth.
+布料后面的逆止球体的偏移量（以米为单位）。
 
 **Front offset**
-The offset in meters for backstop spheres in front of the cloth.
+布料前面的逆止球体的偏移量（以米为单位）。
 
-## Damping properties 
+## Damping 属性 
 
 ![Damping properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-D.png)
 
 **Damping**
-Damping of cloth particle velocity.
-**0.0**: Velocity is unaffected.
-**1.0**: Velocity is zeroed.
+布料粒子速度的阻尼。
+**0.0**: Velocity 不受影响。
+**1.0**: Velocity 被归零。
 
 **Linear Drag**
-Portion of velocity applied to cloth particles.
-**0.0**: Cloth particles are unaffected.
-**1.0**: Damped global cloth particle velocity.
+应用于布料粒子的速度部分。
+**0.0**: 布料粒子不受影响。
+**1.0**: 阻尼的全局布料粒子速度。
 
 **Angular Drag**
-Portion of angular velocity applied to turning cloth particles.
-**0.0**: Cloth particles are unaffected.
-**1.0**: Damped global cloth particle angular velocity.
+应用于转动布料粒子的角速度的一部分。
+**0.0**: 布料粒子不受影响。
+**1.0**: 阻尼的全局布料粒子角速度。
 
-## Inertia properties 
+## Inertia 属性 
 
 ![Inertia properties of the NVIDIA Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-E.png)
 
 **Linear**
-Portion of linear acceleration applied to cloth particles.
-**0.0**: Cloth particles are unaffected.
-**1.0**: Physically correct linear acceleration.
+应用于布料粒子的线性加速度的一部分。
+**0.0**: 布料粒子不受影响。
+**1.0**: 物理正确的线性加速度。
 
 **Angular**
-Portion of angular acceleration applied to turning cloth particles.
-**0.0**: Cloth particles are unaffected.
-**1.0**: Physically correct angular acceleration.
+应用于旋转布料粒子的角加速度的一部分。
+**0.0**: 布料粒子不受影响。
+**1.0**: 物理校正角加速度。
 
 **Centrifugal**
-Portion of angular velocity applied to turning cloth particles.
-**0.0**: Cloth particles are unaffected.
-**1.0**: Physically correct angular velocity.
+应用于转动布料粒子的角速度的一部分。
+**0.0**: 布料粒子不受影响。
+**1.0**: 物理校正角速度。
 
-## Wind properties 
+## Wind 属性 
 
 {{< note >}}
-The component wind properties create wind that affects only the cloth that the component references. For instructions to create wind that can affect multiple components across multiple entities, refer to [Create Wind Forces](/docs/learning-guide/tutorials/physx/wind-provider).
+组件风属性创建的风仅影响组件引用的布料。有关创建可影响多个实体中多个零部件的风的说明，请参阅 [创建风力](/docs/learning-guide/tutorials/physx/wind-provider)。
 {{< /note >}}
 
 ![Wind properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-F.png)
 
 {{< note >}}
-Wind is disabled when both the below **Air drag** and **Air lift** coefficients are **0.0**.
+当以下 **Air drag** 和 **Air lift** 系数均为 **0.0** 时，风被禁用。
 {{< /note >}}
 
 **Enable local wind velocity**
-Enable to set a wind **Local velocity** for this cloth. When disabled, the velocity from Physics::WindBus will be used.
+启用此选项可设置此布料的风 **Local velocity**。禁用时，将使用 Physics：：WindBus 中的速度。
 
 **Local velocity**
-Wind vector (direction and magnitude) in world coordinates. A greater magnitude applies a stronger wind force.
-The wind **Local velocity** property is enabled by the **Enable local wind velocity** property.
+世界坐标中的风矢量（方向和大小）。大小越大，风力越强。
+风 **Local velocity** 属性由 **Enable local wind velocity** 属性启用。
 
 **Air drag coefficient**
-Specifies how much drag air applies to the cloth particles.
+指定应用于布料粒子的阻力空气量。
 
 **Air lift coefficient**
-Specifies how much lift air applies to the cloth particles.
+指定应用于布料粒子的提升空气量。
 
 **Air density**
-The density of air used for drag and lift calculations.
+用于阻力和升力计算的空气密度。
 
-## Collision properties 
+## Collision 属性 
 
 ![Collision properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-G.png)
 
 **Friction**
-Controls the amount of friction between cloth particles and colliders.
-**0.0**: **Friction** disabled.
+控制布料粒子和碰撞体之间的摩擦量。
+**0.0**: **Friction** 已禁用。
 
 **Mass scale**
-Controls how quickly cloth particle mass is increased during collisions.
-**0.0**: **Mass scale** disabled.
+控制碰撞期间布料粒子质量增加的速度。
+**0.0**: **Mass scale** 已禁用。
 
 **Continuous detection**
-Continuous collision detection improves collision by computing the time of impact between cloth particles and colliders.
-The increase in quality can impact performance. We recommend that you use **Continuous detection** only when necessary.
+连续碰撞检测通过计算布料粒子和碰撞体之间的撞击时间来改善碰撞。
+质量的提高会影响性能。我们建议您仅在必要时使用 **Continuous detection**。
 
 **Affects static cloth particles**
-Enable to allow colliders to move static cloth particles. Static cloth particles have a **0.0** inverse mass.
+启用此选项可允许碰撞器移动静态布料粒子。静态布料粒子具有 **0.0** 的反质量。
 
-## Self Collision properties 
+## Self Collision 属性 
 
 ![Self collision properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-H.png)
 
 **Distance**
-The minimum distance that the colliding cloth particles must maintain from each other in meters.
-**0.0**: **Self collision** disabled.
+碰撞布料粒子必须彼此保持的最小距离（以米为单位）。
+**0.0**: **Self collision** 已禁用。
 
 **Stiffness**
-Stiffness for the self collision constraints.
-**0.0**: **Self collision** disabled.
+自碰撞约束的刚度。
+**0.0**: **Self collision** 已禁用。
 
-## Fabric stiffness properties 
+## Fabric stiffness 属性 
 
 ![Fabric stiffness properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-I.png)
 
 **Horizontal**
-Stiffness value for horizontal stretch and compression constraints.
-**0.0**: No horizontal stretch and compression constraints.
+水平拉伸和压缩约束的刚度值。
+**0.0**: 无水平拉伸和压缩约束。
 
 **Horizontal multiplier**
-Scale value for horizontal stretch and compression constraints.
-**0.0**: No horizontal stretch and compression constraints applied.
-**1.0**: Fully apply horizontal stretch and compression constraints.
+水平拉伸和压缩约束的 Scale 值。
+**0.0**: 未应用水平拉伸和压缩约束。
+**1.0**: 完全应用水平拉伸和压缩约束。
 
 **Vertical**
-Stiffness value for vertical stretch and compression constraints.
-**0.0**: No vertical stretch and compression constraints.
+垂直拉伸和压缩约束的刚度值。
+**0.0**: 无垂直拉伸和压缩约束。
 
 **Vertical multiplier**
-Scale value for vertical stretch and compression constraints.
-**0.0**: No horizontal stretch and compression constraints applied.
-**1.0**: Fully apply horizontal stretch and compression constraints.
+垂直拉伸和压缩约束的缩放值。
+**0.0**: 未应用水平拉伸和压缩约束。
+**1.0**: 完全应用水平拉伸和压缩约束。
 
 **Bending**
-Stiffness value for bending constraints. This value defines how easily a cloth folds on itself.
-**0.0**: No bending constraints.
+弯曲约束的刚度值。此值定义布料在自身上折叠的难易程度。
+**0.0**: 无弯曲约束。
 
 **Bending multiplier**
-Scale value for bending constraints.
-**0.0**: No bending constraints applied.
-**1.0**: Fully apply bending constraints.
+弯曲约束的 Scale 值。
+**0.0**: 未应用弯曲约束。
+**1.0**: 完全应用弯曲约束。
 
 **Shearing**
-Stiffness value for shearing constraints. This value defines how easily a cloth twists.
-**0.0**: No shearing constraints.
+剪切约束的刚度值。该值定义布料扭曲的难易程度。
+**0.0**: 无剪切约束。
 
 **Shearing multiplier**
-Scale value for shearing constraints.
-**0.0**: No shearing constraints applied.
-**1.0**: Fully apply shearing constraints.
+剪切约束的 Scale 值。
+**0.0**: 未应用剪切约束。
+**1.0**: 完全应用剪切约束。
 
-## Fabric compression properties 
+## Fabric compression 属性 
 
 ![Fabric Compression properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-J.png)
 
 **Horizontal limit**
-Compression limit for horizontal constraints. This property is affected by **Horizontal multiplier** in the **Fabric stiffness** property group.
-**0.0**: Horizontal compression disabled.
+水平约束的压缩限制。此属性受 **Fabric stiffness** 属性组中的 **Horizontal multiplier** 影响。
+**0.0**: 禁用水平压缩。
 
 **Vertical limit**
-Compression limit for vertical constraints. This property is affected by **Vertical multiplier** in the **Fabric stiffness** property group.
-**0.0**: Vertical compression disabled.
+垂直约束的压缩限制。此属性受 **Fabric stiffness** 属性组中的 **Vertical multiplier** 影响。
+**0.0**: 已禁用垂直压缩。
 
 **Bending limit**
-Compression limit for bending constraints. This property is affected by **Bending multiplier** in the **Fabric stiffness** property group.
-**0.0**: Bending compression disabled.
+弯曲约束的压缩限制。此属性受 **Fabric stiffness** 属性组中的 **Bending multiplier** 影响。
+**0.0**: 禁用弯曲压缩。
 
 **Shearing limit**
-Compression limit for shearing constraints. This property is affected by **Shearing multiplier** in the **Fabric stiffness** property group.
-**0.0**: Shearing compression disabled.
+剪切约束的压缩极限。此属性受 **Fabric stiffness** 属性组中的 **Shearing multiplier** 影响。
+**0.0**: 已禁用剪切压缩。
 
-## Fabric stretch properties 
+## Fabric stretch 属性 
 
 {{< note >}}
-For **Fabric stretch** properties, reduce **Stiffness** of **Tether constraints** or increase its **Scale** to allow cloth to stretch.
+对于 **Fabric stretch** 属性，减少 **Tether constraints** 的 **Stiffness** 或增加其 **Scale** 以允许织物拉伸。
 {{< /note >}}
 
 ![Fabric stretch properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-K.png)
 
 **Horizontal limit**
-Stretch limit for horizontal constraints. This property is affected by **Horizontal multiplier** in the **Fabric stiffness** property group.
-**0.0**: Horizontal stretch disabled.
+水平约束的拉伸限制。此属性受 **Fabric stiffness** 属性组中的 **Horizontal multiplier** 影响。
+**0.0**: 禁用水平拉伸。
 
 **Vertical limit**
-Stretch limit for vertical constraints. This property is affected by **Vertical multiplier** in the **Fabric stiffness** property group.
-**0.0**: Vertical stretch disabled.
+垂直约束的拉伸限制。此属性受 **Fabric stiffness** 属性组中的 **Vertical multiplier** 影响。
+**0.0**: 已禁用垂直拉伸。
 
 **Bending limit**
-Stretch limit for bending constraints. This property is affected by **Bending multiplier** in the **Fabric stiffness** property group.
-**0.0**: Bending stretch disabled.
+弯曲约束的拉伸限制。此属性受 **Fabric stiffness** 属性组中的 **Bending multiplier** 影响。
+**0.0**: 禁用弯曲拉伸。
 
 **Shearing limit**
-Stretch limit for shearing constraints. This property is affected by **Shearing multiplier** in the **Fabric stiffness** property group.
-**0.0**: Shearing stretch disabled.
+剪切约束的拉伸限制。此属性受 **Fabric stiffness** 属性组中的 **Shearing multiplier** 影响。
+**0.0**: 剪切拉伸已禁用。
 
-## Tether constraints properties 
+## Tether constraints 属性 
 
 ![Tether constraints properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-L.png)
 
 **Stiffness**
-Stiffness for tether constraints.
-**0.0**: Tether constraints disabled.
-**1.0**: Tether constraints behave like springs.
+系绳约束的刚度。
+**0.0**: 禁用 Tether 约束。
+**1.0**: Tether 约束的行为类似于 Spring。
 
 **Scale**
-Scale factor for tether constraint **Stiffness**
+系绳约束 **Stiffness** 的比例因子、
 
-## Quality properties 
+## Quality 属性 
 
 ![Quality properties of the Cloth component](/images/user-guide/physx/cloth/ui-cloth-component-M.png)
 
 **Solver frequency**
-Target solver iterations per second. The executed number of iterations per second may vary dependent on many performance factors. However, at least one iteration per frame is solved regardless of the value set.
+目标求解器每秒迭代次数。每秒执行的迭代次数可能因许多性能因素而异。但是，无论设置的值如何，每帧至少会求解一次迭代。
 
 **Acceleration filter iterations**
-Number of iterations to average the delta time factor used for gravity and external acceleration.
+用于重力和外部加速度的增量时间因子的平均迭代次数。
 
 **Remove static triangles**
-Enable to remove triangles composed of static cloth particles. Enabling this property improves performance, however the removed static cloth particles will not be present for collision and self collision calculations.
+启用此选项可删除由静态布料粒子组成的三角形。启用此属性可提高性能，但是，移除的静态布料粒子将不会用于碰撞和自碰撞计算。
 
 **Update normals of static particles**
-When enabled the normals of static particles will be updated according with the movement of the simulated mesh. When disabled the static particles will keep the same normals as the original mesh.
+启用后，静态粒子的法线将根据模拟网格的移动进行更新。禁用后，静态粒子将保持与原始网格相同的法线。

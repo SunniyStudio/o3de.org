@@ -1,26 +1,26 @@
 ---
 linktitle: Mesh Surface Tag Emitter
-title: Mesh Surface Tag Emitter Component
-description: Use the Mesh Surface Tag Emitter component to enable a mesh to emit surface tags in your Open 3D Engine (O3DE) level.
+title: Mesh Surface Tag Emitter 组件
+description: 使用 Mesh Surface Tag Emitter （网格表面标记发射器） 组件，使网格能够在 Open 3D Engine （O3DE） 关卡中发射表面标记。
 ---
 
-Add the **Mesh Surface Tag Emitter** component to an entity to enable a mesh to emit surface tags.
+将 **Mesh Surface Tag Emitter** 组件添加到实体，以使网格能够发出表面标签。
 
-## Provider
+## 提供者
 
 [Surface Data Gem](/docs/user-guide/gems/reference/environment/surface-data)
 
-## Dependencies
+## 依赖
 
-When applying Mesh Surface Tag Emitter to an entity, the entity is required to have one of the following components:
+将 Mesh Surface Tag Emitter 应用于实体时，该实体需要具有以下组件之一：
 
 - [Actor](../animation/actor)
 - [Mesh](../atom/mesh)
 
-## Mesh Surface Tag Emitter properties
+## Mesh Surface Tag Emitter 属性
 
 ![Mesh Surface Tag Emitter component properties](/images/user-guide/components/reference/surface-data/mesh-surface-tag-emitter-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Generated Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that the static mesh will emit. | Array: Surface Tags | None |
+| **Generated Tags** | 静态网格将发出的 [surface tags](/docs/user-guide/gems/reference/environment/surface-data) 数组。 | Array: Surface Tags | None |

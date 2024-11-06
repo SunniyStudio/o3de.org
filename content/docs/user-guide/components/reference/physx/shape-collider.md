@@ -1,23 +1,23 @@
 ---
 linkTitle: PhysX Shape Collider
-title: PhysX Shape Collider Component
-description: The PhysX Shape Collider component adds a PhysX collider that utilizes a shape component to an entity so that the entity can be included in PhysX simulation.
+title: PhysX Shape Collider 组件
+description: PhysX Shape Collider组件添加一个 PhysX 碰撞器，该碰撞器将形状组件利用到实体，以便该实体可以包含在 PhysX 模拟中。
 toc: true
 ---
 
-The **PhysX Shape Collider** component adds PhysX collider based on a **Shape** component so that the entity can be included in PhysX simulation. The PhysX Shape Collider component can also define a trigger area or a force region.
+**PhysX Shape Collider**组件添加基于 **Shape** 组件的 PhysX 碰撞器，以便实体可以包含在 PhysX 模拟中。PhysX Shape Collider （PhysX 形状碰撞器） 组件还可以定义触发器区域或力区域。
 
 {{< note >}}
-Add a [PhysX Static Rigid Body](/docs/user-guide/components/reference/physx/static-rigid-body/) component with a PhysX Shape Collider component to create a *static* entity that will never move. Add a [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/) component to create a *simulated* or a *kinematic* entity. Simulated entities move in response to collisions and forces. Kinematic entities aren't affected by collisions or forces, but are driven by scripted movement.
+添加带有 PhysX Shape Collider （PhysX 形状碰撞器） 组件的 [PhysX Static Rigid Body](/docs/user-guide/components/reference/physx/static-rigid-body/) 组件，以创建永不移动的 **static** 实体。添加 [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/) 组件以创建 **模拟** 或 **运动学** 实体。模拟实体会随着碰撞和力而移动。运动实体不受碰撞或力的影响，但受脚本化运动驱动。
 {{< /note >}}
 
-## Provider
+## 提供者
 
 [PhysX Gem](/docs/user-guide/gems/reference/physics/nvidia/physx/)
 
-## Dependencies
+## 依赖
 
-The PhysX Shape Collider requires one of the following Shape components:
+PhysX Shape Collider 需要以下 Shape 组件之一：
 
 * [Box Shape](/docs/user-guide/components/reference/shape/box-shape/)
 * [Capsule Shape](/docs/user-guide/components/reference/shape/capsule-shape/)
@@ -26,53 +26,53 @@ The PhysX Shape Collider requires one of the following Shape components:
 * [Quad Shape](/docs/user-guide/components/reference/shape/quad-shape/)
 * [Sphere Shape](/docs/user-guide/components/reference/shape/sphere-shape/)
 
-## Use cases
+## 用例
 
-Although the PhysX Shape Collider is similar to the [PhysX Primitive Collider](/docs/user-guide/components/reference/physx/collider/) component, you might prefer to use the PhysX Shape Collider in these scenarios:
+尽管 PhysX Shape Collider （PhysX 形状碰撞器） 类似于 [PhysX Primitive Collider](/docs/user-guide/components/reference/physx/collider/) 组件，但您可能更愿意在以下情况下使用 PhysX Shape Collider （PhysX 形状碰撞器）：
 
-* The shape information defined by the Shape component is used elsewhere in code or script. For example, the shape defines another volume, such as an audio volume, and you want to keep the collider geometry and volume synchronized.
-* You want to use a Shape component such as Polygon Prism Shape that is not provided by PhysX Primitive Collider.
-* You have existing Shape components and don't want to migrate them to use PhysX Primitive Collider components.
+* Shape 组件定义的形状信息在代码或脚本中的其他位置使用。例如，该形状定义了另一个体积（如音频体积），并且您希望使碰撞器几何体和体积保持同步。
+* 您想要使用 Shape （形状） 组件，例如 Polygon Prism Shape （多边形棱柱形状），该组件不是由 PhysX Primitive Collider （PhysX 基元碰撞器） 提供的。
+* 您有现有的 Shape （形状） 组件，并且不想迁移它们以使用 PhysX Primitive Collider （PhysX 基元碰撞器） 组件。
 
-## Limitations
+## 限制
 
-The PhysX Shape Collider component has some limitations compared to the PhysX Primitive Collider component:
+与 PhysX Primitive Collider （PhysX 基元碰撞器） 组件相比，PhysX Shape Collider （PhysX 形状碰撞器） 组件有一些限制：
 
-* Only one Shape component can be used per entity, and so only one PhysX Shape Collider component is supported per entity. Any number of PhysX Primitive Collider components can also be used on the same entity, however.
-* The position and rotation of the PhysX Shape Collider component can't be offset relative to the entity position.
+* 每个实体只能使用一个 Shape （形状） 组件，因此每个实体仅支持一个 PhysX Shape Collider （PhysX 形状碰撞器） 组件。但是，任意数量的 PhysX Primitive Collider （PhysX 基元碰撞器） 组件也可以用于同一实体。
+* PhysX Shape Collider （PhysX 形状碰撞器） 组件的位置和旋转不能相对于实体位置偏移。
 
-## Properties 
+## 属性 
 
 ![PhysX Shape Collider component interface](/images/user-guide/components/reference/physx/physx-shape-collider-ui-01.png)
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
-| **Collision Layer** | Assigns the collider to a collision layer. Collision layers can be used to restrict physical interactions between PhysX objects. | Any collision layer defined in the project's [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/).  | `Default` |
-| **Collides With** | Assigns the collider to a collision group. Collision groups contain the collision layers that this collider can collide with. | Any collision group defined in the project's [Collision Groups](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/). | `All` |
-| **Trigger** | If enabled, this collider functions as a trigger. Triggers perform quick overlap tests with other colliders. Triggers don't apply forces or return contact point information. Use this to speed up PhysX computations in which a simple overlap test between colliders is sufficient. Triangle meshes and **Quad Shapes** are not supported as triggers. | Boolean | `Disabled` |
-| **Simulated** | If enabled, this collider is included in the physics simulation. | Boolean | `Enabled` |
-| **In Scene Queries** | If enabled, this collider can be queried for raycasts, shapecasts, and overlap. | Boolean | `Enabled` |
-| **Physics Materials** | Choose a physics material for each material of this collider. Physics materials define physical properties for the surface such as dynamic and static friction, and density. A collider can have multiple physics materials assigned. | A `.physxmaterial` asset assigned. | `(default)` |
-| **Tag** | Sets a tag for this collider. Tags can be used to quickly identify components in script or code. | String | None |
-| **Rest offset** | Sets the minimum distance between this collider and other colliders. Although this property applies to all colliders, it is particularly important for dynamic colliders. Dynamic colliders are at rest when the forces affecting them drop below the **Sleep threshold** of their rigid body component. When a dynamic collider comes to rest while in contact with any other collider, the colliders are separated by the sum of their **Rest offset** values. **Rest offset** values that are too large might make dynamic entities appear to float. Negative **Rest offset** values might make dynamic entities appear to intersect. You might need to adjust this value in scenarios where the collider does not closely match the render mesh of the entity. The **Rest offset** value must be less than the **Contact offset** value. | Float: -Infinity to 50.0 | `0.0` |
-| **Contact offset** | Sets the distance from the collider where collisions are detected. PhysX bodies generate contacts when they are within the sum of their **Contact offset** values. The **Contact offset** value must be greater than the **Rest offset** value. | Float: 0.0 to 50.0 | `0.02` |
-| **Draw Collider** | Render the collider in the viewport. | Boolean | `Enabled` |
+| **Collision Layer** | 将碰撞器分配给碰撞层。碰撞层可用于限制 PhysX 对象之间的物理交互。 | 在项目的 [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/) 中定义的任何碰撞图层。  | `Default` |
+| **Collides With** | 将碰撞器分配给碰撞组。Collision group （碰撞组） 包含此碰撞器可以与之碰撞的碰撞层。 | 在工程的 [Collision Groups（碰撞组）](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-groups/) 中定义的任何碰撞组。 | `All` |
+| **Trigger** | 如果启用，此碰撞器将用作触发器。Trigger 执行与其他碰撞器的快速重叠测试。触发器不施加力或返回接触点信息。使用此选项可加快 PhysX 计算速度，其中碰撞器之间的简单重叠测试就足够了。不支持将 Triangle meshes 和 **Quad Shapes** 作为触发器。 | Boolean | `Disabled` |
+| **Simulated** | 如果启用，此碰撞器将包含在物理模拟中。 | Boolean | `Enabled` |
+| **In Scene Queries** | 如果启用，则可以查询此碰撞器的光线投射、形状投射和重叠。 | Boolean | `Enabled` |
+| **Physics Materials** | 为此碰撞器的每个材质选择一种物理材质。物理材质定义表面的物理属性，例如动态和静态摩擦以及密度。一个碰撞体可以分配多个物理材质。 | 分配的 `.physxmaterial` 资产 | `(default)` |
+| **Tag** | 为此碰撞器设置一个标签。标签可用于快速识别脚本或代码中的组件。| String | None |
+| **Rest offset** | 设置此碰撞器与其他碰撞器之间的最小距离。尽管此属性适用于所有碰撞器，但对于动态碰撞器尤其重要。当影响动态碰撞体的力低于其刚体组件的 **Sleep threshold** 时，动态碰撞体处于静止状态。当动态碰撞体在与任何其他碰撞体接触时停止时，碰撞体将按其 **Rest offset** 值之和分隔。太大的 **Rest offset** 值可能会使动态实体显示为浮动。负的 **Rest offset**值可能会使动态实体看起来相交。在碰撞器与实体的渲染网格不匹配的情况下，您可能需要调整此值。**Rest offset**值必须小于**Contact offset**值。 | Float: -Infinity to 50.0 | `0.0` |
+| **Contact offset** | 设置与检测到碰撞的碰撞体的距离。当 PhysX 实体位于其 **Contact offset** 值之和内时，PhysX 实体会生成接触。**Contact offset** 值必须大于 **Rest offset** 值。 | Float: 0.0 to 50.0 | `0.02` |
+| **Draw Collider** | 在视区中渲染碰撞体。| Boolean | `Enabled` |
 
-## Complex polygon prism shapes 
+## 复杂的多边形棱柱形状
 
-The [Polygon Prism Shape](/docs/user-guide/components/reference/shape/polygon-prism-shape/) is automatically subdivided into convex portions, which means that polygon prisms can be used with dynamic rigid bodies or as triggers in PhysX simulations. The subdivision is automatically updated if the vertices of the polygon prism are modified.
+[Polygon Prism Shape](/docs/user-guide/components/reference/shape/polygon-prism-shape/) 会自动细分为凸部分，这意味着多边形棱柱可以与动态刚体一起使用，或用作 PhysX 模拟中的触发器。如果修改了多边形棱柱的顶点，则细分会自动更新。
 
 ![A complex polygon prism can't be converted to convex geometry.](/images/user-guide/components/reference/physx/physx-shape-collider-polyprism.png)
 
-If the vertices are modified so that the polygon prism is no longer a simple polygon, it isn't possible to subdivide the polygon prism into convex pieces. If the polygon prism can't be subdivided into convex pieces, an error will display in the **O3DE Editor Console**, as shown in the following example.
+如果修改了顶点，使多边形棱柱不再是简单的多边形，则无法将多边形棱柱细分为凸块。如果多边形棱柱无法细分为凸块，则 **O3DE 编辑器控制台**中将显示错误，如以下示例所示。
 
 ![A complex polygon prism console error.](/images/user-guide/components/reference/physx/physx-shape-collider-error.png)
 
 ## Colliders as triggers 
 
-Triggers allow colliders to perform efficient overlap tests. Colliders marked as triggers won't be affected by forces when they intersect with another collider. This is useful for detecting when something enters a certain area or when two objects overlap. Use Lua or **Script Canvas** to detect overlap.
+触发器允许碰撞器执行高效的重叠测试。标记为触发器的碰撞体在与其他碰撞体相交时不会受到力的影响。这对于检测某物何时进入特定区域或两个对象何时重叠非常有用。使用 Lua 或 **Script Canvas** 来检测重叠。
 
 {{< note >}}
-Because triggers don't perform contact resolution, the contact points between a trigger and another collider aren't available.
-Triangle meshes and **Quad Shapes** are not supported as triggers.
+由于触发器不执行触点解析，因此触发器与另一个碰撞器之间的触点不可用。
+不支持将 Triangle meshes 和 **Quad Shapes** 作为触发器。
 {{< /note >}}

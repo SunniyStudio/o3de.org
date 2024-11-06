@@ -1,36 +1,36 @@
 ---
-title: ROS 2 Georeference Level Component
-linktitle: ROS 2 Georeference Level Component
-description: The ROS 2 Georeference Level component enables you to specify the geographical location of your simulation within the Robot Operating System (ROS 2) in Open 3D Engine (O3DE).
+title: ROS 2 Georeference Level 组件
+linktitle: ROS 2 Georeference Level 组件
+description: ROS 2 Georeference Level组件使您能够在Open 3D Engine (O3DE)中的机器人操作系统 （ROS 2） 中指定模拟的地理位置。
 ---
 
-The **ROS 2 Georeference Level** component allows you to choose the geographical location of your simulation. This component is a level component and should be added to the level entity. If you are using, for example, the [GNSS Sensor Component](../sensors/ros2-gnss-sensor.md), it complements its functionality.
+**ROS 2 Georeference Level** 组件允许您选择模拟的地理位置。此组件是 level 组件，应添加到 level 实体中。例如，如果您使用的是 [GNSS 传感器组件](../sensors/ros2-gnss-sensor.md)，它补充了其功能。
 
-## Provider
+## 提供方
 
 [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2)
 
-## Dependencies
+## 依赖
 
 None
 
-## Properties
+## 属性
 
 ![ROS 2 Georeference Level Component Properties](/images/user-guide/components/reference/robotics/ros2/ros2-georeference-component.png)
 
-| Property                    | Description                                                                                                                      | Values      | Default         |
+| 属性                    | 说明                                                                                                                      | 值      | 默认值         |
 |-----------------------------|----------------------------------------------------------------------------------------------------------------------------------|-------------|-----------------|
-| **Altitude**                | The elevation of the ENU origin entity above Earth's WGS84 ellipsoid                                                             | meters      |  0              |
-| **Latitude**                | The north-south geographical coordinate in WGS84, where north is positive                                                        | degrees     |  0              |
-| **Longitude**               | The east-west geographical coordinate in WGS84, where east is positive                                                           | degrees     |  0              |
-| **ENU Origin Transform**    | Entity that has a geographical location assigned, and its local coordinate system follows ENU (East-North-Up) directions         | Entity      |                 |
+| **Altitude**                | ENU 起始点实体在地球的 WGS84 椭球体上方的高程                                                           | meters      |  0              |
+| **Latitude**                | WGS84 中的南北地理坐标，其中北为正                                                      | degrees     |  0              |
+| **Longitude**               | WGS84 中的东西地理坐标，其中 east 为正                                                          | degrees     |  0              |
+| **ENU Origin Transform**    | 已分配地理位置的实体，其本地坐标系遵循 ENU（东-北-上）方向       | Entity      |                 |
  
-## Usage
+## 用法
 
-1. Identify a location in your level with a known geographical position. This could be a corner of a building or an intersection of roads.
-2. Create an empty entity in known location.
-3. Rotate the entity so that its local coordinate system aligns with mapping:
-   - X should point East.
-   - Y should point North.
-   - Z should point up.
-4. In the **ROS 2 Georeference Level component**, enter the geographical location of the entity and set the **ENU Origin Transform** to reference the entity mentioned above.
+1. 在您的关卡中确定具有已知地理位置的位置。这可能是建筑物的一角或道路的交叉口。
+2. 在已知位置创建一个空实体。
+3. 旋转实体，使其局部坐标系与地图对齐：
+   - X 应该指向东方。
+   - Y 应该指向北方。
+   - Z 应该指向上方。
+4. 在 **ROS 2 Georeference Level 组件** 中，输入实体的地理位置，并设置 **ENU Origin Transform** 以引用上述实体。

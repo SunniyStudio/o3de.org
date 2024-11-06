@@ -1,5 +1,5 @@
 ---
-title: NVIDIA PhysX Components
+title: NVIDIA PhysX组件
 linktitle: NVIDIA PhysX
-description: ' Using NVIDIA PhysX components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用NVIDIA PhysX组件。 '
 ---

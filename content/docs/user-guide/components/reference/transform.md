@@ -1,523 +1,522 @@
 ---
 linkTitle: Transform
-description: ' Use the Transform component to move, rotate, and scale an entity in
-  Open 3D Engine. '
-title: Transform Component
+description: ' 使用 Transform （变换） 组件在 Open 3D Engine 中移动、旋转和缩放实体。 '
+title: Transform 组件
 ---
 
-The **Transform** component controls the translation, rotation, and scale information of an entity in the 3D world. When you create an entity in O3DE Editor, the **Transform** component is automatically added. The translation is the coordinate location (x, y, and z axes) of the entity. The rotation is the degree in which the entity is rotated around its center. The uniform scale is the dimension of the entity in comparison to its original size, applied uniformly in each direction.
+**Transform** 组件控制 3D 世界中实体的平移、旋转和缩放信息。当您在 O3DE Editor 中创建实体时，将自动添加 **Transform** 组件。平移是实体的坐标位置（x、y 和 z 轴）。旋转是实体绕其中心旋转的程度。统一比例是实体的尺寸与其原始大小相比，在每个方向上均匀应用。
 
-*World space* refers to the entity's absolute translation, rotation, and scale in the level. If a child is attached to a parent entity, *local space* refers to the entity's translation, rotation, and scale relative to its parent entity.
+*World space* 是指实体在关卡中的绝对平移、旋转和缩放。如果子实体附加到父实体，则 *local space* 是指实体相对于其父实体的平移、旋转和缩放。
 
-## Transform Component Properties 
+## Transform组件属性 
 
-The **Transform** component has the following properties:
+**Transform** 组件具有以下属性：
 
 **Parent entity**
-The entity assigned as the parent. If a parent entity is specified, the **Transform** component follows the parent entity.
+分配为父级的实体。如果指定了父实体，则 **Transform** 组件将遵循父实体。
 
-### Values 
+### 值 
 
-The **Transform** component has the following values:
+**Transform** 组件具有以下值：
 
 **Translate**
-The local position (relative to the parent) in meters.
+本地位置（相对于父级），以米为单位。
 
 **Rotate**
-The local rotation (relative to the parent) in degrees.
+局部旋转（相对于父级），以度为单位。
 
 **Uniform Scale**
-The local scale, with a single value applied uniformly in each direction. Click on the **Add non-uniform scale** button to add a [Non-uniform Scale](/docs/user-guide/components/reference/non-uniform-scale) component, which allows different scale values to be used on each axis of an entity.
+局部比例，在每个方向上统一应用单个值。点击 **Add non-uniform scale** 按钮以添加 [Non-uniform Scale](/docs/user-guide/components/reference/non-uniform-scale) 组件，该组件允许在实体的每个轴上使用不同的缩放值。
 
 **Parent activation**
-Configures transform behavior when the parent entity activates.
+配置父实体激活时的转换行为。
 
 **Static**
-Entities that can't be moved at run time. Some systems in O3DE treat static entities differently than movable entities (for example, the renderer can optimize static entities, making them less resource intensive to draw).
+在运行时无法移动的实体。O3DE 中的某些系统处理静态实体的方式与处理可移动实体的方式不同（例如，渲染器可以优化静态实体，从而减少绘制它们所占用的资源）。
 
-## EBus Request Bus Interface 
+## EBus 请求总线接口
 
-**TransformBus** is the request bus for the **Transform** component. An entity's transform is the translation, rotation, and scale information.
+**TransformBus** 是 **Transform** 组件的请求总线。实体的变换是平移、旋转和缩放信息。
 
-For more information about using the event bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用事件总线 （EBus） 接口的更多信息，请参阅 [使用事件总线 （EBus） 系统](/docs/user-guide/programming/messaging/ebus/).
 
-Use the following request functions with the EBus interface to communicate with other components of your game.
+将以下请求函数与 EBus 接口结合使用，以便与游戏的其他组件进行通信。
 
 ### GetLocalTM 
 
-Returns the entity's local transform. Doesn't include the parent entity's transform.
+返回实体的本地转换。不包括父实体的转换。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Entity's local transform.
+**返回值**
+实体的本地转换。
 
 ### SetLocalTM 
 
-Sets the entity's local transform, relative to its parent entity, and notifies all listeners.
+设置实体相对于其父实体的本地转换，并通知所有侦听器。
 
-**Parameters**
-Entity's local transform.
+**参数**
+实体的本地转换。
 
-**Return**
+**返回值**
 None
 
 ### GetWorldTM 
 
-Returns the entity's world transform, including the parent entity's transform.
+返回实体的世界变换，包括父实体的变换。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Entity's world transform.
+**返回值**
+实体的世界转换。
 
 ### SetWorldTM 
 
-Sets the world transform and notifies all listeners.
+设置世界变换并通知所有侦听器。
 
-**Parameters**
-Entity's world transform.
+**参数**
+实体的世界转换。
 
-**Return**
+**返回值**
 None
 
 ### GetLocalAndWorld 
 
-Retrieves the entity's local and world transforms.
+检索实体的 local 和 world 转换。
 
-**Parameters**
-Transform \[out\] - Local transform, relative to parent entity.
+**参数**
+Transform \[out\] - Local transform，相对于父实体。
 Transform \[out\] - World transform.
 
-**Return**
+**返回值**
 None
 
 ### SetWorldTranslation 
 
-Sets the entity's world space translation.
+设置实体的世界空间平移。
 
-**Parameters**
-New world space location, in x, y, and z coordinates.
+**参数**
+新的世界空间位置，以 x、y 和 z 坐标表示。
 Type: Vector3
 
-**Return**
+**返回值**
 None
 
 ### SetLocalTranslation 
 
-Sets the entity's local space translation, which is relative to its parent entity.
+设置实体的局部空间平移，该平移相对于其父实体。
 
-**Parameters**
-New local space location, in x, y, and z coordinates.
+**参数**
+新的本地空间位置，以 x、y 和 z 坐标为单位。
 Type: Vector3
 
-**Return**
+**返回值**
 None
 
 ### GetWorldTranslation 
 
-Gets the entity's world space translation.
+获取实体的世界空间平移。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Entity's world space, in x, y, and z coordinates.
+**返回值**
+实体的世界空间，以 x、y 和 z 坐标表示。
 Type: Vector3
 
 ### GetLocalTranslation 
 
-Gets the entity's local space translation, which is relative to its parent entity.
+获取实体的局部空间平移，该平移相对于其父实体。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Entity's local space, in x, y, and z coordinates.
+**返回值**
+实体的局部空间，以 x、y 和 z 坐标为单位。
 Type: Vector3
 
 ### MoveEntity 
 
-Moves the entity within world space.
+在世界空间内移动实体。
 
-**Parameters**
-Offset in world space, in x, y, and z coordinates.
+**参数**
+在世界空间、x、y 和 z 坐标中的偏移。
 Type: Vector3
 
-**Return**
+**返回值**
 None
 
 ### SetWorldX 
 
-Sets the entity's translation x-axis coordinate in world space.
+设置实体在世界空间中的平移 x 轴坐标。
 
-**Parameters**
-X-axis coordinate in world space.
+**参数**
+世界空间中的 X 轴坐标。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### SetWorldY 
 
-Sets the entity's translation y-axis coordinate in world space.
+设置实体在世界空间中的平移 y 轴坐标。
 
-**Parameters**
-Y-axis coordinate in world space.
+**参数**
+世界空间中的 Y 轴坐标。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### SetWorldZ 
 
-Sets the entity's translation z-axis coordinate in world space.
+设置实体在世界空间中的平移 z 轴坐标。
 
-**Parameters**
-Z-axis coordinate in world space.
+**参数**
+世界空间中的 Z 轴坐标。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### GetWorldX 
 
-Gets the entity's translation x-axis coordinate in world space.
+获取实体在世界空间中的平移 x 轴坐标。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-X-axis coordinate in world space.
+**返回值**
+世界空间中的 X 轴坐标。
 Type: Float
 
 ### GetWorldY 
 
-Gets the entity's translation y-axis coordinate in world space.
+获取实体在世界空间中的平移 y 轴坐标。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Y-axis coordinate in world space.
+**返回值**
+世界空间中的 Y 轴坐标。
 Type: Float
 
 ### GetWorldZ 
 
-Sets the entity's translation z-axis coordinate in world space.
+设置实体在世界空间中的平移 z 轴坐标。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Z-axis coordinate in world space.
+**返回值**
+世界空间中的 Z 轴坐标。
 Type: Float
 
 ### SetLocalX 
 
-Sets the entity's translation x-axis coordinate in local space.
+设置实体在本地空间中的平移 x 轴坐标。
 
-**Parameters**
-X-axis coordinate in local space.
+**参数**
+局部空间中的 X 轴坐标。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### SetLocalY 
 
-Sets the entity's translation y-axis coordinate in local space.
+设置实体在本地空间中的平移 y 轴坐标。
 
-**Parameters**
-Y-axis coordinate in local space.
+**参数**
+本地空间中的 Y 轴坐标。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### SetLocalZ 
 
-Sets the entity's translation z-axis coordinate in local space.
+设置实体在本地空间中的平移 z 轴坐标。
 
-**Parameters**
-Z-axis coordinate in local space.
+**参数**
+局部空间的 Z 轴坐标。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### GetLocalX 
 
-Gets the entity's translation x-axis coordinate in local space.
+获取实体在本地空间中的平移 x 轴坐标。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-X-axis coordinate in local space.
+**返回值**
+局部空间中的 X 轴坐标。
 Type: Float
 
 ### GetLocalY 
 
-Gets the entity's y-axis coordinate in local space.
+获取实体在本地空间中的 y 轴坐标。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Y-axis coordinate in local space.
+**返回值**
+本地空间中的 Y 轴坐标。
 Type: Float
 
 ### GetLocalZ 
 
-Gets the entity's z-axis coordinate in local space.
+获取实体在本地空间中的 z 轴坐标。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Z-axis coordinate in local space.
+**返回值**
+局部空间的 Z 轴坐标。
 Type: Float
 
 ### GetWorldRotation 
 
-Gets the angles in radians for each principle axis around which the world transform is rotated in the following order: z-axis, y-axis, x-axis.
+获取世界变换围绕其旋转的每个主轴的弧度角度，顺序如下：z 轴、y 轴、x 轴。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-The Euler angles in radians, which indicate the degree of rotation around each principle axis.
+**返回值**
+以弧度为单位的欧拉角，表示绕每个主轴的旋转程度。
 Type: Vector3
 
 ### GetWorldRotationQuaternion 
 
-Gets the quaternion that represents the world rotation.
+获取表示世界旋转的四元数。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-The quaternion that represents the world rotation.
+**返回值**
+表示世界旋转的四元数。
 Type: Quaternion
 
 ### SetLocalRotation 
 
-Sets the local rotation around each principle axes in the following order: z-axis, y-axis, x-axis.
+按以下顺序设置围绕每个主轴的局部旋转：z 轴、y 轴、x 轴。
 
-**Parameters**
-The Vector3 denoting radian angles of the rotations around each principle axis.
+**参数**
+Vector3 表示围绕每个主轴旋转的弧度角。
 Type: Vector3
 
-**Return**
+**返回值**
 None
 
 ### SetLocalRotationQuaternion 
 
-Sets the local rotation matrix using a quaternion.
+使用四元数设置局部旋转矩阵。
 
-**Parameters**
-The local rotation matrix.
+**参数**
+局部旋转矩阵。
 Type: Quaternion
 
-**Return**
+**返回值**
 None
 
 ### RotateAroundLocalX 
 
-Rotates around the local x-axis for a radian angle.
+围绕局部 x 轴旋转弧度角。
 
-**Parameters**
-The radian angle to rotate around the local x-axis.
+**参数**
+绕局部 x 轴旋转的弧度角度。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### RotateAroundLocalY 
 
-Rotates around the local y-axis for a radian angle.
+围绕局部 y 轴旋转弧度角。
 
-**Parameters**
-The radian angle to rotate around the local y-axis.
+**参数**
+绕局部 y 轴旋转的弧度角度。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### RotateAroundLocalZ 
 
-Rotates around the local z-axis for a radian angle.
+围绕局部 z 轴旋转弧度角。
 
-**Parameters**
-The radian angle to rotate around the local z-axis.
+**参数**
+绕局部 z 轴旋转的弧度角度。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### GetLocalRotation 
 
-Gets angles in radian for each principle axis around which the local transform is rotated in the following order: z-axis, y-axis, x-axis.
+获取按以下顺序旋转局部变换所围绕的每个主轴的弧度角度：z 轴、y 轴、x 轴。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Indicates how much in radian is rotated around each principle axis.
+**返回值**
+指示围绕每个主轴旋转的弧度量。
 Type: Vector3
 
 ### GetLocalRotationQuaternion 
 
-Gets the quaternion representing the local rotation.
+获取表示局部旋转的四元数。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-The quaternion that represents the local rotation.
+**返回值**
+表示局部旋转的四元数。
 Type: Quaternion
 
 ### SetLocalUniformScale 
 
-Sets local uniform scale of the transform.
+设置变换的局部统一缩放。
 
-**Parameters**
-Local uniform scale of the transform, applied equally to each axis.
+**参数**
+变换的局部统一缩放，均匀应用于每个轴。
 Type: Float
 
-**Return**
+**返回值**
 None
 
 ### GetLocalUniformScale 
 
-Gets the uniform scale value, applied equally to each axis in local space.
+获取均匀缩放值，均匀应用于局部空间中的每个轴。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Uniform scale value, applied equally to each axis in local space.
+**返回值**
+Uniform scale 值，均匀应用于局部空间中的每个轴。
 Type: Float
 
 ### GetWorldUniformScale 
 
-Gets the uniform scale value, applied equally to each axis in world space.
+获取均匀缩放值，均匀应用于世界空间中的每个轴。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Uniform scale value, applied equally to each axis in world space.
+**返回值**
+Uniform scale 值，均匀应用于世界空间中的每个轴。
 Type: Float
 
 ### GetParentId 
 
-Returns the parent entity's ID. If the entity does not have a parent, the entity ID is invalid.
+返回父实体的 ID。如果实体没有父项，则实体 ID 无效。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-EntityID of the parent
+**返回值**
+父级的 EntityID
 Type: Int
 
 ### SetParent 
 
-Sets the entity's parent entity and notifies all listeners. The entity's local transform is moved into the parent entity's space to preserve the entity's world transform.
+设置实体的父实体并通知所有侦听器。实体的局部变换将移动到父实体的空间中，以保留实体的世界变换。
 
-**Parameters**
+**参数**
 EntityId - Parent entity ID
 Type: Int
 
-**Return**
+**返回值**
 None
 
 ### SetParentRelative 
 
-Sets the entity's parent entity, moves the transform relative to the parent entity, and notifies all listeners. This function uses the world transform as a local transform and moves the transform relative to the parent entity.
+设置实体的父实体，相对于父实体移动转换，并通知所有侦听器。此函数使用世界转换作为本地转换，并相对于父实体移动转换。
 
-**Parameters**
+**参数**
 EntityId - Parent entity ID
 Type: Int
 
-**Return**
+**返回值**
 None
 
 ### GetChildren 
 
-Returns the entity IDs of the entity's immediate children.
+返回实体的直接子项的实体 ID。
 
-**Parameters**
+**参数**
 None
 
-**Return**
+**返回值**
 Vector of EntityIds
 
 ### GetAllDescendants 
 
-Returns the entity IDs of all descendants of the entity. The descendants are the entity's children, the children's children, and so on. The entity IDs are ordered breadth first.
+返回实体的所有后代的实体 ID。后代是实体的子项、子项的子项等。实体 ID 按宽度顺序排列。
 
-**Parameters**
+**参数**
 None
 
-**Return**
+**返回值**
 Vector of EntityIds
 
 ### GetEntityAndAllDescendants 
 
-Returns the entity ID of the entity and all its descendants. The descendants are the entity's children, the children's children, and so on. The entity IDs are ordered breadth first, and this entity's ID is the first in the list.
+返回实体及其所有后代的实体 ID。后代是实体的子项、子项的子项等。实体 ID 按广度排序排在最前面，此实体的 ID 是列表中的第一个。
 
-**Parameters**
+**参数**
 None
 
-**Return**
+**返回值**
 Vector of EntityIds
 
 ### IsStaticTransform 
 
-Returns whether the transform is static. A static transform doesn't move and doesn't respond to requests to move it.
+返回转换是否为静态。静态转换不会移动，也不会响应移动它的请求。
 
-**Parameters**
+**参数**
 None
 
-**Return**
+**返回值**
 Boolean
 
 ## EBus Notification Bus Interface 
 
-**TransformNotificationBus** is the notification bus for the **Transform** component. Use the following notification functions with the EBus interface to communicate with other components of your game.
+**TransformNotificationBus** 是 **Transform** 组件的通知总线。将以下通知函数与 EBus 界面结合使用，以便与游戏的其他组件进行通信。
 
-For more information about using the event bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用事件总线 （EBus） 接口的更多信息，请参阅 [使用事件总线 （EBus） 系统](/docs/user-guide/programming/messaging/ebus/).
 
 ### OnTransformChanged 
 
-Signals that the local or world transform of the entity changed.
+指示实体的 local 或 world 转换已更改。
 
-**Parameters**
-Transform - The new local transform of the entity
-Transform - The new world transform of the entity
+**参数**
+Transform （变换） - 实体的新局部变换
+Transform （转换） - 实体的新世界转换
 
 ### OnParentChanged 
 
-Signals that the parent of the entity changed.
+表示实体的父级已更改。
 
-**Parameters**
-EntityId - The entity ID of the previous parent. The entity ID is invalid if there was no previous parent.
-EntityId - The entity ID of the new parent. The entity ID is invalid if there is no new parent.
+**参数**
+EntityId - 前一个父级的实体 ID。如果上一个父项没有，则实体 ID 无效。
+EntityId - 新父级的实体 ID。如果没有新的父项，则实体 ID 无效。
 
 ### OnChildAdded 
 
-Signals that a child was added to the entity.
+表示已将子项添加到实体。
 
-**Parameters**
-EntityId - The entity ID of the added child
+**参数**
+EntityId - 添加的子项的实体 ID
 
 ### OnChildRemoved 
 
-Signals that a child was removed from the entity.
+表示已从实体中删除子项。
 
-**Parameters**
-EntityId - The entity ID of the removed child
+**参数**
+EntityId - 已删除子项的实体 ID

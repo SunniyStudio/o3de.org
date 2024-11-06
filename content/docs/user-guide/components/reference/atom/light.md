@@ -98,7 +98,7 @@ Polygon
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Light type** | 光的类型。每种灯的特性都不尽相同。 | `Point (sphere)`, `Point (simple punctual)`, `Spot (disk)`, `Spot (simple punctual)`, `Capsule`, `Quad`, `Polygon` | - |
-| **Color** | 光的颜色。**Color***对纯白光起到凝胶作用，并减少任何其他颜色光的总能量输出。例如，一个 100 `Lumen`的区域灯，如果颜色设置为中灰（18%），则只能输出 18 流明的光。 | Eight bits per channel color: `0` to `255` | `255,255,255` |
+| **Color** | 光的颜色。**Color***对纯白光起到凝胶作用，并减少任何其他颜色光的总能量输出。例如，一个 100 `Lumen`的区域灯，如果颜色设置为中灰（18%），则只能输出 18 流明的光。 | 每通道 8 位颜色： `0` to `255` | `255,255,255` |
 | **Intensity mode** | 光的光度单位。 `Candela` 和 `Lumen`指定从形状整个表面区域发出的光能总量。如果将此模式设置为`Candela` 或 `Lumen`并将**强度**指定为`100.0`，那么所提供的形状分量越大，光线就越暗。这是因为总光能分布在更大的表面区域。`Nit`表示每平方米的光能（烛光）。Ev100 "表示光能在一定面积上的曝光值。`Ev100` 值是指数值，因此 5.0 `Ev100` 值的亮度是 4.0 `Ev100` 值的两倍。对于 `Nit` 和 `Ev100`，形状越大，光就越亮。这是因为总光能随着形状表面积的增加而增加。 | `Candela`, `Lumen`, `Nit`, `Ev100` | `Lumen` |
 | **Intensity** | 在**Intensity mode**下所选择的光度单位的光能输出或亮度。 | Candela, Lumen, Nit: `0` to infinity<br><br>Ev100: -infinity to +infinity | `100` |
 | **Attenuation radius** | 请参阅下面的 [Attenuation radius 属性](#attenuation-radius-properties)。 | Boolean | `Disabled` |

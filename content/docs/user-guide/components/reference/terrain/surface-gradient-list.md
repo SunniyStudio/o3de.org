@@ -1,44 +1,43 @@
 ---
-title: Terrain Surface Gradient List Component
+title: Terrain Surface Gradient List 组件
 linktitle: Terrain Surface Gradient List
-description: 'Open 3D Engine (O3DE) Terrain Surface Gradient List component reference.'
+description: 'Open 3D Engine (O3DE) Terrain Surface Gradient List 组件参考。'
 weight: 100
 ---
 
-The **Terrain Surface Gradient List** component defines mappings between a gradient and a surface type on a terrain layer.  When you assign a gradient to a surface, the gradient defines the strength of that surface in the displayed terrain. For example, you can assign a gradient to a rocky surface to make parts of it appear through a grassy region.
+**Terrain Surface Gradient List** 组件定义地形图层上渐变和表面类型之间的映射。 将坡度指定给曲面时，坡度将定义该曲面在显示的地形中的强度。例如，您可以为岩石表面指定渐变，以使其部分穿过草地区域。
 
-## Usage
+## 用法
 
-Terrain surface weight mappings control the strength of a surface type across the terrain surface. Multiple surface types and weights can exist at the same point. For example, a surface can be 30% grass, 50% dirt, and 20% rock. Other systems query these weights to determine how to render the terrain, what physics properties to apply to the terrain, and so on.
+Terrain 表面权重映射控制 terrain 表面上的表面类型的强度。同一点可以存在多个曲面类型和权重。例如，表面可以是 30% 的草、50% 的泥土和 20% 的岩石。其他系统查询这些权重以确定如何渲染地形、将哪些物理属性应用于地形等。
 
-You select a gradient either by dragging an entity containing a gradient component to the **GradientEntity** field, or by clicking {{< icon "picker.svg" >}}. Once a gradient is assigned, you can select the surface type that this gradient represents, by using the **Surface Tag** pull-down menu. You can configure the dimensions and priority of the layer using the required [Terrain Layer Spawner](/docs/user-guide/components/reference/terrain/layer_spawner).
+通过将包含渐变组件的实体拖动到 **GradientEntity** 字段，或者单击 {{< icon "picker.svg" >}} 来选择渐变。分配渐变后，您可以使用 **Surface Tag** 下拉菜单选择此渐变所代表的表面类型。您可以使用所需的 [Terrain Layer Spawner](/docs/user-guide/components/reference/terrain/layer_spawner) 配置图层的尺寸和优先级。
 
-More than one gradient to surface type mapping can be defined in this component. Each gradient needs to map to a different surface type. A simple example of multiple gradient mappings would be to have two surface types where one gradient is the inverse of the other. You can have more than two as well that can be blended together.
+在此组件中可以定义多个渐变到表面类型的映射。每个渐变都需要映射到不同的表面类型。多个渐变映射的一个简单示例是具有两种表面类型，其中一个渐变是另一个渐变的倒数。您也可以拥有两个以上的可以混合在一起的。
 
-## Provider
+## 提供者
 
 [Terrain Gem](/docs/user-guide/gems/reference/environment/terrain)
 
-## Dependencies
+## 依赖
 
 [Terrain Layer Spawner](/docs/user-guide/components/reference/terrain/layer_spawner)
 
-## Properties
+## 属性
 
 ![Terrain Surface Gradient List component properties](/images/user-guide/components/reference/terrain/terrain-surface-gradient-list-component.png)
-
+2
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Gradient to Surface Mappings** | An array of gradient entities and surface tags to map together. |  |  |
-| **GradientEntity** | The gradient entity to assign to this layer. | Gradient Entity | None |
-| **Surface Tag** | Sets the [surface tag](/docs/user-guide/gems/reference/environment/surface-data) that this gradient represents.<br><br>See the [adding surface tag names](/docs/user-guide/gems/reference/environment/surface-data/#adding-surface-tag-names) guide for creating your own surface tags. | Surface Tag | (unassigned) |
-
+| **Gradient to Surface Mappings** | 要映射在一起的渐变实体和表面标记的数组。 |  |  |
+| **GradientEntity** | 要分配给此层的渐变实体。 | Gradient Entity | None |
+| **Surface Tag** | 设置此渐变表示的 [surface tag](/docs/user-guide/gems/reference/environment/surface-data)。<br><br>请参阅 [添加表面标签名称](/docs/user-guide/gems/reference/environment/surface-data/#adding-surface-tag-names)指南，了解如何创建自己的表面标签。 | Surface Tag | (unassigned) |
 
 ## TerrainAreaSurfaceRequestBus
 
-The `TerrainAreaSurfaceRequestBus` is an internal EBus used by the terrain system to query individual **Terrain Surface Gradient List** components. Other systems generally do not need to use this EBus since nothing outside the terrain system should need any information from the individual component instances. However, if a use case arises, the following request functions on the `TerrainAreaSurfaceRequestBus` EBus interface can be used to query the individual **Terrain Surface Gradient List** components.
+“`TerrainAreaSurfaceRequestBus`”是地形系统用于查询各个 **Terrain Surface Gradient List** 组件的内部事件总线。其他系统通常不需要使用此 EBus，因为 terrain 系统之外的任何内容都不需要来自各个组件实例的任何信息。但是，如果出现使用案例，可以使用“`TerrainAreaSurfaceRequestBus`”事件总线接口上的以下请求函数来查询各个 **Terrain Surface Gradient List** 组件。
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `GetSurfaceWeights` | Returns all of the surfaces that are assigned to this component, along with the gradient's weight value at a specific position. | Position: Vector3 | Surface Weights: Surface Tag Weight List | No |
-| `GetSurfaceWeightsFromList` | Returns all of the surfaces that are assigned to this component, along with the gradient's weight value at a list of positions. | Position: Vector3 List | Surface Weights: Surface Tag Weight List of Lists | No |
+| `GetSurfaceWeights` | 返回分配给此组件的所有曲面，以及特定位置的渐变权重值。 | Position: Vector3 | Surface Weights: Surface Tag Weight List | No |
+| `GetSurfaceWeightsFromList` | 返回分配给此组件的所有曲面，以及位置列表处渐变的权重值。 | Position: Vector3 List | Surface Weights: Surface Tag Weight List of Lists | No |

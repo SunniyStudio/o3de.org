@@ -1,17 +1,17 @@
 ---
 linkTitle: Vegetation Asset List
-title: Vegetation Asset List Component
-description: Organize vegetation assets into reusable asset lists with customized weights and settings in Open 3D Engine (O3DE).
+title: Vegetation Asset List 组件
+description: 在 Open 3D Engine （O3DE） 中使用自定义权重和设置将植被资产组织到可重用的资产列表中。
 weight: 150
 ---
 
-Use the **Vegetation Asset List** component to combine your vegetation assets into reusable asset lists.  Configure *Vegetation Asset Descriptors*, asset-specific settings that are only used when the asset is spawned from this component's vegetation layer.  Create Vegetation Descriptor Lists in the **Asset Editor** or define them in the component interface.
+使用 **Vegetation Asset List** 组件将植被资产合并到可重用的资产列表中。 配置 **Vegetation Asset Descriptors**，这是特定于资产的设置，仅在从此组件的植被层生成资产时使用。 在 **资产编辑器** 中创建 Vegetation Descriptor List，或在组件界面中定义它们。
 
-## Provider
+## 提供方
 
 [Vegetation Gem](/docs/user-guide/gems/reference/environment/vegetation/)
 
-## Vegetation Asset List properties
+## Vegetation Asset List 属性
 
 {{< tabs name="source-type" >}}
 {{% tab name="Embedded Source" %}}
@@ -20,17 +20,17 @@ Use the **Vegetation Asset List** component to combine your vegetation assets in
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Source Type** | If set to `Embedded`, vegetation asset descriptors are defined in this component's interface.  If set to `External`, descriptors are defined in a Vegetation Descriptor List asset. | `Embedded` or `External` | `Embedded` |
-| **Embedded Assets** | An array of vegetation asset descriptors. |  |  |
+| **Source Type** | 如果设置为 '`Embedded`'，则在此组件的界面中定义植被资产描述符。 如果设置为 '`External`'，则在 Vegetation Descriptor List 资产中定义描述符。 | `Embedded` or `External` | `Embedded` |
+| **Embedded Assets** | 植被资产描述符的数组。 |  |  |
 
-### Asset properties
+### Asset 属性
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Instance Spawner** | Sets the type of asset to spawn. | `Dynamic Slice`, `Empty Space`, or `Prefab` | `Dynamic Slice` |
-| **Asset** | Selects the source asset to spawn.<br> <br>*This field is available only if **Instance Spawner** is set to `Dynamic Slice` or `Prefab`.* | Dynamic Slice or Prefab Asset | None |
-| **Weight** | Sets the relative density of the asset's instances.  Vegetation assets in the asset list with larger weights will be placed more frequently than assets with smaller weights. | Float: -Infinity to Infinity | `1.0` |
-| **Display Per-Item Overrides** | Displays per-asset overrides of Vegetation Modifiers and Filters settings. | Boolean | `Disabled` |
+| **Instance Spawner** | 设置要生成的资产类型。 | `Dynamic Slice`, `Empty Space`, or `Prefab` | `Dynamic Slice` |
+| **Asset** | 选择要生成的源资源。<br> <br>仅当 **Instance Spawner** 设置为 '`Dynamic Slice`' 或 '`Prefab`' 时，此字段才可用。 | Dynamic Slice 或 Prefab Asset | None |
+| **Weight** | 设置资产实例的相对密度。 资产列表中权重较大的植被资产将比权重较小的资产更频繁地放置。 | Float: -Infinity to Infinity | `1.0` |
+| **Display Per-Item Overrides** | 显示 Vegetation Modifiers 和 Filters 设置的逐资产覆盖。 | Boolean | `Disabled` |
 
 {{% /tab %}}
 {{% tab name="External Source" %}}
@@ -39,24 +39,24 @@ Use the **Vegetation Asset List** component to combine your vegetation assets in
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Source Type** | If set to `Embedded`, vegetation asset descriptors are defined in this component's interface.  If set to `External`, descriptors are defined in a Vegetation Descriptor List asset. | `Embedded` or `External` | `Embedded` |
-| **External Assets** | Selects the Vegetation Descriptor List asset that provides descriptors for this component. | Vegetation Descriptor List Asset | None |
+| **Source Type** | 如果设置为 '`Embedded`'，则在此组件的界面中定义植被资产描述符。 如果设置为 '`External`'，则在 Vegetation Descriptor List 资产中定义描述符。 | `Embedded` or `External` | `Embedded` |
+| **External Assets** | 选择为此组件提供描述符的 Vegetation Descriptor List 资产。 | Vegetation Descriptor List Asset | None |
 
 {{% /tab %}}
 {{< /tabs >}}
 
 ## DescriptorListRequestBus
 
-Use the following request functions with the `DescriptorListRequestBus` EBus interface to communicate with Vegetation Asset List components in your game.
+将以下请求函数与 '`DescriptorListRequestBus`' 事件总线接口结合使用，以便与游戏中的 Vegetation Asset List 组件进行通信。
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `AddDescriptor` | Adds a descriptor to an asset list. | Vegetation Descriptor | None | Yes |
-| `GetDescriptor` | Returns a vegetation descriptor from an asset list. | Descriptor Index: Integer | Vegetation Descriptor | Yes |
-| `GetDescriptorAssetPath` | Returns the **External Assets** source path for an asset list. | None | Path: String | Yes |
-| `GetDescriptorListSource` | Returns the **Source Type** of an asset list. Returns `0` for `Embedded` and `1` for `External` source types.| None | List Source Type: Integer | Yes |
-| `GetNumDescriptors` | Returns the number of vegetation descriptors in an asset list. | None | Descriptor Index: Integer | Yes |
-| `RemoveDescriptor` | Removes a vegetation descriptor from an asset list. | Descriptor Index: Integer | None | Yes |
-| `SetDescriptor` | Sets the configuration of a descriptor at a specific asset list index. | Descriptor Index: Integer, Vegetation Descriptor | None | Yes |
-| `SetDescriptorAssetPath` | Sets the **External Assets** source path of an asset list. | Path: String | None | Yes |
-| `SetDescriptorListSource` | Sets the **Source Type** of an asset list. `0` for `Embedded` and `1` for `External` source types. | List Source Type: Integer | None | Yes |
+| `AddDescriptor` | 将描述符添加到资产列表。 | Vegetation Descriptor | None | Yes |
+| `GetDescriptor` | 从资产列表中返回植被描述符。 | Descriptor Index: Integer | Vegetation Descriptor | Yes |
+| `GetDescriptorAssetPath` | 返回资产列表的 **External Assets** 源路径。 | None | Path: String | Yes |
+| `GetDescriptorListSource` | 返回资产列表的 **Source Type**。对于 '`Embedded`' 返回 '`0`'，对于 '`External`' 源类型返回 '`1`'。| None | List Source Type: Integer | Yes |
+| `GetNumDescriptors` | 返回资产列表中的植被描述符的数量。 | None | Descriptor Index: Integer | Yes |
+| `RemoveDescriptor` | 从资产列表中删除植被描述符。| Descriptor Index: Integer | None | Yes |
+| `SetDescriptor` | 在特定资产列表索引处设置描述符的配置。 | Descriptor Index: Integer, Vegetation Descriptor | None | Yes |
+| `SetDescriptorAssetPath` | 设置资产列表的 **External Assets** 源路径。 | Path: String | None | Yes |
+| `SetDescriptorListSource` | 设置资产列表的 **Source Type**。 `0` 用于 `Embedded` ， `1` 用于 `External`源类型。 | List Source Type: Integer | None | Yes |

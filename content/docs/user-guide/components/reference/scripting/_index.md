@@ -1,5 +1,5 @@
 ---
-title: Scripting Components
+title: Scripting 组件
 linktitle: Scripting
-description: ' Using Scripting components in Open 3D Engine (O3DE). '
+description: ' 在Open 3D Engine (O3DE)中使用Scripting组件。 '
 ---

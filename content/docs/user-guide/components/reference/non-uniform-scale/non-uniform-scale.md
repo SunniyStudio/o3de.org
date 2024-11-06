@@ -1,21 +1,21 @@
 ---
 linkTitle: Non-uniform Scale
-description: ' Use the Non-uniform Scale component to scale an entity by different amounts along each axis. '
-title: Non-uniform Scale Component
+description: ' 使用 Non-uniform Scale 组件可沿每个轴按不同的量缩放实体。 '
+title: Non-uniform Scale 组件
 ---
 
-The **Non-uniform Scale** component allows entities to be scaled by different amounts along each local axis. It can be added by clicking the **Add non-uniform scale** button on the [Transform](/docs/user-guide/components/reference/transform/) component.
+**Non-uniform Scale** 组件允许实体沿每个局部轴缩放不同的量。 可以通过单击 [Transform](/docs/user-guide/components/reference/transform/) 组件上的 Add non-uniform scale 按钮来添加它。
 
-The **Non-uniform Scale** component is incompatible with certain other components which cannot be non-uniformly scaled without fundamentally changing their character. For example, it is incompatible with [Sphere Shape](/docs/user-guide/components/reference/shape/sphere-shape/) component because non-uniformly scaling a sphere would result in an ellipsoid and break the characteristic symmetry of the sphere.
+**Non-uniform Scale** 组件与某些其他组件不兼容，这些组件如果不从根本上改变其特性，就无法进行非均匀缩放。例如，它与 [Sphere Shape](/docs/user-guide/components/reference/shape/sphere-shape/) 组件不兼容，因为不均匀缩放球体会产生椭球体并破坏球体的特征对称性。
 
-To avoid problems with skew, non-uniform scale is only applied to the current entity and does not propagate to its children.
+为避免倾斜问题，非均匀缩放仅应用于当前实体，不会传播到其子实体。
 
-## Compatible components
-The following components are **compatible** with **Non-uniform Scale**:
+## 兼容的组件
+以下是与**Non-uniform Scale**兼容的组件：
 + **[Box Shape](/docs/user-guide/components/reference/shape/box-shape/)**
 + **[Polygon Prism Shape](/docs/user-guide/components/reference/shape/polygon-prism-shape/)**
 + **[Quad Shape](/docs/user-guide/components/reference/shape/quad-shape/)**
-+ **[PhysX Primitive Collider](/docs/user-guide/components/reference/physx/collider/)** - Note that primitive colliders are replaced with convex approximations if they are non-uniformly scaled, which may slightly deteriorate performance. The level of detail of the convex approximation can be adjusted using the **Subdivision level** setting on the [PhysX Primitive Collider](/docs/user-guide/components/reference/physx/collider/) component.
++ **[PhysX Primitive Collider](/docs/user-guide/components/reference/physx/collider/)** - 请注意，如果基元碰撞体的缩放不均匀，则会将其替换为凸近似值，这可能会略微降低性能。可以使用 [PhysX Primitive Collider](/docs/user-guide/components/reference/physx/collider/)组件上的 **Subdivision level**  设置来调整凸面近似的细节级别。
 + **[PhysX Mesh Collider](/docs/user-guide/components/reference/physx/mesh-collider/)**
 + **[PhysX Shape Collider](/docs/user-guide/components/reference/physx/shape-collider/)**
 + **[PhysX Static Rigid Body](/docs/user-guide/components/reference/physx/static-rigid-body/)**
@@ -24,8 +24,8 @@ The following components are **compatible** with **Non-uniform Scale**:
 + **[Decal](/docs/user-guide/components/reference/atom/decal/)**
 + **Mesh**
 
-## Incompatible components
-The following components are **incompatible** with the **Non-uniform Scale** component because non-uniform scaling would break fundamental assumptions made by the components or because they would require major work to properly support non-uniform scale:
+## 不兼容的组件
+以下组件与 ***Non-uniform Scale** 组件**不兼容**，因为非均匀缩放会破坏组件所做的基本假设，或者因为它们需要大量工作才能正确支持非均匀缩放：
 + **[Capsule Shape](/docs/user-guide/components/reference/shape/capsule-shape/)**
 + **[Compound Shape](/docs/user-guide/components/reference/shape/compound-shape/)**
 + **[Cylinder Shape](/docs/user-guide/components/reference/shape/cylinder-shape/)**
@@ -49,7 +49,7 @@ The following components are **incompatible** with the **Non-uniform Scale** com
 <!-- + **[Blast Family](/docs/user-guide/components/reference/destruction/blast-family/)** -->
 <!-- + **[Blast Family Mesh Data](/docs/user-guide/components/reference/destruction/blast-family-mesh-data/)** -->
 
-The following components are currently **incompatible** because they are not yet supported, but do not have fundamental reasons making compatibility difficult to add:
+以下组件目前 **不兼容** 因为它们尚不受支持，但没有导致兼容性难以添加的根本原因：
 + **Sequence**
 + **[Spline](/docs/user-guide/components/reference/shape/spline/)**
 + **[White Box](/docs/user-guide/components/reference/shape/white-box/)**
@@ -57,53 +57,52 @@ The following components are currently **incompatible** because they are not yet
 + **Diffuse Probe Grid**
 + **Reflection Probe**
 
-## EBus Request Bus Interface
-**NonUniformScaleRequestBus** is the request bus for the **Non-uniform Scale** component.
+## EBus 请求总线接口
+**NonUniformScaleRequestBus** 是用于 **Non-uniform Scale** 组件的请求总线。
 
-For more information about using the event bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/).
+有关使用事件总线 （EBus） 接口的更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/)。
 
-Use the following request functions with the EBus interface to communicate with other components.
+将以下请求函数与 EBus 接口结合使用，以与其他组件进行通信。
 
 ### GetScale
 
-Returns the entity's non-uniform scale.
+返回实体的非均匀缩放。
 
-**Parameters**
+**参数**
 None
 
-**Return**
-Entity's non-uniform scale value.
+**返回值**
+实体的非均匀缩放值。
 Type: Vector3
 
 ### SetScale
 
-Sets the entity's non-uniform scale.
+设置实体的非均匀缩放。
 
-**Parameters**
-New non-uniform scale value.
+**参数**
+新的非均匀缩放值。
 Type: Vector3
 
-**Return**
+**返回值**
 None
 
 ### RegisterScaleChangedEvent
 
-Registers a handler for the **[AZ::Event](/docs/user-guide/programming/messaging/az-event/)** raised when the entity's non-uniform scale is changed.
-
-**Parameters**
-Handler for non-uniform scale change events.
+为更改实体的非均匀缩放时引发的 **[AZ::Event](/docs/user-guide/programming/messaging/az-event/)** 注册处理程序。
+**参数**
+非均匀缩放更改事件的处理程序。
 Type: NonUniformScaleChangedEvent::Handler
 
-**Return**
+**返回值**
 None
 
-## Editor Automation
-The component type id for the editor **Non-uniform Scale** component can be accessed for editor automation using the following.
+## 编辑器自动化
+可以使用以下内容访问编辑器 **Non-uniform Scale** 组件的组件类型 ID 以进行编辑器自动化。
 ```
 azlmbr.editor.EditorNonUniformScaleComponentTypeId
 ```
 
-For example, a **Non-uniform Scale** component can be added and the scale modified as follows.
+例如，可以添加 **Non-uniform Scale** 组件，并按如下方式修改缩放。
 
 ```
 nonUniformScaleComponentId = azlmbr.editor.EditorNonUniformScaleComponentTypeId

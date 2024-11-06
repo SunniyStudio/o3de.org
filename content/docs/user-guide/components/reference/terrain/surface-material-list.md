@@ -1,68 +1,68 @@
 ---
-title: Terrain Surface Materials List Component
+title: Terrain Surface Materials List 组件
 linktitle: Terrain Surface Materials List
-description: 'Open 3D Engine (O3DE) Terrain Surface Materials List component reference.'
+description: 'Open 3D Engine (O3DE) Terrain Surface Materials List 组件参考。'
 weight: 100
 ---
 
-The **Terrain Surface Materials List** component defines mappings between surface types and render materials. You can use this to change the appearance of a surface type within different areas of your game. When you assign a material to a surface type, all the visible surfaces of that type, within the bounds of the required [Axis Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape/) component, will adopt that material.
+**Terrain Surface Materials List** 组件定义表面类型和渲染材质之间的映射。您可以使用它来更改游戏不同区域中 Surface 类型的外观。当您将材质分配给表面类型时，在所需的 [Axis Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape/) 组件的边界内，该类型的所有可见表面都将采用该材质。
 
-This component uses [macro materials](/docs/user-guide/components/reference/terrain/terrain-macro-material) and [detail materials](/docs/user-guide/components/reference/terrain/terrain-detail-material/) across a large terrain surface and blends between them. This blending of detail materials with the macro material enables you to use small high-fidelity tiled detail materials that have variations in color and lighting across the terrain.
+此组件在大型地形表面上使用 [宏材质](/docs/user-guide/components/reference/terrain/terrain-macro-material) 和 [详细材质](/docs/user-guide/components/reference/terrain/terrain-detail-material/) 并在它们之间进行混合。这种细节材质与宏材质的混合使您能够使用小型高保真平铺细节材质，这些材质在整个地形中的颜色和光照都有变化。
 
-Macro and detail material blending is based on the surface weights of the materials. The three surface materials with the highest weight values at every point blend together with relative weighting to add up to 100%, or 1.0. For example, suppose you have the following surface materials and weights:
+宏观和细节材质混合基于材质的表面权重。在每个点上具有最高权重值的三种曲面材质混合在一起，以达到 100% 或 1.0。例如，假设您有以下表面材质和权重：
 * Grass = 0.25
 * Dirt = 0.125
 * Sand = 0.125
 * Rock = 0.05
 
-In this scenario, the blend ignores rock, and the result is 50% grass, 25% dirt, and 25% sand.
+在这种情况下，混合会忽略岩石，结果是 50% 的草、25% 的泥土和 25% 的沙子。
 
-For an example of how to use the detail materials with a surface materials list, follow the [Apply detail materials](/docs/learning-guide/tutorials/environments/create-terrain-from-images/#apply-detail-materials) section of the **Create Terrain from Images** tutorial.
+有关如何将详细材质与表面材质列表一起使用的示例，请按照**从图像创建地形**教程的 [应用详细材质](/docs/learning-guide/tutorials/environments/create-terrain-from-images/#apply-detail-materials) 部分进行操作。
 
-## Usage
-Select the surface type tag using the **SurfaceTag** drop-down menu, then assign a material by clicking {{< icon "file-folder.svg" >}} and choosing a material, or by dragging a material from the AssetBrowser window.
+## 用法
+使用 **SurfaceTag** 下拉菜单选择表面类型标签，然后通过单击 {{< icon "file-folder.svg" >}} 并选择材质，或者从 AssetBrowser 窗口拖动材质来分配材质。
 
-## Provider
+## 提供者
 
 [Terrain Gem](/docs/user-guide/gems/reference/environment/terrain)
 
-## Dependencies
+## 依赖
 
 [Axis-Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape)
 
-## Properties
+## 属性
 
 ![Terrain Surface Materials List component properties](/images/user-guide/components/reference/terrain/terrain-surface-materials-list-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Default Material** | The default material to fall back to when no other material surface mappings exist.<br><br>**NOTE:** The default material doesn't blend with other materials because it has no surface weight. The primary intended uses of the default material are either as an error material to see every place that a detail material hasn't been mapped, or to quickly cover an entire terrain surface with a single material without setting up more complicated mappings. | Material Asset | None |
-| **Material Mappings** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) and material assets to map together. |  |  |
-| **Surface Tag** | Selects a surface tag to map to a material. | Surface:  Surface Tag | None |
-| **Material Asset** | Selects a material asset to apply to the surface. | Material Asset | None |
+| **Default Material** | 当不存在其他材质表面贴图时要回退到的默认材质。<br><br>**注意：** 默认材质不与其他材质混合，因为它没有表面权重。默认材质的主要预期用途是作为错误材质来查看细节材质尚未映射的每个位置，或者使用单个材质快速覆盖整个地形表面，而无需设置更复杂的映射。 | Material Asset | None |
+| **Material Mappings** | 要映射在一起的[surface tags](/docs/user-guide/gems/reference/environment/surface-data)和材质资源的数组。 |  |  |
+| **Surface Tag** | 选择要映射到材质的曲面标记。 | Surface:  Surface Tag | None |
+| **Material Asset** | 选择要应用于表面的材质资源。 | Material Asset | None |
 
 ## TerrainAreaMaterialRequestBus
 
-Use the following request functions with the `TerrainAreaMaterialRequestBus` EBus interface to communicate with Surface Material List components of your game.
+将以下请求函数与 '`TerrainAreaMaterialRequestBus`' 事件总线接口结合使用，以便与游戏的 Surface Material List 组件进行通信。
 
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `GetTerrainSurfaceMaterialRegion` | Retrieves the Aabb for the region where a `TerrainSurfaceMaterialMapping` exists.  | None | Aabb | No |
-| `GetSurfaceMaterialMappings` | Retrieves all the assigned surface types, the materials that you have assigned to them, and the bounds that are set for this entity.  | None | Terrain Surface Material Mapping: Vector | No |
-| `GetDefaultMaterial` | Retrieves the default material for this surface material.  | None | Terrain Surface Material Mapping | No |
+| `GetTerrainSurfaceMaterialRegion` | 检索存在 '`TerrainSurfaceMaterialMapping`' 的区域的 Aabb。  | None | Aabb | No |
+| `GetSurfaceMaterialMappings` | 检索所有已分配的曲面类型、您为其分配的材质以及为此实体设置的边界。  | None | Terrain Surface Material Mapping: Vector | No |
+| `GetDefaultMaterial` | 检索此表面材质的默认材质。  | None | Terrain Surface Material Mapping | No |
 
 ## TerrainAreaMaterialNotificationBus
 
-| Notification Name | Description | Parameter | Return | Scriptable |
+| 通知名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `OnTerrainDefaultSurfaceMaterialCreated` | Notifies listeners when the default surface material has been assigned and loaded. | None | EntityId; Material | No |
-| `OnTerrainDefaultSurfaceMaterialDestroyed` | Notifies listeners when the default surface material has been unassigned. | None | EntityId | No |
-| `OnTerrainDefaultSurfaceMaterialChanged` | Notifies listeners when the default surface material has been changed to a different material. | None | EntityId; Material | No |
-| `OnTerrainSurfaceMaterialMappingCreated` | Notifies listeners when a new mapping between a Surface and a Material is set up. | None | EntityId; Surface Tag; Material | No |
-| `OnTerrainSurfaceMaterialMappingDestroyed` | Notifies listeners when a mapping between a Surface and a Material is removed. | None | EntityId; Surface Tag | No |
-| `OnTerrainSurfaceMaterialMappingTagChanged` | Notifies listeners when a surface tag has changed to tag for an existing material. | None | EntityId; Surface Tag; Surface Tag | No |
-| `OnTerrainSurfaceMaterialMappingMaterialChanged` | Notifies listeners when the material has changed for an existing surface tag. | None | EntityId; Surface Tag; Material | No |
-| `OnTerrainSurfaceMaterialMappingRegionCreated` | Notifies listeners when a set of surface material mappings has been created. | None | EntityId; Aabb | No |
-| `OnTerrainSurfaceMaterialMappingRegionDestroyed` | Notifies listeners when a set of surface material mappings has been destroyed. | None | EntityId; Aabb | No |
-| `OnTerrainSurfaceMaterialMappingRegionChanged` | Notifies listeners when the bounds of this set of surface material mappings has changed. | None | EntityId; Old Region: Aabb; New Region: Aabb | No |
+| `OnTerrainDefaultSurfaceMaterialCreated` | 在分配并加载默认 Surface 材质时通知侦听器。 | None | EntityId; Material | No |
+| `OnTerrainDefaultSurfaceMaterialDestroyed` | 在取消分配默认表面材质时通知侦听器。 | None | EntityId | No |
+| `OnTerrainDefaultSurfaceMaterialChanged` | 当默认 Surface 材质更改为其他材质时通知听者。 | None | EntityId; Material | No |
+| `OnTerrainSurfaceMaterialMappingCreated` | 在 Surface 和 Material 之间设置新映射时通知听者。| None | EntityId; Surface Tag; Material | No |
+| `OnTerrainSurfaceMaterialMappingDestroyed` | 在移除 Surface 和 Material 之间的映射时通知侦听器。 | None | EntityId; Surface Tag | No |
+| `OnTerrainSurfaceMaterialMappingTagChanged` | 当 surface 标签更改为现有材质的 tag 时通知侦听器。 | None | EntityId; Surface Tag; Surface Tag | No |
+| `OnTerrainSurfaceMaterialMappingMaterialChanged` | 当现有 surface 标签的材质发生更改时通知侦听器。 | None | EntityId; Surface Tag; Material | No |
+| `OnTerrainSurfaceMaterialMappingRegionCreated` | 在创建一组表面材质映射时通知侦听器。 | None | EntityId; Aabb | No |
+| `OnTerrainSurfaceMaterialMappingRegionDestroyed` | 当一组表面材质映射被销毁时通知侦听者。 | None | EntityId; Aabb | No |
+| `OnTerrainSurfaceMaterialMappingRegionChanged` | 当这组表面材质映射的边界发生更改时通知侦听器。 | None | EntityId; Old Region: Aabb; New Region: Aabb | No |

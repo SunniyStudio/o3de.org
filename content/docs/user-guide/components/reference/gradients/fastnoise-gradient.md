@@ -1,40 +1,40 @@
 ---
 linktitle: FastNoise Gradient
-title: FastNoise Gradient Component
-description: Use the FastNoise Gradient component to generate a gradient with the FastNoise noise generation library in Open 3D Engine (O3DE).
+title: FastNoise Gradient 组件
+description: 使用FastNoise Gradient组件，利用Open 3D Engine (O3DE)的 FastNoise 噪点生成库生成梯度。
 ---
 
-Add the **FastNoise Gradient** component to use one of the noise generation algorithms from the [FastNoise](https://github.com/Auburn/FastNoiseLite) library to generate a gradient.  The noise generation algorithm is set in the component's **Noise Type** property.
+添加**FastNoise Gradient**组件，使用[FastNoise](https://github.com/Auburn/FastNoiseLite) 库中的一种噪声生成算法来生成梯度。 噪声生成算法在组件的**Noise Type**属性中设置。
 
-## Provider
+## 提供方
 
 [Fast Noise Gem](/docs/user-guide/gems/reference/utility/fast-noise)
 
-## Dependencies ##
+## 依赖 ##
 
 - [Gradient Transform Modifier](/docs/user-guide/components/reference/gradient-modifiers/gradient-transform-modifier)
-- One of the following [Shape](./../shape/) components: [Axis Aligned Box](./../shape/axis-aligned-box-shape), [Box](./../shape/box-shape), [Capsule](./../shape/capsule-shape), [Compound](./../shape/compound-shape), [Cylinder](./../shape/cylinder-shape), [Disk](./../shape/disk-shape), [Polygon Prism](./../shape/polygon-prism-shape), [Quad](./../shape/quad-shape), [Shape Reference](./../shape/shape-reference), [Sphere](./../shape/sphere-shape), or [Tube](./../shape/tube-shape),  to define the **Gradient Transform Modifier's** area.
+- 以下 [Shape](./../shape/) 组件之一: [Axis Aligned Box](./../shape/axis-aligned-box-shape), [Box](./../shape/box-shape), [Capsule](./../shape/capsule-shape), [Compound](./../shape/compound-shape), [Cylinder](./../shape/cylinder-shape), [Disk](./../shape/disk-shape), [Polygon Prism](./../shape/polygon-prism-shape), [Quad](./../shape/quad-shape), [Shape Reference](./../shape/shape-reference), [Sphere](./../shape/sphere-shape), or [Tube](./../shape/tube-shape),  定义 **Gradient Transform Modifier** 的区域。
 
-## Noise types
+## Noise 类型
 
-| Noise Type | Description | Example Gradient |
+| Noise 类型 | 说明 | 灰阶示例 |
 | - | - | - |
-| `Value` | Generates a `White Noise` gradient  based on interpolated values from XYZ-coordinates. | ![FastNoise value noise type example](/images/user-guide/components/reference/gradients/fastnoise-value.png) |
-| `Value Fractal` | Results from the `Value` algorithm are run through a fractal function. | ![FastNoise value fractal noise type example](/images/user-guide/components/reference/gradients/fastnoise-value-fractal.png) |
-| `Perlin` | Generates values from the Perlin noise algorithm, a noise algorithm where visual features are all of similar size. | ![FastNoise Perlin noise type example](/images/user-guide/components/reference/gradients/fastnoise-perlin.png) |
-| `Perlin Fractal` | Results from the `Perlin` noise algorithm are run through a fractal function. | ![FastNoise Perlin fractal noise type example](/images/user-guide/components/reference/gradients/fastnoise-perlin-fractal.png) |
-| `Simplex` | Generates values from the Simplex noise algorithm, a variation of Perlin noise with fewer directional artifacts. | ![FastNoise simplex noise type example](/images/user-guide/components/reference/gradients/fastnoise-simplex.png) |
-| `Simplex Fractal` | Results from the `Simplex` noise algorithm are run through a fractal function. | ![FastNoise simplex fractal noise type example](/images/user-guide/components/reference/gradients/fastnoise-simplex-fractal.png) |
-| `Cellular` | Generates values from a cellular noise algorithm, which assigns values based on randomly distributed _feature points_; each world position is assigned the value of the closest feature point. | ![FastNoise cellular noise type example](/images/user-guide/components/reference/gradients/fastnoise-cellular.png) |
-| `White Noise` |	Generates values from XYZ-coordinates, which produce extremely different values for adjacent samples. | ![FastNoise white noise noise type example](/images/user-guide/components/reference/gradients/fastnoise-white-noise.png) |
-| `Cubic` | Generates values directly from XYZ-coordinates that are then run through cubic interpolation with neighboring values. The results are similar to `Perlin` noise, but with fewer directional artifacts and with a higher occurrence of extreme values. | ![FastNoise cubic noise type example](/images/user-guide/components/reference/gradients/fastnoise-cubic.png) |
-| `Cubic Fractal` | Results from the `Cubic` noise algorithm are run through a fractal function. | ![FastNoise cubic fractal noise type example](/images/user-guide/components/reference/gradients/fastnoise-cubic-fractal.png) |
+| `Value` | 根据 XYZ 坐标的内插值生成`White Noise`梯度。 | ![FastNoise value noise type example](/images/user-guide/components/reference/gradients/fastnoise-value.png) |
+| `Value Fractal` | `Value`算法的结果通过分形函数运行。 | ![FastNoise value fractal noise type example](/images/user-guide/components/reference/gradients/fastnoise-value-fractal.png) |
+| `Perlin` | 从 Perlin 噪声算法中生成数值，这是一种视觉特征大小相似的噪声算法。 | ![FastNoise Perlin noise type example](/images/user-guide/components/reference/gradients/fastnoise-perlin.png) |
+| `Perlin Fractal` | 通过分形函数运行`Perlin`噪声算法的结果。 | ![FastNoise Perlin fractal noise type example](/images/user-guide/components/reference/gradients/fastnoise-perlin-fractal.png) |
+| `Simplex` | 根据 Simplex 噪声算法生成数值，这是 Perlin 噪声的一种变体，具有较少的方向伪差。 | ![FastNoise simplex noise type example](/images/user-guide/components/reference/gradients/fastnoise-simplex.png) |
+| `Simplex Fractal` | 通过分形函数运行`Simplex`噪声算法的结果。 | ![FastNoise simplex fractal noise type example](/images/user-guide/components/reference/gradients/fastnoise-simplex-fractal.png) |
+| `Cellular` | 通过蜂窝噪声算法生成数值，该算法根据随机分布的特征点分配数值；每个世界位置都会分配最接近特征点的数值。 | ![FastNoise cellular noise type example](/images/user-guide/components/reference/gradients/fastnoise-cellular.png) |
+| `White Noise` |	根据 XYZ 坐标生成数值，相邻样本的数值差异极大。 | ![FastNoise white noise noise type example](/images/user-guide/components/reference/gradients/fastnoise-white-noise.png) |
+| `Cubic` | 直接从 XYZ 坐标生成数值，然后与邻近数值进行三次插值。其结果类似于`Perlin`噪声，但方向伪影较少，极值出现率较高。 | ![FastNoise cubic noise type example](/images/user-guide/components/reference/gradients/fastnoise-cubic.png) |
+| `Cubic Fractal` | 通过分形函数运行`Cubic`噪声算法的结果。 | ![FastNoise cubic fractal noise type example](/images/user-guide/components/reference/gradients/fastnoise-cubic-fractal.png) |
 
 {{< note >}}
-Not all combinations of **Noise Type** and noise property settings have the same performance characteristics.
+并非所有**Noise Type**和噪音属性设置的组合都具有相同的性能特征。
 {{< /note >}}
 
-## FastNoise Gradient properties
+## FastNoise Gradient 属性
 
 {{< tabs name="fastnoise-gradient-component-ui" >}}
 {{% tab name="Value" %}}
@@ -43,24 +43,24 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **FastNoise Advanced Settings - Interpolation** | Sets the function used to smooth between gradient values. Refer to the following section for [Interpolation type descriptions and examples](#value-interpolation-type-examples). | `Linear`, `Hermite`, or `Quintic` | `Quintic` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中没有选择实体时，此字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。  | Float: 0.0001 - Infinity | `1.0` |
+| **FastNoise Advanced Settings - Interpolation** | 设置用于平滑梯度值之间的函数。有关 [插值类型说明和示例](#value-interpolation-type-examples) 请参阅以下部分。 | `Linear`, `Hermite`, or `Quintic` | `Quintic` |
+| **Generate Random Seed** | 设置 **Random Seed** 属性为随机。 | | |
 
-### Value Interpolation type examples
+### Value Interpolation 类型示例
 
-| Interpolation Type | Description | Example Gradient |
+| 插值类型 | 示例 | 灰阶示例 |
 |-|-|-|
-| `Linear` | `Linear` interpolation produces angular artifacts. | ![Linear interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-linear.png) |
-| `Hermite` | `Hermite` interpolation produces smooth blurred values. | ![Hermite interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-hermite.png) |
-| `Quintic` | `Quintic` interpolation produces more defined edges than `Hermite` without the angular artifacts of `Linear`. | ![Quintic interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-quintic.png) |
+| `Linear` | `Linear` 插值会产生角度假象。 | ![Linear interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-linear.png) |
+| `Hermite` | `Hermite` 插值产生平滑的模糊值。 | ![Hermite interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-hermite.png) |
+| `Quintic` | `Quintic`插值法比`Hermite`插值法产生更清晰的边缘，而不会产生 `Linear` 插值法的角度误差。 | ![Quintic interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-quintic.png) |
 
 {{% /tab %}}
 {{% tab name="Value Fractal" %}}
@@ -69,36 +69,36 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **Octaves** | Sets the number of recursions of pattern generation. Higher values produce finer details. Values higher than `4` may not be perceptible. | Integer: 0 - 8 | `4` |
-| **Lacunarity** | Sets a frequency multiplier to apply to successive **Octaves**. | Float 0.0 to Infinity | `2.0` |
-| **Gain** | Sets a relative strength multiplier to apply to successive **Octaves**. | Float: 0.0 to Infinity | `0.5` |
-| **FastNoise Advanced Settings - Interpolation** | Sets the function used to smooth between gradient values. Refer to the following section for [Interpolation type descriptions and examples](#value-fractal-interpolation-type-examples). | `Linear`, `Hermite`, or `Quintic` | `Quintic` |
-| **FastNoise Advanced Settings - Fractal Type** | Sets the method of fractal combination. Refer to the following section for [Fractal Type descriptions and examples](#value-fractal-type-examples).| `FBM`, `Billow`, or  `Rigid Multi` | `FBM` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为 `Enabled` 时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中没有选择实体时，此字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。 | Float: 0.0001 - Infinity | `1.0` |
+| **Octaves** | 设置模式生成的递归次数。数值越大，细节越精细。大于`4`的值可能无法察觉。 | Integer: 0 - 8 | `4` |
+| **Lacunarity** | 设置应用于**Octaves**倍频程的频率乘数。 | Float 0.0 to Infinity | `2.0` |
+| **Gain** | 设置应用于 **Octaves**的相对强度乘数。 | Float: 0.0 to Infinity | `0.5` |
+| **FastNoise Advanced Settings - Interpolation** | 设置用于平滑梯度值之间的函数。有关 [插值类型说明和示例](#value-fractal-interpolation-type-examples) 请参阅以下部分。 | `Linear`, `Hermite`, 或 `Quintic` | `Quintic` |
+| **FastNoise Advanced Settings - Fractal Type** | 设置分形组合的方法。有关 [分形类型说明和示例](#value-fractal-type-examples) 请参阅以下部分。| `FBM`, `Billow`, 或  `Rigid Multi` | `FBM` |
+| **Generate Random Seed** | 设置 **Random Seed** 属性为随机值。 | | |
 
-### Value Fractal Interpolation type examples
+### Value Fractal Interpolation 类型示例
 
-| Interpolation Type | Description | Example Gradient |
+| Interpolation Type | 说明 | 灰阶示例 |
 |-|-|-|
-| `Linear` | `Linear` interpolation produces angular artifacts. | ![Linear interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-linear.png) |
-| `Hermite` | `Hermite` interpolation produces smooth blurred values. | ![Hermite interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-hermite.png) |
-| `Quintic` | `Quintic` interpolation produces more defined edges than `Hermite` without the angular artifacts of `Linear`. | ![Quintic interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-quintic.png) |
+| `Linear` | `Linear` 插值会产生角度假象。 | ![Linear interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-linear.png) |
+| `Hermite` | `Hermite` 插值产生平滑的模糊值。 | ![Hermite interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-hermite.png) |
+| `Quintic` | `Quintic`插值法比 `Hermite` 插值法产生更清晰的边缘，而不会产生`Linear`插值法的角度误差。 | ![Quintic interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-quintic.png) |
 
-### Value Fractal Type examples
+### Value Fractal Type 示例
 
-| Fractal Type | Description | Example Gradient |
+| Fractal Type | 说明 | 灰阶示例 |
 |-|-|-|
-| `FBM` | `FBM` or _fractional Brownian motion_ adds multiple frequencies and amplitudes of the noise signal together. | ![FBM fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-fbm.png) |
-| `Billow` | A variant of `FBM`. `Billow` adds the absolute value of multiple frequencies and amplitudes of the noise signal together. This produces extreme lows in the gradient's values. | ![Billow fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-billow.png) |
-| `Rigid Multi` | A variant of `FBM`. `Rigid Multi` subtracts the inverse of the absolute value of multiple frequencies and amplitudes of the noise signal from each other. This produces extreme highs in the gradient's values. | ![Rigid Multi fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-rigid-multi.png) |
+| `FBM` | `FBM` 或 分数布朗运动 将噪声信号的多个频率和振幅加在一起. | ![FBM fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-fbm.png) |
+| `Billow` | `FBM`的一种变体。`Billow`将噪声信号的多个频率和振幅的绝对值相加。这会产生梯度值的极低值。 | ![Billow fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-billow.png) |
+| `Rigid Multi` | `FBM`的变体。`Rigid Multi` 是将噪声信号的多个频率和振幅的绝对值的倒数相减。这会产生梯度值的极高值。 | ![Rigid Multi fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-rigid-multi.png) |
 {{% /tab %}}
 {{% tab name="Perlin" %}}
 
@@ -106,24 +106,24 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **FastNoise Advanced Settings - Interpolation** | Sets the function used to smooth between gradient values. Refer to the following section for [Interpolation type descriptions and examples](#perlin-interpolation-type-examples). | `Linear`, `Hermite`, or `Quintic` | `Quintic` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容Shape组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中没有选择实体时，此字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果 `Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>只有在**Pin Preview to Shape**中选择了实体，该字段才可用。 | Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。  | Float: 0.0001 - Infinity | `1.0` |
+| **FastNoise Advanced Settings - Interpolation** | 设置用于平滑梯度值之间的函数。有关 [插值类型说明和示例](#perlin-interpolation-type-examples) 请参阅以下部分。 | `Linear`, `Hermite`, 或 `Quintic` | `Quintic` |
+| **Generate Random Seed** | 设置 **Random Seed** 属性为随机值。 | | |
 
-### Perlin Interpolation type examples
+### Perlin Interpolation类型示例
 
-| Interpolation Type | Description | Example Gradient |
+| Interpolation Type | 说明 | 灰阶示例 |
 |-|-|-|
-| `Linear` | `Linear` interpolation produces angular artifacts. | ![Linear interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-linear.png) |
-| `Hermite` | `Hermite` interpolation produces smooth blurred values. | ![Hermite interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-hermite.png) |
-| `Quintic` | `Quintic` interpolation produces more defined edges than `Hermite` without the angular artifacts of `Linear`. | ![Quintic interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-quintic.png) |
+| `Linear` | `Linear` 插值会产生角度假象。 | ![Linear interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-linear.png) |
+| `Hermite` | `Hermite` 插值产生平滑的模糊值。| ![Hermite interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-hermite.png) |
+| `Quintic` | `Quintic`“插值法比`Hermite`插值法产生更清晰的边缘，而不会产生`Linear`插值法的角度误差。 | ![Quintic interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-quintic.png) |
 
 {{% /tab %}}
 {{% tab name="Perlin Fractal" %}}
@@ -132,36 +132,36 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **Octaves** | Sets the number of recursions of pattern generation. Higher values produce finer details. Values higher than `4` may not be perceptible. | Integer: 0 - 8 | `4` |
-| **Lacunarity** | Sets a frequency multiplier to apply to successive **Octaves**. | Float 0.0 to Infinity | `2.0` |
-| **Gain** | Sets a relative strength multiplier to apply to successive **Octaves**. | Float: 0.0 to Infinity | `0.5` |
-| **FastNoise Advanced Settings - Interpolation** | Sets the function used to smooth between gradient values. Refer to the following section for [Interpolation type descriptions and examples](#perlin-fractal-interpolation-type-examples). | `Linear`, `Hermite`, or `Quintic` | `Quintic` |
-| **FastNoise Advanced Settings - Fractal Type** | Sets the method of fractal combination. Refer to the following section for [Fractal Type descriptions and examples](#perlin-fractal-type-examples). | `FBM`, `Billow`, or  `Rigid Multi` | `FBM` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中未选择实体时，该字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。 | Float: 0.0001 - Infinity | `1.0` |
+| **Octaves** | 设置模式生成的递归次数。数值越大，细节越精细。大于 `4` 的值可能无法察觉。 | Integer: 0 - 8 | `4` |
+| **Lacunarity** | 设置应用于连续**Octaves**的频率乘数。 | Float 0.0 to Infinity | `2.0` |
+| **Gain** | 设置应用于连续**Octaves**的相对强度乘数。 | Float: 0.0 to Infinity | `0.5` |
+| **FastNoise Advanced Settings - Interpolation** | 设置用于平滑梯度值之间的函数。有关 [插值类型说明和示例](#perlin-fractal-interpolation-type-examples)请参阅以下部分。 | `Linear`, `Hermite`, 或 `Quintic` | `Quintic` |
+| **FastNoise Advanced Settings - Fractal Type** | 设置分形组合的方法。有关 [分形类型说明和示例](#perlin-fractal-type-examples) 请参阅以下部分。 | `FBM`, `Billow`, or  `Rigid Multi` | `FBM` |
+| **Generate Random Seed** | 设置 **Random Seed** 属性为随机值。 | | |
 
-### Perlin Fractal Interpolation type examples
+### Perlin Fractal Interpolation 类型示例
 
-| Interpolation Type | Description | Example Gradient |
+| Interpolation Type | 说明 | 灰阶示例 |
 |-|-|-|
-| `Linear` | `Linear` interpolation produces angular artifacts. | ![Linear interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-linear.png) |
-| `Hermite` | `Hermite` interpolation produces smooth blurred values. | ![Hermite interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-hermite.png) |
-| `Quintic` | `Quintic` interpolation produces more defined edges than `Hermite` without the angular artifacts of `Linear`. | ![Quintic interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-quintic.png) |
+| `Linear` | `Linear` 插值会产生角度假象。 | ![Linear interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-linear.png) |
+| `Hermite` | `Hermite` 插值产生平滑的模糊值。 | ![Hermite interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-hermite.png) |
+| `Quintic` | `Quintic`插值法比`Hermite`插值法产生更清晰的边缘，而不会产生`Linear`插值法的角度误差。 | ![Quintic interpolation example gradient](/images/user-guide/components/reference/gradients/interpolation-quintic.png) |
 
-### Perlin Fractal Type examples
+### Perlin Fractal Type 示例
 
-| Fractal Type | Description | Example Gradient |
+| Fractal Type | 说明 | 灰阶示例 |
 |-|-|-|
-| `FBM` | `FBM` or _fractional Brownian motion_ adds multiple frequencies and amplitudes of the noise signal together. | ![FBM fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-fbm.png) |
-| `Billow` | A variant of `FBM`. `Billow` adds the absolute value of multiple frequencies and amplitudes of the noise signal together. This produces extreme lows in the gradient's values. | ![Billow fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-billow.png) |
-| `Rigid Multi` | A variant of `FBM`. `Rigid Multi` subtracts the inverse of the absolute value of multiple frequencies and amplitudes of the noise signal from each other. This produces extreme highs in the gradient's values. | ![Rigid Multi fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-rigid-multi.png) |
+| `FBM` | `FBM` 或**分数布朗运动**将噪声信号的多个频率和振幅加在一起。 | ![FBM fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-fbm.png) |
+| `Billow` | `FBM`的一种变体。`Billow`"将噪声信号的多个频率和振幅的绝对值相加。这会产生梯度值的极低值。 | ![Billow fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-billow.png) |
+| `Rigid Multi` | `FBM` 的变体。`Rigid Multi`是将噪声信号的多个频率和振幅的绝对值的倒数相减。这会产生梯度值的极高值。 | ![Rigid Multi fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-rigid-multi.png) |
 
 {{% /tab %}}
 {{% tab name="Simplex" %}}
@@ -170,15 +170,15 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为 `Enabled` 时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中未选择实体时，该字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。 <br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。  | Float: 0.0001 - Infinity | `1.0` |
+| **Generate Random Seed** | 设置**Random Seed** 属性为随机值。 | | |
 
 {{% /tab %}}
 {{% tab name="Simplex Fractal" %}}
@@ -187,27 +187,27 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **Octaves** | Sets the number of recursions of pattern generation. Higher values produce finer details. Values higher than `4` may not be perceptible. | Integer: 0 - 8 | `4` |
-| **Lacunarity** | Sets a frequency multiplier to apply to successive **Octaves**. | Float 0.0 to Infinity | `2.0` |
-| **Gain** | Sets a relative strength multiplier to apply to successive **Octaves**. | Float: 0.0 to Infinity | `0.5` |
-| **FastNoise Advanced Settings - Fractal Type** | Sets the method of fractal combination. Refer to the following section for [Fractal Type descriptions and examples](#simplex-fractal-type-examples).| `FBM`, `Billow`, or  `Rigid Multi` | `FBM` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中没有选择实体时，此字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。 <br> <br>只有在**Pin Preview to Shape**中选择了实体，该字段才可用。| Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。  | Float: 0.0001 - Infinity | `1.0` |
+| **Octaves** | 设置模式生成的递归次数。数值越大，细节越精细。大于 `4` 的值可能无法察觉。 | Integer: 0 - 8 | `4` |
+| **Lacunarity** | 设置应用于连续 **Octaves** 的频率乘数。 | Float 0.0 to Infinity | `2.0` |
+| **Gain** | 设置应用于连续**Octaves** 的相对强度乘数。 | Float: 0.0 to Infinity | `0.5` |
+| **FastNoise Advanced Settings - Fractal Type** | 设置分形组合的方法。有关 [分形类型说明和示例](#simplex-fractal-type-examples) 请参阅以下部分。 | `FBM`, `Billow`, or  `Rigid Multi` | `FBM` |
+| **Generate Random Seed** | 设置 **Random Seed** 属性为随机值。 | | |
 
-### Simplex Fractal Type examples
+### Simplex Fractal Type 示例
 
-| Fractal Type | Description | Example Gradient |
+| Fractal Type | 说明 | 灰阶示例 |
 |-|-|-|
-| `FBM` | `FBM` or _fractional Brownian motion_ adds multiple frequencies and amplitudes of the noise signal together. | ![FBM fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-fbm.png) |
-| `Billow` | A variant of `FBM`. `Billow` adds the absolute value of multiple frequencies and amplitudes of the noise signal together. This produces extreme lows in the gradient's values. | ![Billow fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-billow.png) |
-| `Rigid Multi` | A variant of `FBM`. `Rigid Multi` subtracts the inverse of the absolute value of multiple frequencies and amplitudes of the noise signal from each other. This produces extreme highs in the gradient's values. | ![Rigid Multi fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-rigid-multi.png) |
+| `FBM` | `FBM`或 分数布朗运动 将噪声信号的多个频率和振幅加在一起。 | ![FBM fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-fbm.png) |
+| `Billow` | `FBM`的一种变体。`Billow`将噪声信号的多个频率和振幅的绝对值相加。这会产生梯度值的极低值。 | ![Billow fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-billow.png) |
+| `Rigid Multi` | `FBM`的变体。`Rigid Multi`是将噪声信号的多个频率和振幅的绝对值的倒数相减。这会产生梯度值的极高值。 | ![Rigid Multi fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-rigid-multi.png) |
 
 {{% /tab %}}
 {{% tab name="Cellular" %}}
@@ -216,38 +216,38 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **Distance Function** | Sets the distance function used to calculate the cell value for a given point. The distance functions produce different cell shapes. Refer to the following section for [Distance Function examples and descriptions](#distance-function-examples). | `Euclidean`, `Manhattan`, or `Natural` | `Euclidean` |
-| **Return Type** | Sets the type of value that the cellular function returns. Refer to the following section for [Return Type examples](#return-type-examples). | `CellValue`, `Distance`, `Distance2`, `Distance2Add`, `Distance2Sub`, `Distance2Mul`, or `Distance2Div`  | `CellValue` |
-| **Jitter** | Sets the maximum distance that a cellular point can move from its original position. Values above `1.0` may produce artifacts from clamped multiplications. | Float: 0.0 to Infinity | `0.45` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为 `Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中没有选择实体时，此字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。  | Float: 0.0001 - Infinity | `1.0` |
+| **Distance Function** | 设置用于计算指定点的单元格值的距离函数。距离函数会产生不同的单元格形状。有关 [距离函数示例和说明](#distance-function-examples) 请参阅以下部分。 | `Euclidean`, `Manhattan`, 或 `Natural` | `Euclidean` |
+| **Return Type** | 设置单元函数返回值的类型。有关 [返回类型示例](#return-type-examples) 请参阅以下部分。 | `CellValue`, `Distance`, `Distance2`, `Distance2Add`, `Distance2Sub`, `Distance2Mul`, or `Distance2Div`  | `CellValue` |
+| **Jitter** | 设置单元点从原始位置移动的最大距离。大于 `1.0` 的值可能会产生箝位乘法的假象。 | Float: 0.0 to Infinity | `0.45` |
+| **Generate Random Seed** | 设置 **Random Seed** 属性为随机值。 | | |
 
-### Distance Function examples
+### Distance Function 示例
 
-| Distance Function | Example Gradient |
+| Distance Function | 灰阶示例 |
 |-|-|
 | `Euclidean` | ![Euclidean distance function example gradient](/images/user-guide/components/reference/gradients/distance-function-euclidean.png) |
 | `Manhattan` | ![Manhattan distance function example gradient](/images/user-guide/components/reference/gradients/distance-function-manhattan.png) |
 | `Natural` | ![Natural distance function example gradient](/images/user-guide/components/reference/gradients/distance-function-natural.png) |
 
-### Return Type examples
+### Return Type 示例
 
-| Return Type | Description | Example Gradient |
+| Return Type | 说明 | 灰阶示例 |
 |-|-|-|
-| `CellValue` | Returns the value of the nearest feature point at any given world position. | ![CellValue return type example gradient](/images/user-guide/components/reference/gradients/return-type-cellvalue.png) |
-| `Distance` | 	Returns the distance to the nearest feature point at any given world position. | ![Distance return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance.png) |
-| `Distance2` | Returns the distance to the second-nearest feature point at any given world position. | ![Distance2 return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2.png) |
-| `Distance2Add` | Returns the distances of the two closest feature points added together. | ![Distance2Add return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2add.png) |
-| `Distance2Sub` | Returns the distances of the two closest feature points subtracted from each other. | ![Distance2Sub return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2sub.png) |
-| `Distance2Mul` | Returns the distances of the two closest feature points multiplied together. | ![Distance2Mul return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2mul.png) |
-| `Distance2Div` | Returns the distance of the closest feature point divided by the distance of the second-closest feature point. | ![Distance2Div return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2div.png) |
+| `CellValue` | 返回任何给定世界位置上最近特征点的值。 | ![CellValue return type example gradient](/images/user-guide/components/reference/gradients/return-type-cellvalue.png) |
+| `Distance` | 	返回任何给定世界位置上最近地物点的距离。 | ![Distance return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance.png) |
+| `Distance2` | 返回任何给定世界位置上距离第二最近特征点的距离。 | ![Distance2 return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2.png) |
+| `Distance2Add` | 返回两个最近特征点相加的距离。 | ![Distance2Add return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2add.png) |
+| `Distance2Sub` | 返回两个最近的特征点相减后的距离。| ![Distance2Sub return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2sub.png) |
+| `Distance2Mul` | 返回两个最近特征点相乘的距离。 | ![Distance2Mul return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2mul.png) |
+| `Distance2Div` | 返回最近特征点的距离除以第二近特征点的距离。 | ![Distance2Div return type example gradient](/images/user-guide/components/reference/gradients/return-type-distance2div.png) |
 
 {{% /tab %}}
 {{% tab name="White Noise" %}}
@@ -256,14 +256,14 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中没有选择实体时，此字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果 `Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>只有在**Pin Preview to Shape**中选择了实体，该字段才可用。 | Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Generate Random Seed** | 设置 **Random Seed** 属性为随机值。 | | |
 
 {{% /tab %}}
 {{% tab name="Cubic" %}}
@@ -272,15 +272,15 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中未选择实体时，该字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。 <br> <br>此字段仅在**Pin Preview to Shape**中选择了实体时可用。 | Boolean | `Disabled` |
+| **Noise Type** | 设置用于生成梯度的噪声生成算法。 | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, 或 `Cubic Fractal` | `Perlin Fractal` |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。  | Float: 0.0001 - Infinity | `1.0` |
+| **Generate Random Seed** | 设置 **Random Seed** 属性为随机值。 | | |
 
 {{% /tab %}}
 {{% tab name="Cubic Fractal" %}}
@@ -289,50 +289,50 @@ Not all combinations of **Noise Type** and noise property settings have the same
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Preview** | Displays the output gradient of this component after all properties are applied. Click the previewer icon in the top of the preview image to show a larger preview of the gradient in a dockable window. | | |
-| **Pin Preview to Shape** | Sets an entity with a compatible Shape component to use as the bounds of the preview if **Constrain to Shape** is `Enabled`. | EntityId | Current Entity |
-| **Preview Position** | Sets the world location of the preview.<br> <br>*This field is available only if there is no entity selected in **Pin Preview to Shape**.* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the preview. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the gradient preview uses the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
+| **Preview** | 显示该组件应用所有属性后的输出渐变效果。点击预览图片顶部的预览器图标，可在停靠窗口中显示更大的渐变预览。 | | |
+| **Pin Preview to Shape** | 设置一个具有兼容形状组件的实体，以便在**Constrain to Shape**为`Enabled`时用作预览的边界。 | EntityId | Current Entity |
+| **Preview Position** | 设置预览的世界位置。<br> <br>只有在**Pin Preview to Shape**中没有选择实体时，此字段才可用。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Preview Size** | 设置预览的尺寸。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果`Enabled`，渐变预览将使用在**Pin Preview to Shape**中选择的实体的边界。<br> <br>只有在**Pin Preview to Shape**中选择了实体，该字段才可用。 | Boolean | `Disabled` |
 | **Noise Type** | Sets the noise generation algorithm used to generate the gradient. | `Value`, `Value Fractal`, `Perlin`, `Perlin Fractal`, `Simplex`, `Simplex Fractal`, `Cellular`, `White Noise`, `Cubic`, or `Cubic Fractal` | `Perlin Fractal` |
-| **Random Seed** | Sets the initialization value for the pseudorandom noise generation algorithm. Each value generates a different pattern of noise. | Integer: 1 to Infinity | `1` |
-| **Frequency** | Sets the frequency of the generated noise. Smaller values result in noise that is dilated and larger values result in noise that is condensed.  | Float: 0.0001 - Infinity | `1.0` |
-| **Octaves** | Sets the number of recursions of pattern generation. Higher values produce finer details. Values higher than `4` may not be perceptible. | Integer: 0 - 8 | `4` |
-| **Lacunarity** | Sets a frequency multiplier to apply to successive **Octaves**. | Float 0.0 to Infinity | `2.0` |
-| **Gain** | Sets a relative strength multiplier to apply to successive **Octaves**. | Float: 0.0 to Infinity | `0.5` |
-| **FastNoise Advanced Settings - Fractal Type** | Sets the method of fractal combination. Refer to the following section for [Fractal Type descriptions and examples](#cubic-fractal-type-examples).| `FBM`, `Billow`, or  `Rigid Multi` | `FBM` |
-| **Generate Random Seed** | Sets the **Random Seed** property to a random value. | | |
+| **Random Seed** | 设置伪随机噪音生成算法的初始化值。每个值都会产生不同的噪声模式。 | Integer: 1 to Infinity | `1` |
+| **Frequency** | 设置产生噪音的频率。数值越小，产生的噪音越大；数值越大，产生的噪音越小。  | Float: 0.0001 - Infinity | `1.0` |
+| **Octaves** | 设置模式生成的递归次数。数值越大，细节越精细。大于 `4` 的值可能无法察觉。 | Integer: 0 - 8 | `4` |
+| **Lacunarity** | 设置应用于连续**Octaves**的频率乘数。 | Float 0.0 to Infinity | `2.0` |
+| **Gain** | 设置应用于连续**Octaves**的相对强度乘数。 | Float: 0.0 to Infinity | `0.5` |
+| **FastNoise Advanced Settings - Fractal Type** | 设置分形组合的方法。有关 [分形类型说明和示例](#cubic-fractal-type-examples) 请参阅以下部分。| `FBM`, `Billow`, or  `Rigid Multi` | `FBM` |
+| **Generate Random Seed** | Sets the **Random Seed**属性为随机值。 | | |
 
-### Cubic Fractal Type examples
+### Cubic Fractal Type 示例
 
-| Fractal Type | Description | Example Gradient |
+| Fractal Type | 说明 | 灰阶示例 |
 |-|-|-|
-| `FBM` | `FBM` or _fractional Brownian motion_ adds multiple frequencies and amplitudes of the noise signal together. | ![FBM fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-fbm.png) |
-| `Billow` | A variant of `FBM`. `Billow` adds the absolute value of multiple frequencies and amplitudes of the noise signal together. This produces extreme lows in the gradient's values. | ![Billow fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-billow.png) |
-| `Rigid Multi` | A variant of `FBM`. `Rigid Multi` subtracts the inverse of the absolute value of multiple frequencies and amplitudes of the noise signal from each other. This produces extreme highs in the gradient's values. | ![Rigid Multi fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-rigid-multi.png) |
+| `FBM` | `FBM` 或 分数布朗运动 将噪声信号的多个频率和振幅加在一起。 | ![FBM fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-fbm.png) |
+| `Billow` | `FBM` 的一种变体。`Billow` 将噪声信号的多个频率和振幅的绝对值相加。这会产生梯度值的极低值。 | ![Billow fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-billow.png) |
+| `Rigid Multi` | `FBM` 的变体。`Rigid Multi` 是将噪声信号的多个频率和振幅的绝对值的倒数相减。这会产生梯度值的极高值。 | ![Rigid Multi fractal type example gradient](/images/user-guide/components/reference/gradients/fractal-type-rigid-multi.png) |
 
 {{% /tab %}}
 {{< /tabs >}}
 
 ## FastNoiseGradientRequestBus
 
-Use the following request functions with the `FastNoiseGradientRequestBus` EBus interface to communicate with FastNoise Gradient components in your game.
+使用下列请求函数和`FastNoiseGradientRequestBus` EBus 接口与游戏中的 FastNoise Gradient 组件通信。
 
 | 方法名称 | 说明 | 参数 | 返回值 | 脚本化 |
 |-|-|-|-|-|
-| `GetFractalType` | Returns the value of the **FastNoise Advanced Settings - Fractal Type** property. | None | Fractal Type Index: Integer | Yes |
-| `GetFrequency` | Returns the value of the **Frequency** property. | None | Float | Yes |
-| `GetGain` | Returns the value of the **Gain** property. | None | Float | Yes |
-| `GetInterpolation` | Returns the value of the **FastNoise Advanced Settings - Interpolation** property. | None | Interpolation Index: Integer | Yes |
-| `GetLacunarity` | Returns the value of the **Lacunarity** property. | None | Float | Yes |
-| `GetNoiseType` | Returns the value of the **Noise Type** property. | None | Noise Type Index: Integer | Yes |
-| `GetOctaves` | Returns the value of the **Octaves** property. | None | Octave Count: Integer | Yes |
-| `GetRandomSeed` | Returns the value of the **Random Seed** property. | None | Seed: Integer | Yes |
-| `SetFractalType` | Sets the value of the **FastNoise Advanced Settings - Fractal Type** property. | Fractal Type Index: Integer | None | Yes |
-| `SetFrequency` | Sets the value of the **Frequency** property. | Float | None | Yes |
-| `SetGain` | Sets the value of the **Gain** property. | Float | None | Yes |
-| `SetInterpolation` | Sets the value of the **FastNoise Advanced Settings - Interpolation** property. | Interpolation Index: Integer | None | Yes |
-| `SetLacunarity` | Sets the value of the **Lacunarity** property. | Float | None | Yes |
-| `SetNoiseType` | Sets the value of the **Noise Type** property. | Noise Type Index: Integer | None | Yes |
-| `SetOctaves` | Sets the value of the **Octaves** property. | Octave Count: Integer | None | Yes |
-| `SetRandomSeed` | Sets the value of the **Random Seed** property. | Seed: Integer | None | Yes |
+| `GetFractalType` | 返回 **FastNoise Advanced Settings - Fractal Type** 属性的值。 | None | Fractal Type Index: Integer | Yes |
+| `GetFrequency` | 返回 **Frequency** 属性的值。| None | Float | Yes |
+| `GetGain` | 返回 **Gain** property. | None | Float | Yes |
+| `GetInterpolation` | 返回 **FastNoise Advanced Settings - Interpolation** 属性的值。 | None | Interpolation Index: Integer | Yes |
+| `GetLacunarity` | 返回 **Lacunarity** 属性的值。 | None | Float | Yes |
+| `GetNoiseType` | 返回 **Noise Type** 属性的值。 | None | Noise Type Index: Integer | Yes |
+| `GetOctaves` | 返回 **Octaves** 属性的值。 | None | Octave Count: Integer | Yes |
+| `GetRandomSeed` | 返回 **Random Seed** 属性的值。 | None | Seed: Integer | Yes |
+| `SetFractalType` | 设置 **FastNoise Advanced Settings - Fractal Type** 属性的值。| Fractal Type Index: Integer | None | Yes |
+| `SetFrequency` | 设置 **Frequency** 属性的值。 | Float | None | Yes |
+| `SetGain` | 设置 **Gain** 属性的值。 | Float | None | Yes |
+| `SetInterpolation` | 设置 **FastNoise Advanced Settings - Interpolation** 属性的值。 | Interpolation Index: Integer | None | Yes |
+| `SetLacunarity` | 设置 **Lacunarity** 属性的值。 | Float | None | Yes |
+| `SetNoiseType` | 设置 **Noise Type** 属性的值。 | Noise Type Index: Integer | None | Yes |
+| `SetOctaves` | 设置 **Octaves** 属性的值。 | Octave Count: Integer | None | Yes |
+| `SetRandomSeed` | 设置 **Random Seed** 属性的值。 | Seed: Integer | None | Yes |

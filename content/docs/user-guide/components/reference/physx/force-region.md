@@ -1,26 +1,26 @@
 ---
 linkTitle: PhysX Force Region
-description: ' Use the PhysX Force Region component to specify a region that applies physical force to entities. '
-title: PhysX Force Region Component
+description: ' 使用 PhysX Force Region （PhysX 力区域） 组件指定将物理力应用于实体的区域。'
+title: PhysX Force Region 组件
 ---
 
 
 
-You can use the **PhysX Force Region** component to specify a region that applies physical force to entities. For each physics simulation frame, the component applies force to entities that are in the region's bounds. You can use this component to simulate effects such as simulating gravity, slowing down, or deflecting an entity to another direction.
+您可以使用 **PhysX Force Region** （PhysX 力区域） 组件指定将物理力应用于实体的区域。对于每个物理模拟帧，该组件将力应用于区域边界内的实体。您可以使用此组件来模拟效果，例如模拟重力、减慢速度或将实体偏转到另一个方向。
 
-To create a force region, you must do the following:
-+ Enable the [PhysX](/docs/user-guide/gems/reference/physics/nvidia/physx/) gem for your game project
-+ Add a **[PhysX Primitive Collider](/docs/user-guide/components/reference/physx/collider/)** component to the same entity
-+ For the **PhysX Primitive Collider** component, you must select the **Trigger** property for the force region to work
+要创建力区域，您必须执行以下操作：
++ 为游戏项目启用 [PhysX](/docs/user-guide/gems/reference/physics/nvidia/physx/) gem
++ 向相同的实体添加一个 **[PhysX Primitive Collider](/docs/user-guide/components/reference/physx/collider/)** 组件
++ 对于 **PhysX Primitive Collider** 组件，你必须选择 **Trigger** 属性，以使力区域生效
 
-The **PhysX Primitive Collider** component's shape, size, and orientation represent the region that applies force to incoming entities.
+**PhysX Primitive Collider** 组件的形状、大小和方向表示对传入实体施加力的区域。
 
 {{< note >}}
-A **PhysX Mesh Collider** component can also be used, which requires a **PxMesh** asset. But if the collider inside the asset isn't a convex mesh (for example, it's a triangle mesh), the collider won't work as a trigger for collisions.
+也可以使用 **PhysX Mesh Collider** 组件，这需要 **PxMesh** 资产。但是，如果资产内部的碰撞器不是凸面网格（例如，它是一个三角形网格），则碰撞器将不能用作碰撞的触发器。
 {{< /note >}}
 
-**Topics**
-- [PhysX Force Region Component Properties](#physx-force-region-component-properties)
+**主题**
+- [PhysX Force Region 组件属性](#physx-force-region-component-properties)
   - [Force Types](#force-types)
     - [Linear Damping](#linear-damping)
     - [Local Space](#local-space)
@@ -30,22 +30,22 @@ A **PhysX Mesh Collider** component can also be used, which requires a **PxMesh*
     - [World Space](#world-space)
 - [Creating a Force Region](#creating-a-force-region)
 
-## PhysX Force Region Component Properties
+## PhysX Force Region 组件属性
 
 ![Force Region component properties.](/images/user-guide/component/physx/ui-physx-force-region-component-properties.png)
 
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-| Visible |  The component always appears in the viewport, even if the entity isn't selected.  |
-| Debug Forces | A debug arrow draws in gameplay mode. The debug arrow indicates the direction of the net force for each entity inside the force region. |
-| Forces |  Specifies the force types that act in the force region. You can add multiple force types for the same component.  |
+| Visible |  该组件始终显示在视区中，即使未选择实体也是如此。  |
+| Debug Forces | 在游戏模式中绘制调试箭头。调试箭头指示力区域内每个实体的净力方向。 |
+| Forces |  指定作用在力区域中的力类型。您可以为同一组件添加多个力类型。  |
 
-### Force Types
+### Force Types 力类型
 
-You can add multiple force types to the component. When an entity enters the force region, the entity moves according to the net value of the forces that you specify.
+您可以向组件添加多个力类型。当实体进入力区域时，该实体将根据您指定的力的净值进行移动。
 
-**Contents**
+**内容**
 - [PhysX Force Region Component Properties](#physx-force-region-component-properties)
   - [Force Types](#force-types)
     - [Linear Damping](#linear-damping)
@@ -54,135 +54,135 @@ You can add multiple force types to the component. When an entity enters the for
     - [Simple Drag](#simple-drag)
     - [Spline Follow](#spline-follow)
     - [World Space](#world-space)
-- [Creating a Force Region](#creating-a-force-region)
+- [创建力区域](#creating-a-force-region)
 
-#### Linear Damping
+#### Linear Damping线性阻尼
 
-Applies a force in the opposite direction to an entity's velocity. For example, you can create a force that simulates a swamp or mud.
+在与实体的速度相反的方向上应用力。例如，您可以创建模拟沼泽或泥浆的力。
 
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-| Damping |  The amount of damping to apply. You can't specify negative values. Specify higher values to apply more damping. Specify `0` for no damping.  |
+| Damping |  要应用的阻尼量。您不能指定负值。指定较高的值可应用更多的阻尼。指定 `0` 表示无阻尼。  |
 
-#### Local Space
+#### Local Space局部空间
 
-Applies a force in local space, relative to the force region's orientation. For example, you can create a force that simulates a hair dryer or a vacuum cleaner.
+在局部空间中相对于力区域的方向应用力。例如，您可以创建一个模拟吹风机或真空吸尘器的力。
 
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-| Direction |  The direction of the force in the local space of the force region.   You can specify a value from `-1000000` to `1000000`, but O3DE Editor normalizes the value to a range of -`1` and `1`.   |
-|  **Magnitude**  |  The amount of force to apply.  Specify a negative value to apply the force in the opposite direction.  |
+| Direction |  力区域局部空间中的力方向。  您可以指定一个介于 `-1000000` 到 `1000000` 之间的值，但 O3DE 编辑器会将该值标准化为 `-1` 和 `1` 的范围。  |
+|  **Magnitude**  |  要应用的力的大小。 指定负值以沿相反方向应用力。 |
 
-#### Point
+#### Point点
 
-Applies a force relative to the center of force region. The magnitude determines if the force is inward or outward. For example, you can create a force that simulates an explosion or a black hole.
+相对于力中心区域应用力。大小确定力是向内还是向外。例如，您可以创建模拟爆炸或黑洞的力。
 
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-| Magnitude |  The amount of force to apply. Specify a positive value for an outward force and a negative value for an inward force.  |
+| Magnitude |  要应用的力的大小。为向外的力指定一个正值，为向内力指定一个负值。  |
 
-#### Simple Drag
+#### Simple Drag简单阻力
 
-Applies a force that simulates air resistance. **Simple Drag** always applies force in the opposite direction of colliding entities. Larger and faster entities experience more drag. Entities are approximated as spheres.
+应用模拟空气阻力的力。**Simple Drag** 始终在碰撞实体的相反方向上施加力。更大、速度更快的实体会受到更大的阻力。实体近似为球体。
 
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-|  **Region Density** | The density of the volume. Specify higher values to increase the drag force.  You can specify only positive values.   |
+|  **Region Density** | 体积的密度。指定较高的值可增加拖动力。 您只能指定正值。   |
 
-#### Spline Follow
+#### Spline Follow样条线跟随
 
-Applies a force to make entities follow a spline. The force uses a proportional-derivative (PD) controller that simulates a spring moving along a spline. For example, you can create a force that simulates a water slide.
+应用力使实体跟随样条曲线。该力使用比例导数 （PD） 控制器，该控制器模拟沿样条曲线移动的弹簧。例如，您可以创建模拟水滑梯的力。
 
 {{< note >}}
-For the force region entity, if you change the **Scale** property of the **Transform** component, the scaling must be uniform so that the x, y, and z scale values match. If scaling isn't uniform, the spline doesn't correctly reflect the path of the force.
-The end of the spline must be outside the force region so that entities can exit after following the spline.
-{{< /note >}}
-
-| Property | Description |
-| --- | --- |
-|   **Damping Ratio**   |  Slows down the vibration of the entity when it enters the spline.  The higher the value, the faster it slows down the vibrations. A value of `1` quickly slows down vibrations around the spline.  |
-|  **Frequency**  |  The frequency of the vibration when the entity enters the spline.  |
-|  **Target Speed** |  The speed that the entity attempts to reach as it travels through the nodes of the spline. Specify a negative value to apply the force in the opposite direction.  |
-|  **Lookahead**  |  The distance, in meters, that entities look ahead in their path to reach a node on the spline.  The **Lookahead** value determines how far ahead entities look for the next node to steer towards. At each physics simulation frame, the entity in the spline changes its direction to realign itself to the identified node. If spline nodes are close together, you can specify a smaller **Lookahead** value so that entities can detect the next node. If nodes are far apart, you can specify a higher **Lookahead** value so that entities can detect the next node.   |
-
-#### World Space
-
-Applies a force in world space. World space force doesn't take into account an entity's orientation. For example, you can create a force that simulates gravity.
-
-{{< note >}}
-You can define the direction for world space so that it always applies force in the direction that you want, regardless of the colliding entity.
+对于力区域实体，如果更改 **Transform** 组件的 **Scale** 属性，则缩放必须均匀，以便 x、y 和 z 缩放值匹配。如果缩放不均匀，则样条曲线无法正确反映力的路径。
+样条曲线的末端必须位于力区域之外，以便实体可以在跟随样条曲线后退出。
 {{< /note >}}
 
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-|  **Direction** |  The direction of the force in world space.  |
-|  **Magnitude**  |  The amount of force to apply.  Specify a negative value to apply the force in the opposite direction.  |
+|   **Damping Ratio**   |  当实体进入样条曲线时，减慢实体的振动速度。 值越高，振动减慢的速度就越快。值为 `1` 会快速减慢样条曲线周围的振动。  |
+|  **Frequency**  |  实体进入样条曲线时的振动频率。  |
+|  **Target Speed** |  实体在穿过样条曲线的节点时尝试达到的速度。指定负值以沿相反方向应用力。  |
+|  **Lookahead**  |  实体在其路径中向前看以到达样条上节点的距离（以米为单位）。 **Lookahead** 值确定实体在多远前寻找下一个要转向的节点。在每个物理模拟帧中，样条中的实体会改变其方向，以将自身重新对齐到已识别的节点。如果样条节点彼此靠近，则可以指定较小的 **Lookahead**值，以便实体可以检测下一个节点。如果节点相距较远，您可以指定更高的 **Lookahead** 值，以便实体可以检测下一个节点。   |
+
+#### World Space 世界空间
+
+在世界空间中应用力。World Space Force 不考虑实体的方向。例如，您可以创建模拟重力的力。
 
 {{< note >}}
-When you select a force type, remember the following:
-
-For **Simple Drag**, you can't define the direction of force. **Simple Drag** always works in the opposite direction of the entity's movement. In contrast, you can define a direction of force using **World Space**, which always acts in the direction that you specify, regardless of the direction of the moving entity.
-
-To determine how much force to apply, **Linear Damping** takes into account the colliding entity's velocity and mass but not its shape. In contrast, **Simple Drag** takes into account the colliding entity's velocity, cross-section area, and the **Region Density** of the force region.
+您可以定义世界空间的方向，以便它始终沿您想要的方向施加力，而不管碰撞实体如何。
 {{< /note >}}
 
-## Creating a Force Region
 
-You can create a force region so that force applies to another entity that enters the region.
+| 属性 | 说明 |
+| --- | --- |
+|  **Direction** |  力在世界空间中的方向。  |
+|  **Magnitude**  |  要应用的力的大小。 指定负值以沿相反方向应用力。  |
 
-**To create a PhysX Force Region component**
+{{< note >}}
+选择力类型时，请记住以下几点：
+对于 **Simple Drag**，您无法定义力的方向。**Simple Drag** 始终在与实体移动相反的方向上工作。相反，您可以使用 **World Space** 定义力的方向，无论移动实体的方向如何，它始终作用于您指定的方向。
 
-1. In O3DE Editor, create an entity.
+为了确定要施加的力，**Linear Damping** 会考虑碰撞实体的速度和质量，但不考虑其形状。相比之下，**Simple Drag** 考虑了碰撞实体的速度、横截面积和力区域的 **Region Density**。
+{{< /note >}}
 
-1. Enter a name for the entity, such as *ForceRegion*.
+## 创建 Force Region
 
-1. In the **Entity Inspector**, choose **Add Component** and select a **PhysX Force Region** component.
+您可以创建一个力区域，以便将力应用于进入该区域的另一个实体。
 
-1. In the **PhysX Force Region** component, choose **Add Required Component** and select the **PhysX Primitive Collider** component.
+**创建PhysX Force Region组件**
 
-1. In the **PhysX Primitive Collider** component, choose **Add Required Component** and select the **PhysX Static Rigid Body** component.
+1. 在 O3DE 编辑器中，创建一个实体。
 
-1. For the **PhysX Primitive Collider** component, do the following.
+1. 为此实体输入一个名称，例如 *ForceRegion*。
 
-   1. Select the **Trigger** property.
+1. 在 **Entity Inspector**中，选择 **Add Component** ，然后选择一个 **PhysX Force Region** 组件。
 
-   1. For **Shape**, select a shape such as **Box**.
+1. 在 **PhysX Force Region** 组件中，选择**Add Required Component** 并选择 **PhysX Primitive Collider** 组件。
 
-1. For the **PhysX Force Region** component, do the following.
+1. 在 **PhysX Primitive Collider** 组件中，选择 **Add Required Component** 并选择 **PhysX Static Rigid Body** 组件。
 
-   1. Select the **Visible** and **Debug Forces** properties.
+1. 对于 **PhysX Primitive Collider** 组件，完成以下操作：
 
-   1. For **Forces**, click the **+** icon and for **Force Type**, select a force such as **Local Space**.
+   1. 选择 **Trigger** 属性。
 
-   1. For **Magnitude**, enter a value such as **20**.
+   1. 对于 **Shape**，选择一个形状，例如 **Box**。
 
-      Blue arrows appear on the entity that indicate the direction of the force.
+1. 对于 **PhysX Force Region** 组件，完成以下操作：
+
+   1. 选择 **Visible** 和 **Debug Forces** 属性。
+
+   1. 对于**Forces**，点击 **+** 图标，对于 **Force Type**，选择一种力，例如 **Local Space**。
+
+   1. 对于 **Magnitude**，输入一个值，例如 **20**。
+
+      实体上会显示指示力方向的蓝色箭头。
 
       ![Direction of the PhysX Force Region.](/images/user-guide/component/physx/force-region-component-local-force.png)
 
-1. To collide an entity with the force region, create a dynamic entity named *Sphere* and attach the **PhysX Primitive Collider** and **PhysX Dynamic Rigid Body** components. These components enable the entity to interact with other PhysX entities.
+1. 要将实体与力区域碰撞，请创建名为 **Sphere** 的动态实体，并附加 **PhysX Primitive Collider** 和 **PhysX Dynamic Rigid Body** 组件。这些组件使实体能够与其他 PhysX 实体交互。
 
-1. (Optional) Add a **Mesh** component and, for **Mesh asset**, select a mesh asset, such as a `_sphere_1x1.fbx`.
+1. (可选) 添加 **Mesh** 组件，然后对于 **Mesh asset**，选择一个网格资产，例如`_sphere_1x1.fbx`.
 
-1. Select and drag the **Sphere** entity so that it's above the force region.
+1. 选择并拖拽 **Sphere** 实体，使其位于力区域上方。
 
     ![An entity entering the force region.](/images/user-guide/component/physx/force-region-component-local-force-2.png)
 
-1. After you create your dynamic entity, press **Ctrl**+**G** to enter gameplay mode.
-**Example**
+1. 在创建动态实体后，按下 **Ctrl**+**G** 进入游戏模式。
+**例如**
 
-   The sphere falls and collides with the force region. The force region applies force and pushes the sphere in the opposite direction.
+   球体下落并与力区域碰撞。力区域施加力并将球体推向相反方向。
 
    ![PhysX Force Region component animation.](/images/user-guide/component/physx/animation-force-region-component.gif)
 
-1. To leave gameplay mode, press **Esc**.
+1. 要离开游戏模式，按下 **Esc**。
 
 {{< note >}}
-To display PhysX debug visualizations, see [Debugging PhysX](/docs/user-guide/interactivity/physics/debugging/).
-For more information about using PhysX components, see [Simulating physics behavior with the PhysX system](/docs/user-guide/interactivity/physics/nvidia-physx/).
+要显示 PhysX 调试可视化效果，请参阅 [调试 PhysX](/docs/user-guide/interactivity/physics/debugging/)。
+有关使用 PhysX 组件的更多信息，请参阅[使用 PhysX 系统模拟物理行为](/docs/user-guide/interactivity/physics/nvidia-physx/)。
 {{< /note >}}

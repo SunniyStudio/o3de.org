@@ -1,52 +1,52 @@
 ---
-title: Vegetation Surface Mask Filter Component
+title: Vegetation Surface Mask Filter 组件
 linktitle: Vegetation Surface Mask Filter
-description: Use the Vegetation Surface Mask Filter component to distribute vegetation based on surface tag weight in your Open 3D Engine (O3DE) level.
+description: 使用 Vegetation Surface Mask Filter 组件，根据 Open 3D Engine （O3DE） 关卡中的表面标签权重分配植被。
 weight: 700
 ---
 
-Add the **Vegetation Surface Mask Filter** component to define vegetation and blocker placement areas with surface tags and weight ranges.
+添加 **Vegetation Surface Mask Filter** 组件，以定义具有表面标签和权重范围的植被和阻挡物放置区域。
 
-## Provider
+## 提供者
 
 [Vegetation Gem](/docs/user-guide/gems/reference/environment/vegetation/)
 
-## Dependencies
+## 依赖
 
-Add one of the following required components when using the Vegetation Surface Mask Filter component:
+使用 Vegetation Surface Mask Filter 组件时，添加以下必需组件之一：
 - [Vegetation Layer Blender](./../vegetation/vegetation-layer-blender)
 - [Vegetation Layer Blocker](./../vegetation/vegetation-layer-blocker)
 - [Vegetation Layer Blocker (Mesh)](./../vegetation/vegetation-layer-blocker-mesh)
 - [Vegetation Layer Spawner](./../vegetation/layer-spawner)
 
-## Vegetation Surface Mask Filter properties
+## Vegetation Surface Mask Filter 属性
 
 ![Vegetation Surface Mask Filter component properties](/images/user-guide/components/reference/vegetation-filters/vegetation-surface-mask-filter-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Filter Stage** | Defines if filters are applied before or after modifiers. | `PreProcess`, `PostProcess`, or `Default` | `Default` |
-| **Allow Per-Item Overrides** | If `Enabled`, vegetation descriptor properties that are enabled can override this component's properties. | Boolean | `Disabled` |
-| **Inclusion - Surface Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that allow vegetation or blocker instance placement if the surface tag weight of the location is within the **Inclusion - Weight** properties. | Array: Surface Tags | None |
-| **Inclusion - Weight Min** | Sets the minimum weight of an **Inclusion - Surface Tag** that allows vegetation placement. | Float: 0.0 - 1.0 | `0.1` |
-| **Inclusion - Weight Max** | Sets the maximum weight of an **Inclusion - Surface Tag** that allows vegetation placement. | Float: 0.0 - 1.0 | `1.0` |
-| **Exclusion - Surface Tags** | An array of [surface tags](/docs/user-guide/gems/reference/environment/surface-data) that don't allow vegetation or blocker instance placement if the surface tag weight of the location is within the **Exclusion - Weight** properties. | Array: Surface Tags | None |
-| **Exclusion - Weight Min** | Sets the minimum weight of an **Exclusion - Surface Tag** that blocks vegetation. | Float: 0.0 - 1.0 | `0.1` |
-| **Exclusion - Weight Max** | Sets the maximum weight of an **Exclusion - Surface Tag** that blocks vegetation. | Float: 0.0 - 1.0 | `1.0` |
+| **Filter Stage** | 定义是在修饰符之前还是之后应用滤镜。 | `PreProcess`, `PostProcess`, 或 `Default` | `Default` |
+| **Allow Per-Item Overrides** | 如果为 '`Enabled`'，则启用的植被描述符属性可以覆盖此组件的属性。 | Boolean | `Disabled` |
+| **Inclusion - Surface Tags** | 一个 [surface tags](/docs/user-guide/gems/reference/environment/surface-data) 数组，如果该位置的 surface 标记权重在 **Inclusion - Weight** 属性范围内，则允许放置植被或阻止程序实例。 | Array: Surface Tags | None |
+| **Inclusion - Weight Min** | 设置允许放置植被的 **Inclusion - Surface Tag** 的最小权重。 | Float: 0.0 - 1.0 | `0.1` |
+| **Inclusion - Weight Max** | 设置允许放置植被的 **Inclusion - Surface Tag** 的最大权重。 | Float: 0.0 - 1.0 | `1.0` |
+| **Exclusion - Surface Tags** | 一个[surface tags](/docs/user-guide/gems/reference/environment/surface-data)数组，如果该位置的 surface 标记权重在 **Exclusion - Weight** 属性范围内，则不允许放置植被或阻止程序实例。 | Array: Surface Tags | None |
+| **Exclusion - Weight Min** | 设置阻止植被的 **Exclusion - Surface Tag** 的最小权重。 | Float: 0.0 - 1.0 | `0.1` |
+| **Exclusion - Weight Max** | 设置阻止植被的 **Exclusion - Surface Tag** 的最大权重。 | Float: 0.0 - 1.0 | `1.0` |
 
 ## SurfaceMaskFilterRequestBus
 
-Use the following request functions with the `SurfaceMaskFilterRequestBus` EBus interface to communicate with Vegetation Surface Mask Filter components in your game.
+将以下请求函数与 '`SurfaceMaskFilterRequestBus`' 事件总线接口结合使用，以便与游戏中的 Vegetation Surface Mask Filter 组件进行通信。
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `AddExclusiveTag` | Adds a surface tag to the **Exclusion - Surface Tags** array. | Surface Tag: String | None | Yes |
-| `AddInclusiveTag` | Adds a surface tag to the **Inclusion - Surface Tags** array. | Surface Tag: String | None | Yes |
-| `GetAllowOverrides` | Returns the configuration of the **Allow Per-Item Overrides** property. | None | Boolean | Yes |
-| `GetNumExclusiveTags` | Returns the number of surface tags in the **Exclusion - Surface Tags** array. | None | Count: Integer | Yes |
-| `GetNumInclusiveTags` | Returns the number of surface tags in the **Inclusion - Surface Tags** array. | None | Count: Integer | Yes |
-| `GetExclusiveTag` | Returns the surface tag at the specified index of the **Exclusion - Surface Tags** array. | Surface Tag Index: Integer | Surface Tag: String | Yes |
-| `GetInclusiveTag` | Returns the surface tag at the specified index of the **Inclusion - Surface Tags** array. | Surface Tag Index: Integer | Surface Tag: String | Yes |
-| `RemoveExclusiveTag` | Removes the surface tag at the specified index of the **Exclusion - Surface Tags** array. | Surface Tag Index: Integer | None | Yes |
-| `RemoveInclusiveTag` | Removes the surface tag at the specified index of the **Inclusion - Surface Tags** array. | Surface Tag Index: Integer | None | Yes |
-| `SetAllowOverrides` | Sets the configuration of the **Allow Per-Item Overrides** property. | Boolean | None | Yes |
+| `AddExclusiveTag` | 将曲面标记添加到 **Inclusion - Surface Tags** 数组中。 | Surface Tag: String | None | Yes |
+| `AddInclusiveTag` | 将曲面标记添加到 **Inclusion - Surface Tags** 数组中。 | Surface Tag: String | None | Yes |
+| `GetAllowOverrides` | 返回 **Allow Per-Item Overrides** 属性的配置。 | None | Boolean | Yes |
+| `GetNumExclusiveTags` | 返回 **Exclusion - Surface Tags** 数组中的表面标记数。 | None | Count: Integer | Yes |
+| `GetNumInclusiveTags` | 返回 **Inclusion - Surface Tags** 数组中的曲面标记数。 | None | Count: Integer | Yes |
+| `GetExclusiveTag` | 返回 **Exclusion - Surface Tags** 数组的指定索引处的 surface 标记。 | Surface Tag Index: Integer | Surface Tag: String | Yes |
+| `GetInclusiveTag` | 返回 **Inclusion - Surface Tags** 数组的指定索引处的 Surface 标记。 | Surface Tag Index: Integer | Surface Tag: String | Yes |
+| `RemoveExclusiveTag` | 删除 **Exclusion - Surface Tags** 数组的指定索引处的表面标记。 | Surface Tag Index: Integer | None | Yes |
+| `RemoveInclusiveTag` | 删除 **Inclusion - Surface Tags** 数组的指定索引处的 Surface 标记。 | Surface Tag Index: Integer | None | Yes |
+| `SetAllowOverrides` | 设置 **Allow Per-Item Overrides** 属性的配置。 | Boolean | None | Yes |

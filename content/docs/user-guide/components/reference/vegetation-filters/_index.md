@@ -1,17 +1,17 @@
 ---
-title: Vegetation Filter Components
+title: Vegetation Filter 组件
 linktitle: Vegetation Filters
-description: Use Vegetation Filters to control the distribution of vegetation areas in your Open 3D Engine (O3DE) level.
+description: 使用 Vegetation Filters 来控制 Open 3D Engine （O3DE） 关卡中植被区域的分布。
 ---
 
-Add vegetation filters to control the distribution of vegetation areas in your **Open 3D Engine (O3DE)** level.
+添加植被过滤器以控制 **Open 3D Engine （O3DE）** 关卡中植被区域的分布。
 
-| Component | Description | 
+| 组件 | 桌面 | 
 | - | - |
-| [Vegetation Altitude Filter](vegetation-altitude-filter) | Limits the placement of vegetation to be on surfaces within the specified height range. |
-| [Vegetation Distance Between Filter](vegetation-distance-between-filter) | Defines the minimum distance required between vegetation instances. |
-| [Vegetation Distribution Filter](vegetation-distribution-filter) | Limits the placement of vegetation to be within the specified value ranges. |
-| [Vegetation Shape Intersection Filter](vegetation-shape-intersection-filter) | Limits the placement of vegetation to be on surfaces that intersect the specified shape. |
-| [Vegetation Slope Filter](vegetation-slope-filter) | Limits the placement of vegetation to be only on surfaces within the specified surface angles. |
-| [Vegetation Surface Mask Depth Filter](vegetation-surface-mask-depth-filter) | Limits the placement of vegetation to be on surfaces within a specified depth between two surface tags. |
-| [Vegetation Surface Mask Filter](vegetation-surface-mask-filter) | Filters out vegetation based on surface mask-to-tag mappings. |
+| [Vegetation Altitude Filter](vegetation-altitude-filter) | 将植被的放置限制为位于指定高度范围内的表面上。 |
+| [Vegetation Distance Between Filter](vegetation-distance-between-filter) | 定义 Vegetation 实例之间所需的最小距离。 |
+| [Vegetation Distribution Filter](vegetation-distribution-filter) | 将植被的放置限制在指定的值范围内。 |
+| [Vegetation Shape Intersection Filter](vegetation-shape-intersection-filter) | 将植被的放置限制为与指定形状相交的曲面上。 |
+| [Vegetation Slope Filter](vegetation-slope-filter) | 将植被的放置限制为仅在指定表面角度内的表面上。 |
+| [Vegetation Surface Mask Depth Filter](vegetation-surface-mask-depth-filter) | 将植被的放置限制为位于两个表面标签之间指定深度内的表面上。 |
+| [Vegetation Surface Mask Filter](vegetation-surface-mask-filter) | 根据表面掩膜到标签的映射过滤掉植被。 |

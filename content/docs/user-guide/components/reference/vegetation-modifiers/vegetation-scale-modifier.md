@@ -1,66 +1,66 @@
 ---
-title: Vegetation Scale Modifier Component
+title: Vegetation Scale Modifier 组件
 linktitle: Vegetation Scale Modifier
-description: Add variation to your vegetation instances with the Vegetation Scale Modifier component in Open 3D Engine (O3DE).
+description: 使用 Open 3D Engine （O3DE） 中的 Vegetation Scale Modifier 组件向植被实例添加变化。
 weight: 400
 ---
 
-Add variation to the vegetation instances in your level with the **Vegetation Scale Modifier** component.  Use gradients to control how vegetation or blocker instances individually scale. By default, this component is configured to scale the vegetation instance by the same value, `1`.  Change the values of **Range Min** or **Range Max** to values that are appropriate for the mesh instances you are modifying.
+使用 **Vegetation Scale Modifier** 组件向关卡中的植被实例添加变化。 使用渐变来控制 Vegetor Blocker 实例如何单独缩放。默认情况下，此组件配置为按相同的值 '`1`' 缩放植被实例。 将 **Range Min** 或 **Range Max** 的值更改为适合您正在修改的网格实例的值。
 
-## Provider
+## 提供者
 
 [Vegetation Gem](/docs/user-guide/gems/reference/environment/vegetation/)
 
-## Dependencies
+## 依赖
 
-Add one of the following required components when using the Vegetation Scale Modifier component:
+使用 Vegetation Scale Modifier （植被缩放修改器） 组件时，添加以下必需组件之一：
 - [Vegetation Layer Blender](./../vegetation/vegetation-layer-blender)
 - [Vegetation Layer Blocker](./../vegetation/vegetation-layer-blocker)
 - [Vegetation Layer Blocker (Mesh)](./../vegetation/vegetation-layer-blocker-mesh)
 - [Vegetation Layer Spawner](./../vegetation/layer-spawner)
 
-## Vegetation Scale Modifier properties
+## Vegetation Scale Modifier 属性
 
 ![Vegetation Scale Modifier component properties](/images/user-guide/components/reference/vegetation-modifiers/vegetation-scale-modifier-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Allow Per-Item Overrides** | If `Enabled`, vegetation descriptor properties that are enabled can override this component's properties. | Boolean | `Disabled` |
-| **Range Min** | Sets the minimum modified scale of the vegetation instance. | Float: 0.01 to Infinity | `1.0` |
-| **Range Max** | Sets the maximum modified scale of the vegetation instance. | Float: 0.01 to Infinity | `1.0` |
-| **Gradient** | Refer to [Gradient properties](#gradient-properties) below. |  |  |
+| **Allow Per-Item Overrides** | 如果为 '`Enabled`'，则启用的植被描述符属性可以覆盖此组件的属性。 | Boolean | `Disabled` |
+| **Range Min** | 设置 Vegetation 实例的最小修改比例。 | Float: 0.01 to Infinity | `1.0` |
+| **Range Max** | 设置 Vegetation 实例的最大修改比例。 | Float: 0.01 to Infinity | `1.0` |
+| **Gradient** | 请参阅下面的[Gradient 属性](#gradient-properties)。 |  |  |
 
-### Gradient properties
+### Gradient 属性
 
 ![Gradient properties](/images/user-guide/components/reference/vegetation-modifiers/gradient-properties.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Gradient Entity Id** | Sets an entity with an active **Gradient** component. | Entity | None |
-| **Opacity** | Sets the opacity of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Invert Input** | Inverts the values of the input gradient. | Boolean | `Disabled` |
-| **Preview (Inbound)** | Displays the gradient provided by the entity set in **Gradient Entity Id**. |  |  |
-| **Enable Transform** | If `Enabled`, the translation, scale, and rotation of the input gradient may be modified. | Boolean | `Disabled` |
-| **Translate** | Sets the translation of the input gradient. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Scale** | Sets the scale of the input gradient. | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Rotate** | Sets the rotation of the input gradient. | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Enable Levels** | If `Enabled`, the input and output values of the gradient may be modified. | Boolean | `Disabled` |
-| **Input Mid** | Sets the median value of the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Input Min** | Sets a minimum value for the input gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Input Max** | Sets a maximum value for the input gradient. | Float: 0.0 - 1.0 | `1.0` |
-| **Output Min** | Sets a minimum value for the output gradient. | Float: 0.0 - 1.0 | `0.0` |
-| **Output Max** | Sets a maximum value for the output gradient. | Float: 0.0 - 1.0 | `1.0` |
+| **Gradient Entity Id** | 设置具有活动 **Gradient** 组件的实体。 | Entity | None |
+| **Opacity** | 设置输入渐变的不透明度。 | Float: 0.0 - 1.0 | `1.0` |
+| **Invert Input** | 反转输入渐变的值。 | Boolean | `Disabled` |
+| **Preview (Inbound)** | 显示 **Gradient Entity Id** 中的实体集提供的渐变。 |  |  |
+| **Enable Transform** | 如果为 '`Enabled`'，则可以修改输入渐变的平移、缩放和旋转。 | Boolean | `Disabled` |
+| **Translate** | 设置输入渐变的平移。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Scale** | 设置输入渐变的比例。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Rotate** | 设置输入渐变的旋转。 | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
+| **Enable Levels** | 如果为 '`Enabled`'，则可以修改渐变的输入和输出值。 | Boolean | `Disabled` |
+| **Input Mid** | 设置输入渐变的中值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Input Min** | 设置输入渐变的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Input Max** | 设置输入渐变的最大值。 | Float: 0.0 - 1.0 | `1.0` |
+| **Output Min** | 设置输出渐变的最小值。 | Float: 0.0 - 1.0 | `0.0` |
+| **Output Max** | 设置输出渐变的最大值。 | Float: 0.0 - 1.0 | `1.0` |
 
 ## ScaleModifierRequestBus
 
-Use the following request functions with the `ScaleModifierRequestBus` EBus interface to communicate with Vegetation Scale Modifier components in your game.
+将以下请求函数与 '`ScaleModifierRequestBus`' 事件总线接口结合使用，以便与游戏中的 Vegetation Scale Modifier 组件进行通信。
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `GetAllowOverrides` | Returns the configuration of the **Allow Per-Item Overrides** property. | None | Boolean | Yes |
-| `GetGradientSampler` | Returns the gradient sampler object of the scale modifier. | None | Gradient Sampler | Yes |
-| `GetRangeMax` | Returns the value of the **Range Max** property. | None | Float | Yes |
-| `GetRangeMin` | Returns the value of the **Range Min** property. | None | Float | Yes |
-| `SetAllowOverrides` | Sets the configuration of the **Allow Per-Item Overrides** property. | Boolean | None | Yes |
-| `SetRangeMax` | Sets the  **Range Max** property. | Float | None | Yes |
-| `SetRangeMin` | Sets the **Range Min** property. | Float | None | Yes |
+| `GetAllowOverrides` | 返回 **Allow Per-Item Overrides** 属性的配置。 | None | Boolean | Yes |
+| `GetGradientSampler` | 返回缩放修饰符的渐变采样器对象。| None | Gradient Sampler | Yes |
+| `GetRangeMax` | 返回 **Range Max** 属性的值。 | None | Float | Yes |
+| `GetRangeMin` | 返回 **Range Min** 属性的值。 | None | Float | Yes |
+| `SetAllowOverrides` | 设置 **Allow Per-Item Overrides** 属性的配置。 | Boolean | None | Yes |
+| `SetRangeMax` | 设置 **Range Max** 属性。 | Float | None | Yes |
+| `SetRangeMin` | 设置 **Range Min** 属性。 | Float | None | Yes |

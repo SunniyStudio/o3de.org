@@ -1,14 +1,14 @@
 ---
-title: Vegetation Modifier Components
+title: Vegetation Modifier 组件
 linktitle: Vegetation Modifiers
-description: 'Use Vegetation Modifiers to create realistic variation between vegetation instances in Open 3D Engine (O3DE). '
+description: '使用 Vegetation Modifiers 在 Open 3D Engine （O3DE） 中创建植被实例之间的真实变化。 '
 ---
 
-Add vegetation modifiers to create realistic variation between vegetation instances in your **Open 3D Engine (O3DE)** level.
+添加植被修改器，以在 **Open 3D Engine （O3DE）** 关卡中的植被实例之间创建逼真的变化。
 
-| Component | Description | 
+| 组件 | 说明 | 
 | - | - |
-| [Vegetation Position Modifier](vegetation-position-modifier) | Offsets the position of the vegetation. |
-| [Vegetation Rotation Modifier](vegetation-rotation-modifier) | Offsets the rotation of the vegetation. |
-| [Vegetation Scale Modifier](vegetation-scale-modifier) | Offsets the scale of the vegetation. |
-| [Vegetation Slope Alignment Modifier](vegetation-slope-alignment-modifier) | Offsets the orientation of the vegetation relative to a surface angle. |
+| [Vegetation Position Modifier](vegetation-position-modifier) | 偏移植被的位置。 |
+| [Vegetation Rotation Modifier](vegetation-rotation-modifier) | 偏移植被的旋转。 |
+| [Vegetation Scale Modifier](vegetation-scale-modifier) | 偏移植被的比例。 |
+| [Vegetation Slope Alignment Modifier](vegetation-slope-alignment-modifier) | 相对于表面角度偏移植被的方向。 |

@@ -14,37 +14,36 @@ weight: 300
 ## Vegetation Layer Blender 属性
 
 ![Vegetation Layer Blender component properties](/images/user-guide/components/reference/vegetation/vegetation-layer-blender-component.png)
-2
+
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Override Preview Settings** | 如果为`Enabled`，则 **Preview Settings** 属性将确定植被图层预览的形状。 如果为`Disabled`，则植被图层预览的边界由在**Vegetation Areas**中选择的植被图层的Shape组件设置。  | Boolean | `Disabled` |
 | **Pin Preview to Shape** | 如果 **Constrain to Shape** 为 `Enabled`，则设置具有兼容形状组件的实体，以用作植被图层预览的边界。<br> <br>仅当 **Override Preview Settings** 为`Enabled`时，此字段才可用。 | EntityId | Current Entity |
 | **Preview Position** | 设置植被图层预览的世界位置。<br> <br>仅当 **Override Preview Settings** 为`Enabled`， 并且未在 **Pin Preview to Shape** 中选择任何实体时，此字段才可用。* | Vector3: -Infinity to Infinity | X:`0.0`, Y:`0.0`, Z:`0.0` |
-| **Preview Size** | Sets the dimensions of the vegetation layer preview if **Constrain to Shape** is `Disabled`.<br> <br>*This field is available only if **Override Preview Settings** is `Enabled`.* | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
-| **Constrain to Shape** | If `Enabled`, the vegetation layer preview will use the bounds of the entity selected in **Pin Preview to Shape**.<br> <br>*This field is available only if **Override Preview Settings** is `Enabled` and an entity is selected in **Pin Preview to Shape**.* | Boolean | `Disabled` |
-| **Layer Priority** | Defines a high level order that vegetation areas are applied. | `Background` or `Foreground` | `Foreground` |
-| **Sub Priority** | Defines the order that vegetation areas are applied within a layer. Larger numbers have a higher priority. | 0-10000 | `0` |
-| **Inherit Behavior** | Allow shapes, modifiers and filters of a parent entity to affect this vegetation layer. | Boolean | `Enabled` |
-| **Propagate Behavior** | Allow shapes, modifiers and filters of this vegetation layer to affect child entities. | Boolean | `Enabled` |
-| **Vegetation Areas** | An ordered list of vegetation layers. | Array: EntityId | None |
-
+| **Preview Size** | 如果 **Constrain to Shape** 为 '`Disabled`'，则设置植被图层预览的尺寸。<br> <br>仅当 **Override Preview Settings** 为 '`Enabled`' 时，他的字段才可用。 | Vector3: 0.0 to Infinity | X:`1.0`, Y:`1.0`, Z:`1.0` |
+| **Constrain to Shape** | 如果 '`Enabled`'，则植被图层预览将使用在 **Pin Preview to Shape** 中选择的实体的边界。<br> <br>*仅当 **Pin Preview to Shape** 为  `Enabled`  并且在 **Override Preview Setting** 中选择了实体时，此字段才可用。 | Boolean | `Disabled` |
+| **Layer Priority** | 定义应用植被区域的高级别顺序。 | `Background` or `Foreground` | `Foreground` |
+| **Sub Priority** | 定义植被区域在图层中的应用顺序。数字越大，优先级越高。 | 0-10000 | `0` |
+| **Inherit Behavior** | 允许父实体的形状、修饰符和过滤器影响此植被图层。 | Boolean | `Enabled` |
+| **Propagate Behavior** | 允许此植被图层的形状、修饰符和过滤器影响子实体。 | Boolean | `Enabled` |
+| **Vegetation Areas** | 植被图层的有序列表。 | Array: EntityId | None |
 
 ## AreaBlenderRequestBus
 
-Use the following request functions with the `AreaBlenderRequestBus` EBus interface to communicate with Vegetation Layer Blender components in your game.
+将以下请求函数与“`AreaBlenderRequestBus`”事件总线接口结合使用，以便与游戏中的 Vegetation Layer Blender 组件进行通信。
 
-| Method Name | Description | Parameter | Return | Scriptable |
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `AddAreaEntityId` | Adds a vegetation layer to a **Vegetation Areas** array. | EntityId | None | Yes |
-| `GetAreaEntityId` | Returns the EntityId of an entry in a **Vegetation Areas** array at the specified index. | Vegetation Areas Index: Integer | EntityId | Yes |
-| `GetAreaLayer` | Returns the **Layer Priority** of a layer blender. Returns `0` for `Background` and `1` for `Foreground`. | None | Layer Priority: Integer | Yes |
-| `GetAreaPriority` | Returns the **Sub Priority** of a layer blender. | None | Sub Priority: Integer | Yes |
-| `GetAreaProductCount` | Returns the number of vegetation instances spawned in a layer blender's vegetation area. |None  | Count: Integer | Yes |
-| `GetInheritBehavior` | Returns the configuration of a layer blender's **Inherit Behavior** property. | None | Boolean | Yes |
-| `GetNumAreas` | Returns the number of entries in a layer blender's **Vegetation Areas** array. | None | Count: Integer | Yes |
-| `GetPropagateBehavior` | Returns the configuration of a layer blender's **Propagate Behavior** property. | None | Boolean | Yes |
-| `RemoveAreaEntityId` | Removes a vegetation layer from the **Vegetation Areas** array of a layer blender. | Vegetation Areas Index: Integer | None | Yes |
-| `SetAreaLayer` | Sets the **Layer Priority** of layer blender. | Layer Priority: Integer | None | Yes |
-| `SetAreaPriority` | Sets the **Sub Priority** of a layer blender. | Sub Priority: Integer | None | Yes |
-| `SetInheritBehavior` | Sets the **Inherit Behavior** property of a layer blender. | Boolean | None | Yes |
-| `SetPropagateBehavior` | Sets the **Propagate Behavior** property of a layer blender. | Boolean | None | Yes |
+| `AddAreaEntityId` | 将植被图层添加到 **Vegetation Areas** 数组中。 | EntityId | None | Yes |
+| `GetAreaEntityId` | 返回 **Vegetation Areas** 数组中指定索引处条目的 EntityId。 | Vegetation Areas Index: Integer | EntityId | Yes |
+| `GetAreaLayer` | 返回图层混合器的 **Layer Priority**。返回 '`Background`' 的 '`0`' 和 '`foreground`' 的 '`1`'。 | None | Layer Priority: Integer | Yes |
+| `GetAreaPriority` | 返回图层混合器的 **Sub Priority**。 | None | Sub Priority: Integer | Yes |
+| `GetAreaProductCount` | 返回在图层混合器的植被区域中生成的植被实例数。 |None  | Count: Integer | Yes |
+| `GetInheritBehavior` | 返回图层混合器的 **Inherit Behavior** 属性的配置。 | None | Boolean | Yes |
+| `GetNumAreas` | 返回图层混合器的 **Vegetation Areas** 数组中的条目数。 | None | Count: Integer | Yes |
+| `GetPropagateBehavior` | 返回图层混合器的 **Propagate Behavior** 属性的配置。 | None | Boolean | Yes |
+| `RemoveAreaEntityId` | 从图层混合器的 **Vegetation Areas** 数组中删除植被图层。 | Vegetation Areas Index: Integer | None | Yes |
+| `SetAreaLayer` | 设置图层混合器的 **Layer Priority**。 | Layer Priority: Integer | None | Yes |
+| `SetAreaPriority` | 设置图层混合器的 **Sub Priority**。 | Sub Priority: Integer | None | Yes |
+| `SetInheritBehavior` | 设置图层混合器的 **Inherit Behavior** 属性。 | Boolean | None | Yes |
+| `SetPropagateBehavior` | 设置图层混合器的 **Propagate Behavior** 属性。 | Boolean | None | Yes |

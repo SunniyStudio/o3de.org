@@ -1,45 +1,44 @@
 ---
-title: Vegetation Distance Between Filter Component
+title: Vegetation Distance Between Filter 组件
 linktitle: Vegetation Distance Between Filter
-description: Use the Vegetation Distance Between Filter component to control the distance between vegetation instances in your Open 3D Engine (O3DE) level.
+description: 使用 Vegetation Distance Between Filter （过滤器之间的植被距离） 组件来控制 Open 3D Engine （O3DE） 关卡中植被实例之间的距离。
 weight: 200
 ---
 
-Add the **Vegetation Distance Between Filter** component to set a minimum distance between vegetation instances.
+添加 **Vegetation Distance Between Filter** 组件以设置植被实例之间的最小距离。
 
-## Provider
+## 提供者
 
 [Vegetation Gem](/docs/user-guide/gems/reference/environment/vegetation/)
 
-## Dependencies
+## 依赖
 
-Add one of the following required components when using the Vegetation Distance Between Filter component:
+在使用 Vegetation Distance Between Filter （过滤器之间的植被距离） 组件时，添加以下必需组件之一：
 - [Vegetation Layer Blender](./../vegetation/vegetation-layer-blender)
 - [Vegetation Layer Blocker](./../vegetation/vegetation-layer-blocker)
 - [Vegetation Layer Blocker (Mesh)](./../vegetation/vegetation-layer-blocker-mesh)
 - [Vegetation Layer Spawner](./../vegetation/layer-spawner)
 
-## Vegetation Distance Between Filter properties
+## Vegetation Distance Between Filter 属性
 
 ![Vegetation Distance Between Filter component properties](/images/user-guide/components/reference/vegetation-filters/vegetation-distance-between-filter-component.png)
 
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
-| **Allow Per-Item Overrides** | If `Enabled`, vegetation descriptor properties that are enabled can override this component's properties. | Boolean | `Disabled` |
-| **Bound Mode** | If set to `Radius`, **Radius Min** defines the minimum radius between vegetation instances. If set to `MeshRadius`, the radius of an attached **Mesh** component defines the radius of the filter. | `Radius` or `MeshRadius` | `Radius` |
-| **Radius Min** | Sets the minimum radius between vegetation instances. | Float: 0.0 to Infinity | `0.0` |
+| **Allow Per-Item Overrides** | 如果为 '`Enabled`'，则启用的植被描述符属性可以覆盖此组件的属性。 | Boolean | `Disabled` |
+| **Bound Mode** | 如果设置为 '`Radius`'，则 **Radius Min** 定义植被实例之间的最小半径。如果设置为 '`MeshRadius`'，则附加的 **Mesh** 组件的半径定义过滤器的半径。| `Radius` 或 `MeshRadius` | `Radius` |
+| **Radius Min** | 设置植被实例之间的最小半径。 | Float: 0.0 to Infinity | `0.0` |
 
 ## DistanceBetweenFilterRequestBus
 
-Use the following request functions with the `DistanceBetweenFilterRequestBus` EBus interface to communicate with Vegetation Distance Between Filter components in your game.
-
-| Method Name | Description | Parameter | Return | Scriptable |
+将以下请求函数与 '`DistanceBetweenFilterRequestBus`' 事件总线接口结合使用，以便与游戏中的 Vegetation Distance Between Filter 组件进行通信。
+| 方法名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
-| `GetAllowOverrides` | Returns the configuration of the **Allow Per-Item Overrides** property. | None | Boolean | Yes |
-| `GetBoundMode` | Returns the value of the **Bound Mode** property. Returns `0` for `Radius` and `1` for `MeshRadius`. | None | Integer | Yes |
-| `GetRadiusMin` | Returns the value of the **Radius Min** property. | None | Float | Yes |
-| `GetShapeEntityId` | Returns the **Pin To Shape Entity Id** property of a distance between filter. | None | EntityId | Yes |
-| `SetAllowOverrides` | Sets the configuration of the **Allow Per-Item Overrides** property. | Boolean | None | Yes |
-| `SetBoundMode` | Sets the value of the **Bound Mode** property. `0` for `Radius` and `1` for `MeshRadius`. | Integer | None | Yes |
-| `SetRadiusMin` | Sets the value of the **Radius Min** property. | Float | None | Yes |
-| `SetShapeEntityId` | Sets the **Pin To Shape Entity Id** property of a distance between filter.  | EntityId | None | Yes |
+| `GetAllowOverrides` | 返回 **Allow Per-Item Overrides** 属性的配置。 | None | Boolean | Yes |
+| `GetBoundMode` | 返回 **Bound Mode** 属性的值。返回 '`Radius`' 的 '`0`' 和 '`MeshRadius`' 的 '`1`'。 | None | Integer | Yes |
+| `GetRadiusMin` | 返回 **Radius Min** 属性的值。 | None | Float | Yes |
+| `GetShapeEntityId` | 返回过滤器之间距离的 **Pin To Shape Entity Id** 属性。 | None | EntityId | Yes |
+| `SetAllowOverrides` | 设置 **Allow Per-Item Overrides** 属性的配置。 | Boolean | None | Yes |
+| `SetBoundMode` | 设置 **Bound Mode** 属性的值。'`0`' 表示 '`Radius`'，'`1`' 表示 '`MeshRadius`'。 | Integer | None | Yes |
+| `SetRadiusMin` | 设置 **Radius Min** 属性的值。| Float | None | Yes |
+| `SetShapeEntityId` | 设置过滤器之间距离的 **Pin To Shape Entity Id** 属性。  | EntityId | None | Yes |

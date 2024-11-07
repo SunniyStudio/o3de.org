@@ -1,34 +1,34 @@
 ---
-linktitle: Core Gems
-title: Gems Providing Core Open 3D Engine Functionality
-description: An overview of Open 3D Engine Gems which offer common functionality core to games and simulations.
+linktitle: 核心 Gems
+title: 提供核心 Open 3D Engine功能的 Gem
+description: Open 3D Engine Gem 概述，它们提供游戏和模拟的核心通用功能。
 weight: 300
 ---
 
-While Open 3D Engine's architecture and core frameworks provide the backbone and infrastructure to support game and simulation development, most features that are usually required for creating projects come in the form of extensions to the core through the Gem system. Not all of these Gems are used by released projects using the O3DE runtime - some are specific to the Editor, Asset Processor, or other O3DE tools.
+虽然 Open 3D Engine 的架构和核心框架提供了支持游戏和模拟开发的支柱和基础设施，但创建项目通常需要的大多数功能都以通过 Gem 系统扩展到核心的形式出现。并非所有这些 Gem 都由使用 O3DE 运行时的已发布项目使用，有些特定于 Editor、Asset Processor 或其他 O3DE 工具。
 
-Even if a Gem only adds Editor or Asset Processor functionality, it should be included as part of your project's Gems. 
+即使 Gem 仅添加 Editor 或 Asset Processor 功能，它也应作为项目 Gem 的一部分包含在内。
 
 {{< note >}}
-All projects require the O3DE Core (LmbrCentral) Gem to provide core Editor functionality.  O3DE Core (LmbrCentral) also provides many components for gameplay.  Read the [O3DE Core (LmbrCentral) documentation](../reference/o3de-core) for more information.
+所有项目都需要 O3DE 核心 （LmbrCentral） Gem 来提供核心编辑器功能。 O3DE Core （LmbrCentral） 还提供了许多用于游戏的组件。 阅读 [O3DE Core (LmbrCentral)文档](../reference/o3de-core)了解更多信息。
 {{< /note >}}
 
-These Gems are only built and loaded for products that require them:
+这些 Gem 仅为需要它们的产品构建和加载：
 
-* **Atom** - The real-time physically based renderer used by O3DE. In addition to rendering at runtime, Atom provides Editor components and asset processing tools. For more information on Atom, read the [Atom Guide](/docs/atom-guide).
+* **Atom** - O3DE 使用的基于物理的实时渲染器。除了在运行时渲染之外，Atom 还提供 Editor 组件和资源处理工具。有关 Atom 的更多信息，请阅读 [Atom 指南](/docs/atom-guide)。
 
-* **CameraFramework** - Components for placing and controlling cameras. Read the [Cameras documentation](/docs/user-guide/components/reference/camera/camera) for more information.
+* **CameraFramework** - 用于放置和控制摄像机的组件。阅读 [Cameras 文档](/docs/user-guide/components/reference/camera/camera) 了解更多信息。
 
-* **EMotionFX** - The EMotionFX Gem includes a suite of Editor and asset processing tools for artists and animators. It also brings support for processing animations from network traffic, and the ability to control animation states via C++ APIs.
+* **EMotionFX** - EMotionFX Gem 包括一套面向艺术家和动画师的编辑器和资产处理工具。它还支持处理来自网络流量的动画，以及通过 C++ API 控制动画状态的功能。
 
-* **AudioSystem** - The core set of audio abstractions used by O3DE. This provides the set of interfaces used by audio implementations for O3DE, such as the Wwise Audio Gem. Read the [Audio documentation](/docs/user-guide/interactivity/audio/) for more information on how audio works with O3DE.
+* **AudioSystem** - O3DE 使用的核心音频抽象集。这提供了 O3DE 的音频实现使用的接口集，例如 Wwise Audio Gem。阅读 [Audio 文档](/docs/user-guide/interactivity/audio/) 了解在O3DE中音效工作原理的更多信息。
 
-* **PhysX** - Support for physics simulations with NVIDIA PhysX. Read the [NVIDIA PhysX in O3DE documentation](/docs/user-guide/interactivity/physics/nvidia-physx/) for more information.
+* **PhysX** - 支持使用 NVIDIA PhysX 进行物理模拟。阅读 [O3DE中的NVIDIA PhysX文档](/docs/user-guide/interactivity/physics/nvidia-physx/) 了解更多信息。
 
-* **ScriptCanvas** and **GraphCanvas** - Script Canvas is the graphical scripting language used by O3DE, with its Editor UX tools powered by the GraphCanvas Gem. The ScriptCanvas Gem itself provides the Script Canvas tools and runtimes. Read the [Script Canvas documentation](/docs/user-guide/scripting/script-canvas/) for more information.
+* **ScriptCanvas** 和 **GraphCanvas** - Script Canvas 是 O3DE 使用的图形脚本语言，其编辑器 UX 工具由 GraphCanvas Gem 提供支持。ScriptCanvas Gem 本身提供 Script Canvas 工具和运行时。阅读 [Script Canvas documentation](/docs/user-guide/scripting/script-canvas/)  了解更多信息。
 
-* **EditorPythonBindings** - Support for dynamic Python scripting of the Editor. Read the [Python Bindings Examples](/docs/user-guide/editor/editor-automation/#python-editor-bindings-gem-examples) for more information.
+* **EditorPythonBindings** - 支持 Editor 的动态 Python 脚本。阅读 [Python Bindings Examples](/docs/user-guide/editor/editor-automation/#python-editor-bindings-gem-examples)  了解更多信息。
 
-* **PythonAssetBuilder** - Adds Asset Processor support for building assets via Python scripts. Read the [Python Asset Builder Gem documentation](/docs/user-guide/assets/builder/) for more information.
+* **PythonAssetBuilder** - 添加了对通过 Python 脚本构建资产的 Asset Processor 支持。阅读 [Python Asset Builder Gem documentation](/docs/user-guide/assets/builder/)  了解更多信息。
 
-* **ImageProcessing** - Adds the ability to handle common image formats to the Asset Processor.
+* **ImageProcessing** - 添加了向 Asset Processor 处理常见图像格式的功能。

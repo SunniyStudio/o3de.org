@@ -1,8 +1,8 @@
 ---
 linkTitle: Custom Asset Example
 title: Custom Asset Example Gem
-description: The Custom Asset Example Gem provides example code for creating a custom asset for Open 3D Engine's (O3DE) asset pipeline.
+description: Custom Asset Example Gem 提供了为 Open 3D Engine （O3DE） 资产管道创建自定义资产的示例代码。
 toc: true
 ---
 
-The Custom Asset Example Gem provides example code for creating a custom asset for Open 3D Engine's (O3DE) asset pipeline.
+Custom Asset Example Gem 提供了为 Open 3D Engine （O3DE） 资产管道创建自定义资产的示例代码。

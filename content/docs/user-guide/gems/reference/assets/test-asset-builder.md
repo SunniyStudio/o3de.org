@@ -1,8 +1,8 @@
 ---
 linkTitle: Test Asset Builder
 title: Test Asset Builder Gem
-description: The Test Asset Builder Gem is used to feature test Asset Processor.
+description: Test Asset Builder Gem 用于对 Asset Processor 进行功能测试。
 toc: true
 ---
 
-The Test Asset Builder Gem is used to feature test **Asset Processor**.
+Test Asset Builder Gem 用于对 Asset Processor 进行功能测试。

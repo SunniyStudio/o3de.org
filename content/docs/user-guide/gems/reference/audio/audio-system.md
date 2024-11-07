@@ -1,10 +1,10 @@
 ---
 linkTitle: Audio System
 title: Audio System Gem
-description: The Audio System Gem adds support for audio in Open 3D Engine (O3DE) projects.
+description: Audio System Gem 在 Open 3D Engine （O3DE） 项目中添加了对音频的支持。
 toc: true
 ---
 
-The Audio System Gem provides the Audio Translation Layer (ATL), which adds support for audio in **Open 3D Engine (O3DE)** projects.
+Audio System Gem 提供音频转换层 （ATL），它在 Open 3D Engine （O3DE） 项目中添加了对音频的支持。
 
-For more information, refer to [Audio System Overview](/docs/user-guide/interactivity/audio/overview/).
+有关详细信息，请参阅 [音频系统概述](/docs/user-guide/interactivity/audio/overview/)。

@@ -1,20 +1,20 @@
 ---
 linkTitle: MiniAudio 
 title: MiniAudio Gem
-description: The MiniAudio Gem provides support for audio playback using MiniAudio in Open 3D Engine (O3DE) projects.
+description: MiniAudio Gem支持在 Open 3D Engine （O3DE） 项目中使用 MiniAudio 进行音频播放。
 toc: true
 ---
 
-The MiniAudio Gem provides support for audio playback and positioning using [MiniAudio](https://miniaud.io) in **Open 3D Engine (O3DE)** projects.  Multiple audio formats are supported and sounds can be previewed in the Editor without entering game mode.
+MiniAudio Gem 支持在 **Open 3D Engine （O3DE）** 项目中使用 [MiniAudio](https://miniaud.io) 进行音频播放和定位。 支持多种音频格式，无需进入游戏模式即可在 Editor 中预览声音。
 
-For more information on using the components provided by this Gem, refer to the [MiniAudio Playback Component](/docs/user-guide/components/reference/audio/mini-audio-playback.md) and [MiniAudio Playback Component](/docs/user-guide/components/reference/audio/mini-audio-listener.md) documentation.
+有关使用此 Gem 提供的组件的更多信息，请参阅 [[MiniAudio Playback 组件](/docs/user-guide/components/reference/audio/mini-audio-playback.md)  和 [MiniAudio Playback 组件](/docs/user-guide/components/reference/audio/mini-audio-listener.md) 文档。
 
-## Supported Audio Formats
+## 支持的音频格式
 * FLAC
 * MP3
 * OGG 
 * WAV
 
-## Global Volume Control 
+## 全局音量控制
 
-The global volume level can be controlled using the `MiniAudioRequestBus` which is currently only accessible from c++.
+全局音量级别可以使用 '`MiniAudioRequestBus`' 进行控制，目前只能从 c++ 访问。

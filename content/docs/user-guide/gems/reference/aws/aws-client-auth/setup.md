@@ -1,85 +1,85 @@
 ---
-linktitle: Setting Up Client Auth
-title: Setting Up the AWS Client Auth Gem
-description: Learn how to set up the AWS Client Auth Gem for your Open 3D Engine (O3DE) project.
+linktitle: 设置 Client Auth
+title: 设置 AWS Client Auth Gem
+description: 了解如何为您的 Open 3D Engine （O3DE） 项目设置 AWS Client Auth Gem。
 toc: true
 weight: 100
 ---
 
-## Prerequisites
+## 先决条件
 
-The AWS Client Auth Gem requires the following to be installed and configured:
+AWS Client Auth Gem 需要安装和配置以下内容：
 
 * AWS Cloud Development Kit (CDK)
-* AWS credentials
+* AWS 凭据
 * O3DE AWS Core Gem
 
-The [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html) (CLI) (version 2) is optional but also strongly recommended.
+[AWS命令行接口](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html) (CLI) (version 2) 是可选的，但也强烈建议使用。
 
-See [Getting Started with AWS Gems](/docs/user-guide/gems/reference/aws/aws-core/getting-started/) for help with installing and configuring these prerequisites.
+有关安装和配置这些先决条件的帮助，请参阅 [AWS Gem 入门](/docs/user-guide/gems/reference/aws/aws-core/getting-started/)。
 
-## Setting up AWS Client Auth
+## 设置 AWS Client Auth
 
-Complete the following set up steps to use the AWS Client Auth Gem in your project:
+完成以下设置步骤以在您的项目中使用 AWS 客户端身份验证 Gem：
 
-* Enable the AWS Client Auth Gem in your project.
-* Configure project settings.
-* Deploy the CDK application.
-* Update the resource mapping file to use the deployed AWS resources.
+* 在您的项目中启用 AWS Client Auth Gem。
+* 配置项目设置。
+* 部署 CDK 应用程序。
+* 更新资源映射文件以使用已部署的 AWS 资源。
 
-### 1. Enable the AWS Client Auth Gem
+### 1. 启用 the AWS Client Auth Gem
 
-If you haven't already added and built the **AWS Client Auth Gem** into your project, follow the instructions to [Add a Gem to a Project](/docs/user-guide/project-config/add-remove-gems/).
+如果您尚未将 **AWS Client Auth Gem** 添加并构建到您的项目中，请按照说明[将 Gem 添加到项目](/docs/user-guide/project-config/add-remove-gems/)。
 
-### 2. Configure authentication providers
+### 2. 配置身份验证提供程序
 
-For this step, decide which authentication provider you will use and configure your project to use that provider by following the steps in [Using Authentication Providers](./authentication-providers/). You can use one of the supported providers, or extend the Gem to support your own.
+对于此步骤，请确定您将使用哪个身份验证提供程序，并按照 [使用身份验证提供程序](./authentication-providers/)中的步骤将项目配置为使用该提供程序。您可以使用其中一个受支持的提供程序，也可以扩展 Gem 以支持您自己的提供程序。
 
-### 3. Deploy the CDK application
+### 3. 部署 CDK 应用程序
 
-Use the CDK synth and deploy commands from the AWS Client Auth Gem directory to deploy AWS resources for authentication and authorization support. For help with these deployment operations, refer to the synth and deploy steps in [Deploying the CDK Application](/docs/user-guide/gems/reference/aws/aws-core/cdk-application/) in the AWS Core documentation.
+使用 CDK 合成器和 deploy 命令从 AWS 客户端身份验证 Gem 目录部署AWS资源以进行身份验证和授权支持。有关这些部署操作的帮助，请参阅 AWS Core 文档中 [部署 CDK 应用程序](/docs/user-guide/gems/reference/aws/aws-core/cdk-application/)中的合成和部署步骤。
 
-When setting constants for deploy, the AWS Client Auth Gem supports the following additional, optional values. If set, the CDK application will try to enable the authenticated provider authorization using the Amazon Cognito identity pool.
+在设置用于部署的常量时，AWS Client Auth Gem 支持以下其他可选值。如果设置，CDK 应用程序将尝试使用 Amazon Cognito 身份池启用经过身份验证的提供商授权。
 
-**`GOOGLE_APP_CLIENT_ID`**: **Google** app client ID to enable Google-authenticated authorization in Amazon Cognito identity pool.
+**`GOOGLE_APP_CLIENT_ID`**: **Google** 应用程序客户端 ID，用于在 Amazon Cognito 身份池中启用 Google 身份验证的授权。
 
-**`LOGIN_WITH_AMAZON_APP_CLIENT_ID`**: **Login with Amazon** (LWA) app client ID to enable LWA-authenticated authorization in Amazon Cognito identity pool.
+**`LOGIN_WITH_AMAZON_APP_CLIENT_ID`**: **Login with Amazon** (LWA) 应用程序客户端 ID，用于在 Amazon Cognito 身份池中启用 LWA 身份验证的授权。
 
-You can use [deployment scripts](https://docs.aws.amazon.com/cdk/v2/guide/environments.html) to set these environment variables.
+您可以使用 [部署脚本](https://docs.aws.amazon.com/cdk/v2/guide/environments.html)来设置这些环境变量。
 
-After a successful deployment, the following resources are provisioned.
+成功部署后，将预置以下资源。
 
-#### AWS Client Auth stack
+#### AWS Client Auth堆栈
 
-Groups all resources provisioned for AWS Client Auth Gem. Deleting stack will delete all resources from AWS Client Auth stack.
+对为 AWS Client Auth Gem 预置的所有资源进行分组。删除堆栈将从 AWS Client Auth 堆栈中删除所有资源。
 
-#### IAM roles
+#### IAM 角色
 
-1. **CognitoUserPoolSMSRole**: Allows Amazon Cognito user pool to send SMS messages for sign up and MFA.
+1. **CognitoUserPoolSMSRole**: 允许 Amazon Cognito 用户池发送 SMS 消息以进行注册和 MFA。
 
-1. **Authenticated CognitoIdentityPoolRole**: Provides permission to authenticated clients by providing credentials associated with the managed policy attached to this role.
+1. **Authenticated CognitoIdentityPoolRole**: 通过提供与附加到此角色的托管策略关联的凭证，向经过身份验证的客户端提供权限。
 
-1. **Anonymous CognitoIdentityPoolRole**: Provides permission to anonymous clients by providing credentials associated with the managed policy attached to this role.
+1. **Anonymous CognitoIdentityPoolRole**: 通过提供与附加到此角色的托管策略关联的凭证，向匿名客户端提供权限。
 
-#### Amazon Cognito user pool
+#### Amazon Cognito用户池
 
-Create user pool with email/phone sign up enabled, SMS_MFA enabled and optional.
+在启用电子邮件/电话注册的情况下创建用户池，SMS_MFA启用和可选。
 
-#### Amazon Cognito identity pool
+#### Amazon Cognito身份池
 
-Create identity pool to support authenticated and anonymous identities.
+创建身份池以支持经过身份验证的身份和匿名身份。
 
-##### Authenticated
+##### 身份验证
 
-1. **Amazon Cognito user pool**: Use the created user pool for authentication.
-2. **Google**: Use Google authentication provider for authentication.
-3. **Login With Amazon**: Use LWA authentication provider for authentication.
+1. **Amazon Cognito user pool**: 使用创建的用户池进行身份验证。
+2. **Google**: 使用 Google 身份验证提供程序进行身份验证。
+3. **Login With Amazon**: 使用 LWA 身份验证提供程序进行身份验证。
 
-### 4. Update the resource mapping file
+### 4. 更新资源映射文件
 
-After deploying the CDK application, your project's resource mapping file must be updated to export the deployed REST API information so that you can use the deployed AWS resources.
+部署 CDK 应用程序后，必须更新项目的资源映射文件以导出已部署的 REST API 信息，以便您可以使用已部署的 AWS 资源。
 
-Use the [Resource Mapping Tool](/docs/user-guide/gems/reference/aws/aws-core/resource-mapping-tool/) to add the following mappings to your project's resource mapping file:
+使用 [资源映射工具](/docs/user-guide/gems/reference/aws/aws-core/resource-mapping-tool/)将以下映射添加到项目的资源映射文件中：
 
 * `AWSClientAuth.CognitoUserPoolId`
 * `AWSClientAuth.CognitoUserPoolAppClientId`

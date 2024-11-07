@@ -1,8 +1,8 @@
 ---
 linkTitle: Asset Validation
 title: Asset Validation Gem
-description: The Asset Validation Gem provides seed-related commands to ensure assets have valid seeds for asset bundling.
+description: Asset Validation Gem 提供与 seed 相关的命令，以确保 assets 具有用于 asset bundling 的有效 seed。
 toc: true
 ---
 
- The Asset Validation gem adds a set of seed-related commands to the **Open 3D Engine (O3DE)** **Console**. You can use these commands to ensure that you have seeds for all assets that you want to bundle.
+ Asset Validation gem 将一组与种子相关的命令添加到 **Open 3D Engine （O3DE）** **控制台**。您可以使用这些命令来确保具有要捆绑的所有资产的种子。

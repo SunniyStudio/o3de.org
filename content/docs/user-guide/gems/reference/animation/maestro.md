@@ -1,11 +1,11 @@
 ---
 linkTitle: Maestro Cinematics
 title: Maestro Cinematics Gem
-description: The Maestro Cinematics Gem provides Track View, Open 3D Engine's animated sequence and cinematics editor.
+description: Maestro Cinematics Gem提供 Track View、Open 3D Engine 的动画序列和电影编辑器。
 toc: true
 ---
 
 
-The Maestro Cinematics Gem provides Track View, Open 3D Engine's (O3DE) animated sequence and cinematics editor.
+Maestro Cinematics Gem 提供 Track View、Open 3D Engine （O3DE） 的动画序列和电影编辑器。
 
-For more information, see [Create cinematic sequences](/docs/user-guide/visualization/cinematics).
+有关详细信息，请参阅 [创建电影序列](/docs/user-guide/visualization/cinematics)。

@@ -1,10 +1,10 @@
 ---
 linkTitle: Microphone
 title: Microphone Gem
-description: The Microphone Gem provides support for audio input through microphones in Open 3D Engine (O3DE) projects.
+description: Microphone Gem支持在 Open 3D Engine （O3DE） 项目中通过麦克风输入音频。
 toc: true
 ---
 
-The Microphone Gem provides support for audio input through microphones in **Open 3D Engine (O3DE)** projects.
+Microphone Gem 支持在 **Open 3D Engine （O3DE）** 项目中通过麦克风进行音频输入。
 
-The Microphone Gem requires the Audio System Gem.
+Microphone Gem 需要音频系统 Gem。

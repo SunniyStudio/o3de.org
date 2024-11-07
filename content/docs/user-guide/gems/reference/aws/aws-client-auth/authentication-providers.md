@@ -1,47 +1,47 @@
 ---
-title: Using Authentication Providers
-description: Learn how to configure third-party and custom authentication providers for use with the AWS Client Auth Gem in Open 3D Engine (O3DE).
+title: 使用身份验证提供程序
+description: 了解如何配置第三方和自定义身份验证提供商，以便与 Open 3D Engine （O3DE） 中的 AWS 客户端身份验证 Gem 一起使用。
 weight: 200
 toc: true
 ---
 
-The AWS Client Auth Gem supports several preconfigured third-party authentication providers. You can also add support for a custom provider.
+AWS Client Auth Gem 支持多个预配置的第三方身份验证提供商。您还可以添加对自定义提供程序的支持。
 
-To configure an authentication provider, you must do the following.
+要配置身份验证提供程序，您必须执行以下操作。
 
-1. Enable an account with the provider for authentication.
-1. Create and configure the authentication provider settings file.
+1. 启用提供商的帐户进行身份验证。
+1. 创建并配置身份验证提供程序设置文件。
 
-To create and use a custom provider, refer to the instructions at the end of this topic on [Using a Custom Provider](#using-a-custom-provider).
+要创建和使用自定义提供程序，请参阅本主题末尾的 [使用自定义提供程序](#using-a-custom-provider) 中的说明。
 
-## Using a preconfigured third-party provider
+## 使用预配置的第三方提供商
 
-1. Create and enable a [Google](https://docs.aws.amazon.com/cognito/latest/developerguide/google.html) or [Login with Amazon](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon.html) account for authentication.
+1. 为身份验证创建并启用 [Google](https://docs.aws.amazon.com/cognito/latest/developerguide/google.html) 或 [Login with Amazon](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon.html) 账号。
 
-1. Make note of the **app ID** and **app secret** for device type flow.
+1. 记下用于设备类型流的 **app ID** 和 **app secret**。
 
-## Configure authentication provider settings
+## 配置身份验证提供程序设置
 
-You must create a registry settings file named `AuthenticationProvider.setreg` to configure the authentication provider's settings. This file must be located in the project's registry directory: `<ProjectName>\Registry`. Its format is shown in the example that follows.
+您必须创建名为 `AuthenticationProvider.setreg` 的注册表设置文件，以配置身份验证提供程序的设置。此文件必须位于项目的注册表目录中：`<ProjectName>\Registry`。其格式如以下示例所示。
 
-Use the app ID that you obtained when you enabled your account as the value for `AppClientId`.
+使用您在启用账户时获取的应用程序 ID 作为`AppClientId` 的值。
 
-If you are using Google, you must also use the app secret you were given for your account as the value for `ClientSecret`.
+如果您使用的是 Google，则还必须使用为帐户提供的应用程序密钥作为 `ClientSecret` 的值。
 
-When deploying the optional AWS Cloud Development Kit (AWS CDK) application, be sure to use the AWS CDK constant that corresponds to your selected provider. Refer to the AWS CDK application deployment step in [Setting Up Client Auth](./setup/) for details.
+在部署可选的 AWS Cloud Development Kit （AWS CDK） 应用程序时，请务必使用与您选择的提供商对应的 AWS CDK 常量。有关详细信息，请参阅 [设置客户端身份验证](./setup/) 中的 AWS CDK 应用程序部署步骤。
 
-These settings and those in the resource mapping file are read once during activation of `AWSClientAuthSystemComponent`.
-
-| Setting | Description |
+在激活`AWSClientAuthSystemComponent`期间，将读取一次这些设置和资源映射文件中的设置。
+2
+| 设置 | 说明 |
 | --- | --- |
-| **AppClientId** | Client ID provided by the authentication provider upon creating an account. |
-| **ClientSecret** | Client secret provided by the authentication provider upon creating an account. Required only for **Google**. |
-| **GrantType** | Type of grant requested. See [https://oauth.net/2/grant-types/](https://oauth.net/2/grant-types/). |
-| **ResponseType** | Required only for **Login With Amazon**. Same as grant type. |
-| **OAuthCodeURL** | URL to request code for authentication. |
-| **OAuthTokensURL** | URL to confirm and get authenticated tokens on success. |
+| **AppClientId** | 身份验证提供商在创建账户时提供的客户端 ID。 |
+| **ClientSecret** | 身份验证提供商在创建帐户时提供的客户端密钥。仅对 **Google** 是必需的。 |
+| **GrantType** | 请求的授权类型。看[https://oauth.net/2/grant-types/](https://oauth.net/2/grant-types/). |
+| **ResponseType** | 仅对 **Login With Amazon** 是必需的。与 grant type 相同。 |
+| **OAuthCodeURL** | 用于身份验证的请求代码的 URL。 |
+| **OAuthTokensURL** | 用于在成功时确认和获取经过身份验证的令牌的 URL。 |
 
-Example `AuthenticationProvider.setreg` file. When creating this file, include the appropriate section that corresponds to the provider you selected.
+示例 `AuthenticationProvider.setreg` 文件。创建此文件时，请包含与所选提供程序对应的相应部分。
 
 ```json
 {
@@ -67,26 +67,26 @@ Example `AuthenticationProvider.setreg` file. When creating this file, include t
 }
 ```
 
-## Using a custom provider
+## 使用自定义提供程序
 
-To use a custom authentication provider with the AWS Client Auth Gem, you must have endpoints based on the OAuth 2.0/OIDC protocol. Use the following steps to enable your provider.
+要将自定义身份验证提供商与 AWS 客户端身份验证 Gem 一起使用，您必须具有基于 OAuth 2.0/OIDC 协议的终端节点。使用以下步骤启用您的提供商。
 
-1. Update the **Amazon Cognito identity pool** to support a custom login provider.
+1. 更新 **Amazon Cognito identity pool** 以支持自定义登录提供程序。
 
-    a. In the AWS CDK application, in the file `constants.py`, add an entry for the App Client ID for your authentication service.
+    a. 在 AWS CDK 应用程序中，在 `constants.py` 文件中，为您的身份验证服务的 App Client ID 添加一个条目。
 
-    b. Add the same App Client ID to `supported_login_providers` in `cognito_identity_pool.py`.
+    b. 在`cognito_identity_pool.py`中添加相同的App Client ID 到 `supported_login_providers`。
 
-    c. Synth and deploy the AWS Client Auth stack. For help with these commands, see [Deploying the CDK Application](/docs/user-guide/gems/reference/aws/aws-core/cdk-application/) in the AWSCore Gem documentation.
+    c. 合成并部署 AWS Client Auth 堆栈。有关这些命令的帮助，请参阅 AWSCore Gem 文档中的 [部署 CDK 应用程序](/docs/user-guide/gems/reference/aws/aws-core/cdk-application/)。
+   
+1. 实现 C++ 自定义提供程序。
 
-1. Implement your C++ custom provider.
+    a. 在`AuthenticationTokens.h`中向`ProviderNameEnum`添加新的枚举值。
 
-    a. Add a new enum value to `ProviderNameEnum` in `AuthenticationTokens.h`.
+    b. 从`AuthenticationProviderInterface`继承，实现新的自定义提供程序。
 
-    b. Implement a new custom provider inheriting from `AuthenticationProviderInterface`.
+    c. 在`AuthenticationProviderManager::CreateAuthenticationProviderObject`方法中，为上述添加支持。
 
-    c. In the `AuthenticationProviderManager::CreateAuthenticationProviderObject` method, add support for the above.
+    d. 如果上述 Amazon Cognito 设置正确，则授权将有效。
 
-    d. Authorization will work if the Amazon Cognito setting above is set up correctly.
-
-Refer to the [AWS Client Auth](/docs/api/gems/awsclientauth) API Reference for more information.
+有关更多信息，请参阅 [AWS Client Auth](/docs/api/gems/awsclientauth) API 参考。

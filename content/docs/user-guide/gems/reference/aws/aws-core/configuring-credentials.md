@@ -1,71 +1,69 @@
 ---
-title: Configuring AWS Credentials
-description: Learn how to configure AWS credentials in Open 3D Engine for AWS cloud-connected features.
+title: 配置 AWS 凭证
+description: 了解如何在 Open 3D Engine 中配置 AWS 凭证以实现 AWS 云连接功能。
 weight: 150
 toc: true
 ---
 
-These instructions assume that you have (or will have) administrative access to an AWS account. For more information, see the [AWS home page](https://aws.amazon.com/) for instructions on creating an account, the [AWS account root user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html) guide and [Creating your first IAM admin user and user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html). If you already have an AWS account, but you do not have administrative access to it, see your AWS account administrator. 
+这些说明假定您拥有（或将拥有）对 AWS 账户的管理访问权限。有关更多信息，请参阅 [AWS 主页](https://aws.amazon.com/) 了解有关创建账户的说明、[AWS 账户根用户](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html) 指南和 [创建您的第一个 IAM 管理员用户和用户组](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html)。如果您已经拥有 AWS 账户，但没有该账户的管理访问权限，请咨询您的 AWS 账户管理员。
 
-The expectation is that, by the end of this guide and its linked resources, you will:
-* Understand how to set up AWS credentials for O3DE.
-* Understand how to control permissions for AWS users via policies and groups.
-* Understand steps to take around team setup.
-* Have a sense about how to manage credentials during the development and release/distribution phases of your project.
+预期在本指南及其链接资源结束时，您将：
+* 了解如何为 O3DE 设置 AWS 凭证。
+* 了解如何通过策略和组控制 AWS 用户的权限。
+* 了解团队设置要采取的步骤。
+* 了解如何在项目的开发和发布/分发阶段管理凭证。
 
-To set up an [individual user](#setting-up-aws-credentials-as-an-individual), you will need to:
-* Create the required IAM user.
-* Add any AWS permissions required.
-* Export the credentials to the local environment.
+要设置 [个人用户](#setting-up-aws-credentials-as-an-individual)，您需要：
+* 创建所需的 IAM 用户。
+* 添加所需的任何 AWS 权限。
+* 将凭证导出到本地环境。
 
-To [set up credentials for a team](#setting-up-credentials-for-a-team), you will need to:
-* Set up users and IAM credentials.
-* Create user groups.
-* Add AWS IAM users to the appropriate user group.
-* Add AWS permissions to the user groups.
+要 [为团队设置凭据](#setting-up-credentials-for-a-team)，您需要：
+* 设置用户和 IAM 凭证。
+* 创建用户组。
+* 将 AWS IAM 用户添加到相应的用户组。
+* 向用户组添加 AWS 权限。
 
-Once the preceding tasks are complete, users can export their credentials to their local environment.
+完成上述任务后，用户可以将其凭证导出到其本地环境。
 
+## 使用 AWS 凭证
 
-## Working with AWS credentials
+您需要为用户提供 AWS 凭证。您可以在短期和长期凭证之间进行选择。长期凭证在开发过程中很方便。它们更易于配置，但您需要小心确保它们的安全。当您将生成分发给外部用户时，通常建议使用短期凭证，因为它们的生命周期有限。有关更多信息，请参阅 AWS 指南中的 [管理 AWS 访问密钥的最佳实践]](https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html)。
 
-You will need to provide AWS credentials for users. You can choose between short-term and long-term credentials. Long-term credentials are convenient during the development process. They're easier to configure, but you need to be careful they are kept secure. Short-term credentials are generally recommended when you distribute your builds to external users because they have a finite lifetime. For more information, refer to the AWS guide on [Best practices for managing AWS access keys](https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html).
+* 要预置长期凭证，请创建一个具有编程凭证的 AWS Identity and Access Management （IAM） 用户，然后按照本指南中涵盖 O3DE 的 [将 AWS 凭证设置为个人](#setting-up-aws-credentials-as-an-individual) 该用户的部分进行操作。有关更多信息，请参阅有关 [编程访问](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys)的一般 AWS 指南。
 
-* To provision long-term credentials, create an AWS Identity and Access Management (IAM) user with programmatic credentials and follow the section of this guide covering [setting up AWS credentials as an individual](#setting-up-aws-credentials-as-an-individual) that user for O3DE. See the general AWS guide on [Programmatic access](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) for more information. 
+* 要提供短期凭证，请使用 [Amazon Cognito](https://aws.amazon.com/cognito/) 或 [AWS Security Token Service](https://docs.aws.amazon.com/STS/latest/APIReference/welcome.html) 生成 [临时安全凭证](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html)。[AWSClientAuth Gem](/docs/user-guide/gems/reference/aws/aws-client-auth)提供了在 O3DE 中使用 Amazon Cognito 的配置点。
 
-* To provide short-term credentials, use [Amazon Cognito](https://aws.amazon.com/cognito/) or [AWS Security Token Service](https://docs.aws.amazon.com/STS/latest/APIReference/welcome.html) to generate [temporary security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html). The [AWSClientAuth Gem](/docs/user-guide/gems/reference/aws/aws-client-auth) provides configuration points for using Amazon Cognito in O3DE.
+* 要通过 IAM 角色提供访问权限，请参阅 [IAM 角色](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)文档了解更多信息，并按照 [在 AWS CLI 中使用 IAM 角色](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html)了解设置信息。
 
-* To provide access via IAM roles, see the [IAM roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) documentation for more information and follow [Using an IAM role in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html) for setup information.
+强烈建议不要将您的 AWS 账户根用户用于日常任务。相反，请在 IAM 中创建具有您的使用案例所需权限的用户或角色。最佳做法是定期更改用户的访问密钥，并遵循最低权限的做法。有关管理访问密钥的更多信息，请参阅《AWS IAM 用户指南》中的 [管理 IAM 用户的访问密钥](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) 。
 
-It is strongly recommend to not use your AWS account root user for day-to-day tasks. Instead, create users or roles in IAM with the required permissions for your use cases. Best practice is to change users' access keys regularly and follow the practice of least-privileges. For more information on managing access keys, see [Managing access keys for IAM users](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) in the AWS IAM User Guide.
+## 以个人身份设置 AWS 凭证
 
+本部分假设您在 AWS 账户中设置了 [AWS IAM 管理员用户](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html)。
 
-## Setting up AWS credentials as an individual
+本指南中的步骤介绍如何使用具有长期编程凭证的 IAM 用户在 O3DE 中使用。如果您尚未配置 IAM 访问密钥，请使用 AWS 控制台为 [编程访问](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys)的 AWS 参考指南中显示的步骤为现有或新的 IAM 用户生成和下载新的访问密钥。
 
-This section assumes you have an [AWS IAM Administrator user](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html) set up in your AWS account.
+如果您想使用短期凭证来使用 AWS，请参阅 [AWSClientAuth Gem](/docs/user-guide/gems/reference/aws/aws-client-auth) 中的设置信息。
 
-The steps in this guide cover how to use an IAM user with long term programmatic credentials to use in O3DE. If you don't have IAM access keys configured, use the AWS Console to generate and download new access keys for an existing or new IAM user using the steps shown in the AWS reference guide for [Programmatic access](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys).
+从以下选项中进行选择，以设置用户的 AWS 凭证以在 O3DE 中使用。如果您使用的是 [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)，请记住在项目设置中设置配置文件。
 
-If you want to use short-term credentials for working with AWS, please see setup information in the [AWSClientAuth Gem](/docs/user-guide/gems/reference/aws/aws-client-auth).
-
-Choose from the following options to set up a user's AWS credentials for use in O3DE. If you are using [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) remember to set the profile in the project settings.
-
-### Option 1: Create a named profile using the AWS CLI
-O3DE recommends using the [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html) (CLI) (version 2) to manage the import and configuration of AWS credentials. If you have not configured credentials or a region on your computer, the easiest way to satisfy this requirement is to use the AWS `configure` command:
+### 选项 1：使用 AWS CLI 创建命名配置文件
+O3DE 建议使用 [AWS命令行接口](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html) (CLI) (version 2)来管理 AWS 凭证的导入和配置。如果您尚未在计算机上配置凭证或区域，则满足此要求的最简单方法是使用 AWS 的“`configure`”命令：
 
 ```cmd
 aws configure
 ```
 
-Using this command you can provide your AWS access key ID, secret access key, and default region manually when prompted. 
+使用此命令，您可以在出现提示时手动提供 AWS 访问密钥 ID、秘密访问密钥和默认区域。
 
-Alternatively, when you create new access keys for a user, you are given the option to download the keys as a CSV. You can then automatically import them using the AWS `import` CLI command (requires AWS CLI version 2):
+或者，当您为用户创建新的访问密钥时，您可以选择将密钥下载为 CSV。然后，您可以使用 AWS “`import`” CLI 命令（需要 AWS CLI 版本 2）自动导入它们：
 
 ```cmd
 aws configure import --csv file://credentials.csv
 ```
 
-This will create a named profile based on the name of the IAM user in your `credentials` file. 
+这将根据 “`credentials`” 文件中的 IAM 用户名称创建一个命名配置文件。
 
 You can control which profile is used by default in the AWS CLI either by setting a ```[default]``` or through the use of the [AWS_PROFILE](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html#using-profiles) environment variable.
 
@@ -73,8 +71,8 @@ For more information on using AWS CLI configure commands, see [Configuration and
 
 You can also utilize IAM roles by defining role based profiles. Refer to [Using an IAM role in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html) for information.
 
-### Option 2: Configure local credentials using config files
-If you have an automated process or other provisioning mechanism, you can place pre-configured user credentials in the standard AWS config files.
+### 选项 2：使用配置文件配置本地凭证
+如果您有自动化流程或其他预置机制，则可以将预配置的用户凭证放在标准 AWS 配置文件中。
 
 Manually create or edit the `~/.aws/config` and `~/.aws/credentials` files (on macOS or Linux) or `%USERPROFILE%\.aws\config` and `%USERPROFILE%\.aws\credentials` files (on Windows) to include the credentials and a default region. 
 

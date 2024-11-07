@@ -1,10 +1,10 @@
 ---
 linkTitle: Primitive Assets
 title: Primitive Assets Gem
-description: The Primitive Assets Gem provides primitive shape meshes with physics enabled for Open 3D Engine (O3DE).
+description: Primitive Assets Gem 提供为 Open 3D Engine （O3DE） 启用物理特性的基元形状网格。
 toc: true
 ---
 
-The Primitive Assets Gem provides primitive shape assets that have physics enabled. Each asset is unit size (scale X: `1.0`,  Y: `1.0`, Z: `1.0`) and has a gray checkerboard texture. The checkerboard texture is RGB middle gray (R: `127`, G: `127`, B: `127`) and sRGB middle gray (R: `187`, G: `187`, B: `187`). Diffuse, normal, and specular maps are included. The primitive shape assets have import settings and materials. You can use these to add cube, sphere, and cylinder primitive shape assets to your level to use as placeholders, or test **Open 3D Engine (O3DE)** Editor features.
+Primitive Assets Gem 提供启用了物理特性的基元形状资产。每个资产都是单位大小（缩放 X: `1.0`,  Y: `1.0`, Z: `1.0`），并具有灰色棋盘纹理。棋盘纹理为 RGB 中间灰色（R: `127`, G: `127`, B: `127`）和 sRGB 中间灰色（R: `187`, G: `187`, B: `187`）。包括漫反射贴图、法线贴图和高光贴图。基元形状资产具有导入设置和材质。您可以使用这些资源将立方体、球体和圆柱体基元形状资源添加到关卡中，以用作占位符，或测试 **Open 3D Engine （O3DE）** 编辑器功能。
 
-The asset files for the primitive shape meshes are in the `\Gems\PrimitiveAssets\Assets` directory.
+原始形状网格的资源文件位于 `\Gems\PrimitiveAssets\Assets` 目录中。

@@ -1,21 +1,21 @@
 ---
-linktitle: Using the C++ API
-title: Using the C++ API with the AWS Client Auth Gem
-description: Get an overview of using the C++ API with the AWS Client Auth Gem in Open 3D Engine (O3DE).
+linktitle: 使用C++ API
+title: 将 C++ API 与 AWS Client Auth Gem 结合使用
+description: 简要了解如何在 Open 3D Engine （O3DE） 中将 C++ API 与 AWS Client Auth Gem 结合使用。
 toc: true
 weight: 400
 ---
 
-The AWS Client Auth Gem provides a C++ API for making client authorization and user management requests and handling notifications using the O3DE EBus. For more information about using the EBus system, refer to the [EBus](/docs/user-guide/programming/messaging/ebus) documentation.
+AWS Client Auth Gem 提供了一个 C++ API，用于发出客户端授权和用户管理请求，以及使用 O3DE 事件总线处理通知。有关使用事件总线系统的更多信息，请参阅 [EBus](/docs/user-guide/programming/messaging/ebus)文档。
 
-## C++ API Reference
+## C++ API 参考
 
-The O3DE API Reference Guide has a complete reference to the [AWS Client Auth](/docs/api/gems/awsclientauth) C++ API.
+O3DE API 参考指南包含对 [AWS Client Auth](/docs/api/gems/awsclientauth)  C++ API 的完整引用。
 
-In particular, for Amazon Cognito authorization requests, refer to the documentation for the [IAWSCognitoAuthorizationRequests](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_i_a_w_s_cognito_authorization_requests.html) interface and the [AWSCognitoAuthorizationNotifications](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_a_w_s_cognito_authorization_notifications.html) notification bus for handler functions.
+具体而言，对于 Amazon Cognito 授权请求，请参阅处理程序函数的[IAWSCognitoAuthorizationRequests](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_i_a_w_s_cognito_authorization_requests.html) 接口和 [AWSCognitoAuthorizationNotifications](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_a_w_s_cognito_authorization_notifications.html)  通知总线的文档。
 
-For Amazon Cognito user management requests, refer to the documentation for the [IAWSCognitoUserManagementRequests](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_i_a_w_s_cognito_user_management_requests.html) interface and the [AWSCognitoUserManagementNotifications](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_a_w_s_cognito_user_management_notifications.html) notification bus for handler functions.
+对于 Amazon Cognito 用户管理请求，请参阅[IAWSCognitoUserManagementRequests](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_i_a_w_s_cognito_user_management_requests.html)接口的文档以及处理程序函数的[AWSCognitoUserManagementNotifications](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_a_w_s_cognito_user_management_notifications.html)通知总线。
 
-For authentication requests using one of the supported authentication providers, refer to the documentation for the [AuthenticationProviderInterface](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_i_authentication_provider_requests.html) interface and the [AuthenticationProviderNotifications](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_authentication_provider_notifications.html) notification bus for handler functions.
+有关使用受支持的身份验证提供程序之一的身份验证请求，请参阅 [AuthenticationProviderInterface][AuthenticationProviderInterface](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_i_authentication_provider_requests.html)接口的文档以及处理程序函数的 [AuthenticationProviderNotifications](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_authentication_provider_notifications.html) 通知总线.
 
-Reference documentation for specific authentication provider implementations can be found in [AWSCognitoAuthenticationProvider](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_a_w_s_cognito_authentication_provider.html), [GoogleAuthenticationProvider](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_google_authentication_provider.html), and [LWAAuthenticationProvider](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_l_w_a_authentication_provider.html).
+有关特定身份验证提供程序实施的参考文档，请参阅[AWSCognitoAuthenticationProvider](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_a_w_s_cognito_authentication_provider.html), [GoogleAuthenticationProvider](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_google_authentication_provider.html), 和 [LWAAuthenticationProvider](https://o3de.org/docs/api/gems/awsclientauth/class_a_w_s_client_auth_1_1_l_w_a_authentication_provider.html)。

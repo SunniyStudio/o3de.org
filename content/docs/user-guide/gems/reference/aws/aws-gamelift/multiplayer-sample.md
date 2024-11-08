@@ -1,7 +1,7 @@
 ---
 linkTitle: Multiplayer Sample
 title: AWS GameLift Gem Multiplayer Sample
-description: Learn about the multiplayer sample included with the AWS GameLift Gem in Open 3D Engine (O3DE).
+description: 了解 Open 3D Engine （O3DE） 中的 AWS GameLift Gem 附带的多人游戏示例。
 toc: true
 weight: 1000
 draft: true

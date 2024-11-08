@@ -1,51 +1,51 @@
 ---
-linkTitle: Setup
-title: AWS GameLift Gem Setup
-description: Learn how to set up the AWS GameLift Gem in Open 3D Engine (O3DE).
+linkTitle: 安装
+title: AWS GameLift Gem 安装
+description: 了解如何在 Open 3D Engine （O3DE） 中设置 AWS GameLift Gem。
 toc: true
 weight: 200
 ---
 
-This topic teaches you how to set up the **AWS GameLift** Gem in **Open 3D Engine (O3DE)**, so you can use Amazon GameLift in your project.
+本主题将介绍如何在 Open 3D Engine （O3DE） 中设置 **AWS GameLift** Gem，以便您可以在项目中使用 Amazon GameLift。
 
-## 1. Understand GameLift
+## 1. 了解 GameLift
 
-GameLift allows players to connect to your game by creating a game session. For more information, refer to [How Players Connect to Games](https://docs.aws.amazon.com/gamelift/latest/developerguide/game-sessions-intro.html) in the Amazon GameLift Developer Guide.
+GameLift 允许玩家通过创建游戏会话来连接到您的游戏。有关更多信息，请参阅 Amazon GameLift 开发人员指南 中的 [玩家如何连接到游戏](https://docs.aws.amazon.com/gamelift/latest/developerguide/game-sessions-intro.html) 。
 
-A *game session* is an instance of the game running on the server with a given set of properties. A game session can be either public so that it can be found and joined by other players, or private so only players who are invited or notified of it can join.  
+游戏会话是在服务器上运行的具有给定属性集的游戏实例。游戏会话可以是公共的，以便其他玩家可以找到并加入它，也可以是私有的，以便只有收到邀请或通知的玩家才能加入。 
 
-The lifetime of a session involves the following phases:
-   1. Create a new session with the desired settings.  
-   2. Wait for the players to request to join the session.  
-   3. Reserve the players who want to join.  
-   4. Destroy the session when the condition is met. For example, when the last player leaves the session.
-
-
-## 2. Enable the AWS GameLift Gem
+会话的生命周期包括以下阶段：
+   1. 使用所需设置创建新会话。 
+   2. 等待玩家请求加入会话。 
+   3. 保留想要加入的玩家。 
+   4. 满足条件时销毁会话。例如，当最后一个玩家离开会话时。
 
 
-### Dependencies
-
-The AWS GameLift Gem depends on the following Gems:
-
-- [AWS Core Gem](/docs/user-guide/gems/reference/aws/aws-core): Provides the framework to use AWS services in O3DE.
-- [Multiplayer Gem](/docs/user-guide/gems/reference/multiplayer/multiplayer-gem/): Provides multiplayer functionality, like connection and hosting, by extending the networking framework.
+## 2. 启用 AWS GameLift Gem
 
 
-### Enable the AWS GameLift Gem and its dependencies
+### 依赖
 
-To enable the AWS GameLift Gem in your project:
-1. Open the **Project Manager**.
-2. Open the menu under your project and choose **Edit Project Settings...**.
-3. Choose **Configure Gems**.
-4. Enable the AWS GameLift Gem and the dependent Gems.
+AWS GameLift Gem 依赖于以下 Gem：
+
+- [AWS Core Gem](/docs/user-guide/gems/reference/aws/aws-core): 提供在 O3DE 中使用 AWS 服务的框架。
+- [Multiplayer Gem](/docs/user-guide/gems/reference/multiplayer/multiplayer-gem/): 通过扩展网络框架来提供多人游戏功能，如连接和托管。
 
 
-### Include the AWS GameLift Gem static library
+### 启用 AWS GameLift Gem 及其依赖项
 
-You must include the AWS GameLift Gem static library in your project's CMake build target.
+要启用 AWS GameLift Gem 在您的项目中：
+1. 打开 **Project Manager**.
+2. 打开项目下的菜单，然后选择 **Edit Project Settings...**.
+3. 选择 **Configure Gems**.
+4. 启用 AWS GameLift Gem 和依赖 Gem。
 
-1. **(Required)** You must include **Gem::AWSGameLift.Server.Static** as one of the **BUILD_DEPENDENCIES** for your project's server target. For an example of a networked project configured with distinct server and client targets, see the [O3DE Multiplayer project template](https://github.com/o3de/o3de-extras/blob/development/Templates/Multiplayer/Template/Gem/Code/CMakeLists.txt) or the [O3DE Multiplayer Sample project](https://github.com/o3de/o3de-multiplayersample/blob/development/Gem/Code/CMakeLists.txt).
+
+### 包括 AWS GameLift Gem 静态库
+
+您必须在项目的 CMake 构建目标中包含 AWS GameLift Gem 静态库。
+
+1. **(必须)** 您必须将**Gem::AWSGameLift.Server.Static**作为项目服务器目标的 **BUILD_DEPENDENCIES** 之一。有关配置了不同服务器和客户端目标的联网项目的示例，查看[O3DE 多人游戏项目模板](https://github.com/o3de/o3de-extras/blob/development/Templates/Multiplayer/Template/Gem/Code/CMakeLists.txt) 或 [O3DE 多人游戏案例项目](https://github.com/o3de/o3de-multiplayersample/blob/development/Gem/Code/CMakeLists.txt)。
 
     ```cpp
     ly_add_target(
@@ -60,7 +60,7 @@ You must include the AWS GameLift Gem static library in your project's CMake bui
     )
     ```
 
-2. **(Required)** To ensure that the Amazon GameLift Server SDK gets initialized correctly, you must indicate that the `AWSGameLiftServerService` is required for your project server system component.
+2. **(必须)** 要确保 Amazon GameLift Server 开发工具包正确初始化，您必须指示您的项目服务器系统组件需要“`AWSGameLiftServerService`”。
 
    ```cpp
     void YourProjectServerSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
@@ -71,9 +71,10 @@ You must include the AWS GameLift Gem static library in your project's CMake bui
     }
    ```
 
-3. **(Optional)**  Clients do not need to include the GameLift client library to join a game session.  It is [recommended that clients do not make requests directly to GameLift](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift_quickstart_customservers_designbackend.html), instead, they connect to game platform servers that make all GameLift service requests on behalf of players, as well as provide account sign-in, identity management, updates, and information about game modes. 
+3. **(可选)**  客户端不需要包含 GameLift 客户端库即可加入游戏会话。 [建议客户端不要直接向 GameLift 发出请求](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift_quickstart_customservers_designbackend.html)，相反，它们连接到游戏平台服务器，这些服务器代表玩家发出所有 GameLift 服务请求，并提供帐户登录、身份管理、更新和有关游戏模式的信息。
 
-However, if you need to make GameLift service requests in C++ directly from the client during development or for testing, then you must include **Gem::AWSGameLift.Client.Static** as **BUILD_DEPENDENCIES** for your client target. Refer to [GameLift service API Reference](https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html) for more information on the Amazon GameLift service API.
+但是，如果您需要在开发或测试期间直接从客户端发出 GameLift 服务请求C++，则必须将 **Gem::AWSGameLift.Client.Static** 作为客户端目标的 **BUILD_DEPENDENCIES** 包含在内。有关 Amazon GameLift 服务 API 的更多信息，请参阅 [GameLift 服务 API 参考](https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-awssdk.html)。
+
     ```cpp
     ly_add_target(
         NAME YourProject.Client.Static STATIC
@@ -88,29 +89,29 @@ However, if you need to make GameLift service requests in C++ directly from the 
     )
     ```
 
-## 3. Integrate game and dedicated server
+## 3. 集成游戏和专用服务器
 
-Check [Session Management Integration](session-management/integration/) for managing game sessions within your game and dedicated server.
-To support the optional FlexMatch feature, check [FlexMatch Integration](flexmatch/integration/).
+勾选 [会话管理集成](session-management/integration/) 来管理游戏和专用服务器内的游戏会话。
+要支持可选的 FlexMatch 功能，请选中 [FlexMatch 集成](flexmatch/integration/)。
 
 
 ## 4. Set up AWS credentials
 
-To work with AWS resources in O3DE you must set up AWS credentials for your users.
+要在 O3DE 中使用 AWS 资源，您必须为用户设置 AWS 凭证。
 
-For more details on configuring your AWS credentials in O3DE, refer to [Configuring AWS Credentials](/docs/user-guide/gems/reference/aws/aws-core/configuring-credentials/).
+有关在 O3DE 中配置 AWS 凭证的更多详细信息，请参阅 [配置 AWS 凭证](/docs/user-guide/gems/reference/aws/aws-core/configuring-credentials/)。
 
-Please check [IAM policy examples for GameLift](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-iam-policy-examples.html) to configure appropriate permissions required to use the GameLift service.
+请检查 [GameLift 的 IAM 策略示例](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-iam-policy-examples.html)以配置使用 GameLift 服务所需的适当权限。
 
-To use the FlexMatch feature for matchmaking and backfill, please check [Setting up FlexMatch](https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-setting-up.html) for the required permissions.
+要使用 FlexMatch 功能进行对战和回填，请检查 [设置 FlexMatch](https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-setting-up.html)以获取所需的权限。
 
 {{< note >}}
-This step is only required for developers who perform remote tests and infrastructure builds against the GameLift service.
+只有针对 GameLift 服务执行远程测试和基础设施构建的开发人员才需要此步骤。
 
-Alternatively, you can test your server's GameLift integration locally using GameLift Local, which does not require AWS credentials. With support for client override, you can test against GameLift Local. For more information, refer to [AWS GameLift Gem Local Testing](/docs/user-guide/gems/reference/aws/aws-gamelift/local-testing/).
+或者，您也可以使用 GameLift Local 在本地测试服务器的 GameLift 集成，这不需要AWS凭证。借助对客户端覆盖的支持，您可以针对 GameLift Local 进行测试。有关更多信息，请参阅 [AWS GameLift Gem 本地测试](/docs/user-guide/gems/reference/aws/aws-gamelift/local-testing/)。
 {{< /note >}}
 
 
-## 5. Set up the AWS CLI and AWS CDK
+## 5. 设置 AWS CLI 和 AWS CDK
 
-The AWS GameLift Gem provides a sample AWS Cloud Development Kit (AWS CDK) application that you can use to model GameLift resources and deploy your server to GameLift. To do this, you must have the [AWS Command Line Interface (AWS CLI)](https://aws.amazon.com/cli/) and [AWS CDK](https://aws.amazon.com/cdk/) installed on your local machine.
+AWS GameLift Gem 提供了一个示例AWS Cloud Development Kit （AWS CDK） 应用程序，您可以使用它来建模 GameLift 资源并将服务器部署到 GameLift。为此，您必须在本地计算机上安装[AWS Command Line Interface (AWS CLI)](https://aws.amazon.com/cli/) 和 [AWS CDK](https://aws.amazon.com/cdk/)。

@@ -1,64 +1,61 @@
 ---
-linkTitle: FlexMatch Scripting
-title: FlexMatch Scripting
-description: Learn about Script Canvas nodes for player matchmaking in the AWS GameLift Gem in Open 3D Engine (O3DE).
+linkTitle: FlexMatch 脚本编程
+title: FlexMatch 脚本编程
+description: 在 Open 3D Engine （O3DE） 中的 AWS GameLift Gem 中了解用于玩家匹配的 Script Canvas 节点。
 toc: true
 weight: 400
 ---
 
 
-The **AWS GameLift** provides Script Canvas nodes that make requests against Amazon GameLift to start, stop and accept matchmaking requests.
+**AWS GameLift** 提供 Script Canvas 节点，这些节点可向 Amazon GameLift 发出请求以启动、停止和接受对战请求。
 
-There are synchronous and asynchronous versions for each action. Asynchronous nodes perform their operation in the AZ JobFunction and finish at some point in the future. These operations communicate over the network through either AWS HTTPS requests or TCP/UDP packets. Each asynchronous node has a corresponding notification handler node.
+每个操作都有同步和异步版本。异步节点在 AZ JobFunction 中执行其操作，并在将来的某个时间点完成。这些操作通过 AWS HTTPS 请求或 TCP/UDP 数据包通过网络进行通信。每个异步节点都有相应的通知处理程序节点。
 
 
 ## StartMatchmaking
-To find a match for a group of players and create a session to host match, use the `StartMatchmaking` node.
-With this node, you can pass in the properties `configuration name`, `players` and `ticket id` through `AWSGameLiftStartMatchmakingRequest`.
+要查找一组玩家的对战并创建会话来托管对战，请使用 '`StartMatchmaking`' 节点。
+使用此节点，您可以通过“`AWSGameLiftStartMatchmakingRequest`”传入属性`configuration name`、`players`和`ticket id` 。
 
-
-### StartMatchmaking sample graph
+### StartMatchmaking 案例图表
 
 ![StartMatchmaking sample graph](/images/user-guide/gems/reference/aws/aws-gamelift/startmatchmaking.PNG)
 
 
-### StartMatchmakingAsync sample graph
+### StartMatchmakingAsync 案例图表
 
 ![StartMatchmakingAsync sample graph](/images/user-guide/gems/reference/aws/aws-gamelift/startmatchmakingasync.PNG)
 
 
 ## StopMatchmaking
-To cancel a matchmaking ticket that is currently being processed, use the `StopMatchmaking` node.
-With this node, you can pass in the property `ticket id` through `AWSGameLiftStopMatchmakingRequest`.
+要取消当前正在处理的对战票证，请使用 '`StopMatchmaking`' 节点。
+使用此节点，您可以通过“`AWSGameLiftStopMatchmakingRequest`”传入属性“`ticket id`”。
 
-
-### StopMatchmaking sample graph
+### StopMatchmaking 案例图表
 
 ![StopMatchmaking sample graph](/images/user-guide/gems/reference/aws/aws-gamelift/stopmatchmaking.PNG)
 
 
-### StopMatchmakingAsync sample graph
+### StopMatchmakingAsync 案例图表
 
 ![StopMatchmakingAsync sample graph](/images/user-guide/gems/reference/aws/aws-gamelift/stopmatchmakingasync.PNG)
 
 
 ## AcceptMatch
-To register a player's acceptance or rejection of a proposed matchmaking, use the `AcceptMatch` node.
-With this node, you can pass in the properties `accept match`, `player ids` and `ticket id` through `AWSGameLiftAcceptMatchRequest`.
+要注册玩家接受或拒绝建议的匹配，请使用 '`AcceptMatch`' 节点。
+使用此节点，您可以通过“`AWSGameLiftAcceptMatchRequest`”传入属性`accept match`, `player ids` 和 `ticket id`。
 
-
-### AcceptMatch sample graph
+### AcceptMatch 案例图表
 
 ![AcceptMatch sample graph](/images/user-guide/gems/reference/aws/aws-gamelift/acceptmatch.PNG)
 
 
-### AcceptMatchAsync sample graph
+### AcceptMatchAsync 案例图表
 
 ![AcceptMatchAsync sample graph](/images/user-guide/gems/reference/aws/aws-gamelift/acceptmatchasync.PNG)
 
 
 ## StartPolling
-Request to start the local process for polling matchmaking ticket based on given ticket id and player Id.
+请求启动本地进程，以根据给定的票证 ID 和玩家 ID 轮询对战票证。
 
 
 ### StartPolling sample graph
@@ -67,7 +64,7 @@ Request to start the local process for polling matchmaking ticket based on given
 
 
 ## StopPolling
-Request to stop the local process for polling matchmaking ticket.
+请求停止轮询对战票证的本地进程。
 
 
 ### StopPolling sample graph
@@ -77,32 +74,32 @@ Request to stop the local process for polling matchmaking ticket.
 
 ## Matchmaking notifications
 
-The matchmaking notifications to listen for performing required operations based on matchmaking ticket event.
+要侦听的对战通知，用于根据对战票证事件执行所需的操作。
 
 
 ### OnMatchAcceptance node
 
-OnMatchAcceptance is fired when match is found and pending on acceptance. Use this notification to accept found match.
+OnMatchAcceptance 在找到匹配项并等待接受时触发。使用此通知接受找到的匹配项。
 
 ![OnMatchAcceptance node](/images/user-guide/gems/reference/aws/aws-gamelift/onmatchacceptance.PNG)
 
 
 ### OnMatchComplete node
 
-OnMatchComplete is fired when match is complete.
+OnMatchComplete 在匹配完成时触发。
 
 ![OnMatchComplete node](/images/user-guide/gems/reference/aws/aws-gamelift/onmatchcomplete.PNG)
 
 
 ### OnMatchError node
 
-OnMatchError is fired when match is processed with error.
+OnMatchError 在处理 match 时触发错误。
 
 ![OnMatchError node](/images/user-guide/gems/reference/aws/aws-gamelift/onmatcherror.PNG)
 
 
 ### OnMatchFailure node
 
-OnMatchFailure is fired when match is failed to complete.
+OnMatchFailure 在匹配无法完成时触发。
 
 ![OnMatchFailure node](/images/user-guide/gems/reference/aws/aws-gamelift/onmatchfailure.PNG)

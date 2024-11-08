@@ -1,35 +1,35 @@
 ---
-linkTitle: FlexMatch Integration
-title: FlexMatch Integration
-description: Learn how to integrate FlexMatch into your game and dedicated server using the AWS GameLift Gem in Open 3D Engine (O3DE).
+linkTitle: FlexMatch 集成
+title: FlexMatch 集成
+description: 了解如何使用 Open 3D Engine （O3DE） 中的 AWS GameLift Gem 将 FlexMatch 集成到您的游戏和专用服务器中。
 toc: true
 weight: 200
 ---
 
-## Prerequisites
+## 先决条件
 
-- Complete the [integration for game session management](../session-management/integration) for the game client and dedicated server.
+- 完成 [游戏会话管理集成](../session-management/integration) 用于游戏客户端和专用服务器。
+  
+## 集成游戏客户端
 
-## Integrate game client
-
-To support the optional FlexMatch features including backfill, your client application needs to implement the following use cases:
+要支持包括回填在内的可选 FlexMatch 功能，您的客户端应用程序需要实施以下使用案例：
 - `StartMatchmaking`
 - `StopMatchmaking`
 - `StartPolling`
 - `StopPolling`
 - `AcceptMatch`
 
-The AWS GameLift Gem provides both [C++ APIs](cpp-api/) and [scripting](scripting/). You can implement these use cases using either method.
+AWS GameLift Gem 提供了 [C++ APIs](cpp-api/) 和 [scripting](scripting/)。您可以使用任一方法实现这些使用案例。
 
 
-## Integrate dedicated server
+## 集成专用服务器
 
-To support the optional manual backfill, your server should implement the following the use cases:
+要支持可选的手动回填，您的服务器应实施以下使用案例：
 - `StartMatchBackfill`
 - `StopMatchBackfill`
 - `OnUpdateSessionBegin`
 - `OnUpdateSessionEnd`
 
-## Related information
+## 相关信息
 
-- [Preparing games for FlexMatch](https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-integration-intro.html)
+- [为 FlexMatch 准备游戏](https://docs.aws.amazon.com/gamelift/latest/flexmatchguide/match-integration-intro.html)

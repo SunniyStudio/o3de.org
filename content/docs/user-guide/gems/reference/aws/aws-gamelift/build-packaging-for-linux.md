@@ -1,46 +1,46 @@
 ---
-linkTitle: Build Packaging for Linux
-title: AWS GameLift Gem Build Packaging for Linux
-description: Learn how to package your Linux dedicated server builds with the AWS GameLift Gem in Open 3D Engine (O3DE).
+linkTitle: 适用于 Linux 的构建打包
+title: 适用于 Linux 的 AWS GameLift Gem 生成包打包
+description: 了解如何在 Open 3D Engine （O3DE） 中使用 AWS GameLift Gem 打包 Linux 专用服务器版本。
 toc: true
 weight: 800
 ---
 
-This topic describes how to package your Linux dedicated server builds, which is required to install and run them on Amazon GameLift. 
+本主题介绍如何打包 Linux 专用服务器版本，这是在 Amazon GameLift 上安装和运行它们所必需的。
 
-Creating a dedicated server package includes the following steps:
-1.  Prepare an installation folder, and copy the assets, runtime binaries, levels, settings file(s) and additional 3rd party libraries.
-2.  Create an install script to handle tasks that are required to fully install the game build onto GameLift hosting servers.
-3.  Test the dedicated server package on your local machine.
+创建专用服务器包包括以下步骤：
+1. 准备一个安装文件夹，并复制资源、运行时二进制文件、关卡、设置文件和其他第三方库。
+2. 创建安装脚本以处理将游戏版本完全安装到 GameLift 托管服务器上所需的任务。
+3. 在本地计算机上测试专用服务器软件包。
 
 {{< note >}}  
-Linux dedicated server build with the Release configuration is not supported currently. Please make sure to build your dedicated server with the Profile configuration.
+目前不支持使用 Release 配置的 Linux 专用服务器版本。请确保使用 Profile 配置构建您的专用服务器。
 {{< /note >}}
 
-## Prerequisites
-The instructions that follow assume the following:
-- You have built your project with the AWS GameLift Gem enabled. For more information on building projects, refer to [Build the O3DE Project](/docs/welcome-guide/create/creating-projects-using-cli/#build-the-o3de-project). 
-- You have built the Profile version of your project's server launcher.
-- You have run the **Asset Processor** and compiled all of the project's assets.
+## 先决条件
+以下说明假定以下内容：
+- 您已经在启用 AWS GameLift Gem 的情况下构建了项目。有关构建项目的更多信息，请参阅 [构建 O3DE 项目](/docs/welcome-guide/create/creating-projects-using-cli/#build-the-o3de-project). 
+- 您已经构建了项目的服务器启动器的 Profile 版本。
+- 您已运行 **Asset Processor** 并编译了项目的所有资产。
 
-## Prepare installation folder
+## 准备安装文件夹
 
-You must create a separate installation folder to copy over the required assets, profile runtime binaries, registry settings files, and redistributables. In this example, the installation folder is denoted as `<package base folder>`.
+您必须创建一个单独的安装文件夹，以复制所需的资产、配置文件运行时二进制文件、注册表设置文件和可再发行组件。在此示例中，安装文件夹表示为“`<package base folder>`”。
 
-1. Create the required subfolders in your installation folder. The launcher looks for fixed subfolder locations to find assets and registry files, so the installation folder must have the following structure:
+1. 在安装文件夹中创建所需的子文件夹。启动器会查找固定的子文件夹位置以查找资源和注册表文件，因此安装文件夹必须具有以下结构：
 
    - `<package base folder>/assets`
    - `<package base folder>/assets/linux`
    - `<package base folder>/lib64`
 
-2. Copy the following files to the package base folder:
+2. 将以下文件复制到包基文件夹：
 
-    -   All the executables and `*.so` files from `o3de/build/linux/bin/profile`.
-    -   The `Registry` folder from `o3de/build/linux/bin/profile/Registry`.
+   - 来自 '`o3de/build/linux/bin/profile`' 的所有可执行文件和 '`*.so`' 文件。
+   - 来自 '`o3de/build/linux/bin/profile/Registry`' 的 '`Registry`' 文件夹。
   
-3. Copy all of the files (loose assets) in your project's cache folder, `<project folder>/Cache/linux`, to the `<package base folder>/assets/linux` folder.
+3. 复制项目缓存文件夹中的所有文件（松散资源），从犯 `<project folder>/Cache/linux`到`<package base folder>/assets/linux` 文件夹。
 
-4. Copy the following 3rd party libraries from `/usr/lib/x86_64-linux-gnu`/ to `<package base folder>/lib64/`:
+4.  从 `/usr/lib/x86_64-linux-gnu`/ 复制以下第三方库到 `<package base folder>/lib64/`:
 
     -   libc++*
     -   libxkb*
@@ -49,13 +49,13 @@ You must create a separate installation folder to copy over the required assets,
     -   libbsd*
     -   libstdc++*
 
-    To copy libary files, use the following CLI command:
+    要复制库文件，请使用以下 CLI 命令：
 
     ```cmd
     cp -a /usr/lib/x86_64-linux-gnu/<library name>* <package base folder>/lib64/.
     ```
 
-5. Create a build install script called `install.sh` in the package base folder and add the following content to the file. For more information about the build install script, please check [Upload a custom server build to GameLift](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-cli-uploading.html)
+5. 在软件包 base 文件夹中创建名为 'i`nstall.sh`' 的构建安装脚本，并将以下内容添加到文件中。有关生成安装脚本的更多信息，请查看 [将自定义服务器生成包上传到 GameLift](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-build-cli-uploading.html)
 
     ```bash
     #!/bin/sh
@@ -98,22 +98,22 @@ You must create a separate installation folder to copy over the required assets,
     echo 'Install Success'
     ```
 
-## Test server package
+## 测试服务器包
 
-To test the local server package:
+要测试本地服务器包：
 
-1.  Start GameLift Local by following the Amazon GameLift documentation, [Testing Your Integration](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-testing-local.html). 
-2.  Run the CLI command to start your server:
+1.  按照 Amazon GameLift 文档[测试您的集成](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-testing-local.html) 启动 GameLift Local。 
+2.  运行 CLI 命令以启动您的服务器：
     ```
     <package base folder>/<server-launcher-executable> --engine-path=<package base folder> --project-path=<package base folder> --project-cache-path=<package base folder>/assets -bg_ConnectToAssetProcessor=0 -rhi=null
     ```
 
-3.  Start a client and test the server behavior locally by following the Amazon GameLift [Testing Your Integration](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-testing-local.html) documentation. The server log can be found at `<package base folder>/<unique server process id>/user/log/Server.log`.
+3.  按照 Amazon GameLift [测试您的集成](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-testing-local.html)文档启动客户端并在本地测试服务器行为。服务器日志可以在`<package base folder>/<unique server process id>/user/log/Server.log`.
 
 {{< caution >}}  
-Make sure to replace `<package base folder>` with the path to the installation folder that you created earlier. 
+确保将 '`<package base folder>` 替换为您之前创建的安装文件夹的路径。 
 {{< /caution >}}
 
 {{< note >}}  
-If you are using virtualbox to build linux server, you would not be able to test the networking connection across host pc and virtualbox. Instead after launching server, you can use AWS cli to test gamelift session on server side. (see details in [Test a Game Server](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-testing-local.html#integration-testing-local-server))
+如果您使用 virtualbox 构建 linux 服务器，您将无法测试主机 PC 和 virtualbox 之间的网络连接。相反，在启动服务器后，您可以使用 AWS cli 在服务器端测试 Gamelift 会话。（详见 [测试游戏服务器](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-testing-local.html#integration-testing-local-server))
 {{< /note >}}

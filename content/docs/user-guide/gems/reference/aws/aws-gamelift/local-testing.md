@@ -1,79 +1,79 @@
 ---
-linkTitle: Local Testing
-title: AWS GameLift Gem Local Testing with GameLift Anywhere
-description: "Learn how to test locally with the AWS GameLift Gem in O3DE"
+linkTitle: 本地测试
+title: AWS GameLift Gem 使用 GameLift Anywhere 进行本地测试
+description: "了解如何在 O3DE 中使用 AWS GameLift Gem 进行本地测试"
 toc: true
 weight: 600
 ---
 
-In this topic, you will learn how to test and verify AWS GameLift Gem feature integrations on your local machine by using [Amazon GameLift Anywhere](https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-anywhere.html). 
+在本主题中，您将了解如何使用 [Amazon GameLift Anywhere](https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-anywhere.html) 在本地计算机上测试和验证 AWS GameLift Gem 功能集成。
 
-GameLift Anywhere can be used to integrate hardware from your environment into your Amazon GameLift game hosting. Amazon GameLift Anywhere registers your hardware with Amazon GameLift in an Anywhere fleet; you can iteratively test and build your game server project using your own hardware.
+GameLift Anywhere 可用于将环境中的硬件集成到 Amazon GameLift 游戏托管中。Amazon GameLift Anywhere 在 Anywhere 队列中向 Amazon GameLift 注册您的硬件;您可以使用自己的硬件迭代测试和构建 Game Server 项目。
 
-With GameLift Anywhere, you can verify the following:
+使用 GameLift Anywhere，您可以验证以下内容：
 
-*   Your game server is correctly integrated with the Server SDK and is properly communicating with the GameLift service to start new game sessions, accept new players, and report health and status.
+* 您的游戏服务器已与 Server SDK 正确集成，并且正在与 GameLift 服务正确通信，以启动新的游戏会话、接受新玩家并报告运行状况和状态。
     
-*   Your game client is correctly integrated with the AWS SDK for GameLift and is able to retrieve information on existing game sessions, start new game sessions, join players to games and connect to the game session.
+* 您的游戏客户端已与适用于 GameLift 的 AWS 开发工具包正确集成，并且能够检索有关现有游戏会话的信息、启动新的游戏会话、加入玩家游戏以及连接到游戏会话。
     
 
-## 1. Create a Location
+## 1. 创建位置
 
-Create a location for your custom resources. A custom location labels the location of your hardware that Amazon GameLift uses to run your games in Anywhere fleets.
-When creating your custom location, the location name must start with `custom-`.
+为您的自定义资源创建一个位置。自定义位置标记 Amazon GameLift 用于在 Anywhere 队列中运行游戏的硬件的位置。
+创建自定义位置时，位置名称必须以“`custom-`”开头。
 
 ```sh
 aws gamelift create-location --location-name custom-location-1 --region <Region>
 ```
 
 
-## 2. Create an Anywhere Fleet
+## 2. 创建 Anywhere 队列
 
-Creating an Anywhere fleet is a much faster process compared to creating a regular AWS fleet, which usually takes about an hour to setup.
+与创建常规 AWS 队列相比，创建 Anywhere 队列的过程要快得多，因为常规 AWS 队列通常需要大约一个小时才能完成设置。
 
 ```sh
 aws gamelift create-fleet --name AnywhereFleet --compute-type ANYWHERE --locations Location=custom-location-1 --region <Region>
 ```
-Record the `FleetId` for the next steps. Example: **fleet-1a23bc4d-456e-78fg-h9i0-jk1l23456789**
+记录 '`FleetId`' 以用于后续步骤。例：**fleet-1a23bc4d-456e-78fg-h9i0-jk1l23456789**
 
 
-## 3. Register your local machine as a Compute
+## 3. 将本地计算机注册为 Compute
 
-Register your local machine as a GameLift Anywhere Compute.
-For ease of testing, we assume the Server and Client will be run on the same machine; so we can pass localhost (`127.0.0.1`) as the IP address.
-If your machine is accessible via a public IP address, change that value as appropriate.
+将您的本地计算机注册为 GameLift Anywhere Compute。
+为了便于测试，我们假设 Server 和 Client 将在同一台机器上运行;因此我们可以将 localhost （'`127.0.0.1`'） 作为 IP 地址传递。
+如果您的计算机可通过公共 IP 地址访问，请根据需要更改该值。
 
 ```sh
 aws gamelift register-compute --compute-name CustomCompute1 --fleet-id <FleetId> --ip-address 127.0.0.1 --location custom-location-1 --region <Region>
 ```
 
-Also retrieve the compute auth token as it will be necessary for the next steps.
+此外，检索 compute auth 令牌，因为它对于后续步骤是必需的。
 
 ```sh
 aws gamelift get-compute-auth-token --fleet-id <FleedId> --compute-name CustomCompute1
 ```
 
-## 4. Start an instance of the Game Server executable on your machine
+## 4. 在计算机上启动 Game Server 可执行文件的实例
 
-When you are ready to test with GameLift, opt-in by setting the `sv_gameLiftEnabled` and `sv_gameliftAnywhereEnabled` CVARs to `true`. These CVARs are off by default to facilitate local testing prior to the integration of the GameLift Server SDK into your game server.
+当您准备好使用 GameLift 进行测试时，通过将“`sv_gameLiftEnabled`”和“`sv_gameliftAnywhereEnabled`”CVAR 设置为“`true`”来选择加入。默认情况下，这些 CVAR 处于关闭状态，以便于在将 GameLift 服务器开发工具包集成到您的游戏服务器之前进行本地测试。
 
-You will also need to fill in the server parameters via the following CVARs:
+您还需要通过以下 CVAR 填写服务器参数：
 - `sv_gameliftAnywhereWebSocketUrl`
 - `sv_gameliftAnywhereAuthToken`
 - `sv_gameliftAnywhereFleetId`
 - `sv_gameliftAnywhereHostId`
 - `sv_gameliftAnywhereProcessId`
 
-All of the values for these properties are retrieved in the previous steps, aside from these notes:
-- `HostId` should be filled set to the `ComputeName`.
-- `ProcessId` can be omitted. A unique default `ProcessId` will be generated out of the timestamp.
+除了以下说明外，这些属性的所有值都在前面的步骤中检索：
+- 应将“`HostId`”填充为“`ComputeName`”。
+- 可以省略“`ProcessId`”。将从时间戳中生成唯一的默认 '`ProcessId`'。
 
-To set these values, you can either pass them when starting the executable (either via command line or in your Visual Studio solution) as follows:
+要设置这些值，您可以在启动可执行文件时（通过命令行或在 Visual Studio 解决方案中）传递它们，如下所示：
 
 ```sh
 C:\GameLiftPackageWindows\MultiplayerSample.ServerLauncher.exe --sv_gameLiftEnabled=true --sv_gameliftAnywhereEnabled=true --sv_gameliftAnywhereWebSocketUrl="<WebSocketUrl>" --sv_gameliftAnywhereAuthToken="<AuthToken>" --sv_gameliftAnywhereFleetId="<FleetId>" --sv_gameliftAnywhereHostId="<ComputeName>" --sv_gameliftAnywhereProcessId="<ProcessId>"
 ```
-Or you can set these values by creating a settings registry file named `commands.MyProject_serverlauncher.setreg` in the `MyProject/Registry` folder with the following contents:
+或者，您可以通过在 `MyProject/Registry` 文件夹中创建名为 `commands.MyProject_serverlauncher.setreg`，其中包含以下内容：
 
 ```json
 {
@@ -99,17 +99,16 @@ Or you can set these values by creating a settings registry file named `commands
 }
 ```
 
-This way, the values will be applied regardless of how the server is built.
+这样，无论服务器是如何构建的，都将应用这些值。
 
 
-## 5. Start the Game
+## 5.开始游戏
 
-Make sure you have a cmake build target for your game, like YourProject.GameLauncher, and build the application for your local testing.
-You should be able to find application under build bin folder, and launch the game.
+确保你有游戏的 cmake 生成目标，如 YourProject.GameLauncher，并生成用于本地测试的应用程序。
+您应该能够在 build bin folder 下找到 application，然后启动游戏。
 
+## 6.测试游戏和服务器
 
-## 6. Test Game and Server
+测试步骤和说明实际上取决于你自己的项目，但请确保你的测试可以涵盖 CreateSession、JoinSession、LeaveSession 和 DestroySession 用例。
 
-Testing steps and instructions really depend on your own project, but please make sure your testing can cover CreateSession, JoinSession, LeaveSession and DestroySession use case.
-
-You can also verify interactions and logs with the GameLift Local tool. For more information, refer to [Test a Game Server and Client](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-testing-local.html#integration-testing-local-client) in the Amazon GameLift Developer Guide.
+您还可以使用 GameLift Local 工具验证交互和日志。有关更多信息，请参阅《Amazon GameLift 开发人员指南》中的 [测试游戏服务器和客户端](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-testing-local.html#integration-testing-local-client)。

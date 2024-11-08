@@ -1,31 +1,30 @@
 ---
-linkTitle: Session Management Integration
-title: Session Management Integration
-description: Learn how to integrate multiplayer session management into your game and dedicated server using the AWS GameLift Gem in Open 3D Engine (O3DE).
+linkTitle: Session Management 集成
+title: Session Management 集成
+description: 了解如何使用 Open 3D Engine （O3DE） 中的 AWS GameLift Gem 将多人游戏会话管理集成到您的游戏和专用服务器中。
 toc: true
 weight: 200
 ---
 
-## Integrate game client
+## 集成游戏客户端
 
-For a client application, your game must implement the following use cases to manage a session:
+对于客户端应用程序，您的游戏必须实现以下用例来管理会话：
 - `CreateSession`
 - `SearchSessions`
 - `JoinSession`
 - `LeaveSession`
 
-The AWS GameLift Gem provides both [C++ APIs](cpp-api/) and [scripting](scripting/). You can implement these use cases using either method.
+AWS GameLift Gem 同时提供 [C++ API](cpp-api/) 和 [scripting](scripting/)。您可以使用任一方法实现这些使用案例。
+
+## 集成专用服务器
+
+要在服务器和 GameLift 之间建立通信，您必须通知 GameLift 您的服务器已准备就绪，然后让您的服务器响应 GameLift 通知。
+
+有关 GameLift 服务器初始化的更多详细信息，请参阅AWS GameLift Gem C++ API的 [服务器初始化](cpp-api/#server-initialization)。
+
+有关 GameLift 服务器通知的更多详细信息，请参阅AWS GameLift Gem C++ API的 [服务器通知](cpp-api/#server-notifications)。
 
 
-## Integrate dedicated server
+## 相关信息
 
-To establish communication between your server and GameLift, you must notify GameLift that your server is ready, and then have your server respond to GameLift notifications.
-
-For more details on GameLift server initialization, refer to the [Server initialization](cpp-api/#server-initialization) section of the AWS GameLift Gem C++ API page.
-
-For more details on GameLift server notifications, refer to the [Server notifications](cpp-api/#server-notifications) section of the AWS GameLift Gem C++ API page.
-
-
-## Related information
-
-- [Integrating Games with Custom Game Servers](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-custom-intro.html)
+- [将游戏与自定义游戏服务器集成](https://docs.aws.amazon.com/gamelift/latest/developerguide/integration-custom-intro.html)

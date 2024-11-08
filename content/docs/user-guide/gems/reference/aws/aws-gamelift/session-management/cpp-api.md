@@ -1,26 +1,26 @@
 ---
 linkTitle: Session Management C++ API
 title: Session Management C++ API 
-description: Learn how to use the multiplayer session management C++ API with the AWS GameLift Gem in Open 3D Engine (O3DE).
+description: 了解如何将多人游戏会话管理 C++ API 与 Open 3D Engine （O3DE） 中的 AWS GameLift Gem 结合使用。
 toc: true
 weight: 300
 ---
 
-## Client Side
+## 客户端
 
-The **AWS GameLift** Gem implements a session interface for Amazon GameLift. The *session interface* (`ISessionRequests` and `ISessionAsyncRequests`) provides public APIs that allow you to create game sessions and allow players to search and join online games. The session interface abstracts the implementation details of session-related management.
+**AWS GameLift** Gem 为 Amazon GameLift 实现会话接口。*会话接口*（'`ISessionRequests`' 和 '`ISessionAsyncRequests`'）提供公共 API，允许您创建游戏会话并允许玩家搜索和加入在线游戏。session 接口抽象了 session 相关管理的实现细节。
 
-The session interface performs all of the session handling. The Gem acts as a game-specific handler for the session interface. The game code makes calls by using the Gem's C++ API to interact with the session. GameLift creates and owns the game session, which exists on the server only when running an online game.
+会话接口执行所有会话处理。Gem 充当会话接口的游戏特定处理程序。游戏代码通过使用 Gem 的 C++ API 与会话交互来进行调用。GameLift 创建并拥有游戏会话，该会话仅在运行在线游戏时存在于服务器上。
 
-There must be only one implementation of the session interface per dedicated server solution. To add support for another dedicated server solution, you must create another implementation of the session interface.
+每个专用服务器解决方案只能有一个会话接口的实现。要添加对其他专用服务器解决方案的支持，您必须创建会话接口的另一个实现。
 
-It is recommended to create game sessions following the [best practices for GameLift game session queues](https://docs.aws.amazon.com/gamelift/latest/developerguide/queues-best-practices.html) instead of creating them directly on fleets.
+建议按照 [GameLift 游戏会话队列的最佳实践](https://docs.aws.amazon.com/gamelift/latest/developerguide/queues-best-practices.html) 创建游戏会话，而不是直接在队组上创建它们。
 
-### Client initialization
+### 客户端初始化
 
-To make requests against GameLift, you must configure a proper GameLift client by using `AWSGameLiftClientManager::ConfigureGameLiftClient()`. 
+要向 GameLift 发出请求，您必须使用`AWSGameLiftClientManager::ConfigureGameLiftClient()`配置适当的 GameLift 客户端。
 
-Note that you must specify the AWS Region in the correct format. For example, for the US East (N. Virginia) Region, specify **us-east-1**. For a list of supported Regions, refer to [Amazon GameLift endpoints and quotas](https://docs.aws.amazon.com/general/latest/gr/gamelift.html) in the AWS General Reference.
+请注意，您必须以正确的格式指定 AWS 区域。例如，对于美国东部（弗吉尼亚北部）区域，请指定 **us-east-1**。有关受支持区域的列表，请参阅 AWS 一般参考中的 [Amazon GameLift 终端节点和配额](https://docs.aws.amazon.com/general/latest/gr/gamelift.html) 。
 
 ```cpp
 AWSGameLift::AWSGameLiftRequestBus::Broadcast(
@@ -33,11 +33,11 @@ AWSGameLift::AWSGameLiftRequestBus::Broadcast(
 
 ### `CreateSession`
 
-Creates a multiplayer session for players to find and join. This API should only be used for experimentation during development. Prefer to use queues and async game session placement, ideally from a FlexMatch or game service component in production. Refer to [Get Started with Custom Servers](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-integration.html) for more details.
+创建多人游戏会话供玩家查找和加入。此 API 应仅用于开发期间的试验。更喜欢使用队列和异步游戏会话放置，最好从生产中的 FlexMatch 或游戏服务组件。有关详细信息，请参阅 [开始使用自定义服务器](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-integration.html) 。
 
-To create a session, call `AWSGameLiftClientManager::CreateSession()` or `AWSGameLiftClientManager::CreateSessionAsync()`. This makes a request call that configures the new session. 
+要创建会话，请调用`AWSGameLiftClientManager::CreateSession()` 或 `AWSGameLiftClientManager::CreateSessionAsync()`。这将发出一个配置新会话的请求调用。
 
-When session creation begins, the `OnCreateSessionBegin` notification is broadcast on the server side to perform setup operations, such as loading the level. When session creation completes and the session is active, the `OnCreateSessionEnd` notification is broadcast on the server side to perform any follow-up operations.
+当会话创建开始时，将在服务器端广播`OnCreateSessionBegin`通知以执行设置操作，例如加载关卡。当会话创建完成且会话处于活动状态时，将在服务器端广播 `OnCreateSessionEnd` 通知以执行任何后续操作。
 
 ```cpp
 void CreateSessionSync() {
@@ -69,9 +69,9 @@ void CreateSessionAsync() {
 
 ### `SearchSessions`
 
-Searches and retrieves all active sessions that match the provided search criteria.
+搜索并检索与提供的搜索条件匹配的所有活动会话。
 
-To search for sessions, call `AWSGameLiftClientManager::SearchSessions()` or `AWSGameLiftClientManager::SearchSessionsAsync()` and pass in a reference to the search request, which contains the search criteria. When the search is completed, you can iterate through `SessionConfigs` from `SearchSessionsResponse`.
+要搜索会话，请调用`AWSGameLiftClientManager::SearchSessions()` 或 `AWSGameLiftClientManager::SearchSessionsAsync()`，并传入对包含搜索条件的搜索请求的引用。搜索完成后，您可以从 '`SearchSessionsResponse`' 迭代 '`SessionConfigs`'。
 
 ```cpp
 void SearchSessionsSync() {
@@ -99,9 +99,9 @@ void SearchSessionsAsync() {
 
 ### `JoinSession`
 
-Reserves an open player slot in the game session, and initializes a connection from client to server.
+在游戏会话中保留一个开放的玩家位置，并初始化从客户端到服务器的连接。
 
-To begin the process that allows a player to join the game, call `AWSGameLiftClientManager::JoinSession()` or `AWSGameLiftClientManager::JoinSessionAsync()`, and pass in the game session id and the player id that will join. The process returns `true` if both steps, reserving player slot and initializing connection, succeed. If either step fails, the process returns `false`.
+要开始允许玩家加入游戏的过程，请调用`AWSGameLiftClientManager::JoinSession()` 或 `AWSGameLiftClientManager::JoinSessionAsync()`，并传入游戏会话 ID 和将加入的玩家 ID。如果两个步骤（保留玩家位置和初始化连接）都成功，则该过程将返回`true`。如果任一步骤失败，则进程返回 `false`。
 
 ```cpp
 void JoinSessionSync() {
@@ -131,9 +131,9 @@ void JoinSessionAsync() {
 
 ### `LeaveSession`
 
-Disconnects the player from the game session.
+断开玩家与游戏会话的连接。
 
-To leave the game session, call `AWSGameLiftClientManager::LeaveSession()` or `AWSGameLiftClientManager::LeaveSessionAsync()`.
+要离开游戏会话，请调用`AWSGameLiftClientManager::LeaveSession()` 或 `AWSGameLiftClientManager::LeaveSessionAsync()`。
 
 ```cpp
 void LeaveSessionSync()
@@ -151,31 +151,30 @@ void LeaveSessionAsync()
 
 ### Destroy session (passively)
 
-As the default behavior, when the last player leaves the game session, the Multiplayer Gem starts terminating the game session automatically. 
+作为默认行为，当最后一名玩家离开游戏会话时，多人游戏 Gem 将自动开始终止游戏会话。
 
+## 服务端
 
-## Server Side
+### 服务器初始化
 
-### Server initialization
+您必须通知 Amazon GameLift 服务您的服务器进程已准备好托管游戏会话、处理请求和建立连接。
 
-You must notify Amazon GameLift service that your server process is ready to host game sessions, handle requests, and take connections.
-
-To send a notification that your server process is ready, complete any relevant initialization and then use `AWSGameLiftServerRequestBus::Events::NotifyGameLiftProcessReady()`.
-We recommend placing the call after connecting to `Multiplayer::SessionNotificationBus` in the `YourProjectServerSystemComponent` activate step.
+要发送服务器进程已准备就绪的通知，请完成任何相关的初始化，然后使用`AWSGameLiftServerRequestBus::Events::NotifyGameLiftProcessReady()`。
+我们建议在连接到`YourProjectServerSystemComponent`激活步骤中的`Multiplayer::SessionNotificationBus`后进行调用。
 
 ```cpp
 AWSGameLift::AWSGameLiftServerRequestBus::Broadcast(&AWSGameLift::AWSGameLiftServerRequestBus::Events::NotifyGameLiftProcessReady);
 ```
 
 
-### Server notification APIs
+### 服务器通知APIs
 
-After the game session has been created, notifications are broadcast through `Multiplayer::SessionNotificationBus`. You can program how your session responds to these notifications.
+创建游戏会话后，将通过`Multiplayer::SessionNotificationBus`广播通知。您可以对会话如何响应这些通知进行编程。
 
 
 ### `OnCreateSessionBegin`
 
-When the session begins to create on the server, the `Multiplayer::SessionNotificationBus::Events::OnCreateSessionBegin()` notification is broadcast on the server side. When GameLift requests a game session it will supply the releveant runtime configuration, which includes key game session information, such as maximum players. It can also include game data and player data.  Set game session-specific properties and load the appropriate level on the server side during this step. 
+当会话开始在服务器上创建时，`Multiplayer::SessionNotificationBus::Events::OnCreateSessionBegin()`通知在服务器端广播。当 GameLift 请求游戏会话时，它将提供相关的运行时配置，其中包括关键游戏会话信息，例如最大玩家数。它还可以包括游戏数据和玩家数据。 在此步骤中，设置特定于游戏会话的属性并在服务器端加载适当的关卡。
 
 ```cpp
 bool OnCreateSessionBegin(const Multiplayer::SessionConfig& sessionConfig)
@@ -187,7 +186,7 @@ bool OnCreateSessionBegin(const Multiplayer::SessionConfig& sessionConfig)
 
 ### `OnCreateSessionEnd`
 
-At the end of session creation process, the `Multiplayer::SessionNotificationBus::Events::OnCreateSessionEnd()` notification is broadcast on the server side to perform any follow-up operation after session is created and active.
+在会话创建过程结束时，`Multiplayer::SessionNotificationBus::Events::OnCreateSessionEnd()` 通知在服务器端广播，以便在创建并激活会话后执行任何后续操作。
 
 ```cpp
 bool OnCreateSessionEnd()
@@ -199,9 +198,9 @@ bool OnCreateSessionEnd()
 
 ### `OnSessionHealthCheck`
 
-When your server process is ready and running, `Multiplayer::SessionNotificationBus::Events::OnSessionHealthCheck` is called regularly to report a health status of your server process.
+当您的服务器进程准备就绪并运行时， `Multiplayer::SessionNotificationBus::Events::OnSessionHealthCheck` 定期调用以报告 Server 进程的运行状况。
 
-You can customize the health check logic in `OnSessionHealthCheck`. For more information, refer to  [Report server process health](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-health) in the Amazon GameLift documentation.
+您可以在 `OnSessionHealthCheck` 中自定义运行状况检查逻辑。有关更多信息，请参阅 Amazon GameLift 文档中的 [报告服务器进程运行状况](https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-health)。
 
 ```cpp
 bool OnSessionHealthCheck()
@@ -213,7 +212,7 @@ bool OnSessionHealthCheck()
 
 ### `OnDestroySessionBegin`
 
-When the session begins to terminate, the `Multiplayer::SessionNotificationBus::Events::OnDestroySessionBegin` notification is broadcast to perform cleanup operations. During this step, it's recommended to clean up level data on the server side.
+当会话开始终止时，`Multiplayer::SessionNotificationBus::Events::OnDestroySessionBegin` 通知以执行清理操作。在此步骤中，建议在服务器端清理级别数据。
 
 ```cpp
 bool OnDestroySessionBegin()
@@ -224,7 +223,7 @@ bool OnDestroySessionBegin()
 
 ### `OnDestroySessionEnd`
 
-After the session is terminated, the `Multiplayer::SessionNotificationBus::Events::OnDestroySessionEnd` notification is broadcast for any follow-up operations, like shutdown application process, etc.
+会话终止后，`Multiplayer::SessionNotificationBus::Events::OnDestroySessionEnd`对于任何后续操作，如关闭应用程序进程等，都会广播通知。
 
 ```cpp
 bool OnDestroySessionEnd()

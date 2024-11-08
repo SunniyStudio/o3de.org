@@ -1,13 +1,13 @@
 ---
 linkTitle: Environment
 title: Environment Gems
-description: The Environment Gems provide the tools and framework to create natural-looking vegetation in Open 3D Engine (O3DE) projects.
+description: Environment Gems 提供工具和框架，以便在 Open 3D Engine （O3DE） 项目中创建自然的植被。
 ---
 
-The dynamic vegetation system uses vegetation components to customize dynamic vegetation coverage for levels of any size. To use the dynamic vegetation system, you must enable the [Vegetation Gem](./vegetation) for your project.
+动态植被系统使用植被组件来自定义任意大小的级别的动态植被覆盖范围。要使用动态植被系统，必须为项目启用[Vegetation Gem](./vegetation)。
 
-The [Landscape Canvas Gem](./landscape-canvas) provides the **Landscape Canvas** editor, a node-based graph tool for authoring workflows to populate landscape with dynamic vegetation.
+The [Landscape Canvas Gem](./landscape-canvas) 提供 **Landscape Canvas** 编辑器，这是一种基于节点的图形工具，用于编写工作流以使用动态植被填充地形。
 
-<!-- The [Vegetation Assets Gem](./vegetation-gem-assets) provides vegetation models, textures, and other assets and samples for use with the Vegetation Gem and **Landscape Canvas**. -->
+<!-- The [Vegetation Assets Gem](./vegetation-gem-assets) 提供植被模型、纹理以及用于 Vegetation Gem 和 **Landscape Canvas** 的其他资源和示例。 -->
 
-The [Surface Data Gem](./surface-data) enables surfaces such as terrain or meshes to emit signals or tags, that communicate its surface type. These signals and tags have various uses, such as creating inclusion and exclusion areas for vegetation growth.
+[Surface Data Gem](./surface-data) 使 terrain 或 mesh 等表面能够发出信号或标签，以传达其表面类型。这些信号和标签具有多种用途，例如为植被生长创建包含和排除区域。

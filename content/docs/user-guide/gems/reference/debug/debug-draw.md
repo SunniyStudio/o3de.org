@@ -1,8 +1,8 @@
 ---
 linkTitle: Debug Draw
 title: Debug Draw Gem
-description: The Debug Draw Gem provides Editor and runtime debug visualization features for Open 3D Engine (O3DE).
+description: 调试绘制 Gem 为 Open 3D Engine （O3DE） 提供编辑器和运行时调试可视化功能。
 toc: true
 ---
 
-The Debug Draw Gem provides editor and game runtime debug visualization features for an **Open 3D Engine (O3DE)** project. Components such as debug draw text, object bounding boxes, debug spheres, and debug rays are provided by the Debug Draw Gem.
+调试绘制 Gem 为 **Open 3D Engine （O3DE）** 项目提供编辑器和游戏运行时调试可视化功能。调试绘制文本、对象边界框、调试球体和调试光线等组件由 Debug Draw Gem 提供。

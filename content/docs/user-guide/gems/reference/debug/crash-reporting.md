@@ -1,8 +1,8 @@
 ---
 linkTitle: Crash Reporting
 title: Crash Reporting Gem
-description: The Crash Reporting Gem provides support for external crash reporting for Open 3D Engine (O3DE) projects.
+description: Crash Reporting Gem 为 Open 3D Engine （O3DE） 项目提供对外部崩溃报告的支持。
 toc: true
 ---
 
-The Crash Reporting Gem provides support for external crash reporting for **Open 3D Engine (O3DE)** projects.
+Crash Reporting Gem 为 Open 3D Engine （O3DE）** 项目提供对外部崩溃报告的支持。

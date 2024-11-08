@@ -65,25 +65,25 @@ aws configure import --csv file://credentials.csv
 
 这将根据 “`credentials`” 文件中的 IAM 用户名称创建一个命名配置文件。
 
-You can control which profile is used by default in the AWS CLI either by setting a ```[default]``` or through the use of the [AWS_PROFILE](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html#using-profiles) environment variable.
+您可以通过设置 ```[default]``` 或使用[AWS_PROFILE](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html#using-profiles)环境变量来控制在 AWS CLI 中默认使用的配置文件。
 
-For more information on using AWS CLI configure commands, see [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) in the AWS CLI User Guide. 
+有关使用 AWS CLI configure 命令的更多信息，请参阅《AWS CLI 用户指南》中的 [配置和凭证文件设置](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) 。
 
-You can also utilize IAM roles by defining role based profiles. Refer to [Using an IAM role in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html) for information.
+您还可以通过定义基于角色的配置文件来利用 IAM 角色。有关信息，请参阅 [在 AWS CLI 中使用 IAM 角色](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-role.html) 。
 
 ### 选项 2：使用配置文件配置本地凭证
 如果您有自动化流程或其他预置机制，则可以将预配置的用户凭证放在标准 AWS 配置文件中。
 
-Manually create or edit the `~/.aws/config` and `~/.aws/credentials` files (on macOS or Linux) or `%USERPROFILE%\.aws\config` and `%USERPROFILE%\.aws\credentials` files (on Windows) to include the credentials and a default region. 
+手动创建或编辑`~/.aws/config`和`~/.aws/credentials`文件（在 macOS 或 Linux 上）或`%USERPROFILE%\.aws\config`和`%USERPROFILE%\.aws\credentials` 文件（在 Windows 上）以包含凭证和默认区域。
 
-First, in `~/.aws/config` or `%USERPROFILE%\.aws\config` set your default region:
+首先，在 `~/.aws/config` 或 `%USERPROFILE%\.aws\config` 中设置您的默认区域：
 
 ```
 [default]
 region=us-west-2
 ```
 
-Second, in `~/.aws/credentials` or `%USERPROFILE%\.aws\credentials` set up [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) as needed. You can configure a ```default``` profile that is used when no profile is explicitly referenced in commands. 
+其次，在 `~/.aws/credentials` 或 `%USERPROFILE%\.aws\credentials` 中，根据需要设置 [命名配置文件](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)。您可以配置一个 ```default``` 配置文件，当命令中没有明确引用配置文件时使用。
 
 ```
 [default]
@@ -91,158 +91,159 @@ aws_access_key_id=AKXXXXXXXXXXX
 aws_secret_access_key=xxXXXXXXBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY
 ```
 
-### Option 3: Use environment variables to provide credentials
-You can also provide AWS credentials using environmental variables:
+### 选项 3：使用环境变量提供凭据
+您还可以使用环境变量提供 AWS 凭证：
 
-| Variable | Description |
+| 变量 | 说明 |
 | --- | --- |
-| `AWS_ACCESS_KEY_ID` | The AWS access key id to use. |
-| `AWS_SECRET_ACCESS_KEY` | The AWS secret key id to use. |
-| `AWS_SESSION_TOKEN` | The AWS session token to use (optional). If you are working with short-term credentials you will need to include the session token. |
-| `AWS_DEFAULT_REGION` | The default AWS region. |
+| `AWS_ACCESS_KEY_ID` | 要使用的 AWS 访问密钥 ID。 |
+| `AWS_SECRET_ACCESS_KEY` | 要使用的 AWS 密钥 ID。 |
+| `AWS_SESSION_TOKEN` | 要使用的 AWS 会话令牌 （可选）。如果您使用的是短期凭证，则需要包含会话令牌。 |
+| `AWS_DEFAULT_REGION` | 默认 AWS 区域。 |
 
-For more information on using environment variables for credentials, see [Environment variables to configure the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) in the AWS CLI User Guide.
+有关将环境变量用于凭证的更多信息，请参阅《AWS CLI 用户指南》中的 [用于配置 AWS CLI 的环境变量](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) 。
 
-### Option 4: Use O3DE console variables to provide credentials
-This method will only work when using an O3DE runtime binary (Launcher and Editor). Credentials can be provided directly by setting the `cl_awsAccessKey` and `cl_awsSecretKey` Console Variables (CVARs), as follows:
+### 选项 4：使用 O3DE 控制台变量提供凭据
+仅当使用 O3DE 运行时二进制文件（启动器和编辑器）时，此方法才有效。可以通过设置`cl_awsAccessKey`和`cl_awsSecretKey` 控制台变量 （CVAR） 直接提供凭据，如下所示：
 
 ```cmd
 Editor.exe +cl_awsAccessKey AKXXXXXXXXXXX +cl_awsSecretKey xxXXXXXXBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY
 ```
 
-Note: Because of a console variable string size limitation, providing a session token is not currently supported.
+注意：由于控制台变量字符串大小限制，目前不支持提供会话令牌。
 
-| CVar | Description |
+| CVar | 说明 |
 | --- | --- |
-| `cl_awsAccessKey` | The AWS access key id to use. |
-| `cl_awsSecretKey` | The AWS secret key id to use. |
+| `cl_awsAccessKey` | 要使用的 AWS 访问密钥 ID。 |
+| `cl_awsSecretKey` | 要使用的 AWS 密钥 ID。 |
 
 
-## Setting a default profile to use in O3DE
-If your development machine is configured with named profiles in your local AWS credentials file, you can set a profile to be automatically used with O3DE on a per-project basis. This profile should be set in the AWS Core [configuration settings](./getting-started/#project-settings) file and will then be used by default each time the O3DE Editor starts.
+## 设置要在 O3DE 中使用的默认配置文件
+如果您的开发计算机在本地 AWS 凭证文件中配置了命名配置文件，则可以将配置文件设置为按项目自动与 O3DE 一起使用。此配置文件应在 AWS Core [配置设置](./getting-started/#project-settings)  文件中设置，然后每次启动 O3DE 编辑器时都将默认使用。
 
-You can use the following commands to list your defaults and all named profiles (requires AWS CLI version 2):
+您可以使用以下命令列出您的默认配置文件和所有命名配置文件（需要 AWS CLI 版本 2）：
 
 ```cmd
-// Show the current defaults.
+// 显示当前默认值。
 aws configure list
 
-// Show all the named profiles.
+// 显示所有命名的配置文件。
 aws configure list-profiles
 ```
 
 ## Controlling user permissions
-All AWS IAM users are given permissions through the attachment of managed or inline IAM polices. See [Changing permissions for an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_change-permissions.html).
+所有 AWS IAM 用户都通过附加托管或内联 IAM 策略获得权限。请参阅 [更改 IAM 用户的权限](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_change-permissions.html)。
 
-We recommend that you adhere to the following guidelines:
-* Only use an admin user when absolutely necessary, such as when deploying and provisioning AWS resources. An _admin user_ is defined here as a user with full permissions on an AWS account.
-* Grant [least privileges](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege) on your AWS users, so they only have the minimum set of permissions on specific resources they require. This is controlled through setting of managed IAM policies and other mechanisms.
-* Update managed policies to grant or revoke the appropriate permissions as you add and remove AWS resources.
+我们建议您遵守以下准则：
+* 仅在绝对必要时使用管理员用户，例如在部署和预置 AWS 资源时。此处将 _admin user_定义为对 AWS 账户具有完全权限的用户。
+* 为您的 AWS 用户授予 [最低权限](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege)，以便他们仅对所需的特定资源拥有最低权限集。这是通过设置托管的 IAM 策略和其他机制来控制的。
+* 更新托管策略，以便在添加和删除 AWS 资源时授予或撤销适当的权限。
+  
+### 创建 IAM 用户组
+为了简化权限管理，建议您创建 [IAM 用户组](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html)。用户组允许您一次为多个用户指定权限，这样可以更轻松地管理用户组的权限。
 
-### Creating IAM user groups
-To make managing permissions easier, we recommend that you create [IAM user groups](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html). User groups let you specify permissions for multiple users at a time, which can make it easier to manage the permissions for groups of users.
+使用 AWS 控制台、AWS CLI、AWS CloudFormation 模板或使用 AWS Cloud Development Kit （AWS CDK） 创建用户组。我们建议您至少创建两个用户组，以便在 O3DE 中使用 AWS：
+* **Admins** - 这些管理员是拥有和管理 AWS 资源的管理员。通常，他们将执行更新并管理关键资源。
+* **Users** - 这些用户可以对资源执行操作，作为正常游戏或模拟的一部分。
+  
+#### 使用 AWS 控制台创建用户组
+1. 从[https://console.aws.amazon.com/iamv2](https://console.aws.amazon.com/iamv2)打开IAM控制台。
+2. 在IAM控制台的导航面板中，选择 **Groups**。
+3. 选择 **Create New Group**。
+4. 在 **Set Group Name** 页面上，在Group Name中，为新的用户组输入名称。 
+5. 选择 **Next Step**。
+6. 在 **Attach Policy** 页面上，选择 **Next Step** 不带任何策略，或附加与组相关的任何当前策略。
+7. 选择 **Create Group**。
 
-Create user groups using the AWS Console, the AWS CLI, AWS CloudFormation templates or using the AWS Cloud Development Kit (AWS CDK). We recommend you create at least two user groups to work with AWS in O3DE:
-* **Admins** - These are the administrators who own and manage AWS resources. Typically, they will perform updates and manage key resources.
-* **Users** - These are the users who can take action on the resources, as part of normal gameplay or a simulation.
-
-#### To create a user group using the AWS Console
-1. Open the IAM console from [https://console.aws.amazon.com/iamv2](https://console.aws.amazon.com/iamv2).
-2. In the IAM console's navigation pane, choose **Groups**.
-3. Choose **Create New Group**.
-4. On the **Set Group Name** page, for Group Name, enter a name for the new group. 
-5. Choose **Next Step**.
-6. On the **Attach Policy** page, either choose **Next Step** without attaching any policies, or attach any current policies that are relevant to the group.
-7. Choose **Create Group**. 
-
-#### To create a user group using the AWS CLI
-1. Install and configure the AWS CLI as above, see [Installing or updating the latest version of the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
-2. Generate a user group.
+#### 使用 AWS CLI 创建用户组
+1. 如上所述安装和配置 AWS CLI，请参阅 [安装或更新最新版本的 AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)。
+2. 生成用户组。
 ```cmd
 aws iam create-group --group-name MyUserGroup
 ```
 
-#### To create user groups using the AWS CDK examples
-The AWS CDK stacks defined in the AWS Core Gem will autogenerate sample `Admins` and `Users` user groups for you. By default, these groups are named ```O3DE-AWS-PROJECT-Admins``` and ```O3DE-AWS-PROJECT-Users```.
+#### 使用 AWS CDK 示例创建用户组
+AWS Core Gem 中定义的 AWS CDK 堆栈将为您自动生成示例`Admins`和 `Users` 用户组。默认情况下，这些组名为 ```O3DE-AWS-PROJECT-Admins``` 和 ```O3DE-AWS-PROJECT-Users```。
 
-See the [AWS CDK setup instructions](cdk-application) for more details.
+请参阅 [AWS CDK 设置指南](cdk-application) 了解详情。
 
-### Adding users to a user group
-You can add users to IAM User Groups using either the AWS Console or the AWS CLI. See [Adding and removing users in an IAM user group ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_add-remove-users.html) for full details.
+### 将用户添加到用户组
+您可以使用 AWS 控制台或 AWS CLI 将用户添加到 IAM 用户组。请参阅 [在 IAM 用户组中添加和删除用户](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_add-remove-users.html)了解详情。
 
-You can quickly add users via the CLI as follows:
+您可以通过 CLI 快速添加用户，如下所示：
 
 ```
 aws iam add-user-to-group --group-name MyGroup --user-name MyNewUser
 ```
 
-### Attaching permissions to a user group
-You can attach IAM policies to a user group to control the permissions they have access to. This can be done using either the AWS Console, the AWS CLI, AWS CloudFormation template or with the AWS CDK. See [Attaching a policy to an IAM user group ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_attach-policy.html) to attach permissions using the AWS Console or AWS CLI.
+### 为用户组附加权限
+您可以将 IAM 策略附加到用户组，以控制他们有权访问的权限。这可以使用 AWS 控制台、AWS CLI、AWS CloudFormation 模板或 AWS CDK 来完成。请参阅 [将策略附加到 IAM 用户组](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_attach-policy.html) 以使用 AWS 控制台或 AWS CLI 附加权限。
 
-#### Working with O3DE AWS CDK examples
-If you deploy both the Core and example stack from the AWS Core Gem you can see examples of user permissions that were automatically generated by the ```generate_user_policy``` and ```generate_admin_policy``` functions. The user permissions are automatically attached to the user groups by a call to ```__grant_access```.
+#### 使用 O3DE AWS CDK 示例
+如果您同时从 AWS Core Gem 部署 Core 堆栈和示例堆栈，则可以看到由 ```generate_user_policy``` 和```generate_admin_policy```函数自动生成的用户权限示例。用户权限通过调用```__grant_access```自动附加到用户组。
 
-See the AWS CDK [Permissions](https://docs.aws.amazon.com/cdk/v2/guide/permissions.html) documentation for more details.
+请参阅AWS CDK [Permissions](https://docs.aws.amazon.com/cdk/v2/guide/permissions.html) 文档了解更多详情。
 
-The AWS feature gems, such as AWS Metrics Gem, during deployment automatically create managed policies for users and admins that can then be attached manually to the appropriate user group. 
+在部署期间，AWS 功能 Gem（如 AWS Metrics Gem）会自动为用户和管理员创建托管策略，然后可以手动将这些策略附加到相应的用户组。
 
-#### To attach managed policies to user groups using the AWS Console
-1. Open the AWS Console at [https://console.aws.amazon.com/cloudformation](https://console.aws.amazon.com/cloudformation).
-2. Navigate to the desired stack in a region.
-3. Choose the **Resources** tab.
-4. Look for resources with the type ```AWS::IAM::ManagedPolicy``` in the stack and record the policy name.
-5. Open the IAM console at [https://console.aws.amazon.com/iam](https://console.aws.amazon.com/iam).
-6. Select **user groups**.
-7. Choose a user group.
-8. Select **permissions**, then choose **add permissions**, then select **attach polices**.
-9. Filter for policy to attach and select it.
-10. Choose **Attach Policies**.
+#### 使用 AWS 控制台将托管策略附加到用户组
+1. 在 [https://console.aws.amazon.com/cloudformation](https://console.aws.amazon.com/cloudformation) 打开AWS控制台。
+2. 导航到区域中所需的堆栈。
+3. 选择 **Resources** 标签页。
+4. 在堆栈中查找类型为 ```AWS::IAM::ManagedPolicy``` 的资源，并记录策略名称。
+5. 在 [https://console.aws.amazon.com/iam](https://console.aws.amazon.com/iam)打开IAM控制台。
+6. 选择 **user groups**。
+7. 选择一个用户组。
+8. 选择 **permissions**，然后选择 **add permissions**，然后选择 **attach polices**。
+9. 筛选要附加的策略并选择它。
+10. 选择 **Attach Policies**。
+    
+#### 使用 AWS CLI 将托管策略附加到用户组
+1. 在你的AWS账号中[描述和列出您的堆栈](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-describing-stacks.html)。
+2. 在指定堆栈中[列出所需的堆栈资源](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-listing-stack-resources.html)。
+3. 搜索 ```AWS::IAM::ManagedPolicy``` 资源 并记录资源的物理 ID，该 ID 将采用策略 ARN 的形式。
+4. [附加相关策略](https://docs.aws.amazon.com/cli/latest/reference/iam/attach-group-policy.html) 添加到用户组。
 
-#### To attach managed policies to user groups using the AWS CLI
-1. [Describe and list your stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-describing-stacks.html) in your AWS account.
-2. [List required stack resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-listing-stack-resources.html) in a specific stack.
-3. Search for the ```AWS::IAM::ManagedPolicy``` resources and record the physical ID of the resource, which will be in the form of the policy ARN.
-4. [Attach the relevant policy](https://docs.aws.amazon.com/cli/latest/reference/iam/attach-group-policy.html) to the user groups as desired.
-
-Example CLI commands:
+CLI 命令示例：
 ```cmd
 aws cloudformation describe-stacks --region <region>
 aws cloudformation list-stack-resources --stack-name <feature stack> --region <region>
 aws iam  attach-group-policy --group-name <group name> --policy-arn <policy arn>
 ```
 
-## Setting up credentials for a team
+## 为团队设置凭据
 
 {{< note >}}
-You can use [AWS Single Sign-On (SSO)](https://aws.amazon.com/single-sign-on/) instead of IAM to enable multiple users within a single AWS account to work with O3DE. In this usage pattern, the single AWS account serves as the management account for an organization in AWS Organizations, and that organization has no member accounts. To use AWS SSO, follow the [Getting Started](https://docs.aws.amazon.com/singlesignon/latest/userguide/getting-started.html) guide and the instructions in [Integrating AWS CLI with AWS SSO](https://docs.aws.amazon.com/singlesignon/latest/userguide/integrating-aws-cli.html). For related information, see the [What is AWS Organizations](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html) and [What is AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html) guides.
+您可以使用 [AWS Single Sign-On （SSO）](https://aws.amazon.com/single-sign-on/)代替 IAM，使单个 AWS 账户中的多个用户能够使用 O3DE。在这种使用模式中，单个 AWS 账户 充当 AWS Organizations 中组织的管理账户，并且该组织没有成员账户。要使用 AWS SSO，请按照 [入门](https://docs.aws.amazon.com/singlesignon/latest/userguide/getting-started.html) 指南和 [将 AWS CLI 与 AWS SSO 集成](https://docs.aws.amazon.com/singlesignon/latest/userguide/integrating-aws-cli.html) 中的说明进行操作。有关相关信息，请参阅 [什么是 AWS Organizations](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_introduction.html) 和 [什么是 AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html) 指南。
+
 {{< /note >}}
 
-To set up a team, repeat the instructions for individual users above to:
-1. Create relevant IAM user groups. See the [Creating IAM user groups](#creating-iam-user-groups) instructions in this topic.
-2. Provide any [permissions required](#attaching-permissions-to-a-user-group) to access AWS resources to those user groups. 
-3. Create any IAM users and distribute credentials using the instructions above for [individual users](#setting-up-aws-credentials-as-an-individual) as a guide.
-4. [Add users](#adding-users-to-a-user-group) to the relevant user groups to grant them permissions they require.
+要设置团队，请重复上述针对单个用户的说明，以：
+1. 创建相关的 IAM 用户组。请参阅本主题中的 [创建 IAM 用户组](#creating-iam-user-groups)说明。
+2. 向这些用户组提供任何 [所需权限](#attaching-permissions-to-a-user-group) 以访问 AWS 资源。
+3. 创建任何 IAM 用户并按照上述针对 [个人用户](#setting-up-aws-credentials-as-an-individual)的说明作为指南分发凭证。
+4. [添加用户](#adding-users-to-a-user-group) 到相关用户组，以授予他们所需的权限。
 
-Please read [Working with AWS credentials](#working-with-aws-credentials) to decide the right method for providing AWS IAM credentials for your O3DE project.
+请阅读 [使用 AWS 凭证](#working-with-aws-credentials) 以确定为您的 O3DE 项目提供 AWS IAM 凭证的正确方法。
 
-## Running your O3DE project on Amazon EC2
+## 在 Amazon EC2 上运行 O3DE 项目
 
-If you are running your project on Amazon EC2, you can utilize the [instance profile](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#ec2-instance-profile) to authenticate calls made to AWS. Using the IAM role from the Amazon EC2 instance profile lets you avoid configuring AWS credentials on the machine through less secure methods like supplying them as user data at deploy time or remotely accessing the machine to manually set up a profile.
+如果您在 Amazon EC2 上运行项目，则可以使用 [实例配置文件](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#ec2-instance-profile)来验证对 AWS 的调用。使用 Amazon EC2 实例配置文件中的 IAM 角色，您可以避免通过不太安全的方法在计算机上配置 AWS 凭证，例如在部署时将其作为用户数据提供，或远程访问计算机以手动设置配置文件。
 
-To use Amazon EC2 instance role credentials with your project:
-1. Create an Amazon EC2 [instance profile](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html) through the [Amazon web console](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html#instance-profiles-manage-console) or AWS CLI. An instance profile is essentially a container for an IAM role that your Amazon EC2 instance can assume to make calls to AWS.
-1. Provide the associated IAM role with any [permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html) required to access the AWS resources that your O3DE project needs.
-1. Attach the instance profile to the Amazon EC2 instance(s) running your O3DE project. You can attach it to a new instance [at launch time](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/LaunchingAndUsingInstances.html) or you can [attach it to a running instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#attach-iam-role). 
+要将 Amazon EC2 实例角色凭证用于您的项目：
+1. 通过 [Amazon Web 控制台](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html) 或 AWS CLI 创建 Amazon EC2 [实例配置文件](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html#instance-profiles-manage-console) 。实例配置文件本质上是 IAM 角色的容器，您的 Amazon EC2 实例可以代入该容器以调用 AWS。
+1. 为关联的 IAM 角色提供访问 O3DE 项目所需的 AWS 资源所需的任何 [权限](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage-attach-detach.html)。
+1. 将实例配置文件附加到运行 O3DE 项目的 Amazon EC2 实例。您可以 [在启动时](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/LaunchingAndUsingInstances.html) 将其附加到新实例  或可以 [将其附加到正在运行的实例](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#attach-iam-role)。
 
-The AWS Core Gem also requires that the `AllowAWSMetadataCredentials` setting be set to `true` before it will query the [Amazon EC2 Instance Metadata Service (IMDS)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html) for credentials. By default, it is set to `false` to prevent unwanted calls to the Amazon EC2 IMDS endpoint when running your O3DE project locally or on non-Amazon EC2 compute.
+   AWS 核心 Gem 还要求将`AllowAWSMetadataCredentials`设置设置为`true`，然后才能查询 [Amazon EC2 实例元数据服务 （IMDS）](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)以获取凭证。默认情况下，它设置为`false`，以防止在本地或非 Amazon EC2 计算上运行 O3DE 项目时对 Amazon EC2 IMDS 终端节点进行不必要的调用。
 
 {{< note >}}
-If the environment variable `AWS_EC2_METADATA_DISABLED` is set to `true`, this will override the `AllowAWSMetadataCredentials` setting and you will be unable to use credentials from the instance profile. For more information about this environment variable, refer to the [HttpRequestor Gem](/docs/user-guide/gems/reference/network/http-requestor/#turn-off-amazon-ec2-instance-metadata-service-calls).
+如果环境变量`AWS_EC2_METADATA_DISABLED`设置为`true`，这将覆盖`AllowAWSMetadataCredentials`设置，并且您将无法使用实例配置文件中的凭证。有关此环境变量的更多信息，请参阅 [HttpRequestor Gem](/docs/user-guide/gems/reference/network/http-requestor/#turn-off-amazon-ec2-instance-metadata-service-calls)。
 {{< /note>}}
 
-To turn on `AllowAWSMetadataCredentials` in AWSCore:
+在AWSCore中启用 `AllowAWSMetadataCredentials` ：
 
-1. Add it to your `awscoreconfiguration.setreg` [project settings file](./getting-started/#project-settings) at the following path:
+1. 将它添加到你的 `awscoreconfiguration.setreg` [项目设置文件](./getting-started/#project-settings)：
 
     ```json
     {
@@ -257,16 +258,16 @@ To turn on `AllowAWSMetadataCredentials` in AWSCore:
     }
     ```
 
-2. **OR** set it to true via the command line when directly invoking the launcher:
+2. **或** 在直接调用启动器时，通过命令行将其设置为 true：
 
     ```
     ./MyGame.ServerLauncher.exe --regset="/Amazon/AWSCore/AllowAWSMetadataCredentials=true"
     ```
 
 
-## Additional resources
+## 其他资源
 
-* For general help with AWS CLI configuration commands, see [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
-* For help with configuring credentials for the **AWS C++ SDK**, see [Providing AWS credentials](https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/credentials.html).
-* For help with managing permissions for AWS resources, see [Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html).
-* See the IAM documentation for help with [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) and [Using IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html).
+* 有关 AWS CLI 配置命令的一般帮助，请参阅 [配置 AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
+* 有关为 AWS C++ 开发工具包配置凭证的帮助，请参阅 [提供 AWS 凭证](https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/credentials.html).
+* 有关管理 AWS 资源权限的帮助，请参阅 [IAM 中的策略和权限](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html).
+* 请参阅 IAM 文档以获取有关 [IAM 角色](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) 和 [使用 IAM 角色](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html)的帮助。

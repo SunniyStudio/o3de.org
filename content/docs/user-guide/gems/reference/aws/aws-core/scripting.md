@@ -1,39 +1,39 @@
 ---
-linktitle: Scripting
-title: AWS Core Scripting
-description: Examples of using the AWS Core Gem with Script Canvas in Open 3D Engine (O3DE).
+linktitle: 脚本编程
+title: AWS Core 脚本编程
+description: 在 Open 3D Engine （O3DE） 中将 AWS Core Gem 与 Script Canvas 结合使用的示例。
 weight: 400
 toc: true
 ---
 
-This topic demonstrates the Script Canvas nodes that the AWS Core Gem defines.
+本主题演示了 AWS Core Gem 定义的 Script Canvas 节点。
 
 ## Amazon S3
 
 ### GetObject
 
-Input data pins:
+输入数据引脚：
 
 * Bucket Resource KeyName
 * Object KeyName
 * Outfile Name
 
-If the function is successful, you will get a success message from the **OnGetObjectSuccess** event handler on the **AWSS3BehaviorNotificationBus** bus. The file downloads to the location specified as the Outfile Name.
+如果函数成功，您将从 **AWSS3BehaviorNotificationBus** 总线上的 **OnGetObjectSuccess** 事件处理程序收到一条成功消息。文件将下载到指定为 Outfile Name 的位置。
 
-If the function results in an error, you will get an error message from the **OnGetObjectError** event handler on the **AWSS3BehaviorNotificationBus** bus.
+如果该函数导致错误，您将从 **AWSS3BehaviorNotificationBus** 总线上的 **OnGetObjectError** 事件处理程序收到一条错误消息。
 
 ![Scripting AWS S3 GetObject node](/images/user-guide/gems/reference/aws/aws-core/scripting-s3-get-object.png)
 
 ### HeadObject
 
-Input data pins:
+输入数据引脚：
 
 * Bucket Resource KeyName
 * Object KeyName
 
-If the function is successful, you will get a success message from the **OnHeadObjectSuccess** event handler on the **AWSS3BehaviorNotificationBus** bus.
+如果函数成功，您将从 **AWSS3BehaviorNotificationBus** 总线上的 **OnHeadObjectSuccess** 事件处理程序收到一条成功消息。
 
-If the function results in an error, you will get an error message from the **OnHeadObjectError** event handler on the **AWSS3BehaviorNotificationBus** bus.
+如果该函数导致错误，您将从 **AWSS3BehaviorNotificationBus** 总线上的 **OnHeadObjectError** 事件处理程序收到一条错误消息。
 
 ![Scripting AWS S3 HeadObject node](/images/user-guide/gems/reference/aws/aws-core/scripting-s3-head-object.png)
 
@@ -41,20 +41,20 @@ If the function results in an error, you will get an error message from the **On
 
 ### GetItem
 
-Input data pins:
+输入数据引脚：
 
 * Table Resource KeyName
 * Key Map
 
-Key map variable format:
+键映射变量格式：
 
 ![GetItem - Key variable properties](/images/user-guide/gems/reference/aws/aws-core/scripting-dynamodb-get-item-key-variable.png)
 
-Refer to [AttributeValue](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_AttributeValue.html) in the Amazon DynamoDB API Reference.
+请参阅Amazon DynamoDB API 中的 [AttributeValue](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_AttributeValue.html) 。
 
-If the function is successful, you will get a result in the `AttributeValue` string map from the **OnGetItemSuccess** event handler on the **AWSDynamoDBBehaviorNotificationBus** bus.
+如果函数成功，您将在 **AWSDynamoDBBehaviorNotificationBus** 总线上的 **OnGetItemSuccess** 事件处理程序的 '`AttributeValue`' 字符串映射中获得结果。
 
-If the function results in an error, you will get an error message from the **OnGetItemError** event handler on the **AWSDynamoDBBehaviorNotificationBus** bus.
+如果该函数导致错误，您将从 **AWSDynamoDBBehaviorNotificationBus** 总线上的 **OnGetItemError** 事件处理程序收到一条错误消息。
 
 ![Scripting AWS DynamoDB GetItem node](/images/user-guide/gems/reference/aws/aws-core/scripting-dynamodb-get-item.png)
 
@@ -62,13 +62,13 @@ If the function results in an error, you will get an error message from the **On
 
 ### Invoke
 
-Input data pins:
+输入数据引脚：
 
 * Function Resource KeyName
 * Payload
 
-If the function is successful, you will get the return value from the **OnInvokeSuccess** event handler on the **AWSLambdaBehaviorNotificationBus** bus.
+如果函数成功，您将从 **AWSLambdaBehaviorNotificationBus** 总线上的 **OnInvokeSuccess** 事件处理程序获取返回值。
 
-If the function results in an error, you will get an error message from the **OnInvokeError** event handler on the **AWSLambdaBehaviorNotificationBus** bus.
+如果该函数导致错误，您将从 **AWSLambdaBehaviorNotificationBus** 总线上的 **OnInvokeError** 事件处理程序收到一条错误消息。
 
 ![Scripting AWS Lambda Invoke node](/images/user-guide/gems/reference/aws/aws-core/scripting-lambda-invoke.png)

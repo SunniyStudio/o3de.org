@@ -1,105 +1,105 @@
 ---
-title: Using the Resource Mapping Tool
-description: Learn how to use the AWS Resource Mapping Tool in Open 3D Engine.
+title: 使用Resource Mapping Tool
+description: 了解如何在 Open 3D Engine 中使用 AWS Resource Mapping Tool。
 weight: 350
 toc: true
 ---
 
-The resource mapping tool helps manage and configure your resource mappings files.
+资源映射工具有助于管理和配置您的资源映射文件。
 
-## Prerequisites
+## 先决条件
 
-Resource mapping tool uses boto3 to interact with backend AWS services. Before using the tool you will need to do the following:
+资源映射工具使用 boto3 与后端 AWS 服务进行交互。在使用该工具之前，您需要执行以下操作：
 
-1. Set up your AWS credentials. For help, see [Configuring AWS Credentials](./configuring-credentials/).
-1. Set AWS Core [Project Settings](./getting-started/#project-settings) to configure the AWS profile name (if using profiles).
+1. 设置您的 AWS 凭证。有关帮助，请参阅 [配置 AWS 凭证](./configuring-credentials/)。
+1. 设置 AWS Core [项目设置](./getting-started/#project-settings)以配置 AWS 配置文件名称（如果使用配置文件）。
 
-## Launching the tool from the Editor
+## 从 Editor 启动工具
 
-The simplest approach is to launch the tool from the O3DE Editor. Use the **AWS - AWS Resource Mapping tool** menu item to launch the tool.
+最简单的方法是从 O3DE 编辑器启动该工具。使用 **AWS - AWS Resource Mapping tool** 菜单项启动该工具。
 
-The tool can also be run independently of the Editor. See the section [Launching the resource mapping tool from command line](#launching-the-resource-mapping-tool-from-command-line) for instructions.
+该工具也可以独立于 Editor 运行。有关说明，请参阅 [从命令行启动资源映射工具](#launching-the-resource-mapping-tool-from-command-line)部分。
 
-## Importing resources
+## 导入资源
 
-Do the following to import resources into a resource mapping file for your project.
+执行以下操作，将资源导入到项目的资源映射文件中。
 
-### 1. Select the mapping file
+### 1. 选择映射文件
 
-Select an existing mapping file to edit, or generate a new mapping file.
+选择要编辑的现有映射文件，或生成新的映射文件。
 
-**To generate a new mapping file**
+**生成新的映射文件**
 
-On first launch in a new project, no resource mapping files exist.
+在新项目中首次启动时，不存在资源映射文件。
 
 ![Start a new mapping file using the resource mapping tool](/images/user-guide/gems/reference/aws/aws-core/resource-mapping-new.png)
 
-Choose **Create New** to generate a new mappings file. Then use the **Config File** drop-down box to select the newly created file.
+选择 **Create New** 以生成新的 映射 文件。然后使用 **Config File** 下拉列表选择刚刚创建的文件。
 
-**To open an existing mapping file**
+**打开现有映射文件**
 
-Use the **Config File** drop-down box to select an existing mapping file from <Project>\Config.
+使用 **Config File** 下拉列表选择<Project>\Config中的现有映射文件。
 
-### 2. Import resources
+### 2. 导入资源
 
-You can add or import resources individually, or import them from an AWS CloudFormation stack.
+您可以单独添加或导入资源，也可以从 AWS CloudFormation 堆栈导入资源。
 
-#### Importing individual resources
+#### Importing individual resources导入单个资源
 
 ![Use Import Additional Resources to import AWS resources in the resource mapping tool](/images/user-guide/gems/reference/aws/aws-core/resource-mapping-import.png)
 
-**To import a resource deployed in your account**
+**导入账户中部署的资源**
 
-1. Open **Import Additional Resources**.
-1. Choose **Import AWS Resources**.
-1. Select the type of resource to import.
-1. Choose **Search**.
-1. Select the resource(s) to import.
-1. Set the key name.
-1. Choose **Save Changes** to save the file.
+1. 打开 **Import Additional Resources**。
+1. 选择 **Import AWS Resources**。
+1. 选择要导入的资源类型。
+1. 选择 **Search**。
+1. 选择要导入的资源。
+1. 设置键名称。
+1. 选择 **Save Changes** 保存文件。
 
-**To add a resource to a mapping file**
+**将资源添加到映射文件**
 
-1. Choose **Add Row**.
-1. Add a mapping key name.
-1. Enter the resource type. Types should be **AWS CloudFormation** types. Example: `AWS::Lambda::Function`.
-1. Provide the Name or ID of the item, such as the Lambda function name.
-1. Choose **Save Changes**.
+1. 选择 **Add Row**。
+1. 添加映射键名称。
+1. 输入资源类型。类型应该是 **AWS CloudFormation** 类型。例如：`AWS::Lambda::Function`。
+1. 提供项目的 Name （名称） 或 ID，例如 Lambda 函数名称。
+1. 选择 **Save Changes**。
 
-#### Importing from an AWS CloudFormation stack
+#### 从 AWS CloudFormation 堆栈导入
 
-**To import resources from an existing stack**
+**从现有堆栈导入资源**
 
-1. Open **Import Additional Resources**.
-1. Choose **Import CFN Stacks**.
-1. Choose **Search** to describe the stacks in your account.
-1. Select the resource(s) to import.
-1. Import the resources.
-1. Set the key names for the resources.
-1. Choose **Save Changes** to save the file.
+1. 打开 **Import Additional Resources**。
+1. 选择 **Import CFN Stacks**.
+1. 选择 **Search**来描述您账户中的堆栈。
+1. 选择要导入的资源。
+1. 导入资源。
+1. 设置资源的键名称。
+1. 选择 **Save Changes** 以保存文件。
 
-## Launching the resource mapping tool from command line
+## 从命令行启动资源映射工具
 
-You have two options for which Python runtime to use - your own, or the one included with O3DE.
+对于使用哪个 Python 运行时，您有两个选项 - 您自己的运行时，或 O3DE 附带的运行时。
 
-### Tool Arguments
-* `--binaries-path` **[Optional]** Path to QT Binaries necessary for PySide, required if launching tool with engine python environment.
-* `--config-path`   **[Optional]** Path to resource mapping config directory, if not provided tool will use current directory.
-* `--debug`         **[Optional]** Execute on debug mode to enable DEBUG logging level.
-* `--log-path`      **[Optional]** Path to resource mapping tool logging directory, if not provided tool will store logging under tool source code directory.
-* `--profile`       **[Optional]** Named AWS profile to use for querying AWS resources, if not provided tool will use `default` aws profile.
+### 工具参数
+* `--binaries-path` **[Optional]** PySide 所需的 QT 二进制文件的路径，如果使用引擎 python 环境启动工具，则需要。
+* `--config-path`   **[Optional]** 路径到资源映射配置目录，如果没有提供，工具将使用当前目录。
+* `--debug`         **[Optional]** Execute on debug （在调试模式下执行） 以启用 DEBUG 日志记录级别。
+* `--log-path`      **[Optional]** 资源映射工具日志目录的路径，如果没有提供，工具会将日志存储在工具源代码目录下。
+* `--profile`       **[Optional]** 用于查询 AWS 资源的命名 AWS 配置文件，如果未提供，工具将使用“`default`”aws 配置文件。
 
-### Option 1: Set up your own Python virtual environment
+### 选项 1: 设置你自己的Python虚拟环境
 
-This project is set up like a standard Python project. The initialization process also creates a `virtualenv` virtual environment within this project, stored under the `.venv` directory. To create the `virtualenv`, you must have a `python3` executable (or `python` for Windows) in your path with access to the `venv` package. If for any reason the automatic creation of the `virtualenv` fails, you can create the `virtualenv` manually.
+此项目的设置与标准 Python 项目类似。初始化过程还会在此项目中创建一个“`virtualenv`”虚拟环境，存储在“`.venv`”目录下。要创建 '`virtualenv`'，你的路径中必须有一个 '`python3`' 可执行文件（或 Windows 的 '`python`'），可以访问 '`venv`' 包。如果由于任何原因自动创建 '`virtualenv`' 失败，你可以手动创建 '`virtualenv`'。
 
-Open a command prompt to the resource mapping tool directory.
+打开资源映射工具目录的命令提示符。
 
 ```cmd
 cd <ENGINE_ROOT>\Gems\AWSCore\Code\Tools\ResourceMappingTool
 ```
 
-Create a `virtualenv`.
+创建一个`virtualenv`。
 
 ```cmd
 # Windows
@@ -109,7 +109,7 @@ python -m venv .venv
 python3 -m venv .venv
 ```
 
-Activate your `virtualenv`.
+激活你的`virtualenv`。
 
 ```cmd
 # Windows
@@ -119,7 +119,7 @@ Activate your `virtualenv`.
 source .venv/bin/activate
 ```
 
-Install the required dependencies.
+安装所需的依赖项。
 
 ```cmd
 # Windows
@@ -129,45 +129,46 @@ pip install -r requirements.txt
 pip3 install -r requirements.txt
 ```
 
-Launch the resource mapping tool, located in the engine root directory.
+启动位于引擎根目录中的资源映射工具。
 
 ```cmd
 python resource_mapping_tool.py
 ```
 
-### Option 2: Use the Python distribution from O3DE
+### 选项 2: 使用O3DE中的Python发布版
 
-This option requires a build of your project and the O3DE Editor. Refer to the instructions in `README/` located in `<ENGINE_ROOT>\Gems\AWSCore\Code\Tools\ResourceMappingTool` for details.
+此选项需要构建您的项目和 O3DE 编辑器。有关详细信息，请参阅位于`<ENGINE_ROOT>\Gems\AWSCore\Code\Tools\ResourceMappingTool`中的`README/` 中的说明。
 
-Open a command prompt and change the directory to the engine root.
+打开命令提示符并将目录更改为引擎根目录。
 
 ```cmd
 cd <ENGINE_ROOT>
 ```
 
-Launch the resource mapping tool, specifying the path to the project's build folder and to your chosen build configuration.
+启动资源映射工具，指定项目的构建文件夹和您选择的构建配置的路径。
 
 ```cmd
 python\python.cmd Gems\AWSCore\Code\Tools\ResourceMappingTool\resource_mapping_tool.py --binaries_path <PATH_TO_BUILD_FOLDER>\bin\<BUILD_CONFIGURATION>\AWSCoreEditorQtBin
 ```
 
-Example using the **profile** build configuration:
+使用 **profile** 构建配置的示例：
 
 ```cmd
 python\python.cmd Gems\AWSCore\Code\Tools\ResourceMappingTool\resource_mapping_tool.py --binaries_path C:\MyProject\bin\profile\AWSCoreEditorQtBin
 ```
 
-## Troubleshooting
+## 故障排除
 
-### Check the logs
-Check the resource mapping tool logs `resource_mapping_tool.log` that are generated in `--log-path` you provided while launching tool. If `--log-path` is not provided, log file is generated in tool source code directory.
+### 检查日志
+检查您在启动工具时提供的`--log-path` 中生成的资源映射工具日志`resource_mapping_tool.log`。如果未提供`--log-path`，则会在工具源码目录下生成日志文件。
 
-If launching tool from Editor, log file is generated in `<project-directory>/user/logs/resource_mapping_tool.log`
+如果从 Editor 启动工具，则会在`<project-directory>/user/logs/resource_mapping_tool.log`中生成日志文件
 
-### Unable to call a resource
-Check the [resource mapping file](/docs/user-guide/gems/reference/aws/aws-core/resource-mapping-files/) is configured correctly. Ensure the lookup name is defined as expected and it maps to the expected attributes. 
+### 无法调用资源
+检查 [资源映射文件](/docs/user-guide/gems/reference/aws/aws-core/resource-mapping-files/)是否配置正确。确保查找名称按预期定义，并且它映射到预期的属性。
 
-Errors of the form ```Cannot determine region from the url``` in the logs indicate the wrong region or account has been set for the resource.
-* Double check that the resource's mapping entry has the correct region and account information, if overriding the global region and account attributes.
-* Double check that the resource's mapping entry has the correct resource type and name.
-* Ensure the mapping file sets the required global attributes for region and version. Ensure they are set to the expected values.
+日志中 ```Cannot determine region from the url```  形式的错误表示为资源设置了错误的区域或帐户。
+
+* 如果覆盖全局区域和账户属性，请仔细检查资源的映射条目是否具有正确的区域和账户信息。
+* 仔细检查资源的映射条目是否具有正确的资源类型和名称。
+* 确保映射文件为区域和版本设置所需的全局属性。确保它们设置为预期值。

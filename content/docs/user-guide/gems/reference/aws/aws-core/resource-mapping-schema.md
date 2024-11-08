@@ -1,11 +1,11 @@
 ---
-title: Resource Mapping Schema
-description: View the JSON resource mapping schema used by AWS Gems in the Open 3D Engine (O3DE).
+title: JSON 资源映射架构
+description: 查看 Open 3D Engine （O3DE） 中 AWS Gems 使用的 JSON 资源映射架构。
 toc: true
 weight: 320
 ---
 
-The AWS Core Gem provides the following JSON schema for resource mapping.
+AWS Core Gem 为资源映射提供以下 JSON 架构。
 
 ```json
 {

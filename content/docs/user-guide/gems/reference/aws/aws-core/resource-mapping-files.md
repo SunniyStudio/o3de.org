@@ -1,17 +1,17 @@
 ---
-title: Resource Mapping Files
-description: Learn about the resource mapping file used by AWS Gems in the Open 3D Engine (O3DE).
+title: Resource Mapping 文件
+description: 了解 Open 3D 引擎 （O3DE） 中的 AWS Gems 使用的资源映射文件。
 weight: 300
 toc: true
 ---
 
-A **resource mapping file** is a JSON file that provides a map of **lookup names** to a collection of **attributes** about AWS resources. O3DE runtimes can query the mapping file to easily find and utilize AWS resources. Typically, a project under development will use a different deployment, and therefore a different mapping file, than the released version of the project.
+**资源映射文件** 是一个 JSON 文件，它提供 **查找名称** 到有关 AWS 资源的 **属性** 集合的映射。O3DE 运行时可以查询映射文件，以便轻松查找和利用 AWS 资源。通常，正在开发的项目将使用与项目的已发布版本不同的部署，因此使用不同的映射文件。
 
-A mapping file contains one or more resource entries and a set of global attributes.
+映射文件包含一个或多个资源条目和一组全局属性。
 
-**Resource entry format**
+**资源条目格式**
 
-Each entry defines a lookup name - a logical name for the resource - and a collection of attributes in the following format:
+每个条目定义一个查找名称（资源的逻辑名称）和一个属性集合，格式如下：
 
 ```json
 "<lookup name>":  {
@@ -22,21 +22,21 @@ Each entry defines a lookup name - a logical name for the resource - and a colle
 }
 ```
 
-***Supported attributes***
-* Type - AWS resource type, e.g. AWS::Lambda::Function, AWS::S3::Bucket etc. Should map to a [CloudFormation resource type](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html).
-* Name/ID - AWS resource name or id.
-* Region - Used to override the global region attribute, if this resource is deployed to a different AWS region.
-* AccountId - Used to override the global account id attribute, if this resource is deployed in a different AWS account.
+***支持的属性***
+* Type - AWS资源类型，例如AWS::Lambda::Function, AWS::S3::Bucket等，应该映射到一个[CloudFormation资源类型](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)。
+* Name/ID - AWS 资源名称或id。
+* Region - 如果此资源部署到其他 AWS 区域，则用于覆盖 global region 属性。
+* AccountId - 用于覆盖全局账户 ID 属性（如果此资源部署在其他 AWS 账户 中）。
 
-**Global attributes**
+**全局属性**
 
-The mapping file also supports one _optional_ and two **required** global attributes:
+映射文件还支持一个 _可选的_ 和两个 **必须的** 全局属性：
 
-* AccountId (optional) - The default AWS account that is used to search for AWS resources referenced in your O3DE application code. Used when account ID is not otherwise explicitly referenced (such as on a specific resource mapping).
-* Region - The default region to use with this mapping file.
-* Version - The json schema version of this document.
+* AccountId (可选的) - 用于搜索 O3DE 应用程序代码中引用的 AWS 资源的默认 AWS 账户。当未以其他方式显式引用账户 ID 时使用（例如在特定资源映射上）。
+* Region - 要用于此映射文件的默认区域。
+* Version - 本文档的 json 架构版本。
 
-**Example of a complete mapping file**
+**完整映射文件的示例**
 
 ```json
 {
@@ -52,28 +52,28 @@ The mapping file also supports one _optional_ and two **required** global attrib
 }
 ```
 
-This mapping file has a single mapping: **MyKey**, which is a Lambda function called "ExampleLambda". It is deployed in us-west-2 in the AWS account with account ID "123456789123".
+此映射文件具有单个映射：**MyKey**，它是一个名为“ExampleLambda”的 Lambda 函数。它部署在账户 ID 为“123456789123”的 AWS 账户中的 us-west-2 中。
 
 {{< important >}}
-We strongly recommend against including your AWS account ID in builds distributed to untrusted environments. Depending on your use case, anonymous [client authentication](https://o3de.org/docs/user-guide/gems/reference/aws/aws-client-auth/) or the use of [custom domains](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html) may provide ways of interacting with your AWS resources without needing to specify an account ID.
+我们强烈建议不要在分发到不受信任的环境的构建中包含您的 AWS 账户 ID。根据您的使用案例，匿名 [client authentication](https://o3de.org/docs/user-guide/gems/reference/aws/aws-client-auth/) 或使用 [自定义域](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html) 可能会提供与 AWS 资源交互的方法，而无需指定账户 ID。
 {{< /important >}}
 
-## Generating a resource mappings file
+## 生成资源映射文件
 
-The mapping files have a well-defined [JSON format](/docs/user-guide/gems/reference/aws/aws-core/resource-mapping-schema/). They can be generated using custom tools or by hand. However, the easiest way to generate or edit these files is by using the visual [resource mapping tool](/docs/user-guide/gems/reference/aws/aws-core/resource-mapping-tool/) provided with O3DE.
+映射文件具有定义明确的 [JSON 格式](/docs/user-guide/gems/reference/aws/aws-core/resource-mapping-schema/)。它们可以使用自定义工具生成，也可以手动生成。但是，生成或编辑这些文件的最简单方法是使用 O3DE 提供的可视化 [资源映射工具](/docs/user-guide/gems/reference/aws/aws-core/resource-mapping-tool/)。
 
-All mapping files should be saved into the project's `Config` directory.
+所有映射文件都应保存到项目的 `Config` 目录中。
 
-## Using resource mappings
+## 使用资源映射
 
-Define the resource mapping file to use on load in the `ResourceMappingConfigFileName` setting in the `awscoreconfiguration.setreg` file, located in the project's `Registry` directory. See [Project Settings](./getting-started/#project-settings) for more information about this file. The AWS Core Gem loads the defined mapping file on initialization and supports access to the mappings.
+在位于工程的 `Registry`  目录中的 `awscoreconfiguration.setreg`文件的`ResourceMappingConfigFileName`设置中定义要在加载时使用的资源映射文件。有关此文件的更多信息，请参阅 [项目设置](./getting-started/#project-settings) 。AWS Core Gem 在初始化时加载定义的映射文件，并支持对映射的访问。
 
-Use the request bus (`AWSResourceMappingRequestBus`) to interact with a configured resource mapping file. See [AWSResourceMappingRequests](https://o3de.org/docs/api/gems/awscore/class_a_w_s_core_1_1_a_w_s_resource_mapping_requests.html) for the class API reference for the bus.
+使用请求总线 (`AWSResourceMappingRequestBus`) 与配置的资源映射文件进行交互。有关总线的类 API 参考，请参阅 [AWSResourceMappingRequests](https://o3de.org/docs/api/gems/awscore/class_a_w_s_core_1_1_a_w_s_resource_mapping_requests.html)。
 
-**Example: Reading an entry**
+**示例：读取条目**
 
 ```cpp
-// Read settings for a mapping entry called "MyTableKey".
+// 读取名为 “MyTableKey” 的映射条目的设置。
 AZStd::string requestTableName = "";
 AWSResourceMappingRequestBus::BroadcastResult(requestTableName, &AWSResourceMappingRequests::GetResourceNameId, "MyTableKey");
 

@@ -1,32 +1,32 @@
 ---
 linktitle: Metric Data Collection
 title: AWS Core Metric Data Collection
-description: Metric data collected by the AWS Core Gem in Open 3D Engine.
+description: Open 3D Engine 中的 AWS Core Gem 收集的指标数据。
 weight: 500
 ---
 
-The AWS Core Gem includes an option to periodically send usage metrics to AWS. We use this data to better understand how customers use the AWS solutions provided through the Gem. When enabled, we collect the following information and send it to AWS:
+AWS Core Gem 包括一个选项，用于定期向 AWS 发送使用情况指标。我们使用这些数据来更好地了解客户如何使用通过 Gem 提供的 AWS 解决方案。启用后，我们会收集以下信息并将其发送到 AWS：
 
-## Collected Metrics
-
-| Field            | Description                | Example                                  |
+## 收集的指标
+2
+| 字段            | 说明                | 示例                                  |
 |------------------|----------------------------|------------------------------------------|
-| `version`        | Defines the version of the metric schema this event was produced under. | `Schema Policy 1.1` |
-| `o3de_version`   | Defines the O3DE version (if known) providing the metric. | `2107.1` |
-| `platform`       | Identifies the platform running the O3DE Editor. | `Mac` |
-| `platform_version` | Identifies the version or sub-platform type. | `10.15.7` |
-| `timestamp` | Timestamp for metric generation. | `2007-04-05T14:30` |
-| `active_aws_gems` | A list of AWS Gems active in your project, separated by '/'. | `AWSCore/AWSMetrics/AWSClientAuth` |
+| `version`        | 定义生成此事件的指标架构的版本。 | `Schema Policy 1.1` |
+| `o3de_version`   | 定义提供度量的 O3DE 版本（如果已知）。 | `2107.1` |
+| `platform`       | 标识运行 O3DE 编辑器的平台。 | `Mac` |
+| `platform_version` | 标识版本或子平台类型。 | `10.15.7` |
+| `timestamp` | 用于指标生成的时间戳。 | `2007-04-05T14:30` |
+| `active_aws_gems` | 项目中活动的 AWS Gem 列表，以 '/' 分隔。 | `AWSCore/AWSMetrics/AWSClientAuth` |
 
-Data collected is subject to the [AWS Privacy Policy](https://aws.amazon.com/privacy/).
+收集的数据受 [AWS 隐私政策](https://aws.amazon.com/privacy/) 的约束。
 
 ## Opting Out
 
-You can opt out via the Editor preferences found at **Edit** -> **Editor Settings** -> **Global Preferences** -> **AWS**.
+您可以通过 Editor 首选项选择退出，**Edit** -> **Editor Settings** -> **Global Preferences** -> **AWS**。
 
-Or, you can modify the Editor Registry setting file under `{YOUR-PROJECT}/user/Registry/editorpreferences.setreg` and restart the Editor.
+或者，你可以修改编辑器注册表文件`{YOUR-PROJECT}/user/Registry/editorpreferences.setreg`，并重启编辑器。
 
-Registry setting:
+注册表设置：
 
 ```json
 {

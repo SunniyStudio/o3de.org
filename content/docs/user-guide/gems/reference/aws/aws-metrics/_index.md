@@ -1,26 +1,26 @@
 ---
 linktitle: AWS Metrics
 title: AWS Metrics Gem
-description: Introduction to the Open 3D Engine (O3DE) AWS Metrics Gem.
+description: Open 3D Engine （O3DE） AWS 指标 Gem 简介。
 toc: true
 ---
 
-The **AWS Metrics** Gem provides an extensible, out-of-the-box instrumentation and analytics solution for O3DE developers. It builds an analytics pipeline using the AWS Core Gem, and connects you to AWS services that support common metrics operations on your analytics data, including:
+**AWS Metrics** Gem 为 O3DE 开发人员提供可扩展、开箱即用的检测和分析解决方案。它使用 AWS Core Gem 构建分析管道，并将您连接到支持对分析数据执行常见指标操作的 AWS 服务，包括：
 
-* Ingestion
-* Storage
-* Analysis
-* Monitoring
-* Reporting
+*摄入
+*存储
+*分析
+*监测
+*报告
 
-Using this Gem, you can generate and submit metrics events in a thread-safe manner from C++, Lua, and Script Canvas. To use AWS services for real-time and batch analytics, you can deploy the sample AWS Cloud Development Kit (AWS CDK) application as a reasonable starting point. You can also extend the supplied AWS CDK application to a full, production-ready solution to meet your production and scaling needs. Refer to [Game Analytics Pipeline](https://aws.amazon.com/solutions/implementations/game-analytics-pipeline/) on the AWS website for a detailed look at the architecture.
+使用此 Gem，您可以以线程安全的方式从 C++、Lua 和 Script Canvas 生成和提交指标事件。要使用 AWS 服务进行实时和批量分析，您可以部署示例 AWS Cloud Development Kit （AWS CDK） 应用程序作为合理的起点。您还可以将提供的 AWS CDK 应用程序扩展为完整的生产就绪型解决方案，以满足您的生产和扩展需求。请参阅 AWS 网站上的 [Game Analytics Pipeline](https://aws.amazon.com/solutions/implementations/game-analytics-pipeline/)，详细了解架构。
 
-## Enabling the AWS Metrics Gem
+## 启用 AWS Metrics Gem
 
-To enable the AWS Metrics Gem, do the following:
+要启用 AWS Metrics Gem，请执行以下操作：
 
-1. Use **O3DE Project Manager** or the command line to add the AWS Metrics Gem to your project. Note that AWS Metrics requires the [AWS Core Gem](/docs/user-guide/gems/reference/aws/aws-core) as a dependency.
+1. 使用 **O3DE Project Manager** 或命令行将 AWS Metrics Gem 添加到您的项目中。请注意，AWS Metrics 需要 [AWS 核心 Gem](/docs/user-guide/gems/reference/aws/aws-core) 作为依赖项。
 
-1. Build your project using Project Manager, Visual Studio, or CMake.
+1. 使用 Project Manager、Visual Studio 或 CMake 构建您的项目。
 
-1. To configure AWS Metrics for your project, follow the instructions in [Setting Up the AWS Metrics Gem](./setup/).
+1. 要为您的项目配置 AWS 指标，请按照 [设置AWS Metrics Gem](./setup/)。

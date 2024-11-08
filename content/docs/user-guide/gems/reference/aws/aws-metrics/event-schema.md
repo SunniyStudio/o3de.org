@@ -1,12 +1,12 @@
 ---
 linktitle: Event Schema
 title: AWS Metrics API Event Schema
-description: View the JSON event schema for validating AWS Metrics input events in Open 3D Engine (O3DE).
+description: 查看 JSON 事件架构，用于在 Open 3D Engine （O3DE） 中验证 AWS Metrics 输入事件。
 toc: true
 weight: 600
 ---
 
-The AWS Metrics Gem provides the following JSON schema for validating input events. See the advanced topic on [Metrics Event Schema](./advanced-topics/#metrics-event-schema) for information on customizing the schema.
+AWS Metrics Gem 提供以下 JSON 架构来验证输入事件。有关自定义架构的信息，请参阅有关 [Metrics Event Schema](./advanced-topics/#metrics-event-schema) 的高级主题。
 
 ```json
 {

@@ -1,16 +1,16 @@
 ---
-linktitle: Using the C++ API
-title: Using the C++ API with the AWS Metrics Gem
-description: Get an overview of using the C++ API with the AWS Metrics Gem in Open 3D Engine (O3DE).
+linktitle: 使用C++ API
+title: 将 C++ API 与 AWS Metrics Gem 结合使用
+description: 大致了解如何在 Open 3D Engine （O3DE） 中将 C++ API 与 AWS Metrics Gem 结合使用。
 toc: true
 weight: 400
 ---
 
-The AWS Metrics Gem provides a C++ API for submitting metrics and handling notifications using the O3DE EBus. For more information about using the EBus system, refer to the [EBus](/docs/user-guide/programming/messaging/ebus) documentation.
+AWS Metrics Gem 提供了一个 C++ API，用于使用 O3DE 事件总线提交指标和处理通知。有关使用事件总线系统的更多信息，请参阅 [EBus](/docs/user-guide/programming/messaging/ebus)文档。
 
-## Using the AWSMetricsRequestBus
+## 使用 AWSMetricsRequestBus
 
-Sample code for calling the APIs in C++.
+使用 C++ 调用 API 的示例代码。
 
 ```cpp
 // Submit a metrics event and buffer it for sending in batch.
@@ -25,10 +25,10 @@ AWSMetricsRequestBus::BroadcastResult(result, &AWSMetricsRequests::SubmitMetrics
 AWSMetricsRequestBus::Broadcast(&AWSMetricsRequests::FlushMetrics);
 ```
 
-## Using the AWSMetricsNotificationBus
+## 使用 AWSMetricsNotificationBus
 
-Use standard EBus notification handlers for capturing OnSendMetricsSuccess and OnSendMetricsFailure notifications in C++.
+使用标准 EBus 通知处理程序在 C++ 中捕获 OnSendMetricsSuccess 和 OnSendMetricsFailure 通知。
 
-## C++ API Reference
+## C++ API 参考
 
-See the O3DE API Reference Guide for a complete reference to the [AWS Metrics C++ API](/docs/api/gems/awsmetrics).
+请参阅 O3DE API 参考指南 以获取 [AWS Metrics C++ API](/docs/api/gems/awsmetrics).

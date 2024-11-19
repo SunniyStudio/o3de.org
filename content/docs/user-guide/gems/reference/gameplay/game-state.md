@@ -1,31 +1,31 @@
 ---
 linkTitle: Game State
 title: Game State Gem
-description: The Game State Gem provides functionality to determine and manage game states in Open 3D Engine (O3DE) projects.
+description: Game State Gem提供在 Open 3D Engine （O3DE） 项目中确定和管理游戏状态的功能。
 toc: true
 ---
 
-The Game State Gem helps you manage and determine, at a high level, the state that the project runtime is in. Because the Game State Gem uses a stack to manage game states, returning to a previous state is straightforward.
+Game State Gem 可帮助您在高级别管理和确定项目运行时所处的状态。由于 Game State Gem 使用堆栈来管理游戏状态，因此返回到之前的状态非常简单。
 
 {{< note >}}
-For a sample implementation of game states, see the [Game State Samples Gem](/docs/user-guide/gems/reference/gameplay/game-state-samples). The Game State Samples Gem depends on the Game State Gem. You can customize the game states in the Game State Samples gem to meet the requirements of your project.
+有关游戏状态的示例实现，请参阅 [Game State Samples Gem](/docs/user-guide/gems/reference/gameplay/game-state-samples。Game State Samples Gem （游戏状态样本） Gem 取决于 Game State Gem。您可以在 Game State Samples Gem 中自定义游戏状态，以满足您的项目要求。
 {{< /note >}}
 
-## Examining the Code
+## 检查代码
 
-The Game State Gem manages a stack (or [pushdown automaton](https://en.wikipedia.org/wiki/Pushdown_automaton)) of abstract game states. The Game State Gem includes the following code members:
+Game State Gem 管理抽象游戏状态的堆栈（或 [pushdown automaton](https://en.wikipedia.org/wiki/Pushdown_automaton)）。Game State Gem 包括以下代码成员：
 
-* `IGameState` - Abstract interface that all concrete game state classes must be derived from.
+* `IGameState` - 所有具体游戏状态类都必须从中派生的抽象接口。
 
-* `GameStateRequests` - [EBus](/docs/user-guide/programming/messaging/ebus/) interface that other systems use to submit requests related to the game state.
+* `GameStateRequests` - 其他系统用于提交与游戏状态相关的请求的[EBus](/docs/user-guide/programming/messaging/ebus/)接口。
 
-* `GameStateNotifications` - EBus interface that other systems use to listen for events related to the game state.
+* `GameStateNotifications` - 其他系统用于侦听与游戏状态相关的事件的事件总线接口。
 
-* `GameStateSystemComponent` - Implements the `GameStateRequestBus` interface and sends events over the `GameStateNotificationBus`.
+* `GameStateSystemComponent` - 实现 `GameStateRequestBus` 接口，并通过 `GameStateNotificationBus` 发送事件。
 
 ### IGameState
 
-`IGameState` is the abstract interface that all concrete game state classes must be derived from. The interface defines methods that track changes in game state, as seen in the following excerpt from the source code at `\Gems\GameState\Code\Include\GameState\GameState.h`.
+`IGameState` 是所有具体游戏状态类都必须从中派生的抽象接口。该接口定义了跟踪游戏状态变化的方法，如以下源代码摘录所示，地址为 `\Gems\GameState\Code\Include\GameState\GameState.h`。
 
 ```c++
 //! Called when this game state is pushed onto the stack.
@@ -46,7 +46,7 @@ virtual void OnUpdate() {};
 
 ### GameStateRequests
 
-The methods in the `GameStateRequests` EBus perform essential tasks like creating, pushing, and popping a game state, or getting the active game state or active game state type. For the complete source code, see the `\Gems\GameState\Code\Include\GameState\GameStateRequestBus.h` file.
+`GameStateRequests`事件总线中的方法执行基本任务，例如创建、推送和弹出游戏状态，或者获取活动游戏状态或活动游戏状态类型。有关完整的源代码，请参阅 `\Gems\GameState\Code\Include\GameState\GameStateRequestBus.h` 文件。
 
 ```c++
  //! Create a new game state.
@@ -125,7 +125,7 @@ virtual bool DoesStackContainGameStateOfTypeId(const AZ::TypeId& gameStateTypeId
 
 ### GameStateNotifications
 
-The `GameStateNotificationBus` `OnActiveGameStateChanged` method is called when a transition occurs between a prior game state and a newer game state. For the source code, see the `\Gems\GameState\Code\Include\GameState\GameStateNotificationBus.h` file.
+当前一个游戏状态和新的游戏状态之间发生转换时，将调用`GameStateNotificationBus` `OnActiveGameStateChanged` 方法。有关源代码，请参阅`\Gems\GameState\Code\Include\GameState\GameStateNotificationBus.h`文件。
 
 ```c++
 //! Called when a game state transition occurs.

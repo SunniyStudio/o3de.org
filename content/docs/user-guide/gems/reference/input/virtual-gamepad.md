@@ -1,45 +1,45 @@
 ---
 linkTitle: Virtual Gamepad
 title: Virtual Gamepad Gem
-description: The Virtual Gamepad Gem provides controls that emulate a gamepad on touch screen devices for Open 3D Engine (O3DE) projects.
+description: Virtual Gamepad Gem提供在 Open 3D Engine （O3DE） 项目的触摸屏设备上模拟游戏手柄的控件。
 toc: true
 ---
 
-Use the Virtual Gamepad Gem to provide your project's UI with touch screen capabilities on mobile devices. After you enable the Virtual Gamepad Gem, you can add the virtual gamepad components to your project's UI in the **UI Editor**.
+使用 Virtual Gamepad Gem 在移动设备上为项目的 UI 提供触摸屏功能。启用 Virtual Gamepad Gem 后，您可以在 **UI Editor** 中将虚拟游戏手柄组件添加到项目的 UI 中。
 
-The Virtual Gamepad Gem includes a sample UI canvas that you can either customize for your game or use as an example for a new UI canvas. To view this canvas in the UI Editor, open `Gems\VirtualGamepad\Assets\UI\Canvases\VirtualGamepad\VirtualGamepad.uicanvas`.
+Virtual Gamepad Gem 包括一个示例 UI 画布，您可以针对您的游戏进行自定义，也可以将其用作新 UI 画布的示例。要在 UI Editor 中查看此画布，请打开`Gems\VirtualGamepad\Assets\UI\Canvases\VirtualGamepad\VirtualGamepad.uicanvas`。
 
-There is no limit for the number of active UI canvases that can contain virtual gamepad components. This means you can create many virtual gamepad canvases to display for the appropriate scenarios, or even at the same time. For example, you can show a different UI canvas on each half of your virtual gamepad.
+可以包含虚拟游戏手柄组件的活动 UI 画布的数量没有限制。这意味着您可以创建许多虚拟游戏手柄画布，以便在适当的场景中显示，甚至可以同时显示。例如，您可以在虚拟游戏手柄的每一半上显示不同的 UI 画布。
 
-## Configuring virtual gamepad behavior
+## 配置虚拟游戏手柄行为
 
-You can configure the virtual gamepad's behavior in UI Editor. To configure virtual gamepad behavior, do the following:
+您可以在 UI Editor 中配置虚拟游戏手柄的行为。要配置虚拟游戏手柄行为，请执行以下操作：
 
-1. In UI Editor, add the UI components **VirtualGamepadButton** and **VirtualGamepadThumbStick** to the UI canvas.
+1. 在 UI Editor中，添加UI组件 **VirtualGamepadButton** 和 **VirtualGamepadThumbStick** 到 UI 画布。
 
-1. For each component, select an **Input Channel**.
+1. 对于每个组件，选择 一个 **Input Channel**.。
 
 ![Input Channel selection for the VirtualGamepadButton](/images/user-guide/gems/gems-system-gem-virtualgamepad-2.png)
 
-For more information about input in O3DE, see Input in Open 3D Engine.
+有关 O3DE 中输入的更多信息，请参阅 Open 3D Engine 中的输入。
 
-## Virtual Gamepad component properties
+## 虚拟游戏手柄组件属性
 
-The Virtual Gamepad Gem features two components that you can use to customize input for your mobile games:
+Virtual Gamepad Gem 具有两个组件，您可以使用它们来自定义移动游戏的输入：
 
-**VirtualGamepadButton** has one property, **Input Channel**. Select the appropriate input.
+**VirtualGamepadButton** 有一个属性。**Input Channel**。选择适当的输入。
 
 ![Input Channel selection for the VirtualGamepadButton.](/images/user-guide/gems/gems-system-gem-virtualgamepad-properties-1.png)
 
-**VirtualGamepadThumbstick** has the following properties:
+**VirtualGamepadThumbstick** 具有以下属性：
 
 ![VirutalGamepadThumbStick component properties](/images/user-guide/gems/gems-system-gem-virtualgamepad-properties-2.png)
 
-## Displaying the virtual gamepad at runtime
+## 在运行时显示虚拟游戏手柄
 
-You can enable the virtual gamepad for runtime by creating instructions that loads the virtual gamepad UI canvas. You can do this with C++, Lua, or Script Canvas. For more information, see UICanvasManager and UICanvasComponent.
+您可以通过创建加载虚拟游戏手柄 UI 画布的指令来为运行时启用虚拟游戏手柄。您可以使用 C++、Lua 或 Script Canvas 执行此操作。有关更多信息，请参阅 UICanvasManager 和 UICanvasComponent。
 
-The following example Lua script displays a virtual gamepad UI canvas if touch screen support is detected.
+以下示例 Lua 脚本在检测到触摸屏支持时显示虚拟游戏手柄 UI 画布。
 
 ```lua
 local touchDevice =
@@ -49,7 +49,7 @@ if (touchDevice and touchDevice:IsSupported()) then
 end
 ```
 
-The following example Lua script checks if a physical gamepad is connected. If found, the Lua script disables the virtual gamepad.
+以下示例 Lua 脚本检查是否连接了物理游戏手柄。如果找到，Lua 脚本将禁用虚拟游戏手柄。
 
 ```lua
 local gamepadDevice =
@@ -59,9 +59,9 @@ if (gamepadDevice and gamepadDevice:IsConnected()) then
 end
 ```
 
-The following Lua script enables the virtual gamepad when a physical gamepad is disconnected and disables the virtual gamepad when a physical gamepad is connected.
+以下 Lua 脚本在物理游戏手柄断开连接时启用虚拟游戏手柄，并在连接物理游戏手柄时禁用虚拟游戏手柄。
 
-You can find a working example of this Lua script in the `lumberyard_version\dev\SamplesProject\AnimationSamples\Advanced_RinLocomotion\Scripts\Advanced_RinLocomotion.lua` file.
+你可以在`lumberyard_version\dev\SamplesProject\AnimationSamples\Advanced_RinLocomotion\Scripts\Advanced_RinLocomotion.lua`文件中找到此Lua脚本的示例。
 
 ```lua
 function Example:OnActivate()

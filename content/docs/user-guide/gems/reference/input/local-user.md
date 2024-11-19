@@ -1,8 +1,8 @@
 ---
 linkTitle: Local User
 title: Local User Gem
-description: The Local User Gem provides functionality for mapping local user ids to local player slots and managing local user profiles.
+description: Local User Gem 提供将本地用户 ID 映射到本地玩家槽和管理本地用户配置文件的功能。
 toc: true
 ---
 
-The Local User Gem provides functionality for mapping local user IDs to local player slots and managing local user profiles.
+Local User Gem提供将本地用户 ID 映射到本地玩家槽和管理本地用户配置文件的功能。

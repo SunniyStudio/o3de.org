@@ -1,26 +1,26 @@
 ---
-linkTitle: BT Editor Nodes
-title: Behavior Tree Editor Nodes
-description: Reference for all nodes available in the Kythera AI Behavior Tree editor
+linkTitle: BT Editor 节点
+title: Behavior Tree Editor节点
+description: Kythera AI 行为树编辑器中所有可用节点的参考
 weight: 800
 toc: true
 ---
-This is a reference of all Behavior Tree nodes available in the [BT editor](behavior-tree-editor)
+这是 [BT 编辑器](behavior-tree-editor)中所有可用的 Behavior Tree （行为树） 节点的参考。
 
-## Leaf action nodes
+## 叶操作节点
 
-Nodes with no children
+没有子节点的节点
 
 ### Ship movement
 
 #### Ship\_Drift
 
-Keep the ship moving at current velocity (and allow it to be affected by external influences)
+保持飞船以当前速度移动（并允许它受到外部影响）
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Look** | EntityId, Position | no  |     | Direction for ship to point in |
+|输入 |类型 |必需 |默认 |描述 |
+| **Look** | EntityId, Position | no  |     | 船舶指向的方向 |
 
 **Outputs:** none
 
@@ -28,14 +28,14 @@ Keep the ship moving at current velocity (and allow it to be affected by externa
 
 #### Ship\_FlyFlourishSpline
 
-Fly a nav spline as a flourish. That is - copy the spline directly in front of the ship and fly that
+将导航样条线作为华丽的飞行。也就是说 - 直接在飞船前面复制样条并飞行
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Spline** | EntityId | yes | \-  | The spline to fly |
-| **SpeedOverride** | Float | no  | \-1.00 | Speed to fly the spline at. This is read every frame while the spline is being flown. The default of -1 causes the spline to be flown at the usual speed |
-| **DisableAvoidance** | Boolean | no  | false | While flying this spline switch off collision avoidance |
+|输入 |类型 |必需 |默认 |描述 |
+| **Spline** | EntityId | yes | \-  | 要飞的样条曲线 |
+| **SpeedOverride** | Float | no  | \-1.00 | 飞样条线的速度。在吊挂样条曲线时，每帧都会读取此数据。默认值 -1 会导致样条线以通常的速度飞行|
+| **DisableAvoidance** | Boolean | no  | false | 飞行时，此样条线将关闭碰撞避让 |
 
 **Outputs:** none
 
@@ -43,20 +43,20 @@ Fly a nav spline as a flourish. That is - copy the spline directly in front of t
 
 #### Ship\_FlySpline
 
-Fly a nav spline
+飞行导航样条线
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Spline** | EntityId | yes | \-  | The spline to fly |
-| **StartAtNearest** | Boolean | no  | false | Whether to start at the nearest point on the spline |
-| **AttackTargets** | Boolean | no  | true | If true (default), fire on targets that are specified by the spline |
-| **AttackUsualTarget** | Boolean | no  | false | If true, face and fire at the target selected by the usual target selector while flying the spline. If spline targets are specified and AttackTargets is true, this option will be overridden while going past those specific points |
-| **SpeedOverride** | Float | no  | \-1.00 | Speed to fly the spline at. This is read every frame while the spline is being flown. The default of -1 causes the spline to be flown at the usual speed |
-| **ErrorLimit** | Float | no  | \-1.00 | Maximum distance the entity may be away from the spline. If this distance is exceeded then the entity's position is overridden. Negative for no limit (default), otherwise must be >= 1m |
-| **TeleportToStart** | Boolean | no  | false | Instead of flying to the start of the spline, immediately teleport the ship there |
-| **AvoidanceMode** | StringHash | no  | "Normal" | While flying this spline what type of collision avoidance to do (Options: Off, Normal, Limited) |
-| **FailOnJoinFallback** | Boolean | no  | false | Whether to fail this node if joining falls back to use spline based method. This should normally be set to true when splines are picked systemically, to avoid collisions when the path to a systemically picked spline collides with something |
+|输入 |类型 |必需 |默认 |描述 |
+| **Spline** | EntityId | yes | \-  | 要飞的样条曲线 |
+| **StartAtNearest** | Boolean | no  | false | 是否从样条曲线上的最近点开始 |
+| **AttackTargets** | Boolean | no  | true | 如果为 true（默认），则对样条指定的目标触发 |
+| **AttackUsualTarget** | Boolean | no  | false | 如果为 true，则在飞行样条时面向通常由目标选择器选择的目标并开火。如果指定了样条目标并且 AttackTargets 为 true，则在经过这些特定点时，将覆盖此选项 |
+| **SpeedOverride** | Float | no  | \-1.00 | 飞样条线的速度。在吊挂样条曲线时，每帧都会读取此数据。默认值 -1 会导致样条线以通常的速度飞行 |
+| **ErrorLimit** | Float | no  | \-1.00 | 实体可以远离样条线的最大距离。如果超过此距离，则覆盖实体的位置。负数表示无限制（默认），否则必须为 >= 1m |
+| **TeleportToStart** | Boolean | no  | false | 与其飞到样条的起点，不如立即将飞船传送到那里 |
+| **AvoidanceMode** | StringHash | no  | "Normal" | 飞行此样条线时，要执行哪种类型的碰撞避免（选项：Off、Normal、Limited） |
+| **FailOnJoinFallback** | Boolean | no  | false | 如果联接回退到使用基于样条的方法，是否使此节点失败。通常，在系统拾取样条时，应将其设置为 true，以避免在系统拾取的样条线的路径与某些对象发生碰撞时发生碰撞 |
 
 **Outputs:** none
 
@@ -64,36 +64,36 @@ Fly a nav spline
 
 #### Ship\_GetSplinePoint
 
-Get a point from a spline
+从样条曲线获取点
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Spline** | EntityId | yes | \-  | The spline to look up from |
-| **SplineIndex** | Integer | yes | \-  | Which point to look up |
+|输入 |类型 |必需 |默认 |描述 |
+| **Spline** | EntityId | yes | \-  | 要从中查找的样条 |
+| **SplineIndex** | Integer | yes | \-  | 查找哪个点 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **PointPos** | Position | yes | Position of spline point |
+|输出 |类型 |必需 |描述 |
+| **PointPos** | Position | yes |样条点的位置 |
 
 * * *
 
 #### Ship\_Goto
 
-Go straight to a destination. Destination is re-evaluated each update
+直奔目的地。每次更新都会重新评估目标
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Destination** | EntityId, Position | yes | \-  | Where to go to |
-| **AbsoluteSpeed** | Float | no  | 0.00 | The speed to move at in m/s, RelativeSpeed is used if this is set to 0 |
-| **RelativeSpeed** | Float | no  | 1.00 | The proportion of maximum speed to move at (0.0 - 1.0) |
-| **EndDistance** | Float | no  | 0.00 | The minimum distance from the end point to complete at |
-| **AbsoluteSpeedAtDestination** | Float | no  | 0.00 | The absolute speed to be moving at when reaching target position in m/s. Defaults to using RelativeSpeedAtDestination. When going to an entity, this is ignored, instead the entity's current speed is used |
-| **RelativeSpeedAtDestination** | Float | no  | 0.00 | The relative speed to be moving at when reaching target position (0.0 - 1.0). Defaults to stop. When going to an entity, this is ignored, instead the entity's current speed is used |
-| **LookAtDestination** | Boolean | no  | false | Whether to set the look direction to be looking at the destination |
-| **LookTarget** | EntityId, Position | no  |     | Explicit look target (optional) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Destination** | EntityId, Position | yes | \-  | 跳转到哪里 |
+| **AbsoluteSpeed** | Float | no  | 0.00 | 以 m/s 为单位的移动速度，如果设置为 0，则使用 RelativeSpeed|
+| **RelativeSpeed** | Float | no  | 1.00 | 移动速度的最大比例 （0.0 - 1.0） |
+| **EndDistance** | Float | no  | 0.00 | 从终点到完成位置的最小距离 |
+| **AbsoluteSpeedAtDestination** | Float | no  | 0.00 | 到达目标位置时移动的绝对速度，以 m/s 为单位。默认使用 RelativeSpeedAtDestination。当转到实体时，这将被忽略，而是使用实体的当前速度 |
+| **RelativeSpeedAtDestination** | Float | no  | 0.00 | 到达目标位置时移动的相对速度 （0.0 - 1.0）。默认为 stop。当转到实体时，这将被忽略，而是使用实体的当前速度 |
+| **LookAtDestination** | Boolean | no  | false | 是否将注视方向设置为注视目标 |
+| **LookTarget** | EntityId, Position | no  |     | Explicit look target (optional)显式外观目标（可选） |
 
 **Outputs:** none
 
@@ -101,13 +101,13 @@ Go straight to a destination. Destination is re-evaluated each update
 
 #### Ship\_MaintainVel
 
-Keep the ship moving at current velocity
+保持船舶以当前速度行驶
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Velocity** | Velocity | yes | \-  | The velocity for the ship to move at (read every frame) |
-| **Look** | EntityId, Position | no  |     | Direction for ship to point in |
+|输入 |类型 |必需 |默认 |描述 |
+| **Velocity** | Velocity | yes | \-  | 飞船移动的速度（读取每一帧） |
+| **Look** | EntityId, Position | no  |     | 船舶指向的方向 |
 
 **Outputs:** none
 
@@ -115,18 +115,18 @@ Keep the ship moving at current velocity
 
 #### Ship\_PathTo
 
-Path to a destination. Destination is re-evaluated each update
+目标的路径。每次更新都会重新评估目标
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Destination** | EntityId, Position | yes | \-  | Where to go to/path to follow |
-| **AbsoluteSpeed** | Float | no  | 0.00 | The speed to move at in m/s, RelativeSpeed is used if this is set to 0 |
-| **RelativeSpeed** | Float | no  | 1.00 | The proportion of maximum speed to move at (0.0 - 1.0) |
-| **EndDistance** | Float | no  | 0.00 | The minimum distance from the end point to complete at |
-| **AbsoluteSpeedAtDestination** | Float | no  | 0.00 | The absolute speed to be moving at when reaching target position in m/s. Defaults to using RelativeSpeedAtDestination. When going to an entity, this is ignored, instead the entity's current speed is used |
-| **RelativeSpeedAtDestination** | Float | no  | 0.00 | The relative speed to be moving at when reaching target position (0.0 - 1.0). Defaults to stop. When going to an entity, this is ignored, instead the entity's current speed is used |
-| **LookTarget** | EntityId, Position | no  |     | Explicit look target (optional) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Destination** | EntityId, Position | yes | \-  | 去哪里/要遵循的路径 |
+| **AbsoluteSpeed** | Float | no  | 0.00 | 以 m/s 为单位的移动速度，如果设置为 0，则使用 RelativeSpeed |
+| **RelativeSpeed** | Float | no  | 1.00 | 移动速度的最大比例 （0.0 - 1.0） |
+| **EndDistance** | Float | no  | 0.00 | 从终点到完成位置的最小距离|
+| **AbsoluteSpeedAtDestination** | Float | no  | 0.00 | 到达目标位置时移动的绝对速度，以 m/s 为单位。 默认使用 RelativeSpeedAtDestination。当转到实体时，这将被忽略，而是使用实体的当前速度|
+| **RelativeSpeedAtDestination** | Float | no  | 0.00 | 到达目标位置时移动的相对速度 （0.0 - 1.0）。默认为 stop。当转到实体时，这将被忽略，而是使用实体的当前速度 |
+| **LookTarget** | EntityId, Position | no  |     | 显式外观目标（可选） |
 
 **Outputs:** none
 
@@ -134,12 +134,12 @@ Path to a destination. Destination is re-evaluated each update
 
 #### Ship\_Roll
 
-Roll the ship, normally executed in parallel with another movement node. Never completes
+滚动飞船，通常与另一个移动节点并行执行。从未完成
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **RollRate** | Float | yes | \-  | Rotation rate in rad/sec |
+|输入 |类型 |必需 |默认 |描述 |
+| **RollRate** | Float | yes | \-  | 旋转速率（以 rad/sec 为单位） |
 
 **Outputs:** none
 
@@ -147,7 +147,7 @@ Roll the ship, normally executed in parallel with another movement node. Never c
 
 #### Ship\_Stop
 
-Bring the entity to a complete stop
+使实体完全停止
 
 **Inputs:** none
 
@@ -157,18 +157,18 @@ Bring the entity to a complete stop
 
 #### Ship\_Track
 
-Attempt to reach and maintain a given distance from a target entity. Target is only evaluated on entry
+尝试到达目标实体并保持与目标实体的给定距离。Target 仅在进入时进行评估
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Target** | EntityId, Position | yes | \-  | The entity or position to track |
-| **MinAbsoluteSpeed** | Float | no  | 0.00 | The minimum speed to move at while tracking in m/s, MinRelativeSpeed is used if this is set to 0 |
-| **MinRelativeSpeed** | Float | no  | 0.00 | The minimum proportion of top speed to move at while tracking (0.0 - 1.0) |
-| **MaxAbsoluteSpeed** | Float | no  | 0.00 | The maximum speed to move at while tracking in m/s, MaxRelativeSpeed is used if this is set to 0 |
-| **MaxRelativeSpeed** | Float | no  | 1.00 | The maximum proportion of top speed to move at while tracking (0.0 - 1.0) |
-| **Distance** | Float | yes | \-  | Distance to attempt to stay away from the target |
-| **LookAtDestination** | Boolean | no  | false | Whether to set the look direction to be looking at the destination |
+|输入 |类型 |必需 |默认 |描述 |
+| **Target** | EntityId, Position | yes | \-  | 要跟踪的实体或位置 |
+| **MinAbsoluteSpeed** | Float | no  | 0.00 | 跟踪时移动的最小速度（以 m/s 为单位），如果设置为 0，则使用 MinRelativeSpeed |
+| **MinRelativeSpeed** | Float | no  | 0.00 | 跟踪时移动的最高速度的最小比例 （0.0 - 1.0） |
+| **MaxAbsoluteSpeed** | Float | no  | 0.00 | 跟踪时移动的最大速度（以 m/s 为单位），如果设置为 0，则使用 MaxRelativeSpeed |
+| **MaxRelativeSpeed** | Float | no  | 1.00 | 跟踪时移动的最高速度的最大比例 （0.0 - 1.0） |
+| **Distance** | Float | yes | \-  | 尝试远离目标的距离 |
+| **LookAtDestination** | Boolean | no  | false | 是否将注视方向设置为注视目标 |
 
 **Outputs:** none
 
@@ -176,14 +176,14 @@ Attempt to reach and maintain a given distance from a target entity. Target is o
 
 #### Ship\_TurnToTarget
 
-Turn the ship to face a target. Reads target every frame until completes
+转动飞船以面对目标。读取目标每帧一次，直到完成
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Target** | EntityId, Position | yes | \-  | Either a target entity or a position for the ship to point at |
-| **MaintainDirection** | Boolean | no  | false | If true, keeps a constant velocity and rotates to point at target. If false, keeps a constant speed but changes direction of velocity to point at target |
-| **Tolerance** | Float | no  | 1.00 | Tolerance (in degrees) in the direction that must be reached before the node completes |
+|输入 |类型 |必需 |默认 |描述 |
+| **Target** | EntityId, Position | yes | \-  | 目标实体或船舶指向的位置 |
+| **MaintainDirection** | Boolean | no  | false | 如果为 true，则保持恒定速度并旋转以指向目标。 如果为 false，则保持恒定速度，但将速度方向更改为指向目标 |
+| **Tolerance** | Float | no  | 1.00 | 在节点完成之前必须达到的方向的容差（以度为单位） |
 
 **Outputs:** none
 
@@ -193,14 +193,14 @@ Turn the ship to face a target. Reads target every frame until completes
 
 #### Character\_ExactGoto
 
-Move to the given position and direction
+移动到给定的位置和方向
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Destination** | Position | yes | \-  | Where the character should go to |
-| **Direction** | Vector | yes | \-  | What direction the character should face in at the destination position |
-| **Speed** | Float, StringHash | yes | \-  | The speed for the character to move at |
+|输入 |类型 |必需 |默认 |描述 |
+| **Destination** | Position | yes | \-  | 角色应该去哪里 |
+| **Direction** | Vector | yes | \-  | 角色在目标位置应面向哪个方向 |
+| **Speed** | Float, StringHash | yes | \-  | 角色移动的速度|
 
 **Outputs:** none
 
@@ -208,14 +208,14 @@ Move to the given position and direction
 
 #### Character\_Goto
 
-Path find and goto destination
+路径查找和跳转目标
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Destination** | EntityId, Position | yes | \-  | Where to go to |
-| **Speed** | Float, StringHash | yes | \-  | The speed for the character to move at |
-| **EndDistance** | Float | no  | 0.00 | The distance from the end of the path to complete |
+|输入 |类型 |必需 |默认 |描述 |
+| **Destination** | EntityId, Position | yes | \-  | 去哪里 |
+| **Speed** | Float, StringHash | yes | \-  | 角色移动的速度 |
+| **EndDistance** | Float | no  | 0.00 | 距要完成的路径终点的距离 |
 
 **Outputs:** none
 
@@ -223,15 +223,15 @@ Path find and goto destination
 
 #### Character\_GotoDirectness
 
-Approach the given waypoint at a given directness
+以给定的直线接近给定的航点
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Destination** | EntityId, Position | yes | \-  | Position to approach |
-| **Speed** | Float, StringHash | yes | \-  | The speed for the character to move at |
-| **EndDistance** | Float | no  | 1.00 | Distance from destination to complete |
-| **Directness** | Float | no  | 1.00 | Directness of approach |
+|输入 |类型 |必需 |默认 |描述 |
+| **Destination** | EntityId, Position | yes | \-  | 接近的位置 |
+| **Speed** | Float, StringHash | yes | \-  | 角色移动的速度 |
+| **EndDistance** | Float | no  | 1.00 | 从目的地到完成的距离 |
+| **Directness** | Float | no  | 1.00 | 方法的直接性 |
 
 **Outputs:** none
 
@@ -239,34 +239,34 @@ Approach the given waypoint at a given directness
 
 #### Character\_GotoWaypoint
 
-Pathfind to a given input. When nearly complete, redirect to a new waypoint if one has been given
+pathfind 添加到给定输入。当接近完成时，重定向到新的航点（如果已给出）
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Waypoint** | EntityId, Position | yes | \-  | The next waypoint to go to |
-| **Speed** | Float, StringHash | yes | \-  | The speed for the character to move at |
-| **EndTolerance** | Float | no  | 1.00 | At what distance from the current waypoint to read in the next waypoint |
+|输入 |类型 |必需 |默认 |描述 |
+| **Waypoint** | EntityId, Position | yes | \-  | 下一个要去的航点 |
+| **Speed** | Float, StringHash | yes | \-  | 角色移动的速度 |
+| **EndTolerance** | Float | no  | 1.00 | 在距当前航点多远处读取下一个航点 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **DistanceToWaypoint** | Float | yes | Distance to the current waypoint |
+|输出 |类型 |必需 |描述 |
+| **DistanceToWaypoint** | Float | yes | 到当前航点的距离 |
 
 * * *
 
 #### Character\_IsPointReachableNow
 
-Succeed if there is a valid path from the start point/entity to the end point/entity, fail if not
+如果存在从起点/实体到终点/实体的有效路径，则成功，否则失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Start** | EntityId, Position | no  |     | Position/entity to start test from. Default is current AI position |
-| **End** | EntityId, Position | yes | \-  | Position/entity to test to |
-| **ClampRadiusXY** | Float | no  | 2.00 | The radius to clamp to on start and end points in XY plane |
-| **ClampRadiusZ** | Float | no  | 2.00 | The radius to clamp to on start and end points on Z axis |
-| **MaxPathLength** | Float | no  |     | The maximum path length to test. Will default to 2x the distance from start to end positions |
+|输入 |类型 |必需 |默认 |描述 |
+| **Start** | EntityId, Position | no  |     | 要从中开始测试的位置/实体。默认值为当前 AI 位置 |
+| **End** | EntityId, Position | yes | \-  | 要测试的目标位置/实体 |
+| **ClampRadiusXY** | Float | no  | 2.00 | 在 XY 平面中的起点和终点上要钳制的半径 |
+| **ClampRadiusZ** | Float | no  | 2.00 | 在 Z 轴上的起点和终点上要夹紧的半径 |
+| **MaxPathLength** | Float | no  |     | 要测试的最大路径长度。将默认为从开始位置到结束位置距离的 2 倍 |
 
 **Outputs:** none
 
@@ -274,14 +274,14 @@ Succeed if there is a valid path from the start point/entity to the end point/en
 
 #### Character\_PathDistance
 
-Get the length of the current path. Fails if there is no current path
+获取当前路径的长度。如果没有当前路径，则失败
 
 **Inputs:** none
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Distance** | Float | yes | The distance from the end of the path to complete |
+|输出 |类型 |必需 |描述 |
+| **Distance** | Float | yes | 距要完成的路径终点的距离 |
 
 * * *
 

@@ -1,40 +1,40 @@
 ---
 linkTitle: Game State Samples
 title: Game State Samples Gem
-description: The Game State Samples Gem provides a set of sample game states (built on top of the generic Game State Gem), including primary user selection, main menu, level loading, level running, and level paused.
+description: Game State Samples Gem 提供一组示例游戏状态（基于通用 Game State Gem 构建），包括主要用户选择、主菜单、关卡加载、关卡运行和关卡暂停。
 toc: true
 ---
 
-The Game State Samples Gem uses the [GameState Gem](/docs/user-guide/gems/reference/gameplay/game-state) to provide a set of sample game states that control the high-level flow of a game.
+游戏状态示例 Gem 使用 [GameState Gem](/docs/user-guide/gems/reference/gameplay/game-state) 来提供一组示例游戏状态，用于控制游戏的高级流程。
 
-## Game States Included
+## 包含的游戏状态
 
-The Game State Samples gem includes the following game states. These states commonly occur in the beginning, middle, and end of a game.
+Game State Samples Gem 包括以下游戏状态。这些状态通常出现在游戏的开始、中间和结尾。
 
-* **Main menu state** - Enables any level in the project to be loaded from a button click.
-* **Level loading state** - Displays a placeholder loading screen.
-* **Level running state** - Active while the game is running.
-* **Level paused state** - Enables resuming or returning to the main menu to select another level.
-* **Other states** - Game states that react to user sign-in and sign out and controller connections and disconnections.
+* **Main menu state** - 允许通过单击按钮加载项目中的任何关卡。
+* **Level loading state** - 显示占位符加载屏幕。
+* **Level running state** - 在游戏运行时处于活动状态。
+* **Level paused state** - 启用恢复或返回到主菜单以选择其他关卡。
+* **Other states** - 对用户登录和注销以及控制器连接和断开连接做出反应的游戏状态。
 
-### Flow of Game States
+### 游戏状态流
 
-The following diagram shows the flow of the default game states in the GameState Samples gem.
+下图显示了 GameState Samples Gem 中默认游戏状态的流程。
 
 ![Flow of game states in the Game State Samples gem.](/images/user-guide/gems/gems-system-gem-game-state-samples-2.png)
 
-## Possible Uses
+## 可能的用途
 
-The following are some possible ways to use the Game State Samples Gem:
+以下是使用 Game State Samples Gem 的一些可能方法：
 
-* **Copy** - Copy the Gem to your game project to use as a starting point for further customization. This method offers the most flexibility.
+* **复制** - 将 Gem 复制到您的游戏项目中，以用作进一步自定义的起点。此方法提供了最大的灵活性。
 
-* **Derive** - Derive from the code to create your own game states. This approach is recommended if you want to keep the same behavior as the sample game states, but with only minor customizations. For example, you could create a main menu class like the following:
+* **派生** - 从代码派生以创建自己的游戏状态。如果您想保持与示例游戏状态相同的行为，但只进行少量的自定义，则建议使用此方法。例如，您可以创建如下所示的主菜单类：
 
   ```c++
   MyCustomMainMenu : public GameStateMainMenu
   ```
 
-  You could then customize the class through inheritance to load a different main menu UI Canvas. The disadvantage of the "derivation" approach is that it places some logic in the gem and the rest in your game code. This can make your solution hard to follow or debug.
+  然后，您可以通过继承自定义类，以加载不同的主菜单 UI Canvas。“派生”方法的缺点是它将一些逻辑放在 Gem 中，而将其余逻辑放在游戏代码中。这会使您的解决方案难以遵循或调试。
 
-* **Modify** - Modify the GameState Samples gem directly. Because gems can't depend on the game, and therefore can't effectively communicate with any game-specific code, this option is not recommended.
+* **修改** - 直接修改 GameState Samples Gem。由于 Gem 不能依赖于游戏，因此无法与任何特定于游戏的代码进行有效通信，因此不建议使用此选项。

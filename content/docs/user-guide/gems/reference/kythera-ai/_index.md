@@ -1,7 +1,7 @@
 ---
 linkTitle: Kythera AI
 title: Kythera AI Gem
-description: The Kythera AI Gem provides support for Kythera AI features in Open 3D Engine (O3DE), and includes a demo project, levels, and assets that demonstrate the features of Kythera AI.
+description: Kythera AI Gem在 Open 3D Engine （O3DE） 中提供对 Kythera AI 功能的支持，并包括演示 Kythera AI 功能的演示项目、关卡和资产。
 toc: true
 ---
 
@@ -9,30 +9,30 @@ toc: true
 
 ![O3DE showing a level with AI agents and debug draw](/images/user-guide/gems/kythera-ai/kythera-ai-level.jpg)
 
-The Kythera AI Gem adds a broad toolset of AI features to **Open 3D Engine (O3DE)**. It includes a demo project with levels and assets that demonstrate the features of Kythera AI. The following topics cover the tools provided with the Kythera AI Gem.
+Kythera AI Gem 为 Open 3D Engine （O3DE） 添加了广泛的 AI 功能工具集。它包括一个演示项目，其中包含演示 Kythera AI 功能的关卡和资产。以下主题介绍了 Kythera AI Gem 提供的工具。
 
-The Gem is available from our website at [https://www.kythera.ai/kythera-for-o3de](https://www.kythera.ai/kythera-for-o3de).
+Gem 可从我们的网站获得，网址为[https://www.kythera.ai/kythera-for-o3de](https://www.kythera.ai/kythera-for-o3de)。
 
-* [Kythera AI Gem Setup](kythera-ai-gem-setup) - How to install the Kythera AI Gem and get started
+* [Kythera AI Gem 安装](kythera-ai-gem-setup) - 如何安装 Kythera AI Gem 并开始
 
-## 2D navigation
+## 2D 导航
 
-* [Navmesh generation](navmesh-generation) - How to create navigation mesh (navmesh) for ground-based navigation
-* [Character movement APIs](character-movement-apis) - The APIs used to move characters on Kythera AI navmesh
+* [Navmesh 生成](navmesh-generation) - 如何为地面导航创建导航网格 （navmesh）
+* [角色移动API](character-movement-apis) - 用于在 Kythera AI 导航网格上移动角色的 API
 
-## 3D navigation
+## 3D 导航
 
-* [Octree generation](octree-generation) - How to create an octree for 3D navigation
-* [3D Navigation splines](navigation-splines-tool) - Highly configurable splines for describing 3D movement of AI agents
+* [Octree 生成](octree-generation) - 如何为 3D 导航创建八叉树
+* [3D 导航样条线](navigation-splines-tool) - 高度可配置的样条，用于描述 AI 代理的 3D 运动
 
-## Debugging and behavior authoring with the Kythera AI Inspector
+## 使用 Kythera AI Inspector 进行调试和行为创作
 
-The Inspector is Kythera AI's browser-based debugger and behavior tree editor.
+Inspector 是 Kythera AI 基于浏览器的调试器和行为树编辑器。
 
-* [Introduction to the Inspector](introduction-to-the-inspector)
-* [Behavior Tree Editor](behavior-tree-editor)
-* [Behavior Tree nodes](behavior-tree-nodes)
+* [介绍检查器](introduction-to-the-inspector)
+* [行为树编辑器](behavior-tree-editor)
+* [行为树节点](behavior-tree-nodes)
 
-## License
+## 许可证
 
-The Kythera Al Gem is available under the terms of our [Community License](https://www.kythera.ai/o3de-eula). It is free for non-commercial use or for a 60-day trial period, while also allowing commercial use based on a royalty. For other licensing options, please contact us via [our website](https://kythera.ai).
+Kythera Al Gem 根据我们的 [社区许可](https://www.kythera.ai/o3de-eula)条款提供。它可免费用于非商业用途或 60 天试用期，同时也允许基于版税进行商业用途。有关其他许可选项，请通过 [我们的网站](https://kythera.ai)与我们联系。

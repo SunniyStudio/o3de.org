@@ -1,37 +1,37 @@
 ---
 linkTitle: Gestures
 title: Gestures Gem
-description: The Gestures Gem provides detection for common gesture-based input actions in Open 3D Engine (O3DE).
+description: Gestures Gem为 Open 3D Engine （O3DE） 中常见的基于手势的输入操作提供检测。
 toc: true
 ---
 
-You can use the Gestures Gem to recognize common gesture-based input, including the following:
+您可以使用 Gestures Gem 来识别常见的基于手势的输入，包括以下内容：
 
-* **Tap** or **Click** - Single-touch, discrete gesture
-* **Drag** or **Pan** - Single-touch, continuous gesture
-* **Hold** or **Press** - Single-touch, continuous gesture
-* **Swipe** - Single-touch, discrete gesture
-* **Pinch** - Multiple-touch, continuous gesture
-* **Rotate** - Multiple-touch, continuous gesture
+* **轻敲** 或 **点击** - 单点触控、离散手势
+* **拖拽** 或 **平移** - 单点触控、连续手势
+* **按住** 或 **按下** - 单点触控、连续手势
+* **滑动** - 单点触控，离散手势
+* **捏合** - 多点触控、连续手势
+* **旋转** - 多点触控、连续手势
 
-Single-touch gestures (such as tap, drag, hold, and swipe) can be detected with touch or mouse input. However, multiple-touch gestures (such as pinch and rotate) can only be recognized on multi-touch enabled devices such as iOS or Android. You can extend the underlying C++ gesture recognition framework to support your custom gesture recognizers.
+可以通过触摸或鼠标输入来检测单点触控手势（例如点击、拖动、按住和滑动）。但是，多点触控手势（例如捏合和旋转）只能在支持多点触控的设备（如 iOS 或 Android）上识别。您可以扩展基础 C++ 手势识别框架以支持您的自定义手势识别器。
 
-Enable the Gem in your project to automatically start receiving gesture input events that you can respond to.
+在项目中启用 Gem 以自动开始接收您可以响应的手势输入事件。
 
 {{< note >}}
-Gesture recognizers can only be configured in the Gem's source at the moment. There is no UI available to modify them.
+目前只能在 Gem 的源中配置手势识别器。没有可用于修改它们的 UI。
 {{< /note >}}
 
-## Responding to Gesture Input
+## 响应手势输入
 
-Each gesture recognizer that the **Gestures** system component exposes corresponds to a gesture input channel that belongs to a gesture input device.
+**Gestures** 系统组件公开的每个手势识别器对应于属于手势输入设备的手势输入通道。
 
-You can use gesture input channels in the same way as other input channels with C++, Lua, or Script Canvas. You can map the gesture input channels to gameplay actions with an **Input** component.
+您可以像使用 C++、Lua 或 Script Canvas 中的其他输入通道一样使用手势输入通道。您可以使用 **Input** 组件将手势输入通道映射到游戏操作。
 
-To add input to an entity, see the [Input component](/docs/user-guide/components/reference/gameplay/input).
+要向实体添加输入，请参阅 [Input 组件](/docs/user-guide/components/reference/gameplay/input)。
 
-**Example Lua Script**
-The following script listens for and responds to the default double press gesture.
+**Lua 脚本示例**
+以下脚本侦听并响应默认的双击手势。
 
 ```lua
 function GestureExample:OnActivate()
@@ -51,4 +51,4 @@ function GestureExample:OnDeactivate()
 end
 ```
 
-For more information, see [Input in Open 3D Engine](/docs/user-guide/interactivity/input/).
+有关详细信息，请参阅 [Open 3D Engine 中的输入](/docs/user-guide/interactivity/input/)。

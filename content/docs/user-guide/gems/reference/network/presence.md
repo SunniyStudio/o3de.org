@@ -1,8 +1,8 @@
 ---
 linkTitle: Presence
 title: Presence Gem
-description: The Presence Gem provides a target platform agnostic interface for Presence services.
+description: Presence Gem 为 Presence 服务提供与目标平台无关的界面。
 toc: true
 ---
 
-The Presence Gem provides a target platform agnostic interface for Presence services.
+Presence Gem 为 Presence 服务提供与目标平台无关的界面。

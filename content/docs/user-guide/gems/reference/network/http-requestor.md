@@ -1,21 +1,21 @@
 ---
 linkTitle: HTTP Requestor
 title: HTTPRequestor Gem
-description: The HTTPRequestor Gem provides functionality to make asynchronous HTTP/HTTPS requests and return data through a user-provided call back function.
+description: HTTPRequestor Gem 提供通过用户提供的回调函数发出异步 HTTP/HTTPS 请求和返回数据的功能。
 toc: true
 ---
 
-The HTTPRequestor Gem provides functionality to make asynchronous HTTP/HTTPS requests and return data through a user-provided call back function.
+HTTPRequestor Gem提供通过用户提供的回调函数发出异步 HTTP/HTTPS 请求和返回数据的功能。
 
 {{< note >}}
-While this feature is currently supported only on Windows, it could be expanded to other platforms.
+虽然此功能目前仅在 Windows 上受支持，但可以扩展到其他平台。
 {{< /note >}}
 
-## Getting started
+## 开始
 
-To use the HttpRequestor Gem, it must be enabled in the project. For more information refer to [Adding and Removing Gems in a Project](/docs/user-guide/project-config/add-remove-gems/).
+要使用 HttpRequestor Gem，必须在项目中启用它。有关更多信息，请参阅 [在项目中添加和删除 Gem](/docs/user-guide/project-config/add-remove-gems/).
 
-The `HttpRequestor` Gem uses the AWS C++ SDK. To pick up these dependencies, add the following to the project's CMake file:
+`HttpRequestor` Gem使用 AWS C++ 开发工具包。要获取这些依赖项，请将以下内容添加到项目的 CMake 文件中：
 
 ```cmake
 BUILD_DEPENDENCIES
@@ -25,9 +25,9 @@ BUILD_DEPENDENCIES
             3rdParty::AWSNativeSDK::Core
 ```
 
-### Create a dependency on the Gem
+### 在 Gem 上创建依赖项
 
-If you need to ensure the HttpRequestor Gem is enabled before its use in a component, add a requirement in your component's `GetRequiredServices` method. For example:
+如果您需要确保在组件中使用 HttpRequestor Gem 之前已启用它，请在组件的`GetRequiredServices`方法中添加要求。例如：
 
 ```cpp
 void AutomatedTestingSystemComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
@@ -37,12 +37,12 @@ void AutomatedTestingSystemComponent::GetRequiredServices(AZ::ComponentDescripto
 }
 ```
 
-### Turn off Amazon EC2 Instance Metadata Service calls
+### 关闭 Amazon EC2 实例元数据服务调用
 
-The HttpRequestor Gem uses the [AWS C++ SDK](https://github.com/aws/aws-sdk-cpp) to provide the Http(s) client. You don't need to provide AWS credentials or account information to use this Gem.
+HttpRequestor Gem 使用 [AWS C++ SDK](https://github.com/aws/aws-sdk-cpp) 来提供 Http（s） 客户端。您无需提供 AWS 凭证或账户信息即可使用此 Gem。
 
-Unless your project is running on Amazon EC2 compute, it's recommended that you turn off Amazon EC2 Instance Metadata Service (IMDS) queries by setting the [AWS_EC2_METADATA_DISABLED](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) environment variable to `true`.
-Setting this environment variable will prevent SDK resources from needlessly attempting to contact the Amazon EC2 IMDS for configuration, region, and credential information, which can result in delays and wasted network resources.
+除非您的项目在 Amazon EC2 计算上运行，否则建议您通过将 [AWS_EC2_METADATA_DISABLED](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)  环境变量设置为“`true`”来关闭 Amazon EC2 实例元数据服务 （IMDS） 查询。
+设置此环境变量将防止 SDK 资源不必要地尝试联系 Amazon EC2 IMDS 以获取配置、区域和凭证信息，这可能会导致延迟和网络资源浪费。
 
 ```cmd
 set AWS_EC2_METADATA_DISABLED=true
@@ -52,14 +52,14 @@ set AWS_EC2_METADATA_DISABLED=true
 ## C++ API
 
 {{< note >}}
-This content is in the process of being moved to the [API Reference](https://o3de.org/docs/api/gems/httprequestor/class_http_requestor_1_1_http_requestor_requests.html).
+此内容正在移至 [API 参考](https://o3de.org/docs/api/gems/httprequestor/class_http_requestor_1_1_http_requestor_requests.html).
 {{< /note >}}
 
-The HttpRequestor Gem has two sets of APIs: one set for making requests that return JSON responses and one set for return string (text) responses.
+HttpRequestor Gem 有两组 API：一组用于发出返回 JSON 响应的请求，另一组用于返回字符串（文本）响应。
 
 ### AddRequest, AddRequestWithHeaders, AddRequestWithHeadersAndBody
 
-Use the `AddRequest`, `AddRequestWithHeaders`, and `AddRequestWithHeadersAndBody` APIs to send generic HTTP requests to any website and receive the returned data in JSON format. The methods return the data received in the `callback` parameter.
+使用`AddRequest`, `AddRequestWithHeaders`, 和 `AddRequestWithHeadersAndBody`向任何网站发送通用 HTTP 请求并以 JSON 格式接收返回数据的 API。这些方法返回在 `callback` 参数中接收的数据。
 
 #### Syntax
 
@@ -75,41 +75,41 @@ HttpRequestor::HttpRequestorRequestBus::Broadcast(&HttpRequestor::HttpRequestorR
 HttpRequestor::HttpRequestorRequestBus::Broadcast(&HttpRequestor::HttpRequestorRequests::AddRequestWithHeadersAndBody, URI, method, headers, body, callback)
 ```
 
-Each add request method requires the URI, a method and a callback.
+每个添加请求方法都需要 URI、方法和回调。
 
-#### Parameters
+#### 参数
 
-| Parameter | Type | Description | 
+|参数 |类型 |描述 |
 | --- | --- | --- | 
-| URI | `AZStd::String` | The fully qualified web address, in the following format: `scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]`.  | 
-| method | `Aws::Http::HttpMethod` | The method type. The following values are supported: `HTTP_GET`, `HTTP_POST`, `HTTP_DELETE`, `HTTP_PUT`, `HTTP_HEAD`, and `HTTP_PATCH`. | 
-| callback | [see below](#json-request-callback) | This function is called when the HTTP request is completed. The response body and code are present in the callback. | 
-| headers | `HttpRequestor::Headers` | The list of header fields for the HTTP request. | 
-| body | `AZStd::String` | Optional body to send with the request. | 
+| URI | `AZStd::String` | 完全限定的 Web 地址，格式如下： `scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]`.  | 
+| method | `Aws::Http::HttpMethod` | 方法类型。支持以下值： `HTTP_GET`, `HTTP_POST`, `HTTP_DELETE`, `HTTP_PUT`, `HTTP_HEAD`, and `HTTP_PATCH`. | 
+| callback | [see below](#json-request-callback) | 当 HTTP 请求完成时，将调用此函数。响应正文和代码存在于回调中。 | 
+| headers | `HttpRequestor::Headers` | HTTP 请求的标头字段列表。 | 
+| body | `AZStd::String` | 与请求一起发送的可选正文。 | 
 
-Return: No return value.
+Return：无返回值。
 
-### JSON Request Callback
+### JSON 请求回调
 
-This callback is returned for the `AddRequest`, `AddRequestWithHeaders`, and `AddRequestWithHeadersAndBody` methods.
+该回调针对 `AddRequest`, `AddRequestWithHeaders`, 和 `AddRequestWithHeadersAndBody` 等方法返回。
 
 ```cpp
 void Callback(const Aws::Utils::Json::JsonValue& json, Aws::Http::HttpResponseCode responseCode);
 ```
 
-#### Parameters
+#### 参数
 
-| Parameter | Type | Description | 
+|参数 |类型 |描述 |
 | --- | --- | --- | 
-| json | `Aws::Utils::Json::JsonValue` | The JSON object. The life span of this object is valid only during the scope of the callback. | 
-| responseCode | `Aws::Http::HttpResponseCode` | The HTTP response code. | 
+| json | `Aws::Utils::Json::JsonValue` | JSON 对象。此对象的生命周期仅在回调范围内有效。 | 
+| responseCode | `Aws::Http::HttpResponseCode` | HTTP 响应代码。 | 
 
 #### Returns
 `void`
 
 ### AddTextRequest, AddTextRequestWithHeaders, AddTextRequestWithHeadersAndBody
 
-Use the `AddTextRequest`, `AddTextRequestWithHeaders`, and `AddTextRequestWithHeadersAndBody` APIs to send a generic HTTP request to any website and receive the returned data in a text string. The methods return the data received in the `callback` parameter.
+使用`AddTextRequest`, `AddTextRequestWithHeaders`, 和 `AddTextRequestWithHeadersAndBody`API 向任何网站发送通用 HTTP 请求，并以文本字符串形式接收返回的数据。 这些方法返回在 `callback` 参数中接收的数据。
 
 #### Syntax
 
@@ -125,42 +125,42 @@ HttpRequestor::HttpRequestorRequestBus::Broadcast(&HttpRequestor::HttpRequestorR
 HttpRequestor::HttpRequestorRequestBus::Broadcast(&HttpRequestor::HttpRequestorRequests::AddTextRequestWithHeadersAndBody, URI, method, headers, body, callback)
 ```
 
-Each add text request method requires the URI, a method and a callback.
+每个添加文本请求方法都需要 URI、方法和回调。
 
-#### Parameters
+#### 参数
 
-| Parameter | Type | Description | 
-| --- | --- | --- | 
-| URI | `AZStd::String` | The fully qualified web address, in the following format: `scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]` | 
-| method | `Aws::Http::HttpMethod` | The method type. The following values are supported: `HTTP_GET`, `HTTP_POST`, `HTTP_DELETE`, `HTTP_PUT`, `HTTP_HEAD`, and `HTTP_PATCH`. | 
-| callback | [see below](#text-request-callback) | This function is called when the HTTP request is completed. The response body and code are present in the callback. | 
-| headers | `HttpRequestor::Headers` | The list of header fields for the HTTP request. | 
-| body | `AZStd::String` | Optional body to send with the request. | 
+|参数 |类型 | 描述                                                                                                                  |
+| --- | --- |---------------------------------------------------------------------------------------------------------------------| 
+| URI | `AZStd::String` | 完全限定的 Web 地址，格式如下： `scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]`                               | 
+| method | `Aws::Http::HttpMethod` | 方法类型。支持以下值： `HTTP_GET`, `HTTP_POST`, `HTTP_DELETE`, `HTTP_PUT`, `HTTP_HEAD`, 和 `HTTP_PATCH`.                        | 
+| callback | [see below](#text-request-callback) | 当 HTTP 请求完成时，将调用此函数。响应正文和代码存在于回调中。 | 
+| headers | `HttpRequestor::Headers` |HTTP 请求的标头字段列表。                                                                 | 
+| body | `AZStd::String` | 与请求一起发送的可选正文。                                                                            | 
 
 #### Returns
 `void`
 
 ### Text Request Callback
 
-This callback is returned for the `AddTextRequest`, `AddTextRequestWithHeaders` and `AddTextRequestWithHeadersAndBody` methods.
+该回调针对 `AddTextRequest`, `AddTextRequestWithHeaders` 和 `AddTextRequestWithHeadersAndBody` 方法返回。
 
 ```cpp
 void Callback(const AZStd::string& response, Aws::Http::HttpResponseCode responseCode);
 ```
 
-#### Parameters
+#### 参数
 
-| Parameter | Type | Description | 
+|参数 |类型 |描述 |
 | --- | --- | --- | 
-| response | AZStd::string& | The text returned from the server. The life span of this object is valid only during the scope of the callback. | 
-| responseCode | Aws::Http::HttpResponseCode | The HTTP response code. | 
+| response | AZStd::string& | 从服务器返回的文本。此对象的生命周期仅在回调范围内有效。 | 
+| responseCode | Aws::Http::HttpResponseCode | HTTP 响应代码。 | 
 
 #### Returns
 `void`
 
-## Example
+## 例
 
-The following example shows calling a HttpBin to get the origin IP address:
+以下示例显示了调用 HttpBin 以获取源 IP 地址：
 
 ```cpp
 #include <aws/core/http/HttpResponse.h>

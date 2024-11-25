@@ -22,7 +22,7 @@ toc: true
 |输入 |类型 |必需 |默认 |描述 |
 | **Look** | EntityId, Position | no  |     | 船舶指向的方向 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -37,7 +37,7 @@ toc: true
 | **SpeedOverride** | Float | no  | \-1.00 | 飞样条线的速度。在吊挂样条曲线时，每帧都会读取此数据。默认值 -1 会导致样条线以通常的速度飞行|
 | **DisableAvoidance** | Boolean | no  | false | 飞行时，此样条线将关闭碰撞避让 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -58,7 +58,7 @@ toc: true
 | **AvoidanceMode** | StringHash | no  | "Normal" | 飞行此样条线时，要执行哪种类型的碰撞避免（选项：Off、Normal、Limited） |
 | **FailOnJoinFallback** | Boolean | no  | false | 如果联接回退到使用基于样条的方法，是否使此节点失败。通常，在系统拾取样条时，应将其设置为 true，以避免在系统拾取的样条线的路径与某些对象发生碰撞时发生碰撞 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -95,7 +95,7 @@ toc: true
 | **LookAtDestination** | Boolean | no  | false | 是否将注视方向设置为注视目标 |
 | **LookTarget** | EntityId, Position | no  |     | Explicit look target (optional)显式外观目标（可选） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -109,7 +109,7 @@ toc: true
 | **Velocity** | Velocity | yes | \-  | 飞船移动的速度（读取每一帧） |
 | **Look** | EntityId, Position | no  |     | 船舶指向的方向 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -128,7 +128,7 @@ toc: true
 | **RelativeSpeedAtDestination** | Float | no  | 0.00 | 到达目标位置时移动的相对速度 （0.0 - 1.0）。默认为 stop。当转到实体时，这将被忽略，而是使用实体的当前速度 |
 | **LookTarget** | EntityId, Position | no  |     | 显式外观目标（可选） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -141,7 +141,7 @@ toc: true
 |输入 |类型 |必需 |默认 |描述 |
 | **RollRate** | Float | yes | \-  | 旋转速率（以 rad/sec 为单位） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -149,9 +149,9 @@ toc: true
 
 使实体完全停止
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -170,7 +170,7 @@ toc: true
 | **Distance** | Float | yes | \-  | 尝试远离目标的距离 |
 | **LookAtDestination** | Boolean | no  | false | 是否将注视方向设置为注视目标 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -185,7 +185,7 @@ toc: true
 | **MaintainDirection** | Boolean | no  | false | 如果为 true，则保持恒定速度并旋转以指向目标。 如果为 false，则保持恒定速度，但将速度方向更改为指向目标 |
 | **Tolerance** | Float | no  | 1.00 | 在节点完成之前必须达到的方向的容差（以度为单位） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -202,7 +202,7 @@ toc: true
 | **Direction** | Vector | yes | \-  | 角色在目标位置应面向哪个方向 |
 | **Speed** | Float, StringHash | yes | \-  | 角色移动的速度|
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -217,7 +217,7 @@ toc: true
 | **Speed** | Float, StringHash | yes | \-  | 角色移动的速度 |
 | **EndDistance** | Float | no  | 0.00 | 距要完成的路径终点的距离 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -233,7 +233,7 @@ toc: true
 | **EndDistance** | Float | no  | 1.00 | 从目的地到完成的距离 |
 | **Directness** | Float | no  | 1.00 | 方法的直接性 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -268,7 +268,7 @@ pathfind 添加到给定输入。当接近完成时，重定向到新的航点�
 | **ClampRadiusZ** | Float | no  | 2.00 | 在 Z 轴上的起点和终点上要夹紧的半径 |
 | **MaxPathLength** | Float | no  |     | 要测试的最大路径长度。将默认为从开始位置到结束位置距离的 2 倍 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -276,7 +276,7 @@ pathfind 添加到给定输入。当接近完成时，重定向到新的航点�
 
 获取当前路径的长度。如果没有当前路径，则失败
 
-**Inputs:** none
+**输入：** 无
 
 |     |     |     |     |
 | --- | --- | --- | --- |
@@ -287,29 +287,29 @@ pathfind 添加到给定输入。当接近完成时，重定向到新的航点�
 
 #### Character\_SteeringGoto
 
-Let steering handle motion for this entity (from other input)
+让 steering 处理此实体的运动（来自其他输入）
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Speed** | Float, StringHash | yes | \-  | The speed for the character to move at |
+|输入 |类型 |必需 |默认 |描述 |
+| **Speed** | Float, StringHash | yes | \-  | 角色移动的速度 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Character\_TurnToFace
 
-Makes a character turn to face a direction or position
+使角色转向面向某个方向或位置
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Goal** | Vector, EntityId, Position | yes | \-  | The position or direction or entity for the character to face |
-| **DirTolerance** | Float | no  | 5.00 | The tolerance (in degrees) of the target direction |
-| **TurnRate** | Float | no  | 0.00 | Optionally override the character turn rate, in degrees per second. Ignored if zero (or less) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Goal** | Vector, EntityId, Position | yes | \-  | 角色要面对的位置、方向或实体 |
+| **DirTolerance** | Float | no  | 5.00 | 目标方向的容差（以度为单位） |
+| **TurnRate** | Float | no  | 0.00 | （可选）覆盖字符转动速率（以度/秒为单位）。如果为零（或更小），则忽略 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -317,15 +317,15 @@ Makes a character turn to face a direction or position
 
 #### SetStance
 
-Set the stance of a character
+设置角色的姿态
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Stance** | StringHash | no  | "Stand" | The stance to switch to |
-| **Strafing** | Boolean | no  | false | Whether to allow strafing or not |
+|输入 |类型 |必需 |默认 |描述 |
+| **Stance** | StringHash | no  | "Stand" | 要切换到的姿态 |
+| **Strafing** | Boolean | no  | false | 是否允许扫射 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -333,239 +333,239 @@ Set the stance of a character
 
 #### CompareNow
 
-Test a Lua script conditional expression. Can access entity, profile and behavior blackboards
+测试 Lua 脚本条件表达式。可以访问实体、个人资料和行为黑板
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Condition** | StringHash | yes | \-  | The expression to be evaluated. Must evaluate as a boolean (e.g. it could have multiple expressions with ands and ors, for example) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Condition** | StringHash | yes | \-  | 要计算的表达式。必须以布尔值计算（例如，它可以有多个表达式，例如 ands 和 ors） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### EqualsNow
 
-Test whether two inputs are equal (Lhs == Rhs)
+测试两个输入是否相等 （Lhs == Rhs）
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Lhs** | Any | yes | \-  | Left hand value to test |
-| **Rhs** | Any | yes | \-  | Right hand value to test |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Lhs** | Any | yes | \-  | 要测试的左手值 |
+| **Rhs** | Any | yes | \-  | 要测试的右手值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### GreaterThanEqualsNow
 
-Test whether one input is greater or equal to another (Lhs >= Rhs)
+测试一个输入是否大于或等于另一个 (Lhs >= Rhs)
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Lhs** | Integer, Float | yes | \-  | Left hand value to test |
-| **Rhs** | Integer, Float | yes | \-  | Right hand value to test |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Lhs** | Integer, Float | yes | \-  | 要测试的左手值 |
+| **Rhs** | Integer, Float | yes | \-  | 要测试的右手值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### GreaterThanNow
 
-Test whether one input is greater than another (Lhs > Rhs)
+测试一个输入是否大于另一个 (Lhs > Rhs)
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Lhs** | Integer, Float | yes | \-  | Left hand value to test |
-| **Rhs** | Integer, Float | yes | \-  | Right hand value to test |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Lhs** | Integer, Float | yes | \-  | 要测试的左手值 |
+| **Rhs** | Integer, Float | yes | \-  | 要测试的右手值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### HasTagNow
 
-Checks whether an entity has a particular tag
+检查实体是否具有特定标记
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Tag** | Tag | yes | \-  | The tag to test |
-| **EntityId** | EntityId | yes | \-  | The id of the entity to test on |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Tag** | Tag | yes | \-  | 要测试的标签 |
+| **EntityId** | EntityId | yes | \-  | 要测试的实体的 ID |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### HasVariableNow
 
-Checks whether the named variable exists
+检查命名变量是否存在
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Name** | StringHash | yes | \-  | The variable name (or path) to check for |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Name** | StringHash | yes | \-  | 要检查的变量名称（或路径） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### IsInFrontNow
 
-True if the given entity or position has a dot product with our current direction greater than the minimum specified
+如果给定的实体或位置具有点积，且我们的当前方向大于指定的最小值，则为 True。
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Target** | EntityId, Position | yes | \-  | entity or position to test |
-| **MinDotProduct** | Float | no  | 0.00 | Minimum dot product for target to be considered 'in front' |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Target** | EntityId, Position | yes | \-  | 要测试的实体或位置 |
+| **MinDotProduct** | Float | no  | 0.00 | 将目标视为“在前面”的最小点积 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### IsInGroupNow
 
-Checks whether an entity has membership of a particular group
+检查实体是否具有特定组的成员身份
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **EntityId** | EntityId | yes | \-  | The id of the entity to test on |
-| **GroupId** | EntityId | yes | \-  | The id of the entity to test on |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **EntityId** | EntityId | yes | \-  | 要测试的实体的 ID |
+| **GroupId** | EntityId | yes | \-  | 要测试的实体的 ID |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### IsInRangeNow
 
-True if the distance between two positions is within the given range
+如果两个位置之间的距离在给定范围内，则为 True。
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Start** | EntityId, Position | yes | \-  | Entity or position to test from |
-| **End** | EntityId, Position | yes | \-  | Entity or position to check distance to |
-| **MinRange** | Float | no  | 0.00 | Minimum distance for check to pass (optional) |
-| **MaxRange** | Float | no  |     | Maximum distance for check to pass (optional) |
+|     |     |     |     |                |
+| --- | --- | --- | --- |----------------|
+|输入 |类型 |必需 |默认 | 描述             |
+| **Invert** | Boolean | no  | false | 检查条件是否相反       |
+| **Start** | EntityId, Position | yes | \-  | 要测试的实体或位置      |
+| **End** | EntityId, Position | yes | \-  | 要检查距离的实体或位置    |
+| **MinRange** | Float | no  | 0.00 | 检查通过的最小距离（可选）  |
+| **MaxRange** | Float | no  |     | 检查通过的最大距离（可选）  |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### IsValidIDNow
 
-True if the given entity ID is not empty and the entity exists
+如果给定的实体 ID 不为空且实体存在，则为 True
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
+|     |     |     |     |           |
+| --- | --- | --- | --- |-----------|
+|输入 |类型 |必需 |默认 | 描述        |
+| **Invert** | Boolean | no  | false | 检查条件是否相反  |
 | **EntityId** | EntityId | yes | \-  | Entity ID |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### LessThanEqualsNow
 
-Test whether one input is less or equal to another (Lhs <= Rhs)
+测试一个输入是否小于或等于另一个 (Lhs <= Rhs)
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Lhs** | Integer, Float | yes | \-  | Left hand value to test |
-| **Rhs** | Integer, Float | yes | \-  | Right hand value to test |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Lhs** | Integer, Float | yes | \-  | 要测试的左手值 |
+| **Rhs** | Integer, Float | yes | \-  | 要测试的右手值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### LessThanNow
 
-Test whether one input is less than another (Lhs < Rhs)
+测试一个输入是否小于另一个 (Lhs < Rhs)
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Lhs** | Integer, Float | yes | \-  | Left hand value to test |
-| **Rhs** | Integer, Float | yes | \-  | Right hand value to test |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Lhs** | Integer, Float | yes | \-  | 要测试的左手值 |
+| **Rhs** | Integer, Float | yes | \-  | 要测试的右手值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### RandomChanceNow
 
-True with a given probability
+在给定的概率下为 True
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Probability** | Float | yes | \-  | Probability of success (range 0-1) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Probability** | Float | yes | \-  | 成功概率（范围 0-1) |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SignalHasParameterNow
 
-True if the given signal contains a parameter with the given name
+如果给定信号包含具有给定名称的参数，则为 True
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Signal** | Blackboard | yes | \-  | The signal to query |
-| **ParameterName** | String | yes | \-  | Name of the parameter to look for, this may be a path if the signal contains sub-blackboards |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Signal** | Blackboard | yes | \-  | 要查询的信号 |
+| **ParameterName** | String | yes | \-  | 要查找的参数名称，如果信号包含子黑板，则可能是路径 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### TimeGreaterThanNow
 
-Test whether more than a certain interval of time has passed since a timestamp. False if the timestamp isn't set
+测试自时间戳以来是否经过了超过某个时间间隔。如果未设置时间戳，则为 False
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Timestamp** | Timestamp | yes | \-  | The timestamp of an event |
-| **Interval** | Float | yes | \-  | Minimum time since the event |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反|
+| **Timestamp** | Timestamp | yes | \-  | 事件的时间戳 |
+| **Interval** | Float | yes | \-  | 自事件开始以来的最短时间 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### TimeLessThanNow
 
-Test whether less than a certain interval of time has passed since a timestamp. False if the timestamp isn't set
+测试自时间戳以来经过的时间间隔是否小于特定时间间隔。如果未设置时间戳，则为 False
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Invert** | Boolean | no  | false | Check for the opposite of the condition |
-| **Timestamp** | Timestamp | yes | \-  | The timestamp of an event |
-| **Interval** | Float | yes | \-  | Maximum time since the event |
+|输入 |类型 |必需 |默认 |描述 |
+| **Invert** | Boolean | no  | false | 检查条件是否相反 |
+| **Timestamp** | Timestamp | yes | \-  | 事件的时间戳 |
+| **Interval** | Float | yes | \-  | 自事件以来的最长时间 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -573,117 +573,117 @@ Test whether less than a certain interval of time has passed since a timestamp. 
 
 #### Add
 
-Add two inputs together. The inputs must be of types that make sense to be added (int, float, vector)
+将两个输入相加。输入必须是有意义的类型 (int, float, vector)
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **InputA** | Integer, Float, Vector, Position, Velocity | yes | \-  | First input of any type |
-| **InputB** | Integer, Float, Vector, Position, Velocity | yes | \-  | Second input of the same type as InputA |
+|输入 |类型 |必需 |默认 |描述 |
+| **InputA** | Integer, Float, Vector, Position, Velocity | yes | \-  | 任何类型的首次输入 |
+| **InputB** | Integer, Float, Vector, Position, Velocity | yes | \-  | 与 InputA 类型相同的第二个输入 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
+|输出 |类型 |必需 |描述 |
 | **Result** | Any | yes | InputA + InputB |
 
 * * *
 
 #### Divide
 
-Divide one input by another. The numerator input must be a divisible type (int, float, vector). Denominator must a number (int, float)
+将一个输入除以另一个输入。分子输入必须是可整除的类型 （int， float， vector）。分母必须是一个数字 (int, float)
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **InputA** | Integer, Float, Vector | yes | \-  | InputA - Numerator input |
-| **InputB** | Integer, Float | yes | \-  | InputB - Denominator input |
+|输入 |类型 |必需 |默认 |描述 |
+| **InputA** | Integer, Float, Vector | yes | \-  | InputA - 分子输入|
+| **InputB** | Integer, Float | yes | \-  | InputB - 分母输入 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
+|输出 |类型 |必需 |描述 |
 | **Result** | Any | yes | InputA/InputB |
 
 * * *
 
 #### Dot
 
-Calculate the dot product of two vectors
+计算两个向量的点积
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **InputA** | Vector | yes | \-  | First vector |
-| **InputB** | Vector | yes | \-  | Second vector |
+|输入 |类型 |必需 |默认 |描述 |
+| **InputA** | Vector | yes | \-  |第一个向量 |
+| **InputB** | Vector | yes | \-  | 第二个向量|
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
+|输出 |类型 |必需 |描述 |
 | **Result** | Float | yes | InputA . InputB |
 
 * * *
 
 #### Length
 
-Get the length of a vector or velocity
+获取向量或速度的长度
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Vector** | Vector, Velocity | yes | \-  | A vector or velocity |
+|输入 |类型 |必需 |默认 |描述 |
+| **Vector** | Vector, Velocity | yes | \-  | 向量或速度 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Float | yes | Length of the vector |
+|输出 |类型 |必需 |描述 |
+| **Result** | Float | yes | 向量的长度 |
 
 * * *
 
 #### Multiply
 
-Multiply two inputs together. The inputs must of types that make sense to be multiplied (int, float, vector)
+将两个输入相乘。输入的类型必须有意义相乘 (int, float, vector)
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **InputA** | Integer, Float, Vector, Position, Velocity | yes | \-  | First input number |
-| **InputB** | Integer, Float, Vector, Position, Velocity | yes | \-  | Second input number |
+|输入 |类型 |必需 |默认 |描述 |
+| **InputA** | Integer, Float, Vector, Position, Velocity | yes | \-  | 第一个输入数字 |
+| **InputB** | Integer, Float, Vector, Position, Velocity | yes | \-  | 第二个输入数字 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
+|输出 |类型 |必需 |描述 |
 | **Result** | Any | yes | InputA \* InputB |
 
 * * *
 
 #### Normalize
 
-Normalize a vector. Return (0,0,0) if the vector has no length
+规范化向量。如果向量没有长度，则返回 （0,0,0）
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Vector** | Vector | yes | \-  | A vector |
+|输入 |类型 |必需 |默认 |描述 |
+| **Vector** | Vector | yes | \-  | 向量 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Vector | yes | A unit length vector in the same direction as Vector |
+|输出 |类型 |必需 |描述 |
+| **Result** | Vector | yes | 与 Vector 方向相同的单位长度向量 |
 
 * * *
 
 #### Subtract
 
-Subtract one input from another. The inputs must be of types that make sense to be subtracted (int, float, vector)
+从一个输入中减去另一个输入。输入必须是有意义的减去类型 (int, float, vector)
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **InputA** | Integer, Float, Vector, Position, Velocity | yes | \-  | First input of any type |
-| **InputB** | Integer, Float, Vector, Position, Velocity | yes | \-  | Second input of the same type as InputA |
+|输入 |类型 |必需 |默认 |描述 |
+| **InputA** | Integer, Float, Vector, Position, Velocity | yes | \-  | 任何类型的首次输入|
+| **InputB** | Integer, Float, Vector, Position, Velocity | yes | \-  | 与 InputA 类型相同的第二个输入|
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
+|输出 |类型 |必需 |描述 |
 | **Result** | Any | yes | InputA - InputB |
 
 * * *
@@ -692,170 +692,170 @@ Subtract one input from another. The inputs must be of types that make sense to 
 
 #### Character\_PredictPosition
 
-Predict where an entity will be in x secs assuming they continue to move at constant velocity on the navmesh
+预测实体在 x 秒内的位置，假设它们在导航网格上继续以恒定速度移动
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Entity** | EntityId | yes | \-  | The entity to predict |
-| **Time** | Float | yes | \-  | How far ahead to predict the position |
+|输入 |类型 |必需 |默认 |描述 |
+| **Entity** | EntityId | yes | \-  | 要预测的实体 |
+| **Time** | Float | yes | \-  | 提前多远预测位置 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Position** | Position | yes | Predicted position |
+|输出 |类型 |必需 |描述 |
+| **Position** | Position | yes | 预测位置 |
 
 * * *
 
 #### Character\_RandomPointInRange
 
-Find a random point within a given navigation distance of the agent (or an arbitrary position)
+在代理的给定导航距离内（或任意位置）查找随机点
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Range** | Float | yes | \-  | Maximum path distance to returned point (approximate) |
-| **MinDistance** | Float | no  | 0.00 | Minimum straight line distance to returned point (approximate) |
-| **Angle** | Float | no  | 0.00 | Angle of segment to limit search direction in degrees. Ignored if zero (or less) and clamped if greater than 180 |
-| **Direction** | Vector | no  |     | Limit search direction to segment about this vector |
-| **Center** | EntityId, Position | no  |     | Center the search on this position rather than the agent's current position |
+|输入 |类型 |必需 |默认 |描述 |
+| **Range** | Float | yes | \-  | 到返回点的最大路径距离 （近似值） |
+| **MinDistance** | Float | no  | 0.00 | 到返回点的最小直线距离 （近似值） |
+| **Angle** | Float | no  | 0.00 | 用于限制搜索方向的线段角度（以度为单位）。如果零（或更小）则忽略，如果大于 180，则被钳制 |
+| **Direction** | Vector | no  |     | 将搜索方向限制为有关此向量的线段 |
+| **Center** | EntityId, Position | no  |     | 将搜索集中在此位置，而不是代理的当前位置 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Point** | Position | yes | The generated point |
-| **Distance** | Float | no  | Approximate non-string pulled path distance to the point |
+|输出 |类型 |必需 |描述 |
+| **Point** | Position | yes | 生成的点 |
+| **Distance** | Float | no  | 到点的近似非字符串拉取路径距离 |
 
 * * *
 
 #### Character\_RandomPointWithDirectness
 
-Find a random point closest to a given direction
+找到最接近给定方向的随机点
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Destination** | EntityId, Position | yes | \-  | Target position or entity to calculate directness to |
-| **Directness** | Float | yes | \-  | The target directness to generate point for |
-| **Range** | Float | yes | \-  | Maximum path distance to returned point (approximate) |
-| **MinDistance** | Float | no  | 0.00 | Minimum straight line distance to returned point (approximate). Default = 0.0f |
-| **DirectionBias** | Vector | no  |     | Direction to bias when scoring points |
+|     |     |     |     |                                       |
+| --- | --- | --- | --- |---------------------------------------|
+|输入 |类型 |必需 |默认 | 描述                                    |
+| **Destination** | EntityId, Position | yes | \-  | 要计算其直接性的目标位置或实体                       |
+| **Directness** | Float | yes | \-  | 要为其生成点的目标方向                           |
+| **Range** | Float | yes | \-  | 到返回点的最大路径距离 （近似值）                     |
+| **MinDistance** | Float | no  | 0.00 | 到返回点的最小直线距离 （近似值）。默认值 = 0.0f          |
+| **DirectionBias** | Vector | no  |     | 得分时的偏差方向 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Point** | Position | yes | The generated point |
+|输出 |类型 |必需 |描述 |
+| **Point** | Position | yes | 生成的点 |
 
 * * *
 
 #### CountEntitiesWithTags
 
-Search all entities and find the ones that match the specified tags. Returns an array of matching entities. If no entities match then node fails
+搜索所有实体并查找与指定标签匹配的实体。返回匹配实体的数组。如果没有实体匹配，则节点失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Tag** | Tag | yes | \-  | Tag to search on |
-| **ExtraTag** | Tag | no  | ""  | Optional extra tag, if specified this must also be present |
-| **ExcludeId** | EntityId | no  |     | Optional entity to exclude |
-| **Range** | Float | no  | 0.00 | Max distance from entity's current position to search within |
+|输入 |类型 |必需 |默认 |描述 |
+| **Tag** | Tag | yes | \-  | 要搜索的标记 |
+| **ExtraTag** | Tag | no  | ""  | 可选的 extra 标记（如果指定）也必须存在 |
+| **ExcludeId** | EntityId | no  |     | 要排除的可选实体 |
+| **Range** | Float | no  | 0.00 | 从实体的当前位置开始搜索的最大距离 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Count** | Integer | yes | The number of entities found |
+|输出 |类型 |必需 |描述 |
+| **Count** | Integer | yes | 找到的实体数 |
 
 * * *
 
 #### FindEntitiesWithTags
 
-Search all entities and find the ones that match the specified tags. Returns an array of matching entities. If no entities match then node fails
+搜索所有实体并查找与指定标签匹配的实体。返回匹配实体的数组。如果没有实体匹配，则节点失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Tags** | StringHash, BlackboardArray | yes | \-  | Tag or array of tags to search for |
-| **ExcludeId** | EntityId | no  |     | Optional entity to exclude |
-| **Range** | Float | no  | 0.00 | Max distance from entity's current position to search within |
+|输入 |类型 |必需 |默认 |描述 |
+| **Tags** | StringHash, BlackboardArray | yes | \-  | 要搜索的标记或标记数组 |
+| **ExcludeId** | EntityId | no  |     | 要排除的可选实体 |
+| **Range** | Float | no  | 0.00 | 从实体的当前位置开始搜索的最大距离 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Results** | BlackboardArray | yes | The id of the selected entity |
+|输出 |类型 |必需 |描述 |
+| **Results** | BlackboardArray | yes | 所选实体的 ID |
 
 * * *
 
 #### FindNearestEntityWithTags
 
-Search all entities within Range and find the ones that match the specified tags. Returns the closest entity from the set. If no entities match then node fails
+搜索 Range 中的所有实体，并查找与指定标签匹配的实体。返回集合中最近的实体。如果没有实体匹配，则节点失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Tag** | Tag | yes | \-  | Tag to search on |
-| **ExtraTag** | Tag | no  | ""  | Optional extra tags to also search on |
-| **ExcludeId** | EntityId | no  |     | Optional entity to exclude |
-| **Range** | Float | no  | 0.00 | Max distance from entity's current position to search within |
+|输入 |类型 |必需 |默认 |描述 |
+| **Tag** | Tag | yes | \-  | 要搜索的标记 |
+| **ExtraTag** | Tag | no  | ""  | 可选的额外标签也可以搜索 |
+| **ExcludeId** | EntityId | no  |     | 要排除的可选实体 |
+| **Range** | Float | no  | 0.00 | 从实体的当前位置开始搜索的最大距离 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **EntityId** | EntityId | yes | The id of the nearest entity |
-| **Distance** | Float | no  | The distance to the nearest entity |
+|输出 |类型 |必需 |描述 |
+| **EntityId** | EntityId | yes | 最近实体的 ID|
+| **Distance** | Float | no  | 到最近实体的距离 |
 
 * * *
 
 #### FindRandomEntityWithTags
 
-Search all entities and find the ones that match the specified tags. Returns a randomly select entity from the set. If no entities match then node fails
+搜索所有实体并查找与指定标签匹配的实体。返回从集合中随机选择的实体。如果没有实体匹配，则节点失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Tag** | Tag | yes | \-  | Tag to search on |
-| **ExtraTag** | Tag | no  | ""  | Optional extra tags to also search on |
-| **ExcludeId** | EntityId | no  |     | Optional entity to exclude |
-| **Range** | Float | no  | 0.00 | Max distance from entity's current position to search within. A value of zero means there is no distance limit |
+|输入 |类型 |必需 |默认 |描述 |
+| **Tag** | Tag | yes | \-  | 要搜索的标记 |
+| **ExtraTag** | Tag | no  | ""  | 可选的额外标签也可以搜索 |
+| **ExcludeId** | EntityId | no  |     | 要排除的可选实体 |
+| **Range** | Float | no  | 0.00 | 要从实体的当前位置搜索的最大距离。值为零表示没有距离限制 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **EntityId** | EntityId | yes | The id of the selected entity |
+|输出 |类型 |必需 |描述 |
+| **EntityId** | EntityId | yes | 所选实体的 ID|
 
 * * *
 
 #### GetNextNavPoint
 
-Finds the id of the next point on a nav route. Fails if there is no next point
+查找导航路线上下一个点的 ID。如果没有下一个点，则失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **CurrentPoint** | EntityId | yes | \-  | The id of the current point |
+|输入 |类型 |必需 |默认 |描述 |
+| **CurrentPoint** | EntityId | yes | \-  | 当前点的 id|
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **NextPoint** | EntityId | yes | The id of the next point |
+|输出 |类型 |必需 |描述 |
+| **NextPoint** | EntityId | yes | 下一个点的 id |
 
 * * *
 
 #### Ship\_RandomPointInRange
 
-Find a random point in the octree within a given navigation distance of the agent (or an arbitrary position)
+在代理的给定导航距离（或任意位置）内查找八叉树中的随机点
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Range** | Float | yes | \-  | Maximum path distance to returned point (approximate) |
-| **MinDistance** | Float | no  | 0.00 | Minimum straight line distance to returned point (approximate) |
-| **Center** | EntityId, Position | no  |     | Center the search on this position rather than the agent's current position |
-| **ClampStartPoint** | Boolean | no  | false | Clamp the origin search to navigable octree |
+|输入 |类型 |必需 |默认 |描述 |
+| **Range** | Float | yes | \-  | 到返回点的最大路径距离 （近似值） |
+| **MinDistance** | Float | no  | 0.00 | 到返回点的最小直线距离 （近似值） |
+| **Center** | EntityId, Position | no  |     | 将搜索集中在此位置，而不是代理的当前位置 |
+| **ClampStartPoint** | Boolean | no  | false | 将原点搜索限制为可导航的八叉树 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Point** | Position | yes | The generated point |
+|输出 |类型 |必需 |描述 |
+| **Point** | Position | yes | 生成的点 |
 
 * * *
 
@@ -863,750 +863,750 @@ Find a random point in the octree within a given navigation distance of the agen
 
 #### AddTag
 
-Add a tag to an entity
+向实体添加标签
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Tag** | Tag | yes | \-  | The tag to add |
-| **EntityId** | EntityId | yes | \-  | The id of the entity to add the tag to |
+|输入 |类型 |必需 |默认 |描述 |
+| **Tag** | Tag | yes | \-  | 要添加的标签 |
+| **EntityId** | EntityId | yes | \-  | 要将标签添加到的实体的 ID |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### ArrayBreak
 
-Breaks out of currently iterating array loop, See also BTIterateOverArray
+跳出当前迭代数组循环，另请参阅 BTIterateOverArray
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **BreakResult** | StringHash | yes | \-  | Deems if this breakpoint should be considered successful or a failure |
+|输入 |类型 |必需 |默认 |描述 |
+| **BreakResult** | StringHash | yes | \-  | 判断此断点是成功还是失败 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Character\_AdjustSpeedToTargetDist
 
-Calculate speed based on distance from target
+根据与目标的距离计算速度
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Start** | EntityId, Position | no  |     | Optional position or id to calculate distance from, defaults to self |
-| **End** | EntityId, Position | yes | \-  | The position or id to calculate distance to |
-| **FarSpeed** | Float, StringHash | no  |     | Optional name of the speed or a speed value in m/s to use up to far distance, defaults to current speed |
-| **FarDistance** | Float | yes | \-  | Distance at which to start interpolating speed towards CloseSpeed |
-| **CloseSpeed** | Float, StringHash | no  |     | Optional name of the speed or a speed value in m/s to use within close distance, defaults to current speed |
-| **CloseDistance** | Float | yes | \-  | Distance at which to finish interpolating speed towards CloseSpeed |
+|输入 |类型 |必需 |默认 |描述 |
+| **Start** | EntityId, Position | no  |     | 可选 position 或 id 来计算距离，默认为 self |
+| **End** | EntityId, Position | yes | \-  | 要计算距离的位置或 id |
+| **FarSpeed** | Float, StringHash | no  |     | 速度的可选名称或以 m/s 为单位的速度值，用于最远的距离，默认为当前速度 |
+| **FarDistance** | Float | yes | \-  | 开始向 CloseSpeed 进行插值速度的距离 |
+| **CloseSpeed** | Float, StringHash | no  |     | 在近距离内使用的速度可选名称或以 m/s 为单位的速度值，默认为当前速度 |
+| **CloseDistance** | Float | yes | \-  | 完成朝 CloseSpeed 的插值速度的距离 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Float | yes | The calculated speed value |
+|输出 |类型 |必需 |描述 |
+| **Result** | Float | yes | 计算出的速度值 |
 
 * * *
 
 #### Character\_Speed
 
-Translate a named speed (e.g. 'Walk', 'Run') into its numerical value for this entity, applying an optional percentage modifier
+将命名速度（例如 'Walk'、'Run'）转换为此实体的数值，并应用可选的百分比修饰符
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Speed** | Float, StringHash | no  |     | Optional name of the speed or a speed value in m/s, defaults to current speed |
-| **Stance** | StringHash | no  |     | Optional stance to map against, defaults to current stance |
-| **Multiplier** | Float | no  | 1.00 | Optional multiplier to apply to speed (to simplify calculating e.g. 10% faster than walking speed) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Speed** | Float, StringHash | no  |     | 速度的可选名称或以 m/s 为单位的速度值，默认为当前速度 |
+| **Stance** | StringHash | no  |     | 要映射的可选姿态，默认为当前姿态 |
+| **Multiplier** | Float | no  | 1.00 | 应用于速度的可选乘数（以简化计算，例如比步行速度快 10%） |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Float | yes | The calculated speed value |
+|输出 |类型 |必需 |描述 |
+| **Result** | Float | yes | 计算出的速度值 |
 
 * * *
 
 #### ClaimEntity
 
-Claim ownership an entity and remove its 'Available' tag
+声明实体的所有权并删除其“avaliable”标签
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | yes | \-  | The id of the entity to claim |
-| **ObjectSlot** | StringHash | yes | \-  | Where on the entity ownership blackboard to store the object id. Only one object can be stored in each |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | yes | \-  | 要声明的实体的 ID |
+| **ObjectSlot** | StringHash | yes | \-  | 实体所有权黑板上存储对象 ID 的位置。每个 API 中只能存储一个对象 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### ClearTimestampVariable
 
-Clear the value of a timestamp so that any greater or less than comparisons will always return false
+清除时间戳的值，以便任何大于或小于比较的值将始终返回 false
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | Name of the timestamp variable to clear |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要清除的时间戳变量的名称 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Compute
 
-Evaluate a Lua script conditional expression. Can access Entity, Profile and Behavior blackboards
+评估 Lua 脚本条件表达式。可以访问 Entity、Profile 和 Behavior 黑板
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Expression** | StringHash | yes | \-  | The expression to be evaluated |
+|输入 |类型 |必需 |默认 |描述 |
+| **Expression** | StringHash | yes | \-  | 要计算的表达式 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Any | yes | The result of the expression |
+|输出 |类型 |必需 |描述 |
+| **Result** | Any | yes | 表达式的结果 |
 
 * * *
 
 #### Copy
 
-Copies a value (constant or variable) to a variable
+将值（常量或变量）复制到变量
 
-|     |     |     |     |     |
-| --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Input** | Any | yes | \-  | The value |
+|     |     |     |     |    |
+| --- | --- | --- | --- |----|
+|输入 |类型 |必需 |默认 | 描述 |
+| **Input** | Any | yes | \-  | 值  |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Output** | Any | yes | A copy of the value |
+|输出 |类型 |必需 |描述 |
+| **Output** | Any | yes | 值的副本 |
 
 * * *
 
 #### DistanceBetweenPoints
 
-Get distance between two points, either of which can be specified as a KytPos or an entity ID
+获取两点之间的距离，其中两点都可以指定为 KytPos 或实体 ID
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Point1** | EntityId, Position | yes | \-  | The first position or id |
-| **Point2** | EntityId, Position | yes | \-  | The second position or id |
+|输入 |类型 |必需 |默认 |描述 |
+| **Point1** | EntityId, Position | yes | \-  | 第一个位置或 id |
+| **Point2** | EntityId, Position | yes | \-  | 第二个位置或 id |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Distance** | Float | yes | Distance between points |
+|输出 |类型 |必需 |描述 |
+| **Distance** | Float | yes | 点之间的距离 |
 
 * * *
 
 #### DistanceToBoundsEdge
 
-Get distance of an entity to the nearest edge of a bounds object, negative if outside of bounds
+获取实体到边界对象最近边缘的距离，如果超出边界，则为负数
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **BoundsId** | EntityId | yes | \-  | The id of the bounds object |
+|输入 |类型 |必需 |默认 |描述 |
+| **BoundsId** | EntityId | yes | \-  | bounds 对象的 id |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Distance** | Float | yes | Distance to bounds edge, negative if outside of bounds |
+|输出 |类型 |必需 |描述 |
+| **Distance** | Float | yes | 到边界边缘的距离，如果超出边界，则为负数|
 
 * * *
 
 #### EraseTag
 
-Remove a tag from an entity
+从实体中删除标记
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Tag** | Tag | yes | \-  | The tag to erase |
-| **EntityId** | EntityId | yes | \-  | The id of the entity to erase the tag from |
-| **IncludeChildren** | Boolean | no  | false | Whether to also erase children of this tag |
+|输入 |类型 |必需 |默认 |描述 |
+| **Tag** | Tag | yes | \-  | 要擦除的标记 |
+| **EntityId** | EntityId | yes | \-  | 要从中擦除标签的实体的 ID |
+| **IncludeChildren** | Boolean | no  | false | 是否同时擦除此标签的子项 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### EraseVariable
 
-Erases a specified variable
+擦除指定的变量
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | Name of the variable to erase |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要擦除的变量的名称 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Execute
 
-Execute a Lua script expression. Can access Entity, Profile and Behavior blackboards
+执行 Lua 脚本表达式。可以访问 Entity、Profile 和 Behavior 黑板
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Expression** | StringHash | yes | \-  | The expression to be executed |
+|输入 |类型 |必需 |默认 |描述 |
+| **Expression** | StringHash | yes | \-  | 要执行的表达式 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Fail
 
-Do nothing; return fail on first update
+什么都不做;首次更新时返回失败
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### GenerateRandom2dDirection
 
-Generate a random 2d direction in the x-y plane within +/- degrees of the forward direction
+在 x-y 平面上向前方向的 +/- 度内生成随机 2d 方向
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Forward** | Vector | yes | \-  | The forward direction about which to generate |
-| **Angle** | Float | no  | 180.00 | The maximum allow angle (in degrees) either side of the forward direction (allowed range 0 - 180) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Forward** | Vector | yes | \-  | 要生成的正向 |
+| **Angle** | Float | no  | 180.00 | 向前方向两侧的最大允许角度（以度为单位）（允许的范围 0 - 180） |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Direction** | Vector | yes | The random direction that is generated |
+|输出 |类型 |必需 |描述 |
+| **Direction** | Vector | yes | 生成的随机方向 |
 
 * * *
 
 #### GenerateRandomDirectionOnPlane
 
-Generate a random direction on a plane given a normal to the plane
+在给定平面法线的平面上生成随机方向
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Normal** | Vector | yes | \-  | The plane normal |
+|输入 |类型 |必需 |默认 |描述 |
+| **Normal** | Vector | yes | \-  | 平面法线 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Direction** | Vector | yes | The random direction that is generated |
+|输出 |类型 |必需 |描述 |
+| **Direction** | Vector | yes | 生成的随机方向 |
 
 * * *
 
 #### GenerateRandomFloat
 
-Generate a random float value from Min to Max, optionally scaled
+生成从 Min 到 Max 的随机浮点值，可选择缩放
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Min** | Float | yes | \-  | The minimum (inclusive) value to be generated |
-| **Max** | Float | yes | \-  | The maximum (inclusive) value to be generated |
-| **Scale** | Float | no  | 1.00 | Value to scale the randomly generated integer by, e.g. MinVal = 1.0, MaxVal = 4.0, Scale = 2.0: return value is a number from from 2.0 to 8.0 |
+|输入 |类型 |必需 |默认 |描述 |
+| **Min** | Float | yes | \-  | 要生成的最小值（含）值 |
+| **Max** | Float | yes | \-  | 要生成的最大值（含）值 |
+| **Scale** | Float | no  | 1.00 | 缩放随机生成的整数的值，例如 MinVal = 1.0、MaxVal = 4.0、Scale = 2.0：返回值是从 2.0 到 8.0 的数字 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Float | yes | The random number that is generated |
+|输出 |类型 |必需 |描述 |
+| **Result** | Float | yes | 生成的随机数 |
 
 * * *
 
 #### GenerateRandomInt
 
-Generate a random integer value from Min to Max, optionally scaled
+生成一个从 Min 到 Max 的随机整数值，可选择缩放
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Min** | Integer | yes | \-  | The minimum (inclusive) value to be generated |
-| **Max** | Integer | yes | \-  | The maximum (inclusive) value to be generated |
-| **Scale** | Integer | no  | 1   | Value to scale the randomly generated integer by, e.g. MinVal = 1, MaxVal = 4, Scale = 2: return value is a number from from 2 to 8 |
+|输入 |类型 |必需 |默认 |描述 |
+| **Min** | Integer | yes | \-  | 要生成的最小值（含）值 |
+| **Max** | Integer | yes | \-  | 要生成的最大值（含）值 |
+| **Scale** | Integer | no  | 1   | 缩放随机生成的整数的值，例如 MinVal = 1、MaxVal = 4、Scale = 2：返回值是从 2 到 8 的数字 |
 
-|     |     |     |     |
-| --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Integer | yes | The random number that is generated |
+|     |     |     |         |
+| --- | --- | --- |---------|
+|输出 |类型 |必需 | 描述      |
+| **Result** | Integer | yes | 生成的随机数  |
 
 * * *
 
 #### GenerateRandomPosition
 
-Generate a random position offsetting from reference pos, within the Min and Max constraints on each axis
+在每个轴的 Min 和 Max 约束范围内，从参考位置生成随机位置偏移
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **MinX** | Float | no  | 0.00 | The minimum (inclusive) value to be generated on the X axis |
-| **MaxX** | Float | no  | 0.00 | The maximum (inclusive) value to be generated on the X axis |
-| **MinY** | Float | no  | 0.00 | The minimum (inclusive) value to be generated on the Y axis |
-| **MaxY** | Float | no  | 0.00 | The maximum (inclusive) value to be generated on the Y axis |
-| **MinZ** | Float | no  | 0.00 | The minimum (inclusive) value to be generated on the Z axis |
-| **MaxZ** | Float | no  | 0.00 | The maximum (inclusive) value to be generated on the Z axis |
-| **ReferencePos** | Position | yes | \-  | The position to generate the random offset from |
+|输入 |类型 |必需 |默认 |描述 |
+| **MinX** | Float | no  | 0.00 | 要在 X 轴上生成的最小值（含） |
+| **MaxX** | Float | no  | 0.00 | 要在 X 轴上生成的最大值（含） |
+| **MinY** | Float | no  | 0.00 | 要在 Y 轴上生成的最小值（含） |
+| **MaxY** | Float | no  | 0.00 | 要在 Y 轴上生成的最大值（含） |
+| **MinZ** | Float | no  | 0.00 | 要在 Z 轴上生成的最小值（含） |
+| **MaxZ** | Float | no  | 0.00 | 要在 Z 轴上生成的最大值（含） |
+| **ReferencePos** | Position | yes | \-  | 生成随机偏移量的位置 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Position | yes | The random position that is generated |
+|输出 |类型 |必需 |描述 |
+| **Result** | Position | yes | 生成的随机位置 |
 
 * * *
 
 #### GetArraySize
 
-Get an Entity's sate tree and gain access to it's blackboards. \[WARNING\] Do not attempt to change values of a blackboard recieved by this node
+获取实体的 sate 树并访问其黑板。 \[WARNING\] 不要尝试更改此节点接收到的黑板的值
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Array** | BlackboardArray | yes | \-  | Array to return size of |
+|输入 |类型 |必需 |默认 |描述 |
+| **Array** | BlackboardArray | yes | \-  | 要返回大小的数组 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **ArraySize** | Integer | yes | Size of the given array |
+|输出 |类型 |必需 |描述 |
+| **ArraySize** | Integer | yes | 给定数组的大小 |
 
 * * *
 
 #### GetDirection
 
-Get a normalized direction vector between two points, either of which can be specified as a KytPos or an entity ID
+获取两点之间的标准化方向向量，其中任一点都可以指定为 KytPos 或实体 ID
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Start** | EntityId, Position | yes | \-  | The first position or id |
-| **End** | EntityId, Position | yes | \-  | The second position or id |
+|输入 |类型 |必需 |默认 |描述 |
+| **Start** | EntityId, Position | yes | \-  | 第一个位置或 id |
+| **End** | EntityId, Position | yes | \-  | 第二个位置或 id |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Result** | Vector | yes | A unit length vector |
+|输出 |类型 |必需 |描述 |
+| **Result** | Vector | yes | 单位长度向量 |
 
 * * *
 
 #### GetEntityDirection
 
-Get direction in world space of entity's specified local axis
+获取实体指定局部轴在世界空间中的方向
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | yes | \-  | The id of the entity |
-| **Direction** | StringHash | yes | \-  | The name of the desired local direction |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | yes | \-  | 实体的 ID |
+| **Direction** | StringHash | yes | \-  | 所需本地方向的名称 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **WorldDirection** | Vector | yes | Unit vector in the relevant direction in world space |
+|输出 |类型 |必需 |描述 |
+| **WorldDirection** | Vector | yes | 世界空间中相关方向的单位向量 |
 
 * * *
 
 #### GetEntityPos
 
-Get position of an entity
+获取实体的位置
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | yes | \-  | The id of the entity |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | yes | \-  | 实体的 ID |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Position** | Position | yes | The position of the entity |
+|输出 |类型 |必需 |描述 |
+| **Position** | Position | yes | 实体的位置 |
 
 * * *
 
 #### GetEntityStateTree
 
-Get an Entity's sate tree and gain access to it's blackboards. \[WARNING\] Do not attempt to change values of a blackboard recieved by this node
+获取实体的 sate 树并访问其黑板。\[WARNING\] 请勿尝试更改此节点接收到的黑板的值
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | yes | \-  | The ID of the Entity |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | yes | \-  | 实体的 ID |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **StateTree** | Blackboard | yes | Returns the Entity State Tree giving access to it's blackboards |
+|输出 |类型 |必需 |描述 |
+| **StateTree** | Blackboard | yes | 返回 Entity State Tree，以访问其黑板 |
 
 * * *
 
 #### GetEntityTargetBlackboard
 
-Returns a pointer to entity's target blackboard. Fails if no blackboard exists
+返回指向实体的目标黑板的指针。如果不存在 blackboard，则失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | yes | \-  | Id of entity to get blackboard from |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | yes | \-  | 要从中获取黑板的实体的 ID |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **TargetBB** | Blackboard | yes | Target blackboard to the input entity |
+|输出 |类型 |必需 |描述 |
+| **TargetBB** | Blackboard | yes | 将黑板定位到输入实体 |
 
 * * *
 
 #### GetSignalParameter
 
-Get the value of a signal parameter
+获取 signal 参数的值
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Signal** | Blackboard | yes | \-  | The signal to query |
-| **ParameterName** | StringHash | yes | \-  | Name of the parameter to retrieve from the signal, this may be a path if the signal contains sub-blackboards |
+|输入 |类型 |必需 |默认 |描述 |
+| **Signal** | Blackboard | yes | \-  | 要查询的信号 |
+| **ParameterName** | StringHash | yes | \-  | 要从 signal 中检索的参数名称，如果 signal 包含子黑板，则可能是 path |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Value** | Any | yes | Value contained by the parameter |
+|输出 |类型 |必需 |描述 |
+| **Value** | Any | yes | 参数包含的值 |
 
 * * *
 
 #### InitializeVariable
 
-Create a behavior variable initialized to the default value
+创建初始化为默认值的行为变量
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | The variable name to create |
-| **Type** | StringHash | yes | \-  | The type for the behavior variable |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要创建的变量名称 |
+| **Type** | StringHash | yes | \-  | 行为变量的类型 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Log
 
-Write a message to a log
+将消息写入日志
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Message** | String | yes | \-  | The message to write to the log |
-| **Level** | StringHash | no  | "Normal" | The severity of the message |
+|输入 |类型 |必需 |默认 |描述 |
+| **Message** | String | yes | \-  | 要写入日志的消息 |
+| **Level** | StringHash | no  | "Normal" | 消息的严重性 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Noop
 
-Do nothing until interrupted
+在中断之前不执行任何操作
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### OverrideEntityPhysics
 
-Override the physics aspect of an entity for a given frame
+覆盖给定帧的实体的物理特性
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | yes | \-  | Entity to override |
-| **Position** | Position | no  |     | Override the entity's position (Optional) |
-| **Velocity** | Vector, Velocity | no  |     | Override the entity's velocity (Optional) |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | yes | \-  | 要覆盖的实体 |
+| **Position** | Position | no  |     | 覆盖实体的位置（可选） |
+| **Velocity** | Vector, Velocity | no  |     | 覆盖实体的速度 （可选） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### PersonalLog
 
-Write a message to an entity's personal log
+将消息写入实体的个人日志
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Message** | String | yes | \-  | The message to write to the personal log |
+|输入 |类型 |必需 |默认 |描述 |
+| **Message** | String | yes | \-  | 要写入个人日志的消息 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### PopArrayValue
 
-Pops last value from the end of an array
+从数组的末尾弹出最后一个值
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Array** | BlackboardArray | yes | \-  | The array to pop a value from |
-| **Method** | StringHash | no  | "Last" | Which value to pop from the array |
+|输入 |类型 |必需 |默认 |描述 |
+| **Array** | BlackboardArray | yes | \-  | 要从中弹出值的数组 |
+| **Method** | StringHash | no  | "Last" | 要从数组中弹出的值 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Value** | Any | yes | The value popped from the array |
+|输出 |类型 |必需 |描述 |
+| **Value** | Any | yes | 从数组中弹出的值 |
 
 * * *
 
 #### PushArrayValue
 
-Pops last value from the end of an array
+从数组的末尾弹出最后一个值
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Array** | StringHash | yes | \-  | The array push value to |
-| **Value** | Any | yes | \-  | The value to push into array |
+|输入 |类型 |必需 |默认 |描述 |
+| **Array** | StringHash | yes | \-  | 将数组 push 值推送给 |
+| **Value** | Any | yes | \-  | 要推送到数组中的值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Raycast
 
-Perform a raycast, succeeds if nothing is hit
+执行光线投射，如果未命中任何内容，则成功
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **From** | EntityId, Position | yes | \-  | Entity or position to raycast from |
-| **To** | EntityId, Position | yes | \-  | Entity or position to raycast to |
+|输入 |类型 |必需 |默认 |描述 |
+| **From** | EntityId, Position | yes | \-  | 要从中进行光线投射的实体或位置 |
+| **To** | EntityId, Position | yes | \-  | 要光线投射到的实体或位置 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **HitPos** | Position | no  | Hit position (only valid if node fails) |
+|输出 |类型 |必需 |描述 |
+| **HitPos** | Position | no  | 命中位置（仅在节点失败时有效） |
 
 * * *
 
 #### ReleaseEntity
 
-Release ownership of an object and add 'Available' tag
+释放对象的所有权并添加 'Available' 标签
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **ObjectSlot** | StringHash | yes | \-  | Where on the entity ownership blackboard the object is stored |
+|输入 |类型 |必需 |默认 |描述 |
+| **ObjectSlot** | StringHash | yes | \-  | 对象在实体所有权 Blackboard 上的存储位置 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### ReplaceTag
 
-Replace one tag with another on an entity
+将实体上的一个标签替换为另一个标签
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **OldTag** | Tag | yes | \-  | The tag to remove |
-| **NewTag** | Tag | yes | \-  | The tag to add |
-| **EntityId** | EntityId | yes | \-  | The id of the entity on which to change the tags |
+|输入 |类型 |必需 |默认 |描述 |
+| **OldTag** | Tag | yes | \-  | 要删除的标签 |
+| **NewTag** | Tag | yes | \-  | 要添加的标签 |
+| **EntityId** | EntityId | yes | \-  | 要更改标记的实体的 ID |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SendResponseSignal
 
-Send a response to a signal handled by the Behavior Tree
+向行为树处理的信号发送响应
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Signal** | Blackboard | yes | \-  | The signal to respond to |
-| **Result** | StringHash | yes | \-  | The result to return, e.g. Success or Failed |
+|输入 |类型 |必需 |默认 |描述 |
+| **Signal** | Blackboard | yes | \-  | 要响应的信号 |
+| **Result** | StringHash | yes | \-  | 要返回的结果，例如 Success 或 Failed |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SendSignal
 
-Send a signal
+发送信号
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | The name of the signal to send |
-| **Target** | EntityId | no  |     | The ID of the entity to send the signal to (defaults to self) |
-| **Key1** | StringHash | no  | ""  | Optional key for first data parameter on the signal |
-| **Value1** | Any | no  |     | Optional value for first data parameter |
-| **Key2** | StringHash | no  | ""  | Optional key for second data parameter on the signal |
-| **Value2** | Any | no  |     | Optional value for second data parameter |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要发送的信号的名称 |
+| **Target** | EntityId | no  |     | 要向其发送信号的实体的 ID（默认为 self） |
+| **Key1** | StringHash | no  | ""  | 信号上第一个数据参数的可选键 |
+| **Value1** | Any | no  |     | 第一个数据参数的可选值 |
+| **Key2** | StringHash | no  | ""  | 信号上第二个数据参数的可选键 |
+| **Value2** | Any | no  |     | 第二个 data 参数的可选值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SendSignalToGroup
 
-Send a signal to all entities in a group
+向组中的所有实体发送信号
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | The name of the signal to send |
-| **Category** | StringHash | yes | \-  | The category of the group to send the signal to |
-| **Key1** | StringHash | no  | ""  | Optional key for first data parameter on the signal |
-| **Value1** | Any | no  |     | Optional value for first data parameter |
-| **Key2** | StringHash | no  | ""  | Optional key for second data parameter on the signal |
-| **Value2** | Any | no  |     | Optional value for second data parameter |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要发送的信号的名称 |
+| **Category** | StringHash | yes | \-  | 要将信号发送到的组的类别 |
+| **Key1** | StringHash | no  | ""  | 信号上第一个数据参数的可选键 |
+| **Value1** | Any | no  |     | 第一个数据参数的可选值 |
+| **Key2** | StringHash | no  | ""  | 信号上第二个数据参数的可选键|
+| **Value2** | Any | no  |     | 第二个 data 参数的可选值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SetBranchTag
 
-Remove all tags within a given branch and add new tag instead
+删除给定分支中的所有标签并添加新标签
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **BranchTag** | Tag | yes | \-  | The branch tag to prune |
-| **Tag** | Tag | yes | \-  | The tag to add |
-| **EntityId** | EntityId | yes | \-  | The id of the entity to alter tags |
+|输入 |类型 |必需 |默认 |描述 |
+| **BranchTag** | Tag | yes | \-  | 要修剪的 branch 标签 |
+| **Tag** | Tag | yes | \-  | 要添加的标签 |
+| **EntityId** | EntityId | yes | \-  | 要更改标签的实体的 ID |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SetTimestampVariable
 
-Set the value of a timestamp to now, create if it doesn't already exist
+将 timestamp 的值设置为 now，如果尚不存在，则创建
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | Name of the timestamp variable to set to now |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要设置为 now 的 timestamp 变量的名称 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SetVariable
 
-Sets a variable to a particular value
+将变量设置为特定值
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | The variable name (or path) to write the value to |
-| **Value** | Any | yes | \-  | Value to assign to the variable |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要将值写入的变量名称（或路径） |
+| **Value** | Any | yes | \-  | 要分配给变量的值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Ship\_NavRaycast
 
-Test if there is a straight navigable line between two positions
+测试两个位置之间是否有一条直线可导航
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **From** | EntityId, Position | yes | \-  | Entity or position to raycast from |
-| **To** | EntityId, Position | yes | \-  | Entity or position to raycast to |
+|输入 |类型 |必需 |默认 |描述 |
+| **From** | EntityId, Position | yes | \-  | 要从中进行光线投射的实体或位置|
+| **To** | EntityId, Position | yes | \-  | 要光线投射到的实体或位置|
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **HitPos** | Position | yes | Hit position (only valid if node fails) |
+|输出 |类型 |必需 |描述 |
+| **HitPos** | Position | yes | 命中位置（仅在节点失败时有效） |
 
 * * *
 
 #### SmoothSpeedToTargetDist
 
-Calculate speed based on distance from target, smoothing over frames for less abrupt changes
+根据与目标的距离计算速度，在帧上平滑以减少突然的变化
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Start** | EntityId, Position | no  |     | Optional position or id to calculate distance from, defaults to self |
-| **End** | EntityId, Position | yes | \-  | The position or id to calculate distance to |
-| **FarSpeed** | Float, StringHash | no  |     | Optional name of the speed or a speed value in m/s to use up to far distance, defaults to current speed |
-| **FarDistance** | Float | yes | \-  | Distance at which to start interpolating speed towards CloseSpeed |
-| **CloseSpeed** | Float, StringHash | no  |     | Optional name of the speed or a speed value in m/s to use within close distance, defaults to current speed |
-| **CloseDistance** | Float | yes | \-  | Distance at which to finish interpolating speed towards CloseSpeed |
-| **LowSpeedClamp** | Float, StringHash | no  | 0.00 | Optional name of the speed or a speed value in m/s below which not to go |
-| **SmoothingDecayRate** | Float | no  | 0.10 | Smoothing decay, higher value is more smoothing, e.g. 0.1 is 90% towards target value in 1 second |
-| **LastResult** | Float | yes | \-  | Speed calculated in last run, or initial speed value |
-| **LastUpdate** | Timestamp | yes | \-  | Timestamp that node was last run, or use now for first run |
+|输入 |类型 |必需 |默认 |描述 |
+| **Start** | EntityId, Position | no  |     | 可选 position 或 id 来计算距离，默认为 self |
+| **End** | EntityId, Position | yes | \-  | 要计算距离的位置或 id |
+| **FarSpeed** | Float, StringHash | no  |     | 速度的可选名称或以 m/s 为单位的速度值，用于最远的距离，默认为当前速度 |
+| **FarDistance** | Float | yes | \-  | 开始向 CloseSpeed 进行插值速度的距离 |
+| **CloseSpeed** | Float, StringHash | no  |     | 在近距离内使用的速度可选名称或以 m/s 为单位的速度值，默认为当前速度 |
+| **CloseDistance** | Float | yes | \-  | 完成朝 CloseSpeed 的插值速度的距离 |
+| **LowSpeedClamp** | Float, StringHash | no  | 0.00 | 速度的可选名称或以 m/s 为单位的速度值，低于该值时不要去 |
+| **SmoothingDecayRate** | Float | no  | 0.10 | 平滑衰减，值越高越平滑，例如 0.1 在 1 秒内向目标值移动 90% |
+| **LastResult** | Float | yes | \-  | 上次运行中计算的速度或初始速度值 |
+| **LastUpdate** | Timestamp | yes | \-  | 上次运行该节点的时间戳，或现在用于首次运行 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **SmoothedSpeed** | Float | yes | The calculated speed value |
-| **UpdateTimestamp** | Timestamp | yes | The timestamp for this update (to pass back in next time) |
+|输出 |类型 |必需 |描述 |
+| **SmoothedSpeed** | Float | yes | 计算出的速度值 |
+| **UpdateTimestamp** | Timestamp | yes | 此更新的时间戳（以便下次传回） |
 
 * * *
 
 #### Success
 
-Do nothing; return success on first update
+什么都不做;首次更新时返回成功
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Wait
 
-Wait and do nothing for specified time
+等待指定时间，不执行任何操作
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **WaitTime** | Float | no  | 0.00 | Seconds to wait, zero seconds waits forever |
+|输入 |类型 |必需 |默认 |描述 |
+| **WaitTime** | Float | no  | 0.00 | 秒等待，零秒永远等待 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### WaitForSignal
 
-Listen for a signal of a specified name and then keep copy of the signal
+侦听指定名称的信号，然后保留信号的副本
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | The name of the type of signals to listen for |
-| **FilterKey1** | StringHash | no  | ""  | Optional filter to listen for only signals that contain this key |
-| **FilterValue1** | Any | no  |     | Optional filter to listen for only signals that have this value in the FilterKey field |
-| **FilterKey2** | StringHash | no  | ""  | Optional filter to listen for only signals that contain this key |
-| **FilterValue2** | Any | no  |     | Optional filter to listen for only signals that have this value in the FilterKey field |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要侦听的信号类型的名称 |
+| **FilterKey1** | StringHash | no  | ""  | 可选过滤器，用于仅侦听包含此键的信号|
+| **FilterValue1** | Any | no  |     | 可选筛选器，用于仅侦听 FilterKey 字段中具有此值的信号 |
+| **FilterKey2** | StringHash | no  | ""  | 可选过滤器，用于仅侦听包含此键的信号 |
+| **FilterValue2** | Any | no  |     | 可选筛选器，用于仅侦听 FilterKey 字段中具有此值的信号 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
+|输出 |类型 |必需 |描述 |
 | **Signal** | Blackboard | no  | A copy of the signal received |
 
 * * *
 
 #### WaitRandom
 
-Wait and do nothing for random time length between min and max specified values
+等待最小和最大指定值之间的随机时间长度，然后不执行任何操作
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **MinWaitTime** | Float | yes | \-  | Min seconds to wait |
-| **MaxWaitTime** | Float | yes | \-  | Max seconds to wait |
+|输入 |类型 |必需 |默认 |描述 |
+| **MinWaitTime** | Float | yes | \-  | 等待的最小秒数|
+| **MaxWaitTime** | Float | yes | \-  | 等待的最大秒数 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -1618,111 +1618,111 @@ Add an entity to a group
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **GroupId** | EntityId | yes | \-  | Id of the group to add entity to |
-| **EntityId** | EntityId | yes | \-  | Id of the entity to add |
-| **IsLeader** | Boolean | no  | false | Is this node designated as leader of the group. If this entity dies then the group will be disbanded |
+|输入 |类型 |必需 |默认 |描述 |
+| **GroupId** | EntityId | yes | \-  | 要将实体添加到的组的 ID |
+| **EntityId** | EntityId | yes | \-  | 要添加的实体的 ID |
+| **IsLeader** | Boolean | no  | false | 此节点是否被指定为组的领导者。如果此实体死亡，则该组织将被解散 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Count** | Integer | yes | Number of entities in the group after the entity is added |
+|输出 |类型 |必需 |描述 |
+| **Count** | Integer | yes | 添加实体后组中的实体数 |
 
 * * *
 
 #### CreateGroup
 
-Create a new group entity
+创建新的组实体
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Type** | StringHash | yes | \-  | Type of the group |
+|输入 |类型 |必需 |默认 |描述 |
+| **Type** | StringHash | yes | \-  | 组的类型 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **GroupId** | EntityId | yes | The id of the group entity that has been created |
+|输出 |类型 |必需 |描述 |
+| **GroupId** | EntityId | yes | 已创建的组实体的 ID |
 
 * * *
 
 #### EraseGroup
 
-Erase an existing group entity
+擦除现有组实体
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | yes | \-  | Id of the entity to erase |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | yes | \-  | 要擦除的实体的 ID |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### GetEntityInGroup
 
-Get the nth Entity in a Group
+获取组中的第 n 个实体
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **GroupId** | EntityId | yes | \-  | The id of the group that the entity belongs to |
-| **Index** | Integer | yes | \-  | 0 based index of entity to get from group |
+|输入 |类型 |必需 |默认 |描述 |
+| **GroupId** | EntityId | yes | \-  | 实体所属组的 ID |
+| **Index** | Integer | yes | \-  | 要从组中获取的实体的从 0 开始的索引 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **EntityId** | EntityId | yes | The id of the entity |
+|输出 |类型 |必需 |描述 |
+| **EntityId** | EntityId | yes | 实体的 ID |
 
 * * *
 
 #### GetGroupCount
 
-Get the count of entities in a group
+获取组中的实体计数
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **GroupId** | EntityId | yes | \-  | Id of the group to add entity to |
+|输入 |类型 |必需 |默认 |描述 |
+| **GroupId** | EntityId | yes | \-  | 要将实体添加到的组的 ID |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Count** | Integer | yes | Number of entities in the group after the entity is added |
+|输出 |类型 |必需 |描述 |
+| **Count** | Integer | yes | 添加实体后组中的实体数 |
 
 * * *
 
 #### GetGroupFromEntity
 
-Get the group that an entity belongs to
+获取实体所属的组
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | yes | \-  | The id of the entity to get the group for |
-| **Type** | StringHash | yes | \-  | Type of the group to check membership of |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | yes | \-  | 要获取其组的实体的 ID |
+| **Type** | StringHash | yes | \-  | 要检查其成员身份的组的类型 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **GroupId** | EntityId | yes | The id of the group that the entity belongs to |
+|输出 |类型 |必需 |描述 |
+| **GroupId** | EntityId | yes | 实体所属组的 ID |
 
 * * *
 
 #### RemoveEntityFromGroup
 
-Remove an entity from a group
+从组中删除实体
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **GroupId** | EntityId | yes | \-  | Id of the group to add entity to |
-| **EntityId** | EntityId | yes | \-  | Id of the entity to add |
+|输入 |类型 |必需 |默认 |描述 |
+| **GroupId** | EntityId | yes | \-  | 要将实体添加到的组的 ID |
+| **EntityId** | EntityId | yes | \-  | 要添加的实体的 ID |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Count** | Integer | yes | Number of entities in the group after the entity is removed |
+|输出 |类型 |必需 |描述 |
+| **Count** | Integer | yes | 删除实体后组中的实体数 |
 
 * * *
 
@@ -1730,14 +1730,14 @@ Remove an entity from a group
 
 #### ThrowException
 
-Throw an exception
+引发异常
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Type** | StringHash | yes | \-  | Type of exception to throw |
+|输入 |类型 |必需 |默认 |描述 |
+| **Type** | StringHash | yes | \-  | 要引发的异常类型 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -1745,46 +1745,46 @@ Throw an exception
 
 #### DD\_DrawLine
 
-Draw a line between two points
+在两点之间画一条线
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Point1** | EntityId, Position | yes | \-  | The first position or id |
-| **Point2** | EntityId, Position | yes | \-  | The second position or id |
-| **Color** | StringHash | no  | "White" | The color of the line |
+|输入 |类型 |必需 |默认 |描述 |
+| **Point1** | EntityId, Position | yes | \-  | 第一个位置或 id |
+| **Point2** | EntityId, Position | yes | \-  | 第二个位置或 id |
+| **Color** | StringHash | no  | "White" | 线条的颜色|
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### DD\_DrawSphere
 
-Draw a sphere at point with radius
+在半径为的点处绘制球体
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Center** | EntityId, Position | yes | \-  | Position of center |
-| **Radius** | Float | yes | \-  | Radius of sphere |
-| **Color** | StringHash | no  | "White" | The color of the line |
+|输入 |类型 |必需 |默认 |描述 |
+| **Center** | EntityId, Position | yes | \-  | 中心位置 |
+| **Radius** | Float | yes | \-  | 球体半径 |
+| **Color** | StringHash | no  | "White" | 线条的颜色 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### HDV2D\_DrawRandomPoints
 
-Generate and render random points on the navmesh
+在导航网格上生成和渲染随机点
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **NumPoints** | Integer | yes | \-  | The number of points to generate (maximum 10000) |
-| **MinRadius** | Float | yes | \-  | The minimum distance points are allowed to be to the centre |
-| **MaxRadius** | Float | yes | \-  | The maximum distance points are allowed to be to the centre |
+|输入 |类型 |必需 |默认 |描述 |
+| **NumPoints** | Integer | yes | \-  | 要生成的点数（最大 10000） |
+| **MinRadius** | Float | yes | \-  | 允许最小距离点到中心 |
+| **MaxRadius** | Float | yes | \-  | 允许点到中心的最大距离 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -1792,21 +1792,21 @@ Generate and render random points on the navmesh
 
 #### SpatialQuerySimple
 
-Run a SQS query with simplest setup
+使用最简单的设置运行 SQS 查询
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Query** | StringHash | yes | \-  | Name of SQS query to process |
-| **Origin** | EntityId, Position | yes | \-  | Entity or position for the query origin |
-| **Reference** | EntityId, Position | no  |     | Entity or position for the query reference |
+|输入 |类型 |必需 |默认 |描述 |
+| **Query** | StringHash | yes | \-  | 要处理的 SQS 查询的名称 |
+| **Origin** | EntityId, Position | yes | \-  | 查询源的实体或位置 |
+| **Reference** | EntityId, Position | no  |     | 查询引用的实体或位置 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **SQSPoint** | Position | yes | Position of top point of query |
-| **SQSPointId** | EntityId | no  | ID of top point of query |
-| **SQSResult** | Blackboard | no  | Blackboard containing more data about result |
+|输出 |类型 |必需 |描述 |
+| **SQSPoint** | Position | yes | 查询的顶点位置 |
+| **SQSPointId** | EntityId | no  | 查询的顶端 ID |
+| **SQSResult** | Blackboard | no  | 包含有关结果的更多数据的黑板 |
 
 * * *
 
@@ -1814,83 +1814,83 @@ Run a SQS query with simplest setup
 
 #### SendTransitionSignal
 
-Send a signal to this entity to cause a state transition in a parent State Machine. This node throws an error if the state machine does not transition away from the current state after this node has sent the signal
+向此实体发送信号，以在父 State Machine 中引起状态转换。如果状态机在此节点发送信号后没有从当前状态转换出来，则此节点将引发错误
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | The name of the transition signal |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 转换信号的名称|
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 ## Composite Nodes
 
-Nodes with one or more children
+具有一个或多个子项的节点
 
 ### Basic
 
 #### IfThenElse
 
-Test a Lua condition on entry and if true executes its first child, if false executes second child, if present, otherwise fails
+在进入时测试 Lua 条件，如果 true 执行其第一个子项，如果 false 执行第二个子项（如果存在），否则失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Condition** | StringHash | yes | \-  | The Lua expression to be evaluated, must evaluate as a boolean (e.g. it could have multiple tests with ands and ors, for example) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Condition** | StringHash | yes | \-  | 要计算的 Lua 表达式必须计算为布尔值（例如，它可以有多个包含 ands 和 ors 的测试） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### ParallelUntilAllComplete
 
-Runs all children at the same time all are complete. Returns fail if any failed
+同时运行所有子项，所有子项都已完成。如果任何失败，则返回失败
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### ParallelUntilAnyComplete
 
-Runs all children at the same time until one completes
+同时运行所有子项，直到一个子项完成
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### ParallelUntilFailure
 
-Runs all children at the same time until one fails
+同时运行所有子项，直到一个子项失败
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Selector
 
-Runs children one after another until one succeeds or they all fail
+一个接一个地运行子项，直到一个子项成功或全部失败
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Sequence
 
-Sequence of nodes that is run in succession. Stops and fails as soon as any child fails
+连续运行的节点序列。一旦任何子项失败，就会停止并失败
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -1898,11 +1898,11 @@ Sequence of nodes that is run in succession. Stops and fails as soon as any chil
 
 #### StateMachine
 
-A state machine with transitions controlled by signals. This node completes if a child state runs to completion
+具有由 signals 控制的 transitions 的状态机。如果子状态运行完成，则此节点完成
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -1910,70 +1910,70 @@ A state machine with transitions controlled by signals. This node completes if a
 
 #### Priority
 
-Controls an ordered set of children each with a boolean condition as to whether to execute. Will continuously evaluate and execute first child with a true condition
+控制一组有序的子项，每个子项都有一个布尔条件，用于是否执行。将持续评估并执行具有 true 条件的第一个子项
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 ## Decorator Nodes
 
-Nodes with exactly one child
+只有一个子节点
 
 ### Flow control
 
 #### RepeatUntilFails
 
-Keeps repeating the child node until it fails
+不断重复子节点，直到它失败
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Iterations** | Integer | no  | 0   | Number of iterations to run (default infinite) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Iterations** | Integer | no  | 0   | 要运行的迭代次数（默认为无限） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### RepeatUntilSucceeds
 
-Keeps repeating the child node until it succeeds
+不断重复子节点，直到成功
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Iterations** | Integer | no  | 0   | Number of iterations to run (default infinite) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Iterations** | Integer | no  | 0   | 要运行的迭代次数（默认为无限） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Repeater
 
-Keeps repeating the child node regardless of the outcome
+无论结果如何，都不断重复子节点
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Iterations** | Integer | no  | 0   | Number of iterations to run (default infinite) |
+|输入 |类型 |必需 |默认 |描述 |
+| **Iterations** | Integer | no  | 0   | 要运行的迭代次数（默认为无限） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Timer
 
-Runs child node for up to the specified amount of time
+运行子节点最多指定时间
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **RunTime** | Float | yes | \-  | Seconds to run |
-| **FailOnTimeout** | Boolean | no  | false | Whether the node should fail if the timer expires before the child node completes |
+|输入 |类型 |必需 |默认 |描述 |
+| **RunTime** | Float | yes | \-  | 运行秒数 |
+| **FailOnTimeout** | Boolean | no  | false | 如果计时器在子节点完成之前过期，节点是否应该失败 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -1981,31 +1981,31 @@ Runs child node for up to the specified amount of time
 
 #### Failer
 
-Always fails
+总是失败
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Inverter
 
-Reverse the return value of the child node
+反转子节点的返回值
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Succeeder
 
-Always succeeds, unless there is an exception
+始终成功，除非有异常
 
-**Inputs:** none
+**输入：** 无
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -2013,28 +2013,28 @@ Always succeeds, unless there is an exception
 
 #### HandleException
 
-Handle an exception by interrupting the tree and then failing or succeeding
+通过中断树，然后失败或成功来处理异常
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Result** | StringHash | no  | "Succeed" | What should the node return when it receives an exception |
-| **Type** | StringHash | no  | ""  | Type of exception to handle, or unspecified to handle all exceptions |
+|输入 |类型 |必需 |默认 |描述 |
+| **Result** | StringHash | no  | "Succeed" | 节点收到异常时应返回什么 |
+| **Type** | StringHash | no  | ""  | 要处理的异常类型，或未指定以处理所有异常 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### ThrowOnFail
 
-Throw an exception if the child node fails
+如果子节点失败，则引发异常
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Type** | StringHash | yes | \-  | Type of exception to throw |
+|输入 |类型 |必需 |默认 |描述 |
+| **Type** | StringHash | yes | \-  | 要引发的异常类型 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -2042,126 +2042,126 @@ Throw an exception if the child node fails
 
 #### CallSubtree
 
-Call a registered pluggable BT subtree
+调用已注册的可插拔 BT 子树
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Label** | StringHash | yes | \-  | The name of the subtree to be called |
+|输入 |类型 |必需 |默认 |描述 |
+| **Label** | StringHash | yes | \-  | 要调用的子树的名称 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### ClearTimestampVariableOnExit
 
-Clear the value of a timestamp on exit so that any greater or less than comparisons will always return false
+在 exit 时清除 timestamp 的值，以便任何大于或小于的比较将始终返回 false
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | Name of the timestamp variable to clear |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要清除的时间戳变量的名称 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### EraseVariableOnExit
 
-Erase a variable when the child node finishes
+在子节点完成时擦除变量
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | Variable name (or path) to erase |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要擦除的变量名称（或路径） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### HandleRequestSignal
 
-Manages the sending of signal responses when handling request signals such as task switches or scripted commands
+在处理请求信号（如任务切换或脚本命令）时管理信号响应的发送
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Signal** | Blackboard | yes | \-  | The signal being responded to |
-| **ResponseOnSuccess** | StringHash | no  | "Success" | The response to return when subtree succeeds |
-| **ResponseOnFail** | StringHash | no  | "Failed" | The response to return when subtree fails |
-| **ResponseOnEnter** | StringHash | no  |     | The optional response to return when entering the subtree |
+|输入 |类型 |必需 |默认 |描述 |
+| **Signal** | Blackboard | yes | \-  | 正在响应的信号 |
+| **ResponseOnSuccess** | StringHash | no  | "Success" | 子树成功时返回的响应 |
+| **ResponseOnFail** | StringHash | no  | "Failed" | 子树失败时返回的响应 |
+| **ResponseOnEnter** | StringHash | no  |     | 进入子树时要返回的可选响应 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### IterateOverArray
 
-Iterates over elements in an array, See also BTArrayBreak
+迭代数组中的元素，另请参阅 BTArrayBreak
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Array** | BlackboardArray | yes | \-  | Array to iterator over |
-| **OnComplete** | StringHash | no  | "Succeed" | Return value to propogate on reaching end of array |
+|输入 |类型 |必需 |默认 |描述 |
+| **Array** | BlackboardArray | yes | \-  | Array 到 iterator over |
+| **OnComplete** | StringHash | no  | "Succeed" | 在到达数组末尾时返回值以传播 |
 
 |     |     |     |     |
 | --- | --- | --- | --- |
-| Output | Type | Required | Description |
-| **Element** | Any | yes | Array element currently iterating |
+|输出 |类型 |必需 |描述 |
+| **Element** | Any | yes | 当前正在迭代的 Array 元素 |
 
 * * *
 
 #### ReleaseEntityOnExit
 
-Release ownership of a claimed entity on exit
+退出时释放已声明实体的所有权
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **ObjectSlot** | StringHash | yes | \-  | Where on the entity ownership blackboard is the object id stored |
+|输入 |类型 |必需 |默认 |描述 |
+| **ObjectSlot** | StringHash | yes | \-  | 实体所有权黑板上存储的对象 ID |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SetControlledEntity
 
-Specifies which entity the behavior tree is being applied to. Still keeps the same behavior blackboard
+指定要应用行为树的实体。仍然保持相同的行为 Blackboard
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **EntityId** | EntityId | no  |     | The id of the entity to control (Optional, default current entity) |
+|输入 |类型 |必需 |默认 |描述 |
+| **EntityId** | EntityId | no  |     | 要控制的实体的 ID（可选，默认当前实体） |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SetTimestampVariableOnExit
 
-Set a timestamp variable to a current time on exit
+将 timestamp 变量设置为退出时的当前时间
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | Name of the timestamp variable to set |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要设置的 timestamp 变量的名称 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### SetVariableOnExit
 
-Set a variable to a particular value when the child node finishes
+在子节点完成时将变量设置为特定值
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Name** | StringHash | yes | \-  | Variable name (or path) to set |
-| **Value** | Any | yes | \-  | Value to assign to the variable |
+|输入 |类型 |必需 |默认 |描述 |
+| **Name** | StringHash | yes | \-  | 要设置的变量名称（或路径）|
+| **Value** | Any | yes | \-  | 要分配给变量的值 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
@@ -2169,52 +2169,52 @@ Set a variable to a particular value when the child node finishes
 
 #### Character\_DisableAvoidanceForEntity
 
-Switch of avoidance against a particular entity. Usually used for your target. Avoidance is re enabled when this node terminates
+针对特定实体的避让开关。通常用于您的目标。当此节点终止时，将重新启用避障
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Entity** | EntityId | yes | \-  | The entity to no longer avoid |
+|输入 |类型 |必需 |默认 |描述 |
+| **Entity** | EntityId | yes | \-  | 不再避免的实体 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### OverrideObstacleScale
 
-Temporarily changes the scale of the avoidance obstacle until the subtree finishes
+临时更改避让障碍物的比例，直到子树完成
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Scale** | Float | yes | \-  | The new scale to use |
+|输入 |类型 |必需 |默认 |描述 |
+| **Scale** | Float | yes | \-  | 要使用的新秤 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Ship\_DisableAvoidanceForEntity
 
-Switch off avoidance against a particular entity. Usually used for your target. Avoidance is re enabled when this node terminates
+关闭针对特定实体的避障。通常用于您的目标。当此节点终止时，将重新启用避障
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Entity** | EntityId | yes | \-  | The entity to no longer avoid |
+|输入 |类型 |必需 |默认 |描述 |
+| **Entity** | EntityId | yes | \-  | 不再避免的实体 |
 
-**Outputs:** none
+**输出：** 无
 
 * * *
 
 #### Ship\_ToggleAvoidance
 
-Switch on or off avoidance. Avoidance is reset when this node terminates
+开启或关闭避障。当此节点终止时，将重置避障
 
 |     |     |     |     |     |
 | --- | --- | --- | --- | --- |
-| Input | Type | Required | Default | Description |
-| **Avoidance Enabled** | Boolean | yes | \-  | Is avoidance enabled or disabled? |
+|输入 |类型 |必需 |默认 |描述 |
+| **Avoidance Enabled** | Boolean | yes | \-  | 回避是启用还是禁用？ |
 
-**Outputs:** none
+**输出：** 无
 
 * * *

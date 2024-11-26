@@ -1,46 +1,46 @@
 ---
-title: Audio System Overview
-description: Learn about the Open 3D Engine audio system.
+title: Audio系统概述
+description: 了解 Open 3D Engine 音频系统。
 weight: 100
 ---
 
-The O3DE audio system consists of Gems, components, and content.
+O3DE 音频系统由 Gem、组件和内容组成。
 
 ## Gems 
 
-O3DE provides two audio Gems:
+O3DE 提供两个音频 Gem：
 + **AudioSystem**
 + **AudioEngineWwise**
 
-AudioEngineWwise is an audio engine implementation provided by O3DE for Audiokinetic Wwise. An audio engine implementation translates generic Audio Translation Layer (ATL) state requests into real calls to the audio middleware API. It also implements low-level hooks for file I/O and memory allocation as needed for the audio middleware.
+AudioEngineWwise 是 O3DE 为 Audiokinetic Wwise 提供的音频引擎实现。音频引擎实现将通用音频转换层 （ATL） 状态请求转换为对音频中间件 API 的实际调用。它还根据音频中间件的需要为文件 I/O 和内存分配实现低级钩子。
 
-The AudioEngineWwise Gem depends on the AudioSystem Gem. It is recommended that you enable both Gems to enable audio, but the AudioSystem Gem has no dependencies and can be enabled by itself. This leaves open the possibility of other audio middleware Gems to be developed and used instead of AudioEngineWwise.
+AudioEngineWwise Gem 依赖于 AudioSystem Gem。建议您同时启用这两个 Gem 以启用音频，但 AudioSystem Gem 没有依赖项，可以自行启用。这样就有可能开发和使用其他音频中间件 Gem 来代替 AudioEngineWwise。
 
-O3DE audio Gems feature the following modules:
-
-
-****
-
-| Module | Description |
-| --- | --- |
-| Audio System |  Part of the Audio System Gem. Contains the audio translation layer (ATL) code and manages the state of the audio system in O3DE. Most of this module runs on the audio thread, but it also synchronizes with the main thread.  |
-| Audio System Editor |  A O3DE Editor plugin, and part of the Audio System Gem. Contains the **Audio Controls Editor** (ACE) to create and manage ATL controls.  |
-| Audio Engine Wwise |  Part of the Audio Engine Wwise Gem. Contains the implementation of `AudioSystemImplementation` interfaces for Wwise. Contains all Audiokinetic APIs. This is the only module that links with Wwise SDK. Can be configured to use Wwise LTX or the full version of Wwise.  |
-| Audio Engine Wwise Editor |  A O3DE Editor plugin, and part of the Audio Engine Wwise Gem. This is an additional module that the **Audio Controls Editor** loads when O3DE uses Wwise.  |
-
-## Components 
-
-Core audio components available in O3DE Editor enable you to trigger sound effects, play ambient music, change sound variables using RTPC, apply environmental effects, place listeners to act as virtual microphones, and more. For a complete list, see [Audio Components](./components).
-
-## Content 
-
-O3DE audio features the following content:
+O3DE 音频 Gem 具有以下模块：
 
 
 ****
 
-| Content | Description |
+| 模块 | 说明 |
 | --- | --- |
-| Media |  O3DE loads soundbanks and loose media at runtime. The audio middleware authoring tools compiles and generates the media files.  |
-| Project | The audio middleware authoring tools use a project to manage source audio files, adjust sounds and settings, and generate runtime ready media. The Audio Controls Editor also uses the project to help map ATL controls to the audio middleware equivalents. |
-| ATL Libraries |  When the audio system maps ATL controls to their audio middleware equivalents, it creates ATL libraries, which are saved as XML files. O3DE loads these libraries at startup and populates the ATL with runtime data so that the game can control the audio system.  |
+| Audio System |  Audio System Gem 的一部分。包含音频转换层 （ATL） 代码，并管理 O3DE 中音频系统的状态。这个模块的大部分运行在 audio 线程上，但它也与主线程同步。  |
+| Audio System Editor |  一个 O3DE Editor 插件，也是 Audio System Gem 的一部分。包含用于创建和管理 ATL 控件的 **音频控件编辑器** （ACE）。  |
+| Audio Engine Wwise |  Audio Engine Wwise Gem 的一部分。包含 Wwise 的`AudioSystemImplementation`接口的实现。包含所有 Audiokinetic API。这是唯一与 Wwise SDK 链接的模块。可以配置为使用 Wwise LTX 或完整版 Wwise。  |
+| Audio Engine Wwise Editor |  一个 O3DE Editor 插件，也是 Audio Engine Wwise Gem 的一部分。这是 O3DE 使用 Wwise 时 **Audio Controls Editor** 加载的附加模块。  |
+
+## 组件 
+
+O3DE Editor 中提供的 Core Audio 组件使您能够触发音效、播放环境音乐、使用 RTPC 更改声音变量、应用环境效果、将听者用作虚拟麦克风等等。有关完整列表，请参阅 [音频组件](./components).
+
+## 内容 
+
+O3DE 音频包含以下内容：
+
+
+****
+
+| 内容 | 说明 |
+| --- | --- |
+| Media |  O3DE 在运行时加载 SoundBank 和松散媒体。音频中间件创作工具编译并生成媒体文件。  |
+| Project | 音频中间件创作工具使用工程来管理源音频文件、调整声音和设置，以及生成运行时就绪的媒体。Audio Controls Editor 还使用该项目来帮助将 ATL 控件映射到等效的音频中间件。 |
+| ATL 库 |  当音频系统将 ATL 控件映射到其等效的音频中间件时，它会创建 ATL 库，这些库将另存为 XML 文件。O3DE 在启动时加载这些库，并使用运行时数据填充 ATL，以便游戏可以控制音频系统。  |

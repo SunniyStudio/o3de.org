@@ -1,24 +1,24 @@
 ---
 title: Inspector Pane
-description: Use the Audio Controls Editor's Inspector pane to edit the properties of the currently selected control in Open 3D Engine.
+description: 使用 Audio Controls Editor 的 Inspector 窗格在 Open 3D Engine 中编辑当前所选控件的属性。
 weight: 200
 ---
 
-In the **Inspector** pane, you can edit the properties of the control that you selected in the **ATL Controls** pane. You can modify the control's **Name**, select a **Scope**, and modify the **Connected Controls**.
+在 **Inspector** 窗格中，您可以编辑在 **ATL Controls 窗格中选择的控件的属性。您可以修改控件的 **Name**，选择 **Scope**，并修改 **Connected Controls**。
 
 ![Modify controls in the Inspector pane of the Audio Controls Editor](/images/user-guide/audio/audio-atl-editor-inspector.png)
 
-The following table describes the Inspector properties that you can modify in the Inspector pane.
+下表描述了您可以在 Inspector 窗格中修改的 Inspector 属性。
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-| Name |  Name of the control. You can customize the name in the **ATL Controls** pane.   |
-| Scope |  Controls can exist for a global or on a per-level scope. A control with a global scope exists as long as the game is running and regardless of whether the control is used in the current level. When a specific level is defined as the scope, the controls exist only when that level is loaded. This setting is useful in low-memory systems because controls are loaded only in levels in which they are needed.  |
-| Auto Load |  Available only for preloads. If you select **Auto Load**, the elements preloaded with this control will be reference counted; only one copy of them is created that is shared between all users.   |
-| Preloaded Soundbanks |  Available only for preloads. The soundbanks connected with a preload can be different for different platforms. Different soundbanks can be added to different groups, and then in the **Platforms** field, you can choose which group to load for each platform that you are targeting.  |
-| Platforms |  Available only for preloads. You can specify which group of soundbanks to load for each platform. You can share a group between several platforms.  |
-| Connected Controls |  Contains the middleware controls connected to your control.  |
+| Name |  控件的名称。您可以在 **ATL Controls** 窗格中自定义名称。   |
+| Scope |  控件可以存在于全局范围或按级别范围内。只要游戏正在运行，并且无论是否在当前关卡中使用该控件，具有全局范围的控件就存在。当特定级别定义为范围时，控件仅在加载该级别时存在。此设置在内存不足的系统中非常有用，因为控件仅在需要它们的级别中加载。  |
+| Auto Load |  仅适用于预加载。如果选择 **Auto Load**，则使用此控件预加载的元素将被引用计数;仅创建它们的一个副本，该副本在所有用户之间共享。   |
+| Preloaded Soundbanks |  仅适用于预加载。与 preload 连接的 soundBank 对于不同的平台可能有所不同。可以将不同的 SoundBank 添加到不同的组中，然后在 **Platforms** 字段中，您可以选择为目标中的每个平台加载哪个组。  |
+| Platforms |  仅适用于预加载。您可以指定要为每个平台加载的 SoundBank 组。您可以在多个平台之间共享群组。  |
+| Connected Controls |  包含连接到您的控件的中间件控件。  |
 
 {{< note >}}
-The **Auto Load**, **Preloaded Soundbanks**, and **Platforms** properties appear only when the control is a **Preload**.
+**Auto Load**、**Preloaded Soundbanks** 和 **Platforms** 属性仅在控件为 **Preload** 时显示。
 {{< /note >}}

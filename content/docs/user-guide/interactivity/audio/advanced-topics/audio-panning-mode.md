@@ -1,19 +1,19 @@
 ---
-title: Setting the Panning Mode
-description: Set the audio panning in Open 3D Engine.
+title: 设置平移模式
+description: 在 Open 3D Engine 中设置音频平移。
 ---
 
-Two common speaker panning modes can be set in the engine: Speakers and Headphones.
+可以在引擎中设置两种常见的扬声器平移模式：Speakers （扬声器） 和 Headphones （耳机）。
 
-Setting the panning mode to Speakers will set the front L/R panning to be 60 degrees apart.
+将声像调整模式设置为 Speakers 会将前 L/R 声像调整设置为相距 60 度。
 
-Setting the panning mode to Headphones will set the front L/R panning to be 180 degrees apart.
+将平移模式设置为 Headphones 会将前 L/R 平移设置为相距 180 度。
 
-These panning angles will change the output mix to work better with the physical arrangement of speakers around the real listener.
+这些声像摆位角度将改变输出混音，以更好地与真实听者周围的扬声器的物理布置配合。
 
-To set the speaker panning mode, send a request in C++ to the audio system.
+要设置扬声器平移模式，请使用 C++ 向音频系统发送请求。
 
-## C++ Example: Request Set Panning Mode
+## C++ 示例：请求设置平移模式
 
 ```cpp
 if (auto audioSystem = AZ::Interface<Audio::IAudioSystem>::Get();

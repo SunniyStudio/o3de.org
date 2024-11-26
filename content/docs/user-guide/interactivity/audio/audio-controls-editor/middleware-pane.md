@@ -1,33 +1,33 @@
 ---
 title: Middleware Controls Pane
 title: Audio Engine Middleware Controls Pane
-description: Use the Audio Controls Editor's audio engine middleware controls pane to filter and select a middleware-specific control to assign to an ATL control in Open 3D Engine.
+description: 使用 Audio Controls Editor 的音频引擎中间件控件窗格来筛选和选择要分配给 Open 3D Engine 中的 ATL 控件的特定于中间件的控件。
 weight: 300
 toc: true
 ---
 
-**Wwise** is shown here as an example of an audio engine middleware's controls pane.
+**Wwise** 此处显示为音频引擎中间件的 Controls 窗格的示例。
 
-## To filter displayed controls
+## 筛选显示的控件
 
-* In the **Audio Controls Editor**, in the audio engine middleware controls pane, enter your search term into the **Search** bar.
+* 在 **Audio Controls Editor** 的音频引擎中间件控件窗格中，在 **Search** 栏中输入您的搜索词。
 
-## To hide controls that are already assigned
+## 隐藏已分配的控件
 
-* Select **Hide Assigned**. The unassigned controls appear in orange text.
+* 选择 **Hide Assigned**。未分配的控件以橙色文本显示。
 
-## To create connections between ATL controls and middleware-specific controls
+## 在 ATL 控件和特定于中间件的控件之间创建连接
 
-* In the audio engine middleware controls pane, select and drag a control to the **Connected Controls** area of the **Inspector** pane.
+* 在音频引擎中间件控件窗格中，选择控件并将其拖动到 **Inspector** 窗格的 **Connected Controls** 区域。
 
 ![Drag the selected control to the Connected Controls area of the Inspector pane](/images/user-guide/audio/audio-atl-editor-connected.png)
 
-## To create a control
+## 创建控件
 
-1. In the audio engine middleware controls pane, select and drag a control to the **ATL Controls** pane.
+1. 在音频引擎中间件控件窗格中，选择一个控件并将其拖动到 **ATL Controls** 窗格。
 
   ![Drag a middleware control directly into the ATL Controls pane to create a new control.](/images/user-guide/audio/audio-atl-editor-new.png)
 
-  This creates a new control, which shares the same name of the middleware control. The middleware control and the ATL control are also automatically connected.
+  这将创建一个新控件，该控件与中间件控件具有相同的名称。中间件控件和 ATL 控件也会自动连接。
 
-1. To preview the control, choose **File**, **Save All**.
+1. 要预览控件，选择 **File**, **Save All**。

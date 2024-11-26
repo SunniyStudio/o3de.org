@@ -1,26 +1,26 @@
 ---
-title: ATL Default Controls
-description: Learn about the default controls defined in the Audio Translation Layer (ATL).
+title: ATL 默认控件
+description: 了解音频转换层 （ATL） 中定义的默认控件。
 weight: 350
 ---
 
-The game uses Audio Translation Layer (ATL) controls to communicate with the audio middleware. ATL controls are mapped to various data authored in the middleware's authoring tool. This abstraction layer provides you the flexibility to change mappings quickly without updating the game's integration of controls.
+游戏使用 Audio Translation Layer (ATL) 控件与 Audio 中间件通信。ATL 控件映射到中间件创作工具中创作的各种数据。此抽象层使您可以灵活地快速更改映射，而无需更新游戏的控件集成。
 
-To see the list of audio control types, see [ATL Controls Pane](/docs/user-guide/interactivity/audio/audio-controls-editor/atl-controls-pane).
+若要查看音频控件类型的列表，请参阅 [ATL 控件窗格](/docs/user-guide/interactivity/audio/audio-controls-editor/atl-controls-pane).
 
-## ATL Default Controls 
+## ATL 默认控件
 
-The **Audio Controls Editor** automatically creates the following ATL controls by default. You can find the controls in the `default_controls` folder.
+**Audio Controls Editor** 默认情况下，会自动创建以下 ATL 控件。您可以在 'default_controls' 文件夹中找到控件。
 
 ![ATL controls that the Audio Controls Editor automatically creates by default.](/images/user-guide/audio/audio-atl-editor-default.png)
 
-| Name | Description |
+| 名称 | 说明 |
 | --- | --- |
-| do_nothing |  Trigger that is used as a blank event where `play`/`stop` trigger pairs can be assigned. If you set `do_nothing` on the `stop` trigger, the `play` trigger does not stop automatically.  |
-| get_focus |  Trigger that is called when the application window in O3DE Editor gains focus.   |
-| lose_focus |  Trigger that is called when the application window in O3DE Editor loses focus.  To disable the `get_focus` and `lose_focus` triggers, use the console command `s_IgnoreWindowFocus` = `1`. This is useful when remote connecting Wwise Profiler so that audio continues to play while the Wwise Authoring Tool application has focus.   |
-| mute_all |  Trigger that is called when you click **Mute Audio**, which is located on the lower menu bar of O3DE Editor.  |
-| unmute_all |  Trigger that is called when you click **Mute Audio**, which is located on the lower menu bar of O3DE Editor.  |
-| object_speed |  RTPC control that is updated according to the speed of the associated entity in the level. You can enable the calculation of speed on a per entity basis with the `object_velocity_tracking` control.   |
-| object_velocity_tracking |  Switch that is used to enable or disable the calculation of the `object_speed` value on a per entity basis. You do not need to connect this switch to the audio middleware because it communicates O3DE-specific data.   |
-| ObstructionOcclusionCalculationType |  Switch that is used to set the obstruction and occlusion calculation method of an entity. The switch state values are `Ignore`, `SingleRay`, and `MultiRay`. You do not need to connect this switch to the audio middleware because it communicates O3DE-specific data.   |
+| do_nothing |  用作空白事件的触发器，其中可以分配 `play`/`stop` 触发器对。如果您在 `stop` 触发器上设置 `do_nothing`，则 `play` 触发器不会自动停止。  |
+| get_focus |  当 O3DE Editor 中的应用程序窗口获得焦点时调用的触发器。  |
+| lose_focus |  当 O3DE Editor 中的应用程序窗口失去焦点时调用的触发器。 要禁用 `get_focus` 和 `lose_focus` 触发器，请使用控制台命令 `s_IgnoreWindowFocus` = `1`。这在远程连接 Wwise Profiler 时非常有用，这样就可以在 Wwise 设计工具应用程序获得焦点时继续播放音频。   |
+| mute_all |  单击位于 O3DE Editor 下方菜单栏上的 **Mute Audio** 时调用的触发器。 |
+| unmute_all |  单击位于 O3DE Editor 下方菜单栏上的 **Mute Audio** 时调用的触发器。  |
+| object_speed |  根据关卡中关联实体的速度进行更新的 RTPC 控件。您可以使用 `object_velocity_tracking` 控件启用基于每个实体的速度计算。   |
+| object_velocity_tracking |  Switch 用于启用或禁用基于每个实体的 `object_speed` 值的计算。您无需将此开关连接到音频中间件，因为它会传达特定于 O3DE 的数据。   |
+| ObstructionOcclusionCalculationType |  用于设置实体的声障和声笼计算方法的开关。开关状态值为`Ignore`, `SingleRay`, 和 `MultiRay`。您无需将此开关连接到音频中间件，因为它会传达特定于 O3DE 的数据。  |

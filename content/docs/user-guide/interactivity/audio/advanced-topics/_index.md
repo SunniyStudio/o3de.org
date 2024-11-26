@@ -1,11 +1,11 @@
 ---
-linktitle: Advanced Topics
-title: Advanced Audio Topics
-description: Learn about advanced audio topics in Open 3D Engine.
+linktitle: 高级主题
+title: 高级音频主题
+description: 了解 Open 3D Engine 中的高级音频主题。
 weight: 600
 ---
 
-Extend your knowledge of the O3DE audio system with the following advanced topics.
+通过以下高级主题扩展您对 O3DE 音频系统的了解。
 
-* [Getting Sound Duration at Runtime](./sound-duration-runtime)
-* [Setting the Panning Mode](./audio-panning-mode)
+* [在运行时获取声音持续时间](./sound-duration-runtime)
+* [设置平移模式](./audio-panning-mode)

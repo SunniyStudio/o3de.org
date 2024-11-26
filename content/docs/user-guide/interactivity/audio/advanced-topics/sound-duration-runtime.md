@@ -1,13 +1,13 @@
 ---
-title: Getting Sound Duration at Runtime
-description: Load information about a sound in the Open 3D Engine audio system at runtime.
+title: 在运行时获取声音持续时间
+description: 在运行时加载 Open 3D Engine 音频系统中的音效信息。
 ---
 
-In order to get a sound's duration at runtime, an event to play that sound needs to be posted to the audio middleware first. Once it has been posted, the middleware will callback to the audio system with the duration information. If you are interested in this information, you can simply connect to the `AudioTriggerNotificationBus` by the ATL trigger Id that was used.
+为了在运行时获取声音的持续时间，需要先将播放该声音的事件发送到音频中间件。发布后，中间件将回调到音频系统并提供持续时间信息。如果您对此信息感兴趣，只需通过使用的 ATL 触发器 ID 连接到`AudioTriggerNotificationBus`即可。
 
-By overriding the `ReportDurationInfo` function, you will be notified with that information.
+通过覆盖`ReportDurationInfo`函数，您将收到该信息的通知。
 
-## C++ Example: Getting a Sound's Duration
+## C++ 示例：获取声音的持续时间
 
 ```cpp
 class MyClass

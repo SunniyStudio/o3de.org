@@ -1,23 +1,23 @@
 ---
-title: Audio Components
-description:  Use the audio components in Open 3D Engine to add sounds to your level.
+title: Audio 组件
+description:  使用 Open 3D Engine 中的音频组件将声音添加到关卡中。
 weight: 200
 ---
 
-Use the following audio components to add and configure sounds in your level.
+使用以下音频组件在关卡中添加和配置声音。
 
-| Component | Description |
+| 组件 | 说明 |
 | --- | --- |
-| [Audio Area Environment](/docs/user-guide/components/reference/audio/area-environment) | Enables entities that are moving around and throughout a shape to have environment effects applied to any sounds that they trigger. You must also add a shape component to use the audio area environment component. |
-| [Audio Environment](/docs/user-guide/components/reference/audio/environment) | Provides access to features of the Audio Translation Layer (ATL) environments. Environments are used to apply environmental effects such as reverb or echo. |
-| [Audio Listener](/docs/user-guide/components/reference/audio/listener) | Places a virtual microphone in the environment. An audio listener acts as a sink for sound sources in the virtual world, and 3D audio rendering is processed with respect to the listener's world transform. You can specify the audio listener's position and rotation independently. |
-| [Audio Preload](/docs/user-guide/components/reference/audio/preload) | Loads and unloads ATL preloads, which contain references to soundbanks. |
-| [Audio Proxy](/docs/user-guide/components/reference/audio/proxy) | Required dependency if you add multiple audio components to an entity. It acts as a proxy audio object wrapped in a component. For example, if you have an audio trigger component and an audio rtpc component on the same entity, they communicate to the same audio object using this audio proxy component. |
-| [Audio RTPC](/docs/user-guide/components/reference/audio/rtpc) | Provides basic Real-Time Parameter Control (RTPC) functionality. An RTPC is a named variable that the audio system can interpret in many different ways. It allows game developers to set the value from the game at run time to produce real-time tweaking of sounds. |
-| [Audio Switch](/docs/user-guide/components/reference/audio/switch) | Provides basic Audio Translation Layer (ATL) switch functionality. With switches and switch states, you can specify the state of an entity. The audio middleware interprets states, modifies the behavior of sounds, and plays the appropriate sounds. |
-| [Audio Trigger](/docs/user-guide/components/reference/audio/trigger) | Provides basic play and stop features so that you can set up Audio Translation Layer (ATL) play and stop triggers that can be executed on demand. With an audio trigger, you can also enable the player to run or stop audio triggers by name on entities. |
-| [Multi-position Audio](/docs/user-guide/components/reference/audio/multi-position) | Control audio which plays from multiple locations within a level. |
+| [Audio Area Environment](/docs/user-guide/components/reference/audio/area-environment) | 使在形状中移动的实体能够将环境效果应用于它们触发的任何声音。您还必须添加 shape 组件才能使用 Audio Area Environment 组件。 |
+| [Audio Environment](/docs/user-guide/components/reference/audio/environment) | 提供对音频转换层 （ATL） 环境功能的访问。环境用于应用环境效果，例如混响或回声。 |
+| [Audio Listener](/docs/user-guide/components/reference/audio/listener) | 在环境中放置虚拟麦克风。音频侦听器充当虚拟世界中声源的接收器，并根据侦听器的世界变换处理 3D 音频渲染。您可以单独指定音频侦听器的位置和旋转。 |
+| [Audio Preload](/docs/user-guide/components/reference/audio/preload) | 加载和卸载 ATL 预加载，其中包含对 SoundBank 的引用。 |
+| [Audio Proxy](/docs/user-guide/components/reference/audio/proxy) | 如果向实体添加多个音频组件，则为必需依赖项。它充当包装在组件中的代理音频对象。例如，如果同一实体上有一个 Audio Trigger 组件和一个 Audio RTPC 组件，则它们会使用此 Audio Proxy 组件与同一音频对象通信。 |
+| [Audio RTPC](/docs/user-guide/components/reference/audio/rtpc) | 提供基本的实时参数控制 （RTPC） 功能。RTPC 是一个命名变量，音频系统可以通过多种不同的方式对其进行解释。它允许游戏开发人员在运行时设置游戏的值，以产生实时的声音调整。 |
+| [Audio Switch](/docs/user-guide/components/reference/audio/switch) | 提供基本的音频转换层 （ATL） 开关功能。使用 switch 和 switch states，您可以指定实体的状态。音频中间件解释状态，修改声音的行为，并播放适当的声音。 |
+| [Audio Trigger](/docs/user-guide/components/reference/audio/trigger) | 提供基本的播放和停止功能，以便您可以设置可按需执行的音频转换层 （ATL） 播放和停止触发器。使用音频触发器，您还可以使播放器能够在实体上按名称运行或停止音频触发器。 |
+| [Multi-position Audio](/docs/user-guide/components/reference/audio/multi-position) | 控制从关卡中的多个位置播放的音频。 |
 
-## Related topics
+## 相关主题
 
 * [Microphone Gem](/docs/user-guide/gems/reference/audio/microphone)

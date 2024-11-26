@@ -1,8 +1,8 @@
 ---
 linkTitle: Gradient Signal
 title: Gradient Signal Gem
-description: The Gradient Signal Gem provides a number of components for generating, modifying, and mixing gradient signals in Open 3D Engine (O3DE) projects.
+description: Gradient Signal Gem 提供了许多组件，用于在 Open 3D Engine （O3DE） 项目中生成、修改和混合渐变信号。
 toc: true
 ---
 
-The Gradient Signal Gem provides a number of components for generating, modifying, and mixing gradient signals in **Open 3D Engine (O3DE)** projects.
+Gradient Signal Gem 提供了许多组件，用于在 **Open 3D Engine （O3DE）** 项目中生成、修改和混合渐变信号。

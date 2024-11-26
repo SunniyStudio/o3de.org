@@ -1,11 +1,11 @@
 ---
 linkTitle: UI Basics
 title: UI Basics Gem
-description: The UI Basics Gem provides a collection of assets that can be used  with LyShine, the Open 3D Engine (O3DE) runtime User Interface system and editor.
+description: UI Basics Gem 提供了可与 LyShine、Open 3D Engine （O3DE） 运行时用户界面系统和编辑器一起使用的资源集合。
 toc: true
 ---
 
-The UI Basics Gem provides a collection of assets you can use with LyShine, the **Open 3D Engine (O3DE)** user interface editor. UI Basics includes UI prefabs (image, text, button, and text input) and the textures that those prefabs require.
+UI Basics Gem 提供了可与 LyShine（**Open 3D Engine（O3DE）** 用户界面编辑器）一起使用的资源集合。UI 基础知识包括 UI 预制件（图像、文本、按钮和文本输入）以及这些预制件所需的纹理。
 
-For more information, refer to [Creating and Customizing Project User Interfaces](/docs/user-guide/interactivity/user-interface/).
+有关更多信息，请参阅 [创建和自定义项目用户界面](/docs/user-guide/interactivity/user-interface/).
 

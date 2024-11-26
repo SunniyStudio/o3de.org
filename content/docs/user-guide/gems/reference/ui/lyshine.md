@@ -1,11 +1,11 @@
 ---
 linkTitle: LyShine
 title: LyShine Gem
-description: The LyShine Gem provides the runtime UI system and creation tools for Open 3D Engine projects.
+description: LyShine Gem 为 Open 3D Engine 项目提供运行时 UI 系统和创建工具。
 toc: true
 ---
 
-The LyShine Gem provides the runtime UI system for **Open 3D Engine (O3DE)** projects. With the LyShine, you can create dynamic user interfaces for your projects.
+LyShine Gem 为 Open 3D Engine （O3DE） 项目提供运行时 UI 系统。使用 LyShine，您可以为项目创建动态用户界面。
 
-For more information, refer to [Creating and Customizing Project User Interfaces](/docs/user-guide/interactivity/user-interface/).
+有关更多信息，请参阅 [创建和自定义项目用户界面](/docs/user-guide/interactivity/user-interface/)。
 

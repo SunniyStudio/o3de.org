@@ -1,10 +1,10 @@
 ---
 linkTitle: Script Canvas
 title: Script Canvas Gem
-description: The Script Canvas Gem provides Open 3D Engine's (O3DE) visual scripting environment Script Canvas.
+description: Script Canvas Gem提供 Open 3D Engine （O3DE） 的可视化脚本环境 Script Canvas。
 toc: true
 ---
 
-The **Script Canvas** Gem provides a visual scripting environment **Script Canvas**, in **Open 3D Engine (O3DE)**. With the Gem enabled, you can use Script Canvas to visually script game logic without needing to write your own code.
+**Script Canvas** Gem 在 **Open 3D Engine （O3DE）** 中提供可视化脚本环境 **Script Canvas**。启用 Gem 后，您可以使用 Script Canvas 直观地编写游戏逻辑脚本，而无需编写自己的代码。
 
-For more information about working with Script Canvas, see [Creating scripts with Script Canvas](/docs/user-guide/scripting/script-canvas/).
+有关使用 Script Canvas 的更多信息，请参阅 [使用 Script Canvas 创建脚本](/docs/user-guide/scripting/script-canvas/).

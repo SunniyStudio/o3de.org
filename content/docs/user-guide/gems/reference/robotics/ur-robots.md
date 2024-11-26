@@ -1,7 +1,7 @@
 ---
 linkTitle: UR Robots
 title: UR Robots Gem
-description: The UR Robots Gem provides a collection of robotic arms assets that can be used in robotic simulations with Robot Operating System (ROS) 2 in Open 3D Engine (O3DE).
+description: UR Robots Gem 提供一组机械臂资产，这些资产可用于 Open 3D Engine （O3DE） 中的机器人操作系统 （ROS） 2 的机器人模拟。
 toc: true
 ---
 
@@ -9,16 +9,16 @@ toc: true
 
 ![O3DE showing a level with UR10 and UR20 robotic arms](/images/user-guide/gems/ur-robots-gem-demo.png)
 
-The **UR Robots Gem** provides simplified models of the following robotic arms developed by [Universal Robots](https://www.universal-robots.com/):
+**UR Robots Gem** 提供 [Universal Robots ](https://www.universal-robots.com/) 开发的以下机械臂的简化模型:
 - [UR10](https://www.universal-robots.com/products/ur10-robot/)
 - [UR20](https://www.universal-robots.com/products/ur20-robot/)
   
-Thanks to the pneumatic vacuum end effector that can be attached to either of the arms (available in the Gem), you can use the assets in robotic simulations of warehouses. An example of such usage with [ROS&nbsp;2 Gem](./ros2.md) can be found in [ROSCon2023Demo](https://github.com/RobotecAI/ROSCon2023Demo). 
+由于气动真空末端执行器可以连接到任一臂（在 Gem 中提供），您可以在仓库的机器人模拟中使用这些资产。[ROS&nbsp;2 Gem](./ros2.md)  的此类用法示例可以在 [ROSCon2023Demo](https://github.com/RobotecAI/ROSCon2023Demo)中找到。
 
-This Gem has a [Github repository](https://github.com/RobotecAI/o3de-ur-robots-gem/). For more information, refer to the _README_ file of the Gem.
+此 Gem 有一个 [Github 存储库](https://github.com/RobotecAI/o3de-ur-robots-gem/)。有关更多信息，请参阅 Gem 的 _README_ 文件。
 
-## License
+## 许可证
 
-The Gem is licensed under [Apache License, Version 2.0](https://opensource.org/licenses/Apache-2.0). You may elect at your option to use the [MIT License](https://opensource.org/licenses/MIT) instead. Contributions must be made under both licenses.
+Gem 根据 [Apache 许可证 2.0 版](https://opensource.org/licenses/Apache-2.0) 获得许可。您可以选择使用 [MIT 许可证](https://opensource.org/licenses/MIT)。必须在两个许可证下做出贡献。
 
-Models were created based on STL and URDF files kindly shared by [Universal Robots](https://www.universal-robots.com/).
+模型是根据 [Universal Robots](https://www.universal-robots.com/) 友情共享的 STL 和 URDF 文件创建的.

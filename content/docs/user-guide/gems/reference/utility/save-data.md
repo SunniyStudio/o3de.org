@@ -1,47 +1,47 @@
 ---
 linkTitle: Save Data
 title: Save Data Gem
-description: The Save Data Gem provides an API to save runtime data in Open 3D Engine (O3DE) projects.
+description: Save Data Gem 提供用于将运行时数据保存在 Open 3D Engine （O3DE） 项目中的 API。
 toc: true
 ---
 
-The **Save Data** Gem encapsulates all the functionality in **Open 3D Engine (O3DE)** for saving game and individual user data under a single platform-agnostic set of API operations.
+**Save Data** Gem将所有功能封装在 **Open 3D Engine （O3DE）** 中，用于将游戏和个人用户数据保存在一组与平台无关的 API 操作下。
 
-The Save Data Gem uses the [Event Bus (EBus)](/docs/user-guide/programming/messaging/ebus/), O3DE's general-purpose communication system for dispatching notifications and receiving requests. To make requests related to saving or loading persistent user data, use the Save Data Gem's `SaveDataRequests` bus. To listen for notifications related to saving persistent user data, use the `SaveDataNotifications` bus.
+Save Data Gem 使用 O3DE 的通用通信系统 [事件总线 （EBus）](/docs/user-guide/programming/messaging/ebus/)来调度通知和接收请求。要发出与保存或加载持久性用户数据相关的请求，请使用 Save Data Gem 的`SaveDataRequests`总线。要侦听与保存持久性用户数据相关的通知，请使用`SaveDataNotifications`总线。
 
-## Making requests to Save Data
+## 请求保存数据
 
-When making requests to save or load data using the `SaveDataRequestBus`, keep the following points in mind:
+使用 `SaveDataRequestBus` 发出保存或加载数据的请求时，请记住以下几点：
 
-* The Save Data Gem is responsible only for saving and loading generic data buffers. Your game must serialize or deserialize data using a data format, such as JSON or XML. However, the Gem provides convenience functions that save or load an object that has been reflected using a [serialization context](/docs/user-guide/programming/components/reflection/serialization-context/).
+* Save Data Gem 仅负责保存和加载通用数据缓冲区。您的游戏必须使用数据格式 （如 JSON 或 XML） 序列化或反序列化数据。但是，Gem 提供了方便的函数，用于保存或加载已使用 [序列化上下文](/docs/user-guide/programming/components/reflection/serialization-context/).
 
-* Each save data buffer must be uniquely identified by a string. On most operating systems and devices, this string is the name of the file to which the data buffer is written.
+* 每个保存数据缓冲区必须由字符串唯一标识。在大多数操作系统和设备上，此字符串是数据缓冲区写入的文件的名称。
 
-### Saving data for local user IDs
+### 保存本地用户 ID 的数据
 
-Save Data communications that deal with local user profiles depend on the local user ID that uniquely identifies a user on the local device. When using local user IDs, keep in mind the following points:
+保存 处理本地用户配置文件的数据通信取决于在本地设备上唯一标识用户的本地用户 ID。使用本地 User ID 时，请记住以下几点：
 
-* A save data buffer can optionally be associated with a local user ID.
+* 可以选择将保存数据缓冲区与本地用户 ID 相关联。
 
-* Data buffers that have the same name can be stored separately for each local user ID.
+* 可以为每个本地用户 ID 单独存储具有相同名称的数据缓冲区。
 
-* When you call the save data functions, you must either specify a local user ID or pass in the value `AzFramework::LocalUserIdNone`. This requirement helps you to consider whether the data that you are saving should be associated with a user.
+* 调用保存数据函数时，必须指定本地用户 ID 或传入值`AzFramework::LocalUserIdNone`。此要求可帮助您考虑是否应将要保存的数据与用户关联。
 
-* Data associated with a local user ID is saved into a container or directory that is unique to the local user ID and the application.
+* 与本地用户 ID 关联的数据将保存到本地用户 ID 和应用程序唯一的容器或目录中。
 
-* Data not associated with a local user ID is saved into a *global* container or directory unique to the application.
+* 未与本地用户 ID 关联的数据将保存到应用程序唯一的 **全局** 容器或目录中。
 
-For more information about the `SaveDataRequests` bus, refer to the commented source code in `\Gems\SaveData\Code\Include\SaveData\SaveDataRequestBus.h`.
+有关 `SaveDataRequests`总线的更多信息，请参阅`\Gems\SaveData\Code\Include\SaveData\SaveDataRequestBus.h`.
 
-## Getting Save Data notifications
+## 获取保存数据通知
 
-All save and load operations that Save Data performs are asynchronous. Therefore, you must either subscribe to receive Save Data notifications or supply a callback function that notifies you when a save or load operation completes. This action is always performed in the main thread.
+Save Data 执行的所有保存和加载操作都是异步的。因此，您必须订阅以接收 Save Data 通知，或者提供一个回调函数，以便在 Save 或 Load 操作完成时通知您。此操作始终在主线程中执行。
 
-For more information about the `SaveDataNotifications` bus, refer to the commented source code in `\Gems\SaveData\Code\Include\SaveData\SaveDataNotificationBus.h`.
+有关 `SaveDataNotifications` 总线的更多信息，请参阅`\Gems\SaveData\Code\Include\SaveData\SaveDataNotificationBus.h`.
 
-## Save Data code example
+## Save Data 代码示例
 
-The following example code uses the Save Data Gem to save and load buffers and objects to and from persistent storage.
+以下示例代码使用 Save Data Gem 将缓冲区和对象保存到持久性存储或从持久存储加载缓冲区和对象。
 
 ```c++
 const AZ::u64 testSaveDataSize = 9;

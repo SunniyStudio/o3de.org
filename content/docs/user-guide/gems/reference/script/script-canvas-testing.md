@@ -1,8 +1,8 @@
 ---
 linkTitle: Script Canvas Testing
 title: Script Canvas Testing Gem
-description: The Script Canvas Testing Gem provides a framework for testing for and with Script Canvas.
+description: Script Canvas Testing Gem提供用于测试 Script Canvas 和使用 Script Canvas 的框架。
 toc: true
 ---
 
-The Script Canvas Testing Gem provides a framework for testing for and with Script Canvas.
+Script Canvas Testing Gem提供用于测试 Script Canvas 和使用 Script Canvas 的框架。

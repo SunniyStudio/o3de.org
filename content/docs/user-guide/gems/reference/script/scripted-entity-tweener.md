@@ -1,10 +1,10 @@
 ---
 linkTitle: Scripted Entity Tweener
 title: Scripted Entity Tweener Gem
-description: The Scripted Entity Tweener Gem provides a script driven animation system for Open 3D Engine (O3DE) projects.
+description: Scripted Entity Tweener Gem 为 Open 3D Engine （O3DE） 项目提供脚本驱动的动画系统。
 toc: true
 ---
 
-The Scripted Entity Tweener Gem provides a script driven animation system for **Open 3D Engine (O3DE)** projects.Though the Scripted Entity Tweener is particularly useful and powerful for UI entities it can be used with other entities in O3DE.
+Scripted Entity Tweener Gem 为 Open 3D Engine （O3DE） 项目提供脚本驱动的动画系统。尽管脚本化实体补间对 UI 实体特别有用和强大，但它可以与 O3DE 中的其他实体一起使用。
 
-For more information, see [Scripted Entity Tweener System](/docs/user-guide/interactivity/user-interface/animating/tweener-system/).
+有关详细信息，请参阅 [脚本化实体补间系统](/docs/user-guide/interactivity/user-interface/animating/tweener-system/).

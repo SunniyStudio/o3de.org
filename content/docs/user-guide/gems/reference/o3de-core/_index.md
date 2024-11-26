@@ -1,13 +1,13 @@
 ---
 linkTitle: O3DE Core (LmbrCentral)
 title: O3DE Core (LmbrCentral) Gem
-description: The O3DE Core (LmbrCentral) Gem provides required code and assets for running Open 3D Engine Editor.
+description: O3DE Core （LmbrCentral） Gem 提供运行 Open 3D Engine Editor 所需的代码和资产。
 toc: true
 ---
 
-The O3DE Core (LmbrCentral) Gem contains required code and assets for running **Open 3D Engine (O3DE) Editor**. O3DE Core (LmbrCentral) provides basic functionality and many components for O3DE including the following:
+O3DE Core （LmbrCentral） Gem 包含运行 Open 3D Engine （O3DE） 编辑器所需的代码和资产。O3DE Core （LmbrCentral） 为 O3DE 提供基本功能和许多组件，包括：
 
-* Shape components
+* 形状组件
     * [Axis Aligned Box](/docs/user-guide/components/reference/shape/axis-aligned-box-shape)
     * [Box](/docs/user-guide/components/reference/shape/box-shape)
     * [Capsule](/docs/user-guide/components/reference/shape/capsule-shape)
@@ -20,20 +20,20 @@ The O3DE Core (LmbrCentral) Gem contains required code and assets for running **
     * [Spline](/docs/user-guide/components/reference/shape/spline)
     * [Tube](/docs/user-guide/components/reference/shape/tube-shape)
 
-* [Comment component](/docs/user-guide/components/reference/editor/comment)
+* [Comment 组件](/docs/user-guide/components/reference/editor/comment)
 
-* [Simple State component](/docs/user-guide/components/reference/gameplay/simple-state)
+* [Simple State 组件](/docs/user-guide/components/reference/gameplay/simple-state)
 
-* Asset Types
+* 资产组件
 
 <!--
-* AI components
+* AI 组件
     * [Navigation](/docs/user-guide/components/reference/ai/navigation)
     * [Navigation Area](/docs/user-guide/components/reference/ai/nav-area)
     * [Navigation Seed Point](/docs/user-guide/components/reference/ai/nav-seed)
 -->
 
-* Audio components
+* Audio 组件
     * [Audio Area Environment](/docs/user-guide/components/reference/audio/area-environment)
     * [Audio Environment](/docs/user-guide/components/reference/audio/environment)
     * [Audio Listener](/docs/user-guide/components/reference/audio/listener)
@@ -44,12 +44,12 @@ The O3DE Core (LmbrCentral) Gem contains required code and assets for running **
     * [Audio Switch](/docs/user-guide/components/reference/audio/switch)
     * [Audio Trigger](/docs/user-guide/components/reference/audio/trigger)
 
-* Asset Builders
+* 资产构建器
 
-* Look At component
+* Look At 组件
 
 * [Tag component](/docs/user-guide/components/reference/gameplay/tag)
 
 {{< note >}}
-The O3DE Core (LmbrCentral) Gem is required for all O3DE projects.
+所有 O3DE 项目都需要 O3DE 核心 （LmbrCentral） Gem。
 {{< /note >}}

@@ -1,8 +1,8 @@
 ---
 linkTitle: Video Playback Framework
 title: Video Playback Framework Gem
-description: The Video Playback Framework Gem provides the interface to play back video in an Open 3D Engine (O3DE) project.
+description: Video Playback Framework Gem提供在 Open 3D Engine （O3DE） 项目中播放视频的界面。
 toc: true
 ---
 
-The Video Playback Framework Gem provides the interface to play back video in an **Open 3D Engine (O3DE)** project.
+Video Playback Framework Gem 提供在 **Open 3D Engine （O3DE）** 项目中播放视频的界面。

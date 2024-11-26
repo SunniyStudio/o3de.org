@@ -1,8 +1,8 @@
 ---
 linkTitle: Expression Evaluation
 title: Expression Evaluation Gem
-description: The Expression Evaluation Gem provides a method for parsing and executing string expressions in Open 3D Engine (O3DE).
+description: Expression Evaluation Gem 提供在 Open 3D Engine （O3DE） 中解析和执行字符串表达式的方法。
 toc: true
 ---
 
-The Expression Evaluation Gem provides a method for parsing and executing string expressions in **Open 3D Engine (O3DE)**.
+Expression Evaluation Gem 提供在 Open 3D Engine （O3DE） 中解析和执行字符串表达式的方法。

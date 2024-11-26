@@ -1,63 +1,62 @@
 ---
 linkTitle: NVIDIA Blast
-description: ' Use the NVIDIA Blast Gem to simulate destruction in your Open 3D Engine
-  project. '
+description: ' 使用 NVIDIA Blast Gem 模拟 Open 3D Engine 项目中的破坏。 '
 title: NVIDIA Blast Gem
 draft: true
 ---
 
-The NVIDIA Blast Gem uses the NVIDIA Blast library to provide fast, high-fidelity destruction simulation in Open 3D Engine.
+NVIDIA Blast Gem 使用 NVIDIA Blast 库在 Open 3D Engine 中提供快速、高保真的破坏模拟。
 
 {{< note >}}
-NVIDIA Blast for O3DE requires a SideFX Houdini commercial or indie license to create assets. The apprentice license is not sufficient. For more information on Houdini, see [SideFX's home page](https://www.sidefx.com/).
-The precompiled Houdini plug-ins supplied with the NVIDIA Blast Gem require Houdini 18.0.
+适用于 O3DE 的 NVIDIA Blast 需要 SideFX Houdini 商业或独立许可证才能创建资产。学徒执照是不够的。有关 Houdini 的更多信息，请参阅 [SideFX 的主页](https://www.sidefx.com/).
+NVIDIA Blast Gem 附带的预编译 Houdini 增效工具需要 Houdini 18.0。
 {{< /note >}}
 
-For NVIDIA Blast developer information, see [Simulated destruction with NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/).
+有关 NVIDIA Blast 开发人员的信息，请参阅 [使用 NVIDIA Blast 进行模拟破坏](/docs/user-guide/interactivity/physics/nvidia-blast/)。
 
-## Functionality provided by the NVIDIA Blast Gem
+## NVIDIA Blast Gem 提供的功能
 
-The NVIDIA Blast Gem provides the following:
+NVIDIA Blast Gem 提供以下内容：
 
-* **Blast Family Mesh Data** component that adds NVIDIA Blast meshes to an entity.
+* **Blast Family Mesh Data**组件，该组件将 NVIDIA Blast 网格添加到实体中。
 
-* **Blast Family** component that enables NVIDIA Blast simulation for an entity.
+* **Blast Family**组件，该组件为实体启用 NVIDIA Blast 模拟。
 
-* **Blast Configuration** editor available in the **Tools** menu in O3DE Editor.
+* **Blast Configuration** 编辑器位于 O3DE 编辑器的 **Tools** 菜单中。
 
-* **Blast Materials** to set physical properties for NVIDIA Blast assets available in **Asset Editor**.
+* **Blast Materials**为 **Asset Editor**中可用的 NVIDIA Blast 资产设置物理属性。
 
-* **Blast Script Canvas** nodes to script destruction simulation.
+* **Blast Script Canvas** 用于编写破坏模拟脚本的节点。
 
-* Plug-ins and Houdini Digital Assets for SideFX Houdini to fracture geometry and export NVIDIA Blast assets.
+* 用于 SideFX Houdini 的插件和 Houdini 数字资产，用于破碎几何体并导出 NVIDIA Blast 资产。
 
-* A Python Asset Builder to process NVIDIA Blast assets and generate blast slices.
+* Python 资产生成器，用于处理 NVIDIA Blast 资产并生成爆炸切片。
 
-* A public C++ API that allows other systems and Gems to access NVIDIA Blast simulation functionality.
+* 一个公共 C++ API，允许其他系统和 Gem 访问 NVIDIA Blast 模拟功能。
 
-## Enable the NVIDIA Blast Gem
+## 启用NVIDIA Blast Gem
 
-1. Use **Project Manager** to add the NVIDIA Blast Gem to your project. The NVIDIA Blast Gem requires the following Gems as dependencies:
+1. 使用 **Project Manager** 将 NVIDIA Blast Gem 添加到您的项目中。NVIDIA Blast Gem 需要以下 Gem 作为依赖项：
 
    * **LmbrCentral**
 
    * **PhysX**
 
    {{< important >}}
-   Though not required, we highly recommend that you enable the [Python Asset Builder Gem](/docs/user-guide/gems/reference/script/python/python-asset-builder) with the NVIDIA Blast Gem. The NVIDIA Blast Gem includes a Python asset builder script that automatically processes mesh assets for NVIDIA Blast and creates a blast slice asset.
+   虽然不是必需的，但我们强烈建议您使用 NVIDIA Blast Gem 启用 [Python 资产生成器 Gem](/docs/user-guide/gems/reference/script/python/python-asset-builder)。NVIDIA Blast Gem 包括一个 Python 资产构建器脚本，该脚本可自动处理 NVIDIA Blast 的网格资产并创建 Blast 切片资产。
    {{< /important >}}
 
-1. Configure the build:
+1. 配置构建：
 
    ```cmd
    cmake -B <CMake build dir> -S . -G "Visual Studio 16" 
    ```
 
    {{< note >}}
-Use `Visual Studio 16` as the generator for Visual Studio 2019, and `Visual Studio 17` for Visual Studio 2022. For a complete list of common generators for each supported platform, refer to [Configuring projects](/docs/user-guide/build/configure-and-build/#configuring-projects).
+使用`Visual Studio 16`作为 Visual Studio 2019 的生成器，使用`Visual Studio 17`作为 Visual Studio 2022 的生成器。有关每个受支持平台的常用生成器的完整列表，请参阅 [配置项目](/docs/user-guide/build/configure-and-build/#configuring-projects)。
    {{< /note >}}
 
-1. Build your project:
+1. 构建项目：
 
    ```cmd
    cmake --build <CMake build dir> --target <Project name> --config profile -- -m

@@ -1,8 +1,8 @@
 ---
 linkTitle: PBR Reference Materials
 title: PBR Reference Materials Gem
-description: The PBR Reference Materials Gem provides physically based reference materials for Open 3D Engine (O3DE) projects.
+description: PBR Reference Materials Gem 为 Open 3D Engine （O3DE） 项目提供基于物理的参考资料。
 toc: true
 ---
 
-The PBR Reference Materials Gem provides physically based reference materials for **Open 3D Engine (O3DE)** projects. Physically based materials simulate the real world light transmission properties of surfaces.
+PBR Reference Materials Gem 为 Open 3D Engine （O3DE） 项目提供基于物理的参考资料。基于物理的材质模拟表面的真实世界透光属性。

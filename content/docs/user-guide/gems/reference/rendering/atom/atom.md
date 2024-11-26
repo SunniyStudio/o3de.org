@@ -1,10 +1,10 @@
 ---
 linkTitle: Atom Common Features
 title: Atom Common Features Gem
-description: The Atom Common Features Gem provides Atom Renderer and its associated tools (such as Material Editor), utilites, libraries, and interfaces.
+description: Atom Common Features Gem 提供 Atom 渲染器及其关联的工具（如 Material Editor）、实用程序、库和接口。
 toc: true
 ---
 
-The Atom Common Features Gem adds **Atom Renderer** and associated tools and utilties such as **Material Editor** to Open 3D Engine projects. Atom is a modular, data-driven, and multi-threaded renderer that supports Forward+ rendering.
+Atom Common Features Gem 为 Open 3D Engine 项目添加了 **Atom 渲染器** 以及相关的工具和实用程序，例如 **材质编辑器**。Atom 是一个模块化的、数据驱动的、多线程的渲染器，支持 Forward+ 渲染。
 
-For more information refer to the [Atom Guide](/docs/atom-guide).
+有关更多信息，请参阅 [Atom 指南](/docs/atom-guide).

@@ -1,8 +1,8 @@
 ---
 linkTitle: Qt for Python
 title: Qt for Python Gem
-description: The Qt for Python Gem provides the PySide2 Python libraries to manage Qt widgets.
+description: Qt for Python Gem 提供 PySide2 Python 库来管理 Qt 小部件。
 toc: true
 ---
 
-The Qt for Python Gem provides the PySide2 Python libraries to manage Qt widgets.
+Qt for Python Gem提供 PySide2 Python 库来管理 Qt 小部件。

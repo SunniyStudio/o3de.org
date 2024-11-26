@@ -1,10 +1,10 @@
 ---
 linkTitle: LyShine Examples
 title: LyShine Examples Gem
-description: The LyShine Examples Gem provides example code and assets for LyShine, the runtime UI system for Open 3D Engine (O3DE) projects.
+description: LyShine Examples Gem 提供 LyShine 的示例代码和资源，LyShine 是 Open 3D Engine （O3DE） 项目的运行时 UI 系统。
 toc: true
 ---
 
-The LyShine Examples Gem provides example code and assets for LyShine, the runtime UI system for **Open 3D Engine (O3DE)** projects.
+LyShine Examples Gem 提供 LyShine 的示例代码和资源，LyShine 是 Open 3D Engine （O3DE）** 项目的运行时 UI 系统。
 
-For more information, refer to [Creating and Customizing Project User Interfaces](/docs/user-guide/interactivity/user-interface/).
+有关更多信息，请参阅 [创建和自定义项目用户界面](/docs/user-guide/interactivity/user-interface/).

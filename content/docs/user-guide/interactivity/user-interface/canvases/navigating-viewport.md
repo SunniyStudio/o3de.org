@@ -1,30 +1,30 @@
 ---
-linkTitle: Navigating the Viewport
-description: ' Use keyboard, mouse, or menu to navigate the UI Editor viewport in Open 3D Engine. '
-title: Navigating the Viewport
+linkTitle: 导航视口
+description: ' 使用键盘、鼠标或菜单在 Open 3D Engine 中导航 UI Editor 视区。 '
+title: 导航视口
 weight: 100
 ---
 
-The **UI Editor** features a rectangle with a checkerboard pattern on a dark gray background.
+**UI 编辑器** 具有一个在深灰色背景上带有棋盘格图案的矩形。
 
 ![UI Editor canvas pane](/images/user-guide/interactivity/user-interface/canvases/ui-checkerboard.png)
 
-The checkerboard pattern represents empty space within the UI canvas, and the dark gray represents the space outside of the canvas. Anything within the UI canvas space is visible when the canvas is loaded.
+棋盘格图案表示 UI 画布内的空白区域，深灰色表示画布外部的空间。加载画布时，UI 画布空间中的任何内容都可见。
 
-**To zoom in or out on a UI canvas**
+**在 UI 画布上放大或缩小**
 
-Do one of the following:
-+ Mouse - Scroll the mouse wheel.
-+ Keyboard - Press **Ctrl +** or **Ctrl -**.
-+ Menu - Click **View**, then click **Zoom In** or **Zoom Out**.
-+ Toolbar - In the **Zoom** box, enter a percentage value or click the up and down arrows.
+执行以下操作之一：
++ 鼠标 - 滚动鼠标滚轮。
++ 键盘 - 按 **Ctrl +** 或 **Ctrl -**。
++ 菜单 - 点击 **查看**，然后点击 **放大** 或 **缩小**。
++ 工具栏 - 在 **缩放** 框中，输入百分比值或单击向上和向下箭头。
 
-**To pan the view on a UI canvas while dragging the canvas with the left mouse button**
-+ With the mouse on the UI canvas, drag using the middle mouse button.
-+ Press and hold the space bar while dragging the canvas.
+**使用鼠标左键拖动画布时在 UI 画布上平移视图**
++ 将鼠标放在 UI 画布上，使用鼠标中键拖动。
++ 按住空格键，同时拖动画布。
 
-**To toggle common zoom settings**
+**切换常用缩放设置**
 
-Do one of the following:
-+ Fit canvas to current view (default) - Press **Ctrl+0**, or click **View**, **Fit Canvas**.
-+ View canvas at actual size - Press **Ctrl+1**, or click **View**, **Actual Size**.
+执行以下操作之一：
++ 使画布适应当前视图（默认） - 按 Ctrl+0，或单击 **视图**、**适合画布**。
++ 按实际大小查看画布 - 按 **Ctrl+1**，或单击 **查看**、**实际大小**。

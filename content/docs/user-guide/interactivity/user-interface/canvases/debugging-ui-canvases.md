@@ -1,112 +1,112 @@
 ---
-linkTitle: Debugging UI Canvases
-description: ' Use console variables and commands to debug UI canvases in Open 3D Engine. '
-title: Debugging UI Canvases
+linkTitle: 调试 UI 画布
+description: ' 使用控制台变量和命令在 Open 3D Engine 中调试 UI 画布。 '
+title: 调试 UI 画布
 weight: 700
 ---
 
-You can use the following console commands and console variables to display debug information for the UI when your game is running.
+您可以使用以下控制台命令和控制台变量在游戏运行时显示 UI 的调试信息。
 
 ## ui\_DisplayCanvasData 
 
-Displays canvas data for enabled or loaded canvases.
+显示已启用或已加载的画布的画布数据。
 
-| Value | Description |
-| --- | --- |
-| 0 | Off. |
-| 1 | Displays a line of information for each loaded canvas. |
-| 2 | Displays information only for canvases that are enabled. |
+|值 |描述 |
+|-- |--- |
+|0 |关闭。|
+|1 |显示每个加载的画布的一行信息。|
+|2 |仅显示已启用的画布的信息。|
 
-The following example displays data for five loaded UI canvases.
+以下示例显示 5 个已加载 UI 画布的数据。
 
 ![Canvas data for five loaded UI canvases.](/images/user-guide/interactivity/user-interface/canvases/ui-editor-debugging-ui-canvases-1.png)
 
-The following table describes each column.
+下表描述了每列。
 
-| **Column** | **Description** |
-| --- | --- |
-| NN | The index number of the canvas in the list. The canvases are listed in the order that they're drawn in. |
-| Name | The leaf canvas name. |
-| En | Whether the canvas is enabled. |
-| Po | Whether the canvas accepts positional inputs (for example, mouse input). |
-| Na | Whether the canvas has navigation enabled. |
-| DrawOrder | The draw order, which is used to sort the list of loaded canvases. |
-| nElem | The number of UI elements in the canvas. |
-| nEnab | The number of enabled UI elements in the canvas. If a parent isn't enabled, the element isn't counted. |
-| nRend | The number of enabled renderable elements in the canvas (how many images, text and particle effects are being rendered). |
-| nRCtl | The number of enabled "render control" elements in the canvas (masks and faders). |
-| nImg | The number of enabled UI elements with UiImageComponents. |
-| nText | The number of enabled UI elements with UiTextComponents. |
-| nMask | The number of enabled UI elements with UiMaskComponents. |
-| nFadr | The number of enabled UI elements with UiFaderComponents. |
-| nIntr | The number of enabled UI elements with interactable components (Button, Slider, TextInput, and so on). |
-| nUpdt | Number of enabled UI elements with components that listen for updates (that is, that potentially do something every frame). |
-| ActiveInt | The name of the active interactable on this canvas (if any). |
-| HoverInt | The name of the current hover interactable on this canvas (if any). |
+| **列**     |**说明** |
+|-----------| --- |
+| NN        | 画布在列表中的索引号。画布将按其绘制顺序列出。 |
+| Name      | 叶画布名称。 |
+| En        | 画布是否已启用。 |
+| Po        | 画布是否接受位置输入 （例如，鼠标输入）。 |
+| Na        | 画布是否启用了导航。 |
+| DrawOrder | 绘制顺序，用于对加载的画布列表进行排序。 |
+| nElem     | 画布中的 UI 元素数。 |
+| nEnab     | 画布中已启用的 UI 元素的数量。如果未启用父级，则不会对元素进行计数。 |
+| nRend     | 画布中已启用的可渲染元素的数量（正在渲染的图像、文本和粒子效果的数量）。 |
+| nRCtl     | 画布中启用的“渲染控制”元素（蒙版和推子）的数量。|
+| nImg      | 具有 UiImageComponents 的已启用 UI 元素的数量。 |
+| nText     | 使用 UiTextComponents 启用的 UI 元素的数量。 |
+| nMask     | 具有 UiMaskComponents 的已启用 UI 元素的数量。 |
+| nFadr     | 使用 UiFaderComponents 启用的 UI 元素的数量。 |
+| nIntr     | 具有可交互组件（Button、Slider、TextInput 等）的已启用 UI 元素的数量。 |
+| nUpdt     | 具有侦听更新（即可能每帧执行某项操作）的组件的已启用 UI 元素的数量。 |
+| ActiveInt | 此画布上活动可交互对象的名称（如果有）。 |
+| HoverInt  | 此画布上当前悬停可交互对象的名称（如果有）。 |
 
 ## ui\_DisplayDrawCallData 
 
-Displays the number of draw calls used to render UI canvases. This variable is useful for performance tuning and debugging.
+显示用于渲染 UI 画布的绘制调用数。此变量对于性能优化和调试非常有用。
 
 
-| Value | Description |
-| --- | --- |
-| 0 | Turns off the display. |
-| 1 | Turns on the display. |
+|价值 |描述 |
+|--- |--- |
+|0 |关闭显示。|
+|1 |打开显示屏。|
 
-The following example data shows draw call information for four UI canvases.
+以下示例数据显示了四个 UI 画布的绘制调用信息。
 
 ![Draw call information for four UI canvases.](/images/user-guide/interactivity/user-interface/canvases/ui-editor-debugging-ui-canvases-2.png)
 
-The following table describes each column.
+下表描述了每列。
 
-| Column | Description |
+| 列 | 说明 |
 | --- | --- |
-| NN | The index number of the canvas in the list. The canvases are listed in the order that they're drawn in. |
-| Canvas name | The leaf canvas name. |
-| nDraw | The number of draw calls. |
-| nPrim | The number of primitives (for example, images and text strings). |
-| nTris | The number of triangles rendered for the UI. |
-| nMask | The number of mask render nodes in the render graph. |
-| nRTs | The number of render target render nodes in the render graph. |
-| nUTex | The number of unique textures being rendered in the canvas in this frame. |
-| XMask | The number of draw calls caused by the use of masks.  One mask can cause up to four extra draw calls.  |
-| XRT | The number of draw calls caused by render targets. |
-| XBlnd | The number of draw calls caused by a change in blend mode. |
-| XSrgb | The number of draw calls caused by a change in Srgb write. This data point appears only for render targets (for example, playing video). |
-| XMaxV | The number of draw calls caused by a render node that requires more than 65536 vertices or 16384 quads. This case is uncommon. For example, more than 16000 characters of text would be required for a value to appear. |
-| XTex | The number of draw calls that occur when the shader supported maximum of 16 textures is reached. To reduce the number of these calls, you can use a texture atlas. For more information, see [Using Texture Atlases](/docs/user-guide/interactivity/user-interface/canvases/texture-atlases). |
+| NN | 画布在列表中的索引号。画布将按其绘制顺序列出。 |
+| Canvas name | 叶画布名称。 |
+| nDraw | 绘制调用的数量。 |
+| nPrim | 基元 （例如，图像和文本字符串） 的数量。 |
+| nTris | 为 UI 渲染的三角形数。 |
+| nMask | 渲染图中蒙版渲染节点的数量。 |
+| nRTs | 渲染图中渲染目标渲染节点的数量。 |
+| nUTex | 此帧中画布中渲染的唯一纹理的数量。 |
+| XMask | 使用遮罩导致的绘制调用数。 一个遮罩可能会导致最多四个额外的绘制调用。  |
+| XRT | 呈现目标导致的绘制调用数。 |
+| XBlnd | 混合模式更改导致的绘制调用数。 |
+| XSrgb | 由 Srgb 写入更改引起的绘制调用数。此数据点仅针对呈现目标（例如，播放视频）显示。 |
+| XMaxV | 由需要超过 65536 个顶点或 16384 个四边形的渲染节点引起的绘制调用数。这种情况并不常见。例如，显示值需要超过 16000 个字符的文本。|
+| XTex | 达到着色器支持的最多 16 个纹理时发生的绘制调用数。要减少这些调用的数量，您可以使用纹理贴图集。有关详细信息，请参阅 [使用纹理图集](/docs/user-guide/interactivity/user-interface/canvases/texture-atlases). |
 
 ## ui\_DisplayElemBounds 
 
-This console command displays an overlay on the screen that shows the rectangles of elements. By default, it shows the rectangular bounds of every UI element for each enabled UI canvas.
+此控制台命令在屏幕上显示一个覆盖层，该覆盖层显示元素的矩形。默认情况下，它显示每个已启用的 UI 画布的每个 UI 元素的矩形边界。
 
-If you have several enabled UI canvases and want to see the rectangular bounds for only one canvas, use the `ui_DisplayElemBoundsCanvasIndex` console variable. To use the `ui_DisplayElemBoundsCanvasIndex` console variable, specify the index of the canvas whose bounds you want to display. To find the index for an enabled canvas, use the `ui_DisplayCanvasData 2` setting.
+如果您有多个已启用的 UI 画布，并且只想查看一个画布的矩形边界，请使用`ui_DisplayElemBoundsCanvasIndex`控制台变量。要使用`ui_DisplayElemBoundsCanvasIndex`控制台变量，请指定要显示其边界的画布的索引。要查找已启用画布的索引，请使用 `ui_DisplayCanvasData 2` 设置。
 
-The following example shows the rectangular bounds of nested scrollboxes.
+下面的示例演示嵌套滚动框的矩形边界。
 
 ![Rectangular bounds displayed for nested scrollboxes.](/images/user-guide/interactivity/user-interface/canvases/ui-editor-debugging-ui-canvases-3.png)
 
 ## ui\_DisplayTextureData 
 
-Displays the textures that the UI is using.
+显示 UI 正在使用的纹理。
 
-The display shows the dimensions, data size, texture format, and pathname of each texture that the UI system is using in the current frame. The textures are sorted in descending order by the amount of memory that they use.
+显示屏显示 UI 系统在当前帧中使用的每个纹理的尺寸、数据大小、纹理格式和路径名。纹理按它们使用的内存量降序排序。
 
-The following example shows data for 13 unique textures in the current frame.
+以下示例显示了当前帧中 13 个唯一纹理的数据。
 
 ![Data for 13 unique textures in the current frame.](/images/user-guide/interactivity/user-interface/canvases/ui-editor-debugging-ui-canvases-4.png)
 
 ## ui\_ReportDrawCalls 
 
-Writes a report of draw calls to a log file.
+将绘制调用的报告写入日志文件。
 
-The command output displays the location of the log file, as in the following example.
+命令输出显示日志文件的位置，如以下示例所示。
 
 ![Entering the ui_ReportDrawCalls command.](/images/user-guide/interactivity/user-interface/canvases/ui-editor-debugging-ui-canvases-5.png)
 
-The log file is written to `drawcallreport.txt` in the log directory.
+日志文件将写入日志目录中的 `drawcallreport.txt` 中。
 
-The log file lists all of the draw calls for each enabled canvas. The report can be useful for determining how to reduce the number of draw calls.
+日志文件列出了每个已启用画布的所有绘制调用。该报告可用于确定如何减少绘制调用的数量。
 
-For more information, see [Using Texture Atlases to Reduce UI Draw Calls](/docs/user-guide/interactivity/user-interface/canvases/texture-atlases/texture-atlases-using-texture-atlases-to-reduce-ui-draw-calls).
+有关详细信息，请参阅 [使用纹理图集减少 UI 绘制调用](/docs/user-guide/interactivity/user-interface/canvases/texture-atlases/texture-atlases-using-texture-atlases-to-reduce-ui-draw-calls).

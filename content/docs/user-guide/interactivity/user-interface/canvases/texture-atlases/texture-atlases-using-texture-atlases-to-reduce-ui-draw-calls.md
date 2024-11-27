@@ -1,37 +1,37 @@
 ---
-linkTitle: Using Texture Atlases to Reduce UI Draw Calls
-description: Using Texture Atlases to Reduce UI Draw Calls
-title: Using Texture Atlases to Reduce UI Draw Calls
+linkTitle: 使用纹理贴图集减少 UI 绘制调用
+description: 使用纹理贴图集减少 UI 绘制调用
+title: 使用纹理贴图集减少 UI 绘制调用
 weight: 300
 ---
 
-The UI shader can combine draw calls that use up to a maximum of 16 textures. If this limit is exceeded, you can use texture atlases to reduce the number of draw calls.
+UI 着色器可以组合最多使用 16 个纹理的绘制调用。如果超出此限制，您可以使用纹理图集来减少绘制调用的数量。
 
-Deciding which textures to add to a texture atlas is a two-part process:
+决定将哪些纹理添加到纹理图集的过程分为两部分：
 
-1. Find out which canvases have draw calls that might be reduced by using texture atlases.
+1. 找出哪些画布具有绘制调用，这些调用可以通过使用纹理图集来减少。
 
-1. Determine which textures to place in specific texture atlases.
+1. 确定要放置在特定纹理图集中的纹理。
 
-To gather data to make these determinations, you can use the O3DE Editor console.
+要收集数据以做出这些决定，您可以使用 O3DE 编辑器控制台。
 
-**To determine the textures to add to a texture atlas**
+**确定要添加到纹理图集的纹理**
 
-1. In the O3DE Editor console, set the `ui_DisplayDrawCallData` console variable to **1** to display the draw call information for each loaded canvas, as in the following example.
+1. 在 O3DE Editor 控制台中，将 `ui_DisplayDrawCallData` 控制台变量设置为 **1** 以显示每个加载的画布的绘制调用信息，如以下示例所示。
 
    ```
    ui_DisplayDrawCallData 1
    ```
 
-1. In the last column in the display of draw call information, note the values under **XTex**. The **XTex** column shows the number of draw calls when the shader supported maximum of 16 textures is reached. To reduce the number of draw calls, use a texture atlas.
+1. 在绘制调用信息显示的最后一列中，记下 **XTex** 下的值。**XTex** 列显示当达到着色器支持的最多 16 个纹理时绘制调用的数量。要减少绘制调用的数量，请使用纹理图集。
 
 ![Location of the XTex column in the draw call information output.](/images/user-guide/interactivity/user-interface/canvases/texture-atlases/ui-editor-texture-atlases-8.png)
 
-1. In the O3DE Editor console, enter the `ui_ReportDrawCalls` console command. This command outputs a report of the draw calls for all active canvases into a text file.
+1. 在 O3DE Editor 控制台中，输入 `ui_ReportDrawCalls`控制台命令。此命令将所有活动画布的绘制调用报告输出到文本文件中。
 
-1. Open the `drawcallreport.txt` log file.
+1. 打开 `drawcallreport.txt` 日志文件。
 
-1. At the end of the report, examine the following two sections to identify the textures to put into texture atlases.
+1. 在报告结束时，检查以下两个部分以确定要放入纹理图集的纹理。
 
    ```
    --------------------------------------------------------------------------------------------
@@ -45,12 +45,12 @@ To gather data to make these determinations, you can use the O3DE Editor console
    --------------------------------------------------------------------------------------------
    ```
 
-1. When deciding which textures to put into a texture atlas, consider the following points:
-   + A texture atlas reduces draw calls only if the textures in the atlas are used on screen at the same time. Therefore, to reduce draw calls, put textures that are going to be on screen at the same time into the same texture atlas.
+1. 在决定将哪些纹理放入纹理图集时，请考虑以下几点：
+   + 仅当屏幕上同时使用图集中的纹理时，纹理图集才会减少绘制调用。因此，为了减少绘制调用，请将将要同时在屏幕上的纹理放入同一纹理图集中。
 
-     For example, suppose you have texture sets A and B. The textures in A appear in one screen state, and the textures in B appear in a different screen state. In this situation, put the textures in A into one texture atlas and the textures in B into a different texture atlas.
-   + The default maximum size of a texture atlas is `4096x4096`.
+     例如，假设您有纹理集 A 和 B。A 中的纹理以一种屏幕状态显示，B 中的纹理以不同的屏幕状态显示。在这种情况下，将 A 中的纹理放入一个纹理图集中，将 B 中的纹理放入不同的纹理图集中。
+      + 纹理图集的默认最大大小为`4096x4096`。
 
-     Because this limits the number of textures in a texture atlas, having the UI load multiple separate texture atlases is a good practice.
+由于这会限制纹理图集中的纹理数量，因此让 UI 加载多个单独的纹理图集是一种很好的做法。
 
-For more information on the `ui_DisplayDrawCallData` and `ui_ReportDrawCalls` commands, see [Debugging UI Canvases](/docs/user-guide/interactivity/user-interface/canvases/debugging-ui-canvases).
+有关`ui_DisplayDrawCallData` 和 `ui_ReportDrawCalls` 命令的更多信息，请参阅 [调试 UI 画布](/docs/user-guide/interactivity/user-interface/canvases/debugging-ui-canvases)。

@@ -1,25 +1,25 @@
 ---
-linkTitle: Texture Atlases
-title: Using Texture Atlases
-description: ' Use texture atlases on UI canvases for quicker rendering of textures in Open 3D Engine. '
+linkTitle: 纹理图集
+title: 使用纹理图集
+description: ' 在 UI 画布上使用纹理图集，在 Open 3D Engine 中更快地渲染纹理。 '
 toc: true
 weight: 600
 ---
 
-To reduce draw calls, you can add individual textures to a texture atlas and then add one or more texture atlases to a UI canvas.
+要减少绘制调用，您可以将单个纹理添加到纹理图集，然后将一个或多个纹理图集添加到 UI 画布。
 
-## Characteristics 
+## 特性
 
-UI canvases and texture atlases have the following characteristics:
-+ Each UI canvas contains a list of texture atlases to be loaded.
-+ Texture atlases are loaded when the UI canvas loads. They're unloaded when the UI canvas unloads.
-+ If multiple UI canvases load the same texture atlas, the texture atlas is loaded only once.
-+ UI elements that render textures preferentially use textures from a loaded texture atlas, if available.
-+ The texture atlas is only unloaded when all UI canvases that loaded it are unloaded.
+UI 画布和纹理图集具有以下特征：
++ 每个 UI 画布都包含要加载的纹理图集列表。
++ 纹理图集在 UI 画布加载时加载。当 UI 画布卸载时，它们将被卸载。
++ 如果多个 UI 画布加载相同的纹理集，则纹理集仅加载一次。
++ 渲染纹理的 UI 元素优先使用已加载纹理图集（如果可用）中的纹理。
++ 仅当卸载加载纹理图集的所有 UI 画布时，才会卸载纹理图集。
 
-## Advantages 
+## 优势
 
-The principle advantages of texture atlases are the following:
-+ Draw calls are significantly reduced.
-+ Enhanced compression. Although source textures whose dimensions aren't multiples of four aren't compressed, texture atlases are always compressed.
-+ Forced preloading of texture groups. When the canvas loads, it also loads its texture atlases.
+纹理图集的主要优点如下：
++ 绘制调用显著减少。
++ 增强的压缩。尽管不会压缩维度不是 4 的倍数的源纹理，但纹理图集始终会压缩。
++ 强制预加载纹理组。当画布加载时，它还会加载其纹理图集。

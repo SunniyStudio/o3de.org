@@ -1,12 +1,12 @@
 ---
-linkTitle: Setting Canvas Size in Preview
-description: ' Set your game UI canvas size in Open 3D Engine UI Editor Preview to visualize how your canvas might look at different screen resolutions and to see how the interactive elements change state. '
-title: Setting Canvas Size in Preview
+linkTitle: 在预览中设置画布大小
+description: ' 在 Open 3D Engine UI Editor Preview 中设置游戏 UI 画布大小，以可视化画布在不同屏幕分辨率下的外观，并查看交互式元素如何更改状态。 '
+title: 在预览中设置画布大小
 weight: 100
 ---
 
-Change your game UI canvas size in **UI Editor** **Preview** to visualize how your canvas might look at different screen resolutions and to see how the interactive elements change state. Changing your canvas size in **Preview** does not affect the canvas size at which you are authoring the UI canvas-that is controlled in the [**UI Editor**](../changing-size).
+在 **UI 编辑器** **预览** 中更改游戏 UI 画布大小，以可视化画布在不同屏幕分辨率下的外观，并查看交互式元素如何更改状态。在 **预览** 中更改画布大小不会影响您创作 UI 画布的画布大小 - 在 [**UI 编辑器**](../changing-size) 大小。
 
-Setting your canvas size in **Preview** is useful when designing games that run on devices that have multiple resolutions. You can see at different resolutions how an element's size and position changes based on the settings of its **Transform2D** properties, such as anchors, offsets, and the **Scale to Device** settings. For more information on the **Transform2D** properties, see [Transform2D Component](/docs/user-guide/interactivity/user-interface/components/transform2d).
+在设计在具有多种分辨率的设备上运行的游戏时，在 **预览** 中设置画布大小非常有用。您可以在不同的分辨率下查看元素的大小和位置如何根据其 **Transform2D** 属性（如锚点、偏移和 **Scale to Device** 设置）的设置而变化。有关 **Transform2D** 属性的更多信息，请参阅 [Transform2D 组件](/docs/user-guide/interactivity/user-interface/components/transform2d).
 
-The **Canvas scale** in the toolbar shows the scale at which the canvas is displayed. If the **Preview canvas size** selected is larger than the viewport size, the canvas you are previewing is drawn at a reduced scale.
+工具栏中的 **Canvas scale** 显示画布的显示比例。如果所选的 **Preview canvas size** 大于视口大小，则您正在预览的画布将以缩小的比例绘制。

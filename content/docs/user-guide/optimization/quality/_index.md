@@ -1,22 +1,23 @@
 ---
-description: Use the Quality system to define quality levels and the console variable settings for each level.
-title: Quality System
-linkTitle: Quality System
+description: 使用质量系统定义质量级别和每个级别的控制台变量设置。
+title: 质量系统
+linkTitle: 质量系统
 ---
 
-The Quality system gives you the ability to define quality levels and console variable settings for each quality level. Applications typically run on different hardware and need different settings to achieve the best performance on each device and accomodate user preferences.
+质量系统使您能够为每个质量级别定义质量级别和控制台变量设置。应用程序通常在不同的硬件上运行，并且需要不同的设置才能在每个设备上实现最佳性能并适应用户首选项。
 
 
-## Quality groups
+## 质量组
 
-Quality groups (e.g. `q_general`, `q_graphics`, `q_physics` etc.) can be defined in [Settings Registry](/docs/user-guide/settings/) `.setreg` files to make it easier to group similar settings in your application.  Quality levels (e.g. `Low`, `Medium`, `High`, `VeryHigh`) can be defined within each group to accomodate the needs of your application. 
+可以在 [设置注册表](/docs/user-guide/settings/) `.setreg`文件中定义质量组（例如 `q_general`, `q_graphics`, `q_physics` 等），以便更轻松地在应用程序中对类似设置进行分组。 可以在每个组中定义质量级别（例如`Low`, `Medium`, `High`, `VeryHigh`）以满足您的应用需求。
 
-The Quality system creates console variables on demand for each quality group so you can change the active quality level for that group at runtime using the console, for this reason we recommend that you use a lowercase group name with a `q_` prefix, which is short for `quality`.  For example, you may define a quality group for your game named `q_game` and set the quality level at runtime using the console command like the one below where `<quality level>` is the number index or text name of the quality level.
+质量系统按需为每个质量组创建控制台变量，以便您可以在运行时使用控制台更改该组的活动质量级别，因此，我们建议您使用带有`q_`前缀的小写组名称，该前缀是`quality`的缩写。 例如，您可以为游戏定义一个名为 `q_game` 的质量组，并在运行时使用控制台命令设置质量级别，如下所示，其中`<quality level>`是质量级别的数字索引或文本名称。
+
 ```
 q_game <quality level>
 ```
 
-Quality group objects should be defined at the path `O3DE/Quality/Groups` and have the following format.
+质量组对象应在路径 `O3DE/Quality/Groups` 中定义，并具有以下格式。
 
 ```json
 {
@@ -25,20 +26,20 @@ Quality group objects should be defined at the path `O3DE/Quality/Groups` and ha
             "Groups": {
                 "q_general": {
                     "Description" : "Description with values e.g.. 0 : Low, 1 : Medium, 2 : High",
-                    "Levels": [ // quality level names
+                    "Levels": [ // 质量级别名称
                         "Low",
                         "Medium",
                         "High",
                         ...
                     ],
-                    "Default": 2, // default quality level index in the Levels array
-                    "Settings": { // console variable settings for each quality level
-                        // an array can be provided with the setting value for each level
+                    "Default": 2, // Levels 数组中的 default 质量级别索引
+                    "Settings": { // 每个质量级别的控制台变量设置
+                        // 可以为每个级别提供 set 值的数组
                         "r_example":[32, 64, 128],
-                        // a single value can be provided to be used by every quality level
+                        // 可以提供单个值供每个质量级别使用
                         "r_example2": 2,
-                        // if a setting doesn't have values defined for all quality levels,
-                        // the last value in the array will be used for higher quality levels  
+                        // 如果设置没有为所有质量级别定义值，则
+                        // 数组中的最后一个值将用于更高的质量级别
                         "r_example3": [1, 2] ,
                         ...
                     }
@@ -49,7 +50,7 @@ Quality group objects should be defined at the path `O3DE/Quality/Groups` and ha
 }
 ```
 
-The default quality group to use on application start up is defined at the path `O3DE/Quality/DefaultGroup`.
+应用程序启动时使用的默认质量组在路径 `O3DE/Quality/DefaultGroup` 中定义。
 ```json
 {
     "O3DE": {
@@ -60,7 +61,7 @@ The default quality group to use on application start up is defined at the path 
 }
 ```
 
-O3DE includes a single quality group `q_general` in `Registry/quality.setreg` that defines 4 quality levels `Low`, `Medium`, `High`, and `VeryHigh` and defines the default level as `High`.
+O3DE 在 `Registry/quality.setreg` 中包含一个质量组 `q_general` ，它定义了 4 个质量级别`Low`, `Medium`, `High`, 和 `VeryHigh`，并将默认级别定义为 `High`。
 
 #### O3DE/Registry/quality.setreg
 ```json
@@ -79,7 +80,7 @@ O3DE includes a single quality group `q_general` in `Registry/quality.setreg` th
                     ],
                     "Default": 3,
                     "Settings": {
-                        // console variable settings
+                        // 控制台变量设置
                     }
                 }
             }
@@ -88,7 +89,7 @@ O3DE includes a single quality group `q_general` in `Registry/quality.setreg` th
 }
 ```
 
-The Atom Feature Common Gem also includes a `Registry/quality.setreg` file that defines the quality groups `q_graphics` and `q_shadows` for graphics and demonstrates how to create settings that change the quality level for other groups. 
+Atom Feature Common Gem 还包括一个`Registry/quality.setreg`文件，该文件定义图形的质量组`q_graphics`和`q_shadows`，并演示如何创建更改其他组质量级别的设置。
 
 #### O3DE/Gems/Atom/Feature/Common/Registry/quality.setreg
 ```json
@@ -132,14 +133,13 @@ The Atom Feature Common Gem also includes a `Registry/quality.setreg` file that 
 }
 ```
 
-In the example above, when the user sets the quality level for the `q_general` quality group to `Low` or `0` the quality level for `q_graphics` and `q_shadows` will also be set to that level.
+在上面的示例中，当用户将`q_general`质量组的质量级别设置为`Low` 或 `0`时，`q_graphics` 和 `q_shadows`的质量级别也将设置为该级别。
 
+## 质量级别
 
-## Quality levels 
+可以在每个质量组 JSON 对象的设置注册表 JSON 文件中定义质量级别。 
 
-Quality levels can be defined in Settings Registry JSON files within each quality group JSON object.  
-
-Quality levels within each group JSON object should be defined in the following format.
+每个组 JSON 对象中的质量级别应按以下格式定义。
 ```json
 {
     "O3DE": {
@@ -160,11 +160,11 @@ Quality levels within each group JSON object should be defined in the following 
 }
 ```
 
-Each group can have it's own quality levels defined with custom names and number.  Providing quality level names other than `Low`, `High`, etc. can be useful when defining levels for settings that aren't necessarily better or worse, for example you may have settings for power consumption levels like `HighPerformance`, `Balanced`, `EnergyEfficient`. 
+每个组都可以使用自定义名称和编号定义自己的质量级别。 在为不一定更好或更差的设置定义级别时，提供`Low`, `High`等质量级别名称可能很有用，例如，您可能有 `HighPerformance`, `Balanced`, `EnergyEfficient`等功耗级别设置。
 
-## Customizing quality levels for your project
+## 为您的项目自定义质量级别
 
-To override and customize the quality settings in the engine and the gems your project uses, define your own `.setreg` file in your projects `Registry` folder that contains the appropriate JSON content.  For example, if you wanted to override the default quality level in your game to be `VeryHigh` and provide a specific shadow console variable for a specific quality level you could add the following `.setreg` file to your project.
+要覆盖和自定义引擎和项目使用的 Gem 中的质量设置，请在项目`Registry`文件夹中定义您自己的`.setreg` 文件，其中包含相应的 JSON 内容。 例如，如果您想将游戏中的默认质量级别覆盖为`VeryHigh`，并为特定质量级别提供特定的阴影控制台变量，则可以将以下`.setreg` 文件添加到您的项目中。
 
 ### Project/Registry/quality.setreg
 
@@ -174,12 +174,12 @@ To override and customize the quality settings in the engine and the gems your p
         "Quality": {
             "Groups": {
                 "q_general": {
-                    "Default": 3 // change the default level to VeryHigh instead of High
+                    "Default": 3 // 将默认级别更改为 VeryHigh 而不是 High
                 },
                 "q_shadows": {
                     "Settings": {
-                        // example console variable setting for each of the 4 quality
-                        // levels in q_shadows (Low, Medium, High, VeryHigh)
+                        // 4 种质量中每一种的控制台变量设置示例
+                        // q_shadows 中的级别 (Low, Medium, High, VeryHigh)
                         "r_shadowResolution": [128, 512, 1024, 4096]
                     }
                 }
@@ -189,11 +189,11 @@ To override and customize the quality settings in the engine and the gems your p
 }
 ```
 
-## Platform specific quality settings
+## 特定于平台的质量设置
 
-Quality settings can easily be customized for specific platforms because of the existing platform abstraction built into the Settings Registry.  By placing quality `.setreg` files in the appropriate `Registry/Platform/<platform name>` folder they will be used for that specific platform and override any settings in the `Registry/` folder.
+由于 Settings Registry 中内置了现有的平台抽象，因此可以轻松地为特定平台自定义质量设置。 通过将高质量的 `.setreg` 文件放在适当的 `Registry/Platform/<platform name>` 文件夹中，它们将用于该特定平台并覆盖 `Registry/` 文件夹中的任何设置。
 
-For example, to change the default quality level on the Android platform you could add the following `.setreg` file to your project.
+例如，要更改 Android 平台上的默认质量级别，您可以将以下 `.setreg`文件添加到您的项目中。
 
 ### Project/Registry/Platform/Android/quality.setreg
 
@@ -203,7 +203,7 @@ For example, to change the default quality level on the Android platform you cou
         "Quality": {
             "Groups": {
                 "q_general": {
-                    "Default": 0 // change the default level to Low 
+                    "Default": 0 // 将 default level 更改为 Low
                 }
             }
         }
@@ -211,6 +211,6 @@ For example, to change the default quality level on the Android platform you cou
 }
 ```
 
-Customizing the quality settings for other platforms is as simple as placing Settings Registry files in the appropriate platform folder.
+自定义其他平台的质量设置就像将 Settings Registry 文件放在相应的平台文件夹中一样简单。
 
 `<project path>/Registry/Platform/Android|iOS|Linux|Mac|Windows`

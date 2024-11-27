@@ -1,11 +1,11 @@
 ---
-title: "Optimization"
+title: "优化"
 date: 2021-03-02T00:23:56-05:00
 weight: 1300
 ---
 
-Optimization is the process of making code perform and use resources in the most efficient way.
+优化是使代码以最有效的方式执行和使用资源的过程。
 
-### Quality Settings
+### 质量设置
 
-The [Quality system](/docs/user-guide/optimization/quality/) gives you the ability to define quality levels and console variable settings to use for each quality level. Applications typically run on different hardware and need different settings to achieve the best performance on each device and accomodate user preferences.
+[质量系统](/docs/user-guide/optimization/quality/) 使您能够定义质量级别和控制台变量设置以用于每个质量级别。应用程序通常在不同的硬件上运行，并且需要不同的设置才能在每个设备上实现最佳性能并适应用户首选项。

@@ -1,14 +1,14 @@
 ---
-title: Interactivity and simulation
+title: 交互和模拟
 weight: 800
 ---
 
-| Topic                                                    | Description                                                                                                                                                                |
-|----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Physics](physics)                                       | Simulate physics interactions in O3DE using NVIDIA PhysX for collisions and rigid bodies, <!--NVIDIA Blast to simulate destruction, -->and NVIDIA Cloth to simulate cloth. |
-| [Robotics](robotics)                                     | Create robotic simulations integrated with Robot Operating System (ROS) 2 in O3DE.                                                                                         |
-| [Prefabs](prefabs)                                       | Learn about O3DE's prefab system.                                                                                                                                          |
-| [Audio](audio)                                           | Control audio and sound effects in your game.                                                                                                                              |
-| [Input](input)                                           | Allow player input such as key presses and mouse clicks, to create an interactive experience in O3DE.                                                                      |
-| [User interface](user-interface)                         | Create a user interface in your game such as with images, text, buttons, menus, scroll boxes, and heads-up displays (HUDs).                                                |
-| [Navigation and pathfinding](navigation-and-pathfinding) | Create a navigation mesh and find walkable paths between entities and positions.                                                                                           |
+| 主题                                  | 说明                                                                                  |
+|-------------------------------------|-------------------------------------------------------------------------------------|
+| [物理](physics)                       | 使用 NVIDIA PhysX 模拟碰撞和刚体，<!--NVIDIA Blast 模拟破坏，--> NVIDIA Cloth 模拟布料，在 O3DE 中模拟物理交互。 |
+| [机器人](robotics)                     | 在 O3DE 中创建与机器人操作系统 （ROS） 2 集成的机器人模拟。                                                |
+| [Prefab](prefabs)                   | 了解 O3DE 的Prefab系统。                                                                  |
+| [音频](audio)                         | 控制游戏中的音频和声音效果。                                                                      |
+| [输入](input)                         | 允许玩家输入（如按键和鼠标单击）在 O3DE 中创建交互式体验。                                                    |
+| [用户界面](user-interface)              | 在游戏中创建用户界面，例如使用图像、文本、按钮、菜单、滚动框和平视显示器 （HUD）。                                         |
+| [导航和寻路](navigation-and-pathfinding) | 创建导航网格并查找实体和位置之间的可行走路径。                                                             |

@@ -1,10 +1,10 @@
 ---
-title: Navigation and Pathfinding
-description: ' Create a navigation mesh and find walkable paths between entities and positions. '
+title: 导航和寻路
+description: ' 创建导航网格并查找实体和位置之间的可行走路径。 '
 ---
 
-Use the information in this section to learn about navigation and path finding in Open 3D Engine.
+使用本节中的信息了解 Open 3D Engine 中的导航和路径查找。
 
-| Topic | Description |
-| - | - |
-| [Recast Navigation](recast-navigation) | Learn about the Recast Navigation tools that you can use to create navigation meshes and find paths. |
+| 主题                             | 描述                                      |
+|--------------------------------|-----------------------------------------|
+| [Recast 导航](recast-navigation) | 了解可用于创建导航网格和查找路径的 Recast Navigation 工具。 |

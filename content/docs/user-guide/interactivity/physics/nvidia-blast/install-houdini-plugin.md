@@ -1,75 +1,74 @@
 ---
-description: ' Install Houdini plug-ins to create destruction assets for simulations
-  in Open 3D Engine with NVIDIA Blast. '
-title: Install SideFX Houdini plug-ins for NVIDIA Blast
+description: ' 安装 Houdini 插件，使用 NVIDIA Blast 在 Open 3D Engine 中创建用于模拟的破坏资产。 '
+title: 安装适用于 NVIDIA Blast 的 SideFX Houdini 插件
 weight: 100
 draft: true
 ---
 
 
 {{< note >}}
-NVIDIA Blast for O3DE requires a SideFX Houdini commercial or indie license to create assets. The apprentice license is not sufficient. For more information on Houdini, see [SideFX's home page](https://www.sidefx.com/).
+适用于 O3DE 的 NVIDIA Blast 需要 SideFX Houdini 商业或独立许可证才能创建资产。学徒执照是不够的。有关 Houdini 的更多信息，请参阅 [SideFX 的主页](https://www.sidefx.com/).
 
-The precompiled Houdini plug-ins supplied with the **NVIDIA Blast** gem require Houdini 18.0.
+随 **NVIDIA Blast** Gem 提供的预编译 Houdini 插件需要 Houdini 18.0。
 {{< /note >}}
 
-**Contents**
-+ [Install NVIDIA Blast plug-ins](#install-nvidia-blast-plug-ins)
-+ [Enable the Blast tool shelf](#enable-the-blast-tool-shelf)
+**内容**
++ [安装 NVIDIA Blast插件](#install-nvidia-blast-plug-ins)
++ [启用 Blast 工具架](#enable-the-blast-tool-shelf)
 
-## Install NVIDIA Blast plug-ins 
+## 安装 NVIDIA Blast 插件
 
-**To install plug-ins**
+**安装插件**
 
-1. Run `install_plugin.bat` from the `houdini` directory located at `Gems\Blast\houdini`.
+1. 从`houdini`目录运行`install_plugin.bat`，位于`Gems\Blast\houdini`。
 
-1. Grant the installer script administrator privileges when requested.
+1. 请求时授予安装程序脚本管理员权限。
 
-   The plug-ins are installed into various directories in `C:\Users\user_name\Documents\houdini18.0\`.
+   这些插件安装在`C:\Users\user_name\Documents\houdini18.0\`。
 
-1. To verify the installation, you can check for the following files in your Houdini user directory.
+1. 要验证安装，您可以在 Houdini 用户目录中检查以下文件。
 
-   The `C:\Users\user_name\Documents\houdini18.0\otls` directory contains these three files:
+   `C:\Users\user_name\Documents\houdini18.0\otls` 目录包含以下三个文件：
    + `blastExport.hda`
    + `fractureHierarchy.hda`
    + `fractureSingle.hda`
 
-   The `C:\Users\user_name\Documents\houdini18.0\toolbar` directory contains these three files:
+   `C:\Users\user_name\Documents\houdini18.0\toolbar` 目录包含以下三个文件：
    + `default.shelf`
    + `Fracture.shelf`
    + `shelf_tool_assets.json`
 
-   The `C:\Users\user_name\Documents\houdini18.0\dso` directory contains these five files:
+   `C:\Users\user_name\Documents\houdini18.0\dso` 目录包含以下五个文件：
    + `BlastExportPlugin.dll`
    + `BlastExportPlugin.exp`
    + `BlastExportPlugin.ilk`
    + `BlastExportPlugin.lib`
    + `BlastExportPlugin.pdb`
 
-   The `C:\Users\user_name\Documents\houdini18.0\dependencies` directory contains eleven `NvBlast*.dll` files and four `PhysX*.dll` files.
+   `C:\Users\user_name\Documents\houdini18.0\dependencies` 目录包含 11 个`NvBlast*.dll` 文件和 4个 `PhysX*.dll` 文件。
 
-1. Verify that the installation script has added your `houdini` user directory to the **PATH** environment variable in Windows:
+1. 验证安装脚本是否已将 `houdini` 用户目录添加到 Windows 中的 **PATH** 环境变量中：
 
    `C:\Users\user_name\Documents\houdini18.0\`
 
 {{< note >}}
-If Houdini is running prior to installation of the NVIDIA Blast tools for Houdini, restart Houdini for the changes to take effect.
+如果 Houdini 在为 Houdini 安装 NVIDIA Blast 工具之前正在运行，请重新启动 Houdini 以使更改生效。
 {{< /note >}}
 
 {{< important >}}
-Some Houdini installations create the Houdini user directory at `C:\Users\user_name\houdini18.0\` rather than in the `Documents` directory. If Houdini does not load the NVIDIA Blast tools, check to see if Houdini has created a user directory at `C:\Users\user_name\houdini18.0\`. If the directory exists and contains Houdini files such as `dso.cache`, move the above files to `C:\Users\user_name\houdini18.0\` and add `C:\Users\user_name\houdini18.0\` to the **PATH** environment variable.
+一些 Houdini 安装在`C:\Users\user_name\houdini18.0\`而不是 `Documents` 目录中创建 Houdini 用户目录。如果 Houdini 没有加载 NVIDIA Blast 工具，请检查 Houdini 是否在`C:\Users\user_name\houdini18.0\`创建了用户目录。如果该目录存在且包含 Houdini 文件（如 `dso.cache`），请将上述文件移动到 `C:\Users\user_name\houdini18.0\` 中，并将`C:\Users\user_name\houdini18.0\` 添加到 **PATH** 环境变量中。
 {{< /important >}}
 
-## Enable the Blast tool shelf 
+## 启用 Blast 工具架
 
-The NVIDIA Blast installation for Houdini includes a tool shelf that you can enable to speed up the process of creating assets for NVIDIA Blast.
+Houdini 的 NVIDIA Blast 安装包括一个工具架，您可以启用该工具架以加快为 NVIDIA Blast 创建资产的过程。
 
-**To enable the Blast tool shelf**
+**要启用 Blast 工具架**
 
-1. In Houdini, choose the **+** button in the **Toolbar** to the far right.
+1. 在 Houdini 中，在**工具栏**右侧选择 **+** 按钮。
 
-1. From the list, choose **Shelves** to expose the **Shelf list**.
+1. 从列表中，选择 **Shelves** 公开 **Shelf list**。
 
-1. From the **Shelf list** choose **Fracture tools for Blast** to add the shelf to the **Toolbar**.
+1. 从 **Shelf list** 选择 **Fracture tools for Blast** 将工具架添加到 **工具栏**。
 
 ![Enable the NVIDIA Blast tool shelf in Houdini.](/images/user-guide/physx/blast/ui-blast-houdini-shelf-enable.png)

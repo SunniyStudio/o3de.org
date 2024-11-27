@@ -1,84 +1,83 @@
 ---
-description: ' Use the NVIDIA Cloth component to add cloth simulation to Actor components
-  in Open 3D Engine. '
-title: Cloth for Actor components
+description: ' 使用 NVIDIA Cloth 组件将布料模拟添加到 Open 3D Engine 中的 Actor 组件。 '
+title: Actor 组件的布料
 weight: 200
 ---
 
-To use **Cloth**, you must enable the **NVIDIA Cloth** gem. For more information, see the [NVIDIA Cloth gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-cloth/) documentation.
+要使用 **Cloth**，您必须启用 **NVIDIA Cloth **Gem。有关更多信息，请参阅[NVIDIA Cloth gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-cloth/) 文档。
 
-You can create cloth assets for entities with **Actor** components in the content creation application of your choice and import them into O3DE from an `.fbx` file. The actor asset should have the following:
+您可以在所选内容创建应用程序中为具有 **Actor** 组件的实体创建布料资产，并将其从`.fbx`文件导入 O3DE。角色资产应具有以下内容：
 
 **Actor mesh**
-One or more meshes that visually represent the actor, skinned to a skeleton, that will **not** be simulated as cloth.
+一个或多个直观地表示角色的网格，蒙皮到骨架上，它们将 **不会** 模拟为布料。
 
 **Cloth mesh**
-One or more meshes that will be simulated and rendered as cloth.
-+ The cloth mesh must be skinned to bones. The bones do not have to be exclusive to the cloth mesh. The bones must be part of the actor's skeletal hierarchy. Because simulation will drive the cloth mesh, we recommend you use few additional bones for the cloth mesh.
-+ Cloth data can be added to define per vertex mass and constraint properties using the vertex color tool in your content creation application. For more information see [Per vertex properties for cloth](/docs/user-guide/interactivity/physics/nvidia-cloth/vertex-data/).
+一个或多个将被模拟并渲染为 Cloth 的网格。
++ 必须将布网蒙皮到骨骼。骨骼不必是布料网格的独占对象。骨骼必须是 actor 的骨架层次结构的一部分。由于模拟将驱动布料网格，因此我们建议您为布料网格使用少量其他骨骼。
++ 可以使用内容创建应用程序中的顶点颜色工具添加布料数据以定义每个顶点的质量和约束属性。有关详细信息，请参阅 [布料的逐顶点属性](/docs/user-guide/interactivity/physics/nvidia-cloth/vertex-data/)。
 
 **Skeleton**
-A skeleton to drive the actor and cloth meshes. Cloth meshes may be skinned to their own bones or any bones in the hierarchy. Bones that drive the cloth meshes must be part of the skeleton's hierarchy.
+用于驱动 actor 和 cloth 网格的骨架。布料网格可以蒙皮到它们自己的骨骼或层次结构中的任何骨骼。驱动布料网格的骨骼必须是骨架层次结构的一部分。
 
 **Animation**
-A **Motion set** and **Anim graph** based on the actor's skeleton. Keyframe animated cloth can be blended with simulated cloth using **Motion constraints**.
+基于角色骨架的 **Motion set** 和 **Anim graph** 。关键帧动画布料可以使用 **Motion constraints** 与模拟布料混合。
 
 {{< note >}}
-Sample **Actor** component cloth assets are located in the **NVIDIA Cloth** gem directory, which is located at `/dev/Gems/NvCloth/Assets/Objects/cloth/Chicken/`.
+示例 **Actor** 组件布料资源位于 **NVIDIA Cloth** gem 目录中，该目录位于`/dev/Gems/NvCloth/Assets/Objects/cloth/Chicken/`.
 {{< /note >}}
 
-For information on exporting actor assets, see [FBX Settings actor export](/docs/user-guide/assets/scene-settings/actors-tab/).
+有关导出角色资源的信息，请参阅 [FBX 设置角色导出](/docs/user-guide/assets/scene-settings/actors-tab/).
 
-## Add Cloth to Actor components
+## 添加 Cloth 组件到具有 Actor 组件的实体
 
-Create cloth by adding the **Cloth** component to an entity that has an **Actor** component, and then setting the properties of the **Cloth** component.
+通过将 **Cloth** 组件添加到具有 **Actor** 组件的实体，然后设置 **Cloth ** 组件的属性来创建布料。
 
-1. In O3DE Editor, add a new entity to the level.
+1. 在 O3DE 编辑器中，向关卡添加新实体。
 
-1. Add an **Actor** component to the entity, and reference the actor asset and material.
+1. 将 **Actor** 组件添加到实体，并引用 Actor 资产和材质。
 
-1. Add an **Anim Graph** component and reference the actor anim graph asset and motion set.
+1. 添加 **Anim Graph** 组件并引用角色动画图形资产和运动集。
 
-1. Add a **Cloth** component to the entity.
+1. 向实体添加 **Cloth** 组件。
 
-1. Set the cloth data of the actor asset.
+1. 设置 actor 资源的 cloth 数据。
 
-   1. Click the button beside the **Mesh node** property to open the **FBX Settings** window.
+   1. 单击 **Mesh node** 属性旁边的按钮以打开 **FBX Settings** 窗口。
 
    ![Open 3D Engine cloth component mesh node select.](/images/user-guide/physx/cloth/ui-cloth-mesh-node-select.png)
 
-   1. In the **FBX Settings** window, on the **Meshes** tab, and choose **Add Modifier**, **Cloth**.
+   1. 在 **FBX Settings** 窗口的 **Meshes** 选项卡上，依次选择 **Add Modifier**、**Cloth**。
 
-   1. In the **Cloth** modifier area:
+   1. 在 **Cloth** 修改器区域中：
 
-      1. Select the cloth mesh from the drop-down list.
+      1. 从下拉列表中选择布料网格。
 
-      1. When applicable, select the vertex color stream and channel that includes the **Inverse Masses** data. If data is not provided, then cloth defaults to an inverse mass value of 1.0 for all vertices.
+      1. 如果适用，请选择包含 **Inverse Mass （反质量） 数据的顶点颜色流和通道。如果未提供数据，则 cloth 默认为所有顶点的反向质量值 1.0。
 
-      1. When applicable, select the vertex color stream and channel that include the **Motion Constraints** data. If data is not provided, then cloth defaults to a motion constraint value of 1.0 for all vertices.
+      1. 如果适用，请选择包含 **Motion Constraints** 数据的顶点颜色流和通道。如果未提供 data，则 cloth 默认为所有顶点的运动约束值 1.0。
 
-      1. When applicable, select the vertex color streams and channels that includes the **Backstop Offset** and **Backstop Radius** data. If data is not provided, then no backstop constraints will be applied in the simulation.
+      1. 如果适用，请选择包含 **Backstop Offset** 和 **Backstop Radius** 数据的顶点颜色流和通道。如果未提供数据，则模拟中将不应用任何 backstop 约束。
 
       ![Open 3D Engine cloth modifier setup.](/images/user-guide/physx/cloth/ui-cloth-modifier-actor-setup.png)
 
-   1. Choose the **Update** button. **Asset Processor** then updates the asset and includes the cloth data.
+   1. 选择 **Update** （更新） 按钮。然后，Asset Processor 会更新资源并包含布料数据。
 
-1. Configure the cloth component.
+1. 配置 cloth 组件。
 
-   1. Select the cloth mesh node from the drop-down list.
+   1. 从下拉列表中选择 cloth mesh 节点。
 
    ![Open 3D Engine cloth component.](/images/user-guide/physx/cloth/ui-cloth-component-select-actor.png)
 
-   1. Adjust cloth properties to obtain the desired cloth behavior. For more information, see [Cloth Component](/docs/user-guide/components/reference/physx/cloth/).
+   1. 调整 Cloth 属性以获得所需的 Cloth 行为。有关详细信息，请参阅 [Cloth 组件](/docs/user-guide/components/reference/physx/cloth/).
 
-   1. You can use the **Motion constraints** properties **Max Distance** and **Scale** to blend between cloth simulation and keyframe animation.
+   1. 您可以使用 **Motion constraints** 属性 **Max Distance** 和 **Scale** 在布料模拟和关键帧动画之间进行混合。
 
-## Add cloth colliders to an actor
+## 向角色添加布料碰撞器
 
- You can add cloth colliders to an actor to prevent the cloth form penetrating the actor's mesh during simulation. Cloth colliders are added to actors in **Animation Editor**. For information on adding cloth colliders to an actor, see [Add Cloth Colliders to actors](/docs/user-guide/visualization/animation/character-editor/cloth-colliders/).
+您可以向角色添加布料碰撞器，以防止布料形状在模拟期间穿透角色的网格。布料碰撞器已添加到 **Animation Editor** 中的角色中。有关向角色添加布料碰撞器的信息，请参阅 [向角色添加布料碰撞器](/docs/user-guide/visualization/animation/character-editor/cloth-colliders/).
 
-## View the Cloth Simulation
+## 查看 Cloth Simulation
 
-In O3DE Editor, press **Ctrl+G** or press the **Play** button to run your project.
+在 O3DE 编辑器中，按 **Ctrl+G** 或按 **Play** 按钮来运行您的项目。
 
 ![Open 3D Engine cloth simulation with the NVIDIA Cloth gem.](/images/user-guide/physx/cloth/anim-actor-cloth.gif)

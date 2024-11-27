@@ -1,43 +1,42 @@
 ---
-description: ' Create realistic simulated cloth and fabric in Open 3D Engine with NVIDIA
-  Cloth. '
+description: ' 使用 NVIDIA Cloth 在 Open 3D Engine 中创建逼真的模拟布料和织物。 '
 linktitle: NVIDIA Cloth
-title: Simulate cloth with NVIDIA Cloth
+title: 使用 NVIDIA Cloth 模拟布料
 weight: 300
 ---
 
- With **NVIDIA Cloth** in Open 3D Engine you can create realistic cloth simulations for entities that contain **Actor** or **Mesh** components. The **NVIDIA Cloth** gem provides a component you can use to simulate cloth on any mesh that has been processed with a **Cloth** modifier applied in **FBX Settings**.
+ 借助 Open 3D Engine 中的 **NVIDIA Cloth**，您可以为包含 **Actor** 或 **Mesh** 组件的实体创建逼真的布料模拟。**NVIDIA Cloth ** Gem 提供了一个组件，可用于在已使用**FBX Settings**中应用的 **Cloth** 修改器处理的任何网格上模拟布料。
 
-To use **NVIDIA Cloth** you must enable the [NVIDIA Cloth gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-cloth/).
+要使用 **NVIDIA Cloth**，您必须启用 [NVIDIA Cloth gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-cloth/).
 
-## NVIDIA Cloth features 
+## NVIDIA Cloth 功能 
 
 ****
-+ Apply cloth data to meshes imported from `.fbx` files.
-+ Add cloth simulation to entities containing **Mesh** and **Actor** components.
-+ Cloth mesh simplification and static triangle removal allow you to use complex cloth meshes and yield faster cloth simulation.
-+ Define **Inverse mass**, **Motion constraints**, and **Backstop** per cloth particle with vertex color streams you create.
-+ Blend between cloth simulation and actor keyframe animation with motion constraints.
-+ Add cloth colliders to actors with **Animation Editor**.
-+ Add local wind forces to your cloth simulations or use force regions to simulate wind.
-+ Simulate cloth in parallel across available CPU cores.
-+ **NVIDIA Cloth** gem's public API allows other systems and gems to access cloth simulation functionality.
-+ Debug cloth simulations and constraints with real-time cloth debug visualizations.
++ 将布料数据应用于从 `.fbx` 文件导入的网格。
++ 将布料模拟添加到包含 **Mesh** 和 **Actor** 组件的实体。
++ 布料网格简化和静态三角形移除允许您使用复杂的布料网格并更快地生成布料模拟。
++ 使用您创建的顶点颜色流为每个布料粒子定义 **Inverse mass**, **Motion constraints**, 和 **Backstop**。
++ 在布料模拟和具有运动约束的角色关键帧动画之间混合。
++ 使用 **Animation Editor** 向角色添加布料碰撞器。
++ 将局部风力添加到您的布料模拟或使用力区域来模拟风。
++ 在可用的 CPU 内核上并行模拟布料。
++ **NVIDIA Cloth** Gem 的公共 API 允许其他系统和 Gem 访问布料模拟功能。
++ 使用实时布料调试可视化效果调试布料模拟和约束。
 
-## Using NVIDIA Cloth 
+## 使用 NVIDIA Cloth 
 
-[Cloth component](/docs/user-guide/components/reference/physx/cloth/) - Cloth component reference.
+[Cloth 组件](/docs/user-guide/components/reference/physx/cloth/) - Cloth 组件参考。
 
-[Cloth for Mesh components](/docs/user-guide/interactivity/physics/nvidia-cloth/meshes/) - Create cloth for entities containing **Mesh** components.
+[用于Mesh组件的布料](/docs/user-guide/interactivity/physics/nvidia-cloth/meshes/) - 为包含 **Mesh** 组件的实体创建布料。
 
-[Cloth for Actor components](/docs/user-guide/interactivity/physics/nvidia-cloth/actors/) - Create cloth for entities containing **Actor** components.
+[用于Actor组件的布料](/docs/user-guide/interactivity/physics/nvidia-cloth/actors/) - 为包含 **Actor** 组件的实体创建布料。
 
-[Per vertex properties for cloth](/docs/user-guide/interactivity/physics/nvidia-cloth/vertex-data/) - Use per vertex properties to define the **Inverse mass**, **Motion constraints**, and **Backstop** to create higher quality and more predictable cloth simulations.
+[布料的逐顶点属性](/docs/user-guide/interactivity/physics/nvidia-cloth/vertex-data/) - 使用逐顶点属性来定义 **Inverse mass**, **Motion constraints**, 和 **Backstop**，以创建更高质量和更可预测的布料模拟。
 
-[Cloth simulation constraints](/docs/user-guide/interactivity/physics/nvidia-cloth/constraints/) - An overview of how **Motion constraints** and **Backstop** work to improve the results of cloth simulations.
+[布料模拟约束](/docs/user-guide/interactivity/physics/nvidia-cloth/constraints/) - 概述了 **Motion constraints** 和 **Backstop**  如何改进布料模拟的结果。
 
-[Cloth visual debugger](/docs/user-guide/interactivity/physics/nvidia-cloth/debugging/) - Enable the visual debugger for cloth simulations.
+[Cloth 可视化调试器](/docs/user-guide/interactivity/physics/nvidia-cloth/debugging/) - 为 Cloth 模拟启用可视化调试器。
 
-## NVIDIA Cloth references 
+## NVIDIA Cloth 参考 
 
- [NVIDIA Cloth documentation](https://gameworksdocs.nvidia.com/NvCloth/1.1/index.html) at the NVIDIA GAMEWORKS developer portal.
+[NVIDIA Cloth 文档](https://gameworksdocs.nvidia.com/NvCloth/1.1/index.html) 在 NVIDIA GAMEWORKS 开发者门户。

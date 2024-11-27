@@ -1,52 +1,52 @@
 ---
-description: ' Create realistic destruction simulations in Open 3D Engine with NVIDIA Blast. '
-title: Script Canvas nodes for NVIDIA Blast
+description: ' 使用 NVIDIA Blast 在 Open 3D Engine 中创建逼真的破坏模拟。 '
+title: 适用于 NVIDIA Blast 的 Script Canvas 节点
 weight: 800
 draft: true
 ---
 
-The NVIDIA Blast gem includes several **Script Canvas** nodes to script destructible assets. The nodes can be found in the **Blast** group in **Script Canvas**.
+NVIDIA Blast Gem 包含多个 **Script Canvas** 节点，用于编写可破坏资产的脚本。这些节点可以在 **Script Canvas** 的 **Blast** 组中找到。
 
-**Contents**
-+ [BlastFamilyComponentNotificationBus nodes](#blastfamilycomponentnotificationbus-nodes)
-+ [BlastFamilyComponentNotificationBus nodes](#blastfamilycomponentnotificationbus-nodes-1)
-+ [BlastFamilyDamageRequestBus nodes](#blastfamilydamagerequestbus-nodes)
+**内容**
++ [BlastFamilyComponentNotificationBus 节点](#blastfamilycomponentnotificationbus-nodes)
++ [BlastFamilyComponentNotificationBus 节点](#blastfamilycomponentnotificationbus-nodes-1)
++ [BlastFamilyDamageRequestBus 节点](#blastfamilydamagerequestbus-nodes)
 
 ## BlastFamilyComponentNotificationBus nodes 
 
 **On Actor Created**
-Event notification that is invoked whenever an actor is created from a destroyed object used in the given entity.
+每当从给定实体中使用的已销毁对象创建角色时调用的事件通知。
 
 **On Actor Destroyed**
-Notification that is invoked whenever an actor is destroyed from a destroyed object used in the given entity.
+每当从给定实体中使用的已销毁对象销毁 actor 时调用的通知。
 
 ## BlastFamilyComponentNotificationBus nodes 
 
 **Get Actors Data**
-Obtains the actor data, such as entity id and whether actor is static or not, from a destructible object used in the given entity.
+从给定实体中使用的可破坏对象获取角色数据，例如实体 ID 以及角色是否为静态对象。
 
 ## BlastFamilyDamageRequestBus nodes 
 
 **Capsule Damage**
-Full damage is dealt to all chunks and bonds that are not farther than **minRadius** from either **position0** or **position1**. Linearly decreasing damage is applied if the distance is less than **maxRadius**.
+对距离 **position0** 或 **position1** 不远于 **minRadius** 的所有区块和键造成完全伤害。如果距离小于 **maxRadius**，则应用线性递减的伤害。
 
 **Destroy Actor**
-Destroys the actors from a destroyed object used in the given entity.
+从给定实体中使用的已销毁对象中销毁 actor。
 
 **Get Family Id**
-Get the entity id of the **Blast Family** in the given entity.
+获取给定实体中 **Blast Family ** 的实体 ID。
 
 **Impact Spread Damage**
-Full damage is dealt to all chunks and bonds that are not farther than **minRadius** from **position**. Decreasing damage is applied if the distance is less than **maxRadius**. Decreasing damage is calculated using BFS on the support graph instead of Euclidean distances.
+对距离 **position** 不远于 **minRadius** 的所有区块和键造成全额伤害。如果距离小于 **maxRadius**，则应用减少伤害。减少伤害是使用支撑图上的 BFS 而不是欧几里得距离计算的。
 
 **Radial Damage**
-Full damage is dealt to all chunks and bonds that are not farther than **minRadius** from **position**. Linearly decreasing damage is applied if the distance is less than **maxRadius**.
+对距离 **position** 不远于 **minRadius** 的所有区块和键造成全额伤害。如果距离小于 **maxRadius**，则应用线性递减的伤害。
 
 **Shear Damage**
-Deals full damage to bonds that are orthogonal to **normal**. No damage is dealt to bonds that are parallel. Damage to chunks is dependent on distance to **position**. The damage falloff between **minRadius** and **maxRadius** is linear.
+对与 **normal** 正交的键造成全额伤害。不会对平行的键造成任何伤害。对区块的伤害取决于到 **position** 的距离。**minRadius** 和 **maxRadius** 之间的伤害衰减是线性的。
 
 **Stress Damage**
-Stress damage is applied using **force** vector instead of a scalar value. Damage is propagated between bonds based on the support graph.
+应力损伤是使用 **force** 向量而不是标量值施加的。损伤根据支撑图在键之间传播。
 
 **Triangle Damage**
-Full damage is dealt to all chunks and bonds that intersect with a triangle described by the given vertices defined by **position0**, **position1**, and **position2**.
+与由 **position0**、**position1** 和 **position2** 定义的给定顶点描述的三角形相交的所有块和键都会受到完全伤害。

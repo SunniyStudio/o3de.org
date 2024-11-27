@@ -1,56 +1,56 @@
 ---
-description: ' Create realistic destruction simulations in Open 3D Engine with NVIDIA Blast. '
+description: ' 使用 NVIDIA Blast 在 Open 3D Engine 中创建逼真的破坏模拟。 '
 linktitle: NVIDIA Blast
-title: Simulated destruction with NVIDIA Blast
+title: 使用 NVIDIA Blast 进行模拟破坏
 weight: 200
 draft: true
 ---
 
- With **NVIDIA Blast** in Open 3D Engine, you can simulate destruction by authoring blast assets in SideFX Houdini and creating entities with the **Blast Family** and **Blast Family Mesh Data** components.
+借助 Open 3D Engine 中的 **NVIDIA Blast**，您可以通过在 SideFX Houdini 中编写爆炸资产并使用 **Blast Family** 和 **Blast Family Mesh Data** 组件创建实体来模拟破坏。
 
-To use **NVIDIA Blast**, you must enable the [NVIDIA Blast gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-blast/).
+要使用 **NVIDIA Blast**，您必须启用 [NVIDIA Blast gem](/docs/user-guide/gems/reference/physics/nvidia/nvidia-blast/)。
 
 {{< note >}}
-NVIDIA Blast for O3DE requires a SideFX Houdini commercial or indie license to create assets. The apprentice license is not sufficient. For more information on Houdini, see [SideFX's home page](https://www.sidefx.com/).
+适用于 O3DE 的 NVIDIA Blast 需要 SideFX Houdini 商业或独立许可证才能创建资产。学徒执照是不够的。有关 Houdini 的更多信息，请参阅 [SideFX 的主页](https://www.sidefx.com/)。
 
-The precompiled Houdini plug-ins supplied with the **NVIDIA Blast** gem require Houdini 18.0.
+随 **NVIDIA Blast** Gem 提供的预编译 Houdini 插件需要 Houdini 18.0。
 {{< /note >}}
 
-## NVIDIA Blast features 
+## NVIDIA Blast特征
 
-These are the features that NVIDIA Blast provides:
-+ Fracture geometry and author blast assets in SideFX Houdini with the provided Houdini plug-ins and Houdini Digital Assets (HDAs).
-+ Create multiple levels of destruction for simulation.
-+ Automatically process and quickly set up assets with the provided Python Asset Builder for NVIDIA Blast.
-+ Create blast materials to define the forces required to trigger destruction simulation on blast assets.
-+ Add NVIDIA Blast assets to entities with the **Blast Family** and **Blast Family Mesh Data** components.
-+ Script destruction with the provided **Script Canvas** nodes for NVIDIA Blast.
-+ Debug NVIDIA Blast simulations with real-time debug visualizations.
+以下是 NVIDIA Blast 提供的功能：
++ 使用提供的 Houdini 插件和 Houdini 数字资产 （HDA） 在 SideFX Houdini 中断开几何体并创作爆炸资产。
++ 创建多个级别的破坏以进行模拟。
++ 使用提供的 Python Asset Builder for NVIDIA Blast 自动处理和快速设置资产。
++ 创建爆炸材料以定义在爆炸资产上触发破坏模拟所需的力。
++ 将 NVIDIA Blast 资产添加到具有**Blast Family** 和 **Blast Family Mesh Data**组件的实体。
++ 使用为 NVIDIA Blast 提供的 **Script Canvas** 节点进行脚本销毁。
++ 使用实时调试可视化来调试 NVIDIA Blast 模拟。
 
-## Using NVIDIA Blast 
+## 使用 NVIDIA Blast
 
-See the following topics for detailed information about NVIDIA Blast.
+有关 NVIDIA Blast 的详细信息，请参阅以下主题。
 
-[Blast Family component](/docs/user-guide/components/reference/destruction/blast-family/) - Blast Family component reference.
+[Blast Family 组件](/docs/user-guide/components/reference/destruction/blast-family/) - Blast Family 组件参考
 
-[Blast Family Mesh Data component](/docs/user-guide/components/reference/destruction/blast-family-mesh-data/) - Blast Family Mesh Data component reference.
+[Blast Family Mesh Data 组件](/docs/user-guide/components/reference/destruction/blast-family-mesh-data/) - Blast Family Mesh Data组件参考
 
-[Install NVIDIA Blast plug-ins](/docs/user-guide/interactivity/physics/nvidia-blast/install-houdini-plugin/#install-nvidia-blast-plug-ins) - Install the NVIDIA Blast plug-ins and Houdini Digital Assets.
+[安装 NVIDIA Blast 插件](/docs/user-guide/interactivity/physics/nvidia-blast/install-houdini-plugin/#install-nvidia-blast-plug-ins) - 安装 NVIDIA Blast 插件和 Houdini 数字资产。
 
-[Create assets for NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/create-blast-asset/) - Fracture meshes in Houdini and export assets for NVIDIA Blast.
+[创建NVIDIA Blast资产](/docs/user-guide/interactivity/physics/nvidia-blast/create-blast-asset/) - 在 Houdini 中断开网格并导出 NVIDIA Blast 的资产。
 
-[Processing assets for NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/process-blast-asset/) - Process NVIDIA Blast assets for O3DE.
+[处理NVIDIA Blast资产](/docs/user-guide/interactivity/physics/nvidia-blast/process-blast-asset/) - 处理 O3DE 的 NVIDIA Blast 资产。
 
-[Simulate destruction with NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/) - Create entities with NVIDIA Blast assets and simulate destruction.
+[使用NVIDIA Blast模拟破坏](/docs/user-guide/interactivity/physics/nvidia-blast/) - 使用 NVIDIA Blast 资产创建实体并模拟破坏。
 
-[Partial destruction with NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/static-chunks/) - Use attributes to create partial destruction.
+[使用NVIDIA Blast模拟部分破坏](/docs/user-guide/interactivity/physics/nvidia-blast/static-chunks/) - 使用 attributes 创建 partial destruction。
 
-[Specify destruction properties with Blast materials](/docs/user-guide/interactivity/physics/nvidia-blast/materials/) - Use a blast material to define the force required to trigger destruction.
+[使用 Blast 材质指定破坏属性](/docs/user-guide/interactivity/physics/nvidia-blast/materials/) - 使用Blast材质定义触发破坏所需的力。
 
-[NVIDIA Blast visual debugger](/docs/user-guide/interactivity/physics/nvidia-blast/debug/) - Use the visual debugger for NVIDIA Blast.
+[NVIDIA Blast 可视化调试器](/docs/user-guide/interactivity/physics/nvidia-blast/debug/) - 使用 NVIDIA Blast 的可视化调试器。
 
-[Script Canvas nodes for NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/script-canvas/) - Script destruction simulation in Script Canvas.
+[NVIDIA Blast的Script Canvas节点](/docs/user-guide/interactivity/physics/nvidia-blast/script-canvas/) - Script Canvas 中的脚本销毁模拟。
 
-## NVIDIA Blast references 
+## NVIDIA Blast 参考 
 
- [NVIDIA Blast documentation](https://developer.nvidia.com/blast) at the NVIDIA GAMEWORKS developer portal.
+ [NVIDIA Blast 文档](https://developer.nvidia.com/blast) 位于NVIDIA GAMEWORKS开发者中心。

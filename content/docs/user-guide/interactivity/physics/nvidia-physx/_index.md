@@ -1,29 +1,29 @@
 ---
-description: Use Open 3D Engine's PhysX system to create realistic physical effects such as collision detection and rigid body dynamics simulation. 
+description: 使用 Open 3D Engine 的 PhysX 系统创建逼真的物理效果，例如碰撞检测和刚体动力学模拟。 
 linktitle: NVIDIA PhysX
-title: Simulating physics behavior with the PhysX system
+title: 使用 PhysX 系统模拟物理行为
 weight: 100
 ---
 
 
-O3DE's PhysX system acts upon entities to create realistic physical effects such as collision detection and rigid body dynamics simulation. 
+O3DE 的 PhysX 系统作用于实体以创建逼真的物理效果，例如碰撞检测和刚体动力学模拟。
 
-**Topics**
+**主题**
 + [PhysX Gems](#physx-gems)
-+ [PhysX version support](#physx-version-support)
-+ [PhysX Components](#physx-components)
-+ [PhysX Configuration](#physx-configuration)
-+ [Physics Materials](#physics-materials)
-+ [PhysX Debugging](#physx-debugging)
-+ [Configuring the PhysX System](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/))
-+ [PhysX Scene Queries](/docs/user-guide/interactivity/physics/nvidia-physx/scene-queries/)
-+ [PhysX Simulated Bodies](/docs/user-guide/interactivity/physics/nvidia-physx/simulated-bodies/)
-+ [Dynamic joints with PhysX](/docs/user-guide/interactivity/physics/nvidia-physx/joint-intro/)
-+ [Debugging PhysX](/docs/user-guide/interactivity/physics/debugging/)
-+ [PhysX Best Practices](/docs/user-guide/interactivity/physics/nvidia-physx/best-practices/)
-+ [Simulate cloth with NVIDIA Cloth](/docs/user-guide/interactivity/physics/nvidia-cloth/)
-+ [Determinism](#determinism)
-<!-- + [Simulated destruction with NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/) -->
++ [PhysX 版本支持](#physx-version-support)
++ [PhysX 组件](#physx-components)
++ [PhysX 配置](#physx-configuration)
++ [物理材质](#physics-materials)
++ [PhysX 调试](#physx-debugging)
++ [配置PhysX系统](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/))
++ [PhysX场景模拟](/docs/user-guide/interactivity/physics/nvidia-physx/scene-queries/)
++ [PhysX 模拟体](/docs/user-guide/interactivity/physics/nvidia-physx/simulated-bodies/)
++ [使用 PhysX 的动态关节](/docs/user-guide/interactivity/physics/nvidia-physx/joint-intro/)
++ [调试 PhysX](/docs/user-guide/interactivity/physics/debugging/)
++ [PhysX 最佳实践](/docs/user-guide/interactivity/physics/nvidia-physx/best-practices/)
++ [使用 NVIDIA Cloth 模拟布料](/docs/user-guide/interactivity/physics/nvidia-cloth/)
++ [决定论](#determinism)
+<!-- + [使用 NVIDIA Blast 进行模拟破坏](/docs/user-guide/interactivity/physics/nvidia-blast/) -->
 
 
 ## PhysX Gems 
@@ -32,10 +32,10 @@ The PhysX system uses the following Gems, which you can enable in **Project Mana
 
 + **[PhysX](/docs/user-guide/gems/reference/physics/nvidia/physx/)** - Provides integration for the [NVIDIA PhysX 4 SDK](https://developer.nvidia.com/physx-sdk) into O3DE. The integration provided includes a suite of components, configuration via the **O3DE Editor**, Script Canvas integration, **PhysX Visual Debugger** integration, and a simplified API abstraction layer for games.
 
-  For more information, see [PhysX](/docs/user-guide/gems/reference/physics/nvidia/physx/).
+  有关更多信息，请参阅 [PhysX](/docs/user-guide/gems/reference/physics/nvidia/physx/).
 + **[PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/)** - Provides debug visualizations of PhysX scene geometry that you can enable with console commands and other tools.
 
-  For more information, see [PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/).
+  有关更多信息，请参阅 [PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/).
 
 ## PhysX version support
 
@@ -68,25 +68,25 @@ The **PhysX** gem has the following components, which you can [add](/docs/user-g
 
 Use the **PhysX Configuration** window in O3DE Editor to configure global settings, collision layers, collision groups, and PhysX Visual Debugger settings.
 
-For more information, see [Configuring the PhysX System](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/).
+有关更多信息，请参阅 [Configuring the PhysX System](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/).
 
-## Physics Materials 
+## 物理材质
 
-Physics materials allow simulation properties to be configured by entity. Materials customize how an object reacts when it hits a surface and control qualities like friction and bounciness. You use the **Asset Editor** to create a physics material and then assign a material to the collider.
+物理材质允许按实体配置模拟属性。材质可自定义对象在撞击表面时的反应方式，并控制摩擦力和弹性等质量。使用 **Asset Editor** 创建物理材质，然后将材质分配给碰撞器。
 
-For more information, see [Physics materials](/docs/user-guide/interactivity/physics/nvidia-physx/materials/).
+有关更多信息，请参阅 [Physics materials](/docs/user-guide/interactivity/physics/nvidia-physx/materials/).
 
-## PhysX Debugging 
+## PhysX 调试
 
-To verify the implementation of interactions in the simulated world, the following tools are available.
-+ **PhysX Debug gem** - The PhysX Debug gem is recommended if you are a developer or technical artist. You can use this tool to view the physics world in real time in O3DE Editor's editor mode or game mode. To activate the tool, you use console commands or an immediate mode graphical user interface (ImGui). The tool displays PhysX debug lines within the editor and game modes.
+要验证模拟世界中交互的实现，可以使用以下工具。
++ **PhysX Debug gem** - 如果您是开发人员或技术美工人员，建议使用 PhysX Debug Gem。您可以使用此工具在 O3DE Editor 的编辑器模式或游戏模式下实时查看物理世界。要激活该工具，请使用控制台命令或即时模式图形用户界面 （ImGui）。该工具在 Editor 和 Game 模式中显示 PhysX 调试行。
 
-  For more information, see [PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/).
+  有关更多信息，请参阅 [PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/).
 + **PhysX Visual Debugger** - The [PhysX Visual Debugger (PVD)](https://developer.nvidia.com/physx-visual-debugger) is a third party tool provided by NVIDIA that is useful for deep inspection of the PhysX world. O3DE can connect PhysX worlds and scenes to a running PVD application instance. You can use the PVD to step through your simulation and examine various properties at your own pace in detail.
 
   For information on configuring O3DE's connection to PVD, see [Debugger Configuration](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-debugger/).
 
-For more information, see [Debugging PhysX](/docs/user-guide/interactivity/physics/debugging/).
+有关更多信息，请参阅 [Debugging PhysX](/docs/user-guide/interactivity/physics/debugging/).
 
 ## Determinism
 Although PhysX does have support for [**deterministic behavior**](https://docs.nvidia.com/gameworks/content/gameworkslibrary/physx/guide/Manual/BestPractices.html#determinism), it requires specific conditions when constructing and stepping physics scenes, which are not met in O3DE. Furthermore, the physics system in O3DE interacts with many other systems which are not deterministic, such as animation, scripting and asynchronous asset loading. Therefore, the PhysX simulation in O3DE is not expected to be deterministic.

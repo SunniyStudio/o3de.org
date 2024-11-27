@@ -1,97 +1,97 @@
 ---
-description: ' Create realistic destruction simulations in Open 3D Engine with NVIDIA Blast. '
-title: Simulate destruction with NVIDIA Blast
+description: ' 使用 NVIDIA Blast 在 Open 3D Engine 中创建逼真的破坏模拟。 '
+title: 使用 NVIDIA Blast 模拟破坏
 weight: 400
 draft: true
 ---
 
 
-To use NVIDIA Blast assets in O3DE, create an entity, add a **Blast Family** component, add a **Blast Family Mesh Data** component, and then assign the blast assets to the components.
+要在 O3DE 中使用 NVIDIA Blast 资产，请创建一个实体，添加一个 **Blast Family** 组件，添加一个 **Blast Family Mesh Data** 组件，然后将 Blast 资产分配给组件。
 
 {{< note >}}
-To quickly test NIVIDIA Blast simulation, the following steps assume that the assets have been exported from Houdini with **Static root** disabled in the **Blast Export** SOP. With **Static root** disabled, the NVIDIA Blast asset is dynamic, and destruction can be triggered by dropping the entity on a PhysX collision surface such as **PhysX Terrain**. If **Static root** is enabled, the root asset is static, and destruction must be triggered by an external force, such as a projectile impact.
+为了快速测试 NIVIDIA Blast 模拟，以下步骤假定资产已从 Houdini 导出，并在 **Blast Export** SOP 中禁用了 **Static root**。禁用 **Static root** 后，NVIDIA Blast 资产是动态的，可以通过将实体放置在 PhysX 碰撞表面（如 **PhysX 地形）上来触发破坏。如果启用了 **Static root**，则根资源是静态的，并且必须由外力（例如弹丸撞击）触发破坏。
 
-For more information, see [Create assets for NVIDIA Blast](/docs/user-guide/interactivity/physics/nvidia-blast/create-blast-asset).
+有关更多信息，请参阅 [为 NVIDIA Blast 创建资产](/docs/user-guide/interactivity/physics/nvidia-blast/create-blast-asset).
 {{< /note >}}
 
-**Contents**
-- [Create an entity for NVIDIA Blast](#create-an-entity-for-nvidia-blast)
-- [Add automatically processed mesh assets to a NVIDIA Blast entity](#add-automatically-processed-mesh-assets-to-a-nvidia-blast-entity)
-- [Add manually created mesh assets to a NVIDIA Blast entity](#add-manually-created-mesh-assets-to-a-nvidia-blast-entity)
-- [Test NVIDIA Blast destruction simulation](#test-nvidia-blast-destruction-simulation)
+**内容**
+- [为 NVIDIA Blast 创建实体](#create-an-entity-for-nvidia-blast)
+- [将自动处理的网格资源添加到 NVIDIA Blast 实体](#add-automatically-processed-mesh-assets-to-a-nvidia-blast-entity)
+- [将手动创建的网格资产添加到 NVIDIA Blast 实体](#add-manually-created-mesh-assets-to-a-nvidia-blast-entity)
+- [测试 NVIDIA Blast 破坏模拟](#test-nvidia-blast-destruction-simulation)
 
-## Create an entity for NVIDIA Blast 
+## 为 NVIDIA Blast 创建实体
 
-When you create an entity, you add the NVIDIA Blast functionality and define how the asset destructs.
+创建实体时，您可以添加 NVIDIA Blast 功能并定义资产的销毁方式。
 
-**To create an entity for NVIDIA Blast**
+**为 NVIDIA Blast 创建实体**
 
-1. Ensure that the terrain has a **PhysX Terrain** level component. In **Level inspector**, choose **Add Component** and select **PhysX Terrain** from the component list.
+1. 确保地形具有 **PhysX Terrain** 关卡组件。在 **Level inspector**中，选择 **Add Component**，然后从组件列表中选择 **PhysX Terrain**。
 
-1. Create a new entity. Right-click in **Perspective** and choose **Create entity** from the context menu.
+1. 创建新实体。右键单击 **Perspective**，然后从上下文菜单中选择 **Create entity**。
 
-1. Add a **Blast Family** component to the entity. In **Entity Inspector**, choose **Add Component** and select **Blast Family** from the component list. The **Blast Family** component adds NVIDIA Blast functionality to the entity. For more information, see [Blast Family component](/docs/user-guide/components/reference/destruction/blast-family/).
+1. 将 **Blast Family** 组件添加到实体中。在 **Entity Inspector** 中，选择 **Add Component**，然后从组件列表中选择 **Blast Family**。**Blast Family** 组件将 NVIDIA Blast 功能添加到实体中。有关详细信息，请参阅 [Blast Family 组件](/docs/user-guide/components/reference/destruction/blast-family/)。
 
-1. Set the **Blast asset** for the **Blast Family** component. Click the **Folder** button to the right of the **Blast asset** property and choose the `.blast` asset in the Blast Asset selection window.
+1. 为 **Blast Family** 组件设置 **Blast Asset**。单击 **Blast asset** 属性右侧的 **Folder** 按钮，然后在 Blast Asset 选择窗口中选择`.blast`资源。
 
 ![Add the .blast asset to the Blast Family component.](/images/user-guide/physx/blast/ui-blast-add-blast-asset.png)
 
-1. Set the **Blast Material** for the **Blast Family** component. Blast materials define how much damage various forces cause to the bonds holding the fractured asset together, and how much damage is required to cause destruction. For more information see [Specify destruction properties with Blast materials](/docs/user-guide/interactivity/physics/nvidia-blast/materials/).
+1. 为 **Blast Family** 组件设置 **Blast Material**（**Blast 材质**）。爆炸材料定义了各种力对将断裂资产固定在一起的键造成的损害程度，以及造成破坏所需的损害程度。有关详细信息，请参阅 [使用 Blast 材质指定破坏属性](/docs/user-guide/interactivity/physics/nvidia-blast/materials/).
 
-1. Add a **Blast Family Mesh Data** component to the entity. In **Entity Inspector**, Choose **Add Component** and select **Blast Family Mesh Data** from the component list. The **Blast Family Mesh Data** component adds NVIDIA Blast meshes to the entity. For more information, see [Blast Family Mesh Data component](/docs/user-guide/components/reference/destruction/blast-family-mesh-data/).
+1. 将 **Blast Family Mesh Data** 组件添加到实体。在 **Entity Inspector** 中，选择 **Add Component** 并从组件列表中选择 **Blast Family Mesh Data**。**Blast Family Mesh Data** 组件将 NVIDIA Blast 网格添加到实体中。有关详细信息，请参阅 [Blast Family Mesh Data 组件](/docs/user-guide/components/reference/destruction/blast-family-mesh-data/).
 
-If you have processed your mesh assets with **Python Asset Builder**, follow the steps in the section: [Add automatically processed mesh assets to a NVIDIA Blast entity](#add-automatically-processed-mesh-assets-to-a-nvidia-blast-entity).
+如果您已使用 Python Asset Builder 处理网格资产，请按照以下部分中的步骤操作：[将自动处理的网格资产添加到 NVIDIA Blast 实体](#add-automatically-processed-mesh-assets-to-a-nvidia-blast-entity).
 
-If you have manually edited your mesh assets with **FBX Settings**, follow the steps in the section: [Add manually created mesh assets to a NVIDIA Blast entity](#add-manually-created-mesh-assets-to-a-nvidia-blast-entity).
+如果您已使用 **FBX Settings** 手动编辑了网格资产，请按照以下部分中的步骤操作：[将手动创建的网格资产添加到 NVIDIA Blast 实体](#add-manually-created-mesh-assets-to-a-nvidia-blast-entity).
 
-## Add automatically processed mesh assets to a NVIDIA Blast entity 
+## 将自动处理的网格资产添加到 NVIDIA Blast 实体
 
-**Python Asset Builder** creates a `blast_slice` asset when it processes your NVIDIA Blast assets. The blast slice automatically adds the mesh assets and material to the **Blast Family Mesh Data **component.
+**Python Asset Builder** 在处理 NVIDIA Blast 资产时创建 `blast_slice`资产。爆炸切片会自动将网格资产和材质添加到 **Blast Family Mesh Data**组件。
 
-**To add automatically processed mesh assets**
+**添加自动处理的网格资源**
 
-1. In the **Blast Family Mesh Data** component, set a material for the Blast mesh. Click the **Folder** button to the right of the **Material** property and select a material from the material selection window.
+1. 在 **Blast Family Mesh Data** 组件中，为 Blast 网格设置材质。单击 **Material** 属性右侧的 **Folder** 按钮，然后从材质选择窗口中选择一种材质。
 
-1. In the **Blast Family Mesh Data** component, set the **Blast Slice** property. Click the **Folder** button to the right of the **Blast Slice** property and select the asset from the Blast Slice selection window.
+1. 在 **Blast Family Mesh Data** 组件中，设置 **Blast Slice** 属性。单击 **Blast Slice** 属性右侧的 **Folder** 按钮，然后从 Blast Slice 选择窗口中选择资产。
 
-   Enable the **Show mesh assets** property if you would like to view the mesh list.
+   如果要查看网格列表，请启用 **Show mesh assets** 属性。
 
    ![Add the blast slice asset to the Blast Family Mesh Data component.](/images/user-guide/physx/blast/ui-blast-add-blast-mesh-data.png)
 
-1. The entity is now set up to simulate destruction. Continue to the section: [Test NVIDIA Blast destruction simulation](#test-nvidia-blast-destruction-simulation).
+1. 现在，该实体已设置为模拟破坏。继续阅读该部分：[测试 NVIDIA Blast 破坏模拟](#test-nvidia-blast-destruction-simulation).
 
-## Add manually created mesh assets to a NVIDIA Blast entity 
+## 将手动创建的网格资产添加到 NVIDIA Blast 实体
 
-If your NVIDIA Blast mesh assets have been manually edited in **FBX Settings**, use the following steps to add the mesh assets to the entity.
+如果您的 NVIDIA Blast 网格资产已在 **FBX Settings** 中手动编辑，请使用以下步骤将网格资产添加到实体。
 
-**To add manually processed assets**
+**添加手动处理的资产**
 
-1. In the **Blast Family Mesh Data** component, set a material for the Blast mesh. Click the **Folder** button to the right of the **Material** property and select a material from the material selection window.
+1. 在 **Blast Family Mesh Data** 组件中，为 Blast 网格设置材质。单击 **Material** 属性右侧的 **Folder** 按钮，然后从材质选择窗口中选择一种材质。
 
-1. In the **Blast family mesh data** component, enable the **Show mesh assets** property to show the mesh asset list.
+1. 在 **Blast family mesh data** 组件中，启用 **Show mesh assets** 属性以显示网格资源列表。
 
-1. Add a mesh slot to the list. Choose the **+** button to the right of **Mesh assets** to add a mesh slot to the **Mesh assets** list.
+1. 向列表中添加网格槽。选择 **Mesh assets** 右侧的 **+** 按钮，将网格槽添加到 **Mesh assets** 列表中。
 
-1. Add a mesh to the list. Click the **Folder** button to the right of the numbered mesh slot property and select a mesh asset from the **Static Mesh** selection window.
+1. 将网格添加到列表中。单击编号网格插槽属性右侧的 **Folder** 按钮，然后从 **Static Mesh** 选择窗口中选择一个网格资源。
 
-1. Repeat steps **3** and **4** until all of the meshes for the blast asset have been added to the **Blast family mesh data** component.
+1. 重复步骤 **3** 和 **4**，直到 Blast 资产的所有网格都已添加到 **Blast family mesh data** 组件中。
 
 ![Add mesh assets manually to the Blast Family Mesh Data component.](/images/user-guide/physx/blast/ui-blast-family-mesh-data-add-mesh.png)
 
-1. The entity is now set up to simulate destruction. Continue to the section: [Test NVIDIA Blast destruction simulation](#test-nvidia-blast-destruction-simulation).
+1. 现在，该实体已设置为模拟破坏。继续阅读该部分：[测试 NVIDIA Blast 破坏模拟](#test-nvidia-blast-destruction-simulation).
 
-## Test NVIDIA Blast destruction simulation 
+## 测试 NVIDIA Blast 破坏模拟
 
-Because the blast asset has been exported from Houdini with **Static root** disabled, and a **PhysX Terrain** level component has been added to the level, destruction can be tested by dropping the object on the terrain.
+由于爆炸资产是从 Houdini 导出的，并且禁用了 **Static root**，并且已将 **PhysX Terrain** 级别组件添加到关卡中，因此可以通过将对象拖放到地形上来测试破坏。
 
-**To test the destruction simulation**
+**测试破坏模拟**
 
-1. With the entity selected, press the **2** key to enable the move tool.
+1. 选择实体后，按 **2** 键以启用移动工具。
 
-1. Click and drag on the **Z** axis of the move gizmo to move the entity several units above the terrain.
+1. 单击并拖动移动 Gizmo 的 **Z** 轴，将实体移动到地形上方几个单位。
 
-1.  Press **Ctrl+P** to view simulation. The entity drops and shatters when it collides with the terrain.
+1. 按 **Ctrl+P** 查看模拟。实体在与地形碰撞时掉落并碎裂。
 
-1.  Press **Ctrl+P** to end the simulation.
+1. 按 **Ctrl+P** 结束模拟。
 
 ![Add the blast slice asset to the Blast Family Mesh Data component.](/images/user-guide/physx/blast/anim-nvidia-blast-view-simulation.gif)

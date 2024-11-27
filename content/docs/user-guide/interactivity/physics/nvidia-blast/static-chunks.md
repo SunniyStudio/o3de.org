@@ -1,45 +1,44 @@
 ---
-description: ' Create realistic partial destruction simulations in Open 3D Engine with
-  NVIDIA Blast. '
-title: Partial destruction with NVIDIA Blast
+description: ' 使用 NVIDIA Blast 在 Open 3D Engine 中创建逼真的部分破坏模拟。 '
+title: 使用 NVIDIA Blast 进行部分销毁
 weight: 500
 draft: true
 ---
 
-In some scenarios, you might want to partly destroy an entity. For example, you create a destructible wall, but want the bottom of the wall to remain in place as a static mesh with colliders after the top of the wall takes damage from a projectile and is destroyed. You can achieve this by adding **static** to the `name` primitive attribute of non-root mesh chunks in Houdini.
+在某些情况下，您可能希望部分销毁实体。例如，您创建了一堵可破坏的墙，但希望在墙的顶部受到射弹的伤害并被摧毁后，墙的底部作为带有碰撞体的静态网格保持原位。您可以通过在 Houdini 中将 **static** 添加到非根网格块的 `name` 基元属性来实现这一点。
 
-## Make non-root chunks static in NVIDIA Blast 
+## 在 NVIDIA Blast 中将非根数据块设为静态
 
-Use Houdini to make non-root chunks static, which results in partial destruction of the asset.
+使用 Houdini 将非根数据块设为静态数据块，这会导致资产部分销毁。
 
-**To make non-root chunks static**
+**使非根块成为静态的**
 
-1. In Houdini, add an **Attribute String Edit** SOP to the network.
+1. 在 Houdini 中，将 **Attribute String Edit** SOP 添加到网络。
 
-1. Wire the **Attribute String Edit** SOP into the network.
+1. 将 **Attribute String Edit** SOP 连接到网络。
 
-   1. Connect the output of the **Merge** SOP to the input of the **Attribute String Edit** SOP.
+   1. 将 **Merge** SOP 的输出连接到 **Attribute String Edit** SOP 的输入。
 
-   1. Connect the output of the **Attribute String Edit** SOP to the input of the **Blast Export** SOP.
+   1. 将 **Attribute String Edit** SOP 的输出连接到 **Blast Export** SOP 的输入。
 
-1. In the **Attribute String Edit** SOP, in the **Attributes** tab, enable the **Primitives** parameter, and select the **name** attribute from its list.
+1. 在 **Attribute String Edit** SOP 的 **Attributes** 选项卡中，启用 **Primitives** 参数，然后从其列表中选择 **name** 属性。
 
-1. In the **Attribute String Edit** SOP, in the **Filter** tab, set the **From** parameter to the path name of a chunk you would like to make static, such as **root/chunk5**.
+1. 在 **Attribute String Edit** SOP 的 **Filter** 选项卡中，将 **From** 参数设置为要设为静态的数据块的路径名称，例如 **root/chunk5**。
 
-1. In the **Attribute String Edit** SOP, in the **Filter** tab, set the **To** parameter to the same path as above. Append **static** to the path; for example, **root/chunk5static**.
+1. 在 **Attribute String Edit** SOP 的 **Filter** 选项卡中，将 **To** 参数设置为与上述相同的路径。将 **static** 附加到路径;例如，**root/chunk5static**。
 
 {{< important >}}
-If the specified chunk has been fractured, its descendants are also static when exported to O3DE.
+如果指定的块已断开，则其后代在导出到 O3DE 时也是静态的。
 {{< /important >}}
 
-1. You can add additional chunks to the **Attribute String Edit** SOP. Choose the **+** icon next to the **Number of filters** parameter to add a filter. Repeat steps **4** and **5** to make another chunk static.
+1. 您可以向 **Attribute String Edit** SOP 添加其他数据块。选择 **Number of filters** 参数旁边的 **+** 图标以添加筛选条件。重复步骤 **4** 和 **5** 以使另一个数据块静态。
 
-   In the image below, the chunks that comprise the back half of the rabbit have been made static. Note that 12 filters have been added to the filter list in the **Attribute String Edit** SOP. You can see the renamed chunks in the groups and attributes overlay in the perspective viewport.
+   在下图中，构成兔子后半部分的块已变为静态。请注意，12 个过滤器已添加到 **Attribute String Edit** SOP 的过滤器列表中。您可以在透视视区的 groups and attributes 叠加中看到重命名的数据块。
 
    ![Create static chunks in Houdini for NVIDIA Blast.](/images/user-guide/physx/blast/ui-blast-houdini-static-chunks.png)
 
-1. Enable the **Static root** parameter in the **Blast Export** SOP before exporting the asset.
+1. 在导出资产之前，在 **Blast Export** SOP 中启用 **Static root** 参数。
 
-See the result simulation in O3DE below. A large, invisible PhysX Dynamic Rigid Body collider is dropped on the rabbit. The front half of the rabbit is destroyed. The chunks are simulated as dynamic rigid bodies while the back of the rabbit remains in place.
+请参阅下面的 O3DE 中的结果模拟。一个大型的、不可见的 PhysX Dynamic Rigid Body 碰撞器被放置在兔子上。兔子的前半部分被毁坏了。这些块被模拟为动态刚体，而兔子的背部保持在原位。
 
 ![Create static chunks in Houdini for NVIDIA Blast.](/images/user-guide/physx/blast/anim-nvidia-blast-static-simulation.gif)

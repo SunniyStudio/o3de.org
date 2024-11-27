@@ -1,73 +1,73 @@
 ---
-description: ' Process assets for NVIDIA Blast. '
-title: Processing assets for NVIDIA Blast
+description: ' 处理 NVIDIA Blast 的资产。'
+title: 处理 NVIDIA Blast 的资产
 weight: 300
 draft: true
 ---
 
 
-Blast assets that are exported from Houdini must be processed by **Asset Processor** to generate run-time assets. There are two methods for processing Blast assets for use in O3DE: an automated method using Python Asset Builder, and a manual method where you select the meshes to be processed.
+从 Houdini 导出的 Blast 资产必须由 Asset Processor 处理才能生成运行时资产。有两种方法可以处理 Blast 资产以在 O3DE 中使用：一种是使用 Python Asset Builder 的自动方法，另一种是选择要处理的网格的手动方法。
 
 {{< important >}}
-Processing meshes automatically is less time consuming than manually setting up blast meshes to process. It is important to understand both processes, however. You might use the automatic process for the initial export and then manually edit the mesh assets to add modifiers for custom normals or vertex color streams.
+与手动设置要处理的爆破网格相比，自动处理网格的时间更少。但是，了解这两个过程很重要。您可以使用自动过程进行初始导出，然后手动编辑网格资源，以便为自定义法线或顶点颜色流添加修改器。
 
-Once you have manually edited the `.fbx` asset in **FBX Settings**, a `.assetinfo` file is created for the `.fbx` asset. The `.assetinfo` file prevents the mesh assets from being processed automatically by **Python Asset Builder**. Any further changes made to the source `.fbx` file, such as adding or removing fracture levels or chunks, must be manually edited in **FBX Settings**.
+在 **FBX Settings** 中手动编辑`.fbx`资产后，将为`.fbx`资产创建一个`.assetinfo`文件。`.assetinfo`文件会阻止 **Python Asset Builder**自动处理网格资产。对源 `.fbx`文件所做的任何进一步更改，例如添加或删除破裂级别或块，都必须在 **FBX Settings** 中手动编辑。
 {{< /important >}}
 
-**Contents**
-+ [Process Blast assets automatically](#process-blast-assets-automatically)
-+ [Process Blast mesh assets manually](#process-blast-mesh-assets-manually)
+**内容**
++ [自动处理 Blast 资产](#process-blast-assets-automatically)
++ [手动处理 Blast 资产](#process-blast-mesh-assets-manually)
 
-## Process Blast assets automatically 
+## 自动处理 Blast 资产
 
-When blast assets are processed automatically, a blast slice asset is created that adds the blast mesh chunks to the **Blast Family Mesh Data** component. If you have a blast asset with dozens of chunks, automatic processing with the Python asset builder for NVIDIA Blast can save some time.
+当自动处理爆炸资产时，将创建一个爆炸切片资产，该资产将爆炸网格块添加到 **Blast Family Mesh Data** 组件。如果您的 BLAST 资产包含数十个数据块，则使用适用于 NVIDIA Blast 的 Python 资产生成器进行自动处理可以节省一些时间。
 
 {{< note >}}
-Automatically processing assets for NVIDIA Blast requires that your project has been built with the **Python Asset Builder** and **EditorPythonBindings** gems enabled. For more information, see [Python Asset Builder gem](/docs/user-guide/assets/builder).
+自动处理 NVIDIA Blast 的资源要求您的项目已在启用 **Python Asset Builder** 和 **EditorPythonBindings** gem 的情况下构建。有关更多信息，请参阅 [Python Asset Builder gem](/docs/user-guide/assets/builder).
 {{< /note >}}
 
-**To process Blast assets automatically**
+**自动处理 Blast 资源**
 
-1. Copy the `.blast` and `.fbx` files for your Blast asset into an asset directory in your project.
+1. 将 Blast 资产的 `.blast` 和 `.fbx`文件复制到项目的资产目录中。
 
-1. Start O3DE Editor. **Asset Processor** detects the `.blast` and `.fbx` files and generates the runtime mesh assets, a blast asset, and a blast slice asset.
+1. 启动 O3DE 编辑器。**Asset Processor** 检测`.blast` 和 `.fbx`文件，并生成运行时网格资产、爆炸资产和爆炸切片资产。
 
-1. You can verify that the assets have processed successfully in the **Jobs** tab of **Asset Processor**. If you need to reprocess the assets, do the following:
+1. 您可以在 **Asset Processor** 的 **Jobs** 选项卡中验证资产是否已成功处理。如果您需要重新处理资产，请执行以下操作：
 
-   1. In **Asset Processor**, select the **Assets** tab.
+   1. 在 **Asset Processor**中，选择 **Assets** 选项卡。
 
-   1. Right-click the asset in the asset list to open the context menu.
+   1. 右键单击资产列表中的资产以打开上下文菜单。
 
-   1. Choose **Reprocess File** from the context menu.
+   1. 从上下文菜单中选择 **Reprocess File** 。
 
    ![Automatic process of Blast assets.](/images/user-guide/physx/blast/ui-blast-process-automatic.png)
 
-## Process Blast mesh assets manually 
+## 手动处理 Blast 网格资产
 
-Manually processing blast assets requires you to add a mesh group for each chunk mesh so that **Asset Processor** can generate the run-time asset. Manual processing also requires you to add each run-time mesh to the **Blast Family Mesh Data** component. If you need to add modifiers to the blast mesh chunks, such as specifying a vertex color stream, you must use this manual process.
+手动处理爆炸资产需要您为每个块网格添加一个网格组，以便 **Asset Processor** 可以生成运行时资产。手动处理还要求您将每个运行时网格添加到 **Blast Family Mesh Data** 组件。如果需要向爆炸网格块添加修改器，例如指定顶点颜色流，则必须使用此手动过程。
 
-**To process Blast assets manually**
+**手动处理 Blast 资源**
 
-1. Copy the `.blast` and `.fbx` files for your Blast asset into an asset directory in your project.
+1. 将 Blast 资产的`.blast` 和 `.fbx`文件复制到项目的资产目录中。
 
-1. Start O3DE Editor.
+1. 启动 O3DE 编辑器。
 
-1. Locate the `.fbx` asset in **Asset Browser** and double-click on the asset to open **FBX Settings**.
+1. 在 **Asset Browser** 中找到`.fbx`资源，然后双击该资源以打开 **FBX Settings**。
 
-1. Choose the **Meshes** tab.
+1. 选择 **Meshes** 选项卡。
 
-1. Create one **Mesh group** for each mesh in the `.fbx` asset.
+1. 在`.fbx`中为每个网格创建一个 **Mesh group** 。
 
-   1. If there is an existing **Mesh group**, ensure it has only the first mesh selected from the **Select Meshes** list.
+   1. 如果存在现有的 **Mesh group**，请确保它仅具有从 **Select Meshes** 列表中选择的第一个网格。
 
-   1. Add a new **Mesh group** by choosing **Add another mesh**.
+   1. 通过选择 **Add another mesh** 添加新的 **Mesh group**。
 
-   1. Add the next mesh to the new **Mesh group** by choosing the **Hierarchy** button to the right of **Select meshes** and selecting the next mesh from the list.
+   1. 通过选择 **Select meshes** 右侧的 **Hierarchy** 按钮并从列表中选择下一个网格，将下一个网格添加到新的 **Mesh group** 中。
 
-   1. Repeat steps **b** and **c** until each mesh in the mesh list is assigned to its own **Mesh group**.
+   1. 重复步骤 **b** 和 **c**，直到网格列表中的每个网格都分配给其自己的 **Mesh group**。
 
-   ![Create mesh groups for Blast assets.](/images/user-guide/physx/blast/ui-blast-asset-mesh-groups.png)
+      ![Create mesh groups for Blast assets.](/images/user-guide/physx/blast/ui-blast-asset-mesh-groups.png)
 
-1. **Optional:** If the meshes require special processing, such as a vertex color stream provided by the **Mesh (Advanced)** modifier, add modifiers to each mesh group as required.
+1. **可选:** 如果网格需要特殊处理，例如**Mesh (Advanced)**修改器提供的顶点颜色流，请根据需要向每个网格组添加修改器。
 
-1. Choose the **Update** button in the bottom right of **FBX Settings**. **Asset Processor** generates the run-time assets. A **File progress** window appears and displays feedback about the process.
+1. 选择 **FBX Settings** 右下角的 **Update** 按钮。**Asset Processor** 生成运行时资产。此时将出现 **File progress** 窗口，并显示有关该过程的反馈。

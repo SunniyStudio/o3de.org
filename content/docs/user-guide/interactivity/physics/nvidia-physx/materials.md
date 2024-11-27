@@ -1,68 +1,67 @@
 ---
-description: ' Use Physics materials to customize how an object reacts when it hits
-  a surface in your Open 3D Engine project. '
-title: Physics materials
+description: ' 使用 Physics 材质自定义对象在 Open 3D Engine 项目中撞击表面时的反应。'
+title: 物理材质
 weight: 200
 ---
 
-Physics materials define how a PhysX collider reacts to collisions through properties like friction and restitution (bounce). In O3DE, you create physics materials with the **Asset Editor** and assign them to PhysX colliders.
+物理材质定义 PhysX 碰撞器如何通过摩擦力和恢复（反弹）等属性对碰撞做出反应。在 O3DE 中，您可以使用 **Asset Editor** 创建物理材质，并将它们分配给 PhysX 碰撞器。
 
-**Topics**
-+ [Physics material properties](#physics-material-properties)
-+ [Create a physics material](#create-a-physics-material)
-+ [Assign a physics material](#assign-a-physics-material)
-  + [Assign physics materials per face](#assign-physics-materials-per-face)
+**主题**
++ [Physics （物理） 材质属性](#physics-material-properties)
++ [创建物理材质](#create-a-physics-material)
++ [分配物理材质](#assign-a-physics-material)
+  + [为每个面分配物理材质](#assign-physics-materials-per-face)
 
-## Physics material properties
+## 物理材质属性
 
 ![Physics material interface.](/images/user-guide/physx/physx/ui-physx-material-A.png)
 
 ****Dynamic Friction****
-The friction coefficient when the PhysX collider is moving.
-**0.0**: No friction.
+PhysX 碰撞器移动时的摩擦系数。
+**0.0**: 无摩擦。
 
 ****Static Friction****
-The friction coefficient when the PhysX collider is still.
-**0.0**: No friction.
+PhysX 碰撞器静止时的摩擦系数。
+**0.0**: 无摩擦。
 
 ****Restitution****
-The energy that the PhysX collider retains on collision (bounce).
-**0.0**: No bounce.
-**1.0**: Maximum bounce.
+PhysX 碰撞器在碰撞（反弹）时保留的能量。
+**0.0**: 无弹跳。
+**1.0**: 最大弹跳。
 
 ****Friction combine****
-Define how physics material frictions are combined between PhysX colliders when colliding.
-**Average**: The average of the materials in contact. This is the default value.
-**Minimum**: The smaller value of the materials in contact.
-**Maximum**: The larger of the values of the materials in contact.
-**Multiply**: The product of the values of the materials in contact.
+定义碰撞时 PhysX 碰撞器之间的物理材质摩擦力组合方式。
+**Average**: 接触材料的平均值。这是默认值。
+**Minimum**: 接触材料的较小值。
+**Maximum**: 接触材料的值中的较大者。
+**Multiply**: 接触材料值的乘积。
 
 ****Restitution combine****
-Define how physics material restitutions are combined between PhysX colliders when colliding.
-**Average**: The average of the materials in contact. This is the default value.
-**Minimum**: The smaller value of the materials in contact.
-**Maximum**: The larger of the values of the materials in contact.
-**Multiply**: The product of the values of the materials in contact.
+定义碰撞时 PhysX 碰撞器之间如何组合物理材质恢复。
+**Average**: 接触材料的平均值。这是默认值。
+**Minimum**: 接触材料的较小值。
+**Maximum**: 接触材料的值中的较大者。
+**Multiply**: 接触材料值的乘积。
 
 ****Density****
-Define the degree of compactness of a material.
+定义材料的紧密度。
 
-****Compliant Contact Mode (available with [PhysX 5.1](/docs/user-guide/interactivity/physics/nvidia-physx/#physx-version-support) enabled only)****
+****Compliant Contact Mode (仅在启用 [PhysX 5.1](/docs/user-guide/interactivity/physics/nvidia-physx/#physx-version-support)时可用)****
 
 + ****Enable****
-When enabled the normal force of the contact is computed using an implicit spring. **Restitution properties** are not used when Compliant Contact Mode is enabled.
+启用后，将使用隐式弹簧计算接触的法向力。启用 Compliant Contact Mode 时，不使用 **恢复属性**。
 
 + ****Damping****
-Higher damping values produce spongy contacts.
+较高的阻尼值会产生海绵状接触。
 
 + ****Stiffness****
-Higher stiffness values produce stiffer springs that behave more like a rigid contact. The higher the mass of the object, the higher the stiffness needs to be to reduce penetration.
+刚度值越高，产生的弹簧越硬，其行为更像刚性接触。物体的质量越高，需要的刚度就越高，以减少穿透。
 
 ****Debug Color****
-The display color of the physics material in debug view.
+Debug （调试） 视图中物理材质的显示颜色。
 
 {{< note >}}
-When materials collide, the **Friction combine** and **Restitution combine** define the value of applied friction and restitution using the following order:
+当材质发生碰撞时，**Friction combine** 和 **Restitution combine** 使用以下顺序定义应用的摩擦力和恢复力的值：
 
 1. **Average**
 2. **Minimum**
@@ -70,40 +69,40 @@ When materials collide, the **Friction combine** and **Restitution combine** def
 4. **Maximum**
 {{< /note >}}
 
-## Create a physics material
+## 创建物理材质
 
-Physics materials define the physical properties of PhysX colliders.
+物理材质定义 PhysX 碰撞器的物理属性。
 
-**To create a physics material**
+**创建物理材质**
 
-1. Choose Asset Editor from the **Tools** menu.
+1. 在 **Tools** 菜单中旋转Asset Editor。
 
-1. In the Asset Editor, choose **New**, **PhysX Material** from the **File** menu.
+1. 在 Asset Editor 中，从**File**菜单中选择 **New**, **PhysX Material** 。
 
    ![Create a physics material in the Asset Editor.](/images/user-guide/physx/physx/ui-physx-material-B.png)
 
-1. Set the material properties as desired.
+1. 根据需要设置材料属性。
 
-1. Choose **Save As** from the **File** menu in the Asset Editor to save the physics material.
+1. 从 Asset Editor 的 **File** 菜单中选择 **Save As** 以保存物理材质。
 
-## Assign a physics material
+## 分配物理材质
 
-When using a **PhysX Primitive Collider** component, one physics material can be assigned for the entire collider.
+使用 **PhysX Primitive Collider** （PhysX 基元碰撞器） 组件时，可以为整个碰撞器分配一个物理材质。
 
-When using a **PhysX Mesh Collider** component, physics materials can be assigned to entire collider or on a per-face basis if the PhysX asset is a triangle mesh. When the **Physics Materials from Asset** property is enabled, the physics materials for this collider are automatically set based on the Physics Materials from the mesh's PhysX asset (see [FBX Settings PhysX tab](/docs/user-guide/assets/scene-settings/physx-tab/)). To manually set the physics materials in the collider, uncheck the **Physics Materials from Asset** property and select the physics materials from the **Physics Materials** property list to assign it.
+使用 **PhysX Mesh Collider** 组件时，如果 PhysX 资产是三角形网格，则可以将物理材质分配给整个碰撞器或按面分配。启用 **Physics Materials from Asset** 属性后，将根据网格的 PhysX 资产中的物理材质自动设置此碰撞器的物理材质（请参阅 [FBX 设置 PhysX 选项卡](/docs/user-guide/assets/scene-settings/physx-tab/)）。要在碰撞器中手动设置物理材质，请取消选中 **Physics Materials from Asset** 属性，然后从 **Physics Materials** 属性列表中选择物理材质进行分配。
 
 ![PhysX Primitive Collider, setting the physics materials.](/images/user-guide/physx/physx/ui-physx-material-F.png)
 
-### Assign physics materials per face
+### 为每个面分配物理材质
 
-Entities that have PhysX triangle mesh assets can have physics materials assigned per face. You define material placement by assigning materials to the faces of the triangle collision mesh in a content creation application. These materials are listed in both FBX Settings PhysX group and PhysX Mesh Collider component, where each material is assigned a physics material.
+具有 PhysX 三角形网格资产的实体可以为每个面分配物理材质。您可以通过在内容创建应用程序中将材质分配给三角形碰撞网格的面来定义材质放置。这些材质在 FBX Settings （FBX 设置） 的 PhysX 组和 PhysX Mesh Collider （PhysX 网格碰撞器） 组件中列出，其中每个材质都分配有一个物理材质。
 
-For more information on creating PhysX mesh assets, see [FBX Settings PhysX tab](/docs/user-guide/assets/scene-settings/physx-tab/).
+有关创建 PhysX 网格资源的更多信息，请参阅 [FBX 设置的 PhysX 选项卡](/docs/user-guide/assets/scene-settings/physx-tab/).
 
-In the example below, the PhysX mesh asset was authored with six materials in the content creation application: *Yellow*, *Red*, *Blue*, *Teal*, *Green* and *Orange*. In FBX Settings, under PhysX tab, a physics material can be assigned to each material.
+在下面的示例中，PhysX 网格资产是在内容创建应用程序中使用六种材质创作的：*黄色*、*红色*、*蓝色*、*蓝绿色*、*绿色* 和 *橙色*。在 FBX Settings （FBX 设置） 中的 PhysX （PhysX） 选项卡下，可以为每个材质分配一个物理材质。
 
 ![PhysX Asset, per face physics materials.](/images/user-guide/physx/physx/ui-physx-material-G.png)
 
-In **PhysX Mesh Collider Component**, when **Physics Materials from Asset** property is disabled, a physics material can be manually assigned to each material. When **Physics Materials from Asset** property is enabled the physics materials assigned in FBX Settings will be used automatically.
+在 **PhysX Mesh Collider Component** 中，当 **Physics Materials from Asset** 属性被禁用时，可以手动将物理材质分配给每个材质。启用 **Physics Materials from Asset** 属性后，将自动使用在 FBX Settings 中分配的物理材质。
 
 ![PhysX Mesh Collider, per face physics materials.](/images/user-guide/physx/physx/ui-physx-material-H.png)

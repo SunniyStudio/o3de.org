@@ -1,43 +1,43 @@
 ---
-linkTitle: Collision Layers
-title: PhysX Collision Layers
-description: ' Create collision layers for the PhysX system in Open 3D Engine (O3DE). '
+linkTitle: 碰撞层
+title: PhysX 碰撞层
+description: ' 在 Open 3D Engine （O3DE） 中为 PhysX 系统创建碰撞层。 '
 weight: 300
 toc: true
 ---
 
-With collision layers, you can place related PhysX entities into categories. The following list demonstrates some example PhysX collision layers:
+使用碰撞层，您可以将相关的 PhysX 实体放入类别中。以下列表演示了一些示例 PhysX 碰撞层：
 
-* **Terrain** - Terrain, flooring, and any entities that player entities can traverse.
-* **Static objects** - Entities that have colliders and static rigid body components, but no animation, such as large rocks, tree trunks, and walls.
-* **Players** - All player controlled entities.
-* **Enemies** - Entities that move via script or AI that can deal damage to, and receive damage from, player controlled entities.
-* **Projectiles** - Entities that can deal damage.
+* **Terrain** - 地形、地板以及玩家实体可以遍历的任何实体。
+* **Static objects** - 具有碰撞体和静态刚体组件但没有动画的实体，例如大型岩石、树干和墙壁。
+* **Players** - 所有玩家控制的实体。
+* **Enemies** - 通过脚本或 AI 移动的实体，可以对玩家控制的实体造成伤害，也可以从玩家控制的实体中受到伤害。
+* **Projectiles** - 可以造成伤害的实体。
 
-A project can have up to 64 PhysX collision layers. The layers that you define are specific to your project. When a **PhysX Collider** component is added to an entity, it is assigned a collision layer with index **\[0\]** called `Default`. You can assign each collider component to one layer. An entity can have multiple collider components assigned to different layers.
+一个项目最多可以有 64 个 PhysX 碰撞层。您定义的图层特定于您的项目。将 **PhysX Collider** 组件添加到实体时，会为其分配一个索引为 **\[0\]** 的碰撞层，称为`Default`。您可以将每个碰撞器组件分配给一个层。一个实体可以有多个 Collider 组件分配给不同的层。
 
-## Create a collision layer
+## 创建碰撞层
 
-1. In O3DE Editor, from the **Tools** menu, choose **PhysX Configuration**.
+1. 在 O3DE 编辑器中，从 **Tools** 菜单中选择 **PhysX Configuration**。
 
-1. Choose the **Collision Filtering** tab.
+1. 选择 **Collision Filtering**（冲突筛选）**选项卡。
 
-1. Click the **Layers** button to view the layers list.
+1. 单击 **Layers** 按钮查看图层列表。
 
-1. Type the name of the layer into an available text field. Layer names must be 32 characters or less.
+1. 在可用文本字段中键入图层的名称。图层名称不得超过 32 个字符。
 
     ![Creating Layers in the PhysX Configuration tool.](/images/user-guide/interactivity/physics/nvidia-physx/configuring/physx-configuration-2.png)
 
-## Collision layer assignment
+## 碰撞层分配
 
-1. In **O3DE Editor**, select an entity with a **PhysX Collider** component you'd like to assign to a collision layer.
+1. 在 **O3DE Editor** 中，选择要分配给碰撞层的具有 **PhysX Collider** 组件的实体。
 
-1. In the **PhysX Collider** component, from the **Collision Layer** property, choose one of the available collision layers from the drop-down list.
+1. 在 **PhysX Collider** 组件中，从 **Collision Layer** 属性中，从下拉列表中选择一个可用的碰撞层。
 
     ![The PhysX Collider component in the Entity Inspector.](/images/user-guide/interactivity/physics/nvidia-physx/configuring/physx-configuration-3.png)
 
 {{< note >}} 
-* If you rename a layer, its references are updated automatically.
-* Layers can't be reordered.
-* If you create, rename, or delete a collision layer while an entity with a collider assigned to the layer is selected, the changes don't appear in the **Entity Inspector**. To see the changes, deselect and reselect the entity to refresh the component interface.
+* 如果重命名图层，则其引用会自动更新。
+* 图层无法重新排序。
+* 如果在选择为该层分配了碰撞器的实体时创建、重命名或删除碰撞层，则更改不会显示在 **Entity Inspector**中。要查看更改，请取消选择并重新选择实体以刷新组件界面。
 {{< /note >}}

@@ -1,140 +1,139 @@
 ---
-description: ' Create dynamic joint constraints between entities in Open 3D Engine with
-  PhysX joints. '
-title: Dynamic joints with PhysX
+description: ' 使用 PhysX 关节在 Open 3D Engine 中的实体之间创建动态关节约束。 '
+title: 使用 PhysX 的动态关节
 weight: 400
 ---
 
-PhysX joint components constrain the position and orientation of one PhysX Dynamic Rigid Body called the *follower*, relative to another rigid body, called the *leader*. The follower rigid body will have rotational freedom in zero, one, or two axes around the joint, depending on the type of PhysX joint.
+PhysX 关节组件约束一个 PhysX 动态刚体（称为 *跟随者*）相对于另一个刚体（称为 *前导*）的位置和方向。跟随者刚体将在关节周围的零个、一个或两个轴上具有旋转自由度，具体取决于 PhysX 关节的类型。
 
-The example image below is a simple demonstration of the different joint types. In each example, the blue sphere is the lead rigid body. The red sphere is the follower rigid body, which must always be a simulated rigid body. The joint component is always part of the follower entity. Once the joint is added to the follower, it needs to be configured to be placed around the leader (using the **Local Position** and **Local Rotation** properties of the joint component). In this example, the ball and hinge leaders are static rigid bodies, but they could be kinematic or simulated rigid bodies too.
+下面的示例图像是不同关节类型的简单演示。在每个示例中，蓝色球体是前导刚体。红色球体是跟随者刚体，它必须始终是模拟的刚体。关节组件始终是 follower 实体的一部分。将关节添加到从动节点后，需要将其配置为放置在引线周围（使用关节组件的 **Local Position** 和 **Local Rotation** 属性）。在此示例中，球和铰链引线是静态刚体，但它们也可以是运动学或模拟刚体。
 
 ![PhysX Joints example](/images/user-guide/physx/physx/anim-joints-example.gif)
 
-**Contents**
-+ [PhysX joint types](#physx-joint-types)
-+ [PhysX joint setup](#physx-joint-setup)
-+ [PhysX Joint configuration](#physx-joint-configuration)
-  + [Position mode](#position-mode)
-  + [Rotation mode](#rotation-mode)
-  + [Snap position mode](#snap-position-mode)
-  + [Snap rotation mode](#snap-rotation-mode)
-  + [Maximum Force and Maximum Torque modes](#maximum-force-and-maximum-torque-modes)
-  + [Swing limits mode](#swing-limits-mode)
-  + [Twist limits mode](#twist-limits-mode)
-  + [Stiffness and Damping modes](#stiffness-and-damping-modes)
-+ [Notes on stability](#notes-on-stability)
+**内容**
++ [PhysX 关节类型](#physx-joint-types)
++ [PhysX 关节设置](#physx-joint-setup)
++ [PhysX 关节配置](#physx-joint-configuration)
+  + [位置模式](#position-mode)
+  + [旋转模式](#rotation-mode)
+  + [对齐位置模式](#snap-position-mode)
+  + [对齐旋转模式](#snap-rotation-mode)
+  + [Maximum Force （最大力） 和 Maximum Torque （最大扭矩） 模式](#maximum-force-and-maximum-torque-modes)
+  + [摆动限制模式](#swing-limits-mode)
+  + [Twist limits 模式](#twist-limits-mode)
+  + [刚度和阻尼模式](#stiffness-and-damping-modes)
++ [稳定性说明](#notes-on-stability)
 
-## PhysX joint types 
+## PhysX 关节类型
 
-See the linked component reference below for information on the three PhysX joint types:
-+ [ PhysX Ball Joint component reference ](/docs/user-guide/components/reference/physx/ball-joint/) - The **PhysX Ball Joint** component allows freedom of rotation of the follower rigid body in two axes.
-+ [ PhysX Fixed Joint component reference ](/docs/user-guide/components/reference/physx/fixed-joint/) - The **PhysX Fixed Joint** component does not allow freedom of rotation of the follower rigid body in any axis.
-+ [ PhysX Hinge Joint component reference ](/docs/user-guide/components/reference/physx/hinge-joint/) - The **PhysX Hinge Joint** component allows freedom of rotation of the follower rigid body in one axis.
-+ [ PhysX Prismatic Joint component reference ](/docs/user-guide/components/reference/physx/prismatic-joint/) - The **PhysX Prismatic Joint** component keeps the same rotation, but allows the follower rigid body to move freely along one axis.
+有关三种 PhysX 关节类型的信息，请参阅下面的链接组件参考：
++ [ PhysX Ball Joint 组件参考](/docs/user-guide/components/reference/physx/ball-joint/) - **PhysX Ball Joint** 组件允许 Follower 刚体在两个轴上自由旋转。
++ [ PhysX Fixed Joint 组件参考](/docs/user-guide/components/reference/physx/fixed-joint/) - **PhysX Fixed Joint** 组件不允许 Follower 刚体在任何轴上自由旋转。
++ [ PhysX Hinge Joint 组件参考](/docs/user-guide/components/reference/physx/hinge-joint/) - **PhysX Hinge Joint** 组件允许 Follower 刚体在一个轴上自由旋转。
++ [ PhysX Prismatic Joint 组件参考](/docs/user-guide/components/reference/physx/prismatic-joint/) - **PhysX Prismatic Joint** 组件保持相同的旋转，但允许从动刚体沿一个轴自由移动。
 
-## PhysX joint setup 
+## PhysX 关节设置 
 
-The setup for each joint type is the same.
+每种关节类型的设置都是相同的。
 
-1. Create an entity for the **leader** rigid body.
+1. 为 **leader** 刚体创建实体。
 
-   1. Create a new entity. Right click in **Perspective** and choose **Create enity** from the context menu.
+   1. 创建新实体。右键单击 **Perspective**，然后从上下文菜单中选择 **Create enity**。
 
-   1. Add a **PhysX Static Rigid Body** or a **PhysX Dynamic Rigid Body** (type *kinematic* or *simulated*) component depending if you want the leader to move or not.
+   1. 添加 **PhysX Static Rigid Body** 或 **PhysX Dynamic Rigid Body**（类型 *kinematic* 或 *simulated*）组件，具体取决于您是否希望领导者移动。
 
-   1. Add a PhysX collider to the entity.
+   1. 将 PhysX 碰撞器添加到实体。
 
-1. Create an entity for the **follower** rigid body and the joint.
+1. 为 **follower** 刚体和关节创建一个实体。
 
-   1. Create a new entity.
+   1. 创建新实体。
 
-   1. Add a **PhysX Dynamic Rigid Body** (type *simulated*) component to the entity.
+   1. 将 **PhysX Dynamic Rigid Body** （类型 *simulated*） 组件添加到实体。
 
-   1. Add a PhysX collider to the entity. This is required for angle limits to work correctly. Joints still work without a PhysX collider but angle limits and might not be enforced. This is also true when using trigger colliders.
+   1. 将 PhysX 碰撞器添加到实体。这是 angle limits 正常工作所必需的。在没有 PhysX 碰撞器的情况下，关节仍然可以工作，但有角度限制，并且可能不会强制执行。使用触发器碰撞器时也是如此。
 
-   1. Add one of the PhysX joint components:
+   1. 添加其中一个 PhysX 关节组件：
       + **PhysX Ball Joint**
       + **PhysX Fixed Joint**
       + **PhysX Hinge Joint**
       + **PhysX Prismatic Joint**
 
-   1. Assign the leader entity to the PhysX joint by clicking the **Target** button to the right of the **Lead Entity** property and select the leader entity in **Perspective**.
+   1. 通过单击 **Lead Entity** 属性右侧的 **Target** 按钮，然后在 **Perspective** 中选择引线实体，将引线实体分配给 PhysX 关节。
 
-   1. Adjust the position and orientation of the joint to move it to the leader's location. Use the **Local Position** and **Local Rotation** fields in the PhysX joint component. You can enter component mode by clicking the **Edit** button and configure the joint in **Perspective**.
+   1. 调整关节的位置和方向，将其移动到引线的位置。使用 PhysX 关节组件中的 **Local Position** 和 **Local Rotation** 字段。您可以通过单击 **Edit** 按钮进入组件模式，并在 **Perspective**中配置关节。
 
 {{< note >}}
-It is not required for a follower rigid body to have an leader rigid body. When a follower doesn't have a leader it will be constrained on global position.
+从动轮刚体不需要具有引导刚体。当 follower 没有 leader 时，它将受到全局位置的约束。
 {{< /note >}}
 
-## PhysX Joint configuration using component edit mode
+## 使用组件编辑模式的 PhysX 关节配置
 
-Joint components have an **Edit** button that enables component edit mode. In component edit mode, you can edit the properties of the joint in **Perspective**. You can use one of several edit contexts in component edit mode. Press the **Tab** key to cycle through the edit mode contexts. The current context is displayed at the bottom of the **Perspective** pane.
+关节组件具有一个 **Edit** 按钮，用于启用组件编辑模式。在组件编辑模式下，您可以在 **Perspective** 中编辑关节的属性。您可以在组件编辑模式下使用多个编辑上下文之一。按 **Tab** 键可在编辑模式上下文之间循环。当前上下文显示在 **Perspective** 窗格的底部。
 
 ### Position mode 
 
-**Applies to:** Ball Joint, Fixed Joint and Hinge Joint
+**Applies to:** 球形接头、固定接头和铰链接头
 
 ![PhysX joint position mode](/images/user-guide/physx/physx/ui-physx-joint-position-mode.png)
 
-Position mode displays a translate gizmo that you can click and drag to adjust the **Local Position** of the joint relative to the entity transform.
+Position （位置） 模式显示一个平移 Gizmo，您可以单击并拖动该 Gizmo 来调整关节相对于实体变换的 **Local Position（本地位置）**。
 
 ### Rotation mode 
 
-**Applies to:** Ball Joint, Fixed Joint and Hinge Joint
+**Applies to:** 球形接头、固定接头和铰链接头
 
 ![PhysX joint rotation mode](/images/user-guide/physx/physx/ui-physx-joint-rotation-mode.png)
 
-Rotation mode displays a rotation gizmo that you can click and drag on any axis to adjust the **Local Rotation** of the joint relative to the entity transform.
+Rotation （旋转） 模式显示一个旋转小工具，您可以在任何轴上单击并拖动该小工具，以调整关节相对于实体变换的 **Local Rotation** （局部旋转）。
 
 ### Snap position mode 
 
-**Applies to:** Ball Joint and Hinge Joint
+**Applies to:** 球形接头和铰链接头
 
 ![PhysX joint snap position mode](/images/user-guide/physx/physx/ui-physx-joint-snap-position-mode.png)
 
-Snap position mode displays a highlight bounding box and target when you hover over an entity. Click the entity to snap the joint **Local Position** to the highlighted entity's position. If **Select Lead on Snap** is enabled in the joint properties, the entity will be assigned to the joint's **Lead Entity** property. Any entity can be selected except the follower entity.
+当您将鼠标悬停在实体上时，Snap position （对齐位置） 模式会显示高亮显示边界框和目标。单击实体以将关节 **Local Position** 对齐到高亮显示的实体的位置。如果在关节属性中启用了 **Select Lead on Snap**，则该实体将被分配给关节的 **Lead Entity** 属性。可以选择除 follower 实体之外的任何实体。
 
 ### Snap rotation mode 
 
-**Applies to:** Ball Joint
+**Applies to:** 球形接头
 
 ![PhysX joint snap rotation mode](/images/user-guide/physx/physx/ui-physx-joint-snap-rotation-mode.png)
 
-Snap rotation mode displays a highlight bounding box and target when you hover over an entity. Click the entity to snap the joint **Local Rotation** to the highlighted entity's rotation. Any entity can be selected except the leader entity.
+当您将鼠标悬停在实体上时，Snap rotation 模式会显示高亮显示边界框和目标。单击实体以将关节 **Local Rotation** 与高亮显示的实体的旋转对齐。可以选择除引导实体之外的任何实体。
 
 ### Maximum Force and Maximum Torque modes 
 
-**Applies to:** Ball Joint, Fixed Joint and Hinge Joint
+**Applies to:** 球形接头、固定接头和铰链接头
 
 ![PhysX joint maximum force and maximum torque modes](/images/user-guide/physx/physx/ui-physx-joint-breakable-properties-mode.png)
 
-Maximum force and maximum torque modes display a gray box that you can click and drag to adjust the **Maximum Force** and **Maximum Torque** properties. The maximum force and maximum torque modes and properties are available only when the **Breakable** property is enabled for the joint.
+最大力和最大扭矩模式显示一个灰色框，您可以单击并拖动该框来调整 **最大力** 和 **最大扭矩** 属性。最大力和最大扭矩模式和属性仅在为关节启用 **Breakable** 属性时可用。
 
 ### Swing limits mode 
 
-**Applies to:** Ball Joint
+**Applies to:** 球形接头
 
 ![PhysX joint swing limits mode](/images/user-guide/physx/physx/ui-physx-joint-swing-limit-mode.png)
 
-Swing limits mode displays a ring gizmo at the local root of the joint that you can use to rotate the swing limits on the joint's x-axis, and a scale gizmo that you can use to scale the swing limits uniformly or non-uniformly on the joint's y- and z-axes. Swing limits mode is available only when the **Limits** property is enabled for the ball joint component.
+“摆动限制”模式在关节的局部根部显示一个环形 Gizmo，可用于旋转关节 x 轴上的摆动限制，以及一个缩放 Gizmo，可用于在关节的 y 轴和 z 轴上均匀或不均匀地缩放摆动限制。仅当为球关节组件启用了 **Limits** 属性时，Swing limits 模式才可用。
 
 ### Twist limits mode 
 
-**Applies to:** Hinge Joint
+**Applies to:** 铰链关节
 
 ![PhysX joint twist limits mode](/images/user-guide/physx/physx/ui-physx-joint-twist-limit-mode.png)
 
-Twist limits mode displays two ring gizmos that you can click and drag to adjust the **Positive angular limit** and **Negative angular limit** properties. The red ring adjusts the positive limit and the green ring adjusts the negative limit. Twist limits mode is available only when the **Limits** property is enabled for the hinge joint component.
+Twist limits （扭曲限制） 模式显示两个环形小工具，您可以单击并拖动这两个小工具来调整 **正角度限制** 和 **负角度限制** 属性。红色环调整正限制，绿色环调整负限制。仅当为铰链关节组件启用了 **Limits** 属性时，Twist limits 模式才可用。
 
 ### Stiffness and Damping modes 
 
-**Applies to:** Ball Joint and Hinge Joint
+**Applies to:** 球形接头和铰链接头
 
 ![PhysX joint stiffness and damping modes](/images/user-guide/physx/physx/ui-physx-joint-soft-limit-properties-mode.png)
 
-Stiffness and damping modes display a gray box that you can click and drag to adjust the **Stiffness** and **Damping** properties. The stiffness and damping modes and properties are available only when the **Soft limit** property is enabled for the joint.
+Stiffness （刚度） 和 damping （阻尼） 模式显示一个灰色框，您可以单击并拖动该框来调整 **Stiffness** 和 **Damping** 属性。刚度和阻尼模式和属性仅在为关节启用 **Soft limit** 属性时可用。
 
-## Notes on stability 
+## 稳定性说明
 
-The iterative solver used by PhysX joints may not be able to maintain constraints in some configurations. For example, the solver might fail to converge. The result is unstable or unexpected motion during simulation. The PhysX documentation describes configurations that could help avoid such occurrences. Please see [Configuring Joints for Best Behavior](https://docs.nvidia.com/gameworks/content/gameworkslibrary/physx/guide/Manual/Joints.html#configuring-joints-for-best-behavior) in NVIDIA's PhysX Joint documentation.
+PhysX 关节使用的迭代求解器可能无法在某些配置中保持约束。例如，求解器可能无法收敛。结果是模拟过程中的运动不稳定或意外。PhysX 文档介绍了有助于避免此类情况的配置。请参阅 NVIDIA 的 PhysX 关节文档中的 [配置关节以实现最佳行为](https://docs.nvidia.com/gameworks/content/gameworkslibrary/physx/guide/Manual/Joints.html#configuring-joints-for-best-behavior) 。

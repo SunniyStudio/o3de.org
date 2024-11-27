@@ -4,9 +4,9 @@ title: PhysX Scene Queries
 weight: 300
 ---
 
-You can use physics raycast queries to determine whether a specific line segment intersects physics geometry. Similarly a shapecast query (also known as a sweep) tests whether a shape extruded along a line segment intersects with physics geometry. Example uses for these queries might include determining whether an object is in front of another object, or testing a line of sight. Overlap queries are a third type of scene query, which determine whether a stationary shape intersects with other physics geometry. All these scene queries are performed on an `AzPhysics::SceneInterface` object and they all test against the entire scene. Note that as well as queries against entire scenes, it is also possible to perform a raycast against a single [**PhysX Simulated Body**](/docs/user-guide/interactivity/physics/nvidia-physx/simulated-bodies/#raycast).
+您可以使用物理特性光线投射查询来确定特定线段是否与物理特性几何体相交。同样，形状转换查询（也称为扫描）测试沿线段拉伸的形状是否与物理几何体相交。这些查询的示例用途可能包括确定一个对象是否在另一个对象的前面，或测试视线。重叠查询是第三种类型的场景查询，用于确定固定形状是否与其他物理几何体相交。所有这些场景查询都在`AzPhysics::SceneInterface` 对象上执行，并且它们都针对整个场景进行测试。请注意，除了针对整个场景的查询外，还可以对单个 [**PhysX 模拟体**](/docs/user-guide/interactivity/physics/nvidia-physx/simulated-bodies/#raycast)执行光线投射。
 
-Each type of scene query can be performed using an `AzPhysics::SceneQueryRequest` object (there are specializations of the request object for each of the three scene query types). As well as performing a single query, it is possible to collect a batch of queries into a single call using an `AzPhysics::SceneQueryRequests` object, which is a container for many queries. It is also possible to call the request either synchronously or asynchronously.
+每种类型的场景查询都可以使用`AzPhysics::SceneQueryRequest`对象来执行（三种场景查询类型中的每一种都有请求对象的专用化）。除了执行单个查询外，还可以使用`AzPhysics::SceneQueryRequests`对象（许多查询的容器）将一批查询收集到单个调用中。也可以同步或异步调用请求。
 
 ```
 virtual SceneQueryHits QueryScene(SceneHandle sceneHandle, const SceneQueryRequest* request) = 0;
@@ -17,40 +17,40 @@ virtual SceneQueryHitsList QuerySceneBatch(SceneHandle sceneHandle, const SceneQ
     const SceneQueryRequests& requests, SceneQuery::AsyncBatchCallback callback) = 0;
 ```
 
-The results of scene queries are described using containers of `AzPhysics::SceneQueryHit` objects.
+场景查询的结果使用`AzPhysics::SceneQueryHit`对象的容器进行描述。
 
 {{< note >}}
-Scene queries can have a performance cost.
+场景查询可能会降低性能。
 {{< /note >}}
 
-## Raycast
+## 光线投射
 
-Raycast queries are the most common scene query, based on firing a ray from a start position a specified distance along a ray direction.
+光线投射查询是最常见的场景查询，它基于从开始位置沿光线方向发射光线指定距离的光线。
 
-**Example**
-The raycast query intersects the pentagon only.
+**例**
+光线投射查询仅与五边形相交。
 
 ![Raycast query example in PhysX world.](/images/user-guide/physx/physx-raycast-shape-cast-queries-2.png)
 
-A raycast query is specified using an `AzPhysics::RayCastRequest`.
+光线投射查询是使用`AzPhysics::RayCastRequest`指定的。
 
-**RayCastRequest Properties**
+**RayCastRequest 属性**
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-|  `m_distance`  |  Maximum distance along the ray to test for intersections.  |
-|  `m_start`  |  World space point where the ray starts.  |
-|  `m_direction`  |  Direction to cast the ray. This vector must be normalized.  |
-|  `m_hitFlags`  |  Flags used to request particular hit fields to be returned, or indicate which hit fields are valid in a return value.  |
-|  `m_filterCallback`  |  Custom callback function provided by the game to filter out specific objects.  |
-|  `m_reportMultipleHits`  |  Whether to return all hits along the query (up to `m_maxResults`) or only return the first hit.  |
-|  `m_maxResults`  |  The maximum number of hits to return (limited by the [Global Configuration](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-global/)).  |
-|  `m_collisionGroup`  |  Specifies which layers to test against. Use this to test only against specific layers.  |
-|  `m_queryType`  |  Include either static objects, dynamic objects, or both.  |
+|  `m_distance`  |  沿射线测试交集的最大距离。  |
+|  `m_start`  |  光线开始的世界空间点。  |
+|  `m_direction`  |  投射光线的方向。此向量必须归一化。  |
+|  `m_hitFlags`  |  用于请求返回特定点击字段或指示返回值中哪些点击字段有效的标志。  |
+|  `m_filterCallback`  |  游戏提供的自定义回调函数，用于过滤掉特定对象。  |
+|  `m_reportMultipleHits`  |  是返回查询中的所有点击（最多 `m_maxResults`），还是仅返回第一个点击。  |
+|  `m_maxResults`  |  要返回的最大点击数（受 [全局配置](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-global/) 的限制).  |
+|  `m_collisionGroup`  |  指定要测试的图层。使用此选项可仅针对特定层进行测试。 |
+|  `m_queryType`  |  包括静态对象和/或动态对象。  |
 
-To perform a raycast query, use the `AzPhysics::SceneInterface`.
+要执行光线投射查询，请使用`AzPhysics::SceneInterface`.
 
-**Example (C++)**
+**示例 (C++)**
 
 ```
 auto* sceneInterface = AZ::Interface<AzPhysics::SceneInterface>::Get();
@@ -64,7 +64,7 @@ AzPhysics::SceneQueryHits result = sceneInterface->QueryScene(AzPhysics::Default
 auto numHits = result.size();
 ```
 
-**Example (Lua)**
+**示例 (Lua)**
 
 ```
 physicsSystem = GetPhysicsSystem()
@@ -81,42 +81,42 @@ numHits = hits.HitArray:Size()
 
 **Script Canvas**
 
-The following nodes are available in **Script Canvas**:
-- **Raycast (Local Space)** Returns the first entity hit by a ray cast in local space from the source entity in the specified direction.
-- **Raycast (World Space)** Returns the first entity hit by a ray cast in world space from the start position in the specified direction.
-- **Raycast Multiple (Local Space)** Returns all entities hit by a ray cast in local space from the source entity in the specified direction.
+以下节点在 **Script Canvas** 中可用：
+- **Raycast (Local Space)** 返回光线从源实体沿指定方向在本地空间中投射的第一个实体。
+- **Raycast (World Space)** 返回光线在世界空间中从指定方向的起始位置投射的第一个实体。
+- **Raycast Multiple (Local Space)** 返回光线在局部空间中从源实体沿指定方向投射的所有实体。
 
 ## Shapecast
 
-A shapecast query is similar to a raycast query except that a shapecast query takes a shape as well as a point and direction. The shape is swept along the ray to form a volume. Anything that intersects with this volume is returned from the query.
+形状投射查询与光线投射查询类似，不同之处在于形状投射查询采用形状以及点和方向。形状沿射线扫掠以形成体积。与此卷相交的任何内容都将从查询中返回。
 
-**Example**
-The shapecast query is in the shape of a sphere and intersects with the rectangle and pentagon entities.
+**示例**
+形状转换查询呈球体形状，并与矩形和五边形实体相交。
 
 ![Shapecast query example in PhysX.](/images/user-guide/physx/physx-raycast-shape-cast-queries-3.png)
 
-A raycast query is specified using an `AzPhysics::ShapeCastRequest`.
+光线投射查询是使用`AzPhysics::ShapeCastRequest`.
 
-**ShapeCastRequest Properties**
+**ShapeCastRequest 属性**
 
-| Property | Description |
-| --- | --- |
-|  `m_distance`  |  Maximum distance along `m_direction` to test.  |
-|  `m_start`  |  Transform in world space where the shape cast begins.  |
-|  `m_direction`  |  Direction to cast. The vector must be normalised.  |
-|  `m_hitFlags`  |  Flags used to request particular hit fields to be returned, or indicate which hit fields are valid in a return value.  |
-|  `m_shapeConfiguration`  |  Shape that should be swept along the ray.  |
-|  `m_filterCallback`  |  Custom callback function provided by the game to filter out specific objects.  |
-|  `m_reportMultipleHits`  |  Whether to return all hits along the query (up to `m_maxResults`) or only return the first hit.  |
-|  `m_maxResults`  |  The maximum number of hits to return (limited by the [Global Configuration](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-global/)).  |
-|  `m_collisionGroup`  |  Specifies which layers to test against. Use this property to test only against specific layers.  |
-|  `m_queryType`  |  Includes either static objects, dynamic objects, or both.  |
+| 属性                     | 描述                                                                                                            |
+|------------------------|---------------------------------------------------------------------------------------------------------------|
+| `m_distance`           | 要测试的沿 `m_direction` 的最大距离。                                                                                    |
+| `m_start`              | 在形状转换开始的世界空间中变换。                                                                                              |
+| `m_direction`          | 投射方向。向量必须归一化。                                                                                                 |
+| `m_hitFlags`           | 用于请求返回特定点击字段或指示返回值中哪些点击字段有效的标志。                                                                               |
+| `m_shapeConfiguration` | 应沿射线扫掠的形状。                                                                                                    |
+| `m_filterCallback`     | 游戏提供的自定义回调函数，用于过滤掉特定对象。                                                                                       |
+| `m_reportMultipleHits` | 是返回查询中的所有点击（最多 `m_maxResults`），还是仅返回第一个点击。                                                                    |
+| `m_maxResults`         | 要返回的最大点击数（受 [全局配置](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-global/)限制）。 |
+| `m_collisionGroup`     | 指定要测试的图层。使用此属性可仅针对特定层进行测试。                                                                                    |
+| `m_queryType`          | 包括静态对象和/或动态对象。                                                                                                |
 
-Box, capsule and sphere geometries are supported, and there are helper functions to create queries with those shapes in `AzPhysics::ShapeCastRequestHelpers`. Convex mesh geometries are also supported in C++, but not currently exposed to scripting.
+支持长方体、胶囊体和球体几何体，并且有帮助程序函数可用于在`AzPhysics::ShapeCastRequestHelpers`中使用这些形状创建查询。C++ 也支持凸网格几何结构，但目前不支持脚本。
 
-To perform a shapecast query, use the `AzPhysics::SceneInterface`.
+要执行 shapecast 查询，请使用 `AzPhysics::SceneInterface`.
 
-**Example (C++)**
+**示例 (C++)**
 
 ```
 auto* sceneInterface = AZ::Interface<AzPhysics::SceneInterface>::Get();
@@ -132,7 +132,7 @@ AzPhysics::ShapeCastRequest request = AzPhysics::ShapeCastRequestHelpers::Create
 AzPhysics::SceneQueryHits hits = sceneInterface->QueryScene(AzPhysics::DefaultPhysicsSceneName, &request);
 ```
 
-**Example (Lua)**
+**示例 (Lua)**
 
 ```
 physicsSystem = GetPhysicsSystem()
@@ -152,34 +152,34 @@ hits = scene:QueryScene(request)
 
 **Script Canvas**
 
-The following nodes are available in **Script Canvas**:
-- **Box Cast** Returns the first entity hit by a shapecast query with box geometry.
-- **Capsule Cast** Returns the first entity hit by a shapecast query with capsule geometry.
-- **Sphere Cast** Returns the first entity hit by a shapecast query with sphere geometry.
+以下节点在 **Script Canvas** 中可用：
+- **Box Cast** 返回具有框几何体的形状转换查询命中的第一个实体。
+- **Capsule Cast** 返回具有胶囊体几何体的形状投射查询命中的第一个实体。
+- **Sphere Cast** 返回具有球体几何体的形状投射查询命中的第一个实体。
 
 ## Overlap
 
-Overlap queries are simpler, as they don't take a direction or distance. Overlap queries simply return all objects that intersect a shape at specified location in the world.
+重叠查询更简单，因为它们不采用方向或距离。重叠查询只返回在世界中指定位置与形状相交的所有对象。
 
-An overlap query is specified using an `AzPhysics::OverlapRequest`.
+重叠查询是使用`AzPhysics::OverlapRequest`.
 
-**OverlapRequest Properties**
+**OverlapRequest 属性**
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-|  `m_pose` |  Transform in world space of the shape.  |
-|  `m_shapeConfiguration`  |  Shape to use for the overlap.  |
-|  `m_filterCallback`  |  Custom callback function provided by the same to filter out specific entities.  |
-|  `m_unboundedOverlapHitCallback`  |  Allows overlap queries to return unlimited results, processed via a callback.  |
-|  `m_maxResults`  |  The maximum number of hits to return (limited by the [Global Configuration](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-global/), and assuming `m_unboundedOverlapHitCallback` is not used ).  |
-|  `m_collisionGroup`  |  Specifies which layers to test against. Use this property to test only against specific layers.  |
-|  `m_queryType`  |  Includes either static objects, dynamic objects, or both.  |
+|  `m_pose` |  在形状的世界空间中变换。  |
+|  `m_shapeConfiguration`  |  用于重叠的形状。  |
+|  `m_filterCallback`  |  自定义回调函数，用于过滤掉特定实体。  |
+|  `m_unboundedOverlapHitCallback`  |  允许重叠查询返回无限个结果，并通过回调进行处理。  |
+|  `m_maxResults`  |  要返回的最大点击数（受 [全局配置](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-global/) 的限制， 并假设`m_unboundedOverlapHitCallback`未使用 ).  |
+|  `m_collisionGroup`  |  指定要测试的图层。使用此属性可仅针对特定层进行测试。  |
+|  `m_queryType`  |  包括静态对象和/或动态对象。  |
 
-Box, capsule and sphere geometries are supported, and there are helper functions to create queries with those shapes in `AzPhysics::OverlapRequestHelpers`. Convex mesh geometries are also supported in C++, but not currently exposed to scripting.
+支持长方体、胶囊体和球体几何体，并且有帮助程序函数可用于在`AzPhysics::OverlapRequestHelpers`中使用这些形状创建查询。C++ 也支持凸网格几何结构，但目前不支持脚本。
 
-To perform an overlap query, use the `AzPhysics::SceneInterface`.
+要执行重叠查询，请使用`AzPhysics::SceneInterface`.
 
-**Example (C++)**
+**示例 (C++)**
 ```
 auto* sceneInterface = AZ::Interface<AzPhysics::SceneInterface>::Get();
 
@@ -189,7 +189,7 @@ AzPhysics::OverlapRequest request = AzPhysics::OverlapRequestHelpers::CreateBoxO
 AzPhysics::SceneQueryHits results = sceneInterface->QueryScene(AzPhysics::DefaultPhysicsSceneName, &request);
 ```
 
-**Example (Lua)**
+**示例 (Lua)**
 ```
 physicsSystem = GetPhysicsSystem()
 sceneHandle = physicsSystem:GetSceneHandle(DefaultPhysicsSceneName)
@@ -204,22 +204,23 @@ hits = scene:QueryScene(request)
 
 **Script Canvas**
 
-The following nodes are available in **Script Canvas**:
-- **Overlap Box** Returns an array of Entity Ids which overlap with a box geometry.
-- **Overlap Capsule** Returns an array of Entity Ids which overlap with a capsule geometry.
-- **Overlap Sphere** Returns an array of Entity Ids which overlap with a sphere geometry.
+以下节点在 **Script Canvas** 中可用：
+- **Overlap Box** 返回与盒体几何体重叠的 Entity ID 数组。
+- **Overlap Capsule** 返回与胶囊体几何体重叠的实体 ID 数组。
+- **Overlap Sphere** 返回与球体几何体重叠的实体 ID 数组。
 
 ## SceneQueryHit
-The results of scene queries are described using `AzPhysics::SceneQueryHit` objects. A single query may return multiple results, contained in an `AzPhysics::SceneQueryHits` object. The results of batch queries are described using an `AzPhysics::SceneQueryHitsList` object, which is a container of `AzPhysics::SceneQueryHits` objects.
+场景查询的结果使用 `AzPhysics::SceneQueryHit`对象进行描述。单个查询可能会返回多个结果，这些结果包含在`AzPhysics::SceneQueryHits`对象中。批处理查询的结果使用`AzPhysics::SceneQueryHitsList`对象进行描述，该对象是`AzPhysics::SceneQueryHits`对象的容器。
 
-**SceneQueryHit Properties**
-| Property | Description |
+**SceneQueryHit 属性**
+
+| 属性 | 说明 |
 | --- | --- |
-| `m_resultFlags` | Flags which indicate which of the below properties are valid. |
-| `m_distance` | The distance from the origin of the query to the hit (only valid for raycast and shapecast queries). |
-| `m_bodyHandle` | Handle to the `AzPhysics::SimulatedBody` which was hit. |
-| `m_entityId` | The Entity Id of the body which was hit. |
-| `m_shape` | The shape on the body which was hit. |
-| `m_physicsMaterialId` | The phsyics material id on the shape (or face) which was hit. |
-| `m_position` | The position of the hit in world space (only valid for raycast and shapecast queries). |
-| `m_normal` | The [normal](https://en.wikipedia.org/wiki/Normal_(geometry)) in world space of the hit surface. (only valid for raycast and shapecast queries). |
+| `m_resultFlags` | 指示以下哪些属性有效的标志。 |
+| `m_distance` | 从查询源到点击的距离（仅对光线投射和形状投射查询有效）。 |
+| `m_bodyHandle` | 被击中的`AzPhysics::SimulatedBody`的句柄。 |
+| `m_entityId` | 被命中的正文的实体 ID。|
+| `m_shape` | 被击中的身体形状。 |
+| `m_physicsMaterialId` | 被点击的形状（或面）上的 物理 材质 ID。 |
+| `m_position` |命中在世界空间中的位置（仅对光线投射和形状投射查询有效）。 |
+| `m_normal` | 击中表面的世界空间中的 [normal](https://en.wikipedia.org/wiki/Normal_(geometry))。（仅对 Raycast 和 Shapecast 查询有效）。 |

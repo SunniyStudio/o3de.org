@@ -1,64 +1,64 @@
 ---
-linkTitle: Global Configuration
-title: PhysX System Global Configuration
-description: ' Configure global settings for the PhysX system in Open 3D Engine (O3DE). '
+linkTitle: 全局配置
+title: PhysX系统全局配置
+description: ' 在 Open 3D Engine （O3DE） 中配置 PhysX 系统的全局设置。 '
 weight: 200
 toc: true
 ---
 
-On the **Global Configuration** tab, you can configure global PhysX settings and debug visualization settings.
+在 **全局配置** 选项卡上，您可以配置全局 PhysX 设置和调试可视化设置。
 
 ![PhysX Global Configuration tab](/images/user-guide/interactivity/physics/nvidia-physx/configuring/physx-configuration-1.png)
 
-## System configuration 
+## System 系统配置 
 
-The following table describes the **System Configuration** settings.
+下表描述了 **系统配置** 设置。
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Max Time Step** `m_maxTimeStep` | Specifies the largest time step that the simulation can process. This setting sets a limit for how long a simulation step can be, and prevents instability in the simulation if `m_fixedTimeStep` is not set. If the time between frames is greater than `m_maxTimeStep`, the simulation step's time is limited to this value. The value should be a small increment. The default value is `0.05` (1/20th of a second). |
-| **Fixed Time Step** `m_fixedTimeStep` | Sets the frequency of the PhysX simulation. The default is `0.017` (1/60th of a second). Lower values result in more accurate simulations, but at a higher runtime cost. Higher values can cause results that are less stable. If this value is set to `0`, the simulation uses the time between frames, which can vary. If the frame time is greater than this value, O3DE splits the time into the number of steps yielded by the following calculation: <pre>frame_time/m_fixedTimeStep</pre> |
-| **Raycast Buffer Size** | Maximum number of hits that can be returned from a raycast query.  The default is `32`. |
-| **Shapecast Buffer Size** | Maximum number of hits that can be returned from a shapecast query.  The default is `32`. |
-| **Overlap Query Buffer Size** | Maximum number of hits that can be returned from an overlap query.  The default is `32`. |
+| **Max Time Step** `m_maxTimeStep` | 指定模拟可以处理的最大时间步长。此设置为仿真步骤的长度设置限制，并防止在未设置 `m_fixedTimeStep` 时仿真不稳定。如果帧之间的时间大于`m_maxTimeStep` ，则模拟步骤的时间将限制为此值。该值应为一个小增量。默认值为 '0.05' （1/20 秒）。 |
+| **Fixed Time Step** `m_fixedTimeStep` | 设置 PhysX 模拟的频率。默认值为`0.017`  （1/60 秒）。值越低，模拟越准确，但运行时成本越高。较高的值可能会导致结果不太稳定。如果此值设置为 `0`，则模拟使用帧之间的时间，该时间可能会有所不同。如果帧时间大于此值，则 O3DE 会将时间拆分为以下计算得出的步数: <pre>frame_time/m_fixedTimeStep</pre> |
+| **Raycast Buffer Size** | 可从光线投射查询返回的最大命中数。 默认值为 `32`. |
+| **Shapecast Buffer Size** | 可从 shapecast 查询返回的最大命中数。 默认值为 `32`. |
+| **Overlap Query Buffer Size** | 可从重叠查询返回的最大命中数。 默认值为`32`. |
 
-## Scene configuration 
+## Scene 场景配置
 
-The following table describes the settings for **Scene Configuration**.
+下表描述了 **场景配置** 的设置。
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Gravity** |  The world space gravity vector in meters per second squared. The default **X**, **Y**, and **Z** values are `0.0`, `0.0`, and `-9.81`. |
-| **Continuous Collision Detection (CCD)** |  Enables continuous collision detection (CCD) which can improve simulation results at the cost of performance. Disabled by default. |
-| **Persistent Contact Manifold** |  If enabled, the data of colliding surfaces is preserved between frames. This is enabled by default and it's recommended to keep this setting enabled. Persistent manifolds store the contact data created in one time step for potential use in subsequent time steps. This requires more memory for simulation, but can improve the speed and accuracy of collision calculations. If a collision occurs, the data is stored in a persistent contact manifold for use in the next time step. If the surfaces are no longer colliding in the next time step, the data is discarded. Otherwise, the data is used to speed up the calculation, improve accuracy, and reduce jitter and other unwanted simulation artifacts. |
-| **Bounce Threshold Velocity** |  The relative velocity below which colliding objects will not bounce. The default is `2.0`.  |
+| **Gravity** |  世界空间重力矢量（以米/平方秒为单位）。默认 **X**、**Y** 和 **Z** 值为`0.0`, `0.0`, 和 `-9.81`. |
+| **Continuous Collision Detection (CCD)** |  启用连续碰撞检测 （CCD），这可以以牺牲性能为代价来改善仿真结果。默认情况下处于禁用状态。 |
+| **Persistent Contact Manifold** |  如果启用，则在帧之间保留碰撞曲面的数据。默认情况下，此选项处于启用状态，建议保持启用此设置。持久流形存储在一个时间步中创建的触点数据，以便在后续时间步中潜在使用。这需要更多的内存进行模拟，但可以提高碰撞计算的速度和准确性。如果发生碰撞，数据将存储在持续接触流形中，以便在下一个时间步中使用。如果曲面在下一个时间步中不再发生碰撞，则数据将被丢弃。否则，数据将用于加快计算速度、提高准确性并减少抖动和其他不需要的仿真伪影。 |
+| **Bounce Threshold Velocity** |  碰撞对象不会反弹的相对速度。默认值为 `2.0`.  |
 
-## Editor configuration 
+## Editor 编辑器配置 
 
-The following options control the appearance of PhysX debug visualizations in **O3DE Editor**, including the **Debug Draw COM** (center of mass) option of the [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/) component.
+以下选项控制 **O3DE 编辑器** 中 PhysX 调试可视化的外观，包括 [PhysX Dynamic Rigid Body](/docs/user-guide/components/reference/physx/rigid-body/)组件 的 **Debug Draw COM**（质心）选项。
 
 {{< note >}}
-These options are part of the [PhysX](/docs/user-guide/gems/reference/physics/nvidia/physx/) Gem and are not related to the [Debug Draw](/docs/user-guide/gems/reference/debug/debug-draw/) Gem or the [PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/) Gem.
+这些选项是 [PhysX](/docs/user-guide/gems/reference/physics/nvidia/physx/) Gem 的一部分，与 [Debug Draw](/docs/user-guide/gems/reference/debug/debug-draw/) Gem 或[PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/) Gem 无关。
 
-The joint hierarchy options apply to PhysX joints only. They do not apply to actor skeletons or simulated object joints.
+关节层次结构选项仅适用于 PhysX 关节。它们不适用于角色骨架或模拟对象关节。
 {{< /note >}}
 
-| Property | Description |
+| 属性 | 说明 |
 | - | - |
-| **Debug Draw Center of Mass Size** | The size of the debug draw circle that represents the center of the mass. Possible values are from `0.1` to `5.0` meters.  The default value is `0.1`.  |
-| **Debug Draw Center of Mass Color** | The color of the debug draw circle that represents the center of mass. To specify a color, enter its RGB values in the text box. The icon displays the selected color. The default values are `255`, `0`, `0` (red).  |
-| **Global Collision Debug** | Set the global collision debug draw visibility options.<br />**Enable all colliders** Displays all PhysX colliders, including colliders set as hidden.<br />**Disable all colliders** Hides all PhysX colliders, including colliders set as visible.<br />**Set manually** You can set PhysX collider visibility on each collider component individually. This is the default setting. |
-| **Global Collision Debug Color Mode** | Set the debug color mode.<br />**Material Color Mode** Uses physics material's debug color.<br />**Error Mode** Shows glowing red for error cases such as meshes with too many triangles. |
-| **Display Joints Hierarchy** | When enabled, PhysX joint lead-follower connections are displayed in the viewport as a line with two colors. One color for the lead and one color for the follower. Enabled by default. |
-| **Joints Hierarchy Lead Color** | The color of the lead half of a lead-follower joint connection line. |
-| **Joints Hierarchy Follower Color** | The color of the follower half of a lead-follower joint connection line. |
-| **Joints Hierarchy Distance Threshold** | The minimum distance required to draw the line for the follower connection. Distances shorter than this threshold only draw the line for the lead connection. The default is `1.0`. |
+| **Debug Draw Center of Mass Size** | 表示质心的调试绘制圆的大小。可能的值是 从 `0.1` 到 `5.0` 米。默认值为 `0.1`.  |
+| **Debug Draw Center of Mass Color** | 表示质心的调试绘制圆的颜色。要指定颜色，请在文本框中输入其 RGB 值。该图标显示所选颜色。默认值为 `255`, `0`, `0` (red).  |
+| **Global Collision Debug** | 设置全局碰撞调试绘制可见性选项。<br />**Enable all colliders** 显示所有 PhysX 碰撞器，包括设置为隐藏的碰撞器。<br />**Disable all colliders** 隐藏所有 PhysX 碰撞器，包括设置为可见的碰撞器。<br />**Set manually** 您可以在每个碰撞器组件上单独设置 PhysX 碰撞器可见性。这是默认设置。 |
+| **Global Collision Debug Color Mode** | 设置调试颜色模式。<br />**Material Color Mode** 使用物理材质的调试颜色。<br />**Error Mode** 对于错误情况（例如三角形过多的网格），显示发光的红色。 |
+| **Display Joints Hierarchy** | 启用后，PhysX 关节导联-跟随器连接在视区中显示为一条具有两种颜色的线。一种颜色表示潜在客户，一种颜色表示关注者。默认启用。 |
+| **Joints Hierarchy Lead Color** | 引线-从动轮连接线的引线半部分的颜色。 |
+| **Joints Hierarchy Follower Color** | 导联-从动轮接头连接线的从动轮半部分的颜色。|
+| **Joints Hierarchy Distance Threshold** | 为从动节点绘制线所需的最小距离。短于此阈值的距离仅绘制引线连接的线。 默认值是 `1.0`. |
 
-## Wind configuration 
+## Wind 风力配置 
 
-The following table describes the settings for **Wind Configuration**. For more information, refer to [Create Wind Forces](/docs/learning-guide/tutorials/physx/wind-provider).
+下表描述了 **Wind Configuration** 的设置。有关更多信息，请参考 [创建风力](/docs/learning-guide/tutorials/physx/wind-provider).
 
-| Property | Description |
-| --- | --- |
-| **Global wind tag** | This tag is used by PhysX wind system to specify entities that provide *global* wind forces. |
-| **Local wind tag** | This tag is used by PhysX wind system to specify entities that provide wind forces *localized* to a collider volume. |
+| 属性 | 说明                                          |
+| --- |---------------------------------------------|
+| **Global wind tag** | PhysX 风系统使用此标签来指定提供 *全局* 风力的实体。             |
+| **Local wind tag** | PhysX 风系统使用此标签来指定提供风力的实体，这些实体 *局部化* 到碰撞器体积。 |

@@ -1,107 +1,107 @@
 ---
-description: ' Debug PhysX issues for your game in Open 3D Engine. '
-title: Debugging PhysX
+description: ' 在 Open 3D Engine 中调试游戏的 PhysX 问题。 '
+title: 调试 PhysX
 weight: 1000
 ---
 
-The PhysX system has the following features that you can use to debug issues.
+PhysX 系统具有以下功能，可用于调试问题。
 
 {{< note >}}
-You must first enable the [PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/) gem.
+您必须首先启用[PhysX Debug](/docs/user-guide/gems/reference/physics/nvidia/physx-debug/) gem.
 {{< /note >}}
 
 **Topics**
-- [PhysX Debug Console Variables](#physx-debug-console-variables)
-- [Debugging with the ImGui Tool](#debugging-with-the-imgui-tool)
-- [Debug Options in the PhysX Configuration](#debug-options-in-the-physx-configuration)
-- [Enable additional checks and error reporting in PhysX SDK](#enable-additional-checks-and-error-reporting-in-physx-sdk)
+- [PhysX调试控制台变量](#physx-debug-console-variables)
+- [使用 ImGui 工具进行调试](#debugging-with-the-imgui-tool)
+- [PhysX 配置中的 Debug Options （调试选项）](#debug-options-in-the-physx-configuration)
+- [在 PhysX SDK 中启用其他检查和错误报告](#enable-additional-checks-and-error-reporting-in-physx-sdk)
 
-## PhysX Debug Console Variables 
+## PhysX 调试控制台变量
 
-Enter the following console variables to debug your PhysX issues.
+输入以下控制台变量以调试您的 PhysX 问题。
 
-Sets your preferences for debugging. As a recommended best practice, enter this console variable command as your first step for debugging.
+设置调试首选项。作为推荐的最佳实践，请输入此 console variable 命令作为调试的第一步。
 
-**Example**
+**示例**
 
 ```
 physx_Debug 1
 ```
 
-You can specify the following values:
-+ `1` - Enable debug visualizations. By default, this value enables the collision shapes and edges for your PhysX entities.
-+ `2` - Enables all configuration options. This enables all the available visualization options.
-+ `3` - Toggles the proximity based collider visualization. This value applies only to mesh colliders. See [Physics asset colliders](/docs/user-guide/components/reference/physx/collider/#physics-asset-colliders).
-+ `0` - Disables debug visualizations.
+您可以指定以下值：
++ `1` - 启用调试可视化效果。默认情况下，此值将启用 PhysX 实体的碰撞形状和边缘。
++ `2` - 启用所有配置选项。这将启用所有可用的可视化选项。
++ `3` - 切换基于接近度的碰撞器可视化。此值仅适用于网格碰撞器。请参阅 [物理资产碰撞器](/docs/user-guide/components/reference/physx/collider/#physics-asset-colliders).
++ `0` - 禁用调试可视化效果。
 
-**Example**
+**示例**
 
-Toggles a visual culling box frame.
+切换视觉剔除框帧。
 
 ```
 physx_CullingBox 
 ```
 
-Adjusts the culling box size to **100**. Enter **0** to disable culling.
+将剔除框大小调整为 **100**。输入 **0** 以禁用剔除。
 
 ```
 physx_CullingBoxSize 100
 ```
 
-Connects to the PhysX Visual Debugger. You must have the PhysX Visual Debugger open to run this command. See [Debugger Configuration](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-debugger/).
+连接到 PhysX Visual Debugger。您必须打开 PhysX Visual Debugger 才能运行此命令。请参阅 [调试器配置](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-debugger/).
 
 ```
 physx_PvdConnect
 ```
 
-Disconnects from the PhysX Visual Debugger. You must have the PhysX Visual Debugger open to run this command. See [Debugger Configuration](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-debugger/).
+断开与 PhysX Visual Debugger 的连接。您必须打开 PhysX Visual Debugger 才能运行此命令。请参阅 [调试器配置](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-debugger/).
 
 ```
 physx_PvdDisconnect
 ```
 
-For more information, see [Using the Console Window](/docs/user-guide/editor/console/).
+有关详细信息，请参阅 [使用控制台窗口](/docs/user-guide/editor/console/).
 
-## Debugging with the ImGui Tool 
+## 使用 ImGui 工具进行调试
 
-In game mode, you can configure the PhysX debug settings using the immediate mode graphical user interface (**ImGui**) tool.
+在游戏模式下，您可以使用即时模式图形用户界面 （**ImGui**） 工具配置 PhysX 调试设置。
 
 {{< note >}}
-You must enable the [ImGui Gem](/docs/user-guide/gems/reference/debug/imgui) to access this tool.
+您必须启用 [ImGui Gem](/docs/user-guide/gems/reference/debug/imgui) 才能访问此工具。
 {{< /note >}}
 
-**To debug with the ImGui tool**
+**使用 ImGui 工具进行调试**
 
-1. Press **Ctrl+G** to enter gameplay mode.
+1. 按 **Ctrl+G** 进入游戏模式。
 
-1. Press the **Home** key to open the **ImGui** tool. The **PhysX Debug** menu appears under the **Perspective** viewport.
+1. 按 **Home** 键打开 **ImGui** 工具。**PhysX Debug** 菜单显示在 **Perspective** 视区下。
 
-1. Click **PhysX Debug**.
+1. 单击 **PhysX Debug**。
 
 ![PhysX Debug menu in gameplay mode.](/images/user-guide/physx/physx-debugger-imgui-tool.png)
 
-1. You can make the following changes.
+1. 您可以进行以下更改。
 ****
 
-| **Default** | **Description** |
+| **默认** | **说明** |
 |-------|--------|
-| **Debug visualizations** | Enables debug visualizations mode. This is the same as the physx_Debug 1 console variable. |
-| **Visualize colliders** | Enables colliders to appear. This is the same as the physx_Debug 3 console variable. |
-| **Culling** | You can specify the following options:<ul><li>**Wireframe** – Displays wireframes in the viewport.</li><li>**Size** – Click and drag the slider to specify the size of the wireframes. As a best practice, keep this value small to prevent performance issues.</li></ul> |
-| **Collisions** | Enables debugging for collision types. You can specify the following options: <ul><li>**Shapes**</li><li>**Edges**</li><li>**F Normals**</li><li>**Aabbs**</li><li>**Axis**</li><li>**Compounds**</li><li>**Static**</li><li>**Dynamic**</li></ul> |
-| **Body** | Enables debugging for body types. You can specify the following options: <ul><li>**Axes**</li><li>**Mass Axes**</li><li>**Linear Velocity**</li><li>**Angular Velocity**</li></ul> |
+| **Debug visualizations** | 启用调试可视化效果模式。这与 physx_Debug 1 控制台变量相同。 |
+| **Visualize colliders** | 允许显示碰撞器。这与 physx_Debug 3 控制台变量相同。 |
+| **Culling** | 您可以指定以下选项：<ul><li>**Wireframe** – 在视区中显示线框。</li><li>**Size** – 单击并拖动滑块以指定线框的大小。作为最佳实践，请将此值保持较小，以防止出现性能问题。</li></ul> |
+| **Collisions** | 启用碰撞类型的调试。您可以指定以下选项：<ul><li>**Shapes**</li><li>**Edges**</li><li>**F Normals**</li><li>**Aabbs**</li><li>**Axis**</li><li>**Compounds**</li><li>**Static**</li><li>**Dynamic**</li></ul> |
+| **Body** | 启用主体类型的调试。您可以指定以下选项：<ul><li>**Axes**</li><li>**Mass Axes**</li><li>**Linear Velocity**</li><li>**Angular Velocity**</li></ul> |
 
-## Debug Options in the PhysX Configuration 
+## PhysX 配置中的 Debug Options （调试选项）
 
-You can also specify debug settings in the **PhysX Configuration** tool. See [Debugger Configuration](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-debugger/). 
+您还可以在 **PhysX Configuration** 工具中指定调试设置。请参阅 [调试器配置](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-debugger/). 
 
-## Enable additional checks and error reporting in PhysX SDK
+## 在 PhysX SDK 中启用其他检查和错误报告
 
-You can make the profile configuration of O3DE use the **checked** version of the PhysX SDK library. PhysX will perform additional checks to detect invalid parameters, API race conditions and other incorrect uses of the API which might otherwise cause mysterious crashes or failures in simulation. The benefit of doing this is the same safety checks from the debug configuration are enabled without having to run O3DE in debug, where low framerates could impact the simulation.
+您可以使 O3DE 的配置文件配置使用 PhysX SDK 库的 **checked** 版本。PhysX 将执行其他检查，以检测无效参数、API 竞争条件和 API 的其他错误使用，否则可能会导致模拟中出现神秘的崩溃或故障。这样做的好处是，无需在调试中运行 O3DE 即可启用来自调试配置的相同安全检查，因为低帧速率可能会影响仿真。
 
-Using the checked version of PhysX has an impact on performance. Use it to detect errors in the simulation or to make sure that the scene is properly set up, but disable it when doing profiling or trying to identify performance bottlenecks.
+使用 PhysX 的选中版本会影响性能。使用它来检测模拟中的错误或确保场景设置正确，但在执行分析或尝试识别性能瓶颈时禁用它。
 
-You can enable the checked version of PhysX by setting **LY_PHYSX_PROFILE_USE_CHECKED_LIBS** to **TRUE** during CMake configuration:
+您可以通过在 CMake 配置期间将 **LY_PHYSX_PROFILE_USE_CHECKED_LIBS** 设置为 **TRUE** 来启用 PhysX 的选中版本：
 
 ```
 -DLY_PHYSX_PROFILE_USE_CHECKED_LIBS=TRUE

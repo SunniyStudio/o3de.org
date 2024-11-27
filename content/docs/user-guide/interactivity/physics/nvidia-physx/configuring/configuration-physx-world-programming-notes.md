@@ -1,21 +1,21 @@
 ---
 linkTitle: PhysX Worlds
-title: Programming PhysX Worlds
-description: ' Programming notes for PhysX worlds in Open 3D Engine (O3DE). '
+title: 对 PhysX Worlds 进行编程
+description: ' Open 3D Engine （O3DE） 中 PhysX 世界的编程说明。 '
 weight: 700
 toc: true
 ---
 
-For PhysX objects to be simulated, they must exist inside a world. Multiple worlds can have uses like the following:
-+ To simulate the result of an action in the first world. For example, the second world might show what a tower of blocks might look like five seconds from now if it were knocked over in the first world.
-+ To simulate a subset of objects that you don't want to interact with the rest of the world. For example, you could simulate the movement of objects attached to a player's belt.
-+ To overcome hardware or software limits on a single large world. By tiling the single world into multiple smaller worlds and moving objects among them, you can create the illusion of a single large world.
+对于要模拟的 PhysX 对象，它们必须存在于世界内。多个世界可以有如下用途：
++ 模拟第一个世界中的动作结果。例如，第二个世界可能会显示如果在第一个世界中撞倒了一座积木塔，那么它在 5 秒后会是什么样子。
++ 模拟您不想与世界其他部分交互的对象子集。例如，您可以模拟附加到玩家腰带上的对象的移动。
++ 克服单个大世界的硬件或软件限制。通过将单个世界平铺为多个较小的世界并在它们之间移动对象，您可以创建单个大世界的错觉。
 
 ## World ID
 
-Every world created in the PhysX gem is addressable by an ID of type `AZ::Crc32`. Use this ID to address the `WorldRequestBus`.
+在 PhysX Gem 中创建的每个世界都可通过类型为`AZ::Crc32`的 ID 进行寻址。使用此 ID 对 `WorldRequestBus` 进行寻址。
 
-If you have a single world in your game, you can use `BroadcastResult` to invoke `WorldRequestBus`, as in the following example:
+如果您的游戏中只有一个世界，则可以使用 `BroadcastResult` 来调用`WorldRequestBus`，如以下示例所示：
 
 ```
 // Single world setup
@@ -23,7 +23,7 @@ RayCastHit choose;
 WorldRequestBus::BroadcastResult(choose, &WorldRequests::RayCast, request);
 ```
 
-If you have a multi-world game, use `EventResult` and pass in the world ID, as in the following example:
+如果您有一个多世界游戏，请使用 `EventResult` 并传入世界 ID，如以下示例所示：
 
 ```
 // Multiple world setup
@@ -32,9 +32,9 @@ WorldRequestBus::EventResult(choose, AZ_CRC("AZPhysicalWorld"), &WorldRequests::
 ```
 
 {{< note >}}
-If your game creates multiple worlds, it must manage the objects that are added into those worlds.
+如果您的游戏创建多个世界，则必须管理添加到这些世界中的对象。
 {{< /note >}}
 
-## Time step constants
+## 时间步长常数
 
-You can configure step constants for `Physics::WorldSettings` when `PhysXWorld` is created. For more information, see [PhysX System Global Configuration](./configuration-global/#system-configuration).
+您可以在创建 `PhysXWorld` 时为 `Physics::WorldSettings` 配置步长常量。有关更多信息，请参阅 [PhysX 系统全局配置](./configuration-global/#system-configuration).

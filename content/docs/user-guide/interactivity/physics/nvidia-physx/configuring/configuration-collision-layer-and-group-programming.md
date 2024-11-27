@@ -6,16 +6,16 @@ weight: 500
 toc: true
 ---
 
-## Retrieve layers and groups
+## 检索图层和组
 
-You can retrieve instances of collision layers and groups [that you created in O3DE Editor](configuration-collision-groups) as shown below. These methods perform a lookup of the layers defined in the **PhysX Configuration** tool. If no collision layer is found that matches the name, the default layer \(`0`\) is returned.
+您可以检索 [您在 O3DE 编辑器中创建的](configuration-collision-groups) 的碰撞层和组的实例，如下所示。这些方法将执行在 **PhysX Configuration** （PhysX 配置） 工具中定义的图层的查找。如果未找到与名称匹配的碰撞层，则返回默认层 \(`0`\)。
 
 ```
 CollisionLayer layer("MyLayer");
 CollisionGroup group("MyGroup");
 ```
 
-You can also use a request bus to look up layers and groups, as in the following code:
+您还可以使用请求总线来查找层和组，如以下代码所示：
 
 ```
 CollisionLayer layer;
@@ -24,11 +24,11 @@ CollisionGroup group;
 CollisionRequestBus::BroadcastResult(group, &Physics::CollisionRequests::GetCollisionGroupByName, groupName);
 ```
 
-## Create layers and groups
+## 创建图层和组
 
-You can create collision layers and groups in code at runtime. This is useful in scenarios where you might not be able to predefine collision layers and groups, such as projects that generate assets procedurally at runtime.
+您可以在运行时在代码中创建碰撞层和组。这在您可能无法预定义碰撞图层和组的情况下非常有用，例如在运行时按程序生成资产的项目。
 
-The following example code creates a collision group at runtime that contains an `Enemy` layer and a `Tree` layer.
+以下示例代码在运行时创建一个碰撞组，其中包含一个 `Enemy` 层和一个 `Tree` 层。
 
 ```
 CollisionLayer layer1("Enemy"), layer2("Tree");
@@ -37,7 +37,7 @@ group.SetLayer(layer1, true);
 group.SetLayer(layer2, true);
 ```
 
-If all the layers required to construct the collision group are known, you can use overloaded operators, as in the following example:
+如果构造碰撞组所需的所有层都是已知的，则可以使用重载运算符，如以下示例所示：
 
 ```
 CollisionGroup group = CollisionLayer("Layer1") | CollisionLayer("Layer2") | CollisionLayer("Layer3");

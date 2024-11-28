@@ -1,47 +1,47 @@
 ---
 linkTitle: Sprite Sheets
-description: ' Use sprite sheets to save collections of separate images for your game UI in Open 3D Engine''s UI Editor . '
+description: ' 使用 Sprite 表在 Open 3D Engine 的 UI 编辑器中为您的游戏 UI 保存单独图像的集合。 '
 title: Sprite Sheets
 weight: 200
 ---
 
-You can configure an image as a sprite sheet.
+您可以将图像配置为 Sprite 表。
 
-A sprite sheet is a collection of separate images-such as icons, buttons, and other UI assets-that are stored in a single image. Although you can keep all of your images in separate files, using a sprite sheet has several advantages:
-+ Faster performance - For that collection of assets, O3DE can load just one image from disk instead of many separate images. Loading multiple images requires many hard drive seeks and is performance expensive.
-+ Workflow improvements - When your animation contains multiple frames, for example, it's easier to manage just one image that contains all of the animation frames rather than separate files. This makes editing and other workflows easier.
+Sprite 表是存储在单个图像中的单独图像（如图标、按钮和其他 UI 资源）的集合。尽管您可以将所有图像保存在单独的文件中，但使用 Sprite 表具有以下几个优点：
++ 更快的性能 - 对于该资产集合，O3DE 只能从磁盘加载一个映像，而不是多个单独的映像。加载多个图像需要许多硬盘驱动器查找，并且性能昂贵。
++ 工作流程改进 - 例如，当动画包含多个帧时，仅管理包含所有动画帧的一张图像比管理单独的文件更容易。这使得编辑和其他工作流程更加容易。
 
-  Other workflow improvements include easier management of your assets. For example, you could have one image called `mainmenu_ui_assets_spritesheet.png` that contains all of your buttons rather than a series of files such as `mainmenu_button1.png`, `mainmenu_button2.png`, and so on.
+  其他工作流程改进包括更轻松地管理您的资产。例如，您可以有一个名为`mainmenu_ui_assets_spritesheet.png` ，其中包含您的所有按钮，而不是一系列文件，例如 `mainmenu_button1.png`, `mainmenu_button2.png`等等。
 
-**Example**
-The following image contains 12 walking images in a single row.
+**示例**
+下图在一行中包含 12 个行走图像。
 
 ![Walking images.](/images/user-guide/interactivity/user-interface/editor/sprite-editor/ui-editor-component-sprite-sheets-walking.png)
 
-In the following procedure, you can divide the image into 12 columns when configuring the sprite sheet. You can then select the piece of the image that you want to display for your **Image** component.
+在以下过程中，您可以在配置 Sprite 表时将图像分为 12 列。然后，您可以选择要为 **Image** 组件显示的图像片段。
 
-**To configure an image as a sprite sheet**
+**将图像配置为 Sprite 表**
 
-1. In the [Sprite Editor](/docs/user-guide/interactivity/user-interface/editor/sprite-editor), click **Configure Spritesheet** in the lower-left corner.
+1. 在 [Sprite Editor](/docs/user-guide/interactivity/user-interface/editor/sprite-editor) 中，在左下角点击 **Configure Spritesheet** 。
 
-   The **Configure Spritesheet** view displays two new sections, **Configure Spritesheet** and **Select cell**.
+   **Configure Spritesheet** 视图显示两个新部分，**Configure Spritesheet** 和 **Select cell**。
 
    ![Configure Spritesheet and Select cell.](/images/user-guide/interactivity/user-interface/editor/sprite-editor/ui-editor-component-sprite-sheets-1.png)
 
-1. Enter the number of rows and columns. The walking images example has 12 columns and 1 row. These values divide the sprite into a uniform grid and assume that each cell of the sprite sheet is of the same (uniform) size.
+1. 输入行数和列数。行走图像示例有 12 列和 1 行。这些值将 sprite 划分为一个统一的网格，并假设 sprite 表的每个单元格都具有相同的 （uniform） 大小。
 
-1. In the **Select cell** section, click a cell to select it and display its properties.
+1. 在 **Select cell** 部分中，单击一个单元格以将其选中并显示其属性。
 
-1. To configure individual cells with slices scaling, drag the dotted lines to the preferred positions. The **Top**, **Bottom**, **Left**, and **Right** properties are updated automatically to reflect the current positions.
+1. 要使用切片缩放配置单个单元格，请将虚线拖动到首选位置。**Top**, **Bottom**, **Left**, 和 **Right** 属性会自动更新以反映当前位置。
 
-1. Click **Save** to save your changes and close the **Sprite Editor**. Or click **Cancel** to revert your changes and close the **Sprite Editor**.
+1. 点击 **Save** 以保存更改并关闭 **Sprite Editor**。或点击 **Cancel** 以还原更改并关闭 **Sprite Editor**.
 
-1. To select the specific cell of the sprite sheet that you want to use, in the **Image** component properties, select the appropriate **Index** number.
+1. 要选择要使用的 sprite 表的特定单元格，请在 **Image** 组件属性中，选择相应的 **Index** 编号。
 
-   The **Sprite Editor** assigns index numbers in the rows and columns of the sprite sheet, from left to right and then top to bottom, starting with 0 (zero).
+   **Sprite Editor** 在 Sprite 表的行和列中分配索引号，从左到右，然后从上到下，从 0（零）开始。
 
-   If you defined an **Alias** in the **Sprite Editor** properties, that also appears next to the index numbers.
+   如果您在 **Sprite Editor** 属性中定义了 **Alias**，该属性也会显示在索引号旁边。
 
    ![Select Index number of sprite sheet.](/images/user-guide/interactivity/user-interface/editor/sprite-editor/ui-editor-component-sprite-sheets-2.png)
 
-   The cell that you selected appears in the **UI Editor** viewport.
+   您选择的单元格将显示在 **UI Editor** 视区中。

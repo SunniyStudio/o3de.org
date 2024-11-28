@@ -1,40 +1,40 @@
 ---
-linkTitle: Asset Drag and Drop
-description: ' Drag and drop assets from the O3DE Editor''s Asset Browser into the UI Editor as a convenient way to create new entities and assets in the UI Editor. '
-title: Asset Drag and Drop
+linkTitle: 资产拖放
+description: ' 将资产从 O3DE 编辑器的 资源浏览器 拖放到 UI 编辑器中，这是在 UI 编辑器中创建新实体和资源的便捷方式。 '
+title: 资产拖放
 weight: 300
 ---
 
-You can drag and drop existing assets from the **Asset Browser** into the **UI Editor's** viewport, hierarchy pane, properties pane, or a specific property field. This can be a convenient way to create new entities and assets to work with in the **UI Editor**.
+您可以将现有资源从 **资源浏览器** 拖放到 **UI 编辑器** 的视区、层次结构窗格、属性窗格或特定属性字段中。这是创建新实体和资产以在 **UI 编辑器**中使用的便捷方法。
 
-**Dragging assets associated with components**
-+ You can drop any asset that is associated with a component, such as a Script Canvas file or a Lua script file, into the **UI Editor** viewport or hierarchy pane.
+**拖动与组件关联的资产**
++ 您可以将与组件关联的任何资源（例如 Script Canvas 文件或 Lua 脚本文件）拖放到 **UI 编辑器** 视区或层次结构窗格中。
 
-  When you drag an asset from the **Asset Browser** into the *viewport*, the **UI Editor** does the following:
-  + Creates a new entity at the cursor's location.
-  + Adds the associated component, which is indicated by the icon next to the asset in the **Asset Browser**.
-  + Assigns the asset for that component's property.
+当您将资源从 **资源浏览器** 拖动到 *视区* 中时，**UI 编辑器** 将执行以下操作：
+  + 在光标的位置创建新实体。
+  + 添加关联的组件，该组件由 **资源浏览器** 中资源旁边的图标指示。
+  + 为该组件的属性分配资产。
 
-  When you drag an asset from the **Asset Browser** into the *hierarchy pane*, the **UI Editor** does the following:
-  + Creates a new entity and places it as a child of an existing parent, unless the drop location is directly on an entity. In this case, the associated component is added to that existing entity without creating a new one. To override this behavior, press the **Shift** key down while you drop the asset. This creates a new entity and places it as a child of the existing entity.
-  + Adds the associated component, which is indicated by the icon next to the asset in the **Asset Browser**.
-  + Assigns the asset for that component's property.
+  当您将资源从 **资源浏览器** 拖动到 *层次结构窗格* 中时，**UI 编辑器**将执行以下操作：
+  + 创建新实体并将其作为现有父实体的子实体放置，除非放置位置直接位于实体上。在这种情况下，关联的组件将添加到该现有实体中，而无需创建新实体。要覆盖此行为，请在放置资源时按下 **Shift** 键。这将创建一个新实体，并将其作为现有实体的子实体放置。
+  + 添加关联的组件，该组件由 **资源浏览器** 中资源旁边的图标指示。
+  + 为该组件的属性分配资源。
 
-  When you drag an asset from the **Asset Browser** into the *properties pane*, the **UI Editor** does the following to all selected entities:
-  + Adds the associated component, which is indicated by the icon next to the asset in the **Asset Browser**.
-  + Assigns the asset for that component's property.
+当您将资源从 **资源浏览器** 拖动到 *属性窗格* 中时，**UI 编辑器**将对所有选定的实体执行以下操作：
+  + 添加关联的组件，该组件由 **资源浏览器** 中资源旁边的图标指示。
+  + 为该组件的属性分配资产。
 
-**Dragging UI slice assets**
-+ You can drop any slice asset that consists of only UI entities into the **UI Editor** viewport or hierarchy pane.
+拖动 UI 切片资产
++ 您可以将任何仅包含 UI 实体的切片资产拖放到 **UI 编辑器** 视区或层次结构窗格中。
 
-  When you drag a UI slice asset from the **Asset Browser** into the *viewport*, the **UI Editor** does the following:
-  + Instantiates a new entity from the dragged slice at the cursor's location.
+  当您将 UI 切片资源从 **资源浏览器** 拖动到*视区*中时，**UI 编辑器**将执行以下操作：
+  + 从光标位置的拖动切片实例化新实体。
 
-  When you drag a UI slice asset from the **Asset Browser** into the *hierarchy pane*, the **UI Editor** does the following:
-  + Instantiates a new entity from the dragged slice and places it as a child of an existing parent, according to the drop location in the hierarchy.
+  当您将 UI 切片资源从 **资源浏览器** 拖动到*层次结构窗格*时，**UI 编辑器**将执行以下操作：
+  + 从拖动的切片中实例化新实体，并根据层次结构中的放置位置将其放置为现有父级的子实体。
 
-**Dragging UI Canvas assets**
-+ Drag UI Canvas assets from the **Asset Browser** into the **UI Editor** to open them for editing.
+拖动 UI Canvas 资源**
++ 将 UI Canvas 资源从 **资源浏览器** 拖到 **UI 编辑器** 中，以打开它们进行编辑。
 
-**Dragging assets to property fields**
-+ Drag an asset from the **Asset Browser** onto an asset property field in the properties pane to assign that asset to a component's property.
+将资产拖动到属性字段
++ 将资产从 **资产浏览器** 拖动到属性窗格中的资产属性字段上，以将该资产分配给组件的属性。

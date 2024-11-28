@@ -1,81 +1,81 @@
 ---
-linkTitle: UI Editor Toolbar
-description: ' Use the toolbar in Open 3D Engine''s UI Editor to manipulate your game UI elements. '
-title: UI Editor Toolbar
+linkTitle: UI 编辑器工具栏
+description: ' 使用 Open 3D Engine 的 UI 编辑器中的工具栏来操作您的游戏 UI 元素。 '
+title: UI 编辑器工具栏
 weight: 100
 ---
 
-## Interaction Modes 
+## 交互模式
 
-The **UI Editor** toolbar features interaction modes. The selected interaction mode determines how you can interact with the UI elements in your canvas.
+**UI 编辑器**工具栏具有交互模式。所选交互模式决定了您如何与画布中的 UI 元素交互。
 
-**Interaction modes**
+**交互模式**
 
-**Select**
-Select elements in your canvas. In this mode, selecting is the only action that you can use on your UI elements.
+**选择**
+在画布中选择元素。在此模式下，选择是您可以在 UI 元素上使用的唯一操作。
 
-**Move**
-Select and move UI elements. Moving a UI element modifies its offset. In the **Move** mode, you can view but not interact with the anchor widget, which is disabled.
-You can move UI elements in the following ways:
-+ Select an element and drag it to a new position.
-+ Select a particular axis (X, Y, or Z) on the axis gizmo and drag the element by only one axis at a time.
-+ Nudge your selected element using keyboard arrows.
-+ Select multiple elements and align them using the [Alignment Tool](#alignment-tool).
+**移动**
+选择并移动 UI 元素。移动 UI 元素会修改其偏移量。在 **移动** 模式下，您可以查看锚点构件，但不能与之交互，该构件已禁用。
+您可以通过以下方式移动 UI 元素：
++ 选择一个元素并将其拖动到新位置。
++ 在轴 Gizmo 上选择特定轴（X、Y 或 Z），然后一次仅拖动一个轴。
++ 使用键盘箭头微移所选元素。
++ 选择多个元素并使用 [对齐工具](#alignment-tool).
 
-**Rotate**
-Select and rotate UI elements.
+**旋转**
+选择并旋转 UI 元素。
 
-**Resize**
-Select and resize UI elements. Resizing modifies the UI element's offsets.
+**调整**
+选择 UI 元素并调整其大小。调整大小会修改 UI 元素的偏移量。
 
 **Anchor**
-Select and move UI elements by their anchors. If you select one element, the anchor widget appears in blue, and you can interact directly with that element. If you select multiple elements, the anchor widget is disabled.
-In **Anchor** mode, you can interact with UI elements in the same ways as in the **Move** mode.
+按 UI 元素的锚点选择和移动 UI 元素。如果您选择一个元素，则锚点 Widget 将显示为蓝色，您可以直接与该元素交互。如果选择多个元素，则会禁用锚点 Widget。
+在 **Anchor** 模式下，您可以采用与 **Move** 模式中相同的方式与 UI 元素交互。
 
-## Alignment Tool 
+## 对齐工具
 
-The alignment tool is a set of buttons on the **UI Editor**'s toolbar.
+对齐工具是 **UI 编辑器 **工具栏上的一组按钮。
 
 ![The alignment tools are on the UI Editor's toolbar.](/images/user-guide/interactivity/user-interface/editor/ui-editor-toolbar-alignment-tool-buttons.png)
 
-The alignment tools are enabled when your interaction mode is **Move** or **Anchor** and you have selected two or more movable elements.
+当您的交互模式为 **移动** 或 **锚点** 并且您选择了两个或多个可移动元素时，将启用对齐工具。
 
 {{< note >}}
-One type of element that you can't move is one that a parent layout element controls.
+一种您无法移动的元素类型是由父布局元素控制的元素。
 {{< /note >}}
 
-With these tools, you can align elements by lining up their:
-+ Top edges
-+ Elements' horizontal centers
-+ Bottom edges
-+ Left edges
-+ Elements' vertical centers
-+ Right edges
+使用这些工具，您可以通过排列元素来对齐元素：
++ 顶部边缘
++ 元素的水平中心
++ 下边缘
++ 左边缘
++ 元素的垂直中心
++ 右边缘
 
-**To align objects**
+**对齐对象**
 
-1. Select one of the following interaction modes:
+1. 选择以下交互模式之一：
    + **Move**
    + **Anchor**
 
-1. On your canvas, select two or more movable elements.
+1. 在画布上，选择两个或多个可移动元素。
 
-   The alignment tools on the toolbar are now enabled.
+   工具栏上的对齐工具现已启用。
 
-1. Select an alignment button.
+1. 选择对齐按钮。
 
-The method that the alignment tool uses to move the elements depends on the interaction mode you're using. If the mode is in **Move**, elements are moved using their offsets. If the mode is **Anchor**, the elements are moved by their anchors.
+对齐工具用于移动元素的方法取决于您使用的交互模式。如果模式为 **Move**，则使用元素的偏移量移动元素。如果 mode 为 **Anchor****，则元素将按其锚点移动。
 
-A bounding rectangle is a useful graphic for understanding how the alignment tool determines how it aligns elements.
+边界矩形是一个有用的图形，用于了解对齐工具如何确定它如何对齐元素。
 
-Imagine a gray bounding rectangle that encompasses the elements in it.
+想象一个灰色的边界矩形，它包含其中的元素。
 
 ![The selected elements are contained by an imaginary bounding rectangle, which determines how the elements are moved.](/images/user-guide/interactivity/user-interface/editor/ui-editor-toolbar-alignment-tool-bounding1.png)
 
-If you align vertically by the elements' centers, the elements are centered at the bounding rectangle's center, which remains in its original position.
+如果按元素的中心垂直对齐，则元素将以边界矩形的中心为中心，该中心将保持其原始位置。
 
 ![Align elements vertically by their center.](/images/user-guide/interactivity/user-interface/editor/ui-editor-toolbar-alignment-tool-bounding2.png)
 
-If you align vertically by the elements' right edges, the elements' right edges are aligned to the bounding rectangle's right edge.
+如果按元素的右边缘垂直对齐，则元素的右边缘将与边界矩形的右边缘对齐。
 
 ![Align elements vertically by their right edges.](/images/user-guide/interactivity/user-interface/editor/ui-editor-toolbar-alignment-tool-bounding3.png)

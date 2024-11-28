@@ -1,65 +1,65 @@
 ---
-linkTitle: Rulers and Guides
-description: ' Use Rulers and Guides in Open 3D Engine''s UI Editor to visually guide the placement of game UI elements on your UI canvas. '
-title: Rulers and Guides
+linkTitle: 标尺和参考线
+description: ' 使用 Open 3D Engine 的 UI 编辑器中的标尺和参考线，直观地指导游戏 UI 元素在 UI 画布上的放置。'
+title: 标尺和参考线
 weight: 200
 ---
 
-Use **Rulers** and **Guides** to visually guide the placement of your UI elements on your UI canvas.
+使用 **标尺** 和 **参考线** 直观地指导 UI 元素在 UI 画布上的位置。
 
-**To show or hide Rulers**
-+ Do one of the following:
-  + Press **Ctrl+R**
-  + Choose **View** and then **Rulers**
+**显示或隐藏标尺**
++ 执行以下操作之一：
+  + 按下 **Ctrl+R**
+  + 选择 **View**，然后选择**Rulers**
 
-The ruler's units are measured in pixels in the canvas space. Magenta lines on the rulers mark the current location of your cursor.
+标尺的单位在画布空间中以像素为单位进行测量。标尺上的洋红色线条标记光标的当前位置。
 
 ![Magenta lines on the Rulers mark the current location of the cursor.](/images/user-guide/interactivity/user-interface/editor/ui-editor-rulers-guides-magenta.png)
 
-**Guides** appear as green lines and act as a visual aid for positioning UI elements.
+**参考线** 显示为绿线，并充当定位 UI 元素的视觉辅助工具。
 
-**To show or hide **Guides****
-+ Do one of the following:
-  + Press **Ctrl+;** (semicolon)
-  + Choose **View** and then **Guides**
+**显示或隐藏 **指南****
++ 执行以下操作之一：
+  + 按下 **Ctrl+;** (分号)
+  + 选择 **View**，然后选择 **Guides**
 
-You place the guides at a specific pixel offset on a canvas. The **UI Editor** displays guides as green lines, which you can position UI elements around or along.
+将参考线放置在画布上的特定像素偏移处。**UI 编辑器**将参考线显示为绿线，您可以围绕绿线或沿绿线放置 UI 元素。
 
-**To create a guide**
+**创建参考线**
 
-1. Ensure that the **Rulers** appear.
+1. 确保**标尺**已出现。
 
-1. Click on the top or side ruler and drag into the canvas.
+1. 单击顶部或侧标尺，然后拖动到画布中。
 
-   If you start in the top ruler, you create a horizontal line. Starting in the side ruler creates a vertical line.
+   如果从顶部标尺开始，则会创建一条水平线。从侧标尺开始创建一条垂直线。
 
-1. Release at the position that you want to place the guide.
+1. 在要放置导板的位置松开。
 
 ![To create guides, ensure the Ruler is displayed and then drag down or across from the side or top ruler.](/images/user-guide/interactivity/user-interface/editor/ui-editor-rulers-guides-creating-gif.gif)
 
-1. To adjust the position of the guide, click the guide and drag it to a new position.
+1. 要调整参考线的位置，请单击参考线并将其拖动到新位置。
 
     ![Adjust the guide position by placing the cursor on the guide and dragging it.](/images/user-guide/interactivity/user-interface/editor/ui-editor-rulers-guides-adjust.png)
 
     {{< note >}}
-You must be in **Move** or **Anchor** mode to adjust a guide's position.
+您必须处于 **移动** 或 **锚点** 模式才能调整参考线的位置。
 {{< /note >}}
 
-You can lock guides to protect against unintentionally moving them. Locking the guides also makes it easier to move UI elements across and around the guides.
+您可以锁定参考线以防止意外移动它们。锁定参考线还可以更轻松地在参考线之间和周围移动 UI 元素。
 
-**To lock guides**
-+ Choose **View** and then **Lock Guides**.
+**锁定参考线**
++ 选择 **View**，然后选择 **Lock Guides**.
 
-**To delete one guide**
-+ Click on the guide and drag it off of the canvas.
+**删除一个参考线**
++ 单击参考线并将其拖出画布。
 
-**To delete all guides**
-+ Choose **View** and then **Clear Guides**.
+**删除所有**
++ 选择 **View**，然后选择 **Clear Guides**.
 
-You can change the color of all guides.
+您可以更改所有参考线的颜色。
 
-**To change guide color**
+**更改参考线颜色**
 
-1. Click in an empty area on the viewport or hierarchy pane so that no UI elements are selected, and you see the **UI Canvas** component in the **Properties** pane.
+1. 单击视区或层次结构窗格上的空白区域，以便未选择任何 UI 元素，您将在 **Properties** 窗格中看到 **UI 画布**组件。
 
-1. In the **UI Canvas** component, under **Editor settings**, click the **Guide color** and select a new color.
+1. 在 **UI Canvas** 组件中，在**Editor settings**下，点击 **Guide color**并选择一种新颜色。

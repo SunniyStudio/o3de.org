@@ -1,23 +1,23 @@
 ---
-linkTitle: UI Animation Editor
-description: ' Use O3DE''s UI Animation Editor to animate elements in your game''s UI. '
-title: UI Animation Editor
+linkTitle: UI 动画编辑器
+description: ' 使用 O3DE 的 UI 动画编辑器为游戏 UI 中的元素制作动画。 '
+title: UI 动画编辑器
 toc: true
 weight: 200
 ---
 
-You can use animation sequences to animate UI elements in your game's UI. A UI canvas can contain many named animation sequences.
+您可以使用动画序列为游戏 UI 中的 UI 元素添加动画效果。UI 画布可以包含许多命名的动画序列。
 
-The UI **Animation Editor** has the following features:
-+ **Menu** - Operations for creating new animation sequences and switching between the **Track Editor** and **Curve Editor**.
-+ **Toolbar** - Tools for the editing and playback of animations. The **Curve Editor** displays an additional toolbar at the top of the pane.
-+ **Node pane** - Area for showing the active sequence and all of the elements that it is animating. A track for each animated property appears underneath the related element.
-+ **Editor pane** - Area for either the **Track Editor**, the **Curve Editor**, or both.
+UI **动画编辑器** 具有以下功能：
++ **Menu** - 用于创建新动画序列以及在 **Track Editor** 和 **Curve Editor** 之间切换的操作。
++ **Toolbar** - 用于编辑和播放动画的工具。**Curve Editor** 在窗格顶部显示一个附加工具栏。
++ **Node pane** - 用于显示活动序列及其正在制作动画的所有元素的区域。每个动画属性的轨迹都显示在相关元素的下方。
++ **Editor pane** - Area （区域） 用于 **Track Editor （轨迹编辑器）** 和/或 **Curve Editor（曲线编辑器）**。
 
-**To show the **Animation Editor** if it is not already visible**
+**显示 **Animation Editor** （如果尚不可见）**
 
-+ From the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor) menu, choose **View**, **Animation Editor**.
++ 从 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor) 菜单，选择 **View**, **Animation Editor**.
 
 ![UI Animation Window](/images/user-guide/interactivity/user-interface/animating/animation-editor/ui-animation-window.png)
 
-To create an animation sequence, you first create a new sequence, assign one or more UI elements to it, and then record changes you make to the UI element(s)-this becomes the animation sequence. You can then edit the animation sequence(s) using the **Animation Editor**. These processes are described in greater detail in the following sections.
+要创建动画序列，您首先要创建一个新序列，为其分配一个或多个 UI 元素，然后记录您对 UI 元素所做的更改 - 这将成为动画序列。然后，您可以使用 **Animation Editor** 编辑动画序列。以下各节将更详细地介绍这些过程。

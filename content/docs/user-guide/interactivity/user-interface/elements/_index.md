@@ -1,48 +1,47 @@
 ---
-linkTitle: UI Elements
-description: ' Use the UI Editor in Open 3D Engine to manage UI elements like strings, text input fields, images, buttons or containers. '
-title: UI Elements
+linkTitle: UI 元素
+description: ' 使用 Open 3D Engine 中的 UI 编辑器来管理 UI 元素，如字符串、文本输入字段、图像、按钮或容器。 '
+title: UI 元素
 weight: 500
 ---
 
-UI elements are entities that you can attach multiple components to. You can start with an empty element and add components to it, such as a button, image, slider, text, and so on. Or you can add a pre-fabricated (prefab) UI element, such as a scroll box, which is an element with components already attached.
+UI 元素是您可以将多个组件附加到的实体。您可以从空元素开始，然后向其添加组件，例如按钮、图像、滑块、文本等。或者，您可以添加预制 （预制） UI 元素，例如滚动框，该元素是已附加组件的元素。
 
 ![UI element properties](/images/user-guide/interactivity/user-interface/elements/ui-editor-elements.png)
 
-Every UI element has the following two required components that are added automatically:
-+ The **Element** component identifies the element **Id** and presents the option to start in a disabled state.
+每个 UI 元素都有以下两个自动添加的必需组件：
++ **Element** 组件标识元素 **Id** 并提供以禁用状态启动的选项。
 
-  The **Start enabled** option is selected by default. To start the element as disabled in the game, clear this option. When starting the element as disabled in the game, the player can't see or interact with that element or its children. This setting has no effect on how the element appears in the **UI Editor**'s viewport.
-+ The **Transform2D** component defines the positioning, spacing, and size of the element relative to its parent (whether its parent is the canvas or another element). For more information, see [Transform2D Component](/docs/user-guide/interactivity/user-interface/components/transform2d).
+  **Start enabled**选项。要在游戏中将元素设置为禁用状态，请清除此选项。在游戏中将元素启动为禁用状态时，玩家无法看到该元素或其子元素或与之交互。此设置对元素在 UI Editor 视区中的显示方式没有影响。
++ **Transform2D** 组件定义元素相对于其父元素的位置、间距和大小（无论其父元素是画布还是其他元素）。有关详细信息，请参阅 [Transform2D 组件](/docs/user-guide/interactivity/user-interface/components/transform2d).
 
-When you select the **Editor Only** option, that element and its children exist only in the context of the **UI Editor**. For example, when the launcher, the game, or **Preview** mode in the **UI Editor** displays a UI canvas, elements marked **Editor Only** and its children don't appear.
+当您选择 **仅编辑器** 选项时，该元素及其子元素仅存在于 **UI 编辑器** 的上下文中。例如，当 **UI 编辑器** 中的启动器、游戏或 **预览** 模式显示 UI 画布时，标记为 **仅编辑器** 的元素及其子元素不会显示。
 
-You can use **Editor Only** elements when you author a UI canvas and you want to display additional info or visuals that appear only when editing. For example, you can add a UI mockup image of the intended final canvas and mark it as **Editor Only** so that it's visible only when editing the canvas. Those authoring the canvas can use the image as a guide to placing and configuring elements.
+当您创作 UI 画布并希望显示仅在编辑时显示的其他信息或视觉对象时，您可以使用 **仅编辑器** 元素。例如，您可以添加预期最终画布的 UI 模型图像，并将其标记为 **仅限编辑器** ，以便仅在编辑画布时可见。创作画布的人员可以使用该图像作为放置和配置元素的指南。
 
 {{< note >}}
-Runtime references to the **Editor Only** element, such as from script or code, are invalid. You can reference **Editor Only** elements from other **Editor Only** elements. References to **Editor Only** elements from elements that aren't **Editor Only** cause an error and possibly undefined behavior.
+对 **仅限编辑器** 元素的运行时引用 （例如，从脚本或代码） 无效。您可以从其他 **仅编辑器** 元素引用 **仅编辑器** 元素。从非 **仅编辑器** 元素引用 **仅限编辑器** 元素会导致错误，并且可能导致未定义的行为。
 {{< /note >}}
 
-Each UI element can also have one [visual component](../components/visual) (image or text), one [interactive component](../components/interactive) (button, check box, scroll box, slider, or text input), and one [layout component](../components/layout) (layout column, layout row, or layout grid). The [remaining components](../components/other) are the mask and fader, either or both of which UI elements can attach.
+每个 UI 元素也可以有一个 [视觉组件](../components/visual)（图像或文本）、一个 [交互式组件](../components/interactive) （按钮、复选框、滚动框、滑块或文本输入）和一个 [布局组件](../components/layout) （布局列、布局行或布局网格）。[剩余组件](../components/other)是蒙版和Fader，UI 元素可以附加其中之一或两者。
 
-For each of the following procedures, use the **UI Editor** to manage UI elements.
+对于以下每个过程，请使用 **UI 编辑器** 来管理 UI 元素。
 
+**在 UI 编辑器中管理 UI 元素**
 
-**Managing UI Elements in the UI Editor**
-
-| Task | Steps |
+| 任务 | 步骤 |
 | --- | --- |
-| To find an element | In the UI Editor menu, choose Edit and then Find Elements or press Ctrl+F. For more information, see [Searching for UI Elements](search-element). |
-| To create an element | In the UI Editor toolbar, click New and then Empty element. The element appears in the Hierarchy pane and viewport.  |
-| To move, rotate, or resize an element |  Select the element and then click the **Move**, **Rotate**, or **Resize** tool in the toolbar. Select **Snap to grid** to modify elements in increments.  |
-| To copy an element | Right-click the element in the Hierarchy pane or viewport and choose Copy.  |
-| To nudge an element | To nudge, or move, an element one pixel at a time, select the element and click the Move tool. Use arrow keys to nudge elements in the selected direction. Press and hold the Shift key while pressing the arrow keys to nudge elements 10 pixels at a time. |
-| To paste a copied element | Right-click anywhere in the Hierarchy pane or viewport and choose Paste. If an element is selected, the Paste as sibling and Paste as child options appear.  |
-| To delete an element | Right-click the element in the Hierarchy pane or viewport and choose Delete.  |
-| To hide an element |  Click the eye icon (to the right of the element name) in the **Hierarchy** pane or viewport. Click again to show the element. When hiding or unhiding (showing) an element, the following behaviors apply:   |
-| To hide all elements | To hide all elements, clear any selected items and then click the eye icon in the top row of the Hierarchy pane. |
-| To prevent selection of an element in the viewport | Click the padlock icon to the right of the element name in the Hierarchy pane. This prevents selection only of that particular element; its children are still selectable. |
-| To prevent selection of all elements in the viewport | Clear any selected elements (click in a blank area of the Hierarchy pane) and then click the padlock icon in the top row of the Hierarchy pane. |
-| To rename an element | Double-click the element in the Hierarchy pane, enter the new name, and press Enter.  |
-| To nest an element | Select the element in the Hierarchy pane and drag it on top of the parent element.  |
-| To change the element draw order | Select and drag elements up or down in the Hierarchy pane. Elements are drawn in order starting from the top of the hierarchy list, so elements at the bottom of the list appear in front of elements at the top of the list.  |
+| 查找元素 |在 UI Editor （UI 编辑器） 菜单中，选择 Edit （编辑），然后选择 Find Elements （查找元素） 或按 Ctrl+F。有关详细信息，请参阅 [搜索 UI 元素](search-element). |
+| 创建元素 |在 UI Editor 工具栏中，单击 New （新建），然后单击 Empty element （空元素）。该元素将显示在 Hierarchy （层次结构） 窗格和视区中。  |
+| 移动、旋转元素或调整元素大小 | 选择元素，然后单击工具栏中的 **移动**、**旋转**或 **调整大小**工具。选择 **对齐网格** 以增量方式修改元素。  |
+| 复制元素 |右键单击 Hierarchy （层次结构） 窗格或视区中的元素，然后选择 Copy （复制）。  |
+| 微移元素 |要一次微移或移动一个像素的元素，请选择该元素，然后单击 Move 工具。使用箭头键将元素微移到所选方向。按住 Shift 键的同时按箭头键，可一次将元素微移 10 个像素。 |
+| 粘贴复制的元素 |右键单击 Hierarchy （层次结构） 窗格或视区中的任意位置，然后选择 Paste （粘贴）。如果选择了某个元素，则会显示 Paste as sibling 和 Paste as child 选项。  |
+| 删除元素 |右键单击 Hierarchy （层次结构） 窗格或视区中的元素，然后选择 Delete （删除）。 |
+| 隐藏元素 | 单击 **Hierarchy** 窗格或视区中的眼睛图标（位于元素名称右侧）。再次单击可显示元素。隐藏或取消隐藏（显示）元素时，以下行为适用：  |
+| 隐藏所有元素 |要隐藏所有元素，请清除所有选定的项目，然后单击 Hierarchy 窗格顶行中的眼睛图标。 |
+| 阻止在视区中选择元素 |单击 Hierarchy 窗格中元素名称右侧的挂锁图标。这可以防止仅选择该特定元素;其子项仍可选择。 |
+| 阻止在视区中选择所有元素 |清除所有选定的元素（在 Hierarchy 窗格的空白区域中单击），然后单击 Hierarchy 窗格顶行中的挂锁图标。 |
+| 重命名元素 |双击 Hierarchy 窗格中的元素，输入新名称，然后按 Enter。  |
+| 嵌套元素 |在 Hierarchy 窗格中选择元素，并将其拖动到父元素的顶部。  |
+| 更改元素绘制顺序 |在 Hierarchy 窗格中选择并向上或向下拖动元素。元素从层次结构列表的顶部开始按顺序绘制，因此列表底部的元素显示在列表顶部的元素前面。  |

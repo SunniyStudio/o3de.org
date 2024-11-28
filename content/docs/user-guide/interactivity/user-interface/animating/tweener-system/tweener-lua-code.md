@@ -1,13 +1,13 @@
 ---
 linkTitle: Tweeners in Lua
-description: ' Learn how to use Lua scripting to animate your entities with the Scripted Entity Tweener system in Open 3D Engine. '
+description: ' 了解如何使用 Lua 脚本通过 Open 3D Engine 中的 Scripted Entity Tweener 系统为实体制作动画。 '
 title: Tweeners in Lua
 weight: 300
 ---
 
-You must have a minimum set of code to play an animation in the Scripted Entity Tweener system. You use this script as part of a **Lua script** component. For more information about Lua script components, see [Adding Lua Scripts to Component Entities](/docs/user-guide/scripting/lua/add-lua-script).
+您必须具有最少的代码集才能在 Scripted Entity Tweener 系统中播放动画。将此脚本用作 **Lua script** 组件的一部分。有关 Lua 脚本组件的更多信息，请参阅 [将 Lua 脚本添加到组件实体](/docs/user-guide/scripting/lua/add-lua-script).
 
-In the following example, the entity's opacity is linearly tweened to `0.5` over `5` seconds.
+在以下示例中，实体的不透明度在 “`5`” 秒内线性补间为 “`0.5`”。
 
 ```
 local AnimateUiEntity =
@@ -37,7 +37,7 @@ end
 return AnimateUiEntity
 ```
 
-The following example shows a full call with all the default parameters. In this example, the entity moves to the `["x"]` and `["y"]` positions indicated in the code over the `duration` of `5` seconds.
+以下示例显示了具有所有默认参数的完整调用。在此示例中，实体`duration`为 `5` 秒内移动到代码中指示的 `["x"]` 和 `["y"]`位置。
 
 ```
 self.ScriptedEntityTweener:StartAnimation
@@ -59,4 +59,4 @@ self.ScriptedEntityTweener:StartAnimation
 	}
 ```
 
-For the parameter descriptions, see [Tweener Supported Components](./tweener-components).
+有关参数说明，请参阅 [Tweener 支持的组件](./tweener-components).

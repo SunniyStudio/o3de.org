@@ -1,26 +1,26 @@
 ---
-linkTitle: Creating a UI Slice
-description: Creating a UI Slice
-title: Creating a UI Slice
+linkTitle: 创建 UI 切片
+description: 创建 UI 切片
+title: 创建 UI 切片
 weight: 100
 ---
 
-A slice can contain any number of UI elements. However, all UI elements in a slice must be contained within one parent element.
+切片可以包含任意数量的 UI 元素。但是，切片中的所有 UI 元素都必须包含在一个父元素中。
 
-You don't need to select all of the elements to go into the new slice. If you just select one element, all of its child elements are included in the slice.
+您无需选择所有元素即可进入新切片。如果只选择一个元素，则其所有子元素都包含在切片中。
 
-**To create a UI slice**
+**创建 UI 切片**
 
-1. In the **UI Editor**, in the **Hierarchy** pane or in the viewport, select the top-level parent entity to include in the slice.
+1. 在 **UI 编辑器**、**Hiearchy**窗格或视区中，选择要包含在切片中的顶级父实体。
 
-1. Right-click the parent entity and choose **Make New Slice from Selection**.
+1. 右键单击父实体，然后选择 **Make New Slice from Selection**.
 
-1. Save the slice with a descriptive name.
+1. 使用描述性名称保存切片。
 
     {{< tip >}}
-Because you can create many slices for different purposes, we recommend that you name your slices meaningfully and organize them purposefully into directories and subdirectories.
+由于您可以创建许多用于不同目的的切片，因此我们建议您有意义地命名切片，并有目的地将它们组织到目录和子目录中。
     {{< /tip >}}
 
-If you want the slice to appear in the slice library **New**, **Element** menu, you must save it within the `UI/Slices/Library` directory. This directory is either in the project root or within any enabled gems asset root. Adding a slice to the slice library menu makes it easy and convenient to use as a common building block for your UI canvases.
+如果希望切片显示在切片库的 **New**、**Element** 菜单中，则必须将其保存在 `UI/Slices/Library` 目录中。此目录位于项目根目录中，或者位于任何已启用的 Gem 资产根目录中。将切片添加到切片库菜单可以轻松方便地用作 UI 画布的通用构建块。
 
-Slices that you create in the **UI Editor** use the same `.slice` extension as the slices that you create in the main O3DE Editor. However, you can't instantiate slices within the **UI Editor** that you created using the main O3DE Editor. If you attempt to do so, O3DE displays a warning. For workflow ease, save your UI slices in a different directory than your main O3DE Editor slices.
+您在 **UI 编辑器** 中创建的切片使用与您在主 O3DE 编辑器中创建的切片相同的 `.slice`扩展名。但是，您不能在使用主 O3DE 编辑器创建的 **UI 编辑器** 中实例化切片。如果您尝试这样做，O3DE 将显示警告。为了简化工作流程，请将 UI 切片保存在与主 O3DE Editor 切片不同的目录中。

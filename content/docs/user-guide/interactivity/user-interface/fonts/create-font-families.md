@@ -1,13 +1,13 @@
 ---
-linkTitle: Creating Font Families
-description: Combine multiple font assets to create a font family group to use in your game UI in Open 3D Engine.
-title: Creating Font Families
+linkTitle: 创建字体系列
+description: 组合多个字体资源以创建一个字体系列组，以便在 Open 3D Engine 中的游戏 UI 中使用。
+title: 创建字体系列
 weight: 200
 ---
 
-You can combine multiple font assets into a single font family group.
+您可以将多个字体资源合并到一个字体系列组中。
 
-The following is an example of a `.fontfamily` file.
+以下是 `.fontfamily` 文件的示例。
 
 ```
 <fontfamily name="MyFontFamily">
@@ -20,27 +20,27 @@ The following is an example of a `.fontfamily` file.
 </fontfamily>
 ```
 
-The UI system uses the font family definitions to determine which font asset to apply when styling text. You can combine the following types of assets:
-+ **Unstyled** - Font representing text with no styling applied. In the preceding example, this is `myfontfamily-regular.xml`.
-+ **Bold** - Font representing text with bold styling.
-+ **Italic** - Font representing text with italic styling.
-+ **Bold-Italic** - Font representing text with both bold and italic styling.
+UI 系统使用字体系列定义来确定在设置文本样式时要应用的字体资源。您可以组合以下类型的资产：
++ **Unstyled** - 表示未应用样式的文本的字体。在前面的示例中，这是 `myfontfamily-regular.xml`.
++ **Bold** - 表示具有粗体样式的文本的字体。
++ **Italic** - 表示具有斜体样式的文本的字体。
++ **Bold-Italic** - 表示具有粗体和斜体样式的文本的字体。
 
-## Font Family File XML 
+## 字体系列文件 XML
 
-To create a new font family file, you can create a new, empty plain text file and enter the contents, or you can modify an existing font family file.
+要创建新的字体系列文件，可以创建一个新的空纯文本文件并输入内容，也可以修改现有的字体系列文件。
 
-**To add a new font family file to your UI**
+**将新的字体系列文件添加到 UI 中**
 
-1. To create a new font family file, do one of the following:
-   + Open Notepad (or similar program) and save an empty text file with a `.fontfamily` file extension.
-   + Copy an existing `.fontfamily` file into your game project's `Fonts` directory.
+1. 要创建新的字体系列文件，请执行下列操作之一：
+   + 打开记事本（或类似程序）并保存一个文件扩展名为 `.fontfamily`的空文本文件。
+   + 复制现有的`.fontfamily`文件到游戏项目的`Fonts`目录。
 
-1. Name your `.fontfamily` file appropriately \(leave the `.fontfamily` extension\).
+1. 适当地命名你的 `.fontfamily` 文件 \(保留`.fontfamily` 扩展名\).
 
-1. Open your `.fontfamily` file and edit the contents to configure the font family.
+1. 打开 `.fontfamily` 文件并编辑内容以配置字体系列。
 
-   For example:
+   例如：
 
    ```
    <fontfamily name="MyFontFamily">
@@ -53,25 +53,25 @@ To create a new font family file, you can create a new, empty plain text file an
    </fontfamily>
    ```
 
-After the Asset Processor has processed your font assets, you can select your font family by selecting the `*.fontfamily` file in the **UI Editor** as the font for any text component. To apply custom styling to text using the font family, see [Text Styling Markup](../components/visual/components-text#text-markup).
+在 Asset Processor 处理完您的字体资源后，您可以通过在 UI 编辑器中选择`*.fontfamily`文件作为任何文本组件的字体来选择字体系列。要使用字体系列将自定义样式应用于文本，请参阅 [文本样式标记](../components/visual/components-text#text-markup).
 
-The `.fontfamily` file uses XML. The UI system supports the following tags and attributes for the `.fontfamily` file:
+`*.fontfamily`文件使用 XML。UI 系统支持`*.fontfamily`文件的以下标记和属性：
 
 Tag: `fontfamily`
 **Attribute**: `name`
-The unique name of the font family. Each font family name in a project must be unique, and only one `fontfamily` tag may be specified per `.fontfamily` file. You can, however, reuse the same font XML files (defined by the file tag) in multiple font families.
+字体系列的唯一名称。项目中的每个字体系列名称都必须是唯一的，并且每个 `.fontfamily` 文件只能指定一个 `fontfamily` 标签。但是，您可以在多个字体系列中重复使用相同的字体 XML 文件（由 file 标签定义）。
 
 Tag: `font`
-Container tag for the `file` tag.
+`file`标签的容器标签。
 **Attribute**: `lang`
-The language that the font files should be associated with. The font files are loaded only if the listed language is being used. This enables a single font family to use different fonts and styling depending on the language being used.
+字体文件应与之关联的语言。仅当使用列出的语言时，才会加载字体文件。这使单个字体系列能够根据所使用的语言使用不同的字体和样式。
 
 Tag: `file`
 **Attribute**: `path`
-The path to the font XML, a TTF or OTF file. The path is relative to the font family file. The same font asset can be referenced multiple times for a given font family and across multiple font families.
+字体 XML 的路径，即 TTF 或 OTF 文件。该路径是相对于字体系列文件的。对于给定的字体系列和多个字体系列，可以多次引用相同的字体资源。
 **Attribute**: `tags`
-This tag is optional. If omitted, this font file is used when no styling is applied.
+此标签是可选的。如果省略，则在未应用样式时使用此字体文件。
 Values:
-+ **b** - indicates `<b>` bold tag
-+ **i** - indicates `<i>` italic tag
-+ **b,i** - indicates when both `<b>` bold and `<i>` italic tags are applied
++ **b** - 指明 `<b>` bold tag
++ **i** - 指明 `<i>` italic tag
++ **b,i** - 指示何时应用`<b>` 粗体和`<i>`斜体标记

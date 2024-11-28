@@ -1,33 +1,33 @@
 ---
-linkTitle: Modifying UI Slices
-description: ' Modify a UI slice and push the changes in Open 3D Engine''s UI Editor. '
-title: Modifying a UI Slice and Pushing Changes
+linkTitle: 修改 UI 切片
+description: ' 修改 UI 切片并在 Open 3D Engine 的 UI 编辑器中推送更改。 '
+title: 修改 UI 切片并推送更改
 weight: 500
 ---
 
-In the **UI Editor**, you modify UI slices and push changes similarly to the way that you do in the main O3DE Editor.
+在 **UI 编辑器 ** 中，您可以修改 UI 切片并推送更改，其方式与在主 O3DE 编辑器中的操作类似。
 
-The following conventions apply when working with slices in the **UI Editor**:
-+ If you select an entity that is part of a slice instance, the **Properties** pane highlights in orange any properties that are different between the selected entity and the slice to which it belongs.
-+ A UI slice can't contain references to any entities not within the slice. A UI slice can only contain reference to entities within the slice.
+在 **UI 编辑器**中使用切片时，以下约定适用：
++ 如果您选择的实体是切片实例的一部分，则 **属性** 窗格将以橙色突出显示所选实体与其所属切片之间的任何不同属性。
++ UI 切片不能包含对不在切片中的任何实体的引用。UI 切片只能包含对切片中实体的引用。
 
 
 
-In the **Hierarchy** pane, elements that are part of a slice appear in blue. Elements that appear in bold blue indicate that the element is the root of the slice. Within the slice's root, elements that appear in italic indicate a child slice.
+在 **Hierarchy** 窗格中，属于切片的元素显示为蓝色。以蓝色粗体显示的元素表示该元素是切片的根。在切片的根中，以斜体显示的元素表示子切片。
 
-**Example**
-+ The element **Background** is not in a slice.
-+ **FontRenderingButton** is a root element and its child element, **Text**, is an element within `submenubutton.slice`.
+**例**
++ 元素 **Background** 不在切片中.
++ **FontRenderingButton**是根元素及其子元素， **Text**是`submenubutton.slice`中的一个元素。
 
 ![The UI Editor's Hierarchy pane displays in blue any elements that are part of a slice.](/images/user-guide/interactivity/user-interface/slices/ui-editor-modifying-slices-submenubutton.png)
 
-You can locally change an instantiated slice's name, which obscures the name of the slice from which it instantiated.
+您可以在本地更改实例化切片的名称，这会隐藏从中实例化切片的名称。
 
-**To determine the slice that the element instantiated from**
-+ Pause on the element. The slice name and its path appears in a tooltip.
+**确定元素实例化的切片**
++ 在元素上暂停。切片名称及其路径将显示在工具提示中。
 
-**To push local changes to the slice**
+**将本地更改推送到切片**
 
-1. Right-click in the **Properties** pane or on selected UI elements in the **Hierarchy** pane.
+1. 右击**Properties**面板，或在**Hierarchy**面板中选择UI元素。
 
-1. In the context menu, choose **Push to Slice**.
+1. 在上下文菜单中，选择**Push to Slice**。

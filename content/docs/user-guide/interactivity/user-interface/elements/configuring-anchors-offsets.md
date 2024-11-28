@@ -1,10 +1,10 @@
 ---
-linkTitle: Configuring Anchors and Offsets
-description: ' Use an element''s Transform2D component to configure UI anchors and offsets in Open 3D Engine.'
-title: Configuring UI Anchors and Offsets
+linkTitle: 配置 UI 锚点和偏移量
+description: ' 使用元素的 Transform2D 组件在 Open 3D Engine 中配置 UI 锚点和偏移。'
+title: 配置 UI 锚点和偏移量
 weight: 100
 ---
 
-Each UI element's position is determined by the Transform2D component. The Transform2D component sets a UI element's position and size relative to its parent's edges. The parent may be another element (if the elements are nested), or the canvas.
+每个 UI 元素的位置都由 Transform2D 组件确定。Transform2D 组件设置 UI 元素相对于其父元素边缘的位置和大小。父级可以是另一个元素（如果元素嵌套）或画布。
 
-For more information about the Transform2D component, see [Managing UI Anchors and Offsets](../components/transform2d).
+有关 Transform2D 组件的更多信息，请参阅 [管理 UI 锚点和偏移](../components/transform2d).

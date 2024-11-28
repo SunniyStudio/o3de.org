@@ -1,90 +1,90 @@
 ---
 linkTitle: Track Editor
-description: ' Use the Animation Editor''s Track Editor to preview an animation, change the timeline, and work with keys in Open 3D Engine. '
-title: Using the Track Editor
+description: ' 使用 Animation Editor 的 Track Editor 预览动画、更改时间轴以及在 Open 3D Engine 中使用关键点。 '
+title: 使用 Track Editor
 weight: 200
 ---
 
-The **Track Editor** displays all the tracks in your current animation sequence. The **Track Editor** enables you to do the following:
-+ Move, delete, copy, and paste keys
-+ Change the timeline of the animation
-+ Control the animation preview range
+**Track Editor** 显示当前动画序列中的所有轨迹。使用 **Track Editor** 可以执行以下操作：
++ 移动、删除、复制和粘贴键
++ 更改动画的时间轴
++ 控制动画预览范围
 
-**To display the Track Editor**
-+ In the [**Animation Editor**](../), choose **View**, **Track Editor** or **View**, **Both**.
+**显示 Track Editor**
++ 在 [**动画编辑器**](../)，选择 **视图**、**轨道编辑器** 或 **视图**、**两者**。
 
-**To zoom in or out**
-+ Scroll the mouse wheel
+**放大或缩小**
++ 滚动鼠标滚轮
 
-**To pan the view**
-+ With the mouse in the **Track Editor**, drag using the middle mouse button
+**平移视图**
++ 在 **Track Editor** 中使用鼠标，使用鼠标中键拖动
 
-## Working with Keys in the Track Editor 
+## 在 Track Editor 中使用 Key
 
-When you create an animation, key values are automatically recorded. Using the **Track Editor**, you can move, delete, copy, and paste keys. Keys are represented by a green circle on the timeline of each track.
+创建动画时，将自动记录关键值。使用 **Track Editor**，您可以移动、删除、复制和粘贴键。键由每个轨道的时间轴上的绿色圆圈表示。
 
-**To move a key**
-+ Click a key and drag it to a new time on the timeline.
+**移动钥匙**
++ 单击一个键并将其拖动到时间轴上的新时间。
 
-**To constrain movement to time only**
-+ Hold **Shift** as you drag the key to a new time on the timeline.
+**将运动限制在时间上**
++ 按住 **Shift** 键，同时将键拖动到时间轴上的新时间。
 
-**To scale the selected keyframes while moving a key**
-+ Hold **Alt** as you drag the key to a new time on the timeline.
+**在移动关键帧时缩放所选关键帧**
++ 按住 **Alt** 键，同时将键拖动到时间轴上的新时间。
 
-**To delete a key**
-+ Right-click a key and click **Delete**.
+**删除密钥**
++ 右键单击一个键，然后单击 **删除**。
 
-**To copy a key**
-+ Right-click a key and click **Copy**.
+复制密钥
++ 右键单击某个键，然后单击 **复制**。
 
-**To paste a key**
-+ Right-click in the timeline and click **Paste**. Move the key to the desired point on the timeline, then click to place.
+**粘贴密钥**
++ 右键单击时间轴，然后单击 **粘贴**。将键移动到时间轴上的所需点，然后单击以放置。
 
-The **Track Editor**'s toolbar features a variety of tools to improve your workflow efficiency when editing tracks. Pause over each icon to reveal the tooltips.
+**Track Editor** 的工具栏包含各种工具，可以提高编辑轨道时的工作流程效率。将鼠标悬停在每个图标上以显示工具提示。
 
-Some of the toolbar functions require you to select multiple keys.
+某些工具栏功能要求您选择多个键。
 
-**To select multiple keys**
-+ In the **Track Editor**, drag to select multiple keys. The selected keys appear as white circles.
+**选择多个键**
++ 在 **Track Editor** 中，拖动以选择多个键。所选键将显示为白色圆圈。
 
-You can also use the Track Editor toolbar to select, move, and snap keys. When moving keys, you can choose to snap them to other keys, to frames, or to second ticks.
+您还可以使用 Track Editor 工具栏来选择、移动和捕捉关键点。移动关键点时，可以选择将它们对齐到其他关键点、帧或第二个时钟周期。
 
 
-## Working with Keys in the Track Editor Toolbar
+## 在 Track Editor 工具栏中使用关键点
 
-| Toolbar icon | Function |
+| 工具栏图标| 功能 |
 | --- | --- |
-| Go to previous key | Selects the key directly before the currently selected key. |
-| Go to next key | Selects the key directly after the currently selected key. |
-| Slide keys | Moves the currently selected key and slides all the keys after it to the new point on the timeline while maintaining the original spacing. |
-| Move keys | Moves the currently selected key(s) to the new point on the timeline without affecting other keys. |
-| Scale keys |  Functions only with multiple keys selected to increase or decrease the space between the selected keys proportionally.  |
-| Magnet Snapping | Snaps to keys in other tracks as you get close to them; allows you to place the key anywhere but indicates a red circle on the key you want to snap to. |
-| Frame Snapping | Snaps to frames. |
-| Tick Snapping | Snaps to second ticks. |
+| Go to previous key | 选择当前所选键之前的键。 |
+| Go to next key | 选择当前所选键之后的键。 |
+| Slide keys | 移动当前选定的抠像，并将它之后的所有抠像滑动到时间轴上的新点，同时保持原始间距。 |
+| Move keys | 将当前选定的键移动到时间轴上的新点，而不影响其他键。 |
+| Scale keys |  仅在选择多个键的情况下运行，以按比例增加或减少所选键之间的间距。  |
+| Magnet Snapping | 当您靠近其他轨迹中的键时，将其对齐;允许您将键放在任何位置，但表示要对齐到的键上的红色圆圈。 |
+| Frame Snapping | 对齐帧。 |
+| Tick Snapping | 对齐到第二个时钟周期。|
 
-## Moving the Play or Record Point in the Track Editor 
+## 在 Track Editor 中移动播放点或录制点
 
-The play or record point of the animation sequence is shown as a vertical magenta slider on the timeline. Move the play or record point, and the properties of the UI elements in the [**Animation Editor**](../) change to the values specified by the animation tracks.
+动画序列的播放或录制点在时间轴上显示为垂直洋红色滑块。在 [**Animation Editor**](../) 更改为动画轨道指定的值。
 
-**To move the play or record point in the Track Editor**
-+ Click or drag the vertical magenta slider in the timeline.
+**在 Track Editor 中移动播放点或录制点**
++ 单击或拖动时间轴中的垂直洋红色滑块。
 
-## Previewing in the Track Editor 
+## 在 Track Editor 中预览
 
-The **Track Editor** features a timeline along its top edge. To preview your entire animation, simply click the **Play** button to play your animation at its normal speed. You can also change the speed of preview by clicking the arrow beside the play button and selecting 2, 1, ½, ¼, or ⅛. You can also limit your animation preview, as it plays, to a specific time frame.
+**Track Editor** 的上边缘有一个时间轴。要预览整个动画，只需单击 **Play** 按钮即可以正常速度播放动画。您还可以通过单击播放按钮旁边的箭头并选择 2、1、1/2、1/4 或 1/8 来更改预览速度。您还可以将动画预览（在播放时）限制为特定时间范围。
 
-**To limit play preview in the Track Editor**
+**在 Track Editor 中限制播放预览**
 
-1. In the timeline, at the start of your preferred preview time, right-click to mark the time with a red triangle.
+1. 在时间轴中，在首选预览时间开始时，右键单击以使用红色三角形标记时间。
 
-1. In the timeline, at the end of your preferred preview time, right-click again to mark the end time with a red triangle.
+1. 在时间轴中，在首选预览时间结束时，再次右键单击以使用红色三角形标记结束时间。
 
-1. Click the **Play** button to preview your animation in the time frame specified.
+1. 单击 **Play**（播放）按钮，在指定的时间范围内预览动画。
 
 {{< note >}}
-When you preview an animation or move the playback position on the timeline, it moves the UI elements in the **UI Editor**. This means that, if you then save the canvas, these UI elements will be saved in this position.
+当您预览动画或移动时间轴上的播放位置时，它会移动 UI 编辑器中的 UI 元素。这意味着，如果您随后保存画布，这些 UI 元素将保存在此位置。
 
-Reposition the timeline or preview a different sequence to position the UI elements at the positions in which you want them to load before you save the canvas.
+重新定位时间轴或预览不同的序列，以将 UI 元素放置在您希望它们在保存画布之前加载的位置。
 {{< /note >}}

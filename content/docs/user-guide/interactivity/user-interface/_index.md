@@ -1,7 +1,7 @@
 ---
-linktitle: User Interface
-title: Creating and Customizing Project User Interfaces
-description: Use the UI Editor to create and customize various user interface elements in Open 3D Engine.
+linktitle: 用户解密
+title: 创建和自定义 项目用户界面
+description: 使用 UI 编辑器在 Open 3D Engine 中创建和自定义各种用户界面元素。
 ---
 
-You can use the **UI Editor** to create and customize various parts of the game user interface, such as images, text, buttons, menus, scroll boxes, and heads-up displays (HUDs).
+您可以使用 **UI 编辑器** 创建和自定义游戏用户界面的各个部分，例如图像、文本、按钮、菜单、滚动框和平视显示器 （HUD）。

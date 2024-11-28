@@ -1,15 +1,15 @@
 ---
 linkTitle: Tweener Timeline
-description: ' Use Scripted Entity Tweener''s timeline abilities to chain animations together and exert fine control over them in Open 3D Engine. '
+description: ' 使用 Scripted Entity Tweener 的时间轴功能将动画链接在一起，并在 Open 3D Engine 中对它们进行精细控制。 '
 title: Tweener Timeline
 weight: 500
 ---
 
-In the Scripted Entity Tweener system, you can create a timeline for granular control over your animations. You can chain and group animations. You can pause, resume, seek, play backward, label, and even dynamically control the playback speed of the animations.
+在 Scripted Entity Tweener 系统中，您可以创建时间轴以对动画进行精细控制。您可以链接和分组动画。您可以暂停、恢复、搜索、向后播放、标记，甚至动态控制动画的播放速度。
 
-To create a timeline, you can customize the following Lua script.
+要创建时间轴，您可以自定义以下 Lua 脚本。
 
-In this example, the script first animates the entity specified by `ToAnimate`, increasing its size from its original value to a width `["w"]` and height `["h"]` of `600`. The script then animates the entity by shrinking it to a width `["w"]` and height `["h"]` of `200`.
+在此示例中，脚本首先对 `ToAnimate` 指定的实体进行动画处理，将其大小从其原始值增加到宽度 `["w"]` 和高度`["h"]`为`600`。然后，该脚本通过将实体缩小到宽度`["w"]`和高度 `["h"]`的 `200`来为实体添加动画。
 
 ```
 local AnimateUiEntity =
@@ -54,7 +54,7 @@ end
 return AnimateUiEntity
 ```
 
-The following example shows all of the supported timeline operations.
+以下示例显示了所有受支持的时间线操作。
 
 ```
 -- Chained animations

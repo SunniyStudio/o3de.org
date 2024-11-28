@@ -1,44 +1,44 @@
 ---
 linkTitle: Node Pane
-description: ' Use O3DE''s UI Animation editor''s Node Pane to add or remove UI elements in an animation sequence. '
-title: Using the Node Pane
+description: ' 使用 O3DE 的 UI 动画编辑器的 Node Pane 在动画序列中添加或删除 UI 元素。 '
+title: Using the Node Pane使用 Node 窗格
 weight: 100
 ---
 
-The **Node Pane** in the [Animation Editor](../) displays all the nodes in the selected animation sequence. Each item listed in the **Node Pane** is considered a node, though they represent different parts of the sequence. You can use the **Node Pane** to add or delete UI element nodes. Track nodes appear beneath its UI element when you record a track.
+The **Node Pane** in the [Animation Editor](../) 显示所选动画序列中的所有节点。**Node Pane** 中列出的每个项目都被视为一个节点，尽管它们代表序列的不同部分。您可以使用 **Node Pane** 添加或删除 UI 元素节点。录制轨迹时，轨迹节点显示在其 UI 元素下方。
 
-The animation sequence node, at the top level, contains a list of its UI elements nodes. Each UI element node contains a list of its track nodes.
+动画序列节点位于顶层，包含其 UI 元素节点的列表。每个 UI 元素节点都包含其 track 节点的列表。
 
-1. **Animation Sequence** node
+1. **Animation Sequence** 节点
 
-1. **UI Element** nodes
+1. **UI Element** 节点
 
-1. **Track** nodes
+1. **Track** 节点
 
 ![Node Pane with nodes](/images/user-guide/interactivity/user-interface/animating/animation-editor/editing/ui-animation-node-pane.png)
 
-**To add a new UI element node**
+**添加新的 UI 元素节点**
 
-1. In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), select one or more elements.
+1. 在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，选择一个或多个元素。
 
-1. In the **Animation Editor**, right-click anywhere in the node pane and select **Add Selected UI Element(s)**.
+1. 在 **动画编辑器**中，右键单击节点窗格中的任意位置，然后选择 **添加选定的 UI 元素**。
 
-**To remove a UI element node**
-+ In the **Animation Editor**, in the node pane, right-click an element node and click **Delete**.
+删除 UI 元素节点
++ 在 **Animation Editor** 的节点窗格中，右键单击元素节点，然后单击 **Delete**。
 
-**To edit a track**
+**编辑轨道**
 
-1. In the **Animation Editor**, in the node pane, select a track node.
+1. 在 **Animation Editor** 的节点窗格中，选择一个 track 节点。
 
-1. Right-click the track node and choose any of the following:
-   + **Copy Keys**
-   + **Copy Selected Keys**
-   + **Paste Keys**
-   + **Disable the track**
+1. 右键单击轨迹节点，然后选择以下任一选项：
+   + **复制密钥**
+   + **复制所选键**
+   + **粘贴键**
+   + **禁用轨道**
 
-You can also use the **Edit Sequence** tool to edit the properties of the sequence directly. You can set various properties, such as the start and end time, whether the sequence loops, and so on.
+您还可以使用 **Edit Sequence ** 工具直接编辑序列的属性。您可以设置各种属性，例如开始和结束时间、序列是否循环等。
 
-**To open the Edit Sequence tool**
-+ In the **Animation Editor**, click the **Edit Sequence** icon.
+**打开 Edit Sequence 工具**
++ 在 **动画编辑器** 中，单击 **编辑序列** 图标。
 
 ![Edit Sequence Icon](/images/user-guide/interactivity/user-interface/animating/animation-editor/editing/ui-animation-edit-sequence.png)

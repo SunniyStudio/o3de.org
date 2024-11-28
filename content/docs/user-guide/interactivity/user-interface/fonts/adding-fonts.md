@@ -1,28 +1,28 @@
 ---
-linkTitle: Adding New Fonts
-description: Add new font assets to your Open 3D Engine game UI.
-title: Adding New Fonts
+linkTitle: 添加新字体
+description: 将新的字体资源添加到您的 Open 3D Engine 游戏 UI。
+title: 添加新字体
 weight: 100
 ---
 
-For each new font to add, you need the following files:
-+ A font asset - True Type Font \(`.ttf`\) or Open Type Font \(`.otf`\) file
-+ A font `.font` file describing the asset {#create-font-xml-file}
+对于要添加的每种新字体，您需要以下文件：
++ 字体资产 - True Type Font \(`.ttf`\) 或 Open Type Font \(`.otf`\) 文件
++ 字体 `.font` 文件 描述资产 {#create-font-xml-file}
 
-**To add a new font to your UI**
+**向 UI 添加新字体**
 
-1. Save the font asset \(`.ttf` or `.otf` file\) to your game project directory, such as `dev\SamplesProject\Font`.
+1. 保存字体资产 \(`.ttf` 或 `.otf` file\) 添加到您的游戏项目目录中，例如 `dev\SamplesProject\Font`.
 
-1. Copy an existing font `.font` file into your game project `Font` directory. The following directories (included in the O3DE project) contain font `.font` files for reference:
+1. 复制现有的资产 `.font` 文件到游戏项目 `Font` 目录。以下目录（包含在 O3DE 项目中）包含字体 `.font` 文件以供参考：
    + `dev\Engine\Fonts\`
    + `dev\SamplesProject\Fonts\`
 
-1. Change the `.font` file name \(leave the `.font` extension unchanged\). Use any file name that is descriptive and appropriate for your purposes.
+1. 更改 `.font` 文件名 \(保留 `.font` 扩展名\)。使用任何描述性且适合您用途的文件名。
 
-1. Open the `.font` file and edit the following line to point to your font asset file name.
+1. 打开 `.font` 文件并编辑以下行以指向您的字体资源文件名。
 
    ```
    <font path="yourFont.ttf" w="512" h="256"/>
    ```
 
-After the Asset Processor has processed your font assets, you can select your font by [loading the font `.font` file](../components/visual/components-text) in the **UI Editor** for any text component.
+在 Asset Processor 处理完您的字体资源后，您可以通过 [加载字体 '.font' 文件](../components/visual/components-text)的 UI 编辑器。

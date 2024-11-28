@@ -1,11 +1,11 @@
 ---
-linkTitle: Playing Animation Sequences
-description: ' Play animation sequences from Animation Editor. '
-title: Playing Animation Sequences
+linkTitle: 播放动画序列
+description: ' 从 Animation Editor 播放动画序列。 '
+title: 播放动画序列
 weight: 300
 ---
 
-You can play back the animation in the **Animation Editor** to preview what it will look like in your game. Playing the animation sequence animates the UI elements in the **UI Editor**.
+您可以在 **Animation Editor** 中播放动画，以预览它在游戏中的外观。播放动画序列将在 **UI 编辑器** 中为 UI 元素添加动画。
 
-**To control playback of animation in the UI Editor**
-+ In the **Play** toolbar of the **Animation Editor**, use the **Play**, **Pause**, **Stop**, **Go to start of sequence**, and **Go to end of sequence** buttons.
+在 UI 编辑器中控制动画的播放
++ 在 **动画编辑器** 的 **播放** 工具栏中，使用 **播放**、**暂停**、**停止**、**转到序列开头**和 **转到序列结束**按钮。

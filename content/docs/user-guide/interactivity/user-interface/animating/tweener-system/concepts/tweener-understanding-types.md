@@ -1,83 +1,83 @@
 ---
-linkTitle: Easing Types
-description: ' Learn how different Scripted Entity Tweener easing types affect the appearance of animations in Open 3D Engine. '
-title: Supported Tweener Easing Types
+linkTitle: 缓动类型
+description: ' 了解不同的脚本化实体补间缓动类型如何影响 Open 3D Engine 中动画的外观。 '
+title: 支持的 Tweener 缓动类型
 weight: 200
 ---
 
-The easiest way to visualize the concept of Scripted Entity Tweener easing types is to see it on a graph that depicts a change in position over time. The resulting line can be thought of as speed, though it isn't necessarily so.
+可视化脚本化实体 Tweener 缓动类型概念的最简单方法是在描述位置随时间变化的图形上查看它。生成的线可以被认为是速度，但不一定如此。
 
-The movement of objects in the natural world is rarely uniform. A rocket ship blasting off from the ground accelerates slowly as it first gains momentum, and then rapidly accelerates as it shoots toward the sky. If you viewed this motion on a position and time graph, it might look like a quartic or quintic easing in function. A bouncy ball dropped from a height accelerates toward the ground and hits it at a certain velocity. The ball bounces back up at that velocity and decelerates as it nears the top of its arc, and gravity pulls it back down for another bounce. Viewed on a position and time graph, looks like the bounce easing out function.
+自然界中物体的运动很少是均匀的。从地面发射的火箭飞船在首先获得动量时缓慢加速，然后在冲向天空时迅速加速。如果您在位置和时间图上查看此运动，则它可能在函数上看起来像四次或五次缓动。从高处掉落的弹力球加速向地面飞去，并以一定的速度击中它。球以该速度反弹回来，并在接近弧顶时减速，重力将其拉回以进行另一次反弹。在位置和时间图上查看，看起来像 bounce easing out 函数。
 
-O3DE supports the following [tweener ease methods](../tweener-parameters) as [easing in, easing out, and easing in-out](../tweener-parameters) functions (ease type).
+O3DE 支持以下 [补间缓动方法](../tweener-parameters) 作为 [缓入、缓出和缓出入](../tweener-parameters)  函数 （缓动类型） 。
 
 {{< note >}}
-The following images are referenced from [http://easings.net](http://easings.net).
+以下图片引用自 [http://easings.net](http://easings.net).
 {{< /note >}}
 
 **Linear**
-Does not ease in or out. No acceleration or deceleration. Constant movement, such as a conveyor belt in motion.
+不会缓入或缓出。无加速或减速。持续运动，例如运动中的传送带。
 
 ![Linear easing function](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-linear.png)
 
 **Quadratic**
-Easing in function starts at a zero velocity, then accelerates.
-Easing out function begins at a certain velocity and decelerates to zero.
-Easing in-out function starts at zero velocity, accelerates until the halfway point, and then decelerates to zero.
-The following graphs show quadratic ease in, quadratic ease out, and quadratic ease in-out functions.
+缓入函数从零速度开始，然后加速。
+缓出函数以一定的速度开始，然后减速到零。
+缓动 in-out 函数从零速度开始，加速到一半，然后减速到零。
+下图显示了二次缓入、二次缓出和二次缓入-缓出函数。
 
 ![Quadratic easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-quad.png)
 
 **Cubic**
-Similar to quadratic, but with a steeper curve, which indicates a slower rate of acceleration or deceleration at first, followed by a rapid acceleration or deceleration.
-The following graphs show cubic ease in, cubic ease out, and cubic ease in-out functions.
+与二次曲线类似，但曲线更陡峭，这表示起初加速或减速的速度较慢，然后是快速的加速或减速。
+下图显示了三次缓入、三次缓出和三次缓入-出函数。
 
 ![Cubic easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-cubic.png)
 
 **Quart**
-Similar to cubic, but with an even slower rate of acceleration or deceleration followed by an even faster rate of acceleration or deceleration.
-The following graphs show quartic ease in, quartic ease out, and quartic ease in-out functions.
+类似于 cubic，但加速或减速速度更慢，然后加速或减速速度更快。
+下图显示了四次缓入、四次缓出和四次缓入-出函数。
 
 ![Quartic easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-quart.png)
 
 **Quint**
-Similar to quart, but with an even slower rate of acceleration or deceleration followed by an even faster rate of acceleration or deceleration.
-The following graphs show quintic ease in, quintic ease out, and quintic ease in-out functions.
+类似于夸脱，但加速或减速速度更慢，然后加速或减速速度更快。
+下图显示了五次缓入、五次缓出和五次缓入-出函数。
 
 ![Quintic easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-quint.png)
 
 **Sine**
-Based on a sine or cosine function. Gentle easing in or easing out, with an almost constant speed like the linear function.
-The following graphs show sinusoidal ease in, sinusoidal ease out, and sinusoidal ease in-out functions.
+基于 sine 或 cosine 函数。轻柔地缓入或缓出，速度几乎恒定，就像线性函数一样。
+下图显示了正弦缓入、正弦缓出和正弦缓入-输出函数。
 
 ![Sinusoidal easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-sine.png)
 
 **Exponential**
-Similar to cubic.
-The following graphs show exponential ease in, exponential ease out, and exponential ease in-out functions.
+类似于 cubic。
+下图显示了指数缓入、指数缓出和指数缓入-出函数。
 
 ![Exponential easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-cubic.png)
 
 **Circular**
-Based on the equation for half of a circle. The graph in the following image is stretched vertically so that you can see how the graph looks like a part of a circle.
-The following graphs show circular ease in, circular ease out, and circular ease in-out functions.
+基于半个圆的方程式。下图中的图形垂直拉伸，以便您可以看到图形看起来像一个圆的一部分。
+下图显示了循环缓入、循环缓出和循环缓入-缓出函数。
 
 ![Circular easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-circ.png)
 
 **Elastic**
-An example of an elastic easting out function is a plucked guitar string. The string moves up and down with decreasing frequency until it comes to a rest. Easing in is the same motion but in reverse.
-The following graphs show elastic ease in, elastic ease out, and elastic ease in-out functions.
+弹性 easting out 函数的一个示例是拨动的吉他弦。琴弦以递减的频率上下移动，直到停止。缓入是相同的动作，但方向相反。
+下图显示了弹性缓入、弹性缓出和弹性缓入-移出函数。
 
 ![Elastic easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-elastic.png)
 
 **Back**
-An example of a back easing in function is a toy car pulled backward to wind the springs, and then released.
-The following graphs show back ease in, back ease out, and back ease in-out functions.
+功能向后缓动的一个例子是玩具车向后拉以给弹簧上弦，然后松开。
+下图显示了 back ease in、back ease out 和 back ease in-out 函数。
 
 ![Back easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-back.png)
 
 **Bounce**
-Depicts a bouncing motion. For example, a rubber ball dropped from a height displays a bounce ease out function as it bounces and eventually comes to rest.
-The following graphs show bounce ease in, bounce ease out, and bounce ease in out functions.
+描绘弹跳运动。例如，从高处掉落的橡胶球在弹跳并最终静止时会显示弹跳缓出函数。
+下图显示了 bounce ease in、bounce ease out 和 bounce ease in out 函数。
 
 ![Bounce easing in, out, and in-out functions](/images/user-guide/interactivity/user-interface/animating/tweener-system/concepts/ui-animating-tweener-bounce.png)

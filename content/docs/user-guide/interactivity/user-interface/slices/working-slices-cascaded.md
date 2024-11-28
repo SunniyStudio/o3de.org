@@ -1,22 +1,22 @@
 ---
-linkTitle: Cascaded UI Slices
-description: ' Create a cascaded UI slice in Open 3D Engine''s UI Editor . '
-title: Creating a Cascaded UI Slice
+linkTitle: 级联 UI 切片
+description: ' 在 Open 3D Engine 的 UI 编辑器中创建级联 UI 切片. '
+title: 创建级联 UI 切片
 weight: 300
 ---
 
-A cascaded slice is a slice that contains instances of other slices. Cascaded slices can store their own overrides for component and entity properties and can also contain their own entities.
+级联切片是包含其他切片实例的切片。级联切片可以存储自己的组件和实体属性覆盖，也可以包含自己的实体。
 
-When you create a cascaded slice, the UI system maintains references to the slices that are child entities. This means, for example, that you can instantiate an image slice as a parent and a text slice as a child. You can then select them both and make a cascaded slice called `Button`. If you then create instances of the `Button` slice, they all contain a reference to the image slice and the text slice. If you then push a font change to the text slice, this affects all instances of the `Button` slice as well as any other instances of the text slice.
+当您创建级联切片时，UI 系统会维护对作为子实体的切片的引用。这意味着，例如，您可以将图像切片实例化为父切片，将文本切片实例化为子切片。然后，你可以同时选择它们并创建一个名为 `Button` 的级联切片。如果随后创建 `Button` 切片的实例，则它们都包含对图像切片和文本切片的引用。如果随后将字体更改推送到文本切片，则会影响 `Button` 切片的所有实例以及文本切片的任何其他实例。
 
-**To create a cascaded slice**
+**创建级联切片**
 
-1. Select the root of a set of elements. The child entities within that root can be individual elements, slices, or a combination of both.
+1. 选择一组元素的根。该根中的子实体可以是单个元素、切片或两者的组合。
 
     {{< note >}}
-If your root is not already in a slice, and you want to maintain child slice references, you must also select the child slices in this step. If you select only the root, only one option appears: **Make New Slice from Selection**. This creates a detached UI slice (flattens child references).
+如果您的根尚未位于切片中，并且您希望维护子切片引用，则还必须在此步骤中选择子切片。如果仅选择根，则只显示一个选项：**Make New Slice from Selection**。这将创建一个分离的 UI 切片（拼合子引用）。
 {{< /note >}}
 
-1. Right-click the selection and then choose **Make Cascaded Slice from Selected Slices & Entities**.
+1. 右键单击所选内容，然后选择**Make Cascaded Slice from Selected Slices & Entities**.
 
-1. Save the cascaded slice with a descriptive name.
+1. 使用描述性名称保存级联切片。

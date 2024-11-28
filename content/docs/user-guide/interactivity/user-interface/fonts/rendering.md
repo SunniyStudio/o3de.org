@@ -1,17 +1,17 @@
 ---
-linkTitle: Configuring Font Rendering Quality
-description: ' Specify how fonts render in Open 3D Engine''s UI system. '
-title: Configuring Font Rendering Quality
+linkTitle: 配置字体渲染质量
+description: ' 指定字体在 Open 3D Engine 的 UI 系统中的呈现方式。 '
+title: 配置字体渲染质量
 weight: 300
 ---
 
-O3DE's built-in UI system, `LyShine`, renders text using font textures. The quality of the on-screen text is affected by the font texture size, the number of character slots in the font texture, and the size of the text itself when rendered on the screen.
+O3DE 的内置 UI 系统`LyShine`使用字体纹理呈现文本。屏幕上文本的质量受字体纹理大小、字体纹理中的字符槽数以及在屏幕上呈现时文本本身的大小的影响。
 
-Use the procedures in this section to configure font size and texture to achieve quality text rendering.
+使用本节中的过程配置字体大小和纹理，以实现高质量的文本呈现。
 
-## Font Texture Width and Height Attributes 
+## 字体纹理宽度和高度属性
 
-Fonts are defined in XML by `*.font` files. The XML in a `.font` file defines various parameters, such as the path to the source TTF/OTF asset and important rendering properties. The font file `Engine/Fonts/default-ui.font` included in the O3DE project has the following content.
+字体在 XML 中由`*.font`文件定义。`.font`文件中的 XML 定义各种参数，例如源 TTF/OTF 资产的路径和重要的渲染属性。O3DE 项目中包含的字体文件`Engine/Fonts/default-ui.font`包含以下内容。
 
 ```
 <fontshader>
@@ -31,87 +31,87 @@ Fonts are defined in XML by `*.font` files. The XML in a `.font` file defines va
 </fontshader>
 ```
 
-The font texture resolution is controlled by the following line.
+字体纹理分辨率由以下行控制。
 
 ```
 <font path="Vera.ttf" w="512" h="256"/>
 ```
 
-In this example, the font texture has a resolution of 512x256. This resolution size (along with the number of character slots) is an important value for determining font rendering quality.
+在此示例中，字体纹理的分辨率为 512x256。此分辨率大小（以及字符槽的数量）是确定字体渲染质量的重要值。
 
-## Character Slots 
+## 字符插槽
 
-In O3DE, a font texture is logically divided into equally sized slots. In each slot, there is a uniform amount of space for each character (glyph). By default (without additional configuration), there are 128 unique characters (16 rows \* 8 columns).
+在 O3DE 中，字体纹理在逻辑上被划分为大小相等的槽。在每个插槽中，每个字符（字形）都有统一的间距。默认情况下（无需额外配置），有 128 个唯一字符（16 行 \* 8 列）。
 
-If you support a language with many unique characters, such as Chinese, Japanese, or Korean, the default number of slots (128) might not be adequate for your needs, requiring further configuration. Otherwise, 128 unique characters might be adequate for most languages. The following information about character slots describes in further detail the font rendering pipeline in O3DE.
+如果您支持包含许多唯一字符的语言，例如中文、日语或韩语，则默认槽数 （128） 可能不足以满足您的需求，需要进一步配置。否则，对于大多数语言来说，128 个唯一字符可能就足够了。以下有关字符槽的信息进一步详细介绍了 O3DE 中的字体渲染管道。
 
-When rendering a string of characters, the number of *unique* characters in a string is different from the number of characters in a string (its length). The number of character slots in a font texture imposes a limitation only on the number of unique characters that can be rendered in a single frame.
+当渲染一个字符串时，字符串中 *唯一* 字符的数量与字符串中的字符数 （它的长度） 不同。字体纹理中的字符槽数仅对可在单个帧中呈现的唯一字符数施加限制。
 
-For example, the following is a font definition which defines a font texture with `1 (1x1)` texture slot.
+例如，下面是一个字体定义，它定义了一个具有 `1 (1x1)` 纹理槽的字体纹理。
 
 ```
 <font path="Vera.ttf" w="512" h="512" widthslots="1" heightslots="1"/>
 ```
 
-The default values for `widthslots` and `heightslots` is *16* and *8*, respectively. However, as shown in the previous example, you can configure the number of character slots \(`1`\). This font can render a single unique character to the screen, any number of times, such as the following string.
+`widthslots` 和 `heightslots` 的默认值分别为 *16* 和 *8*。但是，如前面的示例所示，您可以配置字符槽 \(`1`\) 的数量。此字体可以在屏幕上呈现单个唯一字符，次数不限，例如以下字符串。
 
 AAAA
 
-The number of unique characters in `AAAA` is 1, and the length of the string is 4. This font texture configuration can render this character an unlimited number of times (that is, a string of variable length) as long as the string contains only a single character. However, this font can't render the following string.
+`AAAA` 中的唯一字符数为 1，字符串的长度为 4。此字体纹理配置可以无限次呈现此字符（即可变长度的字符串），只要字符串仅包含单个字符即可。但是，此字体无法呈现以下字符串。
 
 AABB
 
-Because only one character slot exists in the texture, it can't store both the glyphs for upper-case 'A' and upper-case 'B' and render them both in a frame. To render this string, you need to increase the number of slots using the `widthslots` and `heightslots` parameters.
+由于纹理中仅存在一个字符槽，因此它无法同时存储大写字母 '`A`' 和大写字母 '`B`' 的字形，并将它们同时呈现在一个帧中。要渲染这个字符串，你需要使用 `widthslots` 和 `heightslots` 参数来增加插槽的数量。
 
-Here is another example.
+这是另一个例子。
 
 ```
 <font path="NotoSansSC-Regular.otf" w="4096" h="4096" widthslots="128" heightslots="128"/>
 ```
 
-In this example, the font texture size is `4096x4096`, and there are a total number of `128x128` (16,384) character slots. To determine the available size for each character, divide the texture size (4096x4096) by the number of slots (128x128) to yield a 32x32 pixel space per character. This configuration enables you to render over 16,000 unique characters at a 32-pixel size in a single frame.
+在此示例中，字体纹理大小为 `4096x4096`，并且总共有`128x128`（16,384） 个字符槽。要确定每个字符的可用大小，请将纹理大小 （4096x4096） 除以槽数 （128x128），从而得出每个字符 32x32 像素空间。此配置使您能够在单个帧中以 32 像素大小渲染超过 16,000 个唯一字符。
 
 ## Font Size 
 
-Because a font texture is divided into a logical grid, a simple calculation determines how much real estate each character in the font can use:
+由于字体纹理被划分为一个逻辑网格，因此一个简单的计算可以确定字体中的每个字符可以使用多少空间：
 + Font texture width / `widthslots` = slot width
 + Font texture height / `heightslots` = slot height
 
-Where `widthslots` is the number of character slots across the width (x-axis) of the font texture and `heightslots` is the number of character slots across the height (y-axis) of the font texture.
+其中 `widthslots`是字体纹理宽度（x 轴）上的字符槽数，`heightslots` 是字体纹理高度（y 轴）上的字符槽数。
 
-In the `default-ui.font` example in the previous section, the font texture size was 512x256. Assuming the character slots are at their default values (16x8):
+在 `default-ui.font`中，上一节中的示例，字体纹理大小为 512x256。假设角色槽为默认值 （16x8）：
 + 512 / 16 = 32 (slot width)
 + 256 / 8 = 32 (slot height)
 
-For a 512x256 sized font texture, you can render pixel-perfect characters at 32x32 pixels.
+对于 512x256 大小的字体纹理，您可以以 32x32 像素渲染像素完美的字符。
 
-Knowing these calculations helps you determine the right font texture size for the purposes of your game UI.
+了解这些计算有助于您确定适合游戏 UI 的字体纹理大小。
 
-**To determine the right font texture size for your game UI**
+**确定适合您的游戏 UI 的字体纹理大小**
 
 1. [Create the font `.font` file](./adding-fonts) for the font to use.
 
-1. Choose an arbitrary font texture size to start with, such as 512x256 as used in the previous example.
+1. 首先选择任意字体纹理大小，例如上一个示例中使用的 512x256。
 
-1. Use the **UI Editor** to mock up a canvas with elements that have text components that use your font `.font` file.
+1. 使用 **UI 编辑器** 模拟画布，其中包含具有使用您的字体 `.font` 文件的文本组件的元素。
 
-1. In the **UI Editor**'s **Properties** pane, under **Text** and then **Font Size**, experiment with the font size to find the ideal size for your use case.
+1. 在 UI 编辑器的 **Properties** 窗格中，先在 **Text** 下，再在 **Font size** 下，尝试字体大小以找到适合你的用例的理想大小。
 
-1. After you have determined the appropriate font size for your purposes, use the following formula to determine the font texture width and height:
+1. 在确定了适合自己的用途的字体大小后，使用以下公式确定字体纹理的宽度和高度：
 
     + Texture width = Font size \* `widthslots`
     + Texture height = Font size \* `heightslots`
    
     {{< note >}}
-The default value for `widthslots` and `heightslots` is *16* and *8*, respectively, which gives 128 total character slots. If you need to render more than 128 unique characters to the screen in a single frame-for example, if your game supports Chinese, Japanese, or Korean text- adjust these values accordingly.
+`widthslots` 和 `heightslots` 的默认值分别是 *16* 和 *8*，总共有 128 个字符槽。如果您需要在单个帧中在屏幕上呈现超过 128 个唯一字符（例如，如果您的游戏支持中文、日语或韩语文本），请相应地调整这些值。
 {{< /note >}}
 
-1. Edit your font `.font` to use the calculated font texture size.
+1. 编辑字体 `.font` 以使用计算的字体纹理大小。
 
     {{< note >}}
-Font texture sizes don't necessarily need to be a power of 2: 128, 256, 512, 1024, 2048, and so on. However, the width must be a multiple of `widthslots` (the default value is 16), and the height must be a multiple of `heightslots` (the default value is 8).
+字体纹理大小不一定需要是 2 的幂：128、256、512、1024、2048 等。但是，width 必须是 `widthslots` 的倍数（默认值是 16），高度必须是 `heightslots` 的倍数（默认值是 8）。
 
-You can have multiple font `.font` files that reference the same TTF/OTF file but have different font texture sizes.
+您可以有多个字体`.font` 文件，它们引用相同的 TTF/OTF 文件，但具有不同的字体纹理大小。
 
-For example, you might have some caption text that needs to appear only at a small font size, but you have other screens (perhaps a menu screen) where you want the same look and feel by using the same font. However, it needs to be larger and therefore needs a higher resolution font texture. You can achieve this with separate `.font` files for each use case, with font texture settings adjusted for ideal rendering quality.
+例如，您可能有一些字幕文本只需要以较小的字体显示，但您还有其他屏幕（可能是菜单屏幕），您希望使用相同的字体来获得相同的外观。但是，它需要更大，因此需要更高分辨率的字体纹理。您可以为每个用例使用单独的 `.font` 文件来实现这一点，并调整字体纹理设置以获得理想的渲染质量。
 {{< /note >}}

@@ -1,213 +1,213 @@
 ---
 linkTitle: UI Transform2D
-description: The Transform2D component defines an element's position, rotation, size, and scale.
+description: Transform2D 组件定义元素的位置、旋转、大小和缩放。
 title: UI Transform2D Component
 weight: 200
 ---
 
-The **Transform2D** component is automatically added to every UI element you create. This component defines the element's position, rotation, size, and scale relative to its parent's edges. The parent may be another element (if the elements are nested), or the canvas.
+**Transform2D** 组件会自动添加到您创建的每个 UI 元素中。此组件定义元素相对于其父级边缘的位置、旋转、大小和缩放。父级可以是另一个元素（如果元素嵌套）或画布。
 
-## Managing UI Anchors and Offsets
+## 管理 UI 锚点和偏移量
 
-You can use anchors and offset settings in the **Transform2D** component to set a UI element's position and size relative to its parent's edges. The **Transform2D** component is a required component in every element.
+您可以使用 **Transform2D** 组件中的锚点和偏移设置来设置 UI 元素相对于其父级边缘的位置和大小。**Transform2D** 组件是每个元素中的必需组件。
 
-Anchor values are always `0.00%` to `100.00%` as defined by the parent's edges. Offsets are expressed in pixels and are relative to the anchors.
+锚点值始终为`0.00%` 到 `100.00%`，由父级的边缘定义。偏移量以像素表示，并且是相对于锚点的。
 
-Anchors and offsets are useful in a variety of situations:
-+ Ensuring that an element maintains a specific padding within its parent's edges, regardless of changes to the parent's size
-+ Anchoring an element to a corner of its parent, regardless of changes to the parent's size or position
-+ Building resolution-independent UI elements
+锚点和偏移量在各种情况下都很有用：
++ 确保元素在其父元素的边缘内保持特定的填充，而不管元素的大小如何变化
++ 将元素锚定到其父元素的一角，而不管父元素的大小或位置如何变化
++ 构建与分辨率无关的 UI 元素
 
-For example, you can ensure an element remains full screen regardless of the screen's resolution.
+例如，您可以确保元素保持全屏状态，而不管屏幕的分辨率如何。
 
-### Configuring an element's anchors
+### 配置元素的锚点
 
-1. In the **Hierarchy** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), select the element whose anchors you want to modify.
+1. 在 [**UI 编辑器**](/docs/user-guide/interactivity/user-interface/editor) 的 **Hierarchy** 窗格中，选择要修改其锚点的元素。
 
-1. In the **Properties** pane, under **Transform2D**, choose from the selection of commonly used anchor placements.
+1. 在 **Properties** 窗格中的 **Transform2D** 下，从常用锚点放置选项中进行选择。
 
-   1. Anchor to the parent's center, corner, or midway along an edge without changing size.
+   1. 沿边锚定到父对象的中心、角或中间位置，而不更改大小。
 
-   1. Anchor to the left edge, middle, or right edge; vertical size adjusts to parent.
+   1. 锚定到左边缘、中间或右边缘;垂直大小会根据父级进行调整。
 
-   1. Anchor to the top edge, middle, or bottom edge; horizontal size adjusts to parent.
+   1. 锚定到上边缘、中间或下边缘;水平大小调整为父级。
 
-   1. Anchor all of the element's edges to the parent. The horizontal and vertical size adjusts to parent. You can use this anchor preset to place an element that remains full screen, regardless of a change in resolution. This applies if the canvas is its parent.
+   1. 将元素的所有边缘锚定到父级。水平和垂直大小会根据父级进行调整。您可以使用此锚点预设来放置保持全屏的元素，而不管分辨率如何变化。如果画布是其父级，则适用。
 
    ![Transform 2D Anchor Settings](/images/user-guide/interactivity/user-interface/components/transform/ui-editor-presets-1.png)
 
-**To further edit (fine tune) an element's anchors**
-In the **Properties** pane, under **Transform2D**, do the following for **Anchors**, as appropriate:
-+ For **Left**, enter a value between `0.00%` and `100.00%`.
-+ For **Right**, enter a value between `0.00%` and `100.00%`.
-+ For **Top**, enter a value between `0.00%` and `100.00%`.
-+ For **Bottom**, enter a value between `0.00%` and `100.00%`.
+**进一步编辑（微调）元素的锚点**
+在 **Properties** 窗格中的 **Transform2D** 下，根据需要对 **Anchors** 执行以下操作：
++ 对于 **左 **，输入一个介于 '`0.00%`' 和 '`100.00%`' 之间的值。
++ 对于 **Right**，输入一个介于 '`0.00%`' 和 '`100.00%`' 之间的值。
++ 对于 **Top**，输入一个介于 '`0.00%`' 和 '`100.00%`' 之间的值。
++ 对于 **底部**，输入一个介于 `'0.00%`' 和 '`100.00%`' 之间的值。
 
-The anchors' positions can be visualized as points on a grid, plotted in percentages by the length of its parent's edges from left to right and top to bottom. If you want to keep the element's size absolute (so that it doesn't change size when the parent changes size) but want to anchor it a particular vertical or horizontal point relative to the parent's size, make sure the top and bottom (or left and right) anchors have the same number. In this case, the anchors are said to be together.
+锚点的位置可以可视化为网格上的点，按其父级边缘的长度从左到右、从上到下以百分比绘制。如果你想保持元素的绝对大小（这样当父元素改变大小时它不会改变大小），但想把它锚定在相对于父元素大小的特定垂直或水平点上，请确保顶部和底部（或左和右）锚点具有相同的数字。在这种情况下，锚点被称为在一起。
 
-But if, for example, you want the element's left and right edges to each remain at a fixed percentage relative to its parent and to change size as its parent changes size, then make the numbers different. In this case, the anchors are called split.
+但是，例如，如果你希望元素的左边缘和右边缘分别保持相对于其父级的固定百分比，并随着其父级的大小变化而变化，那么就使数字不同。在这种情况下，锚点称为 split。
 
 ![Visual aid for setting Anchor values](/images/user-guide/interactivity/user-interface/components/transform/ui-editor-percent.png)
 
-### Editing an element's position and size
+### 编辑元素的位置和大小
 
-In the **Properties** pane, under **Transform2D**, modify the **Offsets**, as appropriate:
-If the element's anchors are together, do the following:
-+ For **X Pos**, enter a negative or positive value in pixels. This adjusts the horizontal offset relative to the left-right anchor position.
-+ For **Y Pos**, enter a negative or positive value in pixels. This adjusts the vertical offset relative to the top-bottom anchor position.
-When the element's anchors are together, only its position adjusts with the parent's size. The element's size is not adjusted. Therefore, you can manually adjust the element's size, which remains consistent when anchors are together.
-+ For **Width**, enter a value in pixels.
-+ For **Height**, enter a value in pixels.
-If the element's anchors are split, do the following:
-+ For **Left**, enter a negative or positive value in pixels. This adjusts the size offset relative to the element's left anchor.
-+ For **Right**, enter a negative or positive value in pixels. This adjusts the size offset relative to the element's right anchor.
-+ For **Top**, enter a negative or positive value in pixels. This adjusts the size offset relative to the element's top anchor.
-+ For **Bottom**, enter a negative or positive value in pixels. This adjusts the size offset relative to the element's bottom anchor.
+在 **Properties** 窗格中的 **Transform2D** 下，根据需要修改 **Offsets**：
+如果元素的锚点在一起，请执行以下操作：
++ 对于 **X Pos**，输入负值或正值（以像素为单位）。这将调整相对于左右锚点位置的水平偏移。
++ 对于 **Y Pos**，输入负值或正值（以像素为单位）。这将调整相对于上下锚点位置的垂直偏移。
+当元素的锚点在一起时，只有其位置会随父元素的大小而调整。元素的大小不会调整。因此，您可以手动调整元素的大小，当锚点在一起时，该大小将保持一致。
++ 对于 **Width**，输入一个以像素为单位的值。
++ 对于 **Height**，输入一个以像素为单位的值。
+如果元素的锚点被拆分，请执行以下操作：
++ 对于 **Left**，输入负值或正值（以像素为单位）。这将调整相对于元素左锚点的大小偏移量。
++ 对于 **Right**，输入负值或正值（以像素为单位）。这将调整相对于元素右锚点的大小偏移量。
++ 对于 **Top**，输入负值或正值（以像素为单位）。这将调整相对于元素顶部锚点的大小偏移量。
++ 对于 **Bottom**，输入负值或正值（以像素为单位）。这将调整相对于元素底部锚点的大小偏移量。
 
-### Editing an element's pivot, rotation, and scale
+### 编辑元素的枢轴、旋转和缩放
 
-In the **Properties** pane, under **Transform2D**, do the following for **Pivot**, **Rotation**, and **Scale**, as appropriate:
-+ For **Pivot**, select a pivot preset or enter values for X and Y where `0` and `1` represent the element's edges.
-+ For **Rotation**, enter a value in degrees.
-+ For **X Scale**, enter a value to use as a multiplier for the element's width.
-+ For **Y Scale**, enter a value to use as a multiplier for the element's height.
-+ Select **Scale to Device** if you want the UI element and its child elements to scale with the device resolution.
-
-{{< note >}}
-The element rotates around, resizes from, and calculates position from its pivot point. The pivot point is not limited by the element's borders. You can place the pivot outside of the element.
-{{< /note >}}
-
-**Example: Using Anchors to Resize an Element Relative to its Parent**
-In the following example, anchors are used to resize the element relative to its parent. The layout column of buttons is resized as needed to stay on the screen. Because the layout column of buttons does not use the **Scale to Device** setting, the button text does not change size along with its parent button.
+在 **Properties** 窗格中，在 **Transform2D**下， 根据需要对 **Pivot**、**Rotation** 和 **Scale** 执行以下操作：
++ 对于 **Pivot**，选择枢轴预设或输入 X 和 Y 的值，其中“`0`”和“`1`”表示元素的边缘。
++ 对于 **Rotation**，请输入一个以度为单位的值。
++ 对于 **X Scale**，输入一个值以用作元素宽度的乘数。
++ 对于 **Y Scale**，输入一个值以用作元素高度的乘数。
++ 如果您希望 UI 元素及其子元素随设备分辨率缩放，请选择 **Scale to Device**。
 
 {{< note >}}
-You can [configure the text element](/docs/user-guide/interactivity/user-interface/components/visual/components-text) separately.
+元素围绕其枢轴点旋转、调整大小并从其枢轴点计算位置。枢轴点不受元素边界的限制。您可以将枢轴放置在元素的外部。
 {{< /note >}}
 
-The layout column of buttons has the following settings.
+**示例：使用锚点相对于其父元素调整元素的大小**
+在下面的示例中，锚点用于调整元素相对于其父元素的大小。按钮的布局列会根据需要调整大小，以保持在屏幕上。由于按钮的布局列不使用 **Scale to Device** 设置，因此按钮文本不会随其父按钮一起更改大小。
 
-**Layout Column element settings**
+{{< note >}}
+您可以单独 [配置文本元素](/docs/user-guide/interactivity/user-interface/components/visual/components-text) 。
+{{< /note >}}
 
-| Property | Values |
+按钮的布局列具有以下设置。
+
+**布局列元素设置**
+
+| 属性 | 值 |
 | --- | --- |
-| Anchors | Left = 20%, Top = 6%, Right = 80%, Bottom = 94% |
-| Pivot | Default settings: X = 0.5, Y = 0.5 |
-| Scale to device | None (not selected) |
+| Anchors | 左 = 20%, 顶 = 6%, 右 = 80%, 底 = 94% |
+| Pivot | 默认设置: X = 0.5, Y = 0.5 |
+| Scale to device | None (未选择) |
 
 ![Using anchors to resize buttons to stay on the screen.](/images/user-guide/interactivity/user-interface/components/transform/ui-editor-transform-scale-3.gif)
 
 ## Scale to Device
 
-The **Scale to Device** property helps build game UIs that can display on multiple screen resolutions. You can preview your canvas at different resolutions in the UI Editor in **Preview Mode**.
+**Scale to Device** 属性有助于构建可在多种屏幕分辨率上显示的游戏 UI。您可以在 UI Editor 的 **Preview Mode** 中以不同的分辨率预览画布。
 
-A device scale is computed by using the ratio of the authored canvas size to the runtime canvas size. The device scale is then adjusted based on the selected **Scale to Device** setting. When you select any **Scale to Device** setting other than **None**, the device scale is multiplied with the **Transform2D** component's **Scale** property to get the final local scale for the element.
+设备缩放是使用创作的画布大小与运行时画布大小的比率来计算的。然后，根据所选的 **Scale to Device** 设置调整设备比例。当您选择除 **None** 之外的任何 **Scale to Device** 设置时，设备缩放将乘以 **Transform2D** 组件的 **Scale** 属性，以获得元素的最终局部缩放。
 
-The following **Scale to Device** settings are available:
+以下 **Scale to Device** 设置可用：
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-| None | Does not scale with the device resolution. |
-| Scale to fit (uniformly) | Scales to fit while maintaining the aspect ratio. The final device scale for both X and Y is the minimum of the width and height ratios between the authored canvas size to the viewport size. |
-| Scale to fill (uniformly) | Scales to fill while maintaining the aspect ratio. The final device scale for both X and Y is the maximum of the width and height ratios between the authored canvas size to the viewport size. |
-| Scale to fit X (uniformly) | Scales to fit horizontally while maintaining the aspect ratio. The final device scale for both X and Y is the ratio between the authored canvas width to the viewport width. |
-| Scale to fit Y (uniformly) | Scales to fit vertically while maintaining the aspect ratio. The final device scale for both X and Y is the ratio between the authored canvas height to the viewport height. |
-| Stretch to fill (non-uniformly) | Stretches to fill horizontally and vertically without maintaining the aspect ratio. The final device scale is the ratio between the authored canvas size to the viewport size. |
-| Stretch to fit X (non-uniformly) | Stretches to fit horizontally, but doesn't stretch vertically. The final device scale for X is the ratio between the authored canvas width to the viewport width. Y doesn't scale with the device resolution. |
-| Stretch to fit Y (non-uniformly) | Stretches to fit vertically, but doesn't stretch horizontally. The final device scale for Y is the ratio between the authored canvas height to the viewport height. X doesn't scale with the device resolution. |
+| None | 不随设备分辨率缩放。 |
+| Scale to fit (uniformly) | 在保持纵横比的同时进行缩放以适应。X 和 Y 的最终设备比例是创作的画布大小与视区大小之间的宽度和高度比率的最小值。 |
+| Scale to fill (uniformly) | 缩放以填充，同时保持纵横比。X 和 Y 的最终设备比例是创作的画布大小与视区大小之间的宽度和高度比率的最大值。 |
+| Scale to fit X (uniformly) | 缩放以适合水平方向，同时保持长宽比。X 和 Y 的最终设备比例是创作的画布宽度与视区宽度之间的比率。 |
+| Scale to fit Y (uniformly) | 缩放以适合垂直方向，同时保持纵横比。X 和 Y 的最终设备比例是创作的画布高度与视区高度之间的比率。 |
+| Stretch to fill (non-uniformly) | 拉伸以水平和垂直填充，而不保持长宽比。最终的设备比例是创作的画布大小与视区大小之间的比率。 |
+| Stretch to fit X (non-uniformly) | 可以水平拉伸以适应大小，但不可以垂直拉伸。X 的最终设备比例是创作的画布宽度与视区宽度之间的比率。Y 不随设备分辨率缩放。 |
+| Stretch to fit Y (non-uniformly) | 可垂直拉伸，但不可水平拉伸。Y 的最终设备比例是创作的画布高度与视区高度之间的比率。X 不随设备分辨率缩放。|
 
-When using the **Scale to Device** setting, note the following:
-+ Scaling is performed about the element's pivot.
-+ Scaling an element doesn't affect the value of its offsets from its anchors.
-+ The element's final scale includes any scale inherited from its parents. Set the **Scale to Device** property on a UI element whose child elements that you also want to scale with the device resolution.
-+ Setting **Scale to Device** on a UI element and a descendant element results in double scaling on the descendant element.
-+ Avoid setting **Scale to Device** on a UI element that doesn't have its anchors together. Doing so can result in undesired behavior. This is because the anchors affect the size of the element relative to its parent, and the **Scale to Device** scale is applied on top of that.
+使用 **Scale to Device** 设置时，请注意以下事项：
++ 围绕元素的枢轴执行缩放。
++ 缩放元素不会影响其与锚点的偏移值。
++ 元素的最终缩放包括从其父级继承的任何缩放。在某个 UI 元素上设置 **Scale to Device** 属性，您也希望该元素的子元素随设备分辨率进行缩放。
++ 在 UI 元素和后代元素上设置 **Scale to Device** 会导致后代元素上出现双重缩放。
++ 避免在没有锚点在一起的 UI 元素上设置 **Scale to Device**。这样做可能会导致意外行为。这是因为锚点会影响元素相对于其父元素的大小，并且 **Scale to Device** 缩放在此之上应用。
 
-**Example**
+**示例**
 
-  The element's size matches the viewport's size if you set the anchors to the following values:
+如果将锚点设置为以下值，则元素的大小将与视区的大小匹配：
   + Left = 0%
   + Top = 0%
   + Right = 100%
   + Bottom = 100%
 
-  However, if you then add a scale on top of these anchor values, the element size no longer matches the viewport size.
+但是，如果您随后在这些锚点值的基础上添加缩放，则元素大小将不再与视区大小匹配。
 
-### Scale to Device Examples 
+### Scale to Device 示例
 
-Each of the following examples demonstrates a different **Scale to Device** setting.
+以下每个示例都演示了不同的 **Scale to Device** 设置。
 
-In each example, the background image covers the whole screen and uses the following settings:
+在每个示例中，背景图像覆盖整个屏幕并使用以下设置：
 + Anchors (apart): Left = 0%, Top = 0%, Right = 100%, Bottom = 100%
 + Image type: Tiled
 + Scale to Device: None
 
 ### Uniform Scaling 
 
-In this uniform scaling example, the UI parent element has a fixed aspect ratio and is centered and fitted to the screen that it's displayed on.
+在此统一缩放示例中，UI 父元素具有固定的纵横比，并且居中并适合显示它的屏幕。
 
-The background image is a texture with simple [settings](#uniform-scaling).
+背景图像是具有简单 [settings （设置） 的纹理](#uniform-scaling).
 
-The elements that make up the UI are all contained in a parent element and has the following settings.
+构成 UI 的元素都包含在父元素中，并具有以下设置。
 
-**Parent UI element settings**
+**父级 UI 元素设置**
 
-| Property | Values |
+| 属性 | 说明 |
 | --- | --- |
 | Anchor | Left = 50%, Top = 50%, Right = 50%, Bottom = 50% |
-| Pivot | Default settings: X = 0.5, Y = 0.5 |
-| Width and Height | Matches the authored canvas size (for example, 1280x720) |
-| Scale to device | Scale to fit (uniformly) |
+| Pivot | 默认设置: X = 0.5, Y = 0.5 |
+| Width and Height | 匹配创作的画布大小（例如, 1280x720) |
+| Scale to device | 缩放以适应 （均匀）|
 
 ![Scale to fit uniformly example.](/images/user-guide/interactivity/user-interface/components/transform/ui-editor-transform-scale-1.gif)
 
 ### Scale to Fit Y 
 
-In this uniform scale to fit Y example, the layout column and its buttons are uniformly scaled so that they fit vertically on the screen regardless of its resolution.
+在这个统一缩放以适应 Y 示例中，布局列及其按钮被统一缩放，以便它们垂直适合屏幕，而不管其分辨率如何。
 
-The background image is a texture with simple [settings](#uniform-scaling).
+背景图像是具有简单 [settings](#uniform-scaling) 的纹理.
 
-The elements that make up the buttons are contained in a layout column element. The layout column element contains the UI buttons and has the following settings.
+组成按钮的元素包含在 layout column 元素中。布局列元素包含 UI 按钮，并具有以下设置。
 
-**Layout Column element settings for uniform scaling to fit Y**
+**用于均匀缩放以适应 Y 的布局列元素设置**
 
-| Property | Values |
+| 属性 | 说明 |
 | --- | --- |
 | Anchors | Left = 50%, Top = 50%, Right = 50%, Bottom = 50% |
-| Pivot | Default settings: X = 0.5, Y = 0.5 |
-| Scale to device | Scale to fit Y (uniformly) |
+| Pivot | 默认设置: X = 0.5, Y = 0.5 |
+| Scale to device | 缩放以适合 Y（均匀） |
 
 ![Scale to fit Y uniformly example.](/images/user-guide/interactivity/user-interface/components/transform/ui-editor-transform-scale-2.gif)
 
-### Uniform Scaling While Maintaining Relative Position 
+### 在保持相对位置的同时均匀缩放
 
-In this example, the **Scale to Device** setting scales the health bar and speed indicator depending on the screen resolution. Anchor settings maintain their positions so that the health bar always appears in the right corner and the speed indicator always appears in the center.
+在此示例中，**Scale to Device** 设置根据屏幕分辨率缩放运行状况条和速度指示器。锚点设置会保持其位置，以便运行状况条始终显示在右上角，而速度指示器始终显示在中心。
 
-The background image is a texture with simple [settings](#uniform-scaling).
+背景图像是具有简单 [settings （设置） 的纹理](#uniform-scaling).
 
-The health bar element has the following settings. The anchor values keep it on the upper right corner of the screen.
+Health Bar 元素具有以下设置。锚点值将其保持在屏幕的右上角。
 
-**Health bar element settings**
+**生命条元素设置**
 
-| Property | Values |
+| 属性 | 说明 |
 | --- | --- |
 | Anchors | Left = 100%, Top = 0%, Right = 100%, Bottom = 0% |
 | Pivot | X = 1.0, Y = 0.0 |
-| Scale to device | Scale to fit (uniformly) |
+| Scale to device | 缩放以适应 （均匀）|
 
-The speed indicator element has the following settings. The anchor values keep it in the top center of the screen.
+速度指示器元素具有以下设置。锚点值将其保持在屏幕的顶部中心。
 
-**Health bar element settings**
+**生命条元素设置**
 
-| Property | Values |
+| 属性 | 说明 |
 | --- | --- |
 | Anchors | Left = 50%, Top = 0%, Right = 50%, Bottom = 0% |
 | Pivot | X = 0.5, Y = 0.0 |
-| Scale to device | Scale to fit (uniformly) |
+| Scale to device | 缩放以适应 （均匀） |
 
-The following images show how the health bar and speed indicator scales based on the screen resolution while maintaining their position on the screen.
+下图显示了生命条和速度指示器如何根据屏幕分辨率进行缩放，同时保持它们在屏幕上的位置。
 
 {{< note >}}
-The indicated resolutions are not shown to scale.
+指示的分辨率不会按比例显示。
 {{< /note >}}
 
 ![Example of scaling elements while maintaining relative positions.](/images/user-guide/interactivity/user-interface/components/transform/ui-editor-transform-scale-uniform-position.png)

@@ -1,63 +1,63 @@
 ---
 linkTitle: UI Flipbook Animation
-description: ' Add the Flipbook Animation component to an element to create simple image-based animations in Open 3D Engine. '
-title: UI Flipbook Animation Component
+description: ' 将 Flipbook Animation 组件添加到元素中，以在 Open 3D Engine 中创建基于图像的简单动画。 '
+title: UI Flipbook Animation 组件
 ---
 
-You can use the **FlipbookAnimation** component to create simple image-based animations by animating the frames or cells of a [sprite sheet](/docs/user-guide/interactivity/user-interface/editor/sprite-editor/sprite-sheets).
+您可以使用 **FlipbookAnimation** 组件，通过对 [sprite sheet](/docs/user-guide/interactivity/user-interface/editor/sprite-editor/sprite-sheets) 的帧或单元格进行动画处理，创建简单的基于图像的动画。
 
-**To view a canvas in the UI Editor**
+**在 UI Editor 中查看画布**
 
-1. Navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Flipbook` directory.
+1. 浏览至 `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Flipbook` 目录。
 
-1. Open `Flipbook.uicanvas`.
+1. 打开 `Flipbook.uicanvas`.
 
-You can add the **FlipbookAnimation** component to elements that also have an [**Image**](../visual/components-image) component. You must also set that **Image** component to use a sprite file that has been configured as a [sprite sheet](/docs/user-guide/interactivity/user-interface/editor/sprite-editor/sprite-sheets).
+您可以将 **FlipbookAnimation** 组件添加到同样具有 [**Image**](../visual/components-image) 组件。您还必须将该 **Image** 组件设置为使用已配置为 [Sprite Sheet](/docs/user-guide/interactivity/user-interface/editor/sprite-editor/sprite-sheets) 的 sprite 文件。
 
 ![FlipbookAnimation component and Image component set as sprite/texture asset](/images/user-guide/interactivity/user-interface/components/other/ui-editor-components-other-flipbook-1.png)
 
-**To add and configure a FlipbookAnimation component**
+**添加和配置 FlipbookAnimation 组件**
 
-1. If you have not already done so, create a [sprite sheet](/docs/user-guide/interactivity/user-interface/editor/sprite-editor/sprite-sheets) for your animation image.
+1. 如果您还没有这样做，请为您的动画图像创建一个 [sprite sheet](/docs/user-guide/interactivity/user-interface/editor/sprite-editor/sprite-sheets)。
 
-1. Add an [**Image**](../visual/components-image) component.
+1. 添加一个 [**Image**](../visual/components-image) 组件。
 
-   For the **SpriteType**, choose **Sprite/Texture asset**.
+   对于 **SpriteType**，选择 **Sprite/Texture asset**。
 
-   In the **Sprite path**, click **Browse** (…) and navigate to the directory that contains the sprite sheet asset that you created. Select the sprite sheet.
+   在 **Sprite path** 中，点击 **Browse** (…) 并导航到包含您创建的 Sprite Sheet 资源的目录。选择 Sprite 表。
 
-1. Add a **FlipbookAnimation** component.
+1. 添加一个 **FlipbookAnimation** 组件。
 
-1. Configure the **FlipbookAnimation** properties:
+1. 配置 **FlipbookAnimation** 属性:
 
 * **Start Frame**
 
-    The index of the sprite sheet cell that is to be the first frame in the animation. The value must be equal to or less than the **End Frame** value.
+    将作为动画中第一帧的 sprite sheet 单元格的索引。该值必须等于或小于 **End Frame**值。
 
 * **End Frame**
 
-    The index of the sprite sheet cell that is to be the last frame in the animation. The value must be equal to or greater than the **Start Frame** value.
+    将作为动画中最后一帧的 sprite sheet 单元格的索引。该值必须等于或大于 **Start Frame** 值。
 
 * **Loop start frame**
 
-    The index of the sprite sheet cell that is to be the first frame in the looped portion of an animation. This value must be equal to or greater than **Start Frame** value and less than **End Frame** value. This setting has no effect if **Loop Type** is set to **None**.
+    sprite sheet 单元格的索引，该单元格将成为动画循环部分中的第一帧。此值必须等于或大于 **Start Frame** 值且小于 **End Frame** 值。如果 **Loop Type**（循环类型）设置为 **None**（无），则此设置无效。
 
     {{< tip >}}
-To loop the entire animation, specify a value that is equal to the **Start Frame** value. To create an intro sequence that appears before the looping animation, specify a value greater than the **Start Frame**.
+要循环播放整个动画，请指定一个等于 **Start Frame** 值的值。要创建在循环动画之前显示的介绍序列，请指定大于 **Start Frame** 的值。
     {{< /tip >}}
 
 * **Loop Type**
 
-    Includes the following options:
+    包括以下选项：
 
-   * **None** - No looping behavior. The animation starts between the **Start Frame** and **End Frame** and then stops.
-   * **Linear** - When the animation reaches **End Frame**, it loops by next playing the **Start Frame** and continues until the **End Frame**. This continues until the player stops it manually.
-   * **PingPong** - Reverses the direction of the animation. After animation reaches the **End Frame** or the **Start Frame**, it reverses direction. The loop goes back and forth between the two frames until the player stops it.
+   * **None** - 无循环行为。动画在 **Start Frame** 和 **End Frame** 之间开始，然后停止。
+   * **Linear** - 当动画到达 **End Frame** 时，它会循环播放 **Start Frame**，并继续播放 **End Frame**。这种情况一直持续到播放器手动停止它。
+   * **PingPong** - 反转动画的方向。动画到达 **End Frame** 或 **Start Frame** 后，它会反转方向。循环在两个帧之间来回移动，直到播放器停止它。
 
 * **Frame delay**
 
-    Number of seconds to delay before displaying the next frame.
+    显示下一帧之前延迟的秒数。
 
 * **Auto Play**
 
-    If enabled, automatically starts playing the flipbook animation when the canvas is loaded.
+    如果启用，则在加载画布时自动开始播放 Flipbook 动画。

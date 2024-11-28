@@ -1,61 +1,61 @@
 ---
 linkTitle: UI Layout Column
-description: ' Use a layout column component in the Open 3D Engine UI Editor to organize child elements into a column. '
-title: UI Layout Column Component
+description: ' 使用 Open 3D Engine UI Editor 中的布局列组件将子元素组织到一个列中。 '
+title: UI Layout Column 组件
 weight: 100
 ---
 
-You can use a **LayoutColumn** component to organize child elements into a column. To use this feature, add the **LayoutColumn** component to an element and then add child elements. The UI system positions the child elements within the column, from top to bottom or bottom to top, depending on the order you choose in the component properties. The child elements can contain a texture or image, a button, a check box, text, columns, rows, grids, and so on.
+您可以使用 **LayoutColumn** 组件将子元素组织到一个列中。要使用此功能，请将 **LayoutColumn** 组件添加到元素，然后添加子元素。UI 系统根据您在组件属性中选择的顺序，将子元素从上到下或从下到上定位在列中。子元素可以包含纹理或图像、按钮、复选框、文本、列、行、网格等。
 
-To see an in-game example of a completed canvas with the **Layout Column** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Layout Components**, **Layout Column**. You can view examples of different child sizes within a column. Press **Esc** to exit the game.
+要查看具有 **Layout Column** 组件的完整画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**, **Layout Components**, **Layout Column***。您可以在列中查看不同子项大小的示例。按 **Esc** 退出游戏。
 
-To view this same canvas in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Layout` directory and open the `SimpleColumn.uicanvas` file.
+要在 UI 编辑器中查看此同一画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Layout` 目录并打开`SimpleColumn.uicanvas` 文件。
 
-You can add a prebuilt **Layout Column** element from the slice library. When you do this, a simple layout column is automatically created and nested in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **Layout Column** 元素。执行此操作时，将自动创建一个简单的布局列并将其嵌套在 **Hierarchy** 窗格中。
 
-**To add a Layout Column element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **LayoutColumn**.
+**从切片库添加 Layout Column 元素**
++ 在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，选择 **New**, **Element from Slice Library**, **LayoutColumn**.
 
- By default, the layout column gives every child the same amount of space, regardless of its content. You can, however, manipulate the sizes of each child by adding the [LayoutCell](./components-layout-cell) component to each or specific children.
+默认情况下，layout 列为每个子项提供相同的空间量，而不管其内容如何。但是，您可以通过将 [LayoutCell](./components-layout-cell) 组件添加到每个子项或特定子项来操纵每个子项的大小。
 
-The layout column can also give varying space to each child depending on its content. To enable the layout column to do this, clear the **Ignore Default Cell** option in the **LayoutColumn** component's properties.
+layout 列还可以根据其内容为每个子项提供不同的空间。要使布局列能够执行此操作，请清除 **LayoutColumn** 组件属性中的 **Ignore Default Cell** 选项。
 
-In the first image, **Ignore Default Cells** is selected. The layout column gives each child the same amount of space regardless of their contents.
+在第一个图像中，选择了 **Ignore Default Cells**。layout 列为每个子项提供相同的空间量，而不管其内容如何。
 
 ![Layout column with equally sized children](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-layout-column-ignore.png)
 
-In the second image, **Ignore Default Cells** is cleared. The layout column calculates its children's space based on their contents.
+在第二个图像中，清除了 **Ignore Default Cells**。layout 列根据其子项的内容计算其子项的空间。
 
 ![Layout column with children sized to content](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-layout-column-clear.png)
 
-To see an example of a completed canvas with the layout column component, open `SimpleColumn.uicanvas` in the LyShineExamples Gem \(`\dev\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\`\).
+要查看带有布局列组件的完整画布的示例，请打开 `SimpleColumn.uicanvas`，位于LyShineExamples Gem \(`\dev\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\`\)中。
 
-**To edit a layout column component**
+**编辑布局列组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **LayoutColumn** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的**Properties**中，展开 **LayoutColumn**并根据需要执行以下操作：
 
 **Padding**
 
-Type values in pixels, relative to the element's borders.
+键入相对于元素边框的像素值。
 
 **Spacing**
 
-Type values in pixels to adjust spacing between elements.
+以像素为单位键入值以调整元素之间的间距。
 
 **Order**
 
-Select **Top-to-Bottom** or **Bottom-to-Top** to specify the order in which the child elements appear in the column.
+选择 **Top-to-Bottom** 或 **Bottom-to-Top** 以指定子元素在列中的显示顺序。
 
 **Child Alignment**
 
-If the layout's children don't occupy all the available layout space, use this setting to determine how the children are aligned.
+如果 layout 的 children 不占用所有可用的 layout 空间，请使用此设置来确定 children 的对齐方式。
 
-For **Horizontal**, select **Left**, **Center**, or **Right** to determine how the children are aligned horizontally.
+对于 **Horizontal**， 选择 **Left**, **Center**, 或 **Right** 来确定子项的水平对齐方式。
 
-For **Vertical**, select **Top**, **Center**, or **Bottom** to determine how the children are aligned vertically.
+对于 **Vertical**， 选择 **Top**, **Center**, 或 **Bottom** 来确定子项如何垂直对齐。
 
 **Ignore Default Cell**
 
-Selected by default, this property causes the layout column to give each child an equal amount of space regardless of their contents (unless the child has a [**LayoutCell**](./components-layout-cell) component). The layout column ignores the layout cell's content-based default calculations.
+默认情况下，此属性处于选中状态，它会导致布局列为每个子项提供相等的空间量，而不管其内容如何（除非该子项具有 [**LayoutCell**](./components-layout-cell) 组件）。布局列会忽略布局单元格中基于内容的默认计算。
 
-When you clear this option, the layout column uses the children's layout cell calculated values to determine how much space to give each child based on its contents. For more information, see [LayoutCell](./components-layout-cell).
+清除此选项时，布局列将使用子项的布局单元格计算值来确定根据其内容为每个子项提供多少空间。有关详细信息，请参阅 [LayoutCell](./components-layout-cell).

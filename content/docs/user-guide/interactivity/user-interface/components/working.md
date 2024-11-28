@@ -1,89 +1,89 @@
 ---
-linkTitle: Working with UI Components
-description: Learn how to add and delete components, reference UI elements as component properties, and manage components in Open 3D Engine's UI Editor .
-title: Working with UI Components
+linkTitle: 使用 UI 组件
+description: 了解如何在 Open 3D Engine 的 UI 编辑器中添加和删除组件、引用 UI 元素作为组件属性以及管理组件。
+title: 使用 UI 组件
 weight: 100
 ---
 
-You can use the **UI Editor** to add and delete components, create references to UI elements for component properties, and manage components.
+您可以使用 **UI 编辑器** 添加和删除组件、为组件属性创建对 UI 元素的引用以及管理组件。
 
-## Adding or Deleting Components 
+## 添加或删除组件
 
-You can add or delete components in the [UI Editor](/docs/user-guide/interactivity/user-interface/editor).
+您可以在 [UI 编辑器](/docs/user-guide/interactivity/user-interface/editor).
 
-**To add a component to an element**
+**将组件添加到元素**
 
-1. In the **UI Editor**, select an element in the **Hierarchy** pane or in the Viewport.
+1. 在 **UI 编辑器**中，在 **Hierarchy** 窗格或视区中选择一个元素。
 
-   To add components to multiple elements at once, use **Ctrl** to select multiple elements.
+  要一次将组件添加到多个元素，请使用 **Ctrl** 选择多个元素。
 
-1. Do one of the following:
-   + At the top of the **Properties** panel, click **Add Component**.
-   + In the **Properties** panel, right-click and choose **Add Component**.
+1. 执行以下操作之一：
+   + 在 **Properties** 面板顶部，点击 **Add Component**.
+   + 在 **Properties** 面板中，右击并选择 **Add Component**.
 
-1. Select the component to add to the element: image, text, button, check box, slider, text input, scroll box, fader, mask, layout column, layout row, or layout grid.
+1. 选择要添加到元素的组件：图像、文本、按钮、复选框、滑块、文本输入、滚动框、推子、蒙版、布局列、布局行或布局网格。
 
-1. See the instructions for the specific component that you're adding.
+1. 请参阅您要添加的特定组件的说明。
 
-**To delete a component from an element**
+**从元素中删除组件**
 
-1. In the **UI Editor**, select an element in the **Hierarchy** pane.
+1. 在 **UI Editor**中，在 **Hierarchy** 窗格中选择一个元素。
 
-1. In the **Properties** panel, right-click the component and click **Remove**.
+1. 在 **Properties** 面板中，右击组件，点击 **Remove**。
 
-## Referencing UI Elements 
+## 引用 UI 元素
 
-You can specify a UI element for some properties on components. For example, you can specify UI elements for **Lua Script** properties.
+您可以为组件上的某些属性指定 UI 元素。例如，您可以为 **Lua Script** 属性指定 UI 元素。
 
 ![Properties in a Lua Script component.](/images/user-guide/interactivity/user-interface/components/ui-editor-referencing-ui-elements-1.png)
 
-You can specify elements as properties either by dragging the element into the property field or by using the pick object button.
+您可以通过将元素拖动到属性字段中或使用 pick 对象按钮将元素指定为属性。
 
-**To drag a UI element into a property**
-+ In the **UI Editor**'s **Hierarchy** panel, select an element and drag it to the component property in the **Properties** panel.
+**将 UI 元素拖动到属性中**
++ 在 **UI 编辑器**的 **Hierarchy** 面板中，选择一个元素并将其拖到 **Properties** 面板中的组件属性中。
 
-**To use the pick object button to reference a UI element**
+**使用选取对象按钮引用 UI 元素**
 
-1. In the **Properties** panel, next to the property to specify an element for, click the pick object button.
+1. 在 **Properties** 面板中，在要为其指定元素的属性旁边，单击 pick object 按钮。
 
     ![Properties in a Lua Script component.](/images/user-guide/interactivity/user-interface/components/ui-editor-referencing-ui-elements-2.png)
 
-1. Select the element that you want from either the viewport or the **Hierarchy** panel.
+1. 从视区或 **Hierarchy** 面板中选择所需的元素。
 
-    The property populates with the UI element name.
+    该属性将填充 UI 元素名称。
 
-**To clear the element name from the property**
-+ In the **Properties** panel, next to the property name, click **x**.
+**从属性中清除元素名称**
++ 在 **Properties** 面板中，单击属性名称旁边的 **x**。
 
-After you specify a UI element as a property, you can select that element from the **Properties** panel.
+将 UI 元素指定为属性后，您可以从 **属性** 面板中选择该元素。
 
-**To select a UI element from the **Properties** panel**
-+ In the **Properties** panel, double-click the element name.
+从 **Properties** 面板中选择 UI 元素
++ 在 **Properties** 面板中，双击元素名称。
 
-## Managing UI Components 
+## 管理 UI 组件
 
-You can use the context menu in the **Properties** panel to add, remove, cut, copy, and paste components.
+您可以使用 **Properties** 面板中的上下文菜单来添加、删除、剪切、复制和粘贴组件。
 
-**To manage components from the context menu**
+**从上下文菜单管理组件**
 
-1. In the **Hierarchy** panel, select the UI element.
+1. 在 **Hierarchy** 面板中，选择 UI 元素。
 
-1. In the **Properties** panel, either right-click the component or click the menu button in the header. Then choose one of the following:
-    + **Add component** - Add a component to the element
-    + **Delete component** - Remove a component from the element
-    + **Cut component** - Cut a component from one UI element to be pasted onto a different UI element
-    + **Copy component** - Copy a component from one UI element to be pasted onto a different UI element
-    + **Paste component** - Paste a component copied from one UI element onto a different UI element
+1. 在 **Properties** 面板中，右键单击组件或单击标题中的菜单按钮。然后选择以下选项之一：
+    + **Add component** - 向元素添加组件
+    + **Delete component** - 从元素中删除组件
+    + **Cut component** - 从一个 UI 元素剪切组件以粘贴到另一个 UI 元素上
+    + **Copy component** - 从一个 UI 元素复制组件以粘贴到另一个 UI 元素
+    + **Paste component** - 将从一个 UI 元素复制的组件粘贴到另一个 UI 元素上
 
-You can also use the context menu to act on multiple components at once.
+您还可以使用上下文菜单一次对多个组件执行操作。
 
-**To perform actions on multiple components**
+**对多个组件执行操作**
 
-1. Press **Ctrl** to select multiple components and then right-click to open the context menu.
+1. 按 Ctrl 键选择多个组件，然后右键单击以打开上下文菜单。
 
-1. Choose an action.
+1. 选择一项操作。
 
     {{< note >}}
-The **Element** and **Transform2D** components are automatically added to a UI element and can't be removed from the component list.
-Some actions are disabled, depending on the context. For example, you can't paste a component if you haven't copied one.
+**Element** 和 **Transform2D** 组件会自动添加到 UI 元素中，并且无法从组件列表中删除。
+某些操作被禁用，具体取决于上下文。例如，如果您尚未复制组件，则无法粘贴组件。
 {{< /note >}}

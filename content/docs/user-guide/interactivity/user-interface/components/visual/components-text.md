@@ -1,49 +1,49 @@
 ---
 linkTitle: UI Text
-description: Use a Text component in Open 3D Engine's UI Editor to add a text string to a UI element.
-title: UI Text Component
+description: 使用 Open 3D Engine 的 UI 编辑器中的文本组件将文本字符串添加到 UI 元素。
+title: UI Text 组件
 weight: 300
 ---
 
-You can use a **Text** component to add a text string to an element.  Use the **Properties** pane of the [UI Editor](/docs/user-guide/interactivity/user-interface/editor) to configure the following settings for the **Text** component.
+您可以使用 **Text** 组件向元素添加文本字符串。 使用 [UI 编辑器](/docs/user-guide/interactivity/user-interface/editor) 的 **Properties** 窗格为 **Text** 组件配置以下设置。
 
 
-**Text Settings**
+**Text 设置**
 
-| Name | Description |
+|名称 |描述 |
 | --- | --- |
-| Text |  Enter the preferred text string and press **Enter**. You can also apply [text styling markup](#text-markup).  |
-| Enable markup |  If selected, the text string is parsed for markup tags. For more information, see [Text Markup](#text-markup).  |
-| Color |  Click the color swatch to select a different color.  |
-| Alpha |  Use the slider to choose an alpha value between **0** and **1**.  |
-| Font path |  Click the button and select a font `.font` file. For more information, see [Adding New Fonts](/docs/user-guide/interactivity/user-interface/fonts/adding-fonts).  |
-| Font size |  Enter a font size and press **Enter**.  |
-| Font effect |  Select an effect from the list. The available font effects are dictated by the font `.font` file.  |
-| Horizontal text alignment |  Select **Left**, **Center**, or **Right** to align the text with the element's left and right borders.  |
-| Vertical text alignment |  Select **Top**, **Center**, or **Bottom** to align the text with the element's top and bottom borders.  |
-| Overflow mode |  Select **Overflow** to allow the text to display beyond the edges of the element. Select **Clip text** to hide, or clip, any text that flows beyond the element's edges.  |
-| Wrap text |  Select **No wrap** to prevent text from wrapping to subsequent lines. Select **Wrap text** to allow text to be broken into separate lines.  |
+| Text |  输入首选文本字符串，然后按 Enter。您还可以应用 [文本样式标记](#text-markup).  |
+| Enable markup |  如果选中，则为标记标签解析文本字符串。有关更多信息，请参阅 [Text Markup](#text-markup).  |
+| Color |  单击色样以选择其他颜色。  |
+| Alpha |  使用滑块选择介于 **0** 和 **1** 之间的 alpha 值。  |
+| Font path |  单击按钮并选择字体 `.font` 文件。有关详细信息，请参阅 [添加新字体](/docs/user-guide/interactivity/user-interface/fonts/adding-fonts).  |
+| Font size |  输入字体大小，然后按 Enter。  |
+| Font effect |  从列表中选择一个效果。可用的字体效果由字体 `.font`文件决定。 |
+| Horizontal text alignment |  选择 **Left**, **Center**, 或 **Right** 将文本与元素的左边框和右边框对齐。  |
+| Vertical text alignment |  选择 **Top**, **Center**, 或 **Bottom** 将文本与元素的上边框和下边框对齐。  |
+| Overflow mode |  选择 **Overlay** 以允许文本显示在元素边缘之外。选择 **Clip text** 以隐藏或剪切流出元素边缘的任何文本。  |
+| Wrap text |  选择 **No wrap** 以防止文本换行到后续行。选择 **Wrap text** 以允许将文本分成单独的行。 |
 
 ## Text Markup 
 
-You can customize the appearance of the text in your game UI with bold and italic styling, multiple text colors, and multiple fonts in a single text string. You can also embed images in the text.
+您可以在单个文本字符串中使用粗体和斜体样式、多种文本颜色和多种字体来自定义游戏 UI 中的文本外观。您还可以在文本中嵌入图像。
 
-To do this, enter specific tags directly into the **Text** box, along with your string. The simple markup language is loosely based on HTML.
+为此，请直接在 **Text** 框中输入特定标签以及您的字符串。简单标记语言松散地基于 HTML。
 
- To use the text styling markup feature, you must use a font family `*.fontfamily` asset file in the **Font path** setting \(rather than an individual `.font` asset file\). For more information about adding font families to your projects, see [Implementing New Fonts](/docs/user-guide/interactivity/user-interface/fonts/).
+要使用文本样式标记功能，您必须在 **Font path** 设置中使用字体系列 `*.fontfamily`  资产文件\(而不是单个 `.font` 资产文件\)。有关将字体系列添加到项目的更多信息，请参见 [实现新字体](/docs/user-guide/interactivity/user-interface/fonts/)。
 
-**To use text styling markup**
+**使用文本样式标记**
 
-1. In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), add a **Text** component to an element on your canvas (or modify an existing component).
+1. 在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，添加**Text** component 拖动到画布上的元素（或修改现有组件）。
 
-1. With the element selected, in the **Properties** pane, set the **Font path** property to a `*.fontfamily` file.
+1. 选择元素后，在 **Properties** 窗格中，将 **Font path** 属性设置为`*.fontfamily`文件。
 
-1. Enter a string with markup styling in the **Text** box. See the next section for examples.
+1. 在 **Text** 框中输入带有标记样式的字符串。有关示例，请参阅下一节。
 
 ### Styling Tags and Attributes 
 
-**Example**
-You can use the following tags and attributes when styling text with markup:
+**示例**
+使用标记设置文本样式时，可以使用以下标记和属性：
 
 **Bold** tag: 
 
@@ -61,11 +61,11 @@ You can use the following tags and attributes when styling text with markup:
 
 ![Example that uses a Text component to add different fonts in the UI Editor.](/images/user-guide/interactivity/user-interface/components/visual/this-text-font.png)
 
-### Image Tag and Attributes 
+### Image 标签和属性
 
-Use the `<img>` tag to embed an image in text.
+使用  `<img>` 标签在文本中嵌入图像。
 
-**Example**
+**示例**
 
 ```
 <img src="images/icons/button" vAlign="center" height="fontHeight" scale="1.5" yOffset="5" xPadding="6"/>
@@ -73,18 +73,18 @@ Use the `<img>` tag to embed an image in text.
 <img src="images/icons/button" vAlign="bottom" height="100" scale="0.8" yOffset="-3" lPadding="2" rPadding="6"/>
 ```
 
-Use the following attributes to customize your image. Only the `src` attribute is required. All other attributes are optional.
+使用以下属性自定义映像。只需要 `src` 属性。所有其他属性都是可选的。
 
 
 ****
 
-| Attribute | Example | Description |
+| 属性 | 示例 | 说明 |
 | --- | --- | --- |
-| src | src="images/icons/button" |  Asset path of the texture to display.  |
-| vAlign | vAlign="center" |  Alignment of image in the text area. The text area refers to the total height of the largest glyph in the font. If you don't specify this attribute, the default alignment is `baseline`.   |
-| height | height="100" |  Sets the image height and adjusts its width to preserve the aspect ratio. If you don't specify this attribute, the default alignment is `fontAscent`.   |
-| scale | scale="0.8" | Scales the image by the specified scale factor. If not specified, this attribute defaults to 1.0. |
-| yOffset | yOffset="-3" |  Offsets the image vertically by the specified float value in pixels. If not specified, this attribute defaults to `0`.  |
-| xPadding | xPadding="6" |  Adds equal spacing before and after the image by the specified float value in pixels. If not specified, this attribute defaults to 0.0.  |
-| lPadding | lPadding="10" |  Adds spacing to the left of the image by the specified float value in pixels. If not specified, this attribute defaults to 0.0.  |
-| rPadding | rPadding="2" |  Adds spacing to the right of the image by the specified float value in pixels. If not specified, this attribute defaults to 0.0. |
+| src | src="images/icons/button" |  要显示的纹理的 Asset path。  |
+| vAlign | vAlign="center" |  文本区域中的图像对齐方式。文本区域是指字体中最大字形的总高度。如果未指定此属性，则默认对齐方式为 `baseline`.   |
+| height | height="100" | 设置图像高度并调整其宽度以保持长宽比。如果未指定此属性，则默认对齐方式为 `fontAscent`.   |
+| scale | scale="0.8" | 按指定的比例因子缩放图像。如果未指定，则此属性默认为 1.0。 |
+| yOffset | yOffset="-3" |  按指定的浮点值（以像素为单位）垂直偏移图像。如果未指定，则此属性默认为 `0`.  |
+| xPadding | xPadding="6" |  在图像前后按指定的浮点值（以像素为单位）添加相等的间距。如果未指定，则此属性默认为 0.0。  |
+| lPadding | lPadding="10" |  按指定的浮点值（以像素为单位）向图像左侧添加间距。如果未指定，则此属性默认为 0.0。  |
+| rPadding | rPadding="2" |  按指定的浮点值（以像素为单位）向图像右侧添加间距。如果未指定，则此属性默认为 0.0。 |

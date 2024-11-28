@@ -1,51 +1,51 @@
 ---
 linkTitle: UI Layout Row
-description: ' Use a layout row component in the Open 3D Engine UI Editor to organize child elements into a row. '
-title: UI Layout Row Component
+description: ' 使用 Open 3D Engine UI Editor 中的布局行组件将子元素组织到一行中。'
+title: UI Layout Row 组件
 weight: 200
 ---
 
- You can use a **LayoutRow** component to organize child elements into a row. To use this feature, you add the **LayoutRow** component to an element and then add child elements. The UI system positions the child elements within the row, from left to right or right to left, depending on the order you choose. The child elements can contain a texture or image, a piece of text, a button, a check box, more columns, rows, grids, and so on. To control the sizes of specific, or all, children, add the [LayoutCell](./components-layout-cell) component to those children.
+您可以使用 **LayoutRow** 组件将子元素组织成一行。要使用此功能，请将 **LayoutRow** 组件添加到元素中，然后添加子元素。UI 系统根据您选择的顺序，将子元素从左到右或从右到左放置在行中。子元素可以包含纹理或图像、一段文本、一个按钮、一个复选框、更多列、行、网格等。要控制特定或所有子项的大小，请将 [LayoutCell](./components-layout-cell)  组件添加到这些子项中。
 
-Similar to the **LayoutColumn** component, the **LayoutRow** component has an **Ignore Default Cell** property. For more information, see [LayoutColumn](./components-layout-column).
+与 **LayoutColumn** 组件类似，**LayoutRow** 组件具有 **Ignore Default Cell** 属性。有关更多信息，请参阅[LayoutColumn](./components-layout-column).
 
 ![LayoutRow with children](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-layout-row.png)
 
-To see an in-game example of a completed canvas with the **Layout Row** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Layout Components**, **Layout Row**. You can view examples of different child sizes within a row. Press **Esc** to exit the game.
+要查看具有 **Layout Row** 组件的完整画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择**Components**, **Layout Components**, **Layout Row**。您可以在一行中查看不同子项大小的示例。按 **Esc** 退出游戏。
 
-To view this same canvas in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Layout` directory and open the `SimpleRow.uicanvas` file.
+要在 UI 编辑器中查看此同一画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Layout` 目录并打开 `SimpleRow.uicanvas` 文件。
 
-You can add a prebuilt **Layout Row** element from the slice library. When you do this, a simple layout row is automatically created and nested in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **Layout Row** 元素。执行此操作时，将自动创建一个简单的布局行并将其嵌套在 **Hierarchy** 窗格中。
 
-**To add a Layout Row element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **LayoutRow**.
+**从切片库添加 Layout Row 元素**
++ 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，选择 **New**, **Element from Slice Library**, **LayoutRow**.
 
-**To edit a layout row component**
+**编辑布局行组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **LayoutRow** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的**Properties**面板中，展开 **LayoutRow** 并根据需要执行以下操作：
 
 **Padding**
 
-Type values in pixels, relative to the element's borders.
+键入相对于元素边框的像素值。
 
 **Spacing**
 
-Type values in pixels to adjust spacing between elements.
+以像素为单位键入值以调整元素之间的间距。
 
 **Order**
 
-Select **Left-to-Right** or **Right-to-Left** to specify the order in which the child elements appear in the row.
+选择 **Left-to-Right** 或 **Right-to-Left** 以指定子元素在行中的显示顺序。
 
 **Child Alignment**
 
-If the layout's children don't occupy all the available layout space, use this setting to determine how the children are aligned.
+如果 layout 的 children 不占用所有可用的 layout 空间，请使用此设置来确定 children 的对齐方式。
 
-For **Horizontal**, select **Left**, **Center**, or **Right** to determine how the children are aligned horizontally.
+对于 **Horizontal**, 选择 **Left**, **Center**, 或 **Right** 来确定子项的水平对齐方式。
 
-For **Vertical**, select **Top**, **Center**, or **Bottom** to determine how the children are aligned vertically.
+对于 **Vertical**, 选择 **Top**, **Center**, 或 **Bottom** 来确定子项如何垂直对齐。
 
 **Ignore Default Cell**
 
-Selected by default, this property causes the layout row to give each child an equal amount of space regardless of their contents (unless the child has a [**LayoutCell**](./components-layout-cell) component). The layout row ignores the layout cell's content-based default calculations.
+默认情况下，此属性会使布局行为每个子项提供相等的空间量，而不管其内容如何（除非子项具有 [**LayoutCell**](./components-layout-cell) 组件）。布局行将忽略布局单元格的基于内容的默认计算。
 
-When you clear this option, the layout row uses the children's layout cell calculated values to determine how much space to give each child based on its contents. For more information, see [LayoutCell](./components-layout-cell).
+清除此选项时，布局行将使用子项的布局单元格计算值来确定根据其内容为每个子项提供多少空间。有关详细信息，请参阅 [LayoutCell](./components-layout-cell).

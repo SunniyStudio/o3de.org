@@ -1,51 +1,51 @@
 ---
 linkTitle: UI Layout Grid
-description: ' Use a layout grid component in the Open 3D Engine UI Editor to organize child elements into a uniform grid. '
-title: UI Layout Grid Component
+description: ' 使用 Open 3D Engine UI Editor 中的布局网格组件将子元素组织到一个统一的网格中。'
+title: UI Layout Grid 组件
 weight: 300
 ---
 
-You can use a layout grid component to organize child elements into a uniform grid. To use this feature, you add the layout grid component to an element and then add child elements. The UI system positions the child elements in a grid pattern. You can choose whether the child elements are positioned left to right or right to left, and bottom to top or top to bottom. The child elements can contain a texture or image, a piece of text, a button, a check box, more columns, rows, grids, and so on. The size of each child is determined by the **Cell Size** property and is independent of each child's content.
+您可以使用布局网格组件将子元素组织到一个统一的网格中。要使用此功能，您需要将布局网格组件添加到元素中，然后添加子元素。UI 系统将子元素定位在网格模式中。您可以选择子元素是按从左到右还是从右到左、从下到上还是从上到下放置。子元素可以包含纹理或图像、一段文本、一个按钮、一个复选框、更多列、行、网格等。每个子项的大小由 **Cell Size** 属性确定，并且独立于每个子项的内容。
 
 ![Example canvas with LayoutGrid](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-layout-grid.png)
 
 
 
-To see an in-game example of a completed canvas with the **LayoutGrid** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Layout Components**, **Layout Grid**. You can view examples of different fill patterns. Press **Esc** to exit the game.
+要查看具有 **LayoutGrid** 组件的完整画布的游戏内示例，请在项目 SamplesProject 中打开关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**, **Layout Components**, **Layout Grid**。 您可以查看不同填充图案的示例。按 **Esc** 退出游戏。
 
-To view this same canvas in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Layout ` directory and open the `SimpleGrid.uicanvas` file.
+要在 UI 编辑器中查看此同一画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Layout `目录并打开`SimpleGrid.uicanvas`文件。
 
-You can add a prebuilt **Layout Grid** element from the slice library. When you do this, a simple layout grid is automatically created and nested in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **Layout Grid** 元素。执行此操作时，将自动创建一个简单的布局网格并将其嵌套在 **Hierarchy** 窗格中。
 
-**To add a Layout Grid element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **LayoutGrid**.
+**从切片库添加 Layout Grid 元素**
++ 在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，选择**New**, **Element from Slice Library**, **LayoutGrid**.
 
-**To edit a layout grid component**
+**编辑布局网格组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **LayoutGrid** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的**Properties**面板中，展开 **LayoutGrid** 并根据需要执行以下操作：
 
 **Padding**
 
-Type values in pixels, relative to the element's borders.
+键入相对于元素边框的像素值。
 
 **Spacing**
 
-Type values in pixels to adjust spacing among elements.
+以像素为单位键入值以调整元素之间的间距。
 
 **Cell size**
 
-Type values in pixels to specify the size of the child elements.
+键入以像素为单位的值以指定子元素的大小。
 
 **Order**
 
-Do the following as appropriate:
-+  For **Horizontal**, select **Left-to-Right** or **Right-to-Left** to determine the order in which elements appear horizontally.
-+ For **Vertical**, select **Top-to-Bottom** or **Bottom-to-Top** to determine the order in which elements appear vertically.
-+ For **Starting With**, select **Horizontal** or **Vertical** to determine whether elements appear horizontally or vertically first.
+根据需要执行以下操作：
++  对于 **Horizontal**, 选择 **Left-to-Right** 或 **Right-to-Left** 确定元素水平显示的顺序。
++ 对于 **Vertical**, 选择 **Top-to-Bottom** 或 **Bottom-to-Top** 确定元素垂直显示的顺序。
++ 对于 **Starting With**, 选择 **Horizontal** 或 **Vertical** 来确定元素是先水平显示还是垂直显示。
 
 **Child Alignment**
-If the layout's children don't occupy all the available layout space, this setting determines how the children are aligned.
+如果布局的子项不占用所有可用的布局空间，则此设置将确定子项的对齐方式。
 
-For **Horizontal**, select **Left**, **Center**, or **Right** to determine how the children are aligned horizontally.
+对于 **Horizontal**, 选择 **Left**, **Center**, 或 **Right** 来确定子项的水平对齐方式。
 
-For **Vertical**, select **Top**, **Center**, or **Bottom** to determine how the children are aligned vertically.
+对于 **Vertical**, 选择 **Top**, **Center**, 或 **Bottom** 来确定子项如何垂直对齐。

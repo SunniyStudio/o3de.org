@@ -1,88 +1,88 @@
 ---
-linkTitle: Tooltip Components
-description: ' Use tooltip components to give an element a tool tip when hovering over it, and configure its display properties in O3DE''s UI Editor. '
-title: UI Tooltip and Tooltip Display Components
+linkTitle: Tooltip 组件
+description: ' 使用工具提示组件在将鼠标悬停在元素上时为其提供工具提示，并在 O3DE 的 UI 编辑器中配置其显示属性。 '
+title: UI Tooltip 和 Tooltip Display 组件
 weight: 600
 ---
 
-You can add either a **Tooltip** component or a **TooltipDisplay** component to an element. With these components, you can display a tooltip when hovering over an interactive element.
+您可以向元素添加 **Tooltip** 组件或 **TooltipDisplay** 组件。使用这些组件，您可以在将鼠标悬停在交互式元素上时显示工具提示。
 
-To see in-game examples of completed canvases with **Tooltip** components, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Other Components**, **Tooltips**. You can view examples of tooltip text options and display styles. Press **Esc** to exit the game.
+要查看带有 **Tooltip** 组件的完整画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 Ctrl+G** 玩游戏，然后选择 **Components**、**Other Components**、**Tooltips**。您可以查看工具提示文本选项和显示样式的示例。按 **Esc** 退出游戏。
 
-To view these same canvases in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Tooltips` directory.
+要在 UI 编辑器 中查看这些相同的画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Tooltips` 目录。
 
-You can open the following canvases:
+您可以打开以下画布：
 + `TextOptions.uicanvas`
 + `Tooltips.uicanvas`
 
 ## Tooltip 
 
-You can use a **Tooltip** component to provide the text of the tooltip. Add a tooltip component to any interactive element that is to display a tooltip in the pause state.
+您可以使用 **Tooltip** 组件来提供工具提示的文本。将工具提示组件添加到任何交互式元素中，以在 pause 状态下显示工具提示。
 
-**To edit a tooltip component**
+**编辑Tooltip组件**
 
-1. In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **Tooltip**.
+1. 在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的**Properties**窗格中，展开 **Tooltip**.
 
-1. Enter a text string.
+1. 输入文本字符串。
 
 ## TooltipDisplay 
 
-The **TooltipDisplay** component defines the tooltip's display behavior. Add a **TooltipDisplay** component to the element that is to visually represent the tooltip. You must also set the **Tooltip display element** property of the canvas to this element. For more information, see [Configuring Canvas Properties](/docs/user-guide/interactivity/user-interface/canvases/canvas-properties).
+**TooltipDisplay** 组件定义工具提示的显示行为。向元素添加 **TooltipDisplay** 组件，以直观地表示工具提示。还必须将画布的 **Tooltip display element** 属性设置为此元素。有关详细信息，请参阅 [配置 Canvas 属性](/docs/user-guide/interactivity/user-interface/canvases/canvas-properties).
 
-**To edit a TooltipDisplay component**
+**编辑 TooltipDisplay 组件**
 
-+ In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **TooltipDisplay** and use the following settings, as appropriate:
++ 在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的**Properties**窗格中，展开 **TooltipDisplay** 并根据需要使用以下设置：
 
 **Trigger Mode**
 
-Select a tooltip trigger condition:
+选择工具提示触发条件：
 
-+ **On Hover** - The tooltip appears when the pointer hovers over the interactive element, and disappears when the pointer moves off of the interactive element.
-+ **On Press** - The tooltip appears when the interactive element is pressed and held, and disappears when the press is released. Note that the pointer might have moved elsewhere on the canvas by the time the release action has occurred.
-+ **On Click** - The tooltip appears when a pointer click, which includes a press and a release, occurs on the interactive element. The tooltip disappears when the next pointer click occurs anywhere on the canvas. Note that if the pointer clicks on the same entity, the tooltip disappears, but then reappears after the specified **Delay time**.
++ **On Hover** - 当指针悬停在交互式元素上时，工具提示会出现，当指针离开交互式元素时，工具提示会消失。
++ **On Press** - 工具提示在按住交互式元素时显示，并在释放按时消失。请注意，在发生释放操作时，指针可能已移动到画布上的其他位置。
++ **On Click** - 当交互式元素上发生指针单击（包括按下和释放）时，将显示工具提示。当下一次指针单击发生在画布上的任意位置时，工具提示将消失。请注意，如果指针单击同一实体，则工具提示将消失，但在指定的 **Delay time** 之后会重新出现。
 
     {{< tip >}}
-On mobile devices, you might want to use **On Press** or **On Click** instead of **On Hover**.
+在移动设备上，您可能希望使用 **On Press** 或 **On Click** 而不是 **On Hover**。
     {{< /tip >}}
 
     {{< note >}}
-In all cases, the appearance of the tooltip is delayed by the amount of time specified in **Delay time**. Furthermore, in all cases, the tooltip will disappear after a fixed amount of time set by O3DE, regardless of other criteria specified in the trigger conditions.
+在所有情况下，工具提示的显示都会延迟 **Delay time** 中指定的时间量。此外，在所有情况下，工具提示都将在 O3DE 设置的固定时间后消失，而不管触发条件中指定的其他条件如何。
     {{< /note >}}
 
 **Auto position**
 
-Automatically positions the element based on the positioning mode. The positioning mode is specified in the **Positioning** property.
+根据定位模式自动定位元素。定位模式在 **Positioning** 属性中指定。
 
 **Positioning**
 
-Select a positioning mode:
-+ **Offset from mouse** - Position the element so that its pivot is a certain distance from the pointer. The distance is specified in the **Offset** property.
-+ **Offset from element** - Position the element so that its pivot is a certain distance from the pivot of the element that triggered the tooltip display.
+选择定位模式：
++ **Offset from mouse** - 定位元素，使其枢轴与指针保持一定距离。距离在 **Offset** 属性中指定。
++ **Offset from element** - 定位元素，使其枢轴与触发工具提示显示的元素枢轴保持一定距离。
 
 **Offset**
 
-The offset to use when automatically positioning the element.
+自动定位元素时使用的偏移量。
 
 **Auto size**
 
-Automatically resizes the element to match the tooltip string's size. The text element is a child of the element, and its text is specified in the **Text** property. If **Auto size** is selected, then the text element's anchors should be apart so that the text element can grow and shrink with its parent.
+自动调整元素的大小以匹配工具提示字符串的大小。text 元素是元素的子元素，其 text 在 **Text** 属性中指定。如果选择了 **Auto size**，则文本元素的锚点应分开，以便文本元素可以随其父元素一起放大和缩小。
 
 **Text**
 
-The child element that is to display a tooltip string.
+用于显示工具提示字符串的子元素。
 
 **Delay time**
 
-The amount of time to wait before displaying the element.
+显示元素之前等待的时间。
 
 **Display time**
 
-The amount of time the element is to be displayed.
+元素的显示时间。
 
 **Show sequence**
 
-The animation sequence to be played when the element is about to appear.
+元素即将出现时要播放的动画序列。
 
 **Hide sequence**
 
-The animation sequence to be played when the element is about to disappear.
+当元素即将消失时要播放的动画序列。

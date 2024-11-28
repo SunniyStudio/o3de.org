@@ -1,79 +1,79 @@
 ---
 linkTitle: UI Layout Cell
-description: ' Add a layout cell component to a child of the layout row or column in the Open 3D Engine UI Editor to specify the child''s minimum size, target size, or extra ratio size. '
-title: UI Layout Cell Component
+description: ' 在 Open 3D Engine UI Editor 中，将布局单元格组件添加到布局行或列的子项，以指定子项的最小大小、目标大小或额外比率大小。 '
+title: UI Layout Cell 组件
 weight: 400
 ---
 
-When working with cell contents, it's important to understand the difference between a layout cell and the **LayoutCell** component. A layout cell represents a set of values that determine the space or area allocated to a child in a layout row or column. The **LayoutCell** component, on the other hand, manipulates the way a layout cell is sized. A layout cell exists on a child of a layout row or layout column whether or not it has a **LayoutCell** component. The **LayoutCell** component simply provides a way to manipulate and override the default calculations of a layout cell.
+在处理单元格内容时，了解布局单元格和 **LayoutCell** 组件之间的区别非常重要。布局单元格表示一组值，这些值确定在布局行或列中分配给子项的空间或区域。另一方面，**LayoutCell** 组件控制布局单元格的大小。布局单元格存在于布局行或布局列的子项上，无论它是否具有 **LayoutCell** 组件。**LayoutCell** 组件只提供了一种操作和覆盖布局单元格的默认计算的方法。
 
-A layout cell's properties consist of a minimum size, a target size, and an extra size ratio. These properties are not directly modifiable in the UI Editor, but are determined in several ways:
+布局单元格的属性包括最小大小、目标大小和额外大小比率。这些属性不能在 UI Editor 中直接修改，但可以通过多种方式确定：
 
-+ Components - The following components can affect the layout cell size:
++ 组件 - 以下组件可能会影响布局单元格大小：
 
-  + Image or text - The image's default size is the layout cell's target size. The length and size of a string in a text component is the layout cell's target size.
-  + Layout row or layout column (added or nested as children) - The default values of a layout row or layout column, added as a child, determines the layout cell's minimum and target size. The default value is calculated by the sum of its own children plus padding and spacing.
+  + 图像或文本 - 图像的默认大小是布局单元格的目标大小。文本组件中字符串的长度和大小是布局单元格的目标大小。
+  + 布局行或布局列（添加或嵌套为子项） - 作为子项添加的布局行或布局列的默认值决定了布局单元格的最小大小和目标大小。默认值的计算方法是其自己的 children 之和加上 padding 和 spacing。
 
     {{< note >}}
-The **LayoutColumn** and **LayoutRow** components contain a property called **Ignore Default Cells**. Selecting this property causes the above calculations to be ignored and simply allocate equal space to all children regardless of content. Clear this property to calculate layout cell values by components. For more information, see [LayoutColumn](/docs/user-guide/interactivity/user-interface/components/layout/components-layout-column).
+**LayoutColumn** 和 **LayoutRow** 组件包含一个名为 **Ignore Default Cells** 的属性。选择此属性会导致忽略上述计算，并简单地为所有子项分配相等的空间，而不考虑内容。清除此属性可按组件计算布局单元格值。有关详细信息，请参阅 [LayoutColumn](/docs/user-guide/interactivity/user-interface/components/layout/components-layout-column).
 {{< /note >}}
 
-+ Fixed default layout cell values - If the child doesn't have any components that calculate their own layout cell values, then the layout cell is assigned a minimum and target size of 0 and an extra size ratio of 1. This typically means equal spacing for the children that do not have a component affecting the layout cell's size. Each layout cell grows at the same rate to fill the available space (hence the extra size ratio of 1).
-+ **LayoutCell** component - Add the **LayoutCell** component to specify values for the minimum and target sizes, and the extra size ratio. Any values you specify here override the values calculated by all other methods.
++ 固定默认布局单元格值 - 如果子项没有任何计算自己的布局单元格值的组件，则会为布局单元格分配最小和目标大小 0 以及额外大小比率 1。这通常意味着没有影响布局单元格大小的组件的子项的间距相等。每个布局单元格都以相同的速率增长以填充可用空间（因此额外大小比率为 1）。
++ **LayoutCell** component - 添加 **LayoutCell** 组件以指定最小大小和目标大小的值，以及额外大小比率。您在此处指定的任何值都会覆盖所有其他方法计算的值。
 
-After layout cell values are calculated, layout cell space is allocated by the following:
+计算布局单元格值后，布局单元格空间将按以下方式分配：
 
-1. First, each child receives its minimum size (**Min Height** or **Min Width**).
+1. 首先，每个子项都会收到其最小大小 (**Min Height** 或 **Min Width**).
 
-1. If space is available, each child receives its target size (**Target Height** or **Target Width**).
+1. 如果有可用空间，则每个子项都会收到其目标大小 (**Target Height** 或 **Target Width**).
 
-1. If space is still available after that, then the **Extra Size Ratio** value is used to determine how to allocate the remaining space. This ratio is relative to the child's siblings. For example, if one child's extra size ratio is 1, and another child's is 2, then the second child gains twice as much extra space as the first child. An extra size ratio of 0 means that no more space is allocated once the target size is reached.
+1. 如果在此之后仍有可用空间，则使用 **Extra Size Ratio** 值来确定如何分配剩余空间。此比率是相对于孩子的兄弟姐妹的比率。例如，如果一个子项的额外大小比率为 1，另一个子项的 Extra Size Ratio 为 2，则第二个子项获得的额外空间是第一个子项的两倍。额外大小比率 0 意味着在达到目标大小后不再分配更多空间。
 
-## Using the LayoutCell Component 
+## 使用 LayoutCell 组件
 
-You can apply the **LayoutCell** component to the children of a layout row or column to override the layout cell's default calculations.
+您可以将 **LayoutCell** 组件应用于布局行或列的子项，以覆盖布局单元格的默认计算。
 
-In the following example, the layout column has three images as its children. The images each occupy equal space in the column.
+在以下示例中，layout 列将三个 images 作为其子项。每个图像在列中占据相等的空间。
 
 ![Hierarchy pane and canvas](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-layout-cell.png)
 
-If you add a **LayoutCell** component to the first image, and then select **Min Height** and assign a value of 100, then the UI system overrides that child's default calculated value, and gives the top image more height than its siblings, whose values are recalculated to adjust to the remaining column space.
+如果将 **LayoutCell** 组件添加到第一个图像，然后选择 **Min Height** 并分配值 100，则 UI 系统将覆盖该子级的默认计算值，并为顶部图像提供比其同级图像更高的高度，后者的值将重新计算以调整到剩余的列空间。
 
 ![Setting Min Height in LayoutCell](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-layout-cell-2.png)
 
-In the next example, a layout grid was added as a child. Its calculated size is the same as its two siblings above it.
+在下一个示例中，将布局网格添加为子项。它计算出的大小与它上面的两个同级相同。
 
 ![LayoutGrid added to canvas](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-layout-cell-3.png)
 
-However, when you add a **LayoutCell** component to the grid, and then specify a **Min Height** of 100, then the grid, as a whole is granted that amount of space. If you add the **LayoutCell** component to the children of a layout grid, however, it has no effect. That's because individual grid spaces are always uniform and are controlled by the grid parent.
+但是，当您将 **LayoutCell** 组件添加到网格中，然后将 **Min Height** 指定为 100 时，将向整个网格授予该空间量。但是，如果将 **LayoutCell** 组件添加到布局网格的子项中，则它不会产生任何效果。这是因为各个网格空间始终是统一的，并且由网格父级控制。
 
 ![LayoutCell added to LayoutGrid](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-layout-cell-4.png)
 
-**To edit a LayoutCell component**
+**To edit a LayoutCell component编辑 LayoutCell 组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **LayoutCell** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的 **Properties** 面板中，展开 **LayoutCell** 并根据需要执行以下操作：
 
 **Min Width**
 
-Select to define the layout cell's minimum width. Type a value in the box that appears.
+选择以定义布局单元格的最小宽度。在显示的框中键入一个值。
 
 **Min Height**
 
-Select to define the layout cell's minimum height. Type a value in the box that appears.
+选择以定义布局单元格的最小高度。在显示的框中键入一个值。
 
 **Target Width**
 
-Select to define the layout cell's target width. Type a value in the box that appears. If space is available, this target width is allocated to the layout cell.
+选择以定义布局单元格的目标宽度。在显示的框中键入一个值。如果有可用空间，则此目标宽度将分配给布局单元格。
 
 **Target Height**
 
-Select to define the target height. Type a value in the box that appears. If space is available, this target height is allocated to the layout cell.
+选择以定义目标高度。在显示的框中键入一个值。如果有可用空间，则此目标高度将分配给布局单元格。
 
 **Extra Width Ratio**
 
-Select to define the layout cell's extra width ratio. Type a value in the box that appears. This value is a ratio that is relative to the other elements. If space remains after the layout cell reaches its target size, the **Extra Size Ratio** value is used to allocate the rest of the space.
+选择以定义布局单元格的额外宽度比例。在显示的框中键入一个值。此值是相对于其他元素的比率。如果在布局单元格达到其目标大小后仍有空间，则 **Extra Size Ratio** 值用于分配其余空间。
 
-Because this **Extra Size Ratio** value is relative to the other children, if one child's extra size ratio is 1, and another child's is 2, then the second child gains twice as much extra space as the first child. An extra size ratio of 0 means that no more space is allocated once the target size is reached.
+由于此 **Extra Size Ratio** 值是相对于其他子项的，因此，如果一个子项的 Extra Size Ratio 为 1，而另一个子项的 Extra Size Ratio 为 2，则第二个子项获得的额外空间是第一个子项的两倍。额外大小比率 0 意味着在达到目标大小后不再分配更多空间。
 
 **Extra Height Ratio**
-Select to define the layout cell's extra height ratio. Type a value in the box that appears.
+选择以定义布局单元格的额外高度比率。在显示的框中键入一个值。

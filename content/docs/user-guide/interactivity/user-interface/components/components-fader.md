@@ -1,21 +1,21 @@
 ---
 linkTitle: UI Fader
-description: Use the Fader component to adjust the transparency of an element and its children.
-title: UI Fader Component
+description: 使用 Fader 组件调整元素及其子元素的透明度。
+title: UI Fader 组件
 ---
 
-You can use a **Fader** component to simultaneously adjust the transparency of an element and its children.
+您可以使用 **Fader** 组件同时调整元素及其子元素的透明度。
 
-**To view an example canvas in the UI Editor**
+**在 UI 编辑器中查看示例画布**
 
-+ Navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Fader` directory.
++ 浏览至 `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Fader` 目录。
 
-You can open the following canvases:
+您可以打开以下画布：
 + `AnimFade.uicanvas`
 + `DirectFade.uicanvas`
 
-**To edit a fader component**
+**编辑Fader组件**
 
-1. In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **Fader**.
+1. 在 [**UI 编辑器**](/docs/user-guide/interactivity/user-interface/editor) 的 **Properties** 窗格中，展开 **Fader**。
 
-1. For the **Fade** multiplier, use the slider to select a number between `0` (invisible) and `1` (opaque) and press **Enter**.
+1. 对于 **Fade** 乘数，使用滑块选择介于 '`0`' （不可见） 和 '`1`' （不透明） 之间的数字，然后按 **Enter**。

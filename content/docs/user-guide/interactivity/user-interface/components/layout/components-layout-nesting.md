@@ -1,28 +1,28 @@
 ---
-linkTitle: Nesting Layout Components
-description: ' Nest layout components within other layout components in the Open 3D Engine UI Editor. '
-title: Nesting Layout Components
+linkTitle: 嵌套布局组件
+description: ' 在 Open 3D Engine UI Editor 中将布局组件嵌套在其他布局组件中。 '
+title: 嵌套布局组件
 weight: 600
 ---
 
-You can nest layout components within other layout components.
+您可以将布局组件嵌套在其他布局组件中。
 
-To see an in-game example of a completed canvas with a nested layout, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Layout Components**, **Nested Layout**. Press **Esc** to exit the game.
+要查看具有嵌套布局的完整画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**, **Layout Components**, **Nested Layout**。按 **Esc** 退出游戏。
 
-To view that same canvas in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Layout` directory and open the `\NestedLayout.uicanvas`.
+要在 UI 编辑器 中查看同一画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Layout` 目录并打开 `\NestedLayout.uicanvas`.
 
-The following examples shows one large layout row.
+以下示例显示了一个大型布局行。
 
 ![Hierarchy pane with LayoutRow and children](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-nesting-row.png)
 
-Within the layout row are four columns.
+布局行中有四列。
 
 ![LayoutColumns within LayoutRow](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-nesting-column.png)
 
-Within column A, there are three layout rows. Column B has two layout grids. Column C has three images. Column D has one large image consisting of a color.
+在 A 列中，有 3 个布局行。列 B 有两个布局网格。列 C 有 3 张图像。列 D 有一个由颜色组成的大图像。
 
 ![Child elements of the LayoutColumns](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-nesting-nested.png)
 
-The first image in column C has a layout cell component with a minimum height set at 120. This gives it a larger space than its two siblings below it, which do not have **LayoutCell**l components. Layout column D also has a **LayoutCell** component, with a minimum width of 110, giving it more space than the other three columns, which do not have **LayoutCell** components.
+C 列中的第一个图像具有最小高度设置为 120 的布局单元格组件。这为它提供了比它下面的两个兄弟更大的空间，这两个兄弟姐妹没有 **LayoutCell**l 组件。布局列 D 还有一个 **LayoutCell** 组件，最小宽度为 110，这比其他三列（没有 **LayoutCell** 组件）提供了更多的空间。
 
 ![Child elements with LayoutCells](/images/user-guide/interactivity/user-interface/components/layout/ui-editor-components-nesting-cell.png)

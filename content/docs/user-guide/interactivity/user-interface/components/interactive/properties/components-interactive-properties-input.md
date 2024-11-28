@@ -1,10 +1,10 @@
 ---
 linkTitle: Input Enabled
-description: ' The Input Enabled setting determines whether the component can be interacted with in O3DE. '
+description: ' Input Enabled 设置确定是否可以在 O3DE 中与组件交互。 '
 title: Input Enabled
 weight: 100
 ---
 
-The **Input Enabled** setting, selected by default, determines whether the component can be interacted with.
+的 **Input Enabled** 设置（默认选中）确定是否可以与组件交互。
 
-To visualize how the interactive element looks in its disabled state, deselect the **Input Enabled** setting, and then use [Preview mode](/docs/user-guide/interactivity/user-interface/canvases/preview) to preview your canvas.
+要可视化交互式元素在禁用状态下的外观，请取消选择 **Input Enabled** 设置，然后使用 [预览模式](/docs/user-guide/interactivity/user-interface/canvases/preview) 预览画布。

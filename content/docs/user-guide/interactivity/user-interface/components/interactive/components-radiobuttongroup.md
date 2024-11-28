@@ -1,33 +1,33 @@
 ---
 linkTitle: UI Radio Button Group
-description: ' Use a Radio Button Group component to manage radio button groups in O3DE''s UI Editor. '
-title: UI Radio Button Group Component
+description: ' 使用 Radio Button Group 组件在 O3DE 的 UI 编辑器中管理单选按钮组。 '
+title: UI Radio Button Group 组件
 weight: 140
 ---
 
-You can use the **RadioButtonGroup** component to manage radio buttons. This component handles selecting and clearing the radio buttons in the group when appropriate. It also ensures that only one radio button is selected at one time. You typically use this component on an element with children radio buttons, which are part of the radio button group.
+您可以使用 **RadioButtonGroup** 组件来管理单选按钮。此组件在适当时处理选择和清除组中的单选按钮。它还确保一次只选择一个单选按钮。通常在具有 children 单选按钮的元素上使用此组件，这些单选按钮是单选按钮组的一部分。
 
 ![RadioButtonGroup element on canvas](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-radiobuttongroup.png)
 
-To see in-game examples of completed canvases with the **RadioButtonGroup** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **RadioButton**. You can view examples of different behaviors, default settings, and groups for radio buttons Press **Esc** to exit the game.
+要查看具有 **RadioButtonGroup** 组件的完整画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**, **Interactable Components**, **RadioButton**。您可以查看单选按钮的不同行为、默认设置和组的示例按 **Esc** 退出游戏。
 
-To view these same canvases in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\RadioButton` directory. You can open the following canvases:
-+ `Groups.uicanvas` - Examples of different radio button groupings
-+ `RadioButton.uicanvas` - Examples of different behaviors and default settings
+要在 UI 编辑器 中查看这些相同的画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\RadioButton`目录。您可以打开以下画布：
++ `Groups.uicanvas` - 不同单选按钮分组的示例
++ `RadioButton.uicanvas` - 不同行为和默认设置的示例
 
-You can add a prebuilt **RadioButtonGroup** element from the slice library. When you do this, a group of three radio buttons is automatically created in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **RadioButtonGroup** 元素。执行此操作时，将在 **Hierarchy** 窗格中自动创建一组三个单选按钮。
 
-**To add a RadioButtonGroup element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **RadioButtonGroup**.
+**从切片库添加 RadioButtonGroup 元素**
++ 在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，选择 **New**, **Element from Slice Library**, **RadioButtonGroup**.
 
 **To edit a RadioButtonGroup component**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **RadioButtonGroup** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的 **Properties** 面板中，展开 **RadioButtonGroup** 并根据需要执行以下操作：
 
 **Settings**, **Allow uncheck**
 
-Select to enable the clearing or unchecking of selected radio buttons.
+选择以启用清除或取消选中选定的单选按钮。
 
 **Actions**, **Change**
 
-Enter a text string. This string is sent as an action on the UI canvas when the radio button group has any state changes.
+输入文本字符串。当单选按钮组有任何状态更改时，此字符串将作为 UI 画布上的操作发送。

@@ -1,45 +1,45 @@
 ---
 linkTitle: UI Draggable
-description: ' Use the draggable component in the Open 3D Engine UI Editor to make UI elements movable. '
-title: UI Draggable Component
+description: ' 使用 Open 3D Engine UI Editor 中的可拖动组件使 UI 元素可移动。'
+title: UI Draggable 组件
 weight: 190
 ---
 
-You can use the **Draggable** component to make a UI element movable from one location to another on screen. Use the **Draggable** component in combination with the **DropTarget** component so that dragging can start on the draggable element and end on the drop target element. Drag-and-drop is a common operation in UI screens, such as an inventory system.
+您可以使用 **Draggable** 组件使 UI 元素在屏幕上从一个位置移动到另一个位置。将 **Draggable** 组件与 **DropTarget** 组件结合使用，以便拖动可以从可拖动元素开始，在放置目标元素上结束。拖放是 UI 屏幕（如库存系统）中的常见操作。
 
-Because drag-and-drop behavior is game specific, the **Draggable** and **DropTarget** components are designed to be used with scripting or C++ to define actions that result from the drag and the drop.
+由于拖放行为是特定于游戏的，因此 **Draggable** 和 **DropTarget** 组件旨在与脚本或 C++ 一起使用，以定义拖放产生的操作。
 
 ![Animation of mouse dragging and dropping UI elements](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-draggable.gif)
 
-To add the draggable component to a UI element, use the **Add Component** menu in the **Properties** pane.
+要将可拖动组件添加到 UI 元素，请使用 **Properties** 窗格中的 **Add Component** 菜单。
 
-The following picture shows an example of a **Draggable** component, where color has been added to the state actions for **Drag States**.
+下图显示了 **Draggable** 组件的示例，其中颜色已添加到 **Drag States**的状态操作中。
 
 ![UI Editor Draggable component](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-drag-drop-draggable.png)
 
-The **Draggable** component is an interactive component. It has the standard [interactive properties](properties).
+**Draggable** 组件 是一个交互式组件。它具有标准的 [交互属性](properties).
 
-**To edit a Draggable component**
+**编辑 Draggable 组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **Draggable** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的 **Properties** 面板中，展开 **Draggable** 并根据需要执行以下操作：
 
 **Interactable**
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties) 以编辑 Common Interactive Component 设置。
 
 **Drag States**
 
-Define the color, alpha, sprite, or font of this element and its child elements for a particular drag state.
-When it is not being dragged, an element with a draggable component uses the interactable states (pause on, pressed, and disabled).
+为特定拖动状态定义此元素及其子元素的颜色、alpha、sprite 或字体。
+当元素未被拖动时，具有可拖动组件的元素使用可交互状态（pause on、pressed 和 disabled）。
 
-When being dragged, however, the draggable component has an additional three states:
+但是，在拖动时，可拖动组件具有另外三种状态：
 
-    + **Normal** - Automatic state when a drag state begins.
+    + **Normal** - 拖动状态开始时的 Automatic 状态。
    
-    + **Valid** - Typically the state used when the draggable component pauses on a valid drop target. This state is determined by a script that you write or C++ code that connects to the `UiDropTargetNotificationBus` and listens for the `OnDropHoverStart` method.
+    + **Valid** - 通常是可拖动组件在有效放置目标上暂停时使用的状态。此状态由您编写的脚本或连接到`UiDropTargetNotificationBus`并侦听`OnDropHoverStart`方法的 C++ 代码确定。
    
-    + **Invalid** - Typically the state used when a draggable component pauses over an invalid drop target. This state is determined by a script that you write or C++ code. When a valid drag state is triggered, a notification is automatically sent using the `UiDropTargetNotificationBus`.
+    + **Invalid** - 通常是可拖动组件在无效的放置目标上暂停时使用的状态。此状态由您编写的脚本或 C++ 代码确定。当触发有效的拖动状态时，将使用`UiDropTargetNotificationBus`自动发送通知。
    
-The script or C++ can use the `UiDraggableBus` to set the drag state of the **Draggable** component. It can also set the drop state of the **DropTarget** to indicate valid drop targets to the user.
+脚本或 C++ 可以使用 `UiDraggableBus` 来设置 **Draggable** 组件的拖动状态。它还可以设置 **DropTarget** 的放置状态，以向用户指示有效的放置目标。
 
-To see an example of simple drag Lua script, open `DraggableElement.lua` in `Gems\LyShineExamples\Assets\UI\Scripts\LyShineExamples\DragAndDrop`.
+要查看简单拖动 Lua 脚本的示例，请打开`Gems\LyShineExamples\Assets\UI\Scripts\LyShineExamples\DragAndDrop`中的 `DraggableElement.lua`。

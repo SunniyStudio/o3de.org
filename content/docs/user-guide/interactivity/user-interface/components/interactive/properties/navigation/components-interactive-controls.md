@@ -1,29 +1,29 @@
 ---
-linkTitle: Interactive Element Controls
-description: ' Learn how user input devices can control interactive UI elements in O3DE. '
-title: Interactive Element Controls
+linkTitle: 交互式元素控件
+description: ' 了解用户输入设备如何控制 O3DE 中的交互式 UI 元素。 '
+title: 交互式元素控件
 weight: 200
 ---
 
-To interact with a focused element, press **Enter** on the keyboard.
+要与聚焦元素交互，请按键盘上的 Enter。
 
-When an element is interactive, use the following controls:
+当元素是交互式的时，请使用以下控件：
 
-## Button and Checkbox controls
+## Button 和 Checkbox 控件
 
-**Enter** presses the button or selects or clears the check box, and then returns to navigation automatically. The control does not remain active after action.
+**Enter** 按下按钮或者选中或清除复选框，然后自动返回到导航。该控件在操作后不会保持活动状态。
 
-## Slider and Scrollbox controls
+## Slider 和 Scrollbox 控件
 
-Use arrow keys or joystick to move the slider or scroll box. Press **Enter** to return to navigation.
+使用箭头键或操纵杆移动滑块或滚动框。按 **Enter** 返回导航。
 
-## TextInput controls
+## TextInput 控件
 
-While active, use the following (press **Enter** to return to navigation):
+处于活动状态时，使用以下命令（按 **Enter** 返回导航）：
 
-+ Arrow keys move the text cursor.
-+ **Shift+arrow** keys selects text.
-+ Alphanumeric keys type text at the cursor position.
-+ **Ctrl+A** selects the entire text string.
-+ **Backspace** deletes the character to the left of the cursor.
-+ **Delete** deletes the character to the right of the cursor.
++ 箭头键可移动文本光标。
++ **Shift+箭头** 键选择文本。
++ 字母数字键在光标位置键入文本。
++ **Ctrl+A** 选择整个文本字符串。
++ **Backspace** 删除光标左侧的字符。
++ **删除** 删除光标右侧的字符。

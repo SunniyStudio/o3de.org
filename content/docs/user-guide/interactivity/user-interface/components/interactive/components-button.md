@@ -1,38 +1,38 @@
 ---
 linkTitle: UI Button
-description: ' Use a button component to make an element behave like a button in the O3DE UI Editor. '
-title: UI Button Component
+description: ' 使用按钮组件使元素的行为类似于 O3DE UI 编辑器中的按钮。 '
+title: UI Button 组件
 weight: 100
 ---
 
-You can use a **Button** component to make an element behave like a button.
+您可以使用 **Button** 组件使元素的行为类似于按钮。
 
 ![UI Editor Button component](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-button.png)
 
-To see an in-game example of a completed canvas with the **Button** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **Button**. You can view the different types of buttons you can create. Press **Esc** to exit the game.
+要查看带有 **Button** 组件的完整画布的游戏内示例，请在项目 SamplesProject 中打开关卡 UiFeatures。按 Ctrl+G 玩游戏，然后选择 **Components**、**Interactable Components**、**Button**。您可以查看可以创建的不同类型的按钮。按 **Esc** 退出游戏。
 
-To view this same canvas in the **UI Editor**, open `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Button\Styles.uicanvas`.
+要在 UI 编辑器中查看此同一画布，请打开`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Button\Styles.uicanvas`.
 
-Note the following:
-+ This component is typically applied to an element with an image component; if no visual or image component is present, many of the button's properties have no effect.
+请注意以下事项：
++ 此组件通常应用于具有图像组件的元素;如果不存在 Visual 或 Image 组件，则 Button 的许多属性不起作用。
 
-+ If you want to add a text label to a button, add a child element with a text component.
- 
-+ To define borders for a sliced image type, open the **Sprite Editor**. To do this, click the arrow (open-in) ![Open In Icon](/images/user-guide/interactivity/user-interface/editor/sprite-editor/ui-editor-components-button-1.png) next to **Sprite path**.
++ 如果要向按钮添加文本标签，请添加带有文本组件的子元素。
 
-You can add a prebuilt **Button** element from the slice library. When you do this, a basic button with the text string "Button" is automatically created in your **Hierarchy** pane.
++ 要定义切片图像类型的边框，请打开 **Sprite Editor**。为此，请单击箭头 （open-in） ![Open In Icon](/images/user-guide/interactivity/user-interface/editor/sprite-editor/ui-editor-components-button-1.png) 的 **Sprite Path**。
 
-**To add a Button element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **Button**.
+您可以从切片库添加预构建的 **Button** 元素。执行此操作时，将在 **Hierarchy** 窗格中自动创建一个带有文本字符串 “Button” 的基本按钮。
 
-**To edit a button component**
+**从切片库添加 Button 元素**
++ 在 [**UI 编辑器**](/docs/user-guide/interactivity/user-interface/editor)中，选择 **New**, **Element from Slice Library**, **Button**.
 
-In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor) **Properties** pane, expand **Button** and do the following, as appropriate:
+**编辑按钮组件**
+
+在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的 **Properties** 面板中，展开 **Button**并根据需要执行以下操作：
 
 ****Interactable****
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties)以编辑 Common Interactive Component 设置。
 
 ****Actions**, **Click****
 
-Enter a text string. This string is sent as an action on the UI canvas when the button is clicked.
+输入文本字符串。单击按钮时，此字符串将作为 UI 画布上的操作发送。

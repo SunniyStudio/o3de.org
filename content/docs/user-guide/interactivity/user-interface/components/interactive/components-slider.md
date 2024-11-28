@@ -1,65 +1,65 @@
 ---
 linkTitle: UI Slider
-description: ' Use a slider component to make an element behave like a slider in O3DE''s UI Editor. '
-title: UI Slider Component
+description: ' 使用滑块组件使元素的行为类似于 O3DE 的 UI 编辑器中的滑块。 '
+title: UI Slider 组件
 weight: 150
 ---
 
-You can use the **Slider** component to make an element behave like a slider. This component is typically applied to an element with three visual child elements: one immediate child, called **Track**, and two child elements of the track, called **Fill** and **Handle**.
+您可以使用 **Slider** 组件使元素的行为类似于滑块。此组件通常应用于具有三个可视子元素的元素：一个直接子元素，称为 **Track**，以及轨道的两个子元素，称为 **Fill** 和 **Handle**。
 
 ![Element with Slider component on canvas](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-slider-components.png)
 
-To see in-game examples of completed canvases with the **Slider** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **Slider**. You can view examples of different slider behavior and positioning. Press **Esc** to exit the game.
+要查看使用 **Slider** 组件完成的画布的游戏内示例，请在项目 SamplesProject 中打开关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**, **Interactable Components**, **Slider**。您可以查看不同滑块行为和位置的示例。按 **Esc** 退出游戏。
 
-To view these same canvases in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Slider` directory. You can open the following canvases:
-+ `Behavior.uicanvas` - Examples of slider behaviors such as fill type, handles, and buttons to control the slider
-+ `Rotation.uicanvas` - Example of slider positioning
+要在 UI 编辑器 中查看这些相同的画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Slider`目录。您可以打开以下画布：
++ `Behavior.uicanvas` - 滑块行为示例，例如填充类型、手柄和用于控制滑块的按钮
++ `Rotation.uicanvas` - 滑块定位示例
 
-You can add a prebuilt **Slider** element from the slice library. When you do this, the slider's track, fill, and handle are automatically created in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **Slider** 元素。执行此操作时，滑块的 track、fill 和 handle 将在 **Hierarchy** 窗格中自动创建。
 
-**To add a Slider element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **Slider**.
+**从切片库添加 Slider 元素**
++ 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)，选择 **New**, **Element from Slice Library**, **Slider**.
 
-**To edit a slider component**
+**编辑滑块组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **Slider** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的**Properties**面板中，展开 **Slider** 并根据需要执行以下操作：
 
 **Interactable**
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties) 以编辑 Common Interactive Component 设置。
 
 **Elements**, **Track**
 
-Select an element from the list to provide the background of the slider and to limit the movement of the manipulator.
+从列表中选择一个元素，以提供滑块的背景并限制操纵器的移动。
 
 **Elements**, **Fill**
 
-Select an element from the list to provide the background of the slider, from the lower limit to the center of the manipulator position.
+从列表中选择一个元素以提供滑块的背景，从下限到操纵器位置的中心。
 
 **Elements**, **Manipulator**
 
-Select an element from the list to provide the movable knob of the slider.
+从列表中选择一个元素以提供滑块的可移动旋钮。
 
 **Value**, **Value**
 
-Enter the initial value of the slider.
+输入滑块的初始值。
 
 **Value**, **Min**
 
-Enter the lower limit of the slider.
+输入滑块的下限。
 
 **Value**, **Max**
 
-Enter the upper limit of the slider.
+输入滑块的上限。
 
 **Value**, **Stepping**
 
-Enter the step value. For example, use `1` to only permit whole integer values.
+输入 step 值。例如，使用 `1` 只允许整数值。
 
 **Actions**, **Change**
 
-Enter a text string. This string is sent as an action on the UI canvas when the slider has finished changing values.
+输入文本字符串。当滑块完成更改值时，此字符串将作为 UI 画布上的操作发送。
 
 **Actions**, **End Change**
 
-Enter a text string. This string is sent as an action on the UI canvas when the slider has changing values.
+输入文本字符串。当滑块的值发生变化时，此字符串将作为 UI 画布上的操作发送。

@@ -5,50 +5,50 @@ title: UI Radio Button Component
 weight: 130
 ---
 
-You can use the **RadioButton** component to make an element behave like a radio button. This component is typically used on an element with two visual child elements-one to display when the radio button is selected and another to display when the radio button is cleared.
+您可以使用 **RadioButton** 组件使元素的行为类似于单选按钮。此组件通常用于具有两个可视子元素的元素 - 一个在选择单选按钮时显示，另一个在清除单选按钮时显示。
 
-Use this component in conjunction with the **RadioButtonGroup** component. The **RadioButtonGroup** component handles selecting and clearing the radio buttons in the group and makes sure that only one radio button is ever selected.
+将此组件与 **RadioButtonGroup** 组件结合使用。**RadioButtonGroup** 组件负责选择和清除组中的单选按钮，并确保只选择一个单选按钮。
 
 ![RadioButton element on canvas](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-radiobutton.png)
 
-To see in-game examples of completed canvases with the **RadioButton** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **RadioButton**. You can view examples of different behaviors, default settings, and groups for radio buttons Press **Esc** to exit the game.
+要查看带有 **RadioButton** 组件的完整画布的游戏内示例，请在项目 SamplesProject 中打开关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**, **Interactable Components**, **RadioButton**。您可以查看单选按钮的不同行为、默认设置和组的示例按 **Esc** 退出游戏。
 
-To view these same canvases in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\RadioButton` directory. You can open the following canvases:
-+ `Groups.uicanvas` - Examples of different radio button groupings
-+ `RadioButton.uicanvas` - Examples of different behaviors and default settings
+要在 UI 编辑器 中查看这些相同的画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\RadioButton` 目录。您可以打开以下画布：
++ `Groups.uicanvas` - 不同单选按钮分组的示例
++ `RadioButton.uicanvas` - 不同行为和默认设置的示例
 
 **To edit a radio button component**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **RadioButton** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的 **Properties** 面板中，展开 **RadioButton** 并根据需要执行以下操作：
 
 **Interactable**
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties) 以编辑 Common Interactive Component 设置。
 
 **Elements**, **On**
 
-Select an element from the list to specify the entity that appears when the radio button state is on (selected).
+从列表中选择一个元素，以指定在单选按钮状态为 on （selected） 时显示的实体。
 
 **Elements**, **Off**
 
-Select an element from the list to specify the entity that appears when the radio button state is off (cleared).
+从列表中选择一个元素，以指定在单选按钮状态为 off （cleared） 时显示的实体。
 
 **Elements**, **Group**
 
-Select an element from the list to specify the group the radio button belongs to.
+从列表中选择一个元素以指定单选按钮所属的组。
 
 **Value**, **Checked**
 
-Select the box to change the initial state of the radio button.
+选中该框以更改单选按钮的初始状态。
 
 **Actions**, **Change**
 
-Enter a text string. This string is sent as an action on the UI canvas when the radio button has any state changes.
+输入文本字符串。当单选按钮有任何状态更改时，此字符串将作为 UI 画布上的操作发送。
 
 **Actions**, **On**
 
-Enter a text string. This string is sent as an action on the UI canvas when the radio button state changes to on (selected).
+输入文本字符串。当单选按钮状态更改为 on （selected） 时，此字符串将作为 UI 画布上的操作发送。
 
 **Actions**, **Off**
 
-Enter a text string. This string is sent as an action on the UI canvas when the radio button state changes to off (cleared).
+输入文本字符串。当单选按钮状态更改为 off （cleared） 时，此字符串将作为 UI 画布上的操作发送。

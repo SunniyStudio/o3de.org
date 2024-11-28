@@ -1,13 +1,13 @@
 ---
 linkTitle: Actions
-description: ' Use the Actions properties in O3DE UI Editor to trigger an event when one of the listed actions occur. '
+description: ' 使用 O3DE UI 编辑器中的 Actions 属性，在列出的操作之一发生时触发事件。'
 title: Actions
 weight: 600
 ---
 
-You can use the **Actions** properties to trigger a particular event when one of the listed actions occur. Type a string for one of the actions. When the listed action occurs (for example, when a game player starts to pause on the element), the listed string is sent as an action.
+您可以使用 **Actions** 属性在列出的操作之一发生时触发特定事件。为其中一个操作键入字符串。当列出的操作发生时（例如，当游戏玩家开始在元素上暂停时），列出的字符串将作为操作发送。
 
-You can enter strings for the following actions:
+您可以为以下操作输入字符串：
 + **Hover start**
 + **Hover end**
 + **Pressed**

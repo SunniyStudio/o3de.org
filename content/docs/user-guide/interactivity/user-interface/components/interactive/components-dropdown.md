@@ -1,77 +1,77 @@
 ---
 linkTitle: UI Dropdown
-description: ' Use the Dropdown component to make an element behave like a drop-down menu in the Open 3D Engine UI Editor. '
-title: UI Dropdown Component
+description: ' 使用 Dropdown 组件使元素的行为类似于 Open 3D Engine UI Editor 中的下拉菜单。 '
+title: UI Dropdown 组件
 weight: 210
 ---
 
-You can use the **Dropdown** component to make an element behave like a drop-down menu. Use this component with child elements that contain content. The child elements provide the contents of the drop-down menu.
+您可以使用 **Dropdown** 组件使元素的行为类似于下拉菜单。将此组件与包含内容的子元素一起使用。子元素提供下拉菜单的内容。
 
-You can use the **Dropdown** component with the **DropdownOption** component. With the **DropdownOption** component, you can configure options to change the menu text and its icon after it is selected.
+您可以将 **Dropdown** 组件与 **DropdownOption** 组件一起使用。使用 **DropdownOption** 组件，您可以配置选项，以便在选择菜单文本后更改菜单文本及其图标。
 
-To see in-game examples of completed canvases with the **Dropdown** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **Dropdown**. You can view **Simple Dropdowns**, **Nested Dropdowns**, **Multiple Select & Functionality**, and **Using UI Components and Dropdowns**. Press **Esc** to exit the game.
+要查看带有 **Dropdown** 组件的完整画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**、**Interactable Components**、**Dropdown**。您可以查看**Simple Dropdowns**，**Nested Dropdowns**，**Multiple Select & Functionalit**，以及**Using UI Components and Dropdowns**。按 **Esc** 退出游戏。
 
-To view these same canvases in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Dropdown` directory. You can open the following canvases:
-+ `MultipleFunc.uicanvas` - Multiple selection drop-down menu and functional drop-down menu (perform actions on a ball such as create, destroy, move, and change color)
-+ `Nested.uicanvas` - Two levels and multilevel with siblings submenus
-+ `Simple.uicanvas` - Simple selection drop-down menu, selection drop-down menu with icons, expand on pause drop-down menu, and expand on pause with icons
-+ `UsingUi.uicanvas` - Drop-down menus with a scroll box, image, check box, slider, and radio buttons
+要在 UI 编辑器 中查看这些相同的画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Dropdown`目录。您可以打开以下画布：
++ `MultipleFunc.uicanvas` - Multiple selection 下拉菜单和功能下拉菜单（对球执行操作，例如创建、销毁、移动和更改颜色）
++ `Nested.uicanvas` - 两级和多级（带同级）子菜单
++ `Simple.uicanvas` - 简单选择下拉菜单、带图标的选择下拉菜单、带图标的选区下拉菜单、带图标的暂停时展开
++ `UsingUi.uicanvas` - 带有滚动框、图像、复选框、滑块和单选按钮的下拉菜单
 
-You can add a prebuilt **Dropdown** element from the slice library. When you do this, a drop-down menu, three options, and their image elements are automatically created in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **Dropdown** 元素。执行此操作时，将在 **Hierarchy** 窗格中自动创建一个下拉菜单、三个选项及其图像元素。
 
 ![Dropdown slice on canvas](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-interactive-dropdown-slice.png)
 
-**To add a Dropdown element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **Dropdown**.
+**从切片库添加 Dropdown 元素**
++ 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，选择 **New**, **Element from Slice Library**, **Dropdown**.
 
-**To edit a Dropdown component**
+**编辑 Dropdown 组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **Dropdown** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的 **Properties** 面板中，展开 **Dropdown** 并根据需要执行以下操作：
 
 **Interactable**
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties)以编辑 Common Interactive Component 设置。
 
 **Elements, Content**
 
-Select an element from the list. This specifies the entity that appears when the drop-down menu is expanded.
+从列表中选择一个元素。这指定了展开下拉菜单时显示的实体。
 
 **Elements, Expanded Parent**
 
-Drag an element onto the **Expanded Parent** box. This specifies the entity that serves as the parent when the drop-down menu is expanded. This is used to layer drop-down menus.
+将元素拖到 **Expanded Parent** 框上。这指定了在下拉菜单展开时用作父级的实体。这用于图层下拉菜单。
 
 **Elements, Text Element**
 
-Select an element from the list to specify the entity to display the text corresponding to the selected option.
+从列表中选择一个元素，以指定实体以显示与所选选项对应的文本。
 
 **Elements, Icon Element**
 
-Select an element from the list to specify the entity to display the icon corresponding to which option is selected.
+从列表中选择一个元素，以指定要显示与所选选项相对应的图标的实体。
 
 **Options, Expand on Hover**
 
-Select to enable drop-down behavior upon pause and collapse upon exit.
+选择以在暂停时启用下拉行为，并在退出时折叠。
 
 **Options, Wait Time**
 
-Enter a number of seconds that the drop-down menu waits before expanding on pause or collapsing on exit.
+输入下拉菜单在暂停时展开或退出时折叠之前等待的秒数。
 
 **Options, Collapse on Outside Click**
 
-Select to enable drop-down menu collapse upon clicking outside the menu.
+选择以启用在菜单外部单击时折叠下拉菜单。
 
 **Dropdown States, Expanded**
 
-Click plus to add states to the drop-down menu when it is expanded.
+点击 加 在展开时将状态添加到下拉菜单中。
 
 **Actions, Expanded**
 
-Enter a text string to be sent as an action on the UI canvas when the drop-down menu is expanded.
+输入一个文本字符串，当下拉菜单展开时，该字符串将作为操作在 UI 画布上发送。
 
 **Actions, Collapsed**
 
-Enter a text string to be sent as an action on the UI canvas when the drop-down menu is collapsed.
+输入一个文本字符串，当下拉菜单折叠时，要作为操作在 UI 画布上发送。
 
 **Actions, Option Selected**
 
-Enter a text string to be sent as an action on the UI canvas when a drop-down option is selected.
+输入要在选择下拉选项时作为操作在 UI 画布上发送的文本字符串。

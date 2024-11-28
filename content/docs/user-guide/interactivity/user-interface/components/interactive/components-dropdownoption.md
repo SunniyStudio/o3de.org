@@ -1,35 +1,35 @@
 ---
 linkTitle: UI Dropdown Option
-description: ' Use the Dropdown Option component to make an element an option in a drop-down menu in the Open 3D Engine UI Editor. '
-title: UI Dropdown Option Component
+description: ' 使用 Dropdown Option 组件，将元素设为 Open 3D Engine UI Editor 下拉菜单中的选项。 '
+title: UI Dropdown Option 组件
 weight: 215
 ---
 
-You can use the **DropdownOption** component to make an element an option in a drop-down menu. When using the **DropdownOption** component, note the following:
-+ The **DropdownOption** is used along with the **Dropdown** component on an element.
-+ The **DropdownOption** requires an interactive component, typically a **RadioButton** component so that only one option can be selected at any time in the drop-down menu.
-+ Its child elements typically contain the **Text** component, which appears when the option is selected.
+您可以使用 **DropdownOption** 组件将元素设置为下拉菜单中的选项。使用 **DropdownOption** 组件时，请注意以下事项：
++ **DropdownOption** 与元素上的 **Dropdown** 组件一起使用。
++ **DropdownOption** 需要一个交互式组件，通常是 **RadioButton** 组件，以便任何时候在下拉菜单中都只能选择一个选项。
++ 其子元素通常包含 **Text** 组件，该组件在选择该选项时显示。
 
-To see an in-game example of a completed canvas with the **DropdownOption** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **Dropdown**, **Using UI Components and Dropdowns**. Press **Esc** to exit the game.
+要查看带有 **DropdownOption** 组件的完整画布的游戏内示例，请在项目 SamplesProject 中打开关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**, **Interactable Components**, **Dropdown**, **Using UI Components and Dropdowns**。按 **Esc** 退出游戏。
 
-To view this same canvas in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Dropdown` directory and open the `UsingUi.uicanvas` file. This canvas features a drop-down menu with a scroll box, image, check box, slider, and radio buttons.
+要在 UI 编辑器中查看此同一画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\Dropdown`目录，打开`UsingUi.uicanvas`文件。此画布具有一个下拉菜单，其中包含滚动框、图像、复选框、滑块和单选按钮。
 
-**To edit a DropdownOption component**
+**编辑 DropdownOption 组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **DropdownOption** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的 **Properties**面板中，展开 DropdownOption，并根据需要执行以下操作：
 
 **Interactable**
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties) 以编辑 Common Interactive Component 设置。
 
 **Elements, Owning Dropdown**
 
-Select an element from the list that has the **Dropdown** component. This is the element to be modified when this option is selected.
+从列表中选择具有 **Dropdown** 组件的元素。这是选择此选项时要修改的元素。
 
 **Elements, Text Element**
 
-Select an element from the list that displays the text corresponding to this option. This text is displayed on the owning drop-down menu when this option is selected (as long as the drop-down menu has a **Text Element** configured).
+从列表中选择一个元素，该元素显示与此选项对应的文本。选择此选项后，此文本将显示在拥有的下拉菜单中（只要下拉菜单配置了 **Text Element**）。
 
 **Elements, Icon Element**
 
-Select an element from the list that displays the icon corresponding to this option. This icon is displayed on the owning drop-down menu when this option is selected (as long as the drop-down menu has an **Icon Element** configured).
+从列表中选择一个元素，该元素显示与此选项对应的图标。选择此选项后，此图标会显示在拥有下拉菜单上（只要下拉菜单配置了 **Icon Element**）。

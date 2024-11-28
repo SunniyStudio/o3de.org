@@ -1,61 +1,60 @@
 ---
 linkTitle: UI Dynamic Scroll Box
-description: Use the Dynamic Scroll Box component to create Scroll Box elements at runtime in Open 3D Engine (O3DE).
-title: UI Dynamic Scroll Box Component
+description: 使用动态滚动框组件可在运行时在 Open 3D Engine （O3DE） 中创建滚动框元素。
+title: UI Dynamic Scroll Box 组件
 weight: 185
 ---
 
-With the **DynamicScrollBox** component, you can change the number of children of the scroll box's element at run time. To use the **DynamicScrollBox** component, you place it on an element that also has a **ScrollBox** component.
+使用 **DynamicScrollBox** 组件，您可以在运行时更改滚动框元素的子元素的数量。要使用 **DynamicScrollBox** 组件，请将其放置在同样具有 **ScrollBox** 组件的元素上。
 
-The content element dynamically resizes to fit its child elements. The first child of the content element acts as the prototype element. At run time, the UI system clones the prototype element to achieve the specified number of children in the layout.
+内容元素会动态调整大小以适应其子元素。内容元素的第一个子元素充当 prototype 元素。在运行时，UI 系统会克隆 prototype 元素，以在布局中实现指定数量的子元素。
 
-With the **DynamicScrollBox** component, only the minimum number of child elements are actually created for display. This is different from the [**DynamicLayout**](../layout/dynamic-layout) component, where all child elements are created at run time and can consume a large amount of resources. The **DynamicScrollBox**'s elements are reused as the user scrolls; therefore, a scroll box can simulate a large number of children while maintaining good performance.
+使用 **DynamicScrollBox** 组件时，实际上只创建最小数量的子元素以供显示。这与 [**DynamicLayout**](../layout/dynamic-layout) 组件，其中所有子元素都是在运行时创建的，并且可能会消耗大量资源。当用户滚动时，将重复使用 **DynamicScrollBox** 的元素;因此，Scroll Box 可以在保持良好性能的同时模拟大量子项。
 
-The **DynamicScrollBox** component automatically positions its children and resizes the content element to match the bounding box of its children. Each child's size is the same as the prototype element. By default, the children are positioned in a row from left to right. If vertical scrolling is enabled, the children are positioned in a column from top to bottom.
+**DynamicScrollBox** 组件会自动定位其子元素并调整内容元素的大小以匹配其子元素的边界框。每个子元素的大小与 prototype 元素相同。默认情况下，子项从左到右排成一行。如果启用了垂直滚动，则子项将从上到下放置在列中。
 
-**To use a dynamic scroll box component**
+**使用动态滚动框组件**
 
-1. In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), add a **Scrollbox** prefab. To do this, click **New**, **Element from Prefab**, **ScrollBox**.
+1. 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor) 中，添加 **Scrollbox** 预制件。为此，请单击**New**, **Element from Prefab**, **ScrollBox**.
 
-   This serves as the structure or framework to hold your dynamic content.
+   这用作保存动态内容的结构或框架。
 
-1. Add a **DynamicScrollbox** component to your scroll box component. To do this, in the **Properties** pane choose **Add Component**, **DynamicScrollbox**.
+1. 将 **DynamicScrollbox** 组件添加到您的滚动框组件中。为此，请在 **Properties** 窗格中选择 **Add Component**, **DynamicScrollbox**.
 
-   For **Default Num Elements**, enter the initial number of children to be created. This is mainly for previewing a canvas in **Preview** mode since the number of children ultimately comes from a custom component that implements the `UiDynamicScrollBoxDataBus`.
+   对于 **Default Num Elements（默认元素数）**，输入要创建的初始子项数。这主要用于在 **Preview** 模式下预览画布，因为子项的数量最终来自实现`UiDynamicScrollBoxDataBus`.
 
-1. Create a child entity that has an **Image** component. To do this, right-click on your scroll box component in the **Hierarchy** pane, choose **New**, **Element from Prefab**, **Image**.
+1. 创建具有 **Image** 组件的子实体。为此，请右键单击 **Hierarchy** 窗格中的滚动框组件，然后选择**New**, **Element from Prefab**, **Image**.
 
-   This image serves as the prototype element that will be cloned and filled with dynamic content.
+   此图像用作原型元素，该元素将被克隆并填充动态内容。
 
-The **DynamicScrollBox** component uses a bus called `UiDynamicScrollBoxDataBus` to retrieve the number of children that the content element should have. It also uses a bus called `Ui DynamicScrollBoxElementNotificationBus` to notify when a child element is about to become visible. This is where you set up the child element with dynamic content. To do this, you must create and add to the scroll box element a custom component that implements these two buses.
+**DynamicScrollBox** 组件使用一个名为`UiDynamicScrollBoxDataBus`的总线来检索内容元素应具有的子项数。它还使用一个名为`Ui DynamicScrollBoxElementNotificationBus`的总线来通知子元素何时即将可见。这是设置具有动态内容的子元素的位置。为此，您必须创建一个实现这两个总线的自定义组件，并将其添加到 scroll box 元素中。
 
-## EBus Interface 
+## EBus 接口 
 
-Use the following notification functions with the EBus interface to communicate with other components of your game.
+将以下通知函数与 EBus 界面结合使用，以便与游戏的其他组件进行通信。
 
- For more information about using the Event Bus (EBus) interface, see [Working with the Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus).
+有关使用事件总线 （EBus） 接口的更多信息，请参阅 [使用事件总线 （EBus） 系统](/docs/user-guide/programming/messaging/ebus).
 
 ### UiDynamicScrollBoxDataBus:GetNumElements 
 
-Implement this bus to provide a dynamic scroll box the number of children it should clone.
+实现此总线以提供动态滚动框应克隆的子对象数。
 
-Returns the number of children that the dynamic scroll box should clone.
-
-**Parameters**
+返回动态滚动框应克隆的子项数。
+**参数**
 None
 
-**Return**
-Number of children to clone.
+**返回值**
+要克隆的子项数。
 
 ### Ui DynamicScrollBoxElementNotificationBus:OnElementBecomingVisible 
 
-Implement this bus to receive notifications when elements of a dynamic scroll box are about to become visible.
+实现此总线，以便在动态滚动框的元素即将可见时接收通知。
 
-Sends a signal when an element of a dynamic scroll box is about to become visible.
+当动态滚动框的元素即将变得可见时发送信号。
 
-**Parameters**
-`entityID` - The entity Id of the element that is about to become visible.
-`index` - The index of the element that is about to become visible.
+**参数**
+`entityID` - 即将变为可见的元素的实体 ID。
+`index` - 即将变为可见的元素的索引。
 
-**Return**
+**返回值**
 None

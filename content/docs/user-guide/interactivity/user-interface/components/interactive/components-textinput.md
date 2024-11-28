@@ -1,73 +1,73 @@
 ---
 linkTitle: UI Text Input
-description: ' Use a text input component to make an element offer player input in O3DE''s UI Editor. '
-title: UI Text Input Component
+description: ' 使用Text Input组件使元素在 O3DE 的 UI 编辑器中提供玩家输入。 '
+title: UI Text Input 组件
 weight: 160
 ---
 
-You can use a **TextInput** component to make an element offer player input. This component is typically applied to an element with an image component and two child elements with text components (one for placeholder text and one for input text).
+您可以使用 **TextInput** 组件使元素提供玩家输入。此组件通常应用于具有一个图像组件和两个具有文本组件的子元素（一个用于占位符文本，一个用于输入文本）。
 
 ![Canvas with TextInput element](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-textinput.png)
 
-To see in-game examples of completed canvases with the **TextInput** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **TextInput**. You can view examples of different types of text input behavior on single lines and on multiple lines. Press **Esc** to exit the game.
+要查看具有 **TextInput** 组件的完整画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 Ctrl+G** 玩游戏，然后选择 **Components**, **Interactable Components**, **TextInput**。您可以在单行和多行上查看不同类型的文本输入行为的示例。按 **Esc** 退出游戏。
 
-To view these same canvases in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\TextInput` directory. You can open the following canvases:
-+ `Multiline.uicanvas` - Examples of editing multiline text strings
-+ `SingleLine.uicanvas` - Example of editing single-line text strings
+要在 UI 编辑器 中查看这些相同的画布，请导航到 `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\TextInput` 目录。您可以打开以下画布：
++ `Multiline.uicanvas` - 编辑多行文本字符串的示例
++ `SingleLine.uicanvas` - 编辑单行文本字符串的示例
 
-You can add a prebuilt **TextInput** element from the slice library. When you do this, a text input box, pause-on state, and placeholder text "Type here..." are automatically created in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **TextInput** 元素。执行此操作时，将出现文本输入框、暂停状态和占位符文本“在此处键入...”在您的 **Hierarchy** 窗格中自动创建。
 
-**To add a TextInput element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **TextInput**.
+**从切片库添加 TextInput 元素**
++ 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，选择 **New**, **Element from Slice Library**, **TextInput**.
 
-**To edit a text input component**
+**编辑文本输入组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **TextInput** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的**Properties**中，展开 **TextInput** 并根据需要执行以下操作：
 
 **Interactable**
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties) 以编辑 Common Interactive Component 设置。
 
 **Elements**, **Text**
 
-Select an element from the list to provide the text component for the input text. The list shows child elements that have text components.
+从列表中选择一个元素，为输入文本提供文本组件。该列表显示具有文本组件的子元素。
 
 **Elements**, **Placeholder text element**
 
-Select an element from the list to provide the text component for the placeholder text. The list shows child elements that have text components.
+从列表中选择一个元素，为占位符文本提供文本组件。该列表显示具有文本组件的子元素。
 
 **Text editing**, **Selection color**
 
-Click the color swatch to select a different color for the selected text.
+单击色板可为所选文本选择其他颜色。
 
 **Text editing**, **Cursor color**
 
-Click the color swatch to select a different color for the cursor.
+单击色样为光标选择其他颜色。
 
 **Text editing**, **Max char count**
 
-Enter the maximum number of characters allowed in the text input box. Type `-1` for no character limit.
+输入文本输入框中允许的最大字符数。键入 '`-1`' 表示无字符限制。
 
 **Text editing**, **Cursor blink time**
 
-Enter a value in seconds. Use `0` for no blink, `1` to blink once every second, `2` to blink once every two seconds, etc.
+输入一个值（以秒为单位）。使用“`0`”表示不闪烁，“`1`”表示每秒闪烁一次，“`2`”表示每两秒闪烁一次，以此类推。
 
 **Text editing**, **Is password field**
 
-Select the box and specify the replacement character.
+选中该框并指定替换字符。
 
 **Text editing**, **Clip input text**
 
-Sets the **Overflow mode** of the text element to **Clip text** at runtime.
+在运行时将文本元素的 **Overflow mode** 设置为 **Clip text**。
 
 **Actions**, **Change**
 
-Enter a text string. This string is sent as an action on the UI canvas whenever a change occurs in the text input, such as typing or deleting a character.
+输入文本字符串。每当文本输入发生更改（例如键入或删除字符）时，此字符串都会作为 UI 画布上的操作发送。
 
 **Actions**, **End edit**
 
-Enter a text string. This string is sent as an action on the UI canvas whenever the player clicks off the text input or presses **Enter**.
+输入文本字符串。每当玩家单击文本输入或按 **Enter** 时，此字符串将作为 UI 画布上的操作发送。
 
 **Actions**, **Enter**
 
-Enter a text string. This string is sent as an action on the UI canvas when the player presses **Enter**.
+输入文本字符串。当玩家按 **Enter** 时，此字符串将作为 UI 画布上的操作发送。

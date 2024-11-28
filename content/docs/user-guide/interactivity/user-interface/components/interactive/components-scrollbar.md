@@ -1,84 +1,84 @@
 ---
 linkTitle: UI Scroll Bar
-description: ' Use a scroll bar component to add a scroll bar in the Open 3D Engine UI Editor. '
-title: UI Scrollbar Component
+description: ' 使用滚动条组件在 Open 3D Engine UI Editor 中添加滚动条。 '
+title: UI Scrollbar 组件
 weight: 170
 ---
 
-You can use a **ScrollBar** component to add a scrollable bar, or handle, for manipulating settings or scrolling within a scroll box.
+您可以使用 **ScrollBar** 组件添加可滚动条或手柄，用于操作设置或在滚动框中滚动。
 
-To see in-game examples of completed canvases with the **ScrollBar** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **ScrollBar**. You can view examples of different types of scroll bar positioning and handles, scroll bars paired with scroll boxes, and visibility options. Press **Esc** to exit the game.
+要查看使用 **ScrollBar** 组件完成画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 **Ctrl+G** 玩游戏，然后选择 **Components**, **Interactable Components**, **ScrollBar**。您可以查看不同类型的滚动条位置和手柄、与滚动框配对的滚动条以及可见性选项的示例。按 **Esc** 退出游戏。
 
-To view these same canvases in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\ScrollBar` directory. You can open the following canvases:
-+ `ScrollBoxes.uicanvas` - Examples of scroll bars paired with scroll boxes
-+ `Simple.uicanvas` - Examples of scroll bar with simple logic
-+ `Visibility.uicanvas` - Examples of scroll bar visibility options when paired with scroll boxes
+要在 UI 编辑器 中查看这些相同的画布，请导航到`\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\ScrollBar` 目录。您可以打开以下画布：
++ `ScrollBoxes.uicanvas` - 与滚动框配对的滚动条示例
++ `Simple.uicanvas` - 具有简单逻辑的滚动条示例
++ `Visibility.uicanvas` - 与滚动框配对时滚动条可见性选项的示例
 
-This is a horizontal scroll bar:
+这是一个水平滚动条：
 
 ![Animation of horizontal scroll bar](/images/user-guide/interactivity/user-interface/components/interactive/horizontal-scrollbar.gif)
 
-This is an image within a scroll box with both a horizontal and a vertical scroll bar:
+这是滚动框中的图像，同时具有水平滚动条和垂直滚动条：
 
 ![Animation of image scrolling with scroll bars](/images/user-guide/interactivity/user-interface/components/interactive/scrollbar-scrollbox.gif)
 
-The scroll bar can also fade automatically when not in use:
+滚动条在不使用时也可以自动淡化：
 
 ![Example of auto fade scroll bar.](/images/user-guide/interactivity/user-interface/components/interactive/ui-scrollbar-autofade.gif)
 
-You can add a prefabricated horizontal or vertical scroll bar element. When you do this, a handle is automatically created and nested in your **Hierarchy** pane.
+您可以添加预制的水平或垂直滚动条元素。执行此操作时，将自动创建一个手柄并将其嵌套在 **Hierarchy** 窗格中。
 
-You can add a prebuilt **ScrollBarHorizontal** or **ScrollBarVertical** element from the slice library. When you do this, the scroll bar and its handle is automatically created in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **ScrollBarHorizontal** 或 **ScrollBarVertical** 元素。执行此操作时，滚动条及其手柄将在 **Hierarchy** 窗格中自动创建。
 
-**To add a ScrollBar element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **ScrollBarHorizontal** or **ScrollBarVertical**.
+**从切片库添加 ScrollBar 元素**
++ 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)中，选择 **New**, **Element from Slice Library**, **ScrollBarHorizontal** or **ScrollBarVertical**.
 
-**To edit a scroll bar component**
+**编辑滚动条组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **ScrollBar** and do the following, as appropriate:
+在[**UI Editor**](/docs/user-guide/interactivity/user-interface/editor)的**Properties**面板中，展开 **ScrollBar** 并根据需要执行以下操作：
 
 **Interactable**
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties)以编辑 Common Interactive Component 设置。
 
 **Elements**, **Handle**
 
-Select an element from the list to provide the movable handle of the scroll bar.
+从列表中选择一个元素以提供滚动条的可移动手柄。
 
 **Values**, **Orientation**
 
-Select the scroll bar's orientation:
-    + **Horizontal** - Scrollbar's handle moves left and right.
-    + **Vertical** - Scrollbar's handle moves up and down.
+选择滚动条的方向：
+    + **Horizontal** - Scrollbar 的手柄可向左和向右移动。
+    + **Vertical** - Scrollbar 的手柄上下移动。
    
 **Values**, **Value**
 
-Enter the initial value of the scroll bar (**0.0** to **1.0**).
+输入滚动条的初始值 (**0.0** 到 **1.0**).
 
 **Values**, **Handle size**
 
-Enter the size of the handle relative to the scroll bar (**0.0** to **1.0**).
+输入手柄相对于滚动条的大小 (**0.0** 到 **1.0**).
 
 **Values**, **Min handle size**
 
-Enter the minimum size of the handle in pixels.
+输入手柄的最小大小（以像素为单位）。
 
 **Actions**, **Change**
 
-Enter a text string. This string is sent as an action on the UI canvas when the scroll bar changes values.
+输入文本字符串。当滚动条更改值时，此字符串将作为 UI 画布上的操作发送。
 
 **Actions**, **End Change**
 
-Enter a text string. This string is sent as an action on the UI canvas when the scroll bar has finished changing values.
+输入文本字符串。当滚动条完成更改值时，此字符串将作为 UI 画布上的操作发送。
 
 **Fade**, **Auto Fade When Not In Use**
 
-Select the check box to enable the scrollbar to fade to transparency after it is not used for a set amount of time. Specify the delay time in **Fade Delay**.
+选中该复选框可使滚动条在一定时间内未使用后淡出为透明。在 **Fade Delay** 中指定延迟时间。
 
 **Fade**, **Fade Delay**
 
-Enter the delay in seconds before the scrollbar begins fading to transparency. Requires **Auto Fade When Not In Use** to be checked.
+输入滚动条开始淡化为透明度之前的延迟（以秒为单位）。需要选中 **Auto Fade When Not In Use**。
 
 **Fade**, **Fade Speed**
 
-Enter the time in seconds that it will take for the scrollbar to completely fade to transparency. Requires **Auto Fade When Not In Use** to be checked.
+输入滚动条完全淡化为透明所需的时间（以秒为单位）。需要选中 **Auto Fade When Not In Use**。

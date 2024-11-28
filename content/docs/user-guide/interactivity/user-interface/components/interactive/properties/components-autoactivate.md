@@ -1,12 +1,12 @@
 ---
 linkTitle: Auto Activate
-description: ' Enable Auto Activate for interactive elements in O3DE UI Editor to set an element to activate automatically. '
+description: ' 在 O3DE UI 编辑器中为交互式元素启用 Auto Activate ，以将元素设置为自动激活。 '
 title: Auto Activate
 weight: 500
 ---
 
-The **Auto Activate** setting applies to interactive elements that remain active after they are pressed. These include the slider, scroll bar, scroll box, and text input.
+**Auto Activate** 设置适用于在按下后仍保持活动状态的交互式元素。这些选项包括滑块、滚动条、滚动框和文本输入。
 
-When Auto Activate is set, an element automatically activates when navigated to with the directional keys, and deactivates when navigated away from with the directional keys. The user does not need to press the **Enter** and **Back** keys to activate or deactivate the element.
+设置“Auto Activate”后，元素在使用方向键导航到时会自动激活，而在使用方向键离开时将停用。用户无需按 **Enter** 和 **Back** 键来激活或停用该元素。
 
-The UI must be designed so that a user cannot get stuck on an activated element. For example, a horizontal slider that is set to automatically activate should not have another interactive element to the left or right of it. This is because pressing the left or right key on an active slider moves the slider handle.
+UI 的设计必须使用户不会卡在激活的元素上。例如，设置为自动激活的水平滑块的左侧或右侧不应有其他交互式元素。这是因为在活动滑块上按左键或右键会移动滑块手柄。

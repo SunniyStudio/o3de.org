@@ -1,96 +1,96 @@
 ---
 linkTitle: UI Scroll Box
-description: ' Use a scroll box component to present content, such as images or text, within a scrollable area in O3DE''s UI Editor. '
-title: UI Scroll Box Component
+description: ' 使用滚动框组件在 O3DE 的 UI 编辑器中的可滚动区域内显示内容，例如图像或文本。 '
+title: UI Scroll Box 组件
 weight: 180
 ---
 
-You can use a **ScrollBox** component to present content, such as images or text, within a scrollable area.
+您可以使用 **ScrollBox** 组件在可滚动区域内显示内容，例如图像或文本。
 
-This component is typically used with a mask component, which hides the content outside of the masked area.
+此组件通常与蒙版组件一起使用，该组件将内容隐藏在蒙版区域之外。
 
 ![Animation of Scrollboxes used with a mask](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-scrollbox.gif)
 
-To see in-game examples of completed canvases with the **ScrollBox** component, open the level UiFeatures in the project SamplesProject. Press **Ctrl+G** to play the game, and then choose **Components**, **Interactable Components**, **ScrollBox**. You can view examples of different scrolling options, snapping options, interactions between scroll boxes and other components, and nested scroll boxes. Press **Esc** to exit the game.
+要查看具有 **ScrollBox** 组件的完整画布的游戏内示例，请打开项目 SamplesProject 中的关卡 UiFeatures。按 Ctrl+G** 玩游戏，然后选择**Components**, **Interactable Components**, **ScrollBox**。您可以查看不同滚动选项、对齐选项、滚动框和其他组件之间的交互以及嵌套滚动框的示例。按 **Esc** 退出游戏。
 
-To view these same canvases in the **UI Editor**, navigate to the `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\ScrollBox` directory. You can open the following canvases:
-+ `Interactions.uicanvas` - Examples of interactions between scroll boxes and other interactive components
-+ `Nested.uicanvas` - Examples of nesting scroll boxes
-+ `Scrolling.uicanvas` - Examples of different scrolling options such as horizontal, vertical, 2D, and unconstrained
-+ `Snapping.uicanvas` - Examples of different snapping options
+要在 UI 编辑器 中查看这些相同的画布，请导航到 `\Gems\LyShineExamples\Assets\UI\Canvases\LyShineExamples\Comp\ScrollBox`目录。您可以打开以下画布：
++ `Interactions.uicanvas` - 滚动框和其他交互式组件之间的交互示例
++ `Nested.uicanvas` - 嵌套滚动框的示例
++ `Scrolling.uicanvas` - 不同滚动选项的示例，例如水平、垂直、2D 和不受约束
++ `Snapping.uicanvas` - 不同对齐选项的示例
 
-You can add a prebuilt **ScrollBox** element from the slice library. When you do this, a mask, content, and image elements are automatically created and nested in your **Hierarchy** pane.
+您可以从切片库添加预构建的 **ScrollBox** 元素。执行此操作时，将自动创建掩码、内容和图像元素并将其嵌套在 **Hierarchy** 窗格中。
 
-**To add a ScrollBox element from the slice library**
-+ In the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), choose **New**, **Element from Slice Library**, **Scrollbox**.
+**从切片库添加 ScrollBox 元素**
++ 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor) 中，选择 **New**, **Element from Slice Library**, **Scrollbox**.
 
-The element named **ScrollBox** (1) has the **ScrollBox** component (2) applied to it. You can add an image to the **ScrollBox** element's **Image** component (3), which acts as the visual frame for the scroll box. Because the mask element and its child elements are drawn in front of the scroll box element, you see only the edges of the image on the **ScrollBox** component. To increase or decrease the viewable area of this image, adjust the offsets in the mask element's [**Transform2D**](/docs/user-guide/interactivity/user-interface/components/transform2d) component.
+名为 **ScrollBox** （1） 的元素应用了 **ScrollBox** 组件 （2）。可以将图像添加到 **ScrollBox** 元素的 **Image** 组件 （3） 中，该组件充当滚动框的可视框架。由于 mask 元素及其子元素绘制在滚动框元素的前面，因此您只能在 **ScrollBox** 组件上看到图像的边缘。要增加或减少此图像的可视区域，请调整蒙版元素的 [**Transform2D**](/docs/user-guide/interactivity/user-interface/components/transform2d)  组件中的偏移量。
 
 ![ScrollBox component properties](/images/user-guide/interactivity/user-interface/components/interactive/ui-editor-components-scrollbox.jpg)
 
-The element named **Mask** has a [**Mask**](../components-mask) component applied to it, which acts as the viewport through which you can see the content. To specify a custom mask, you can add an image to the **Mask** element's **Image** component. The contents are drawn to the visible area of the mask; the transparent area of the mask hides content.
+名为 **Mask** 的元素具有 [**Mask**](../components-mask)  组件，该组件充当视区，您可以通过该视区查看内容。要指定自定义蒙版，可以将图像添加到 **Mask** 元素的 **Image** 组件中。内容将绘制到蒙版的可见区域;蒙版的透明区域会隐藏内容。
 
-**To edit a scroll box component**
+**编辑滚动框组件**
 
-In the **Properties** pane of the [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor), expand **ScrollBox** and do the following, as appropriate:
+在 [**UI 编辑器**](/docs/user-guide/interactivity/user-interface/editor) 的 **Properties** 窗格中，展开 **ScrollBox** 并根据需要执行以下操作：
 
 **Interactable**
 
-See [Properties](properties) to edit the common interactive component settings.
+见 [Properties](properties) 以编辑 Common Interactive Component 设置。
 
 **Content**, **Content element**
 
-Select an element from the list to provide the content to be displayed within the scroll box.
+从列表中选择一个元素，以提供要在滚动框中显示的内容。
 
 **Content**, **Initial scroll offset**
 
-Enter the initial offset value of the content element's pivot point from the parent element's pivot point.
+输入内容元素的枢轴点与父元素的枢轴点之间的初始偏移值。
 
 **Content**, **Constrain scrolling**
 
-Select the check box to prevent content from scrolling beyond its edges.
+选中该复选框可防止内容滚动到其边缘之外。
 
 **Content**, **Snap**
 
-Select a snapping mode:
-+ **None** - No snapping.
-+ **To children** - When a drag motion is released, the content element moves in such a way that the closest child element's pivot point is snapped to the parent element's pivot point. You can use this, for example, to center a child element in the scroll box when the dragging stops.
-+ **To grid** - When a drag motion is released, the content element's pivot point is snapped to a multiple of the grid spacing from the parent element's pivot point.
+选择对齐模式：
++ **None** - 无对齐。
++ **To children** - 释放拖动动作时，内容元素的移动方式是，最近的子元素的枢轴点与父元素的枢轴点对齐。例如，当拖动停止时，可以使用此选项将子元素在滚动框中居中。
++ **To grid** - 释放拖动动作时，内容元素的枢轴点将对齐到父元素枢轴点的网格间距的倍数。
 
 **Horizontal scrolling**, **Enabled**
 
-Select the check box to enable content to scroll horizontally. If the element, or its parent, is rotated, then the axis of scrolling is also rotated. You can enable horizontal scrolling simultaneously with vertical scrolling to scroll in both directions.
+选中该复选框可使内容水平滚动。如果元素或其父元素旋转，则滚动轴也会旋转。您可以同时启用水平滚动和垂直滚动，以在两个方向上滚动。
 
 **Horizontal scrolling**, **Scrollbar element**
 
-Select an element from the list to provide the horizontal scroll bar associated with the scroll box.
+从列表中选择一个元素，以提供与滚动框关联的水平滚动条。
 
 **Horizontal scrolling**, **Scrollbar visibility**
 
-Select the visibility behavior of the horizontal scroll bar:
-+ **Always visible** - Scroll bar is always visible.
-+ **Auto hide** - Scroll bar is automatically hidden when not needed. Scroll bar is resized according to visibility of the vertical scroll bar.
-+ **Auto hide and resize view area** - Same as **Auto hide**, but the view area is also resized smaller when the scroll bar is visible and larger when the scroll bar is hidden.
+选择水平滚动条的可见性行为：
++ **Always visible** - 滚动条始终可见。
++ **Auto hide** - 滚动条在不需要时自动隐藏。滚动条的大小根据垂直滚动条的可见性进行调整。
++ **Auto hide and resize view area** - 与 **Auto hide** 相同，但当滚动条可见时，视图区域的大小也会调整得更小，当滚动条隐藏时，视图区域的大小也会调整得更大。
    
 **Vertical scrolling**, **Enabled**
 
-Select the check box to enable content to scroll vertically. If the element, or its parent, is rotated, then the axis of scrolling is also rotated. You can enable vertical scrolling simultaneously with horizontal scrolling to scroll in both directions.
+选中该复选框可使内容垂直滚动。如果元素或其父元素旋转，则滚动轴也会旋转。您可以同时启用垂直滚动和水平滚动，以在两个方向上滚动。
 
 **Vertical scrolling**, **Scrollbar element**
 
-Select an element from the list to provide the vertical scroll bar associated with the scroll box.
+从列表中选择一个元素，以提供与滚动框关联的垂直滚动条。
 
 **Vertical scrolling**, **Scrollbar visibility**
 
-Select the visibility behavior of the vertical scroll bar:
-+ **Always visible** - Scroll bar is always visible.
-+ **Auto hide** - Scroll bar is automatically hidden when not needed. Scroll bar is resized according to visibility of the vertical scroll bar.
-+ **Auto hide and resize view area** - Same as auto hide, but the view area is also resized smaller when the scroll bar is visible and larger when the scroll bar is hidden.
+选择垂直滚动条的可见性行为：
++ **Always visible** - 滚动条始终可见。
++ **Auto hide** - 滚动条在不需要时自动隐藏。滚动条的大小根据垂直滚动条的可见性进行调整。
++ **Auto hide and resize view area** - 与自动隐藏相同，但当滚动条可见时，视图区域的大小也会调整得更小，当滚动条隐藏时，视图区域的大小也会调整得更大。
    
 **Actions**, **Change**
 
-Set the action that is triggered during dragging each time the position changes.
+设置每次位置更改时拖动时触发的操作。
 
 **Actions**, **End change**
 
-Set the action that is triggered when a drag motion is completed.
+设置拖动运动完成时触发的操作。

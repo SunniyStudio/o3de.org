@@ -1,43 +1,43 @@
 ---
-linktitle: Spawning Players
-title: Spawning Player Entities
-description: A reference for spawning and registering network player entities in Open 3D Engine (O3DE).
+linktitle: 生成玩家
+title: 生成玩家实体
+description: 在 Open 3D Engine （O3DE） 中生成和注册网络玩家实体的参考。
 weight: 700
 ---
 
-In most networking multiplayer games, when a player joins a session, the host must spawn an [*autonomous*](overview#multiplayer-entity-roles) networked entity for the player. Likewise, when a player leaves, the host must remove the entity and clean up. In **Open 3D Engine (O3DE)**, you can set up your spawning logic in this way, or handle join and leave events in other ways by using `OnPlayerJoin` and `OnPlayerLeave` events, which the `IMultiplayerSpawner` interface of the **Multiplayer Gem** provides. Alternatively, to get started sooner, you can bypass programming these events and use the [**Simple Network Player Spawner**](/docs/user-guide/components/reference/multiplayer/simple-player-spawner) component, which sets up `OnPlayerJoin` and `OnPlayerLeave` for this common use case.
+在大多数联网多人游戏中，当玩家加入会话时，主机必须为玩家生成一个 [*autonomous*](overview#multiplayer-entity-roles)  联网实体。同样，当玩家离开时，主机必须删除实体并进行清理。在 **Open 3D Engine （O3DE）** 中，您可以以这种方式设置生成逻辑，或者使用 **多人游戏 Gem** 的`IMultiplayerSpawner`接口提供的`OnPlayerJoin` 和 `OnPlayerLeave`事件以其他方式处理 join 和 leave 事件。或者，为了更快地开始，您可以绕过这些事件的编程，并使用 [**Simple Network Player Spawner**](/docs/user-guide/components/reference/multiplayer/simple-player-spawner)组件，该组件为这个常见用例设置了`OnPlayerJoin` 金额 `OnPlayerLeave`。
 
-## `IMultiplayerSpawner` interface
+## `IMultiplayerSpawner` 接口
 
-*IMultiplayerSpawner* is an [`AZ::Interface<T>`](/docs/user-guide/programming/messaging/az-interface) that provides a mechanism to tell the Multiplayer Gem what to spawn and where to spawn it when a player joins a session. `IMultiplayerSpawner` also provides a hook to clean up when a player leaves. All multiplayer games should provide an implementation to handle the events delivered for player join and player leave events.
+*IMultiplayerSpawner* 是一个[`AZ::Interface<T>`](/docs/user-guide/programming/messaging/az-interface)，它提供了一种机制，当玩家加入会话时，告诉多人游戏 Gem 要生成什么以及在哪里生成它。`IMultiplayerSpawner` 还提供了一个钩子，用于在玩家离开时进行清理。所有多人游戏都应提供一个实现来处理为玩家加入和玩家离开事件交付的事件。
 
-### Player join events
+### 玩家加入事件
 
-A player is defined as having *joined* a session when either:
-  * A client application begins hosting a session, in which case the host may need to spawn a new player entity.
-  * A client connects to an ongoing hosted session.
-  
-The `OnPlayerJoin` method of `IMultiplayerSpawner` provides a hook for when the server may want to spawn an autonomous player prefab on the behalf of a user. It takes both an identifier and custom data provided by the user, and the implementation is required to determine which prefab to spawn and its world location. For example, data provided with the connection could be used to select a specific character or team.
+玩家在以下情况下被定义为已*加入*会话：
+  * 客户端应用程序开始托管会话，在这种情况下，主机可能需要生成新的玩家实体。
+  * 客户端连接到正在进行的托管会话。
 
-`OnPlayerJoin` is expected to return a `NetworkEntityHandle`, making it the caller's responsibility to instantiate a networked prefab for the user. The Multiplayer Gem then takes the returned `NetworkEntityHandle` and both marks it as autonomous and associates it with the player's connection.
+`IMultiplayerSpawner`的`OnPlayerJoin`方法提供了一个钩子，用于服务器何时可能希望代表用户生成自主玩家预制件。它采用用户提供的标识符和自定义数据，并且需要实现来确定要生成的预制件及其世界位置。例如，随连接提供的数据可用于选择特定角色或团队。
 
-### Player leave events
+`OnPlayerJoin`应返回`NetworkEntityHandle`，从而使调用方负责为用户实例化联网预制件。然后，多人游戏 Gem 获取返回的`NetworkEntityHandle`，并将其标记为自主，并将其与玩家的连接相关联。
 
-A player is having defined as *left* a session when a client disconnects from the server. Unlike with player connections, there is no special case for when a client stops hosting their own session - one of the steps should always be disconnecting *all* clients before shutting down the server.
+### 玩家离开事件
 
-The `OnPlayerLeave` method of `IMultiplayerSpawner` provides a hook so that when the client disconnects, the server can clean up any entities that were spawned for the client. `OnPlayerLeave` takes an entity handle to the prefab spawned by `OnPlayerJoin` so that the player entity can be removed. It also takes the replication set for the connection which allows the server to remove associated entities as well (for example, objects deployed by the leaving player).
+玩家在客户端与服务器断开连接时定义为 * 离开* 会话。与玩家连接不同，当客户端停止托管自己的会话时，没有特殊情况 - 其中一个步骤应该始终在关闭服务器之前断开 *所有* 客户端的连接。
 
-`OnPlayerLeave` also takes a disconnect reason which allows responding to different kinds of disconnects. For example, it may be undesirable to clean up objects if a player times out if they can attempt to reconnect to the session.
+`IMultiplayerSpawner` 的`OnPlayerLeave`方法提供了一个钩子，这样当客户端断开连接时，服务器可以清理为客户端生成的任何实体。`OnPlayerLeave`将实体句柄用于`OnPlayerJoin` 生成的预制件，以便可以删除玩家实体。它还需要连接的复制集，这也允许服务器删除关联的实体（例如，由离开的玩家部署的对象）。
+
+`OnPlayerLeave` 还采用 disconnect reason，它允许响应不同类型的 disconnect。例如，如果玩家可以尝试重新连接到会话，则如果玩家超时，则清理对象可能是不可取的。
 
 
-## Examples in MultiplayerSample Project
+## MultiplayerSample Project 中的示例
 
-A practical example of an implementation for a spawner is [`MultiplayerSampleSystemComponent`](https://github.com/o3de/o3de-multiplayersample/blob/2c84827ffb20082b8c16fc0edc65cd49226f3cd2/Gem/Code/Source/MultiplayerSampleSystemComponent.cpp) in [MultiplayerSample Project](https://github.com/o3de/o3de-multiplayersample/). MultiplayerSample Project implements a "round robin"-style spawning system that gathers entities with `NetworkPlayerSpawnerComponents`. `MultiplayerSampleSystemComponent` then queries that system during the `OnPlayerJoin` event. The `OnPlayerLeave` event simply marks the entity that's passed in for removal.
+生成器实现的一个实际示例是 [MultiplayerSample Project](https://github.com/o3de/o3de-multiplayersample/) 中的 ['MultiplayerSampleSystemComponent'](https://github.com/o3de/o3de-multiplayersample/blob/2c84827ffb20082b8c16fc0edc65cd49226f3cd2/Gem/Code/Source/MultiplayerSampleSystemComponent.cpp)。MultiplayerSample Project 实现了一个“round robin（循环）”样式的生成系统，该系统使用`NetworkPlayerSpawnerComponents`收集实体。然后，`MultiplayerSampleSystemComponent`在`OnPlayerJoin`事件期间查询该系统。`OnPlayerLeave` 事件只是标记传入的要删除的实体。
 
-For more information about MultiplayerSample Project, refer to the [MultiplayerSample README](https://github.com/o3de/o3de-multiplayersample/blob/development/README.md).
+有关 MultiplayerSample 项目的更多信息，请参阅 [MultiplayerSample README](https://github.com/o3de/o3de-multiplayersample/blob/development/README.md).
 
-## Simple Player Spawning component
+## Simple Player Spawning 组件
 
-The Simple Network Player Spawner level component provides a straightforward way to set up `OnPlayerJoin` and `OnPlayerLeave` events. It implements a common use case for handling those events, specifically: when a player joins, create a networked entity for that player, and when a player leaves, remove that entity.
+Simple Network Player Spawner 关卡组件提供了一种简单的方法来设置 `OnPlayerJoin` 和 `OnPlayerLeave`事件。它实现了处理这些事件的常见用例，具体而言：当玩家加入时，为该玩家创建一个网络实体，当玩家离开时，删除该实体。
 
-For more information, refer to [Simple Network Player Spawner component](/docs/user-guide/components/reference/multiplayer/simple-player-spawner).
+有关更多信息，请参阅 [Simple Network Player Spawner 组件](/docs/user-guide/components/reference/multiplayer/simple-player-spawner).

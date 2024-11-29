@@ -1,79 +1,79 @@
 ---
-linktitle: Network Entity Hierarchies
-title: Multiplayer Network Entity Hierarchies
-description: A reference for creating network entity hierarchies in Open 3D Engine (O3DE).
+linktitle: 网络实体层次结构
+title: 多人游戏网络实体层次结构
+description: 在 Open 3D Engine （O3DE） 中创建网络实体层次结构的参考。
 weight: 600
 ---
 
-*Network Hierarchies* provide a convenient way to group related entities under one logical group. Entities in such a hierarchy process their network input together as one, including their input creation, processing and rollback.
+*网络层次结构* 提供了一种将相关实体分组到一个逻辑组下的便捷方法。此类层次结构中的实体将其网络输入作为一个整体处理，包括其输入的创建、处理和回滚。
 
 {{<important>}}
-Network Hierarchies are designed for small groups of entities.
+网络层次结构专为一小组实体而设计。
 
-By default the limit is set to 16 entities. You can modify this limit with CVar: `bg_hierarchyEntityMaxLimit`.
+默认情况下，限制设置为 16 个实体。您可以使用 CVar 修改此限制： `bg_hierarchyEntityMaxLimit`.
 {{</important>}}
 
-## Hierarchical Components
+## 分层组件
 
-In order to declare a network hierarchy, you have to use a combination of hierarchical components: `NetworkHierarchyRootComponent` and `NetworkHierarchyChildComponent`. `NetworkHierarchyRootComponent` marks an entity as the root of a hierarchy and it should be placed on the highest parent of your entity prefab or a group of entities. `NetworkHierarchyRootComponent` marks an entity as a child of a hierarchy. It should be added on child entities under the entity with `NetworkHierarchyRootComponent`.
+为了声明网络层次结构，您必须使用分层组件的组合：`NetworkHierarchyRootComponent`和`NetworkHierarchyChildComponent`。`NetworkHierarchyRootComponent`将实体标记为层次结构的根，并且应将其放置在实体预制件或一组实体的最高父级上。`NetworkHierarchyRootComponent`将实体标记为层次结构的子实体。应将其添加到具有 `NetworkHierarchyRootComponent`的实体下的子实体上。
 
-Network hierarchies can be created either in the Editor or by parenting entities at runtime.
+可以在 Editor 中创建网络层次结构，也可以通过在运行时为实体设置父子关系来创建。
 
-### Creating Network Hierarchies in the Editor
+### 在编辑器中创建网络层次结构
 
-1. Creating a network entity with all its network common components:
-    - Network Binding Component
-    - Network Transform Component
+1. 创建具有所有网络通用组件的网络实体：
+    - Network Binding 组件
+    - Network Transform 组件
 
 
-1. Add a Mesh component for visual information in the Editor.
+1. 在 Editor 中添加 Mesh 组件以获取视觉信息。
 
-1. Here is an example of a simple network entity:
+1. 以下是一个简单的网络实体示例：
 
     ![Starting Network Entity](/images/user-guide/networking/multiplayer/starting_network_entity.png)
 
-1. To make it a hierarchical root entity, add a **Network Hierarchy Root** component:
+1. 要使其成为分层根实体，请添加 **Network Hierarchy Root** 组件：
 
     ![Starting Hierarchy Root Entity](/images/user-guide/networking/multiplayer/starting_hierarchy_root_entity.png)
 
-    The resulting entity is a parent entity for hierarchical child entities.
+    生成的实体是分层子实体的父实体。
 
-1. Form a hierarchical child entity by adding a **Network Hierarchy Child** component:
+1. 通过添加 **Network Hierarchy Child** 组件来形成分层子实体：
 
     ![Starting Hierarchy Child Entity](/images/user-guide/networking/multiplayer/starting_hierarchy_child_entity.png)
 
-    Notice that this entity is a child entity to the root entity.
+    请注意，此实体是根实体的子实体。
 
     ![Simple Hierarchy Example](/images/user-guide/networking/multiplayer/simple_hierarchy.png)
 
-    Often, a hierarchy is a group of entities that you want to spawn at runtime. In these cases, you want to create a prefab out of the entities.
+    通常，层次结构是您希望在运行时生成的一组实体。在这些情况下，您希望从实体中创建预制件。
 
     ![Simple Hierarchy Prefab](/images/user-guide/networking/multiplayer/simple_hierarchy_prefab.png)
 
-    It is important that the entity with a **Network Hierarchy Root** component is at the top parent entity within the prefab. All other entities should have a **Network Hierarchy Child** component on them.
+    具有 **Network Hierarchy Root** 组件的实体必须位于预制件中的顶部父实体，这一点很重要。所有其他实体上都应具有 **Network Hierarchy Child** 组件。
 
 
-### ImGui Hierarchy Debugger
+### ImGui 层次结构调试器
 
-O3DE Multiplayer Gem comes with a debugger to help you trouble shoot and analyze hierarchy structure in an O3DE application. It can be enabled by bringing up ImGui menu (**HOME** key by default), and then selecting **Multiplayer** > **Multiplayer Hierarchy Debugger**. With the hierarchy debugger enabled, you will be able to browse hierarchies and get debug text in the world over the root entities of hierarchies.
+O3DE 多人游戏 Gem 附带一个调试器，可帮助您对 O3DE 应用程序中的层次结构进行故障排除和分析。可以通过调出 ImGui 菜单（默认为 **HOME** 键），然后选择 **Multiplayer** > **Multiplayer Hierarchy Debugger** 来启用它。启用层次结构调试器后，您将能够浏览层次结构，并通过层次结构的根实体在世界中获取调试文本。
 
-Using this debugger, you can find the following information about a hierarchy:
-- Its root entity name
-- Total number of entities in the hierarchy
-- Entity name of each member within the hierarchy
-- The `AZ::EntityId` of each member
-- The network ID of each member, `Multiplayer::NetEntityId`
-- Its hierarchical role within the hierarchy, either child, root, or an inner root that acts as a child in the case of nested hierarchies.
+使用此调试器，您可以找到有关层次结构的以下信息：
+- 其根实体名称
+- 层次结构中的实体总数
+- 层次结构中每个成员的实体名称
+- 每个成员的 `AZ::EntityId`
+- 每个成员的网络 ID，`Multiplayer::NetEntityId`
+- 它在层次结构中的分层角色，可以是 child、root 或在嵌套层次结构中充当 child 的内部根。
 
 
-### Adding Input Processing to Network Hierarchies
+### 将输入处理添加到网络层次结构中
 
-Any entity that has component(s) that perform multiplayer input processing component need to have either:
+任何具有执行多人游戏输入处理组件的组件的实体都需要具有：
 - **Local Prediction Input**
 - **Network Hierarchy Root**
 - **Network Hierarchy Child**
 
-For example, here is an example component that has a `NetworkInput` field in its definition.
+例如，下面是一个定义中包含`NetworkInput`字段的示例组件。
 
 ```xml
 <?xml version="1.0"?>
@@ -90,22 +90,22 @@ For example, here is an example component that has a `NetworkInput` field in its
 </Component>
 ```
 
-Add a component to provide multiplayer input processing:
+添加一个组件以提供多人游戏输入处理：
 
 ![Hierarchy Debug Overlay](/images/user-guide/networking/multiplayer/hierarchy_child_entity_with_input_processing_component.png)
 
-As a general rule, a hierarchy must have one **Local Prediction Input** component at its top parent entity to process multiplayer input. However, hierarchical child entities need only a **Network Hierarchy Child** component to process their multiplayer input.
+作为一般规则，层次结构必须在其顶部父实体中有一个 **Local Prediction Input** 组件才能处理多人游戏输入。但是，分层子实体只需要一个 **Network Hierarchy Child** 组件来处理其多人游戏输入。
 
 
-### Creating Network Hierarchies at Runtime
+### 在运行时创建网络层次结构
 
-Network hierarchies are automatically updated, created and disbanded at runtime whenever parent-child relationship changes among entities with either a hierarchy root or hierarchy child component. When the `AZ::TransformBus` EBus is used to change the attachments of entities, the hierarchies are updated at runtime.
+每当具有层次结构根或层次结构子组件的实体之间的父子关系发生变化时，网络层次结构就会在运行时自动更新、创建和解散。当使用`AZ::TransformBus`事件总线更改实体的附件时，层次结构将在运行时更新。
 
-### Hierarchies of Hierarchies
+### 层次结构的层次结构
 
-It is possible to create a hierarchy out of several hierarchies by attaching the root of one hierarchy to an entity from another hierarchy. In such cases, an inner root component becomes a hierarchical child of this new parent, until it is detached from the hierarchy. This is useful when constructing vehicles, weapons and players out of different prefabs that are attached and detached at runtime as needed.
+通过将一个层次结构的根附加到另一个层次结构中的实体，可以从多个层次结构中创建层次结构。在这种情况下，内部根组件将成为此新父级的分层子级，直到它与层次结构分离。当使用不同的预制件构建车辆、武器和玩家时，这非常有用，这些预制件在运行时根据需要附加和分离。
 
 
 {{<note>}}
-For more information on network hierarchies, read the [ServerHierarchyTests source](https://github.com/o3de/o3de/blob/development/Gems/Multiplayer/Code/Tests/ServerHierarchyTests.cpp).
+有关网络层次结构的更多信息，请阅读 [ServerHierarchyTests 源](https://github.com/o3de/o3de/blob/development/Gems/Multiplayer/Code/Tests/ServerHierarchyTests.cpp)。
 {{</note>}}

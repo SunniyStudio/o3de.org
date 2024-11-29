@@ -1,44 +1,44 @@
 ---
-title: Separating Multiplayer Logic into Client and Server Launchers
-description: Build Open 3D Engine launchers with the Multiplayer Gem specifically targeting Clients, Servers or both.
-linkTitle: Separating Client and Server
+title: 将多人游戏逻辑分离为客户端和服务器启动器
+description: 使用多人游戏 Gem 构建 Open 3D Engine 启动器，专门针对客户端和/或服务器。
+linkTitle: 分离 Client 和 Server
 weight: 450
 ---
 
-The **Multiplayer Gem** supports code separation at build time, to create code that contains only client logic, only server logic, or both client and server logic. This allows users to create executables of smaller size by excluding unnecessary logic and dependencies. It also allows hiding potentially sensitive logic unique to one executable from the other. For example, ensuring that a free-to-play client executable never includes any server logic code will reduce the chances of hacking or abuse.
+**Multiplayer Gem** 支持在构建时进行代码分离，以创建仅包含客户端逻辑、仅包含服务器逻辑或同时包含客户端和服务器逻辑的代码。这允许用户通过排除不必要的逻辑和依赖项来创建较小大小的可执行文件。它还允许将一个可执行文件特有的潜在敏感 logic 隐藏给另一个可执行文件。例如，确保免费游戏的客户端可执行文件永远不包含任何服务器逻辑代码，这将减少黑客攻击或滥用的机会。
 
-The splitting functionality produces multiple build types:
-* _GameLauncher_ is a client-only launcher.
-* _ServerLauncher_ is a server-only launcher suitable for dedicated servers.
-* _UnifiedLauncher_ provides both functionalities, and is suitable for _client-hosted servers_, which are clients that can simultaneously host and participate in a multiplayer session.
+拆分功能会生成多种 build 类型：
+* _GameLauncher_ 是仅限客户端的启动器。
+* _ServerLauncher_ 是适用于专用服务器的仅限服务器的启动器。
+* _UnifiedLauncher_ 同时提供这两种功能，并且适用于_client托管的 servers_，这些客户端可以同时托管和参与多人游戏会话。
 
-This functionality is implemented through a variety of build mechanisms and it's important to understand these mechanisms in any Gem or project using the Multiplayer Gem.
+此功能是通过各种构建机制实现的，在使用多人游戏 Gem 的任何 Gem 或项目中了解这些机制非常重要。
 
-## Splitting client and server logic
+## 拆分客户端和服务器逻辑
 
-The Multiplayer Gem contains code files that can be divided into two categories:
-1. Files that are fully required on all launcher types.
-2. Files that have parts conditionally compiled out depending on launcher type and their dependents.
+多人游戏 Gem 包含可分为两类的代码文件：
+1. 所有启动器类型都完全需要的文件。
+2. 根据启动器类型及其依赖项有条件编译出部分的文件。
 
-These file lists are maintained in `multiplayer_files.cmake` and `multiplayer_split_files.cmake` respectively.
+这些文件列表分布维护在`multiplayer_files.cmake` 和 `multiplayer_split_files.cmake`。
 
-`multiplayer_files.cmake` generally contains core datatypes, base and core classes. `multiplayer_split_files.cmake` contains AutoComponent based MultiplayerComponents and types dependent on them.
+`multiplayer_files.cmake` 通常包含 Core 数据类型、Base 和 Core 类。 `multiplayer_split_files.cmake` 包含基于 AutoComponent 的 MultiplayerComponent 和依赖于它们的类型。
 
-### CMake setup
+### CMake 设置
 
-The split by cmake files leads us to four Multiplayer targets:
+按 cmake 文件拆分将我们引向四个 Multiplayer 目标：
 
-1. Common - A target containing `multiplayer_files.cmake`.
-2. Client - A target containing `multiplayer_files.cmake` plus `multiplayer_split_files.cmake` conditionally compiled for clients.
-3. Server - A target containing `multiplayer_files.cmake` plus `multiplayer_split_files.cmake` conditionally compiled for servers.
-4. Unified - A target containing `multiplayer_files.cmake` plus `multiplayer_split_files.cmake` conditionally compiled for both clients and servers.
+1. Common - 包含 `multiplayer_files.cmake`.
+2. Client - 包含 `multiplayer_files.cmake` 加 `multiplayer_split_files.cmake` 为 Client 端进行有条件编译。
+3. Server - 包含 `multiplayer_files.cmake` 加 `multiplayer_split_files.cmake` 为服务器有条件地编译。
+4. Unified - 包含 `multiplayer_files.cmake` 加 `multiplayer_split_files.cmake` 为 Client 端和 Server 进行条件编译。
 
-When including the Multiplayer Gem it is important to understand the needs of your usage. If the usage requires split logic, it is recommended to create Client, Server, and Unified targets which specify `Multiplayer.Client`, `Multiplayer.Server `, and `Multiplayer.Unified` dependencies, respectively. If your usage does not require split logic, then `Multiplayer.Common` is sufficient.
+在包含 Multiplayer Gem 时，了解您的使用需求非常重要。如果使用需要拆分逻辑，建议创建分别指定`Multiplayer.Client`, `Multiplayer.Server `, 和 `Multiplayer.Unified`依赖项的 Client、Server 和 Unified 目标。如果您的使用不需要拆分逻辑，则`Multiplayer.Common`就足够了。
 
-As an example, [MultiplayerSample](https://github.com/o3de/o3de-multiplayersample) uses and builds upon MultiplayerComponents in the Multiplayer Gem. It therefore defines its own respective Client, Server and Unified targets. 
+例如， [MultiplayerSample](https://github.com/o3de/o3de-multiplayersample) 使用并构建多人游戏 Gem 中的 MultiplayerComponent。因此，它定义了自己的 Client、Server 和 Unified 目标。
 
 {{< note >}}
-The following CMake examples are abbreviated.
+以下 CMake 示例是缩写。
 {{< /note >}}
 
 ```cmake
@@ -112,7 +112,7 @@ The following CMake examples are abbreviated.
     )
 ```
 
-Meanwhile, Multiplayer_ScriptCanvas only requires core datatypes so it only uses `Multiplayer.Common`.
+同时，Multiplayer_ScriptCanvas只需要核心数据类型，因此它只使用`Multiplayer.Common`.
 
 ```cmake
     ly_add_target(
@@ -128,14 +128,14 @@ Meanwhile, Multiplayer_ScriptCanvas only requires core datatypes so it only uses
                 Gem::Multiplayer.Common.Static
     )
 ```
-### Conditional compilation
+### 条件编译
 
-MultiplayerComponents are subject to conditional compilation. This is done using the macros `AZ_TRAIT_CLIENT` and `AZ_TRAIT_SERVER`. Client-specific logic should be wrapped in the former, while server-specific logic should be wrapped in the latter. The motivation for this approach is to allow target specific logic in MultiplayerComponents without requiring target specific files (i.e. a ServerComponent and ClientComponent with or without a BaseComponent).
+MultiplayerComponent 受条件编译的约束。这是使用宏`AZ_TRAIT_CLIENT` 和 `AZ_TRAIT_SERVER`完成的。特定于客户端的 logic 应该包装在前者中，而特定于服务器的 logic 应该包装在后者中。这种方法的动机是允许在 MultiplayerComponents 中使用特定于目标的逻辑，而不需要特定于目标的文件（即带或不带 BaseComponent 的 ServerComponent 和 ClientComponent）。
 
-In the Multiplayer Gem's cmake, observe that each target enables or disables these traits based on the target. For example, Server enables `AZ_TRAIT_SERVER` while disabling `AZ_TRAIT_CLIENT`. Usage of these targets will bring the macro definitions with them.
+在多人游戏 Gem 的 cmake 中，观察每个目标是否根据目标启用或禁用这些特征。例如，Server 启用`AZ_TRAIT_SERVER`，同时禁用`AZ_TRAIT_CLIENT`。使用这些目标将带来宏定义。
 
 {{< note >}}
-The following CMake example is abbreviated.
+以下 CMake 示例是缩写。
 {{< /note >}}
 
 ```cmake
@@ -193,9 +193,9 @@ The following CMake example is abbreviated.
 
 ### AutoComponents
 
-AutoComponents make use of `AZ_TRAIT_SERVER` and `AZ_TRAIT_CLIENT`. Depending on the specification of elements of a component, they will conditionally exclude logic. For example, given an RPC that is invoked on the client and handled on the server, the invocation signal will be wrapped in `AZ_TRAIT_CLIENT` while the handler will be wrapped in `AZ_TRAIT_SERVER`. Classes inheriting from AutoComponents will need to honor these usages in order to compile correctly.
+AutoComponents 使用 `AZ_TRAIT_SERVER` 和 `AZ_TRAIT_CLIENT`。根据组件元素的规范，它们将有条件地排除 logic。例如，给定一个在客户端调用并在服务器上处理的 RPC，则调用信号将包装在 `AZ_TRAIT_CLIENT` 中，而处理程序将包装在 `AZ_TRAIT_SERVER`中。从 AutoComponents 继承的类需要遵循这些用法才能正确编译。
 
-Consider the following RPC:
+请考虑以下 RPC：
 
 ```xml
     <RemoteProcedure Name="SendClientInput" InvokeFrom="Autonomous" HandleOn="Authority" IsPublic="true" IsReliable="false" GenerateEventBindings="false" Description="Client to server move / input RPC">
@@ -204,7 +204,7 @@ Consider the following RPC:
     </RemoteProcedure>
 ```
 
-This generates the following AutoComponent signatures:
+这将生成以下 AutoComponent 签名：
 
 ```cpp
     //! SendClientInput Invocation
@@ -222,4 +222,4 @@ This generates the following AutoComponent signatures:
     #endif
 ```
 
-A component inheriting from this AutoComponent that overrides HandleSendClientInput would need to similarly wrap it in `AZ_TRAIT_SERVER` as well.
+从此 AutoComponent 继承并覆盖 HandleSendClientInput 的组件也需要将其类似地包装在 `AZ_TRAIT_SERVER` 中。

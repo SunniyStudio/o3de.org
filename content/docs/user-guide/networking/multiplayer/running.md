@@ -1,77 +1,77 @@
 ---
-linkTitle: Running Multiplayer Projects
-title: Running Multiplayer Projects
-description: How to run multiplayer-enabled projects in Open 3D Engine (O3DE).
+linkTitle: 运行 Multiplayer 项目
+title: 运行 Multiplayer 项目
+description: 如何在 Open 3D Engine （O3DE） 中运行支持多人游戏的项目。
 weight: 300
 ---
 
-Running projects using the **Multiplayer Gem** in **Open 3D Engine (O3DE)** requires that you correctly build your project and set configuration options to run your project.
+使用 Open 3D Engine （O3DE） 中的 **Multiplayer Gem** 运行项目需要您正确构建项目并设置配置选项以运行项目。
 
-## Build your project
+## 构建你的项目
 
-When building your project, be sure do the following:
+在构建项目时，请务必执行以下操作：
 
-* Ensure your project is [properly configured](./configuration).
-* Build your project's `GameLauncher` and `ServerLauncher` targets.
+* 确保项目[已经正确配置](./configuration)。
+* 构建项目的 `GameLauncher` 和 `ServerLauncher` 目标。
 
-## Running your project
+## 运行你的项目
 
-Next, run the game either in standalone mode, using the ImGui options to host, or by using **O3DE Editor**.
+接下来，在独立模式下运行游戏，使用 ImGui 选项进行托管，或使用 **O3DE 编辑器**。
 
-### Testing in the Editor
+### 在 Editor 中测试
 
-You can run multiplayer projects in **O3DE Editor** using **Ctrl+G**. For more information, refer to [Test Multiplayer Projects in the O3DE Editor](./test-in-editor).
+您可以使用 **Ctrl+G** 在 **O3DE 编辑器** 中运行多人游戏项目。有关更多信息，请参阅 [在 O3DE 编辑器中测试多人游戏项目](./test-in-editor).
 
-### Running locally using ImGui options
+### 使用 ImGui 选项在本地运行
 
-1. Launch your `ServerLauncher` either from Visual Studio or from your build directory.
-2. Press the `HOME` key to enable the debug menu.
-3. Select the `Host` option.
-4. Select a level to load to begin hosting.
-5. Use the `Launch Local Client` option to automatically launch a client connected to the server.
+1. 从Visual Studio或Build目录打开 `ServerLauncher`。
+2. 按下 `HOME` 键启用调试菜单。
+3. 选择`Host` 选项。
+4. 选择开始托管时要加载的关卡。
+5. 使用`Launch Local Client`选项以自动启动连接到 服务器的客户端。
 
-### Running server and client launchers in standalone
+### 独立运行服务器和客户端启动器
 
-#### Manual configuration using the application's console
+#### 使用应用程序的控制台进行手动配置
 
-You can manually launch the executables for Client and Server and configure them using the application's console command line.
+您可以手动启动 Client 和 Server 的可执行文件，并使用应用程序的控制台命令行对其进行配置。
 
-1. Launch both `ClientLauncher` and `ServerLauncher`.
-2. In `ServerLauncher` press `~` to open the command line.
-3. Run the command `host` to begin hosting.
-4. Run the command `LoadLevel <path to level>` to load a level.
-5. In `ClientLauncher` press `~` to open the command line.
-6. Run the command `connect <IP Address:Port>` to connect to the server. If running locally, `connect` will default to localhost.
+1. 启动 `ClientLauncher` 和 `ServerLauncher`。
+2. 在 `ServerLauncher` 中按 `~` 打开命令行提示符。
+3. 运行命令 `host` 以开始托管。
+4. 运行命令 `LoadLevel <path to level>` 加载一个关卡。
+5. 在 `ClientLauncher` 中按 `~` 打开命令行提示符。
+6. 运行命令 `connect <IP Address:Port>` 连接到服务器。如果本地运行，`connect` 将默认为 localhost。
 
-#### Using pre-defined config files
+#### 使用预定义的配置文件
 
-You can manually launch the executables for Client and Server and pass a pre-defined configuration file to each for them to execute on launch. Commands in these cfgs files are executed in listed order.
+您可以手动启动 Client 和 Server 的可执行文件，并将预定义的配置文件传递给每个可执行文件，以便它们在启动时执行。这些 cfgs 文件中的命令按列出的顺序执行。
 
-1. In the root of your project directory create `launch_client.cfg` and `launch_server.cfg`.
+1. 在项目目录的根目录中创建 `launch_client.cfg` 和 `launch_server.cfg`。
 
-2. Open `launch_server.cfg` and edit it to look like the following:
+2. 打开 `launch_server.cfg`并将其编辑为如下所示：
 
     ```txt
     host
     LoadLevel <path to Level>
     ```
 
-3. Open `launch_client.cfg` and edit it to look like the following:
+3. 打开 `launch_client.cfg` 并将其编辑为如下所示：
 
     ```txt
     connect <IP Address:Port>
     ```
 
-    Alternatively, you can do the following for testing against localhost server running on the default port.
+    或者，您可以执行以下操作，以针对在默认端口上运行的 localhost 服务器进行测试。
 
     ```txt
     connect
     ```
 
-4. Run the server using `MultiplayerSample.ServerLauncher.exe --console-command-file=launch_server.cfg`
+4. 使用 `MultiplayerSample.ServerLauncher.exe --console-command-file=launch_server.cfg`运行服务器
 
-5. Run the client using `MultiplayerSample.ClientLauncher.exe --console-command-file=launch_client.cfg`
+5. 使用 `MultiplayerSample.ClientLauncher.exe --console-command-file=launch_client.cfg`运行客户端
 
-It is necessary to run the Server first so the Client has a host to connect to. 
+必须先运行 Server，以便 Client 有要连接的主机。
 
-The preceding commands can be run either from a command line in your build directory or by setting command line arguments in your preferred execution method.
+上述命令可以从 build 目录中的命令行运行，也可以通过在首选执行方法中设置命令行参数来运行。

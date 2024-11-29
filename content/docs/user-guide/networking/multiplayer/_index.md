@@ -32,13 +32,13 @@ Multiplayer Gem 支持以下内容：
 | [生成玩家实体](spawning) | 如何生成一个实体供连接玩家控制。 |
 | [Debugging Multiplayer Desyncs](debug-desync) | 如何使用内置的 Desync Audit Trail 工具分析和调试多人不同步现象。 |
 
-## Related topics
+## 相关主题
 
-| Topic | Description |
+| 主题 | 说明 |
 |---|---|
-| [Network and Multiplayer Settings](../settings) | Settings to control the client and server behavior in `AzNetworking` and the Multiplayer Gem. |
-| [Multiplayer Components](/docs/user-guide/components/reference/#multiplayer) | Reference documentation for multiplayer components. |
-| [Multiplayer Gem API Reference](/docs/api/gems/multiplayer/annotated.html) | The complete C++ API reference for the O3DE Multiplayer Gem. |
-| [Multiplayer Compression Gem](/docs/user-guide/gems/reference/multiplayer/multiplayer-compression) | An example Gem showing how to implement network compression. |
-| [Multiplayer Sample](https://github.com/o3de/o3de-multiplayersample#readme) | Download the multiplayer sample to help you experiment with the features in the Multiplayer Gem. |
-| [Tutorial: Your First Network Component](/docs/learning-guide/tutorials/multiplayer/first-multiplayer-component/) | Tutorial for creating a network-enabled component. |
+| [网络和多人游戏设置](../settings) | 用于控制`AzNetworking`和多人游戏 Gem 中的客户端和服务器行为的设置。 |
+| [Multiplayer 组件](/docs/user-guide/components/reference/#multiplayer) | Reference documentation for multiplayer components. |
+| [Multiplayer Gem API 参考](/docs/api/gems/multiplayer/annotated.html) | O3DE 多人游戏 Gem 的完整 C++ API 参考。 |
+| [Multiplayer Compression Gem](/docs/user-guide/gems/reference/multiplayer/multiplayer-compression) | 显示如何实施网络压缩的示例 Gem。 |
+| [Multiplayer Sample](https://github.com/o3de/o3de-multiplayersample#readme) | 下载多人游戏示例，以帮助您试验多人游戏 Gem 中的功能。 |
+| [教程：您的第一个网络组件](/docs/learning-guide/tutorials/multiplayer/first-multiplayer-component/) | 创建支持网络的组件的教程。 |

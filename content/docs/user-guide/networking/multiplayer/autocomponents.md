@@ -1,151 +1,151 @@
 ---
-linktitle: Auto-components
-title: Multiplayer Auto-components
-description: A reference for defining Open 3D Engine (O3DE) multiplayer states through auto-components.
+linktitle: 自动组件
+title: Multiplayer 自动组件
+description: 通过自动组件定义 Open 3D Engine （O3DE） 多人游戏状态的参考。
 weight: 400
 ---
 
-*Auto-components* provide a convenient way to create **Open 3D Engine (O3DE)** multiplayer components. These components define states that are relevant to network synchronization. Using the [AzAutoGen](/docs/user-guide/programming/autogen) system, you can process auto-component files that are found in your project during a build to automatically generate C++ classes for components and to create controllers that provide network replication and remote function calls. Auto-components also manage [edit](/docs/user-guide/programming/components/reflection/edit-context/) and [behavior](/docs/user-guide/programming/components/reflection/behavior-context/) context bindings so that the bound component shows in **O3DE Editor** and works with O3DE scripting.
+*自动组件* 提供了一种创建**Open 3D Engine （O3DE）** 多人游戏组件的便捷方式。这些组件定义与网络同步相关的状态。使用 [AzAutoGen](/docs/user-guide/programming/autogen) 系统，您可以在构建过程中处理在项目中找到的自动组件文件，以自动生成组件的 C++ 类，并创建提供网络复制和远程函数调用的控制器。自动组件还管理 [编辑](/docs/user-guide/programming/components/reflection/edit-context/) 和 [行为](/docs/user-guide/programming/components/reflection/behavior-context/) 上下文绑定，以便绑定组件显示在 **O3DE 编辑器** 中并与 O3DE 脚本一起使用。
 
-To enable auto-component builds for your project, follow the instructions in [Multiplayer: Project Configuration](./configuration).
+要为您的项目启用自动组件构建，请按照 [多人游戏：项目配置](./configuration) 中的说明进行操作。
 
 
-## File structure
+## 文件结构
 
-Auto-components are defined in XML files and placed in the `Code\Source\Autogen` directory of the Multiplayer Gem. By naming convention, auto-component filenames must end with the suffix `.AutoComponent.xml`.
+自动组件在 XML 文件中定义，并放置在多人游戏 Gem 的`Code\Source\Autogen` 目录中。根据命名约定，自动组件文件名必须以后缀`.AutoComponent.xml`。
 
-## Attributes
+## 属性
 
-A multiplayer component can contain a variety of attributes that define its functionality and interface, such as network properties, RPCs, network inputs, and archetype properties.
+多人游戏组件可以包含定义其功能和接口的各种属性，例如网络属性、RPC、网络输入和原型属性。
 
 ### Component
 
-The `Component` tag defines the name, namespace, include path, and C++ override behavior for the multiplayer component. This is required and should be defined only once.
+`Component` 标签定义多人游戏组件的名称、命名空间、包含路径和 C++ 覆盖行为。这是必需的，并且只应定义一次。
 
-| Property | Description | Type |
+| 属性 |描述 |类型 |
 |---|---|---|
-| Name | The class name of the generated auto-component. The value must be a valid C++ class name. | `string` |
-| Namespace | The namespace that the generated auto-component will be placed within. For a given Gem, all defined auto-components must be defined within the same namespace. Mixing namespaces inside a Gem will result in compiler errors. The value must be a valid C++ namespace name. | `string` |
-| OverrideComponent | If `true`, the generated component will be a base class and the developer implementing the multiplayer component will be responsible for supplying the final derived component used in the editor and at runtime. | `bool` |
-| OverrideController | If `true`, the generated controller will be a base class, and the developer implementing the multiplayer component will be responsible for supplying the final derived controller used in the runtime. | `bool` |
-| OverrideInclude | If either `OverrideComponent` or `OverrideController` are `true`, this value is **required** and must be the path (relative to the Gem root) of the header containing the concrete implementations. The developer implementing the final component or controller classes must provide the class header that the final classes are declared within. | `string` |
+| Name | 生成的 auto-component 的类名。该值必须是有效的 C++ 类名。 | `string` |
+| Namespace | 生成的 auto-component 将放置在其中的命名空间。对于给定的 Gem，所有定义的 auto-components 都必须在同一命名空间中定义。在 Gem 中混合命名空间将导致编译器错误。该值必须是有效的 C++ 命名空间名称。 | `string` |
+| OverrideComponent | 如果 `true`，生成的组件将是一个基类，实现多人游戏组件的开发人员将负责提供在编辑器和运行时使用的最终派生组件。 | `bool` |
+| OverrideController | 如果 `true`，生成的控制器将是一个基类，实现多人游戏组件的开发人员将负责提供运行时中使用的最终派生控制器。 | `bool` |
+| OverrideInclude | 如果 `OverrideComponent` 或 `OverrideController` 是 `true`，此值为 **required**，并且必须是包含具体实现的标头的路径（相对于 Gem 根）。实现最终组件或控制器类的开发人员必须提供在其中声明最终类的类头。 | `string` |
 
 ### ComponentRelation
 
-The `ComponentRelation` tag indicates this component's relationship with other components. Use this to define whether or not this component requires or is incompatible with sibling components on the same entity. For example, the `NetworkCharacterComponent` requires a `NetworkTransformComponent` on the same entity to properly function.
+`ComponentRelation` 标签表示该组件与其他组件的关系。使用此选项可定义此组件是否需要同一实体上的同级组件或是否与同一实体上的同级组件不兼容。例如，`NetworkCharacterComponent` 需要在相同的实体上有一个 `NetworkTransformComponent` 才能正常运行。
 
-| Property | Description | Type |
+| 属性 |描述 |类型 |
 |---|---|---|
-| Name | The name of the related component. The value must be a valid C++ class name.| `string` |
-| Namespace | The namespace that the related component is declared within. The value must be a valid C++ namespace name. | `string` |
-| Include | The include path of the related component. | `string` |
-| Constraint | The type of relation that the related component has with this component. The allowed values are:<ul><li>**Required**: The related component must be present on the entity. These components are displayed in the Editor as a hard requirement for adding this autocomponent.</li><li>**Weak**: The related component isn't required, but will be activated on the entity (if present) before this auto-component.</li><li>**Incompatible**: The related component isn't compatible with this auto-component. Attempting to place both components on an entity will result in an error.</li></ul> | `Required`, `Weak`, `Incompatible` |
-| HasController | If `true`, the related component must have a multiplayer controller associated with it. Setting this value to true causes controller accessors to be generated on the controller. | `bool` |
+| Name | 相关组件的名称。该值必须是有效的 C++ 类名。| `string` |
+| Namespace | 在其中声明相关组件的命名空间。该值必须是有效的 C++ 命名空间名称。 | `string` |
+| Include | 相关组件的 include 路径。 | `string` |
+| Constraint | 相关组件与此组件的关系类型。允许的值为：<ul><li>**Required**: 相关组件必须存在于实体上。这些组件在 Editor 中显示为添加此 autocomponent 的硬性要求。</li><li>**Weak**: 相关组件不是必需的，但将在此自动组件之前在实体（如果存在）上激活。</li><li>**Incompatible**:相关组件与此 auto-component 不兼容。尝试将两个组件都放置在实体上将导致错误。</li></ul> | `Required`, `Weak`, `Incompatible` |
+| HasController | 如果 `true`，则相关组件必须具有与之关联的多人游戏控制器。将此值设置为 true 将导致在控制器上生成控制器访问器。| `bool` |
 
-For components that have a relation constraint of `Required` or `Weak`, accessors are generated on the auto-component with the name `Get<ComponentName>()`. These accessors return a cached pointer to the related component that's created on entity activation.
+对于具有 `Required` 或 `Weak`关系约束的组件，将在 auto-component 上生成名为 `Get<ComponentName>()` 的访问器。这些访问器返回一个缓存的指针，该指针指向在实体激活时创建的相关组件。
 
 ### Include
 
-The `Include` tag is used to generate the `#include` directives of the C++ code. An `Include` tag contains a path to a single header file. Use additional `Include` tags for each header file that your generated classes will use. 
+`Include`标签用于生成 C++ 代码的 `#include` 指令。`Include`标签包含单个头文件的路径。对生成的类将使用的每个头文件使用额外的`Include`标签。
 
-| Property | Description | Type |
+| 属性 |描述 |类型 |
 |---|---|---|
-| File | The path to a header to add as an `#include` of the generated source. | `string` |
+| File | 要添加为生成源的 `#include` 的标头的路径。 | `string` |
 
 
-### Network properties
+### Network 属性
 
-Network properties state information about the component that gets replicated between network endpoints. 
-They have two important fields: `ReplicateFrom` and `ReplicateTo`. 
-Together, these fields define which role can replicate to another specific role.
-You can only replicate property values *from* Authority and Autonomous roles. 
-A `ReplicateFrom` Authority relationship creates a server-authority model, which helps to ensure that you don't accidentally replicate from an unprivileged client. 
-Properties can be replicated *to* any role, because all participants in the session may need information from any other participant.
+网络属性 表示有关在网络终端节点之间复制的组件的信息。
+他们有两个重要的字段： `ReplicateFrom` 和 `ReplicateTo`. 
+这些字段共同定义哪个角色可以复制到另一个特定角色。
+您只能从 Authority 和 Autonomous 角色复制属性值。
+`ReplicateFrom` 授权关系会创建一个服务器授权模型，这有助于确保您不会意外地从非特权客户端复制。 
+属性可以复制到任何角色，因为会话中的所有参与者都可能需要来自任何其他参与者的信息。
 
-The following are four types of networking properties with a valid "from and to" relationship and their possible use cases:
+以下是具有有效“from 和 to”关系的四种类型的网络属性及其可能的用例：
 
-- **Authority-to-Client**: Handles client, or "simulated", properties.
+- **Authority-to-Client**: 处理 Client 端或 “simulated” 属性。
 
-- **Authority-to-Autonomous**: Handles autonomous-only properties.
+- **Authority-to-Autonomous**: 处理仅限自主的属性。
 
-- **Authority-to-Server**: Handles host migration.
+- **Authority-to-Server**: 处理主机迁移。
 
-- **Autonomous-to-Authority**: Gathers information about client metrics, such as monitoring the health of clients.
+- **Autonomous-to-Authority**: 收集有关客户端指标的信息，例如监控客户端的运行状况。
 
-For networking properties that replicate from Authority, a replication hierarchy applies. The replicate-to rules trickle up the hierarchy in the following way: An Authority-to-Client replication also replicates to Autonomous and Server roles. An Authority-to-Autonomous replication also replicates to the Server role. Finally, an Authority-to-Server replication only replicates to the Server. This behavioral hierarchy ensures that if the Authority ever migrates to the other server, then the other server has the right property information.
+对于从 Authority 复制的网络属性，将应用复制层次结构。replicate-to 规则按以下方式在层次结构中向上流动：Authority-to-Client 复制还会复制到 Autonomous 和 Server 角色。Authority-to-Autonomous 复制也会复制到 Server 角色。最后，Authority-to-Server 复制仅复制到 Server。此行为层次结构可确保在权限迁移到其他服务器时，其他服务器具有正确的属性信息。
 
-The `NetworkProperty` tag has the following properties:
+`NetworkProperty` 标签具有以下属性：
 
-| Property | Description | Values |
+| 属性 | 说明 | 值 |
 | - | - | - |
-| Name | Name of the network property. | `string` |
-| Description | Describes the function of the network property. | `string` |
-| Type | The property's type must be a valid C++ type or class name. | `string` |
-| Init | The initial value of the property. | `string` |
-| ReplicateFrom | Tells the network which role can send information about the changes that were made to this property. | `Authority`, `Autonomous` | 
-| ReplicateTo | Tells the network which role can receive information about the changes that were made to this property. | `Server`, `Authority`, `Autonomous`, `Client` | 
-| Container | The type of holder object that stores this network property. | `Object`, `Array`, `Vector` |
-| Count | The number of elements, when `Container` is `Array` or `Vector`. Must be an integer value or an integer type variable. | `string` |
-| IsPublic | If `true`, this property's access modifier is set to `public`, and is accessible from outside of the class.  | `bool` |
-| IsRewindable | If `true`, the network simulation records the historic value of this network property for each network time tick. The ability to rewind is needed if the network property plays a crucial role in the network simulation, as it relates to other network entities. For example, the network transform component's network properties are rewindable. This is important because if player A shoots a gun at network time tick 10, then the host must rewind all of the other network entities' transform components back to their position at time tick 10 to check who was hit. | `bool` |
-| IsPredictable | If true, the Autonomous player is allowed to edit this property even if **ReplicateFrom** is `Authority` and not `Autonomous`. The autonomous player doesn't have control of this network property, but they may predict and change its value locally. For example, with the Network Transform component, the autonomous player is allowed to alter their player's position locally, even before receiving explicit permission from the server to move. This makes the player's movements feel responsive. | `bool` |
-| ExposeToEditor | If `true`, this property is accessible in the O3DE Editor. | `bool` |
-| ExposeToScript | If `true`, this property is accessible for runtime scripting via Lua and ScriptCanvas.  | `bool` |
-| GenerateEventBindings | If `true`, [AZ::Event](https://www.o3de.org/docs/user-guide/programming/az-event/) callbacks will be triggered whenever the value of this network property is changed. | `bool` |
+| Name | 网络属性的名称。 | `string` |
+| Description | 描述 network 属性的功能。 | `string` |
+| Type | 属性的类型必须是有效的 C++ 类型或类名。 | `string` |
+| Init | 属性的初始值。 | `string` |
+| ReplicateFrom | 告知网络哪个角色可以发送有关对此属性所做更改的信息。 | `Authority`, `Autonomous` | 
+| ReplicateTo | 告知网络哪个角色可以接收有关对此属性所做更改的信息。 | `Server`, `Authority`, `Autonomous`, `Client` | 
+| Container | 存储此网络属性的 holder 对象的类型。 | `Object`, `Array`, `Vector` |
+| Count | 元素数，当 `Container` 是 `Array` 或 `Vector`。必须是整数值或整数类型变量。 | `string` |
+| IsPublic | 如果 `true`，则此属性的访问修饰符设置为 `public`，并且可以从类外部访问。 | `bool` |
+| IsRewindable | 如果 `true`中，网络模拟会记录每个网络时间时钟周期的此网络属性的历史值。如果网络属性在网络模拟中起着至关重要的作用，则需要回退功能，因为它与其他网络实体相关。例如，网络转换组件的网络属性是可倒回的。这一点很重要，因为如果玩家 A 在网络时间第 10 刻开枪，则主机必须将所有其他网络实体的转换组件倒回它们在第 10 刻的位置，以检查谁被击中。 | `bool` |
+| IsPredictable | 如果为 true，则允许 Autonomous 播放器编辑此属性，即使 **ReplicateFrom** 是 `Authority` 而不是 `Autonomous`。自主播放器无法控制此网络属性，但他们可以在本地预测和更改其值。例如，使用 Network Transform 组件，允许自主玩家在本地更改其玩家的位置，甚至在获得服务器的明确移动许可之前。这会使玩家的动作感觉灵敏. | `bool` |
+| ExposeToEditor | 如果 `true`，此属性可在 O3DE 编辑器中访问。 | `bool` |
+| ExposeToScript | 如果 `true`，则可通过 Lua 和 ScriptCanvas 访问此属性，以便运行时编写脚本。  | `bool` |
+| GenerateEventBindings | 如果 `true`，每当此网络属性的值发生变化时，都会触发 [AZ::Event](https://www.o3de.org/docs/user-guide/programming/az-event/) 回调。 | `bool` |
 
 ### Remote procedure calls (RPCs)
 
-RPCs have two important properties: `InvokeFrom` and `HandleOn`. These properties describe which role the RPC is invoked from and which role it's handled on.
+RPC 具有两个重要属性：`InvokeFrom` 和 `HandleOn`。这些属性描述从哪个角色调用 RPC 以及在哪个角色上处理 RPC。
 
-The following are four types of RPCs with a valid "invoked from and handled on" relationship and their possible use cases:
+以下是四种类型的 RPC，具有有效的“invoked from and handled on”关系及其可能的用例：
 
-- **Authority-to-Autonomous**: In an example use case, it sends corrections about the game state to the user.
+- **Authority-to-Autonomous**: 在示例用例中，它向用户发送有关游戏状态的更正。
 
-- **Authority-to-Client**: Authority sends calls to all clients. For example, it sends a request to play a particle effect on all the clients.
+- **Authority-to-Client**: Authority 向所有客户端发送调用。例如，它发送一个请求，以便在所有客户端上播放粒子效果。
 
-- **Server-to-Authority**: This is required to communicate information between entities. For example, suppose in a multi-server setup, EntityA is owned by ServerA and EntityB is owned by ServerB. If EntityA communicates directly to EntityB, EntityA will be talking to a proxy, not the real EntityB. Server-to-Authority ensures that messages always find the entity with authority. For example, when a player wants to deal damage, Autonomous informs the Server, and the Server sends the DealDamage function to Authority. 
+- **Server-to-Authority**: 这是在实体之间传递信息所必需的。例如，假设在多服务器设置中，实体 A 归 ServerA 所有，实体 B 归 ServerB 所有。如果实体 A 直接与实体 B 通信，则实体 A 将与代理通信，而不是真正的实体 B。Server-to-Authority 确保消息始终找到具有权限的实体。例如，当玩家想要造成伤害时，Autonomous 会通知 Server，然后 Server 将 DealDamage 函数发送给 Authority。
 
-- **Autonomous-to-Authority**: Sends user settings information that affects user input and is used during input-process time rather than input-creation time, such as mouse sensitivity and input controls. 
+- **Autonomous-to-Authority**: 发送影响用户输入的用户设置信息，这些信息在输入处理时而不是输入创建时使用，例如鼠标敏感度和输入控件。
 
-The `RemoteProcedure` tag has the following properties:
+`RemoteProcedure` 标签具有以下属性：
 
-| Property | Description | Values | 
+| 属性 | 说明 | 值 |
 | - | - | - |
-| Name | Name of the RPC. | `string` |
-| Param | A parameter and value pair that you can send along with the RPCs. You can have none or an infinite amount of parameters. You must specify the parameter's type and name. |  |
-| Description | Describes the functionality of the RPC. | `string` |
-| InvokeFrom | Tells the network which role invokes this RPC. | `Authority`, `Server`, `Autonomous` | 
-| HandleOn | Tells the network which roles handles this RPC. If Authority, the RPC is handled by the server that has authority over that entity. If Autonomous, the RPC is handled only by the relevant player's local client. If Client, the RPC is handled on all clients. | `Authority`, `Autonomous`, `Client` |
-| IsPublic | If `true`, this property's access modifier is set to `public`, allowing others to send this RPC across the network. | `bool` |
-| IsReliable | If `true`, RPC is reliable and uses a queue to guarantee the delivery of a message. Otherwise, RPC is unreliable and are sent over a "fire and forget" method. Be aware that RPCs can be reliably sent, but are not guaranteed to arrive in any particular order.  | `bool` |
-| GenerateEventBindings | If `true`, [AZ::Event](https://www.o3de.org/docs/user-guide/programming/az-event/) callbacks will be triggered whenever the value of this network property is changed. | `bool` |
+| Name | RPC 的名称。 | `string` |
+| Param | 可以与 RPC 一起发送的参数和值对。您可以没有参数或无限数量的参数。您必须指定参数的类型和名称。 |  |
+| Description | 描述 RPC 的功能。 | `string` |
+| InvokeFrom | 告知网络哪个角色调用此 RPC。 | `Authority`, `Server`, `Autonomous` | 
+| HandleOn | 告知网络哪些角色处理此 RPC。如果为 Authority，则 RPC 由对该实体具有权限的服务器处理。如果 Autonomous（自主），则 RPC 仅由相关玩家的本地客户端处理。如果为 Client，则在所有客户端上处理 RPC。 | `Authority`, `Autonomous`, `Client` |
+| IsPublic | 如果 `true`，则此属性的访问修饰符设置为 '`public`'，允许其他人通过网络发送此 RPC。 | `bool` |
+| IsReliable | 如果 `true`，RPC 是可靠的，并使用队列来保证消息的传递。否则，RPC 不可靠，并通过“即发即弃”方法发送。请注意，RPC 可以可靠地发送，但不能保证按任何特定顺序到达。  | `bool` |
+| GenerateEventBindings | 如果 `true`, [AZ::Event](https://www.o3de.org/docs/user-guide/programming/az-event/) 每当此网络属性的值发生更改时，都会触发回调。 | `bool` |
 
 
-### Archetype property
+### Archetype 属性
 
-The `ArchetypeProperty` tag defines a property that you can configure only at edit time. When a multiplayer component gets generated, its archetype properties become accessible in the O3DE Editor, via the component menu. A multiplayer component may have none or an infinite number of archetype properties.
+`ArchetypeProperty`tag 定义只能在编辑时配置的属性。当生成多人游戏组件时，可以通过组件菜单在 O3DE 编辑器中访问其原型属性。多人游戏组件可以没有原型属性，也可以有无限数量的原型属性。
 
-| Property | Description | Values |
+| 属性 | 说明 | 值 |
 | - | - | - |
-| Name | The name of the property. | `string` |
-| Type | The property's type must be a valid C++ type or class name. | `string` |
-| Init | The initial value of the property. | `string` |
-| Container | The type of holder object that stores this property. | `Object`, `Array`, `Vector` |
-| Count | The number of elements, when `Container` is `Array` or `Vector`. Must be an integer value or an integer type variable. | `string` |
-| ExposeToEditor | If `true`, this is accessible in the O3DE Editor. It's recommended to enable this setting for archetype properties to be useful. Only disable this setting if you don't want users to access this and are supplying a hard-coded value in `Init`.  | `bool` |
+| Name | 属性的名称。 | `string` |
+| Type | 属性的类型必须是有效的 C++ 类型或类名。 | `string` |
+| Init | 属性的初始值。 | `string` |
+| Container | 存储此属性的 holder 对象的类型。 | `Object`, `Array`, `Vector` |
+| Count | 元素的数量，当`Container` 是 `Array` 或 `Vector`.必须是整数值或整数类型变量。 | `string` |
+| ExposeToEditor | 如果 `true`, 这可以在 O3DE 编辑器中访问。建议启用此设置，以使 archetype 属性有用。 如果你不想让用户访问此属性，禁用此设置，提供一个硬编码值 `Init`。  | `bool` |
 
 
-### Network inputs
+### Network 输入
 
-*Network inputs* are used to send input data from the player to the authoritative server. Network inputs are like special [remote procedure calls (RPCs)](/docs/user-guide/networking/multiplayer/overview#remote-procedure-calls-rpcs) that the Multiplayer Gem creates, processes, and records at each frame of the network tick. When the authority receives a network input from the player, it stamps the network input with a frame number. Noting the frame number allows the authority to *rewind*, meaning it returns all of the rewindable network properties to that moment in history. Rewinding before processing the input is crucial to keep the multiplayer simulation in sync.
+**网络输入**用于将输入数据从播放器发送到权威服务器。网络输入类似于特殊的 [远程过程调用 （RPC）](/docs/user-guide/networking/multiplayer/overview#remote-procedure-calls-rpcs)，多人游戏 Gem 在网络时钟周期的每一帧创建、处理和记录。当颁发机构收到来自播放器的网络输入时，它会使用帧编号标记网络输入。记下帧编号允许颁发机构 *倒回 *，这意味着它将所有可倒回的网络属性返回到历史上的那个时刻。在处理输入之前倒回对于保持多人游戏模拟同步至关重要。
 
-| Property | Description |
+| 属性 | 说明 |
 | --- | --- |
-| **Name** | The name of the input. This name is used when writing or reading the input in code. |
-| **Type** | The data type that the input is stored as. |
-| **Init** | The initial value of the data. |
+| **Name** | 输入的名称。在代码中写入或读取输入时，将使用此名称。 |
+| **Type** | 输入存储为的数据类型。 |
+| **Init** | 数据的初始值。 |
 
-#### Example
+#### 例如
 
 ```xml
 <NetworkInput Type="StickAxis" Name="ForwardAxis" Init="0.0f" />
@@ -153,20 +153,20 @@ The `ArchetypeProperty` tag defines a property that you can configure only at ed
 <NetworkInput Type="uint8_t"   Name="ResetCount"  Init="0" />
 ```
 
-For a more complete example, refer to [`NetworkPlayerMovementComponent.AutoComponent.xml`](https://github.com/o3de/o3de-multiplayersample/blob/development/Gem/Code/Source/AutoGen/NetworkPlayerMovementComponent.AutoComponent.xml#L21-L28).
+有关更完整的示例，请参阅 [`NetworkPlayerMovementComponent.AutoComponent.xml`](https://github.com/o3de/o3de-multiplayersample/blob/development/Gem/Code/Source/AutoGen/NetworkPlayerMovementComponent.AutoComponent.xml#L21-L28).
 
-#### Using network inputs in game logic
+#### 在游戏逻辑中使用网络输入
 
-In C++ and scripting, an auto-component with a network input requires that you implement the following multiplayer component controller functions:
+在 C++ 和脚本中，具有网络输入的自动组件要求您实现以下多人游戏组件控制器函数：
 
-- `CreateInput`: Define this function to return a filled-in network input that contains all of the recorded device inputs that occurred since the last tick. The multiplayer system automatically calls CreateInput for the autonomous player at every network tick. This is important because unlike for single player, the multiplayer system cannot act immediately upon receiving device inputs. Instead, the multiplayer system tracks all of the device inputs and stores them in the network input.
+- `CreateInput`: 定义此函数以返回一个填充的网络输入，其中包含自上次 tick 以来发生的所有记录的设备输入。多人游戏系统在每个网络时钟周期自动为自主玩家调用 CreateInput。这一点很重要，因为与单人游戏不同，多人游戏系统无法在收到设备输入后立即执行操作。相反，多人游戏系统会跟踪所有设备输入并将其存储在网络输入中。
 
-- `ProcessInput`: Define and use this function to process all of the network inputs. Prior to calling this function, you should only have recorded device inputs through CreateInput, which doesn't result in any changes to the world yet. When you call ProcessInput, both the server and client-player will process the same network input at the same network tick. This function calls for both the autonomous player and the authority.
+- `ProcessInput`: 定义并使用此函数处理所有网络输入。在调用此函数之前，您应该只通过 CreateInput 记录设备输入，这还不会导致世界发生任何变化。调用 ProcessInput 时，服务器和客户端播放器将在同一网络时钟周期处理相同的网络输入。此函数需要自主玩家和权限。
 
 
-### Example
+### 例如
 
-[`NetworkWeaponsComponent.AutoComponent.xml`](https://github.com/o3de/o3de-multiplayersample/blob/development/Gem/Code/Source/AutoGen/NetworkWeaponsComponent.AutoComponent.xml) is an example of an auto-component that synchronizes a component that represents weapon state across a multiplayer session.
+[`NetworkWeaponsComponent.AutoComponent.xml`](https://github.com/o3de/o3de-multiplayersample/blob/development/Gem/Code/Source/AutoGen/NetworkWeaponsComponent.AutoComponent.xml)是一个 auto-component 示例，该组件在多人游戏会话中同步表示武器状态的组件。
 
 ```xml
 <?xml version="1.0"?>
@@ -206,13 +206,13 @@ In C++ and scripting, an auto-component with a network input requires that you i
 </Component>
 ```
 
-## Building auto-components
+## 构建自动组件
 
-Auto-components are processed when you compile and build your project. Whenever you update an auto-component XML file, you must reconfigure and recompile O3DE Editor, Game Launcher, and Server Launcher. This is because the XML is used to generate a C++ file, and the C++ file must be compiled. For more information about configuring builds, refer to [Configure and Build](/docs/user-guide/build/configure-and-build).
+自动组件在编译和生成项目时进行处理。无论何时更新自动组件 XML 文件，都必须重新配置并重新编译 O3DE Editor、Game Launcher 和 Server Launcher。这是因为 XML 用于生成 C++ 文件，并且必须编译 C++ 文件。有关配置构建的更多信息，请参阅 [配置和构建](/docs/user-guide/build/configure-and-build).
 
-Like other O3DE components, make sure to add your auto-component files inside your project's CMake file so that they can be built. Similarly, you must reconfigure and recompile after updating any CMake file.
+与其他 O3DE 组件一样，请确保将 auto-component 文件添加到项目的 CMake 文件中，以便可以构建它们。同样，在更新任何 CMake 文件后，您必须重新配置并重新编译。
 
-The following example of `<your-project>_files.cmake` lists the auto-component files:
+以下 `<your-project>_files.cmake` 示例列出了自动组件文件：
 
 ```cmake
 set(FILES

@@ -1,53 +1,53 @@
 ---
-linkTitle: Project Configuration
-title: Adding the Multiplayer Gem to a Project
-description: Learn how to add multiplayer support to an Open 3D Engine (O3DE) project or Gem. Includes instructions for creating a placeholder auto-component.
+linkTitle: 项目配置
+title: 将 Multiplayer Gem 添加到项目
+description: 了解如何向 Open 3D Engine （O3DE） 项目或 Gem 添加多人游戏支持。包括创建占位符自动组件的说明。
 weight: 200
 ---
 
-When you need multiplayer support in your **Open 3D Engine (O3DE)** project, the easiest way to set it up is to create the project from the O3DE multiplayer template using the instructions that follow.
+当您在 **Open 3D Engine （O3DE）** 项目中需要多人游戏支持时，最简单的设置方法是使用下面的说明从 O3DE 多人游戏模板创建项目。
 
-If your O3DE project is already in development and you want to add multiplayer support to it, the instructions on [Manual project configuration](#manual-project-configuration) will help you add the **Multiplayer Gem** to an existing project.
+如果您的 O3DE 项目已在开发中，并且您想要为其添加多人游戏支持，则 [手动项目配置](#manual-project-configuration)上的说明将帮助您将 **多人游戏 Gem** 添加到现有项目。
 
-## Creating a multiplayer project from the multiplayer template {#creating-project-from-template}
+## 从 Multiplayer 模板创建多人游戏项目 {#creating-project-from-template}
 
-To create a multiplayer project from the O3DE multiplayer template, you need O3DE version 22.10 or later. You must first add the template from the [O3DE Extras GitHub repo](https://github.com/o3de/o3de-extras) to your library of O3DE templates using **Project Manager**. Then you will be able to create a new project from the template.
+要从 O3DE 多人游戏模板创建多人游戏项目，您需要 O3DE 版本 22.10 或更高版本。您必须首先使用 **Project Manager** 将 [O3DE Extras GitHub repo](https://github.com/o3de/o3de-extras) 中的模板添加到您的 O3DE 模板库中。然后，您将能够从模板创建新项目。
 
-1. In Project Manager, choose **New Project**, then **Create New Project**. For help with using Project Manager to create projects, refer to [Creating projects using Project Manager](/docs/user-guide/project-config/project-manager/#creating-projects-using-project-manager).
+1. 在 Project Manager中，选择 **New Project**，然后选择 **Create New Project**。有关使用 Project Manager 创建项目的帮助，请参考 [使用 Project Manager 创建项目](/docs/user-guide/project-config/project-manager/#creating-projects-using-project-manager)。
 
-1. Choose **Add remote template**.
+1. 选择 **Add remote template**。
 
-1. In the **Add a remote template** dialog box, enter `https://github.com/o3de/o3de-extras.git` as the **Remote URL**. Then choose **Add**. This registers the GitHub repo as a remote source.
+1. 在 **Add a remote template** 对话框中，输入 `https://github.com/o3de/o3de-extras.git` 到 **Remote URL**中。然后点击 **Add**。这会将 GitHub 存储库注册为远程源。
 
     {{< image-width src="/images/user-guide/networking/multiplayer/add_extra_templates.png" width="700" alt="Enter O3DE Extras repo URL in Add Remote Template dialog box." >}}
 
-1. Select the new template named **Multiplayer**. This selects the template for the new project.
+1. 选择名为 **Multiplayer** 的新模板。这将为新项目选择模板。
 
-1. Choose **Download Template** (in the bottom right of the New Project window), then choose the location where the template will be downloaded. Choose **Download**.
+1. 选择 **Download Template**（位于 New Project 窗口的右下角），然后选择将下载模板的位置。选择 **Download**。
 
-1. With the template downloaded, you can configure your project with additional Gems. Choose **Create Project** when you're ready to create the new project.
+1. 下载模板后，您可以使用其他 Gem 配置您的项目。当您准备好创建新项目时，请选择 **Create Project**。
 
-1. Choose **Build Project - Build Now** from the project's icon box to build the project.
+1. 从项目的图标框中选择 **Build Project - Build Now** 构建项目。
 
-1. When the build completes, your project will be ready to use. You can choose **Open Editor** to open it in **O3DE Editor**.
+1. 构建完成后，您的项目即可使用。你可以选择 **Open Editor** 在 **O3DE Editor**中打开项目。
 
-1. The project comes with a `Demo` level which you can open from the Editor and play with using **Ctrl+G**.
+1. 该项目带有一个`Demo`关卡，您可以从编辑器打开该关卡，然后使用 **Ctrl+G** 进行操作。
 
-### Alternative ways to set up the multiplayer template
+### 设置多人游戏模板的替代方法
 
-To set up the multiplayer template without using Project Manager, you will need to download the template from the [O3DE Extras GitHub repo](https://github.com/o3de/o3de-extras) and then register the template from a command line.
+要在不使用 Project Manager 的情况下设置多人游戏模板，您需要从 [O3DE Extras GitHub repo](https://github.com/o3de/o3de-extras) 下载模板，然后从命令行注册模板。
 
-1. When obtaining the template from the O3DE Extras GitHub repo, you can choose to download a tagged release version or use `git clone` to get the latest prerelease code from the `development` branch. Do _one_ of the following:
+1. 从 O3DE Extras GitHub 存储库获取模板时，您可以选择下载标记的发行版或使用“git clone”从`development`分支获取最新的预发行代码。执行以下之一：
 
-    a. To download a release version from the repo, open the [O3DE Extras tags page](https://github.com/o3de/o3de-extras/tags). Select a version, then choose the zip file that begins with the name `Template_Multiplayer` to download. Unzip the contents to a directory of your choice.
+    a. 要从存储库下载发布版本，请打开 [O3DE Extras tags 页面]](https://github.com/o3de/o3de-extras/tags)。选择一个版本，然后选择以名称`Template_Multiplayer`开头的 zip 文件进行下载。将内容解压缩到您选择的目录中。
 
-    b. To download the latest prerelease code from the `development` branch, open a command line window on your computer and use `git clone` to get the contents of the repo:
+    b. 要从 `development` 分支下载最新的预发行代码，请在您的计算机上打开一个命令行窗口，然后使用`git clone`获取存储库的内容：
 
     ```cmd
     git clone https://github.com/o3de/o3de-extras.git
     ```
 
-1. Open a command line window to your O3DE engine directory and use the `o3de register` command to register the multiplayer template.
+1. 打开一个命令行窗口，转到 O3DE 引擎目录，并使用`o3de register`命令注册多人游戏模板。
 
     ```cmd
     // Example using downloaded and unzipped release version.
@@ -57,34 +57,34 @@ To set up the multiplayer template without using Project Manager, you will need 
     scripts\o3de.bat register -tp C:/o3de-extras/Templates/Multiplayer
     ```
 
-1. You can now create a project from this template, using either Project Manager or the `o3de create-project` command, as in the following example:
+1. 现在，您可以使用 Project Manager 或`o3de create-project`命令从此模板创建项目，如以下示例所示：
 
     ```cmd
     scripts\o3de.bat create-project -pp C:/o3de-projects/my-multiplayer-game -tn Multiplayer
     ```
 
-## Manual project configuration
+## 手动项目配置
 
-Adding the full functionality of the Multiplayer Gem to an O3DE project requires making edits to the CMake scripts and source code. These changes enable:
+将多人游戏 Gem 的全部功能添加到 O3DE 项目需要编辑 CMake 脚本和源代码。这些更改支持：
 
-* Linking against the correct core libraries and Gems.
-* Building [auto-components](./autocomponents).
-* Creating multiplayer component descriptors.
-* Registering the components with the Multiplayer Gem.
+* 链接到正确的核心库和 Gem。
+* 构建 [auto-components](./autocomponents).
+* 创建多人游戏组件描述符。
+* 向多人游戏 Gem 注册组件。
 
 {{< note >}}
-Because both O3DE Gems and projects use the same CMake build functions, you can use these instructions to create a new Gem that extends the behavior of the Multiplayer Gem.
+由于 O3DE Gem 和项目都使用相同的 CMake 构建函数，因此您可以使用这些说明创建一个新的 Gem，以扩展多人游戏 Gem 的行为。
 {{< /note >}}
 
-### Enable the Multiplayer Gem
+### 启用 Multiplayer Gem
 
-Start by adding and enabling the Multiplayer Gem in your project. For help, refer to [Adding and Removing Gems in a Project](/docs/user-guide/project-config/add-remove-gems/).
+首先，在项目中添加并启用 Multiplayer Gem。有关帮助，请参阅 [在项目中添加和删除 Gem](/docs/user-guide/project-config/add-remove-gems/).
 
-### Make CMakeList.txt changes
+### 进行CMakeList.txt更改
 
-Make sure the `<ProjectName>.Static` target includes the correct dependencies. 
-Find the CMake file that defines your project's static target. For example, `<ProjectName>/Gem/Code/CMakeList.txt`. Edit the `<ProjectName>.Static` target as follows:
-1. In the `FILES_CMAKE` section, add `<projectname>_autogen_files.cmake`. You create this file in a later step.
+确保 `<ProjectName>.Static` 目标包含正确的依赖项。
+找到定义项目静态目标的 CMake 文件。例如，`<ProjectName>/Gem/Code/CMakeList.txt`。编辑`<ProjectName>.Static`目标，如下所示：
+1. 在`FILES_CMAKE`部分，添加`<projectname>_autogen_files.cmake`。您将在后续步骤中创建此文件。
     ```cmake
         ly_add_target(
             NAME <ProjectName>.Static STATIC
@@ -94,7 +94,7 @@ Find the CMake file that defines your project's static target. For example, `<Pr
                 <projectname>_autogen_files.cmake
     ```
 
-1. In the `BUILD_DEPENDENCIES PUBLIC` section, add `AZ::AzNetworking`, `Gem::Multiplayer`, and `AZ::AzFramework`.
+1. 在 `BUILD_DEPENDENCIES PUBLIC` 部分中，添加 `AZ::AzNetworking`, `Gem::Multiplayer`, 和 `AZ::AzFramework`.
    ```cmake
     ly_add_target(
         NAME <ProjectName>.Static STATIC
@@ -106,8 +106,8 @@ Find the CMake file that defines your project's static target. For example, `<Pr
                 Gem::Multiplayer
    ```
 
-    {{< note >}}If `BUILD_DEPENDENCIES` does not contain a `PUBLIC` section, add it as shown in the previous code example.{{< /note >}}
-1. In the `BUILD_DEPENDENCIES PRIVATE` section, add `Gem::Multiplayer.Static`.
+    {{< note >}}如果 `BUILD_DEPENDENCIES` 没包含 `PUBLIC`，添加它，如前面的代码示例所示。{{< /note >}}
+1. 在`BUILD_DEPENDENCIES PRIVATE`中，添加`Gem::Multiplayer.Static`。
    ```cmake
     ly_add_target(
         NAME <ProjectName>.Static STATIC
@@ -117,7 +117,7 @@ Find the CMake file that defines your project's static target. For example, `<Pr
                 ...
                 Gem::Multiplayer.Static
    ```
-1. Also add the following `AUTOGEN_RULES` section to the `<ProjectName>.Static` target:
+1. 同时，添加以下 `AUTOGEN_RULES` 到 `<ProjectName>.Static` 目标中:
    
    ```cmake
     ly_add_target(
@@ -130,7 +130,7 @@ Find the CMake file that defines your project's static target. For example, `<Pr
             *.AutoComponent.xml,AutoComponentTypes_Source.jinja,$path/AutoComponentTypes.cpp
    ```
 
-At the end of editing the CMake file, your `<ProjectName>.Static` target should look something like the following:
+在编辑 CMake 文件结束时， `<ProjectName>.Static` Target 应如下所示：
 
 ```cmake
 ly_add_target(
@@ -161,9 +161,9 @@ ly_add_target(
 )
 ```
 
-### Add the AutoGen CMake file
+### 添加 AutoGen CMake 文件
 
-Next, create a new file named `<projectname>_autogen_files.cmake` and place it in the project's code folder. For example: `<ProjectName>/Gem/Code/<projectname>_autogen_files.cmake`. The contents of this file add the source templates for [auto-components](./autocomponents) to the project build.
+接下来，创建一个名为 `<projectname>_autogen_files.cmake`  的新文件，并将其放在项目的 code 文件夹中。例如：`<ProjectName>/Gem/Code/<projectname>_autogen_files.cmake`。此文件的内容将 [auto-components](./autocomponents)的源模板添加到项目构建中。
 
 ```cmake
 set(FILES
@@ -175,18 +175,18 @@ set(FILES
 )
 ```
 
-### Add a placeholder auto-component
+### 添加占位符自动组件
 
 {{< known-issue link="https://github.com/o3de/o3de/issues/4058">}}
-If you've enabled multiplayer auto-components but you haven't created any auto-components, you might experience a build failure. As a workaround, follow the steps in this section to create a placeholder auto-component.
+如果您已启用多人游戏自动组件，但尚未创建任何自动组件，则可能会遇到构建失败。解决方法是，请按照本节中的步骤创建占位符自动组件。
 {{< /known-issue >}}
 
-1. Under your project's `Code\Source\` directory, create a new folder named `AutoGen`.
-    {{< note >}}This AutoGen directory doesn't have to be temporary. All future multiplayer auto-components can live here.{{< /note >}}
-1. Under `Code\Source\AutoGen`, create a new, placeholder auto-component file named `MyFirstNetworkComponent.AutoComponent.xml`.
-    {{< note >}}This guide uses "MyFirstNetworkComponent" as the name for this multiplayer auto-component. You can specify any name for your component, but be sure to use that name consistently.{{< /note >}}
+1. 在项目的`Code\Source\` 目录下，创建一个名为`AutoGen`的新文件夹。
+   {{< note >}}这个 AutoGen 目录不一定是临时的。所有未来的多人游戏自动组件都可以位于此处。{{< /note >}}
+1. 在`Code\Source\AutoGen`下，创建一个名为`MyFirstNetworkComponent.AutoComponent.xml`的新占位符自动组件文件。
+   {{< note >}}本指南使用“MyFirstNetworkComponent”作为这个多人游戏自动组件的名称。您可以为组件指定任何名称，但请务必始终使用该名称。{{< /note >}}
 
-1. Modify `Code\Source\AutoGen\MyFirstNetworkComponent.AutoComponent.xml` to have the following content:
+1. 修改 `Code\Source\AutoGen\MyFirstNetworkComponent.AutoComponent.xml` 可包含以下内容：
     ```xml  
     <?xml version="1.0"?>
 
@@ -199,30 +199,30 @@ If you've enabled multiplayer auto-components but you haven't created any auto-c
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     </Component>
     ```
-    {{< important >}}Replace `<ProjectName>` with your project's name and make sure that the value is wrapped in quotes.
+    {{< important >}}使用项目名称替换 `<ProjectName>`， 并确保该值用引号括起来。
     {{< /important >}}
-1. Register the placeholder auto-component with CMake by updating `<projectname_files.cmake>`.
+1. 通过更新 `<projectname_files.cmake>` 向 CMake 注册占位符自动组件>。
     ```cmake
     set(FILES
         ...
         Source/AutoGen/MyFirstNetworkComponent.AutoComponent.xml
     )
     ```
-{{< note >}}After completing the setup steps in this guide, you can delete the placeholder auto-component and create a new auto-component, or use it as a starting point. There must always be at least one auto-component.
+{{< note >}}完成本指南中的设置步骤后，您可以删除占位符自动组件并创建新的自动组件，或将其用作起点。必须始终至少有一个 auto-component 。
 
-To learn more about multiplayer auto-components, refer to [Multiplayer Auto-components](../autocomponents) or follow the introductory [multiplayer tutorial](/docs/learning-guide/tutorials/multiplayer/first-multiplayer-component/).{{< /note >}}
+要了解有关多人游戏自动组件的更多信息，请参阅 [多人游戏自动组件](../autocomponents)或按照介绍性的 [多人游戏教程](/docs/learning-guide/tutorials/multiplayer/first-multiplayer-component/) 进行操作。{{< /note >}}
 
-### Make Module.cpp changes
+### 进行Module.cpp更改
 
-To use multiplayer functionality, you must make small changes to your project's source code to generate descriptors for multiplayer components.
+要使用多人游戏功能，您必须对项目的源代码进行一些小的更改，以便为多人游戏组件生成描述符。
 
-Make the following changes to your project's `Code/Source/<ProjectName>Module.cpp`:
-1. Include `AutoComponentTypes.h` at the top of the file.
+对项目的 `Code/Source/<ProjectName>Module.cpp`进行以下更改：
+1. 在文件顶部包含 `AutoComponentTypes.h` ：
     ```cpp
     #include <Source/AutoGen/AutoComponentTypes.h>
     ```
 
-1. Edit the `<ProjectName>Module` constructor to create the component descriptors, which allows multiplayer components to be registered.
+1. 编辑 `<ProjectName>Module` 构造函数以创建组件描述符，从而允许注册多人游戏组件。
     ```cpp
     MultiplayerSampleModule()
         : AZ::Module()
@@ -231,19 +231,19 @@ Make the following changes to your project's `Code/Source/<ProjectName>Module.cp
         CreateComponentDescriptors(m_descriptors); //< Add this line to register your project's multiplayer components
     }
     ```
-    {{< important >}}Make sure the call to `CreateComponentDescriptors()` is the *last* line of the constructor.
+    {{< important >}}确保对  `CreateComponentDescriptors()` 的调用是构造函数的 *最后一行* 。
     {{< /important >}}
 
-### Make SystemComponent.cpp changes
+### 进行SystemComponent.cpp更改
 
-Finally, after adding code to generate descriptors, you must register the multiplayer components with the Multiplayer Gem.
+最后，在添加代码以生成描述符后，您必须向 Multiplayer Gem 注册多人游戏组件。
 
-Make the following changes to your project's `Code/Source/<ProjectName>SystemComponent.cpp` file.
-1. Include `AutoComponentTypes.h` at the top of the file.
+对项目的 `Code/Source/<ProjectName>SystemComponent.cpp` 文件进行以下更改。
+1. 在文件顶部包含 `AutoComponentTypes.h` 。
     ```cpp
     #include <Source/AutoGen/AutoComponentTypes.h>
     ```
-2. Register Multiplayer components with the Gem by updating the `Activate()` function.
+2. 通过更新 `Activate()` 函数，向 Gem 注册多人游戏组件。
 
     ```cpp
     ...
@@ -254,6 +254,6 @@ Make the following changes to your project's `Code/Source/<ProjectName>SystemCom
     }
     ```
 
-### Rebuild the project
+### 重新构建项目
 
-Configuring and building is always required after editing CMake and C++ files. You can use the [Project Manager](/docs/user-guide/project-config/project-manager/) to rebuild, or configure and build via the [command-line interface (CLI)](/docs/user-guide/build/configure-and-build/).
+编辑 CMake 和 C++ 文件后，始终需要配置和构建。您可以使用 [Project Manager](/docs/user-guide/project-config/project-manager/)重新构建，或通过 [命令行界面 （CLI）](/docs/user-guide/build/configure-and-build/) 进行配置和构建。

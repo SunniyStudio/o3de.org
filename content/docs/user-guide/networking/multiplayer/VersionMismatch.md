@@ -1,36 +1,37 @@
 ---
-linkTitle: Version Mismatch
-title: Multiplayer Version Mismatch
-description: Learn how to detect multiplayer version mismatch in Open 3D Engine (O3DE).
+linkTitle: 版本不匹配
+title: 多人游戏版本不匹配
+description: 了解如何在 Open 3D Engine （O3DE） 中检测多人游戏版本不匹配。
 weight: 900
 ---
 
-In order to keep the multiplayer simulation in sync, it's important that all connected multiplayer endpoints are running the same multiplayer version.
+为了使多人游戏模拟保持同步，所有连接的多人游戏终端节点都必须运行相同的多人游戏版本。
 
-For example, consider a server that is running a particular build of a multiplayer game. If an updated client connects with changes to its network components, the server may not know how to handle the updated network properties, or how to serialize network packets correctly.
+例如，假设某个服务器正在运行多人游戏的特定版本。如果更新的客户端连接时对其网络组件进行了更改，则服务器可能不知道如何处理更新的网络属性，或者如何正确序列化网络数据包。
 
-Servers and clients must be running the same version of all the multiplayer components (components which communicate to each other over the network); any difference may lead to unexpected behavior. 
+服务器和客户端必须运行所有多人游戏组件（通过网络相互通信的组件）的相同版本;任何差异都可能导致意外行为。
 
-**Open 3D Engine (O3DE)** networking provides multiplayer version checks to identify and guard against this unexpected behavior.
+**Open 3D Engine (O3DE)**联网提供多人游戏版本检查来识别和防范这种意外行为。
 
-## How to enable the Multiplayer Version Mismatch feature:
-Multiplayer version mismatch detection is enabled automatically inside the [Multiplayer Gem](/docs/user-guide/gems/reference/multiplayer/). If two multiplayer endpoints connect with different versions, a `Multiplayer::VersionMismatchEvent` [AZ::Event](/docs/user-guide/programming/az-event/) will be triggered. In addition, information about which auto-components are mismatched will be printed to the console and written to logs to aid debugging.
+## 如何启用 Multiplayer Version Mismatch 功能：
+多人游戏版本不匹配检测在 [Multiplayer Gem](/docs/user-guide/gems/reference/multiplayer/) 中自动启用。如果两个多人游戏端点连接不同的版本，将触发`Multiplayer::VersionMismatchEvent` [AZ::Event](/docs/user-guide/programming/az-event/)。此外，有关哪些 auto-components 不匹配的信息将打印到控制台并写入日志以帮助调试。
 
-## Relevant console variables (CVARs)
-| Setting                            | Description                                                 | Default |                    | 
+## 相关控制台变量 (CVARs)
+
+| 设置                            | 说明                                                 | 默认值 |                    | 
 |------------------------------------|-------------------------------------------------------------|---------|--------------------------|
-| sv_versionMismatch_autoDisconnect    | Determines if a mismatched connection will automatically terminate. It's recommended to keep this true; even minor differences between the version of a multiplayer component can cause unexpected behavior. | True |
-| sv_versionMismatch_sendManifestToClient | Determines if the server will send all its individual multiplayer component version information to the client when there's a mismatch. Upon receiving the information, the client will print which components are different to the console. It's recommended to set to false for release builds. This is to prevent clients having knowledge to any multiplayer component information that should be kept private (component names and version hashes). | True |
-| bg_viewportConnectionStatus|  If true, the viewport connection status system will display on-screen warnings whenever important multiplayer events occur; this includes version mismatches. | True ||
+| sv_versionMismatch_autoDisconnect    | 确定不匹配的连接是否将自动终止。建议保持此状态;即使多人游戏组件版本之间的微小差异也可能导致意外行为。 | True |
+| sv_versionMismatch_sendManifestToClient | 确定当出现不匹配时，服务器是否会将其所有单独的多人游戏组件版本信息发送到客户端。收到信息后，客户端将打印哪些组件与控制台不同。建议将发布版本设置为 false。这是为了防止客户端了解任何应保持私有的多人游戏组件信息（组件名称和版本哈希）。 | True |
+| bg_viewportConnectionStatus|  如果为 true，则每当发生重要的多人游戏事件时，视区连接状态系统将在屏幕上显示警告;这包括版本不匹配。 | True ||
 
-## How it works behind the scenes:
-1. AzAutoGen creates a unique 64-bit hash value for each auto-component XML file that it digests.
-    1. The 64-bit hash will be stored in the `ComponentData` class that’s passed to the global `MultiplayerComponentRegistry`.
-2. During application start up, as all the gems are registering their components with the `MultiplayerComponentRegistry`, the `MultiplayerComponentRegistry` will combine each component’s hash to create its own 64-bit system version hash.
-3. On a connection event the `MultiplayerComponentRegistry’s` version hash is sent from the connector (typically the client) to the acceptor (the server) as part of the `MultiplayerPackets::Connect` packet.
-4. Server will compare the client’s version hash with its own to make sure it matches.
-    1. If there's a multiplayer system version mismatch then:
-        1. A version mismatch packet is exchanged containing the version hash of each individual auto-component in order for the server and client to know exactly which components are out-of-date.
-        2. Error logs are reported.
-        3. An [AZ::Event](/docs/user-guide/programming/az-event/) is broadcast using `AZ::Interface<IMultiplayer>::Get()->AddVersionMismatchHandler`.
-        4. The connection is terminated (if `sv_versionMismatch_autoDisconnect` is enabled). 
+## 幕后工作原理：
+1. AzAutoGen 为其摘要的每个自动组件 XML 文件创建一个唯一的 64 位哈希值。
+    1. 64 位哈希值将存储在传递给全局`MultiplayerComponentRegistry`的`ComponentData`类中。
+2. 在应用程序启动期间，由于所有 Gem 都向`MultiplayerComponentRegistry`注册其组件，因此`MultiplayerComponentRegistry`将合并每个组件的哈希值，以创建自己的 64 位系统版本哈希值。
+3. 在连接事件中，`MultiplayerComponentRegistry`版本哈希作为`MultiplayerPackets::Connect` 数据包的一部分从连接器（通常是客户端）发送到接受器（服务器）。
+4. Server 会将客户端的版本哈希值与自己的版本哈希值进行比较，以确保它匹配。
+    1. 如果存在多人游戏系统版本不匹配，则：
+        1. 交换一个版本不匹配数据包，其中包含每个单独的自动组件的版本哈希，以便服务器和客户端确切知道哪些组件已过期。
+        2. 报告错误日志。
+        3. 使用`AZ::Interface<IMultiplayer>::Get()->AddVersionMismatchHandler`广播[AZ::Event](/docs/user-guide/programming/az-event/)。
+        4. 连接已终止 (如果启用了 `sv_versionMismatch_autoDisconnect`)。 

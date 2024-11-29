@@ -1,8 +1,8 @@
 ---
-title: Open 3D Engine on Windows 10
+title: Open 3D Engine 在 Windows 10 上
 linkTitle: Windows 10
-description: An overview of Open 3D Engine support for development on Windows 10.
+description: 概述了 Open 3D Engine 对 Windows 10 上的开发支持。
 weight: 100
 ---
 
-Read the [system requirements](/docs/welcome-guide/requirements) for information on setting up your Windows environment for development with Open 3D Engine.
+阅读 [系统要求](/docs/welcome-guide/requirements)，了解有关设置 Windows 环境以使用 Open 3D Engine 进行开发的信息。

@@ -1,27 +1,27 @@
 ---
-title: Generating Android Projects on Windows
-linkTitle: Generating Android Project
-description: Step-by-step guide to generating and deploying an Android project for Open 3D Engine (O3DE).
+title: 在 Windows 上生成 Android 项目
+linkTitle: 生成 Android 项目
+description: 生成和部署适用于 Open 3D Engine （O3DE） 的 Android 项目的分步指南。
 weight: 200
 ---
 
 
-In this tutorial, you will learn how to build and deploy an Android project in **Open 3D Engine (O3DE)**.
+在本教程中，您将学习如何在 Open 3D Engine （O3DE） 中构建和部署 Android 项目。
 
-The following workflow describes the steps to build and deploy the Atom Sample Viewer project to a device that runs Android 20. You can also follow these steps to build your own project on any supported Android version. 
+以下工作流程介绍了构建 Atom Sample Viewer 项目并将其部署到运行 Android 20 的设备的步骤。您还可以按照以下步骤在任何受支持的 Android 版本上构建自己的项目。
 
-## Prerequisites
+## 先决条件
 
-The following instructions assume that you have:
+以下说明假定您已：
 
-1.  Steps are performed in a Windows host machine.
-1.  The software [prerequisites for Android](docs/user-guide/platforms/android#prerequisite-software-and-packages) are satisfied.
-1.  Latest version of [Android Studio](https://developer.android.com/studio)
+1.  步骤在 Windows 主机上执行。
+1.  满足软件 [Android 的先决条件](docs/user-guide/platforms/android#prerequisite-software-and-packages)。
+1.  [Android Studio](https://developer.android.com/studio)的最新版
 
-1.  [O3DE](https://github.com/o3de/o3de.git) has been cloned locally on the system. Python must be initialized (through the `python\get_python.cmd` script), and the path must be [registered](/docs/welcome-guide/setup/setup-from-github/building-windows/#register-the-engine) as the engine.
-1.  [Atom Sample Viewer](https://github.com/o3de/o3de-atom-sampleviewer.git) has been cloned locally on the system, and registered as an O3DE project through the [O3DE Command Line](docs/user-guide/project-config/cli-reference#register).
-1.  A [signing configuration keystore](/docs/user-guide/platforms/android#apk-signing) is created (Either from Android Studio or the keytool command line)
-1.  The **android** platform must be enabled in the [AssetProcessorPlatformConfig.setreg](https://github.com/o3de/o3de/blob/324c0317e9cf61428d3bec492c7ba243a08718f9/Registry/AssetProcessorPlatformConfig.setreg#L64-L70) in the engine root:
+1.  [O3DE](https://github.com/o3de/o3de.git) 已在系统上本地克隆。必须初始化 Python(通过`python\get_python.cmd`脚本)，并且路径必须为 [注册](/docs/welcome-guide/setup/setup-from-github/building-windows/#register-the-engine)作为引擎。
+1.  [Atom Sample Viewer](https://github.com/o3de/o3de-atom-sampleviewer.git) 已在系统本地克隆，并通过 [O3DE 命令行](docs/user-guide/project-config/cli-reference#register)。
+1.  创建一个 [签名配置密钥库](/docs/user-guide/platforms/android#apk-signing)（从 Android Studio 或 keytool 命令行）
+1.  必须在引擎根目录的 [AssetProcessorPlatformConfig.setreg](https://github.com/o3de/o3de/blob/324c0317e9cf61428d3bec492c7ba243a08718f9/Registry/AssetProcessorPlatformConfig.setreg#L64-L70) 中启用 **android** 平台：
     ```json
     "Platforms": {
     //"pc": "enabled",
@@ -33,50 +33,49 @@ The following instructions assume that you have:
     ```
 
 {{< note >}}
-This example workflow represents the 'Source Engine' workflow when setting up [O3DE from GitHub](/docs/welcome-guide/setup/setup-from-github)
+此示例工作流表示在设置 [O3DE from GitHub](/docs/welcome-guide/setup/setup-from-github)
 {{< /note >}}
 
 
-## Set up environment variables
+## 设置环境变量
 
-This tutorial will use the following environment variables in the example steps
+本教程将在示例步骤中使用以下环境变量
 
 - `O3DE_ENGINE_PATH`
 
-  The local path where the [O3DE](https://github.com/o3de/o3de.git) repository was cloned to and registered.
+  将 [O3DE](https://github.com/o3de/o3de.git)存储库克隆到并注册到的本地路径。
 
 - `O3DE_PROJECT_PATH`
 
-  The local path where [Atom Sample Viewer](https://github.com/o3de/o3de-atom-sampleviewer.git) repository was cloned to and registered.
+  将 [Atom Sample Viewer](https://github.com/o3de/o3de-atom-sampleviewer.git)  存储库克隆到并注册到的本地路径。
 
 - `O3DE_PROJECT_NAME`
 
-  The name of the project (`AtomSampleViewer`).
+  项目的名称(`AtomSampleViewer`).
 
 - `TARGET_ANDROID_PROJECT_PATH`
 
-  The path write the Android Project Gradle script to.
+  将 Android 项目 Gradle 脚本写入的路径。
 
 - `ANDROID_SDK_HOME`
 
-  The path to where the Android SDK is set to. This path must have the following sub path to the sdk manager command line:
+  Android SDK 设置位置的路径。此路径必须具有指向 sdk manager 命令行的以下子路径：
   ```
   %ANDROID_SDK_HOME%\cmdline-tools\latest\bin\sdkmanager.bat
 
 - `ANDROID_SIGNING_CONFIG_KEYSTORE_FILE`
 
-  The key store file location for the [signing configuration](/docs/user-guide/platforms/android#APK_Signing) to use for APK signing. The key store file can be created with the [keytool](https://docs.oracle.com/en/java/javase/17/docs/specs/man/keytool.html) utility provided by Java. 
+  用于 APK 签名的 [签名配置](/docs/user-guide/platforms/android#APK_Signing) 的密钥存储文件位置。密钥存储文件可以使用 Java 提供的[keytool](https://docs.oracle.com/en/java/javase/17/docs/specs/man/keytool.html) 实用程序创建。
 
 - `ANDROID_SIGNING_CONFIG_KEY_ALIAS`
 
-  The alias of the signing key in the key store file that will be used for the APK signing.
+  密钥存储文件中将用于 APK 签名的签名密钥的别名。
 
-## Step by step instructions
+## 分步说明
 
+1. 为项目构建适用于 Android 的工具和资产。
 
-1. **Build the tools and assets for Android for the project.**
-
-   Configure and build the asset processing tools and process the assets.
+配置和构建资产处理工具并处理资产。
 
    ```
    cd %O3DE_PROJECT_PATH%
@@ -91,14 +90,14 @@ This tutorial will use the following environment variables in the example steps
 
    ```
 
-1. **Make sure all the licenses are accepted for the Android SDK**
+1. **确保 Android SDK 接受所有许可证**
 
    ```
    %ANDROID_SDK_HOME%\cmdline-tools\latest\bin\sdkmanager.bat --licenses
    ```
-   (Follow the commands to accept the licenses if necessary)
+（如有必要，请按照命令接受许可证）
 
-1. **Configure the android environment settings**
+1. **配置 android 环境设置**
 
    ```
    %O3DE_ENGINE_PATH%\scripts\o3de.bat android-configure --set-value sdk.root="%ANDROID_SDK_HOME%" --global
@@ -111,13 +110,13 @@ This tutorial will use the following environment variables in the example steps
 
    ```
 
-1. **Validate the settings and environment and correct any issues that are reported**
+1. **验证设置和环境并更正报告的任何问题**
 
    ```
    %O3DE_ENGINE_PATH%\scripts\o3de.bat android-configure --validate
    ```
 
-1. **Configure the Signing Config key store and alias**
+1. **配置 Signing Config 密钥存储和别名**
 
    ```
    %O3DE_ENGINE_PATH%\scripts\o3de.bat android-configure --set-value signconfig.store.file="%ANDROID_SIGNING_CONFIG_KEYSTORE_FILE%" --global
@@ -125,26 +124,26 @@ This tutorial will use the following environment variables in the example steps
    %O3DE_ENGINE_PATH%\scripts\o3de.bat android-configure --set-value signconfig.key.alias=%ANDROID_SIGNING_CONFIG_KEY_ALIAS% --global
    ```
 
-1. **Set the Signing Config key store password**
+1. **设置 Signing Config 密钥存储密码**
 
    ```
    %O3DE_ENGINE_PATH%\scripts\o3de.bat android-configure --set-password signconfig.store.password --global
    ```
-   Enter + confirm the password for the key store when prompted
+出现提示时输入 + 确认密钥存储的密码
 
-1. **Set the Signing Config signing key password**
+1. 设置 Signing Config 签名密钥密码
    ```
    %O3DE_ENGINE_PATH%\scripts\o3de.bat android-configure --set-password signconfig.key.password --global
    ```
-   Enter + confirm the password for the key when prompted
+出现提示时输入 + 确认密钥的密码
 
-1. **Run the Android project generation script**
+1. **运行 Android 项目生成脚本**
 
    ```
    %O3DE_ENGINE_PATH%\scripts\o3de.bat android-generate -p %O3DE_PROJECT_NAME% -B %TARGET_ANDROID_PROJECT_PATH%
    ```
 
-1. **Build the Android APK**
+1. **构建 Android APK**
 
    ```
    cd %TARGET_ANDROID_PROJECT_PATH%
@@ -153,35 +152,34 @@ This tutorial will use the following environment variables in the example steps
 
    ```
 
-1. **Deploy the Android APK**
+1. 部署 Android APK
 
-   Using the [ADB](https://developer.android.com/tools/adb) tool in the Android SDK, connect and list the attached device(s)
+   使用 Android SDK 中的 [ADB](https://developer.android.com/tools/adb) 工具，连接并列出连接的设备
 
    ```
    %ANDROID_SDK_HOME%\platform-tools\adb.exe devices
    ```
    
-   You should see a list of devices (if there are any attached) and their attach status. If you don't see any attached devices, then check the USB connection to the device, and make sure it is authorized to connect to the device (on the device itself).
+   您应该会看到设备列表（如果有附加的设备）及其附加状态。如果您没有看到任何连接的设备，请检查与设备的 USB 连接，并确保它已获得连接到设备（在设备本身上）的授权。
 
-   If you see something like the following:
+   如果您看到类似以下内容的内容：
    
    ```
    List of devices attached
    XXXXXXXXXXX     unauthorized
    ```
 
-   This means that you need to authorize debugging on the computer for the device.
+   这意味着您需要在计算机上为设备授权调试。
 
-   Once all the authorizations are complete, you should see something like:
+   完成所有授权后，您应该会看到如下内容：
 
    ```
    List of devices attached
    XXXXXXXXXXX     device
    ```
 
-   Once the Android device is identified, and the computer is authorized to connect to the device, you will be able to install the APK.
+   识别出 Android 设备并授权计算机连接到该设备后，您就可以安装 APK。
 
    ```
    %ANDROID_SDK_HOME%\platform-tools\adb.exe install -t -r %TARGET_ANDROID_PROJECT_PATH%\app\build\outputs\apk\profile\app-profile.apk
    ```
-   

@@ -1,24 +1,24 @@
 ---
-linkTitle: Asset Bundler
-title: Bundle Game Assets in Open 3D Engine
-description: Learn how to manage your assets and package them into asset bundles in Open 3D Engine (O3DE).
+linkTitle: 资产打包器
+title: 在 Open 3D Engine 中捆绑游戏资源
+description: 了解如何在 Open 3D Engine （O3DE） 中管理您的资产并将其打包到资产包中。
 weight: 500
 toc: false
 ---
 
-**Open 3D Engine (O3DE)** provides a set of tools for intelligently bundling assets and managing your game's product and source dependencies. Use these tools to package only the assets that your game project currently uses and to reduce your product's overall deployment size and complexity.
+**Open 3D Engine (O3DE)** 提供了一组工具，用于智能地捆绑资产并管理游戏的产品和源依赖项。使用这些工具可以仅打包游戏项目当前使用的资源，并减小产品的整体部署大小和复杂性。
 
 
-## Section topics
+## 章节主题
 
-| Topic | Description |
+| 主题 | 说明 |
 | --- | --- |
-| [Bundling Project Assets for Release](./bundle-assets-for-release) | When preparing your O3DE project for release, optimize your project assets by packaging them into asset bundles. |
-| [Resolving Missing Assets](./assets-resolving) | Learn how to resolve missing assets and their dependencies. |
-| [Verifying Asset Bundles](./verifying-bundles) | Learn about the tools and processes for managing and verifying your game project's assets. |
-| [Tagging Asset Files](./file-tagging) | Learn how to add and support tags for your asset files. |
-| [Asset List Comparison Operations](./list-operations) | Learn about the features of the Asset Bundler Batch tool, which you use to create and compare asset lists for delivery of your game project. |
-| [Default Dependencies](./default-dependencies) | Learn about default dependency files and how to edit them. |
-| [Asset Bundler Concepts and Terms](./concepts) | Look up the concepts and terminology used in asset bundling. |
-| [Asset Bundler Command Line Reference](./command-line-reference) | Browse the full reference for commands and options that the AssetBundlerBatch tool uses. |
+| [捆绑项目资源以进行发布](./bundle-assets-for-release) | 在准备发布 O3DE 项目时，通过将项目资源打包到资源包中来优化项目资源。 |
+| [解决缺失资产](./assets-resolving) | 了解如何解决缺失的资产及其依赖项。 |
+| [验证 Asset Bundle](./verifying-bundles) | 了解用于管理和验证游戏项目资产的工具和流程。 |
+| [标记资源文件](./file-tagging) | 了解如何为资产文件添加和支持标签。 |
+| [资产列表比较操作](./list-operations) | 了解 Asset Bundler Batch 工具的功能，您可以使用该工具创建和比较资源列表以交付游戏项目。 |
+| [默认依赖项](./default-dependencies) | 了解默认依赖项文件以及如何编辑它们。 |
+| [Asset Bundler 概念和术语](./concepts) | 查找资产捆绑中使用的概念和术语。 |
+| [Asset Bundler 命令行参考](./command-line-reference) | 浏览 AssetBundlerBatch 工具使用的命令和选项的完整参考。 |
 

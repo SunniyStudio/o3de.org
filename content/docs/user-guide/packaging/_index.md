@@ -1,18 +1,18 @@
 ---
-linkTitle: Packaging and Release
-title: Packaging and Release
+linkTitle: 打包和发布
+title: 打包和发布
 weight: 1600
-description: Learn how to create release and content update packages for your Open 3D Engine (O3DE) project.
+description: 了解如何为 Open 3D Engine （O3DE） 项目创建发布和内容更新包。
 ---
 
-The topics in this section provide information about how to prepare and package your **Open 3D Engine (O3DE)** project for release, and create content patch packages for post release updates.
+本节中的主题提供了有关如何准备和打包 Open 3D Engine （O3DE） 项目以进行发布，以及创建内容补丁包以进行发布后更新的信息。
 
-## Section topics
+## 章节主题
 
-| Topic | Description |
+| 主题 | 说明 |
 | - | - |
-| [Creating a Project Game Release Layout for Windows](windows-release-builds) | Learn how to create an O3DE project game release layout for Windows manually. |
-| [Creating a Content Patch Update Package](content-patch-package) | Learn how to create updated asset bundles for content patches and release updates. |
-| [Project Export](project-export) | Learn how to use the Project Export CLI to automate preparing your project for release. |
-| [Asset Bundler](asset-bundler/) | Learn how to manage your assets and package them into asset bundles. |
-| [Troubleshooting](troubleshooting) | Tips, tricks, and advice for troubleshooting issues with packaging O3DE projects. |
+| [创建适用于 Windows 的项目游戏发布布局](windows-release-builds) | 了解如何手动创建适用于 Windows 的 O3DE 项目游戏发布布局。 |
+| [创建内容修补程序更新包](content-patch-package) | 了解如何为内容补丁和版本更新创建更新的资源包。 |
+| [项目导出](project-export) | 了解如何使用 Project Export CLI 自动准备项目以供发布。 |
+| [资产打包器](asset-bundler/) | 了解如何管理您的资源并将其打包到 Asset Bundle 中。 |
+| [故障排除](troubleshooting) | 用于解决打包 O3DE 项目的问题的提示、技巧和建议。 |

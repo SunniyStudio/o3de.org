@@ -1,128 +1,126 @@
 ---
 description: >-
-  The Open 3D Engine Asset Bundler is a tool that you use to package and
-  deploy the actual assets that are used in your game. This tool also provides timelier
-  and more efficient content updates and patches.
-title: What is the Open 3D Engine Asset Bundler?
+  Open 3D Engine Asset Bundler 是一种工具，用于打包和部署游戏中使用的实际资产。此工具还提供更及时、更高效的内容更新和补丁。
+title: 什么是 Open 3D Engine Asset Bundler？
 weight: 100
 ---
 
-The Asset Bundler is a command-line tool, `AssetBundlerBatch.exe`, and a set of specific file formats generated and used by the tool.
+Asset Bundler 是一个命令行工具`AssetBundlerBatch.exe`，以及该工具生成和使用的一组特定文件格式。
 
-## Prerequisites to use the Asset Bundler 
+## 使用 Asset Bundler 的先决条件
 
-To use the Asset Bundler, your game project must meet the following criteria:
-+ The assets that you are bundling have been processed by [Asset Processor](/docs/user-guide/assets/asset-processor/).
+要使用 Asset Bundler，您的游戏项目必须满足以下条件：
++ 您正在捆绑的资产已由 [Asset Processor 处理](/docs/user-guide/assets/asset-processor/).
 
-## Why use the Asset Bundler? 
+## 为什么使用 Asset Bundler？
 
-With the Asset Bundler, you don't have to figure out which assets that you need to include in your game and which assets to exclude. This can help save you time. For example, you have a working folder with 10,000 assets, but your final game uses only 5,000 of those assets. You want to ship only those 5,000 assets. Tracking this manually can quickly become complicated and expensive.
+使用 Asset Bundler，您不必弄清楚游戏中需要包含哪些资源以及要排除哪些资源。这可以帮助您节省时间。例如，您有一个包含 10,000 个资源的工作文件夹，但您的最终游戏只使用了其中的 5,000 个资源。您只想运送这 5,000 个资产。手动跟踪此情况很快就会变得复杂且昂贵。
 
-The O3DE Asset Bundler helps make shipping the specific assets used for the release of your game more reliable and repeatable. The reliability is based on an underlying dependency system that informs Asset Bundler which assets to include. If you make changes to your game and add or remove assets, the next time that you run the Asset Bundler, it automatically includes or excludes these new assets for you. The repeatability is based on underlying configuration files that provides consistency across different runs of the Asset Bundler.
+O3DE Asset Bundler 有助于使用于发布游戏的特定资产的发布更加可靠和可重复。可靠性基于底层依赖项系统，该系统会通知 Asset Bundler 要包含哪些资源。如果您更改了游戏并添加或删除了资源，则下次运行 Asset Bundler 时，它会自动为您包含或排除这些新资源。可重复性基于底层配置文件，这些文件在 Asset Bundler 的不同运行之间提供一致性。
 
-By using the Asset Bundler, because you have smaller release packages, less risk of shipping unused or inappropriate assets, and more effective asset management.
+通过使用 Asset Bundler，因为您的发布包更小，运送未使用或不适当的资源的风险更小，并且资源管理更有效。
 
-## How do I use the Asset Bundler? 
+## 如何使用 Asset Bundler？
 
-Generating a platform-specific asset bundle using the Asset Bundler follows these steps:
+使用 Asset Bundler 生成特定于平台的资源包，请执行以下步骤：
 
-1. **Define your seeds**. A *seed* is generally a top-level asset, such as a `.spawnable` file that contains an entire game level. You must have one or more seeds defined in a seed list. A seed list is a file with the suffix `.seed`.
+1. **定义你的种子**。*种子* 通常是顶级资源，例如包含整个游戏关卡的 `.spawnable`文件。您必须在种子列表中定义一个或多个种子。种子列表是后缀为`.seed` 的文件。
 
-1. **Generate your asset lists**. The Asset Bundler evaluates each seed defined in your seed list. It then recursively evaluates each dependent asset for inclusion in a complete asset list. Generated asset lists have the suffix `.assetlist`.
+1. **生成您的资产列表**。Asset Bundler 会评估种子列表中定义的每个种子。然后，它会递归评估每个依赖资产，以包含在完整的资产列表中。生成的资产列表具有后缀`.assetlist`。
 
-1. **Configure your bundle settings**. Provide a configuration file, called the "bundle settings file," which has the suffix: `.bundlesettings`. It contains all of the specific settings, such as the maximum bundle size, when creating a release bundle for your game.
+1. **配置您的捆绑包设置**。提供一个名为“捆绑包设置文件”的配置文件，其后缀为`.bundlesettings`。它包含为游戏创建发布捆绑包时的所有特定设置，例如最大捆绑包大小。
 
-1. **Bundle your assets**. The Asset Bundler utility,` AssetBundlerBatch.exe`, uses the asset list and bundle settings files to create a release bundle as a `.pak` file.
+1. **捆绑您的资产**。Asset Bundler 实用程序` AssetBundlerBatch.exe`使用资源列表和捆绑包设置文件将发布捆绑包创建为`.pak`文件。
 
-   The following diagram illustrates the relationships and process for bundling assets with the Asset Bundler.
+   下图说明了使用 Asset Bundler 捆绑资源的关系和过程。
 
 ![The steps used in the general process for bundling assets with O3DE.](/images/user-guide/assetbundler/asset-bundler-overview.png)
 
-In this example, the seeds are the assets Level1.spawnable and Level2.spawnable. These `.spawnable` files reference O3DE prefab product asset files and in this context represent game levels, which reference the entity meshes they contain, which in turn reference the material and texture files for those entities.
+在此示例中，种子是资产 Level1.spawnable 和 Level2.spawnable。这些`.spawnable`文件引用 O3DE 预制件产品资产文件，在此上下文中表示游戏关卡，这些关卡引用它们包含的实体网格，而这些网格又引用这些实体的材质和纹理文件。
 
-With those product dependency relationships in place, the Asset Bundler examines the hierarchies of each seed and generates an asset list. Asset lists, along with the bundle settings file that you create, are used to assemble the final bundle as a `.pak` file with all of the dependent assets. Any assets not associated with a seed are not included in the final release bundle.
+建立这些产品依赖关系后，Asset Bundler 会检查每个种子的层次结构并生成资源列表。资产列表以及您创建的捆绑包设置文件用于将最终捆绑包组合为包含所有相关资产的`.pak`文件。任何未与种子关联的资源都不会包含在最终版本包中。
 
-The Asset Bundler runs whenever the Asset Processor starts, which includes any time you launch O3DE. You can also run it from the command line with the `AssetBundlerBatch` command. For more information on the latter, read the [Asset Bundler Command Line Reference](/docs/user-guide/packaging/asset-bundler/command-line-reference).
+每当 Asset Processor 启动时，Asset Bundler 都会运行，包括您启动 O3DE 时。您也可以使用 `AssetBundlerBatch`命令从命令行运行它。有关后者的更多信息，请阅读 [Asset Bundler 命令行参考](/docs/user-guide/packaging/asset-bundler/command-line-reference).
 
-## Why define product dependencies? 
+## 为什么要定义产品依赖关系？
 
-Many game projects restrict the content in their bundled builds. This is often done to hit target build sizes, such as the over-the-air download cap on iOS. It can also restrict content from builds that you really don't want in your release, such as content that would result in a negative ESRB rating for your game. The product dependency system provides tools to help you understand why assets are included in your asset bundles. This lets you debug the associated references and remove them if you don't want an asset.
+许多游戏项目会限制其捆绑版本中的内容。这样做通常是为了达到目标构建大小，例如 iOS 上的无线下载上限。它还可以限制您确实不希望在发布中出现的 build 中的内容，例如会导致游戏 ESRB 评分为负的内容。产品依赖项系统提供了一些工具，可帮助您了解资源包中包含资源的原因。这样，您就可以调试关联的引用，并在不需要资产时将其删除。
 
-There are two types of asset dependencies:
-+ *Product dependencies*. This type of dependency is between two product assets. It declares that there is a specific link between these two assets, and in most cases you'll want both available in your final packaged build of your game.
-+ *Source dependencies*. This type of dependency indicates that a source asset must be processed first, and that information from processing the source asset is required before the final product asset can be generated. For example, a process in an asset pipeline that runs on `Tree.fbx` has declared a source dependency on `Tree.mtl`. The `Tree.fbx` job won't run until the `Tree.mtl` job has completed, which guarantees that product details for `Tree.mtl` are available when the `Tree.fbx` job runs, and that information can be used in the generation of `Tree.fbx`'s product \(in this example, a single CGF file, `Tree.cgf`\).
+有两种类型的资产依赖关系：
++ *产品依赖项*。这种类型的依赖关系发生在两个产品资产之间。它声明这两个资源之间存在特定链接，在大多数情况下，您希望在游戏的最终打包版本中提供这两个资源。
++ *源依赖项*。这种类型的依赖关系表示必须先处理源资产，并且需要处理源资产的信息，然后才能生成最终产品资产。例如，在`Tree.fbx`上运行的资源管道中的进程已声明对`Tree.mtl`的源依赖项。在`Tree.mtl`作业完成之前，`Tree.fbx` 作业不会运行，这保证了 `Tree.fbx` 作业运行时 `Tree.mtl` 的产品详细信息可用，并且该信息可用于生成`Tree.fbx` 的产品 \(在本例中，单个 CGF 文件 `Tree.cgf`\)。
 
-In these topics, we are referring to *product dependencies* unless otherwise indicated.
+在这些主题中，除非另有说明，否则我们指的是 *产品依赖项*。
 
-The Asset Bundler also lets you exclude content that you don't want to release using the [asset list comparison feature](/docs/user-guide/packaging/asset-bundler/list-operations).
+Asset Bundler 还允许您使用 [资产列表比较](/docs/user-guide/packaging/asset-bundler/list-operations) 功能来排除不想发布的内容.
 
-## How product asset dependencies are used by O3DE 
+## O3DE 如何使用产品资产依赖项
 
-Product dependencies generate asset lists from seed lists. This simplifies the management of what goes into your packaged game content for your game releases. These dependencies are expressed as paths \(either relative or absolute, and can optionally include the wildcard `*`\) and are managed by an Asset Builder during processing. Within the Asset Builder, the `m_pathDependencies` variable contains the list of dependency paths.
+产品依赖项从种子列表生成资产列表。这简化了对游戏发布的打包游戏内容中的内容的管理。这些依赖关系表示为路径 \（相对或绝对，并且可以选择包含通配符 '*'\），并在处理过程中由 Asset Builder 管理。在 Asset Builder 中，`m_pathDependencies`变量包含依赖项路径列表。
 
-For example, you have a game that has one level for your release build. Your game contains a single tree. You also have a separate test level that you don't need to ship, which contains a single rock.
+例如，您有一个游戏，该游戏有一个用于发布版本的级别。您的游戏包含一个树。您还有一个不需要发布的单独测试关卡，其中包含一个 Rock。
 
 ![Screenshot of a set of dependent assets represented as a folder and file structure on a disk.](/images/user-guide/assetbundler/asset-bundler-simple-game-files.png)
 
-The following example shows a basic workflow for a simple game with assets that emits dependencies correctly.
+以下示例显示了一个简单游戏的基本工作流程，其中包含正确发出依赖项的资产。
 
 ![New Asset Bundler dependency workflow.](/images/user-guide/assetbundler/new-asset-bundler-flowchart-simple.png)
 
-For more complex game projects, with file loads implemented in C++ and custom asset builders, the asset bundling workflow can look more like this:
+对于更复杂的游戏项目，使用 C++ 和自定义资源构建器实现文件加载，资源捆绑工作流程可能更像这样：
 
 ![New Asset Bundler workflow for complex projects.](/images/user-guide/assetbundler/new-asset-bundler-flowchart.png)
 
-With the O3DE asset bundling workflow, you need only dig into the individual asset systems when a problem occurs using [the missing asset scanning tools](/docs/user-guide/packaging/asset-bundler/assets-resolving/). You also have opportunities early in development to verify that you're bundling the correct assets.
+通过 O3DE 资产捆绑工作流程，您只需在出现问题时使用 [缺少的资产扫描工具](/docs/user-guide/packaging/asset-bundler/assets-resolving/) 深入研究各个资产系统。您还有机会在开发早期验证您是否捆绑了正确的资产。
 
-## Asset Builders and the Asset Bundler 
+## Asset Builder 和 Asset Bundler
 
-An Asset Builder is a standalone application that primarily translates intermediate assets to a platform-native asset format. An Asset Builder also provides dependency tracking and tasks related to managing asset metadata.
+Asset Builder 是一个独立的应用程序，主要将中间资产转换为平台原生资产格式。Asset Builder 还提供依赖项跟踪和与管理资产元数据相关的任务。
 
-O3DE ships with Asset Builders for many common asset types. The Asset Bundler relies on the information produced by the Asset Builders for your project to manage the dependencies. If you use custom asset types, you can [create your own Asset Builders](/docs/user-guide/assets/builder) to support proper asset management and bundling with O3DE.
+O3DE 随附了适用于许多常见资产类型的资产生成器。Asset Bundler 依靠 Asset Builder 为项目生成的信息来管理依赖项。如果您使用自定义资产类型，您可以 [创建自己的资产生成器](/docs/user-guide/assets/builder) 以支持适当的资产管理和与 O3DE 捆绑。
 
-For example, Asset Builders for images can convert any portable image asset into a set of performance image formats. When the Asset Builder for the images run, they create the dependency tree for the performance-oriented image formats generated from the more general-use portable image formats, and define them as dependent on the respective portable image format. If you create the performance-oriented images manually or through a separate process, the dependencies are not defined and not available to the Asset Bundler.
+例如，适用于图像的 Asset Builder 可以将任何可移植图像资源转换为一组性能图像格式。当图像的 Asset Builder 运行时，它们会为从更通用的可移植图像格式生成的面向性能的图像格式创建依赖关系树，并将它们定义为依赖于相应的可移植图像格式。如果您手动或通过单独的过程创建面向性能的图像，则不会定义依赖关系，并且 Asset Bundler 无法使用这些依赖项。
 
-In addition to processing your asset, Asset Builders also determine any product or source asset dependencies and store that information in an Asset Catalog for later use by the Asset Bundler. Specifically, "defining asset dependencies" means updating your custom Asset Builder to identify all of the other assets that the asset being processed depends on. It is important to define asset dependencies so that you can perform accurate Asset Bundling to ship your game. Without defined dependencies the Asset Bundler has no way to know which assets your game needs when it's time to prepare your asset bundles release-you could end up missing assets, or include too many, or ship undesirable ones. With asset dependencies defined in your Asset Builder(s), you can be assured that you are including exactly the assets you need for your game and nothing more.
+除了处理您的资源之外，Asset Builder 还会确定任何产品或源资源依赖项，并将该信息存储在 Asset Catalog 中，以供 Asset Bundler 稍后使用。具体来说，“定义资产依赖关系”是指更新您的自定义 Asset Builder 以识别正在处理的资产所依赖的所有其他资产。定义资源依赖关系非常重要，这样您就可以执行准确的资源捆绑来发布您的游戏。如果没有定义的依赖项，Asset Bundler 就无法知道您的游戏在准备 Asset Bundle 版本时需要哪些资源，您最终可能会缺少资源，或者包含太多资源，或者发布不需要的资源。通过在 Asset Builder 中定义资产依赖项，您可以放心，您包含的正是游戏所需的资产，仅此而已。
 
-You can use the Asset Builder APIs to develop your own Asset Builders, which can then process your custom asset type's source files and generate files that you can use in O3DE. Source code for a sample Asset Builder implementation is provided in the `Games/CustomAssetExample/Code/Source/Builder` directory under your O3DE installation root.
+您可以使用 Asset Builder API 开发自己的 Asset Builder，然后，它可以处理自定义资产类型的源文件并生成可在 O3DE 中使用的文件。示例 Asset Builder 实现的源代码位于 O3DE 安装根目录下的`Games/CustomAssetExample/Code/Source/Builder`目录中。
 
-For more information, see the [the Asset Builder documentation](/docs/user-guide/assets/builder).
+有关更多信息，请参阅 [Asset Builder 文档](/docs/user-guide/assets/builder).
 
-## Define dependencies in your Asset Builder 
-In addition to processing your asset, Asset Builders also define any product or source asset dependencies, and then store that information in a database for later use by the Asset Bundler. Specifically, defining an asset dependency means updating your custom Asset Builder to identify all of the other assets that the asset being processed depends on. It is important to define asset dependencies so that you can perform accurate Asset Bundling to ship your game. Without defined dependencies, the Asset Bundler cannot identify which assets your game needs when it's time to prepare your asset bundles release. As a result, you could end up missing assets, including too many, or shipping undesirable ones. With Asset Dependencies defined in your Asset Builders, you are including the exact assets that you need for your game.
+## 在 Asset Builder 中定义依赖项
+除了处理您的资源之外，Asset Builder 还定义了任何产品或源资源依赖项，然后将该信息存储在数据库中，以供 Asset Bundler 稍后使用。具体而言，定义资产依赖关系意味着更新自定义 Asset Builder 以识别正在处理的资产所依赖的所有其他资产。定义资源依赖关系非常重要，这样您就可以执行准确的资源捆绑来发布您的游戏。如果未定义依赖项，则 Asset Bundler 在准备 Asset Bundle 版本时无法识别游戏需要哪些资源。因此，您最终可能会丢失资产（包括太多）或运送不需要的资产。在 Asset Builder 中定义 Asset Dependencies 后，您可以包含游戏所需的确切资产。
 
-## Asset bundling and source control 
+## 资产捆绑和源代码管理
 
-During the asset bundling process, you can generate multiple different types of artifacts. We recommend that you track some of these in source control, as per the suggested best practices in the following table.
+在资产捆绑过程中，您可以生成多种不同类型的构件。我们建议您根据下表中建议的最佳实践，在源代码管理中跟踪其中的一些问题。
 
 
-**Asset bundling artifact storage best practices**
+**资产捆绑构件存储最佳实践**
 
-| File Extension | Source Control Details | File Storage Best Practices |
+| 文件扩展名 | 版本控制详情 | 文件存储最佳实践 |
 | --- | --- | --- |
-| .seed | Keep your seed lists in source control. |  If you have multiple builds and are patching bugs in older revisions of your game, consider keeping versioned seed lists that match each release. For example, you could keep seed lists for multiple releases on Steam, such as an unstable feature release and your stable release. If your game has one release for a specific platform and your release pipeline is relatively uncomplicated, you can maintain one version of a seed list. You can also track your game's seeds by splitting the contents into multiple seed lists. The Asset Bundler can combine files at different steps in the process, so you don't need to make sure the files used in earlier steps look like your final output.  |
-| .assetlist | Keep your asset lists in source control. This makes it more efficient to generate delta patches for your game. These are patches that containonly modified files since your last release. | You should store a separate asset list file in your source control for each release that you generate from them. Asset lists contain fingerprint information for each file. If you want to generate a delta patch and you don't have your asset list from the previous version of your game, you must sync your source control back to the exact time you generated that first asset list. Storing each asset list for a version separately can save you time later. | 
-| .comparisonrules | If you use comparison rules, keep them in source control. | Storing your comparison rules in a file is an optional step in the asset bundling workflow. Use comparison rule files to help make sure that you're generating your packaged game content in the same way across multiple releases. |
-| .bundlesettings | If you use bundle settings, keep them in source control. | Storing your bundle settings in a file is an optional step in the asset bundling workflow. Use bundle settings files to help make sure that you're generating your packaged game content in the same way across multiple releases. |
-| .pak (asset bundles) | Don't store .pak files for your asset bundles in standard source control. Keep them in a separate secured file store. | Keeping track of your previously released content can help you debug problems. Asset bundles can be large, so diffing them isn't particularly useful. We recommend that you find an alternate place to store these files. If you're using Git as your source control solution, Git LFS can provide a useful home for these files. You can also use Amazon S3 to store your historical asset bundles. |
+| .seed | 将种子列表保留在版本控制中。 |  如果您有多个版本，并且正在修补游戏的旧版本中的错误，请考虑保留与每个版本匹配的版本化种子列表。例如，您可以保留 Steam 上多个版本的种子列表，例如不稳定功能版本和稳定版本。如果您的游戏针对特定平台有一个版本，并且您的发布管道相对简单，则可以维护一个版本的种子列表。您还可以通过将内容拆分为多个种子列表来跟踪游戏的种子。Asset Bundler 可以在流程的不同步骤合并文件，因此您无需确保前面步骤中使用的文件看起来像您的最终输出。  |
+| .assetlist | 将资产列表保留在版本控制中。这样可以更高效地为游戏生成增量补丁。这些补丁仅包含自上次发布以来修改的文件。 | 您应该在源代码管理中为从它们生成的每个版本存储单独的资源列表文件。资产列表包含每个文件的指纹信息。如果要生成增量补丁，但没有以前版本游戏中的资源列表，则必须将版本控制同步回生成第一个资源列表的确切时间。单独存储版本的每个资源列表可以节省您以后的时间。 | 
+| .comparisonrules | 如果您使用比较规则，请将它们保留在源代码管理中。 | 将比较规则存储在文件中是资产捆绑工作流中的一个可选步骤。使用比较规则文件来帮助确保您在多个版本中以相同的方式生成打包的游戏内容。 |
+| .bundlesettings | 如果您使用 bundle 设置，请将它们保留在源代码管理中。 | 将捆绑包设置存储在文件中是资产捆绑工作流程中的一个可选步骤。使用捆绑包设置文件来帮助确保您在多个版本中以相同的方式生成打包的游戏内容。 |
+| .pak (asset bundles) | 不要将资源包的 .pak 文件存储在标准版本控制中。将它们保存在单独的安全文件存储中。 | 跟踪以前发布的内容可以帮助您调试问题。资源包可能很大，因此区分它们并不是特别有用。我们建议您寻找其他位置来存储这些文件。如果您使用 Git 作为源代码管理解决方案，Git LFS 可以为这些文件提供一个有用的主页。您还可以使用 Amazon S3 存储历史 Asset Bundle。 |
 
-In the following example, there is a game that has two sets of bundled content: Assets loaded by the engine itself, and assets loaded by the game. In this scenario, the game has just release a version 2 update. Bundles have been created that upgrade existing version 1 players to version 2; amd version 2 only bundles content for new players who don't have version 1 content.
+在以下示例中，有一个游戏具有两组捆绑内容：由引擎本身加载的资产和由游戏加载的资产。在这种情况下，游戏刚刚发布了版本 2 更新。已创建捆绑包，可将现有版本 1 播放器升级到版本 2;AMD 版本 2 仅为没有版本 1 内容的新玩家捆绑内容。
 
-The following table provides some examples of the artifacts generated and used in bundling for this example scenario and how they are used.
+下表提供了此示例场景在捆绑中生成和使用的构件的一些示例，以及它们的使用方式。
 
 
-**Example file artifacts in an Asset Bundler workflow**
+**Asset Bundler 工作流程中的示例文件构件**
 
-| Files (Example) | Usage | Notes |
+| 文件 (示例) | 用法 | 注意 |
 | --- | --- | --- |
-|    | The asset lists used to generate the bundles for version 1 of the game. | You should keep these files in source control with the version in the file name. This lets you use these files to generate delta patches for future game releases. |
-|    | Asset lists to generate bundles for version 2 of the game. | You should keep these files in source control with the version in the file name. This allows these files to be easily used to generate delta patches for future game releases. |
-|    | These are asset lists generated as an interim step in creating the game bundle. An asset list comparison that removes content in the engine asset list is used to trim these down to the "engineRemoved" asset lists in the previous row. | You may have asset lists that you generate as interim steps that aren't used to create bundles directly. These could go into source control as a historical record, but they won't be used in the future to generate delta patches. |
-|    | The asset list comparison rules. One set of rules is used to generate the upgrade bundles between versions. The other set of rules is used to remove assets in the engine asset list from the game asset list. | Comparison rules files should be stored in source control, so you can use the same bundle creation process each release. Versioning information is not stored in the file name, because it's unlikely you will need to use two versions at the same time. If you ever do, you can rely on your source control's history to retrieve the older version. |
-|    | The settings used to generate the bundles. | Bundle settings files should be stored in source control, so you can use the same bundle creation process each release. |
-|    | The game's seed list. | Your game's seed list should be stored in source control. As you change your game's content, you'll add and remove seeds from it. Versioning information is not stored in the file name, because it's unlikely you will need to use two versions at the same time. If you do, rely on your source control's history to retrieve older versions. |
-|    | The asset bundles generated for each release. | Keep track of your game content's packaged asset bundles, to use in your game's releases. You can store your game's packaged content in source control, but this is not optimal, because these are large, binary files. We recommend that you use a separate storage solution, like Amazon S3. |
+|    | 用于为游戏版本 1 生成捆绑包的资产列表。 | 您应该将这些文件保存在源代码控制中，并在文件名中包含版本。这样，您就可以使用这些文件为将来的游戏版本生成增量补丁。 |
+|    | 资产列表，以便为游戏版本 2 生成捆绑包。 | 您应该将这些文件保存在源代码控制中，并在文件名中包含版本。这使得这些文件可以轻松用于为将来的游戏版本生成增量补丁。 |
+|    | 这些是作为创建 Game Bundle 的临时步骤生成的资产列表。删除引擎资产列表中内容的资产列表比较用于将这些资产缩减为上一行中的“engineRemoved”资产列表。 | 您可能拥有作为临时步骤生成的资产列表，这些列表不用于直接创建捆绑包。这些可以作为历史记录进入源代码管理，但将来不会用于生成增量补丁。 |
+|    | 资产列表比较规则。一组规则用于在版本之间生成升级捆绑包。另一组规则用于从游戏资产列表中删除引擎资产列表中的资产。| 比较规则文件应存储在源代码控制中，以便您可以在每个版本中使用相同的捆绑包创建过程。版本控制信息不会存储在文件名中，因为您不太可能需要同时使用两个版本。如果您曾经这样做过，您可以依靠源代码控制的历史记录来检索旧版本。 |
+|    | 用于生成捆绑包的设置。 | 捆绑包设置文件应存储在源代码控制中，以便您可以在每个版本中使用相同的捆绑包创建过程。 |
+|    | 游戏的种子名单。 | 游戏的种子列表应存储在源代码控制中。当您更改游戏内容时，您将在其中添加和删除种子。版本控制信息不会存储在文件名中，因为您不太可能需要同时使用两个版本。如果这样做，请依靠源代码控件的历史记录来检索旧版本。 |
+|    | 为每个版本生成的 Asset Bundle。| 跟踪游戏内容的打包 Asset Bundle，以便在游戏版本中使用。您可以将游戏的打包内容存储在源代码控制中，但这并不是最佳选择，因为这些是大型二进制文件。我们建议您使用单独的存储解决方案，例如 Amazon S3。 |
 
-## Additional Resources 
+## 其他资源
 
-+ [Asset Bundler Concepts and Terms](/docs/user-guide/packaging/asset-bundler/concepts)
++ [Asset Bundler 概念和术语](/docs/user-guide/packaging/asset-bundler/concepts)

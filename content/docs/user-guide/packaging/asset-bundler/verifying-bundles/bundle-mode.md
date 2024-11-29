@@ -5,19 +5,19 @@ title: Using Bundle Mode to Test Bundles
 weight: 300
 ---
 
-Bundle mode is a process that lets you enable asset loading to prioritize bundles over loose cache assets. After you build the seed lists for packaging your game, you can use bundle mode and the `sys_report_files_not_found_in_paks` console variable to test your packaging rules. Bundle mode makes it easy for you to load and report on issues in all the bundles \(game `.pak` files\) from a location that you specify without creating a release build.
+Bundle 模式是一个过程，允许您启用资源加载以优先处理 Bundle 而不是松散缓存资源。构建用于打包游戏的种子列表后，您可以使用 bundle 模式和 `sys_report_files_not_found_in_paks`控制台变量来测试您的打包规则。捆绑包模式使您可以轻松地从您指定的位置加载和报告所有捆绑包  \(游戏 `.pak` 文件\)  中的问题，而无需创建发布版本。
 
-Using bundle mode involves two key tasks:
-+ Turning on missing asset reporting for assets not in bundles. This enables "bundle mode".
-+ Mounting and loading bundles for your game.
+使用捆绑模式涉及两项关键任务：
++ 为不在捆绑包中的资产启用缺少资产报告。这将启用 “捆绑模式”。
++ 为您的游戏安装和加载捆绑包。
 
-When reporting is enabled, the `sys_report_files_not_found_in_paks` console variable reports when an asset loads that isn't in any of your bundles. By selectively loading bundles and using the `sys_report_files_not_found_in_paks` command, you can find assets that need to be included in your bundles.
+启用报告后，`sys_report_files_not_found_in_paks`控制台变量会报告何时加载不在任何捆绑包中的资源。通过有选择地加载 bundle 并使用 `sys_report_files_not_found_in_paks` 命令，您可以找到需要包含在 bundle 中的资产。
 
-## Enabling Bundle Mode
+## 启用 Bundle Mode
 
-To enable bundle mode, use the `sys_report_files_not_found_in_paks` console variable and specify a value of `1`,`2`, or `3`. A value of `1` writes missing files as log entries without issuing warning messages.
+要启用捆绑模式，请使用 `sys_report_files_not_found_in_paks` 控制台变量并指定值 '`1`'、'`2`' 或 '`3`'。值 '`1`' 将缺失的文件作为日志条目写入，而不发出警告消息。
 
-The following list shows valid arguments for the `sys_report_files_not_found_in_paks` console variable.
+以下列表显示了`sys_report_files_not_found_in_paks` 控制台变量的有效参数。
 
 ```
 0 = Disabled
@@ -27,75 +27,75 @@ The following list shows valid arguments for the `sys_report_files_not_found_in_
 <Every other value> = Error
 ```
 
-### Log File Entries
+### 日志文件条目
 
-Missing files are logged with entries similar to the following:
+缺少的文件将记录为类似于以下内容的条目：
 
 ```
 Missing from bundle: @assets@\levels\milestone2\auto_resourcelist.txt
 ```
 
-If you use the `sys_report_files_not_found_in_paks` console variable with the launcher, the error messages are written to a log file.
+如果您在启动器中使用`sys_report_files_not_found_in_paks`控制台变量，则错误消息将写入日志文件。
 
-### Setting the Console Variable
+### 设置 Console 变量
 
-Enabling the console variable before running the editor or launcher ensures that all missing assets are reported. To ensure that the console variable is always active when you run the editor or launcher, modify `editor.cfg` and `autoexec.cfg` in your project directory.
+在运行编辑器或 Launcher 之前启用 console 变量可确保报告所有缺失的资产。要确保在运行编辑器或启动器时控制台变量始终处于活动状态，请修改项目目录中的 `editor.cfg` 和 `autoexec.cfg`。
 
-You can also enable the console variable at runtime by using the console (**\~**) or remote console.
+您还可以在运行时使用控制台(**\~**) 或远程控制台启用 console 变量。
 
-## Bundle Mode Commands
+## 捆绑模式命令
 
-Bundle mode has two commands:
-+ **loadbundles** *<bundle\_directory>* *<extension>* - Loads all the bundles from the specified directory into the game. If no arguments are supplied, the directory defaults to `Bundles` and the extension to `.pak`.
-+ **unloadbundles** - Unload any bundle that was loaded through the `loadbundles` command.
+捆绑模式有两个命令：
++ **loadbundles** *<bundle\_directory>* *<extension>* - 将指定目录中的所有捆绑包加载到游戏中。如果未提供任何参数，则目录默认为`Bundles`，扩展名为`.pak`。
++ **unloadbundles** - 卸载通过`loadbundles`命令加载的任何捆绑包。
 
-## Using Bundle Mode Example
+## 使用捆绑模式示例
 
-The following procedure shows how bundle mode works. In the example, game mode is entered when a bundle is missing.
+以下过程显示了捆绑模式的工作原理。在示例中，当缺少捆绑包时，将进入游戏模式。
 
-**To test bundle mode**
+**测试捆绑包模式**
 
-1. In the console window, enter the following command:
+1. 在控制台窗口中，输入以下命令：
 
    ```
    sys_report_files_not_found_in_paks 1
    ```
 
-   The `1` argument specifies that missing files are reported as log entries rather than warnings or errors.
+   `1` 参数 指定将缺失文件报告为日志条目，而不是警告或错误。
 
-1. Enter game mode. A list of Missing from bundle errors displays.
+1. 进入游戏模式。此时将显示 Missing from bundle errors （捆绑包中缺失） 错误列表。
 
 ![Missing from bundle errors in the console window.](/images/user-guide/assetbundler/asset-bundler-bundle-mode-1.png)
 
-1. Enter the command `loadbundles` to load bundles for the level.
+1. 输入命令`loadbundles` 以加载该级别的捆绑包。
 
 ![Using the loadbundles command.](/images/user-guide/assetbundler/asset-bundler-bundle-mode-2.png)
 
-   There are fewer errors, but some assets are still missing. The [Asset Validation Gem](/docs/user-guide/gems/reference/assets/asset-validation) seed-related commands can help find the missing assets.
+   错误较少，但仍缺少一些资产。[Asset Validation Gem](/docs/user-guide/gems/reference/assets/asset-validation)与种子相关的命令可以帮助查找缺失的资源。
 
-1. Use the Asset Validation gem `addseedpath` command to add a likely missing bundle.
+1. 使用 Asset Validation gem `addseedpath` 命令添加可能缺少的捆绑包。
 
    ```
    addseedpath levels\milestone2\level.pak
    ```
 
-1. Enter the `listknownassets` command.
+1. 输入 `listknownassets` 命令。
 
 ![Listing known assets in the console.](/images/user-guide/assetbundler/asset-bundler-bundle-mode-3.png)
 
-1. Examine the output. In the following example, the output shows missing button assets.
+1. 检查输出。在以下示例中，输出显示缺少的按钮资产。
 
 ![Identifying missing assets in the output.](/images/user-guide/assetbundler/asset-bundler-bundle-mode-4.png)
 
-   In the case of the button assets, the bundle was packaged a while ago and must be repackaged. However, other assets are also still missing.
+   对于按钮资产，捆绑包是不久前打包的，必须重新打包。但是，其他资产也仍然缺失。
 
-1. Add the missing assets to the seed list for the level.
+1. 将缺少的资源添加到关卡的种子列表中。
 
-1. Run the [bundling commands](/docs/user-guide/packaging/asset-bundler/command-line-reference/) for the level.
+1. 运行关卡的 [捆绑命令](/docs/user-guide/packaging/asset-bundler/command-line-reference/)。
 
-1. Drop the bundles into the `Bundles` directory.
+1. 将捆绑包放入`Bundles`目录中。
 
-1. Enter an `assetbundlerbatch assetlists` command, as shown in the following example. Use the `--print` argument to check the output. In the example, the single-line command has been formatted for readability.
+1. 输入`assetbundlerbatch assetlists`命令，如以下示例所示。 使用`--print`参数检查输出。在示例中，为了提高可读性，已对单行命令进行了格式设置。
 
    ```
    assetbundlerbatch assetlists
@@ -105,9 +105,9 @@ The following procedure shows how bundle mode works. In the example, game mode i
          --print
    ```
 
-1. Verify that the output displays as expected.
+1. 验证输出是否按预期显示。
 
-1. Enter the `assetbundlerbatch assetlists` command again to bundle the assets, but this time without the `--print` argument. The example command is single-line, but has been formatted for readability.
+1. 再次输入e `assetbundlerbatch assetlists` 命令以捆绑资源，但这次没有`--print`参数。示例命令是单行的，但为了便于阅读，已进行格式设置。
 
    ```
    assetbundlerbatch assetlists
@@ -118,14 +118,14 @@ The following procedure shows how bundle mode works. In the example, game mode i
          --assetlistfile DemoLevelList.assetlist
    ```
 
-   Output:
+   输出:
 
    ```
    Saving Asset List file to ( G:\P4\dev\DemoLevelList_pc.assetlist )...
    Save successful! ( G:\P4\dev\DemoLevelList_pc.assetlist )
    ```
 
-1. Enter an `assetbundlerbatch bundles` command, as shown in the following example.
+1. 输入`assetbundlerbatch bundles`命令，如以下示例所示。
 
    ```
    assetbundlerbatch bundles
@@ -134,15 +134,15 @@ The following procedure shows how bundle mode works. In the example, game mode i
          --outputbundlepath G:\P4\dev\DemoProject\Bundles\milestone2.pak
    ```
 
-   Output:
+   输出:
 
    ```
    Creating Bundle ( G:\P4\dev\DemoProject\Bundles\milestone2_pc.pak )...
    Bundle ( G:\P4\dev\DemoProject\Bundles\milestone2_pc.pak ) created successfully!
    ```
 
-1. Enter the `loadbundles` command to reload the bundles, and then enter game mode.
+1. 输入`loadbundles`命令重新加载捆绑包，然后进入游戏模式。
 
 ![All loaded assets are now in bundles.](/images/user-guide/assetbundler/asset-bundler-bundle-mode-5.png)
 
-   All the assets loaded when game mode was entered are now in bundles.
+   进入游戏模式时加载的所有资源现在都位于捆绑包中。

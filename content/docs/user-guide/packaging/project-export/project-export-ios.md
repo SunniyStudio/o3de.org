@@ -1,38 +1,38 @@
 ---
-linkTitle: Project Export for iOS
-title: Project Export for iOS
-description: (Experimental) Learn how to use the Project Export CLI to automate preparing your project for release on iOS.
+linkTitle: 适用于 iOS 的项目导出
+title: 适用于 iOS 的项目导出
+description: （实验性）了解如何使用 Project Export CLI 自动准备要在 iOS 上发布的项目。
 toc: true
 weight: 420
 ---
-This guide covers how to use project export tooling to build and deploy games on iOS. We will use the iOS export script to generate an Xcode project and prepare assets and then build the project. The end result of export should be an IPA file that can be installed on your iOS device.
+本指南介绍如何使用项目导出工具在 iOS 上构建和部署游戏。我们将使用 iOS 导出脚本生成 Xcode 项目并准备资源，然后构建项目。导出的最终结果应该是可以安装在 iOS 设备上的 IPA 文件。
 
 {{< note >}}
-To learn more about the project export tooling, please consult the page [Project Export CLI Tool.](/docs/user-guide/packaging/project-export/project-export-cli)
+要了解有关项目导出工具的更多信息，请参阅页面 [项目导出 CLI 工具。](/docs/user-guide/packaging/project-export/project-export-cli)
 {{< /note >}}
 {{< important >}}
-The iOS export functionality is only available on macOS, which is currently experimental for O3DE.
+iOS 导出功能仅在 macOS 上可用，目前在 O3DE 中处于试验阶段。
 {{< /important >}}
 
-## Prerequisites
-1. Make sure that the [Project Export CLI Tool page](/docs/user-guide/packaging/project-export/project-export-cli) prerequisites are satisfied.
-2. Make sure you have your project created and registered with your engine.
-3. Have a valid copy of Xcode installed on your machine, and a valid Apple Developer ID associated with that IDE. To set up such an ID, go to [developer.apple.com](https://developer.apple.com). To use your desired Apple ID, in Xcode go to `Xcode -> Settings`. In the Settings window, go to the Accounts tab and click the '+' icon at the bottom of the left panel to add your account. Select Apple ID to proceed, and follow on-screen instructions.
-4. You will also need to ensure that Xcode has the standard SDKs installed for macOS and iOS, and that your preferred iOS test device is compatible with Xcode. If you are not sure, you can consult [this page on installing Simulator Runtimes](https://developer.apple.com/documentation/xcode/installing-additional-simulator-runtimes).
-5. Make sure the o3de engine bootstrap registry is enabled for ios. To do so, go to your O3DE engine installation and edit the file at `$O3DE_ENGINE_PATH/Registry/bootstrap.setreg` so that the `assets` field uses `ios`. Like so:
+## 先决条件
+1. 确保满足 [项目导出 CLI 工具页面](/docs/user-guide/packaging/project-export/project-export-cli)  先决条件。
+2. 确保您已创建项目并将其注册到引擎中。
+3. 在您的计算机上安装了有效的 Xcode 副本，以及与该 IDE 关联的有效 Apple Developer ID。要设置这样的 ID，请转到 [developer.apple.com](https://developer.apple.com)。要使用您想要的 Apple ID，请在 Xcode 中转到`Xcode -> Settings`。在“设置”窗口中，转到“帐户”选项卡，然后单击左侧面板底部的“+”图标以添加您的帐户。选择 Apple ID 继续，然后按照屏幕上的说明进行操作。
+4. 您还需要确保 Xcode 安装了适用于 macOS 和 iOS 的标准 SDK，并且您首选的 iOS 测试设备与 Xcode 兼容。如果您不确定，可以查阅 [此页 安装 Simulator Runtimes](https://developer.apple.com/documentation/xcode/installing-additional-simulator-runtimes).
+5. 确保为 iOS 启用了 o3de 引擎引导注册表。为此，请转到您的 O3DE 引擎安装并编辑`$O3DE_ENGINE_PATH/Registry/bootstrap.setreg`中的文件，以便`assets`字段使用`ios`。这样：
 ```
 "assets": "ios",
 ```
-6. Edit the `$O3DE_ENGINE_PATH/Registry/AssetProcessorPlatformConfig.setreg` file at line 67 by uncommenting the line:
+6. 编辑 `$O3DE_ENGINE_PATH/Registry/AssetProcessorPlatformConfig.setreg` 文件，注释掉第 67 行:
 ```
 //"ios": "enabled", -> "ios": "enabled",
 ```
-This will tell the asset processor to make sure ios assets are cached when building the project.
-7. Make sure you have a proper provisioning profile setup for Xcode to use when code signing your app. Alternatively, use automatic signing to let Xcode handle it for you. You can learn more about how set it up [here.](https://developer.apple.com/help/account/manage-profiles/create-a-development-provisioning-profile). 
+这将指示 Asset Processor 确保在构建项目时缓存 iOS 资源。
+7. 确保您拥有正确的 provisioning 配置文件设置，以便在对 App 进行代码签名时使用。或者，使用自动签名让 Xcode 为您处理。您可以了解有关如何设置的更多信息 [此处.](https://developer.apple.com/help/account/manage-profiles/create-a-development-provisioning-profile). 
 
-## Quickstart
-### Running the Export Script
-For building in release mode with bundled PAK files for your IPA, you can use the following export command:
+## 快速入门
+### 运行导出脚本
+要使用 IPA 的捆绑 PAK 文件在发布模式下构建，您可以使用以下 export 命令：
 ```
 export O3DE_ENGINE_PATH=/path/to/o3de
 export PROJECT_PATH=/path/to/project
@@ -40,44 +40,44 @@ cd $PROJECT_PATH
 $O3DE_ENGINE_PATH/scripts/o3de.sh export-project -es export_source_ios_xcode.py -pp . -ibp build/game-ios -ll INFO --config release
 ```
 
-To use profile mode instead, change the `--config` parameter in the above snippet to use `profile` instead. Please note though that this will automatically set assets to LOOSE mode, and will not use PAK files for your final IPA.
+要改用 profile 模式，请将上述代码片段中的`--config`参数更改为使用`profile`。但请注意，这会自动将资源设置为 LOOSE 模式，并且不会将 PAK 文件用于最终的 IPA。
 
-That invocation should be all that is needed to create an IPA file for your project. To install the IPA on your phone for testing, you can do so manually via Xcode. Please check [this page for more details.](https://developer.apple.com/documentation/xcode/distributing-your-app-to-registered-devices#Install-the-app-on-user-devices)
+该调用应该是为您的项目创建 IPA 文件所需的全部内容。要在手机上安装 IPA 进行测试，您可以通过 Xcode 手动执行此操作。请查看 [此页面了解更多详情。](https://developer.apple.com/documentation/xcode/distributing-your-app-to-registered-devices#Install-the-app-on-user-devices)
 
-As a result of the export process, the resulting Xcode project file was also generated. You can find it in `$PROJECT_PATH/build/game-ios`. For regular iterative development with frequent deployments to the iOS device, it is recommended you work with Xcode directly using this project file. See the [manual export page for more details.](manual-export-atom-sampleviewer-ios#using-xcode)
+作为导出过程的结果，还生成了生成的 Xcode 工程文件。您可以在`$PROJECT_PATH/build/game-ios`中找到它。对于频繁部署到 iOS 设备的常规迭代开发，建议您直接使用此项目文件与 Xcode 合作。有关详细信息，请参阅 [手动导出页面。](manual-export-atom-sampleviewer-ios#using-xcode)
 
-## iOS Export Script
-O3DE ships with an [iOS Export Script](https://github.com/o3de/o3de/blob/bb3eafe30d8291f50b69924e5b7a432c8c6f53ca/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L24), capable of generating an Xcode project file to handle standard use cases of O3DE projects on iOS. This script is only designed to run from an O3DE source installation on a macOS machine.
+## iOS导出脚本
+O3DE 附带一个 [iOS 导出脚本](https://github.com/o3de/o3de/blob/bb3eafe30d8291f50b69924e5b7a432c8c6f53ca/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L24)，能够生成 Xcode 项目文件以处理 iOS 上 O3DE 项目的标准用例。此脚本仅设计为从 macOS 计算机上的 O3DE 源安装运行。
 
-The export script has two primary sections: the function [`export_ios_xcode_project`](https://github.com/o3de/o3de/blob/bb3eafe30d8291f50b69924e5b7a432c8c6f53ca/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L24) and the [startup code that only runs if the script is invoked by the CLI](https://github.com/o3de/o3de/blob/bb3eafe30d8291f50b69924e5b7a432c8c6f53ca/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L200). In-depth discussion on these two sections will be made in the [Developer Guide](https://docs.o3de.org/docs/engine-dev/) in the future.
+导出脚本有两个主要部分：函数 [`export_ios_xcode_project`](https://github.com/o3de/o3de/blob/bb3eafe30d8291f50b69924e5b7a432c8c6f53ca/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L24) 和 [仅在脚本由 CLI 调用时运行的启动代码](https://github.com/o3de/o3de/blob/bb3eafe30d8291f50b69924e5b7a432c8c6f53ca/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L200)。关于这两部分的深入讨论，将在以后的 [开发者指南](https://docs.o3de.org/docs/engine-dev/) 中进行。
 
-### Usage
-To use the export script, you can issue the arguments at the same time that you are running the `export-project` command. The arguments specific to the script will be deferred until it begins running.
+### 用法
+要使用 export 脚本，您可以在运行 `export-project` 命令的同时发出参数。特定于脚本的参数将被推迟到它开始运行。
 
-The arguments are as follows:
-| Argument Name | Description | Required? |
+参数如下：
+|参数名称 |描述 |必需？ |
 | - | - | - |
-| [`--script-help`](https://github.com/o3de/o3de/blob/9b90a24479e2b191d2125d34c1984b013b2cb13f/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L89) | Display the help information specifically for the export script. | no |
-| [`--config`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L243) | Defines the CMake build configuration when building the project's binaries, such as GameLauncher. Options are either `profile` or `release`. | no |
-| [`--tool-config`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L249) | The CMake build configuration to use when building tool binaries. Options are either `profile` or `release`. | no |
-| [`--build-assets`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L262-L267) | Override the default behavior to include processing all assets and run the asset bundler for the project. This option is available when the export-project-configure defaults for `option.build.assets` is `False`. | no |
-| [`--skip-build-assets`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L262-L267) | Override the default behavior to skip reprocessing and rebundling of all assets for the project. This option is available when the export-project-configure defaults for `option.build.assets` is `True`. | no |
-| [`--fail-on-asset-errors`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L270-L275) | Override the default behavior to fail the export process on any errors that occur during asset processing.  This option is available when the export-project-configure defaults for `option.fail.on.asset.errors` is `False`. | no |
-| [`--continue-on-asset-errors`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L270-L275) |  Override the default behavior to ignore any errors that occur during asset processing and continue with the project export.  This option is available when the export-project-configure defaults for `option.fail.on.asset.errors` is `True`. | no |
-| [`--seedlist`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L277-L282) | Path to a seedlist file for asset bundling. You can specify this multiple times for multiple seed lists. This parameter also allows for wildcard matching for paths. | no |
-| [`--seedfile`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L284-L289) | Path to a seed file for asset bundling. Example seed files are levels or prefabs. You can specify this multiple times for multiple seed files. This parameter also allows for wildcard matching for paths. | no |
-| [`--level-name`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L291-L296) | The name of the level you want to export. This will look in `<o3de_project_path>/Cache/levels` to fetch the right level prefab. Specify multiple times for each level in your game. This is not necessary if the level is already defined inside of a seed list. | no |
-| [`--build-tools`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L319-L326) | Builds the O3DE toolchain executables if the engine is not an SDK. This will build AssetBundlerBatch, AssetProcessorBatch. This option is available when the export-project-configure defaults for `option.build.tools` is `False`. | no |
-| [`--skip-build-tools`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L319-L326) | Skips building the O3DE toolchain executables if the engine. This may be useful if you already have the tools available. This option is available when the export-project-configure defaults for `option.build.tools` if `True`.| no |
-| [`--tools-build-path`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L330) | Designates where the build files for the O3DE toolchain are generated. If not specified, default is `<o3de_project_path>/build/tools`.  | no |
-| [`--max-bundle-size`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L349) | Specify the maximum size of a given asset bundle.  | no |
-| [`--ios-build-path`](https://github.com/o3de/o3de/blob/9b90a24479e2b191d2125d34c1984b013b2cb13f/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L94) | Designates where the Xcode project file for the project is generated. If not specified, default is `<o3de_project_path>/build/game_ios`. | no |
-| [`--quiet`](https://github.com/o3de/o3de/blob/9b90a24479e2b191d2125d34c1984b013b2cb13f/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L98) | Suppresses logging information unless an error occurs. | no |
+| [`--script-help`](https://github.com/o3de/o3de/blob/9b90a24479e2b191d2125d34c1984b013b2cb13f/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L89) |显示专门用于导出脚本的帮助信息。 | no |
+| [`--config`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L243) | 定义在构建项目的二进制文件（如 GameLauncher）时的 CMake 构建配置。选项包括`profile` 或 `release`. | no |
+| [`--tool-config`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L249) | 构建工具二进制文件时使用的 CMake 构建配置。选项包括`profile` 或 `release`. | no |
+| [`--build-assets`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L262-L267) | 覆盖默认行为以包括处理所有资源并运行项目的资源打包器。当`option.build.assets`的 export-project-configure 默认值为 `False` 时，此选项可用。 | no |
+| [`--skip-build-assets`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L262-L267) | 覆盖默认行为以跳过项目所有资产的重新处理和重新捆绑。当`option.build.assets`的 export-project-configure 默认值为 `True` 时，此选项可用。 | no |
+| [`--fail-on-asset-errors`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L270-L275) | 覆盖默认行为，以在资产处理过程中发生任何错误时使导出过程失败。当 `option.fail.on.asset.errors` 的 export-project-configure 默认值为`False`时，此选项可用。 | no |
+| [`--continue-on-asset-errors`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L270-L275) |  覆盖默认行为以忽略资产处理过程中发生的任何错误，并继续进行工程导出。当 `option.fail.on.asset.errors` 的 export-project-configure 默认值为`True`时，此选项可用。 | no |
+| [`--seedlist`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L277-L282) | 用于资产捆绑的种子列表文件的路径。您可以为多个种子列表多次指定此项。此参数还允许对路径进行通配符匹配。 | no |
+| [`--seedfile`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L284-L289) | 资产捆绑的种子文件的路径。示例种子文件是关卡或预制件。您可以为多个种子文件多次指定此项。此参数还允许对路径进行通配符匹配。 | no |
+| [`--level-name`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L291-L296) | 要导出的关卡的名称。这将在 `<o3de_project_path>/Cache/levels` 中查找以获取正确的级别预制件。为游戏中的每个级别指定多次。如果级别已在种子列表中定义，则不需要这样做。 | no |
+| [`--build-tools`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L319-L326) | 如果引擎不是 SDK，则构建 O3DE 工具链可执行文件。这将构建 AssetBundlerBatch 和 AssetProcessorBatch。当 `option.build.tools`的 export-project-configure 默认值为 `False` 时，此选项可用。| no |
+| [`--skip-build-tools`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L319-L326) | 如果 engine.如果您已经拥有可用的工具，这可能很有用。当 `option.build.tools`的 export-project-configure 默认值为 `True` 时，此选项可用。 | no |
+| [`--tools-build-path`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L330) | 指定生成 O3DE 工具链的构建文件的位置。如果未指定，则默认为`<o3de_project_path>/build/tools`.  | no |
+| [`--max-bundle-size`](https://github.com/o3de/o3de/blob/f0c150d75722b3302753972b28d73a8036b70b31/scripts/o3de/ExportScripts/export_source_built_project.py#L349) | 指定给定 asset bundle 的最大大小。  | no |
+| [`--ios-build-path`](https://github.com/o3de/o3de/blob/9b90a24479e2b191d2125d34c1984b013b2cb13f/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L94) | 指定生成项目的 Xcode 项目文件的位置。如果未指定，则默认为`<o3de_project_path>/build/game_ios`. | no |
+| [`--quiet`](https://github.com/o3de/o3de/blob/9b90a24479e2b191d2125d34c1984b013b2cb13f/scripts/o3de/ExportScripts/export_source_ios_xcode.py#L98) | 除非发生错误，否则禁止显示日志记录信息。 | no |
 
-Here is an example usage of this script:
+以下是此脚本的示例用法：
 ```
 # On Mac
 export IOS_OUTPUT_PATH=/path/to/ios/build/path
 $O3DE_ENGINE_PATH/scripts/o3de.sh export-project --export-script $O3DE_ENGINE_PATH/scripts/o3de/ExportScripts/export_source_ios_xcode.py --project-path $PROJECT_PATH --ios-build-path $IOS_OUTPUT_PATH
 ```
-`O3DE_ENGINE_PATH`, `O3DE_PROJECT_PATH` and `IOS_OUTPUT_PATH` are environment variables. The `O3DE_ENGINE_PATH` and `O3DE_PROJECT_PATH` variables point to the path locations for your o3de source engine and o3de project respectively. The `IOS_OUTPUT_PATH` variable corresponds to the folder path where you would like for the generated Xcode project file to appear.
+`O3DE_ENGINE_PATH`, `O3DE_PROJECT_PATH` 和 `IOS_OUTPUT_PATH` 是环境变量。`O3DE_ENGINE_PATH` 和 `O3DE_PROJECT_PATH` 变量分别指向 o3de 源引擎和 o3de 项目的路径位置。`IOS_OUTPUT_PATH`变量对应于您希望生成的 Xcode 工程文件显示的文件夹路径。

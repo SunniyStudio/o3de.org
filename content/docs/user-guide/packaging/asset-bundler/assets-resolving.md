@@ -1,87 +1,87 @@
 ---
-description: ' Resolve missing assets in your O3DE game project. '
-title: Resolving Missing Assets
+description: ' 解决 O3DE 游戏项目中缺少的资源。 '
+title: 解决缺失资产
 weight: 200
 ---
 
-After you build and package your O3DE game, you want to frequently verify that your packages contain every asset they require. For information about verifying your asset bundles, see [Verifying that Bundles Contain Required Assets](/docs/user-guide/packaging/asset-bundler/verifying-bundles/).
+在构建和打包 O3DE 游戏后，您需要经常验证您的包是否包含它们需要的所有资产。有关验证 Asset Bundle 的信息，请参阅 [验证 Bundle 是否包含必需的资源](/docs/user-guide/packaging/asset-bundler/verifying-bundles/).
 
-When you identify a potential missing asset, you want to include it so that the asset is no longer missing in your next bundled game package.
+当您确定可能缺少的资源时，您需要将其包含在内，以便下一个捆绑游戏包中不再缺少该资源。
 
-An asset that is missing from a bundle might be one of the following:
-+ **A missing product dependency** - An asset that references another asset, but did not declare it as a product dependency, or the referenced asset was removed during the [asset list comparison process](/docs/user-guide/packaging/asset-bundler/list-operations/).
-+ **A hardcoded file load** - Assets loaded by path or by asset ID in C++.
-+ **A false positive** - The asset appeared to be missing from a bundle, but is not actually used. For example, you might have an editor-only asset that appears to be missing that is never loaded or used in your game's launcher.
+捆绑包中缺少的资源可能是以下资产之一：
++ **缺少产品依赖项** - 引用其他资产的资产，但未将其声明为产品依赖项，或者在 [资产列表比较过程中](/docs/user-guide/packaging/asset-bundler/list-operations/) 删除了引用的资产。
++ **硬编码文件加载** - 在 C++ 中按路径或资产 ID 加载资产。
++ **误报** - 资源似乎在捆绑包中缺失，但实际上并未使用。例如，您可能有一个似乎缺少的仅限编辑器的资源，该资源从未在游戏的启动器中加载或使用。
 
-To resolve the missing asset, check each of these possibilities in turn.
+要解决缺少的资产，请依次检查每种可能性。
 
-## Missing Product Dependencies 
+## 缺少产品依赖项
 
-A missing asset might have been loaded as a reference from O3DE or from your game code's interaction with another asset. In these cases, you can resolve the issue by emitting a new product dependency.
+缺少的资产可能已作为来自 O3DE 的引用或您的游戏代码与其他资产的交互加载。在这些情况下，您可以通过发出新的 product 依赖项来解决问题。
 
-### Finding the Asset Reference
+### 查找 Asset 引用
 
-To find the source of the asset reference, try the following approaches:
+要查找资产引用的源，请尝试以下方法：
 <!-- 
 Missing topic. 
 
 + Use the Asset Processor Batch's [missing dependency scanner](/docs/user-guide/packaging/asset-bundler/verifying-bundles/missing-dependency-scanner/). -->
-+ Debug the file load using the following methods:
-  + Set breakpoints, if possible
-  + Add extra `print` commands
-  + Try interacting with your game in different ways to see what triggers the missing asset to load.
++ 使用以下方法调试文件加载：
+  + 设置断点（如果可能）
+  + 添加额外的 `print` 命令
+  + 尝试以不同的方式与游戏交互，以查看是什么触发了缺失资产的加载。
 
-As a hint to where to start debugging, note that most file loading routes through [`AzFramework::IO::Archive`](/docs/api/frameworks/azframework/class_a_z_1_1_i_o_1_1_archive.html). Setting breakpoints or adding additional debugging logic \(like `printf` statements\) can help identify what is triggering the asset load that you are investigating.
+作为开始调试位置的提示，请注意，大多数文件加载都会通过[`AzFramework::IO::Archive`](/docs/api/frameworks/azframework/class_a_z_1_1_i_o_1_1_archive.html) 进行路由。设置断点或添加额外的调试逻辑 \(如 `printf` 语句\) 可以帮助确定触发您正在调查的资产负载的原因。
 
-### Finding the Builder to Update 
+### 查找要更新的生成器
 
-Track down the job that generates the asset that references your missing asset. Then you can update the generated asset to emit the missing asset as a product dependency. The source of the generated asset can be obvious if it has a file extension that is associated with a known builder.
+跟踪生成引用缺失资产的资产的作业。然后，您可以更新生成的资产，以将缺少的资产作为产品依赖项发出。如果生成的资产具有与已知生成器关联的文件扩展名，则生成的资产的来源可能很明显。
 
-If the source of the generated asset is not obvious, you can use the asset database to look up the information.
+如果生成的资产的来源不明显，则可以使用 asset database 来查找信息。
 
-**To look up a job that generates an asset**
+**查找生成资产的作业**
 
-1. In the **Products** table, search for the asset that you want to update to emit a dependency. The following example search for a material uses [DB Browser for SQLite](https://sqlitebrowser.org/) to explore the asset database:
+1. 在 **Products** 表中，搜索要更新以发出依赖项的资产。以下示例搜索材质使用 [DB Browser for SQLite](https://sqlitebrowser.org/) 来浏览资源数据库：
 
 ![Searching for an asset in the Products table.](/images/user-guide/assetbundler/asset-bundler-assets-resolving-1.png)
 
-1. Look up the `JobPK` value in the **Jobs** table, as in the following example:
+1. 在 **Jobs** 表中查找 `JobPK` 值，如以下示例所示：
 
 ![Looking up a value in the asset database Jobs table.](/images/user-guide/assetbundler/asset-bundler-assets-resolving-2.png)
 
-1. Look up the `JobKey` or `BuilderGuid` in your code base.
+1. 在代码中查找 `JobKey` 或 `BuilderGuid`。
 
-### Updating the Builder to Emit the Dependency 
+### 更新 Builder 以发出依赖项
 
-After you've identified the builder which emits the product that is missing the dependency, update the builder. For more information, see [Declare Product Dependencies](/docs/user-guide/packaging/asset-bundler/overview/#why-use-product-dependencies).
+确定发出缺少依赖项的产品的生成器后，请更新生成器。有关详细信息，请参阅 [声明产品依赖项](/docs/user-guide/packaging/asset-bundler/overview/#why-use-product-dependencies).
 
-## Hardcoded File Loads 
+## 硬编码文件加载
 
-To resolve missing assets from hardcoded file loads, find where in code the file is loaded and then choose a resolution strategy.
+要解决硬编码文件加载中缺少的资源问题，请查找文件在代码中的加载位置，然后选择解决策略。
 
-### Finding the File Load 
+### 查找文件加载
 
-We recommend the following techniques for tracking down a hardcoded file load:
+我们建议使用以下技术来跟踪硬编码文件加载：
 
-1. Using breakpoints in code.
+1. 在代码中使用断点。
 
-2. Adding additional log messages to the code base.
+2. 向代码库添加其他日志消息。
 
-3. Doing a "find in files" search for strings that refer to the missing asset.
+3. 执行“在文件中查找”搜索引用缺失资产的字符串。
 
-For more information, see [Finding the Asset Reference](#asset-bundler-assets-resolving-finding-the-asset-reference) earlier in this topic.
+有关更多信息，请参阅本主题前面的 [查找资产引用](#asset-bundler-assets-resolving-finding-the-asset-reference)。
 
-### Resolving the Missing Asset
+### 解决缺失的资源
 
-To resolve the missing asset from a hardcoded file load, try the following options:
-+ **Remove the hardcoded load** - By emitting assets as product dependencies from relevant builders, you can use seed lists with fewer files that are easier to maintain.
-+ **Add as seed** - If you can't or don't want to replace the hard-coded asset load, you can add the referenced file as a seed to your game's seed list. Because adding the seed changes only data and doesn't require recompiling your game, this approach can be useful later in development and minimizes code changes. For information about adding the referenced file as a seed to your game's seed list, see the [O3DE Asset Bundler Command-Line Tool Reference](/docs/user-guide/packaging/asset-bundler/command-line-reference/).
-+ **Use the Wildcard Dependency System** - If your project uses relative path loads or wildcard path loads, you can declare the dependencies in a dependencies file. This technique is explained in the following section.
+要从硬编码文件加载中解决缺少的资源，请尝试以下选项：
++ **删除硬编码加载** - 通过将资产作为产品依赖项从相关构建器发出，您可以使用文件较少且更易于维护的种子列表。
++ **添加为种子** - 如果您不能或不想替换硬编码的资产加载，则可以将引用的文件作为种子添加到游戏的种子列表中。由于添加种子只会更改数据，不需要重新编译游戏，因此此方法在开发后期可能很有用，并且可以最大限度地减少代码更改。有关将引用的文件作为种子添加到游戏的种子列表的信息，请参阅 [O3DE Asset Bundler 命令行工具参考](/docs/user-guide/packaging/asset-bundler/command-line-reference/).
++ **使用通配符依赖关系系统** - 如果您的项目使用相对路径加载或通配符路径加载，则可以在依赖关系文件中声明依赖关系。此技术将在下一节中介绍。
 
-## False Positives
+## 误报
 
-Some assets and asset references are used only in the editor or in launchers during development. These assets aren't used in release builds. Therefore, you can consider any assets that are missing from bundles that aren't used in release builds to be false positives.
+在开发过程中，某些资源和资源引用仅在编辑器或启动器中使用。这些资产不用于发布版本。因此，您可以将未在发布版本中使用的捆绑包中缺少的任何资产视为误报。
 
-### Removing False Positives From Missing Asset Scanning Results
+### 从缺失的资产扫描结果中删除误报
 
-After you've verified that an asset is not used in your release builds, you can use the file tagging system to tag it so that it doesn't appear in future scans. For more information, see [Using the File Tagging System to Include or Exclude Assets](/docs/user-guide/packaging/asset-bundler/file-tagging/).
+在验证发布版本中未使用资产后，您可以使用文件标记系统对其进行标记，以便它不会显示在将来的扫描中。有关详细信息，请参阅 [使用文件标记系统包含或排除资产](/docs/user-guide/packaging/asset-bundler/file-tagging/)。

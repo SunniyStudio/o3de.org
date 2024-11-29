@@ -1,57 +1,56 @@
 ---
-description: ' Use the Open 3D Engine Asset Editor to create file tag rules for including
-  and excluding files in your asset bundles for processing by the Asset Bundler.
-  Rules are composed of pattern matching logic and file tag strings. '
-title: Using the File Tagging System to Include or Exclude Assets
+description: ' 使用 Open 3D Engine Asset Editor 创建文件标签规则，用于在资源包中包含和排除文件，以便 Asset Bundler 进行处理。
+  规则由模式匹配逻辑和文件标签字符串组成。 '
+title: 使用文件标记系统包含或排除资源
 weight: 400
 ---
 
-O3DE uses a file tagging system to include or exclude files at various stages of processing. This system employs file tag rules to select files that match specified patterns. File tags are associated with each rule to use as keys in file tag queries. This is done by using the O3DE FileTag API. You can create your own custom file tag rules using the O3DE Asset Editor. This is useful whenever you need additional control over which files should be included or excluded during a processing step. For example, as part of asset bundling, it is useful to eliminate "false positives" found after using the **Missing Dependency Scanner**.
+O3DE 使用文件标记系统在处理的各个阶段包含或排除文件。此系统使用文件标签规则来选择与指定模式匹配的文件。文件标签与每个规则相关联，以用作文件标签查询中的键。这是通过使用 O3DE FileTag API 完成的。您可以使用 O3DE 资产编辑器创建自己的自定义文件标签规则。当您需要对在处理步骤中应包含或排除哪些文件时进行额外控制时，这非常有用。例如，作为资产捆绑的一部分，消除在使用 **Missing Dependency Scanner** 后发现的“误报”非常有用。
 
-**Topics**
-+ [Creating File Tag Rules](#creating-file-tag-rules)
-+ [Using the FileTag API](#using-the-filetag-api)
+**主题**
++ [创建文件标签规则](#creating-file-tag-rules)
++ [使用FileTag API](#using-the-filetag-api)
 
-## Creating File Tag Rules 
+## 创建文件标签规则
 
-Use the O3DE Asset Editor to add custom file tag rules to either `exclude.filetag` or `include.filetag`, depending on whether you are excluding or including asset files. Both of these `.filetag` files are located in the `dev\Engine` directory. File tag rules consist of two required parts:
-+ A **File Pattern** that defines the files to match this rule. Supported patterns include:
-  + **Exact** \(for example, `readme.txt`\)
-  + **Wildcard** \(for example, `*.cfxb`\)
-  + **Regex** \(for example, `.*/gems?/?.*/gem.json`\)
-+ One or more **File Tags** that are used by either O3DE or your own code as keys to refer to the file pattern matching defined by this rule.
+使用 O3DE 资产编辑器将自定义文件标签规则添加到`exclude.filetag` 或 `include.filetag`，具体取决于您是排除还是包含资产文件。这两个`.filetag`文件都位于`dev\Engine`目录中。文件标记规则由两个必需部分组成：
++ **File Pattern** 定义与此规则匹配的文件。支持的模式包括：
+  + **Exact** \(例如, `readme.txt`\)
+  + **Wildcard** \(例如, `*.cfxb`\)
+  + **Regex** \(例如, `.*/gems?/?.*/gem.json`\)
++ O3DE 或您自己的代码用作键的一个或多个 **File Tags** ，用于引用此规则定义的文件模式匹配。
 
-You can use the **Comment** field to add more information about a file tag rule, for example to document its usage.
+您可以使用 **Comment** 字段添加有关文件标记规则的更多信息，例如记录其使用情况。
 
 {{< note >}}
-Some file tags have designated uses within O3DE. Various tools may require that you use specific tags, such as `editoronly` and `shader`. You can find the full list of commonly used tags in the `FileTagsIndex` enum in `dev\Code\Framework\AzFramework\AzFramework\FileTag\FileTag.h`.
+某些文件标签在 O3DE 中具有指定的用途。各种工具可能要求您使用特定的标签，例如 `editoronly` 和 `shader`。可以在`dev\Code\Framework\AzFramework\AzFramework\FileTag\FileTag.h`中的`FileTagsIndex`枚举中找到常用标记的完整列表。
 {{< /note >}}
 
-**How to Create a File Tag Rule**
+**如何创建文件标签规则**
 
-1. In O3DE Editor, choose **Tools**, **Asset Editor**.
+1. 在 O3DE 编辑器中，选择**Tools**, **Asset Editor**.
 
-1. Choose **File**, **Open**, and select either `exclude.filetag` or `include.filetag` from the `Engine` directory.
+1. 选择 **File**, **Open**, 并从`Engine`目录选择 `exclude.filetag` 或 `include.filetag`。
 
-1. Open **Definition**, find the line labeled **File Tag Map**, and click on the '**+**' button to add a new child element.
+1. 打开 **Definition**, 找到标记为 **File Tag Map**的行，点击 '**+**' 按钮添加新的子元素。
 
 ![Start a new file tag rule by adding a new element to the File Tag Map.](/images/user-guide/assetbundler/asset-bundler-filetag-new-element.png)
 
-1. Enter the desired file matching pattern in the **New Key** field.
+1. 在 **New Key** 字段中输入所需的文件匹配模式。
 
 ![Specify the desired file matching pattern.](/images/user-guide/assetbundler/asset-bundler-filetag-new-key.png)
 
-1. Open your new file pattern key from the list and select the appropriate **File Pattern** type.
+1. 从列表中打开您的新文件模式键，然后选择相应的 **File Pattern** 类型。
 
-1. Add one or more **File Tags** to associate with your new file pattern.
+1. 添加一个或多个 **File Tags** 以与您的新文件模式关联。
 
 ![Complete the new file tag rule by selecting a File Pattern type and entering one or more File Tags.](/images/user-guide/assetbundler/asset-bundler-filetag-example.png)
 
-1. Select **File**, **Save** to save your new file tag rule.
+1. 选择 **File**, **Save** 以保存新的 File 标签规则。
 
-## Using the FileTag API 
+## 使用 FileTag API
 
-You can use the C++ FileTag API to write your own logic for determining whether to include or exclude files. The following example uses the file tagging system to ignore files that match patterns associated with the `ignore` and `shader` tags.
+您可以使用 C++ FileTag API 编写自己的逻辑来确定是包含还是排除文件。以下示例使用文件标记系统忽略与`ignore` 和 `shader`标记关联的模式匹配的文件。
 
 ```
    bool IsIgnored(const char* szPath)
@@ -67,7 +66,7 @@ You can use the C++ FileTag API to write your own logic for determining whether 
 ```
 
 {{< note >}}
-In the previous example, it shows querying the `QueryFileTagsEventBus` on the ID `FileTagType::exclude`. This implies that this query is using the file tagging rules specified in the `exclude.filetag` file.
+在前面的示例中，它显示了对 ID`FileTagType::exclude`的`QueryFileTagsEventBus`的查询。这意味着此查询正在使用`exclude.filetag`文件中指定的文件标记规则。
 {{< /note >}}
 
-You can find the FileTag API in the `dev\Code\Framework\AzFramework\AzFramework\FileTag` directory. In that directory, `FileTag.h` declares the `Match` method that was used in the previous example. There are other methods there, such as `GetTags`, which you can use to write more complex logic. You may find it useful to work with the `excludeFileComponent` helper class, found in `FileTagComponent.h`. This component class automatically loads the default exclusion file for you, sets the file tag type to `FileTagType::exclude`, and connects to the `QueryFileTagsEventBus` upon activation.
+您可以在`dev\Code\Framework\AzFramework\AzFramework\FileTag`目录中找到 FileTag API。在该目录中，`FileTag.h` 声明了上一个示例中使用的 `Match` 方法。还有其他方法，例如 `GetTags`，您可以使用它们编写更复杂的逻辑。您可能会发现使用 `FileTagComponent.h` 中的 `excludeFileComponent` 辅助类很有用。此组件类会自动为您加载默认排除文件，将文件标记类型设置为`FileTagType::exclude`，并在激活时连接到 `QueryFileTagsEventBus`。

@@ -5,175 +5,173 @@ description: Learn how to manage your assets and package them into asset bundles
 weight: 150
 ---
 
-This topic is an introduction to using the **Asset Bundler** to bundle assets for a distributable *project game release layout*. Managing project assets into bundles can help reduce the project's size on disk, optimize the project's runtime, and organize the assets to make future asset releases easier. When preparing to distribute your project, use the instructions in this topic to help you create an asset bundle.
+本主题介绍了如何使用 **Asset Bundler** 为可分发的 *项目游戏发布布局* 捆绑资产。将项目资源管理到捆绑包中有助于减小项目在磁盘上的大小、优化项目的运行时，并组织资源以更轻松地发布将来的资源。准备分发项目时，请使用本主题中的说明来帮助您创建 Asset Bundle。
 
 
-## Prerequisites
+## 先决条件
 
-Build your project with the `release` configuration. This creates a *project game release layout*, which contains the application and files that you can distribute. Learn how to [create a project game release layout for Windows](/docs/user-guide/packaging/windows-release-builds).
-
-
-## Bundling project assets
-
-This tutorial contains the following steps: 
-
-1. Set up Asset Bundler.
-1. Create the game assets bundle.
-1. Create the engine assets bundle.
-1. Add the bundles to the release layout.
+使用`release` 配置构建您的项目。这将创建一个 *项目游戏发布布局*，其中包含您可以分发的应用程序和文件。了解如何 [创建适用于 Windows 的项目游戏发布布局](/docs/user-guide/packaging/windows-release-builds).
 
 
-Throughout the steps, replace `<engine>` with either of the following:
+## 捆绑项目资产
 
-- `C:\MyProject` -- For a source engine.
-- `C:\o3de-install` -- For a pre-built SDK engine.
+本教程包含以下步骤：
+
+1. 设置 Asset Bundler。
+1. 创建游戏资源包。
+1. 创建引擎资源包。
+1. 将捆绑包添加到发布布局中。
 
 
-### Set up Asset Bundler
+在整个步骤中，将`<engine>` 替换为以下任一值：
 
-To set up and run Asset Bundler, do the following:
+- `C:\MyProject` -- 对于源代码引擎。
+- `C:\o3de-install` -- 对于预构建的 SDK 引擎。
 
-1. In your `<engine>` directory, use CMake to invoke Visual Studio to build Asset Bundler.
+
+### 设置 Asset Bundler
+
+要设置和运行 Asset Bundler，请执行以下操作：
+
+1. 在您的 `<engine>` 目录中，使用 CMake 调用 Visual Studio 来构建 Asset Bundler。
 
     ```cmd
     cmake --build build/windows --target AssetBundler --config profile -- -m
     ```
 
-    This command contains the following options:
+    此命令包含以下选项：
 
-    - `--target AssetBundler` -- Sets the build target to Asset Bundler and Asset Bundler Batch, and their dependent modules.
+    - `--target AssetBundler` -- 将构建目标设置为 Asset Bundler 和 Asset Bundler Batch 及其依赖模块。
 
-    - `--config profile` -- Sets the build configuration to profile, which enables optimization and allows debugging.
+    - `--config profile` -- 将 build configuration 设置为 profile，这将启用优化并允许调试。
 
 
-1. Run `AssetBundler.exe` from the `<engine>\build\windows\bin\profile` directory. This opens Asset Bundler with a graphical user interface (GUI). (Alternatively, to use the command line interface (CLI), run `AssetBundlerBatch.exe`.)
+1. 从 `<engine>\build\windows\bin\profile` 目录运行 `AssetBundler.exe`。这将打开带有图形用户界面 （GUI） 的 Asset Bundler。（或者，要使用命令行界面 （CLI），请运行`AssetBundlerBatch.exe`。
 
-    Now you should have Asset Bundler open, which looks like this in the GUI:
+    现在，您应该打开了 Asset Bundler，在 GUI 中如下所示：
 
     {{< image-width "/images/user-guide/packaging/windows-release-build/asset-bundler-default-gui.png" "1000" "An annotated image of O3DE editor's user interface." >}}
 
 <br></br>
 
 {{< known-issue >}}
-There may be errors and warnings about "AssetBundler" and "AssetSeedManager" that are listed in the console of Asset Bundler. You can safely ignore them.
+可能存在有关 “AssetBundler” 和 “AssetSeedManager” 的错误和警告，这些错误和警告在 Asset Bundler 的控制台中列出。您可以放心地忽略它们。
 {{< /known-issue >}}
 
 
-### Create a bundle for game assets
+### 为游戏资源创建 bundle
 
-The *game asset bundle* contains your project's levels and all of the assets within them, such as objects, environments, materials, and so on. When bundling your game assets, it's only important to bundle assets that your game actually uses in its levels. There's no need to include assets in your project directory that are never loaded in your project. You can use Asset Bundler to generate a list of assets that your levels depend on. This helps ensure that your resulting package file is at an optimal size.
+*游戏资源包* 包含项目的关卡及其中的所有资源，例如对象、环境、材质等。在捆绑游戏资源时，捆绑游戏在其关卡中实际使用的资源才很重要。无需在项目目录中包含从未加载到项目中的资源。您可以使用 Asset Bundler 生成关卡所依赖的资源列表。这有助于确保生成的包文件处于最佳大小。
 
 
 #### Create a new seed asset list
 
-1. In the Asset Bundler GUI, on the **Seeds** tab, in the **Seed List file** panel, click **Create new Seed List file**. For this example, you can name the file `GameSeedList`.
+1. 在 Asset Bundler GUI 的 **Seeds** 选项卡上的 **Seed List file** 面板中，单击 **Create new Seed List file**。在此示例中，您可以将文件命名为`GameSeedList`。
 
-1. Select the `GameSeedList` file from **Seed List files**. This should highlight the whole row, not enable the check box.
+1. 从 **Seed List files** 中选择`GameSeedList`文件。这应该突出显示整行，而不是启用复选框。
 
-1. In the **Product Assets** panel, click **+ Add Asset**, which opens the **Add Seed Asset** dialog.
+1. 在 **Product Assets** 面板中，单击 **+ Add Asset**，这将打开 **Add Seed Asset** 对话框。
 
-1. In the list of platforms, select the **pc** check box.
+1. 在平台列表中，选中 **pc** 复选框。
 
-1. Click **Browse...** to open File Explorer, and browse to the `levels` folder.
+1. 单击 **Browse...** 打开文件资源管理器，然后浏览到`levels`文件夹。
 
-1. Select your level `.spawnable` file and press **Open**.
+1. 选择您的关卡`.spawnable`文件，然后按 **Open**。
 
-1. In the **Add Seed Asset** dialog, click **Add Seed**.
+1. 在 **Add Seed Asset** 对话框中，单击 **Add Seed**。
 
-1. In the Asset Bundler GUI, in the **Product Assets** panel, verify that your seed list has the level assets.
+1. 在 Asset Bundler GUI 的 **Product Assets** 面板中，验证您的种子列表是否包含关卡资源。
 
-1. Select the checkbox for your new seed list file and select **Save** in the main **File** menu.
+1. 选中新种子列表文件的复选框，然后在主 **File** 菜单中选择 **Save**。
 
-#### Generate an asset list
+#### 生成资产列表
 
-1. In the Asset Bundler GUI, select the checkbox for your new seed list file from the list.
+1. 在 Asset Bundler GUI 中，从列表中选中新种子列表文件的复选框。
 
-1. Click **Generate Asset Lists**, which opens the **Generate Asset List Files** dialog.
+1. 单击 **Generate Asset Lists**，这将打开 **Generate Asset List Files** 对话框。
 
-1. In the list of platforms, select the **pc** check box.
+1. 在平台列表中，选中 **pc** 复选框。
 
-1. Click **Browse...**, which opens File Explorer.
+1. 单击 **Browse...**，这将打开文件资源管理器。
 
-1. In File Explorer, enter a name for your asset list, and then click **Save**. For this example, use the name `game.assetlist`.
+1. 在 File Explorer（文件资源管理器）中，输入资产列表的名称，然后单击 **Save**（保存）**。对于此示例，请使用名称 `game.assetlist`。
 
-1. Press **Create New File** in the **Generate Asset List Files** dialog.
+1. 在 **Generate Asset List Files** 对话框中按 **Create New File**。
 
-1. In the Asset Bundler GUI, navigate to the **Asset Lists** tab to verify the assets in `game.assetlist`. The assets are listed in the **Asset List** panel.
+1. 在 Asset Bundler GUI 中，导航到 **Asset Lists** 选项卡以验证`game.assetlist`中的资产。资产列在 **Asset List** 面板中。
 
-#### Bundle your assets
+#### 捆绑您的资产
 
-1. In the Asset Bundler GUI, on the **Asset Lists** tab, in the **Asset List Files** panel, select your asset list (`game.assetlist`).
+1. 在 Asset Bundler GUI 的 **Asset Lists** 选项卡上的 **Asset List Files** 面板中，选择您的资源列表(`game.assetlist`)。
 
-1. Click **Generate Bundle**, which opens the **Generate Bundles** dialog. 
+1. 单击 **Generate Bundle**，这将打开 **Generate Bundle** 对话框。
 
-1. Select an Output Bundle Name by clicking the **Browse...** button next to the Output Bundle Name field, which opens File Explorer. You can leave the other default options as is.
+1. 单击 Output Bundle Name（输出包名称）字段旁边的 **Browse...** 按钮，选择“Output Bundle Name”（输出包名称），这将打开文件资源管理器。您可以将其他默认选项保留原样。
 
-1. In File Explorer, enter a name for your package file, and then click **Open**. For this example, use the name `game.pak`.
+1. 在文件资源管理器中，输入包文件的名称，然后单击 **Open**。对于此示例，请使用名称 `game.pak`。
 
-1. Leave the other default options as is and click **Generate Bundles**.
+1. 将其他默认选项保留原样，然后单击 **Generate Bundles**。
 
-For Windows, when Asset Bundler saves your bundle, it appends `_pc` to the bundle's name. So you should now have an asset bundle, `game_pc.pak`.
+对于 Windows，当 Asset Bundler 保存您的捆绑包时，它会将“_pc”附加到捆绑包的名称中。因此，您现在应该有一个资源包`game_pc.pak`。
 
+### 为引擎资源创建捆绑包
 
-### Create a bundle for engine assets
+接下来，为项目的插件资源创建一个捆绑包。*引擎资源包* 包含加载和运行 Game Launcher 所需的基本文件。
 
-Next, create a bundle for your project's engine assets. The *engine asset bundle* contains essential files needed to load and run the Game Launcher.
+#### 从默认种子列表生成资产列表
 
-#### Generate an asset list from default seed lists
+1. 在 Asset Bundler GUI 中，导航到 **Seeds** 选项卡。
 
-1. In the Asset Bundler GUI, navigate to the **Seeds** tab.
+1. 在 **种子列表文件** 面板的底部，选中 **Default Seed Lists** 复选框。如果 `GameSeedList` 文件是从前面的步骤中选择的，请确保取消选择该文件。
 
-1. At the bottom of the **Seed List files** panel, select the **Default Seed Lists** check box. Make sure to deselect the `GameSeedList` file if it's selected from an earlier step. 
+1. 单击 **Generate Asset Lists**，这将打开 **Generate Asset List files** 对话框。
 
-1. Click **Generate Asset Lists**, which opens the **Generate Asset List files** dialog.
+1. 在平台列表中，选中 **pc** 复选框。
 
-1. In the list of platforms, select the **pc** check box.
+1. 单击 **Browse...**，这将打开文件资源管理器。
 
-1. Click **Browse...**, which opens File Explorer.
+1. 在 File Explorer（文件资源管理器）中，输入资产列表的名称，然后单击 **Save**。在此示例中，我们将使用名称 `engine.assetlist`。
 
-1. In File Explorer, enter a name for your asset list, and then click **Save**. For this example, we'll use the name `engine.assetlist`.
+1. 在 Asset Bundler GUI 中，导航到 **Asset Lists** 选项卡以验证`engine.assetlist`中的资产。资产列在 **Asset List** 面板中。
 
-1. In the Asset Bundler GUI, navigate to the **Asset Lists** tab to verify the assets in `engine.assetlist`. The assets are listed in the **Asset List** panel.
+#### 捆绑您的资产
 
-#### Bundle your assets
+1. 在 Asset Bundler GUI 的 **Asset Lists** 选项卡上的 **Asset List Files** 面板中，选择`engine.assetlist`文件。
 
-1. In the Asset Bundler GUI, on the **Asset Lists** tab, in the **Asset List Files** panel, select the `engine.assetlist` file.
+1. 单击 **Generate Bundle**，这将打开 **Generate Bundle** 对话框。
 
-1. Click **Generate Bundle**, which opens the **Generate Bundles** dialog.
+1. 单击 Output Bundle Name（输出包名称）字段旁边的 **Browse...** 按钮，选择“Output Bundle Name”（输出包名称），这将打开文件资源管理器。
 
-1. Select an Output Bundle Name by clicking the **Browse...** button next to the Output Bundle Name field, which opens File Explorer. 
+1. 在文件资源管理器中，输入包文件的名称，然后单击 **打开**。对于此示例，请使用名称 `engine.pak`。
 
-1. In File Explorer, enter a name for your package file, and then click **Open**. For this example, use the name `engine.pak`.
+1. 将其他默认选项保留原样，然后单击 **Generate Bundles**。
 
-1. Leave the other default options as is and click **Generate Bundles**.
+对于 Windows，当 Asset Bundler 保存您的捆绑包时，它会将`_pc`附加到捆绑包的名称中。因此，您现在应该有一个资源包`engine_pc.pak`。您可以在 **Completed Bundles list** 下查看您的捆绑包。
 
-For Windows, when Asset Bundler saves your bundle, it appends `_pc` to the bundle's name. So you should now have an asset bundle, `engine_pc.pak`. You can view your bundle under the **Completed Bundles list**.
+### 将捆绑包添加到项目游戏发布布局
 
+下一步，添加 `game_pc.pak` 和 `engine_pc.pak` 文件到您的项目游戏版本布局中，以便 Game Launcher 可以从这些捆绑包加载资产。
 
-### Add bundles to the project game release layout
+1. 浏览至 `<install>\bin\Windows\release\<build>\Cache\pc` 目录中，其中包含项目 Game Release 布局目录中的捆绑内容。例如，默认路径可以是：
 
-Next, add your `game_pc.pak` and `engine_pc.pak` files to your project game release layout, so that the Game Launcher can load assets from those bundles.
-
-1. Navigate to the `<install>\bin\Windows\release\<build>\Cache\pc` directory, which contains the bundled content in your project game release layout directory. For example, the default path could be:
-
-   - `C:\MyProject\install\bin\Windows\release\Default\Cache\pc` -- For non-monolithic builds.
+   - `C:\MyProject\install\bin\Windows\release\Default\Cache\pc` -- 对于非整体式构建。
    
-   - `C:\MyProject\install\bin\Windows\release\Monolithic\Cache\pc` -- For monolithic builds.
+   - `C:\MyProject\install\bin\Windows\release\Monolithic\Cache\pc` -- 对于整体式构建。
 
-2. You may need to remove the `engine.pak` file that's automatically created when you create a project game release layout. You don't need it anymore because you created new bundles.
+2. 你可能需要删除在创建项目游戏发布布局时自动创建的`engine.pak` 文件。您不再需要它，因为您创建了新的捆绑包。
 
-3. Add your new bundles, `game_pc.pak` and `engine_pc.pak`, to this directory.
+3. 将新捆绑包`game_pc.pak` 和 `engine_pc.pak`添加到此目录。
 
-Now you can run your project's Game Launcher and it will use your new bundles! 
-
-
-## Final notes
-
-In this tutorial, you learned how to bundle your projects assets, which is recommended for release builds as it can optimize your project before you distribute it. Managing assets into two bundles (game and engine assets) is one way to do it. In practice, your team may choose to manage your project assets into different sets of bundles.
+现在，您可以运行项目的 Game Launcher，它将使用您的新捆绑包！
 
 
-## Related topics
+## 最后说明
 
-| Topic | Description |
+在本教程中，您学习了如何捆绑项目资源，建议将其用于发布版本，因为它可以在您分发项目之前优化项目。将资源管理到两个捆绑包（游戏和引擎资源）中是一种方法。在实践中，您的团队可能会选择将项目资源管理到不同的捆绑包集中。
+
+
+## 相关主题
+
+|主题 |描述 |
 | - | - |
-| [Creating a Project Game Release Layout for Windows](/docs/user-guide/packaging/windows-release-builds) | Learn how to create a project game release layout for Windows. |
+| [创建适用于 Windows 的项目游戏发布布局](/docs/user-guide/packaging/windows-release-builds) | 了解如何创建适用于 Windows 的项目游戏发布布局。 |

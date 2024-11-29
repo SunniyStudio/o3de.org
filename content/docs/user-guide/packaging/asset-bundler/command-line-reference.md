@@ -1,36 +1,36 @@
 ---
-linktitle: CLI Reference
-title: Asset Bundler Command Line Tool Reference
-description: Command reference for the Open 3D Engine Asset Bundler command-line tool, AssetBundlerBatch. This reference covers the available commands, their options, and basic use cases.
+linktitle: CLI 参考
+title: Asset Bundler 命令行工具参考
+description: Open 3D Engine Asset Bundler 命令行工具 AssetBundlerBatch 的命令参考。此参考涵盖可用命令、其选项和基本使用案例。
 weight: 800
 ---
 
-The Open 3D Engine Asset Bundler is driven by a command-line tool called `AssetBundlerBatch`. This tool manages seed lists, asset lists, comparisons, and asset bundles. The asset bundler is **not** used to compile assets into the format used by the bundler for distribution - that is the role of the Asset Processor. Before running the Asset Bundler, make sure that you:
-+  Enable each platform for which assets should be bundled. Enabled platforms are managed by editing the `dev/AssetProcessorPlatformConfig.ini` file in your project.
-+ Run the Asset Processor to ensure that assets and their metadata are up to date.
+Open 3D Engine Asset Bundler 由名为`AssetBundlerBatch`的命令行工具驱动。此工具管理种子列表、资源列表、比较和资源包。资源打包器**不是**用于将资源编译为打包器用于分发的格式的 - 这是 Asset Processor 的角色。在运行 Asset Bundler 之前，请确保：
++  启用应捆绑资产的每个平台。通过编辑项目中的`dev/AssetProcessorPlatformConfig.ini` 文件来管理启用的平台。
++ 运行 Asset Processor 以确保资产及其元数据是最新的。
 
-See the [Asset Bundler Concepts and Terms](/docs/user-guide/packaging/asset-bundler/concepts/) or [Glossary](/docs/user-guide/appendix/glossary/) for definitions of terms used in this reference.
+查看 [Asset Bundler 概念和术语](/docs/user-guide/packaging/asset-bundler/concepts/) 或 [术语](/docs/user-guide/appendix/glossary/)了解有关此参考中使用的术语的定义。
 
-## General Use 
+## 一般用途
 
- The format for `AssetBundlerBatch` commands is:
+`AssetBundlerBatch` 命令的格式为：
 
 ```cmd
 AssetBundlerBatch command --parameterWithArgs arg1,arg2 --flagParameter ...
 ```
 
- The `AssetBundlerBatch` executable is contained in the same folder as the `Editor` and `AssetProcessor` executables.  If you do not find the executable, you likely need to build `AssetBundlerBatch` by running the `cmake --build <build path>` command with `--target AssetBundlerBatch`. 
+`AssetBundlerBatch`可执行文件与`Editor`和`AssetProcessor`可执行文件包含在同一个文件夹中。 如果找不到可执行文件，则可能需要使用`--target AssetBundlerBatch`运行`cmake --build <build path>`命令来构建`AssetBundlerBatch`。
 
-The elements in this example invocation break down to:
-+  `command` - The command for the asset bundler to run. Examples include `seeds` and `assetLists`.
-+  `--parameterWithArgs` - An argument which takes parameters. If a parameter can take more than one argument, you can either separate arguments with a `,` character without using whitespace, or by giving the parameter multiple times:
+此示例调用中的元素细分为：
++  `command` - 资源打包器要运行的命令。示例包括`seeds` 和 `assetLists`.
++  `--parameterWithArgs` - 一个采用参数的参数。如果一个参数可以接受多个参数，你可以用`,`字符分隔参数，而不使用空格，或者多次给出参数：
   + `--parameterWithArgs arg1,arg2`
   + `--parameterWithArgs="arg1,arg2"`
   + `--parameterWithArgs arg1 --parameterWithArgs arg2`
   + `--parameterWithArgs="arg1" --parameterWithArgs="arg2"`
 
-   These styles of writing parameters can be freely mixed and matched. Note that not all arguments take more than one input parameter.
-+  `--flagParameter` - A flag which doesn't take any arguments. Flags represent boolean values and turn features of the Asset Bundler on and off.
+   这些编写参数的样式可以自由混合和匹配。请注意，并非所有参数都采用多个 input 参数。
++  `--flagParameter` - 一个不接受任何参数的标志。标志表示布尔值，并打开和关闭 Asset Bundler 的功能。
 
  An example command is:
 
@@ -56,100 +56,100 @@ build/linux/bin/profile/AssetBundlerBatch seeds --seedFileList MyProject/AssetBu
 {{< /tabs >}}
 
 
-### Options 
+### 选项
 
- The options in this section are valid for all Asset Bundler subcommands.
+本节中的选项对所有 Asset Bundler 子命令都有效。
 
 **`--help` / `-h`**
 
-Without a command, prints out the help text for `AssetBundlerBatch`. When used with a command, prints the help information for that command.
+如果没有命令，则打印出 `AssetBundlerBatch` 的帮助文本。与命令一起使用时，打印该命令的帮助信息。
 
 **`--verbose`**
 
-Enables more detailed output messages. `Error` and `Warning` messages will display the file name and line number which generated the message. This flag is intended for use when looking at source files or generating output for debugging purposes.
+启用更详细的输出消息。 `Error` 和 `Warning`消息将显示生成消息的文件名和行号。此标志用于查看源文件或生成用于调试目的的输出。
 
-## Seed lists - `seeds`
+## 种子列表 - `seeds`
 
-The `seeds` command is used to manage seed lists, the first phase of the Asset Bundler workflow. Seed list files have the `.seed` extension.
+`seeds`命令用于管理种子列表，这是 Asset Bundler 工作流程的第一阶段。种子列表文件的扩展名为`.seed`。
 
-This command requires an existing cache of assets for each provided platform. To make sure that the cache is up to date, update the supported platforms and run the Asset Processor.
+此命令需要每个提供的平台的现有资产缓存。要确保缓存是最新的，请更新支持的平台并运行 Asset Processor。
 
-### Options
+### 选项
 
 **`--seedListFile`**
 
-The seed list to modify and save. This file must be writable and have the `.seed` extension. The file is created if it doesn't exist. The argument's value may be either an absolute or engine-root-relative path.
+要修改和保存的种子列表。此文件必须是可写的，并且具有`.seed`扩展名。如果文件不存在，则会创建该文件。参数的值可以是绝对路径或引擎根相对路径。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* Yes
 
 **`--addSeed`**
 
-Add seeds to the seed list for the `--platform` values. If a seed does not exist for one of the specified platforms, then the invalid platforms are ignored. The argument's value may be any number of cache-relative paths to pre-processed assets.
+将 seeds 添加到`--platform`值的种子列表中。如果其中一个指定平台不存在种子，则会忽略无效平台。参数的值可以是指向预处理资产的任意数量的缓存相对路径。
 
-Although `.slice` files are built and present in the asset cache, they aren't product assets and don't generate dependencies when added to a seed list. Avoid using them as seeds.
+尽管 `.slice` 文件已构建并存在于资产缓存中，但它们不是产品资产，并且在添加到种子列表时不会生成依赖项。避免将它们用作种子。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--removeSeed`**
 
-Remove the `--platform` values for the provided seeds. If a seed is not available for a platform, it's ignored. A seed is not completely removed from the seed list until it has no associated platforms.
+删除提供的种子的`--platform`值。如果种子对平台不可用，则会忽略它。种子在没有关联的平台之前不会从种子列表中完全删除。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--addPlatformToSeeds`**
 
-Adds the `--platform` values to all seeds in the seed list. If a seed isn't valid for a provided platform, a warning is printed indicating the affected seed and the platform that caused the warning. The seed is updated for all other valid platforms.
+将`--platform`值添加到种子列表中的所有种子。如果种子对提供的平台无效，则会打印一条警告，指示受影响的种子和导致警告的平台。将针对所有其他有效平台更新 seed。
 
 * *Type:* Flag
 * *Required: No*
 
 **`--removePlatformFromSeeds`**
 
-Removes the `--platform` values from all seeds in the seed list. If this would remove all platforms for an existing seed, the seed is unchanged and a warning is printed. Use `--removeSeed` to remove a seed from a seed list.
+从种子列表中的所有种子中删除`--platform`值。如果这将删除现有种子的所有平台，则种子将保持不变并打印警告。使用`--removeSeed`从种子列表中删除种子。
 
 * *Type:* Flag
 * *Required:* No
 
 **`--print`**
 
-Prints the contents of the seed list after performing operations.
+执行操作后打印种子列表的内容。
 
 * *Type:* Flag
 * *Required:* No
 
 **`--platform`**
 
-The platforms used for this command. Defaults to all supported platforms for the current project. Supported platforms can be changed by modifying `AssetProcessorPlatformConfig.ini`.
+用于此命令的平台。默认为当前项目支持的所有平台。可以通过修改`AssetProcessorPlatformConfig.ini`来更改支持的平台。
 
-Platform names can be found in the `AssetProcessorPlatformConfig.ini` file, or as folder names found under `dev/Cache/ProjectName`.
+平台名称可以在 `AssetProcessorPlatformConfig.ini` 文件中找到，也可以作为文件夹名称找到`dev/Cache/ProjectName` 。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--updateSeedPath`**
 
-Updates the relative paths for every seed in the seed list.
+更新 seed 列表中每个 seed 的相对路径。
 
 * *Type:* Flag
 * *Required:* No
 
 **`--removeSeedPath`**
 
-Removes the relative path hints for every seed in the seed list. This argument is useful when you want to share your seed list with a third party.
+删除种子列表中每个种子的相对路径提示。当您想与第三方共享种子列表时，此参数非常有用。
 
 * *Type:* Flag
 * *Required:* No
 
-### Examples
+### 示例
 
-In the following examples, assume that the current project has enabled the platforms `pc`, `ios`, and `android`.
+在以下示例中，假设当前项目已启用平台 `pc`, `ios`, 和 `android`。
 
-**Example : Add seed**
+**示例 : 添加种子**
 
-Create the seed list `testFile.seed` if it doesn't exist, and add the `asset1.pak` and `asset2.pak` assets as seeds for the `PC` platform:
+如果不存在，请创建种子列表 `testFile.seed` ，并将`asset1.pak` 和 `asset2.pak`资产添加为`PC`平台的种子：
 
 {{< tabs name="Command line example-Add seed" >}}
 {{% tab name="Windows" %}}
@@ -172,9 +172,9 @@ build/linux/bin/profile/AssetBundlerBatch seeds --seedListFile testFile.seed \
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Add platforms**
+**示例 : 添加平台**
 
-Add the `ios` and `android` platforms for all seeds in the `testFile.seed` seed list:
+为`testFile.seed`种子列表中的所有种子添加`ios` 和 `android`平台：
 
 {{< tabs name="Command line example-Add platforms" >}}
 {{% tab name="Windows" %}}
@@ -193,9 +193,9 @@ build/linux/bin/profile/AssetBundlerBatch seeds --seedListFile testFile.seed --a
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Display seed list contents**
+**示例 ：显示种子列表内容**
 
-Show the contents of the `testFile.seed` file, including the absolute and relative paths of all assets used as seeds:
+显示 `testFile.seed` 文件的内容，包括用作种子的所有资产的绝对路径和相对路径：
 
 {{< tabs name="Command line example-Display seed list contents" >}}
 {{% tab name="Windows" %}}
@@ -214,118 +214,118 @@ build/linux/bin/profile/AssetBundlerBatch seeds --seedListFile testFile.seed --p
 {{% /tab %}}
 {{< /tabs >}}
 
-## Asset Lists - `assetLists` 
+## 资产列表 - `assetLists` 
 
-The `assetLists` command is used to manage and create asset lists. See the `--assetListFile` argument for how platform information is encoded in asset list file names. Asset list files have the `.assetlist` extension.
+`assetLists`命令用于管理和创建资产列表。有关如何在资产列表文件名中对平台信息进行编码的信息，请参阅 `--assetListFile` 参数。资源列表文件的扩展名为`.assetlist`。
 
-This command requires an existing cache of assets for each provided platform. To make sure that the cache is up to date, update the supported platforms and run the Asset Processor.
+此命令需要每个提供的平台的现有资产缓存。要确保缓存是最新的，请更新支持的平台并运行 Asset Processor。
 
-### Options
+### 选项
 
 **`--assetListFile`**
 
-The base name of the platform-specific asset list files to be generated. This file's path must be writable, and the file name must have the `.assetlist` extension. The argument's value may be either an absolute or engine-root-relative path.
+要生成的特定于平台的资产列表文件的基本名称。此文件的路径必须是可写的，并且文件名必须具有`.assetlist`扩展名。参数的值可以是绝对路径或引擎根相对路径。
 
-The asset list files generated are named based on the value of this argument and the provided platforms. For an argument value of `path/assetFile.assetlist`, each platform gets an asset file created as `path/assetFile_Platform.assetlist`. For example, `assetFile.assetlist` for the platform `pc` is named `assetFile_pc.assetlist`.
+生成的资产列表文件根据此参数的值和提供的平台进行命名。对于参数值`path/assetFile.assetlist`，每个平台都会获得一个创建为`path/assetFile_Platform.assetlist`的资源文件。例如，平台`pc`的`assetFile.assetlist`被命名为`assetFile_pc.assetlist`。
 
-`assetLists` invocations must contain either the `--assetListFile` argument or `--print` flag.
+`assetLists` 调用必须包含 `--assetListFile` 参数或 `--print` 标志。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--seedListFile`**
 
-The seed list used to generate the asset list. This argument can be used along with other arguments that provide seeds.
+用于生成资产列表的种子列表。此参数可以与提供种子的其他参数一起使用。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--addSeed`**
 
-Individual seeds used to generate the asset list. This argument can be used along with other arguments that provide seeds.
+用于生成资产列表的单个种子。此参数可以与提供种子的其他参数一起使用。
 
-Although `.slice` files are built and present in the asset cache, they aren't product assets and don't generate dependencies when used as seeds. Avoid using them as seeds.
+尽管`.slice`文件已构建并存在于资产缓存中，但它们不是产品资产，并且在用作种子时不会生成依赖项。避免将它们用作种子。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--addDefaultSeedListFiles`**
 
-Automatically include the default seed lists for the O3DE Engine, default project, and all enabled Gems. As project-relative paths, the files that define default assets are:
+自动包含 O3DE 引擎、默认项目和所有已启用 Gem 的默认种子列表。作为项目相对路径，定义默认资源的文件包括：
 +  **Engine** - `Engine/Engine_Dependencies.xml`
 +  **Gems** - `Gems/gem_name/Assets/gem_name_Dependencies.xml`
 +  **Project** - `project_name/project_name_Dependencies.xml`
 
-This flag also includes default seed list files in the following locations:
+此标志还包括以下位置的默认种子列表文件：
 +  **Engine** - `<engine root>/Assets/Engine/SeedAssetList.seed`
 +  **Platform** - `<engine root>/Assets/Engine/Platforms/<platform>/*.seed`
 +  **Gems** - `<gem name>/Assets/seedList.seed`
 
-This argument can be used along with other arguments that provide seeds.
+此参数可以与提供种子的其他参数一起使用。
 
 * *Type:* Flag
 * *Required:* No
 
 **`--skip`**
 
-A list of assets to ignore. This can include both seed assets and any dependencies that were picked up by the asset processor. The argument value is a comma-separated list of cache-relative paths to assets that have already been pre-processed.
+要忽略的资产列表。这可以包括种子资产和资产处理器选取的任何依赖项。参数值是一个逗号分隔的列表，其中包含已预处理的资产的缓存相对路径。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--platform`**
 
-The platforms used for this command. Defaults to all supported platforms for the current project. Supported platforms can be changed by modifying `AssetProcessorPlatformConfig.ini`.
+用于此命令的平台。默认为当前项目支持的所有平台。可以通过修改 `AssetProcessorPlatformConfig.ini`来更改支持的平台。
 
-Enabled platform names can be found in the `AssetProcessorPlatformConfig.ini` file, or as directories under `dev/Cache/ProjectName`.
+启用的平台名称可以在 `AssetProcessorPlatformConfig.ini` 文件中找到，也可以在 `dev/Cache/ProjectName` 下的目录中找到。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--print`**
 
- Output a list of all product dependencies. The behavior of this argument depends on which other arguments are provided to the `AssetBundlerBatch argumentList` command:
-+ `--assetListFile` without operations: Read an existing asset list from disk and display its contents.
-+ `--assetListFile` with operations: Generate a new asset list and display its contents.
-+ Without `--assetListFile`: Display the contents of the asset list that would be generated.
+输出所有产品依赖项的列表。此参数的行为取决于向 `AssetBundlerBatch argumentList` 命令提供的其他参数：
++ `--assetListFile` 无操作：从磁盘读取已有资产列表，并显示其内容。
++ `--assetListFile` 有操作：生成新的资产列表并显示其内容。
++ 不带 `--assetListFile`: 显示将生成的资产列表的内容。
 
-Each of these behaviors is illustrated in the [assetList examples](#asset-bundler-command-line-reference-assetlists-examples).
+这些行为中的每一个都在 [assetList 示例](#asset-bundler-command-line-reference-assetlists-examples).
 
-`AssetBundlerBatch assetLists` commands must contain either the `--assetListFile` argument to generate new asset lists, or the `--print` flag to write information to the console.
+`AssetBundlerBatch assetLists`命令必须包含`--assetListFile`参数以生成新的资产列表，或`--print`标志以将信息写入控制台。
 
 * *Type:* Flag
 * *Required:* No
 
 **`--dryRun`**
 
- Run without generating new asset lists.
+在不生成新资产列表的情况下运行。
 
 * *Type:* Flag
 * *Required:* No
 
 **`--generateDebugFile`**
 
-Generate a file that contains additional information about asset inclusion for debugging purposes. This file contains a hierarchical list of every asset contained within the asset list file, as well as information about which seeds marked each specific asset as a product dependency. The debug file is stored in the same path as the `--assetListFile`, with the extension `.assetlistdebug`.
+生成一个文件，其中包含有关资产包含的其他信息，以便进行调试。此文件包含资产列表文件中包含的每个资产的分层列表，以及有关哪些种子将每个特定资产标记为产品依赖项的信息。调试文件存储在与`--assetListFile`相同的路径中，扩展名为`.assetlistdebug`。
 
-This argument requires the use of `--assetListFile`. If you use the `--print` argument, the output of the generated files is displayed in the console, not the output of the debug file.
+此参数需要使用`--assetListFile`。如果使用 `--print` 参数，则生成的文件的输出将显示在控制台中，而不是调试文件的输出。
 
 * *Type:* Flag
 * *Required:* No
 
 **`--allowOverwrites`**
 
-Allow overwriting of existing asset files. By default, existing asset lists will not be regenerated.
+允许覆盖现有资源文件。默认情况下，不会重新生成现有资源列表。
 
 * *Type:* Flag
 * *Required:* No
 
-### Examples 
+### 示例 
 
-In the following examples, assume that the seed list `testFile.seed` exists and that the `pc`, `ios`, and `android` platforms are enabled.
+在以下示例中，假设存在种子列表`testFile.seed` 并且启用了 `pc`, `ios`, 和 `android` 平台。
 
-**Example : Display default assets**
+**示例 ：显示默认资产**
 
-Display which asset lists would be generated from the seed lists for the O3DE Engine and enabled Gems for a project's default platforms:
+显示将从 O3DE 引擎的种子列表和项目的默认平台的已启用 Gem 中生成的资产列表：
 
 {{< tabs name="Command line example-Display default assets" >}}
 {{% tab name="Windows" %}}
@@ -344,9 +344,9 @@ build/linux/bin/profile/AssetBundlerBatch assetLists --addDefaultSeedListFiles -
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Display asset lists for default platforms**
+**示例 ：显示默认平台的资产列表**
 
-Use an input asset list and the project's default platforms to display that asset list's contents:
+使用输入资源列表和项目的默认平台来显示该资源列表的内容：
 
 {{< tabs name="Command line example-Display asset lists for default platforms" >}}
 {{% tab name="Windows" %}}
@@ -365,9 +365,9 @@ build/linux/bin/profile/AssetBundlerBatch assetLists --assetListFile assetListFi
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Create an asset list and debug file from a seed list**
+**示例：从种子列表创建资产列表和调试文件**
 
-Generate an asset list `testList_pc.assetlist` and debug information `testList_pc.assetlistdebug` from the `testFile.seed` seed list:
+从 `testFile.seed` 种子列表中生成资源列表`testList_pc.assetlist` 和调试信息 `testList_pc.assetlistdebug` ：
 
 {{< tabs name="Command line example-Create an asset list and debug file from a seed list" >}}
 {{% tab name="Windows" %}}
@@ -392,9 +392,9 @@ build/linux/bin/profile/AssetBundlerBatch assetLists --assetListFile testList.as
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Display asset list contents for a platform**
+**示例 ：显示平台的资产列表内容**
 
-Display the contents of the `testList_pc.assetlist` file:
+显示 `testList_pc.assetlist` 文件的内容：
 
 {{< tabs name="Command line example-Display asset list contents for a platform" >}}
 {{% tab name="Windows" %}}
@@ -413,9 +413,9 @@ build/linux/bin/profile/AssetBundlerBatch assetLists --assetListFile testList.as
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Regenerate asset lists from a seed list**
+**示例 ：从种子列表重新生成资产列表**
 
-Regenerate all asset lists from the `testFile.seed` seed list, overwriting the `testList_pc.assetlist` file if it exists:
+从`testFile.seed`种子列表重新生成所有资产列表，覆盖`testList_pc.assetlist`文件（如果存在）：
 
 {{< tabs name="Command line example-Regenerate asset lists from a seed list" >}}
 {{% tab name="Windows" %}}
@@ -434,64 +434,64 @@ build/linux/bin/profile/AssetBundlerBatch assetLists --assetListFile testList.as
 {{% /tab %}}
 {{< /tabs >}}
 
-## Comparison rules - `comparisonRules` 
+## 比较规则 - `comparisonRules` 
 
-The `comparisonRules` command is used to generate comparison rules files. Comparison rules files are used as inputs for the [compare](#asset-bundler-command-line-reference-compare) subcommand. Comparison rules files are pre-built descriptions of which operations to perform and in what order. For more information on comparison rules, see [Open 3D Engine Asset List Comparison Operations](/docs/user-guide/packaging/asset-bundler/list-operations/).
+`comparisonRules`命令用于生成比较规则文件。比较规则文件用作 [compare](#asset-bundler-command-line-reference-compare)子命令的输入。比较规则文件是要执行的操作和顺序的预构建描述。有关比较规则的更多信息，请参阅 [打开 3D 引擎资产列表比较操作](/docs/user-guide/packaging/asset-bundler/list-operations/)。
 
-### Options 
+### 选项 
 
 **`--comparisonRulesFile`**
 
- The comparison rules file to generate.
+要生成的比较规则文件。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* Yes
 
 **`--comparisonType`**
 
- The comparison types to apply, in the given order. Valid values are:
-+ *0* or *delta*: Delta comparison
-+ *1* or *union*: Union
-+ *2* or *intersection*: Intersection
-+ *3* or *complement*: Complement
-+ *4* or *filePattern*: FilePattern
-+ *5* or *intersectionCount*: IntersectionCount
+要应用的比较类型，按给定顺序。有效值为：
++ *0* 或 *delta*：增量比较
++ *1* 或 *union*：联合
++ *2* 或 *intersection*：交集
++ *3* 或 *complement*：补码
++ *4* 或 *filePattern*： FilePattern
++ *5* 或 *intersectionCount*：IntersectionCount
 
-For more information about how each of these rules operates on input files, see [Open 3D Engine Asset List Comparison Operations](/docs/user-guide/packaging/asset-bundler/list-operations/).
+有关这些规则如何对输入文件进行操作的更多信息，请参阅[打开 3D 引擎资产列表比较操作](/docs/user-guide/packaging/asset-bundler/list-operations/).
 
-The `intersectionCount` comparison type can't be combined with any other comparison type as part of a rule list.
+`intersectionCount`比较类型不能作为规则列表的一部分与任何其他比较类型组合。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* Yes
 
 **`--filePatternType`**
 
-The type of file pattern matching to use on the provided file patterns. Valid values are:
-+ *0*: Perform wildcard matching - the `*` character will match any number of characters
-+ *1*: Perform regular expression matching
+要对提供的文件模式使用的文件模式匹配的类型。有效值为：
++ *0*：执行通配符匹配 -`*`字符将匹配任意数量的字符
++ *1*：执行正则表达式匹配
 
-* *Type:* Multi-value argument. The number of parameters for the `--filePatternType` argument must match the number of FilePattern arguments to the `--comparisonType` argument.
+* *Type:* 多值参数. `--filePatternType`参数的参数数量必须与`--comparisonType`参数的 FilePattern 参数数量匹配。
 * *Required:* No
 
 **`--filePattern`**
 
-The file patterns to use for building the list of files that will be compared by the corresponding `--comparisonType`. The patterns are interpreted according to the corresponding `--filePatternType` parameter.
+用于构建将由相应的 `--comparisonType` 进行比较的文件列表的文件模式。根据相应的`--filePatternType`参数解释模式。
 
-* *Type:* Multi-value argument. The number of parameters for the `--filePattern` argument must match the number of FilePattern arguments to the `--comparisonType` argument.
+* *Type:* 多值参数. `--filePattern`参数的参数数量必须与`--comparisonType`参数的 FilePattern 参数数量匹配。
 * *Required:* No
 
 **`--allowOverwrites`**
 
-Allow overwriting of existing comparison rules files. By default, existing files will not be overwritten.
+允许覆盖现有的比较规则文件。默认情况下，不会覆盖现有文件。
 
 * *Type:* Flag
 * *Required:* No
 
-### Examples 
+### 示例 
 
-**Example : Generate a delta and filter for XML files**
+**示例：为 XML 文件生成增量和过滤器**
 
- Generate a comparison rules file which produces a delta comparison, and then filters the results to include only XML files:
+生成一个比较规则文件，该文件生成增量比较，然后筛选结果以仅包含 XML 文件：
 
 {{< tabs name="Command line example-Generate a delta and filter for XML files" >}}
 {{% tab name="Windows" %}}
@@ -516,96 +516,96 @@ build/linux/bin/profile/AssetBundlerBatch comparisonRules --comparisonRulesFile 
 {{% /tab %}}
 {{< /tabs >}}
 
-## Comparisons - `compare` 
+## 比较 - `compare` 
 
-The `compare` command is used to take pairs of asset lists as input, perform a comparison operation, and write the result of the comparison as a new asset list. See [Open 3D Engine Asset List Comparison Operations](/docs/user-guide/packaging/asset-bundler/list-operations/) for details on comparison operations.
+`compare` 命令用于将资产列表对作为输入，执行比较操作，并将比较结果写入新的资产列表。有关比较操作的详细信息，请参阅 [Open 3D Engine 资产列表比较操作](/docs/user-guide/packaging/asset-bundler/list-operations/)。
 
-### Options 
+### 选项 
 
 **`--comparisonRulesFile`**
 
-The comparison rules file to load rules from. Comparisons from the rules file will be performed before any other comparisons given as arguments, and are evaluated in the order that the rules file was created with.
+要从中加载规则的比较规则文件。规则文件中的比较将在作为参数给出的任何其他比较之前执行，并按创建规则文件的顺序进行评估。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--comparisonType`**
 
-The comparison types to apply to the input files. The first `--comparisonType` parameter is applied to the first arguments of `--firstAssetListFile` and `--secondAssetListFile`, the second comparison is applied to the second parameters of those arguments, and so on.
+要应用于输入文件的比较类型。第一个`--comparisonType`参数应用于`--firstAssetListFile` 和 `--secondAssetListFile`的第一个参数，第二个比较应用于这些参数的第二个参数，依此类推。
 
-Valid values are:
-+ *0* or *delta*: Delta comparison
-+ *1* or *union*: Union
-+ *2* or *intersection*: Intersection
-+ *3* or *complement*: Complement
-+ *4* or *filePattern*: FilePattern
-+ *5* or *intersectionCount*: IntersectionCount
+有效值为：
++ *0* 或 *delta*：增量比较
++ *1* 或 *union*：联合
++ *2* 或 *intersection*：交集
++ *3* 或 *complement*：补码
++ *4* 或 *filePattern*： FilePattern
++ *5* 或 *intersectionCount*：IntersectionCount
 
-For more information about how each of these rules operate on input files, see [Open 3D Engine Asset List Comparison Operations](/docs/user-guide/packaging/asset-bundler/list-operations/).
+有关这些规则如何对输入文件进行操作的更多信息，请参阅[打开 3D 引擎资产列表比较操作](/docs/user-guide/packaging/asset-bundler/list-operations/).
 
-The `intersectionCount` comparison type can't be combined with any other comparison type.
+`intersectionCount` 比较类型不能与任何其他比较类型结合使用。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* Yes
 
 **`--filePatternType`**
 
-The type of file pattern matching to use on the provided file patterns. Valid values for this argument are:
-+ *0*: Perform wildcard matching - the `*` character will match any number of characters
-+ *1*: Perform regular expression matching
+要对提供的文件模式使用的文件模式匹配的类型。此参数的有效值为：
++ *0*：执行通配符匹配 - `*`字符将匹配任意数量的字符
++ *1*：执行正则表达式匹配
 
-* *Type:* Multi-value argument. The number of parameters for the `--filePatternType` argument must match the number of `FilePattern` comparison arguments to the `--comparisonType` argument.
+* *Type:* 多值参数. 用于`--filePatternType` 参数的参数数必须匹配 `FilePattern`，比较 `--comparisonType` 参数。
 * *Required:* No
 
 **`--filePattern`**
 
-The file patterns to use for matching asset file paths from inputs. The patterns are interpreted according to the corresponding `--filePatternType` parameter. The first pattern is used with the first occurrence of the `FilePattern` comparison type, the second with the second occurrence, and so on.
+用于匹配输入中的资产文件路径的文件模式。根据相应的`--filePatternType`参数解释模式。第一个模式与第一次出现的`FilePattern`比较类型一起使用，第二个模式与第二次出现的比较类型一起使用，依此类推。
 
-* *Type:* Multi-value argument. The number of parameters for the `--filePattern` argument must match the number of `FilePattern` comparison arguments to the `--comparisonType` argument.
+* *Type:* 多值参数. 用于 `--filePattern` 参数的参数数必须匹配 `FilePattern`，比较 `--comparisonType` 参数。
 * *Required:* No
 
 **`--firstAssetListFile`**
 
-The files to use as the first set of inputs for comparison.
+用作第一组输入以进行比较的文件。
 
-* *Type:* Multi-value argument. The number of parameters for the `--firstAssetListFile` argument must match the number of arguments to the `--comparisonType` argument.
+* *Type:* 多值参数. `--firstAssetListFile`参数的参数数量必须与`--comparisonType`参数的参数数量匹配。
 * *Required:* No
 
 **`--secondAssetListFile`**
 
-The files to use as the second set of inputs for comparisons that require a second input file. This argument isn't used for the `FilePattern` or `IntersectionCount` comparison types.
+用作需要第二个输入文件的比较的第二组输入的文件。此参数不用于 `FilePattern` 或 `IntersectionCount` 比较类型。
 
-* *Type:* Multi-value argument. The number of parameters for the `--secondAssetListFile` argument must match the number of non-`FilePattern` arguments to the `--comparisonType` argument.
+* *Type:* 多值参数. `--secondAssetListFile`参数的参数数量必须与`--comparisonType`参数的非`FilePattern`参数的数量匹配。
 * *Required:* No
 
 **`--output`**
 
-The output files for the result of each performed comparison. Output files can be a file, or a variable passed from another comparison. Variables start with the `$` character. For more about variables, see [Open 3D Engine Asset List Comparison Operations](/docs/user-guide/packaging/asset-bundler/list-operations/).
+每个执行的比较的结果的输出文件。输出文件可以是文件，也可以是从另一个比较传递的变量。变量以 `$` 字符开头。有关变量的更多信息，请参阅 [打开 3D 引擎资产列表比较操作](/docs/user-guide/packaging/asset-bundler/list-operations/).
 
-* *Type:* Multi-value argument. The number of parameters for the `--output` argument must match the number of parameters to the `--comparisonType` argument.
+* *Type:* 多值参数. `--output`参数的参数数量必须与 `--comparisonType` 参数的参数数量匹配。
 * *Required:* No
 
 **`--print`**
 
-This argument behaves differently depending on whether it's given as a flag or has a parameter list.
-+ **Flag (no arguments)**: Prints the final comparison result to the console.
-+  **With arguments**: Prints the contents of each argument to the console after comparisons complete. Arguments can either be files or variables.
+此参数的行为会有所不同，具体取决于它是作为标志提供还是具有参数列表。
++ **Flag (no arguments)**: 将最终比较结果打印到控制台。
++  **With arguments**: 比较完成后，将每个参数的内容打印到控制台。参数可以是文件或变量。
 
-* *Type:* Multi-value argument or flag
+* *Type:* 多值参数 or flag
 * *Required:* No
 
 **`--allowOverwrites`**
 
-Allow overwriting of existing output files. By default, existing files will not be overwritten.
+允许覆盖现有输出文件。默认情况下，不会覆盖现有文件。
 
 * *Type:* Flag
 * *Required:* No
 
-### Examples 
+### 示例 
 
-**Example : Compare to generate a delta**
+**示例 ：比较以生成增量**
 
-Generate a new asset list `deltaAssetList.assetlist` by taking the files that appear in either `firstAssetList_pc.assetlist` or `secondAssetList_pc.assetlist`, but not both:
+通过获取出现在`firstAssetList_pc.assetlist` 或 `secondAssetList_pc.assetlist`中的文件来生成新的资产列表 `deltaAssetList.assetlist`，但不能同时获取两者：
 
 {{< tabs name="Command line example-Compare to generate a delta" >}}
 {{% tab name="Windows" %}}
@@ -630,9 +630,9 @@ build/linux/bin/profile/AssetBundlerBatch compare --comparisonType delta \
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Compare based on file path matching**
+**示例 ：根据文件路径匹配进行比较**
 
-Generate a new asset list `filePatternAssetList.assetlist` that contains only XML files from the `assetList_pc.assetlist` file:
+生成一个新的资源列表`filePatternAssetList.assetlist`，其中仅包含 `assetList_pc.assetlist` 文件中的 XML 文件：
 
 {{< tabs name="Command line example-Compare based on file path matching" >}}
 {{% tab name="Windows" %}}
@@ -659,9 +659,9 @@ build/linux/bin/profile/AssetBundlerBatch compare --comparisonType filePattern \
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Count intersection across multiple asset lists**
+**示例 ：计算多个资产列表中的交集**
 
-Use `intersectionCount` on `engine_pc.assetlist`, `game_pc.assetlist`, and `patch_pc.assetlist` to print out assets which appear 2 times or more between any of these asset lists:
+使用`engine_pc.assetlist`, `game_pc.assetlist`, 和 `patch_pc.assetlist`上 `intersectionCount`打印出在以下任一资源列表之间出现 2 次或更多次的资源：
 
 {{< tabs name="Command line example-Count intersection across multiple asset lists" >}}
 {{% tab name="Windows" %}}
@@ -684,68 +684,68 @@ build/linux/bin/profile/AssetBundlerBatch compare --comparisonType intersectionC
 {{% /tab %}}
 {{< /tabs >}}
 
-## Bundle settings - `bundleSettings` 
+## 捆绑包设置 - `bundleSettings` 
 
-The `bundleSettings` command is used to manage bundle settings files, which are configuration files that let you store commonly used bundle configurations for easy reuse and automation.
+`bundleSettings`命令用于管理包设置文件，这些文件是配置文件，可让您存储常用的包配置，以便于重用和自动化。
 
-### Options 
+### 选项 
 
 **`--bundleSettingsFile`**
 
-The bundle settings file to be modified when running this command. If this file already exists, only those settings that are specified by the command invocation are changed.
+执行此命令时要修改的 bundle 设置文件。如果此文件已存在，则仅更改由命令调用指定的设置。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* Yes
 
 **`--assetListFile`**
 
-Sets the asset list file to use in bundle generation.
+设置要在包生成中使用的资源列表文件。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--outputBundlePath`**
 
-Sets the location where the generated asset bundle is written to. Asset bundles use the `.pak` file extension.
+设置生成的 asset bundle 写入到的位置。资源包使用`.pak`文件扩展名。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--bundleVersion`**
 
-Sets the bundle format version to use in generation. The only allowed value is `1`.
+设置要在生成中使用的捆绑包格式版本。唯一允许的值为 `1`。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--maxSize`**
 
-Sets the maximum allowed size for individual bundles, in MB. If any generated bundle is larger than the maximum size, it will be split into smaller bundles and named accordingly.
+设置单个捆绑包允许的最大大小 （MB）。如果生成的任何捆绑包大于最大大小，则会将其拆分为更小的捆绑包并相应地命名。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--platform`**
 
-The platforms to update the bundle settings for. Defaults to the project's enabled platforms, defined in `AssetProcessorPlatformConfig.ini`. Valid platform names can be found in the platform configuration file or as folder names under `dev/Cache/ProjectName`.
+要更新其捆绑包设置的平台。默认为项目的已启用平台，在 `AssetProcessorPlatformConfig.ini`中定义。有效的平台名称可以在平台配置文件中找到，也可以在  `dev/Cache/ProjectName`下的文件夹名称中找到。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--print`**
 
-Prints the contents of the bundle settings file to the console after modifying all values.
+修改所有值后，将包设置文件的内容打印到控制台。
 
 * *Type:* Flag
 * *Required:* No
 
-### Examples 
+### 示例 
 
-The following examples assume that these platforms are enabled for the project: `pc`
+以下示例假定为项目启用了这些平台：`pc`
 
-**Example : Set default max bundle size and asset list for PC**
+**示例 ：为 PC 设置默认最大捆绑包大小和资产列表**
 
-Create a bundler settings file `defaults_pc.bundlesettings` for PC with the maximum bundle size set to 1024 MB and the `allAssets_pc.assetlist` asset list as its input:
+为 PC 创建一个打包器设置文件`defaults_pc.bundlesettings`，最大捆绑包大小设置为 1024 MB，并将`allAssets_pc.assetlist`资产列表作为其输入：
 
 {{< tabs name="Command line example-Set default max bundle size and asset list for PC" >}}
 {{% tab name="Windows" %}}
@@ -770,67 +770,67 @@ build/linux/bin/profile/AssetBundlerBatch bundleSettings --bundleSettingsFile de
 {{% /tab %}}
 {{< /tabs >}}
 
-## Asset bundles - `bundles` 
+## 资源包 - `bundles` 
 
-The `bundles` command is used to generate the final bundle (`.pak`) files that contain all of the assets from an asset list. Bundles can't be modified once created, only regenerated.
+`bundles` 命令用于生成包含资产列表中所有资产的最终捆绑包 (`.pak`)文件。捆绑包一旦创建就无法修改，只能重新生成。
 
-### Options 
+### 选项 
 
 **`--bundleSettingsFile`**
 
-The bundle settings file to be loaded. If arguments are provided that would override the settings file, the arguments override the settings file.
+要加载的 bundle 设置文件。如果提供的参数将覆盖 settings 文件，则参数将覆盖 settings 文件。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--assetListFile`**
 
-The asset list file to use in bundle generation.
+要在 bundle 生成中使用的资源列表文件。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--outputBundlePath`**
 
- The location where the generated asset bundle is written to. Asset bundles use the `.pak` file extension.
-* *Type:* Single-value argument
+生成的资源包写入的位置。资源包使用`.pak`文件扩展名。
+* *Type:* 单值参数
 * *Required:* No
 
 **`--bundleVersion`**
 
-The bundle format version to use in generation. The only allowed value is `1`.
+生成时使用的捆绑包格式版本。唯一允许的值为`1`。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--maxSize`**
 
-The maximum allowed size for individual bundles, in MB. If any generated bundle is larger than the maximum size, it will be split into smaller bundles and named accordingly.
+单个捆绑包允许的最大大小，以 MB 为单位。如果生成的任何捆绑包大于最大大小，则会将其拆分为更小的捆绑包并相应地命名。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--platform`**
 
-The platforms to generate bundles for. Defaults to the project's enabled platforms, defined in `AssetProcessorPlatformConfig.ini`. Valid platform names can be found in the platform configuration file or as folder names under `dev/Cache/ProjectName`.
+要为其生成捆绑包的平台。默认为项目的已启用平台，在`AssetProcessorPlatformConfig.ini`中定义。有效的平台名称可以在平台配置文件中找到，也可以在`dev/Cache/ProjectName` 下的文件夹名称中找到。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--allowOverwrites`**
 
-Allow overwriting of existing bundle files. By default, bundles are not overwritten.
+允许覆盖现有捆绑包文件。默认情况下，不会覆盖捆绑包。
 
 * *Type:* Flag
 * *Required:* No
 
-### Examples 
+### 示例 
 
-In the following examples, assume that the current project has enabled the platforms `pc`, `ios`, and `android`.
+在以下示例中，假设当前项目已启用平台`pc`, `ios`, 和 `android`.
 
-**Example : Create a bundle for PC using a settings file**
+**示例 ：使用设置文件为 PC 创建捆绑包**
 
-Create a `assets_pc.pak` bundle for PC, using the `defaults_pc.bundlesettings` file:
+使用`defaults_pc.bundlesettings`文件为 PC 创建`assets_pc.pak`捆绑包：
 
 {{< tabs name="Command line example-Create a bundle for PC" >}}
 {{% tab name="Windows" %}}
@@ -849,9 +849,9 @@ build/linux/bin/profile/AssetBundlerBatch bundles --outputBundlePath assets.pak 
 {{% /tab %}}
 {{< /tabs >}}
 
-**Example : Create bundles for all platforms**
+**示例 ：为所有平台创建捆绑包**
 
-Create bundles for all of a project's enabled platforms, using the `allAssets_pc.assetlist`, `allAssets_ios.assetlist`, and `allAssets_android.assetlist` files:
+为项目的所有已启用平台创建捆绑包，使用`allAssets_pc.assetlist`, `allAssets_ios.assetlist`, 和 `allAssets_android.assetlist` 文件:
 
 {{< tabs name="Command line example-Create bundles for all platforms" >}}
 {{% tab name="Windows" %}}
@@ -870,66 +870,66 @@ build/linux/bin/profile/AssetBundlerBatch bundles --outputBundlePath assets.pak 
 {{% /tab %}}
 {{< /tabs >}}
 
-## Bundle from seed - `bundleSeed` 
+## 从种子捆绑 - `bundleSeed` 
 
-The `bundleSeed` command is used to generate bundles directly from seeds and their dependencies, without the use of an intermediate asset list. No other files besides the required seeds are used as input, and only bundle files are produced as output.
+`bundleSeed`命令用于直接从种子及其依赖项生成捆绑包，而无需使用中间资产列表。除了所需的种子之外，没有其他文件用作输入，并且仅生成捆绑包文件作为输出。
 
-### Options 
+### 选项 
 
 **`--addSeed`**
 
-The seeds to be used in bundle file generation. All asset dependencies of these seeds are included in the bundle as well. Argument parameters should be given as cache-relative paths to pre-processed assets.
+要在捆绑包文件生成中使用的种子。这些种子的所有资产依赖项也包含在捆绑包中。参数参数应作为预处理资产的缓存相对路径提供。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* Yes
 
 **`--bundleSettingsFile`**
 
-The bundle settings file to be loaded. If arguments are provided that would override the settings file, the arguments override the settings file.
+要加载的 bundle 设置文件。如果提供的参数将覆盖 settings 文件，则参数将覆盖 settings 文件。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--outputBundlePath`**
 
-The location where the generated asset bundle is written to. Asset bundles use the `.pak` file extension.
+生成的资源包写入的位置。资源包使用`.pak`文件扩展名。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--bundleVersion`**
 
-The bundle format version to use in generation. The only allowed value is `1`.
+生成时使用的捆绑包格式版本。唯一允许的值为 `1`。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--maxSize`**
 
-The maximum allowed size for individual bundles, in MB. If any generated bundle is larger than the maximum size, it will be split into smaller bundles and named accordingly.
+单个捆绑包允许的最大大小，以 MB 为单位。如果生成的任何捆绑包大于最大大小，则会将其拆分为更小的捆绑包并相应地命名。
 
-* *Type:* Single-value argument
+* *Type:* 单值参数
 * *Required:* No
 
 **`--platform`**
 
-The platforms to update the bundle settings for. Defaults to the project's enabled platforms, defined in `AssetProcessorPlatformConfig.ini`. Valid platform names can be found in the platform configuration file or as folder names under `dev/Cache/ProjectName`.
+要更新其捆绑包设置的平台。默认为项目的已启用平台，在 `AssetProcessorPlatformConfig.ini`中定义。有效的平台名称可以在平台配置文件中找到，也可以在 `dev/Cache/ProjectName`下的文件夹名称中找到。
 
-* *Type:* Multi-value argument
+* *Type:* 多值参数
 * *Required:* No
 
 **`--allowOverwrites`**
 
-Allow overwriting of existing bundle files. By default, bundles are not overwritten.
+允许覆盖现有捆绑包文件。默认情况下，不会覆盖捆绑包。
 
 * *Type:* Flag
 * *Required:* No
 
 ### Examples 
 
-**Example : Regenerate bundle for a seed**
+**示例 ：为种子重新生成捆绑包**
 
-Regenerate the bundle `processed.pak` for the `example.cgf` asset and all of its dependencies, with a maximum size of 512MB.
+为`example.cgf`资产及其所有依赖项重新生成包`processed.pak`，最大大小为 512MB。
 
 {{< tabs name="Command line example-Regenerate bundle for a seed" >}}
 {{% tab name="Windows" %}}

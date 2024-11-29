@@ -1,137 +1,137 @@
 ---
-linkTitle: Project Configuration
-title: ROS 2 Project Configuration
-description: How to install dependencies and build a project with the ROS 2 Gem in Open 3D Engine (O3DE).
+linkTitle: 项目配置
+title: ROS 2 项目配置
+description: 如何在 Open 3D Engine （O3DE） 中使用 ROS 2 Gem 安装依赖项并构建项目。
 weight: 200
 toc: true
 ---
 
-## Requirements
+## 要求
 
-* Ubuntu 22.04 with ROS 2 Humble or Ubuntu 24.04 with ROS 2 Jazzy. Other Ubuntu versions, ROS 2 versions, and Linux distributions can also work, but are not supported.
+* 带有 ROS 2 Humble 的 Ubuntu 22.04 或带有 ROS 2 Jazzy 的 Ubuntu 24.04。其他 Ubuntu 版本、ROS 2 版本和 Linux 发行版也可以工作，但不受支持。
   {{< important >}}
-  The ROS 2 Gem is not available for Windows.
+ROS 2 Gem 不适用于 Windows。
   {{< /important >}}
-* [O3DE built from source on Linux](/docs/welcome-guide/setup/setup-from-github/building-linux).
-* The [latest released version](https://docs.ros.org/en/rolling/Releases.html#list-of-distributions ) of ROS 2. This instruction assumes that the `desktop` version is installed. Otherwise, some packages might be missing. 
-  * The O3DE ROS 2 has been tested with [ROS 2 Humble](https://docs.ros.org/en/humble/Installation.html) and [ROS 2 Iron](https://docs.ros.org/en/iron/Installation.html) with Ubuntu 22.04.
+* [O3DE 在 Linux 上从源代码构建](/docs/welcome-guide/setup/setup-from-github/building-linux).
+* ROS 2的[最新版](https://docs.ros.org/en/rolling/Releases.html#list-of-distributions )。此说明假定已安装`desktop`版本。否则，可能会缺少某些包。
+  * O3DE ROS 2 已在 Ubuntu 22.04 上使用 [ROS 2 Humble](https://docs.ros.org/en/humble/Installation.html)  和 [ROS 2 Iron](https://docs.ros.org/en/iron/Installation.html) 进行了测试。
 
-## Setting up
+## 设置
 
-### ROS 2 ecosystem
+### ROS 2 生态系统
 
-#### Source your ROS 2 workspace
+#### 获取您的 ROS 2 工作区
 
-To build or run projects using ROS 2 Gem, you must [source your ROS 2 workspace](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html) in your console. The best way to ensure that ROS 2 is sourced at all times is by adding the following line to the `~/.profile` file:
+要使用 ROS 2 Gem 构建或运行项目，您必须在控制台中 [source your ROS 2 workspace](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html)。确保 ROS 2 始终是来源的最好方法是将以下行添加到`~/.profile`文件中：
 ```
 source /opt/ros/<distro>/setup.bash
 ```
-Replace `<distro>` with the ROS 2 distribution name (such as `humble`).
-Then, you must log out and log in from Ubuntu for the change to take effect.
+将 `<distro>` 替换为 ROS 2 分配名称(例如 `humble`)。
+然后，您必须注销并从 Ubuntu 登录，更改才能生效。
 
-#### Custom packages
+#### 自定义软件包
 
-The Gem fully supports [workspace overlaying](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html#source-the-overlay).
-Source your workspace on top of the ROS 2 installation to include custom packages.
+Gem 完全支持 [工作区叠加](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html#source-the-overlay)。
+在 ROS 2 安装的基础上获取您的工作区以包含自定义软件包。
 
-The Gem comes with a number of ROS 2 packages already included and linked, but you might want to include additional packages in your project.
-To do so, use the `target_depends_on_ros2` function in your project's `Gem/CMakeLists.txt`:
+Gem 附带了许多已包含和链接的 ROS 2 包，但您可能希望在项目中包含其他包。
+为此，在你的项目的`Gem/CMakeLists.txt`中使用 `target_depends_on_ros2` 功能:
 
 ```
 target_depends_on_ros2_packages(<your_target> <ros_package1> <ros_package2>)
 ```
 
-#### Working with multiple ROS versions
+#### 使用多个 ROS 版本
 
-If you have multiple ROS 2 versions installed, make sure you [source](https://docs.ros.org/en/humble/Tutorials/Workspace/Creating-A-Workspace.html#source-the-overlay) the one you would like to use. You can check which version is sourced in your console by checking the value of `ROS_DISTRO` environment variable (`echo $ROS_DISTRO`).
+如果您安装了多个 ROS 2 版本，请确保您 [source](https://docs.ros.org/en/humble/Tutorials/Workspace/Creating-A-Workspace.html#source-the-overlay)是您想要使用的那个。您可以通过检查`ROS_DISTRO`环境变量 （`echo $ROS_DISTRO`） 的值来检查控制台中的版本来源。
 
-> You currently need to rebuild your project if it was previously built with another ROS version.
+> 如果项目之前是使用其他 ROS 版本构建的，您当前需要重新构建项目。
 
-### Additional ROS 2 packages required
+### 需要额外的 ROS 2 软件包
 
 * gazebo_msgs: `ros-${ROS_DISTRO}-gazebo-msgs`
-    * gazebo_msgs are used for robot spawning (no dependency on Gazebo).
+    * gazebo_msgs 用于机器人生成（不依赖于 Gazebo）。
 * Ackermann messages: `ros-${ROS_DISTRO}-ackermann-msgs`
 * Control toolbox `ros-${ROS_DISTRO}-control-toolbox`
 * XACRO `ros-${ROS_DISTRO}-xacro`
 * Vision msgs `ros-${ROS_DISTRO}-vision-msgs`
 
-If a `desktop` installation of ROS 2 distro was selected, everything else should be there.
+如果选择了 ROS 2 发行版的`desktop`安装，则其他所有内容都应该在那里。
 
-Use this helpful command to install:
+使用这个有用的命令来安装：
 
 ```
 sudo apt install ros-${ROS_DISTRO}-ackermann-msgs ros-${ROS_DISTRO}-control-toolbox ros-${ROS_DISTRO}-nav-msgs ros-${ROS_DISTRO}-gazebo-msgs ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-vision-msgs
 ```
 
-### Clone the Gem repository
+### 克隆 Gem 存储库
 
-The ROS 2 Gem lives in the [`o3de/o3de-extras`](https://github.com/o3de/o3de-extras) repository. Clone the GitHub repository to your machine:
+ROS 2 Gem 位于 ['o3de/o3de-extras'](https://github.com/o3de/o3de-extras)存储库中。将 GitHub 存储库克隆到您的计算机上：
 
 ```
 git clone https://github.com/o3de/o3de-extras
 ```
 
-### Registering the Gem
+### 注册 Gem
 
-To use the ROS 2 Gem in any O3DE project, you need to register it with O3DE.
+要在任何 O3DE 项目中使用 ROS 2 Gem，您需要在 O3DE 中注册它。
 
-For convenience, set a couple of environment variables: `O3DE_HOME` to where your O3DE is located and `O3DE_EXTRAS_HOME`
-to the path of your cloned o3de-extras repository, for example:
+为方便起见，请设置几个环境变量： `O3DE_HOME`到 O3DE 所在的位置 和 `O3DE_EXTRAS_HOME`
+添加到克隆的 o3de-extras 存储库的路径中，例如：
 
 ```shell
 export O3DE_HOME=${HOME}/o3de
 export O3DE_EXTRAS_HOME=${HOME}/o3de-extras
 ```
 
-Run the following command to register the ROS 2 Gem:
+运行以下命令以注册 ROS 2 Gem：
 ```bash
 ${O3DE_HOME}/scripts/o3de.sh register --gem-path ${O3DE_EXTRAS_HOME}/Gems/ROS2
 ```
 
-### Registering robotic project templates
+### 注册机器人项目模板
 
-Robotics project templates can help you quickly start your simulation project. We recommend that you register the robotics project template Gems and their Asset Gems, which you downloaded with the `o3de-extras` repository.
+机器人项目模板可以帮助您快速启动仿真项目。我们建议您注册机器人项目模板 Gem 及其资产 Gem，这些 Gem 是使用`o3de-extras`存储库下载的。
 
-To register robotic templates and assets:
-1. Enable Git Large File Storage (LFS), if you haven't already.  Asset Gems use LFS to store large files.
+要注册机器人模板和资产：
+1. 启用 Git Large File Storage （LFS）（如果尚未启用）。 Asset Gem 使用 LFS 存储大型文件。
     ```bash
     cd ${O3DE_EXTRAS_HOME}
     git lfs install && git lfs pull
     ```
-2. Register the following templates and assets from o3de-extras.
+2. 从 o3de-extras 注册以下模板和资产。
     ```bash
     ${O3DE_HOME}/scripts/o3de.sh register --all-gems-path ${O3DE_EXTRAS_HOME}/Gems/
     ${O3DE_HOME}/scripts/o3de.sh register --all-templates-path ${O3DE_EXTRAS_HOME}/Templates/
     ```
    
-For more information, refer to [Adding and Removing Gems](/docs/user-guide/project-config/add-remove-gems/) and [Registering Gems](/docs/user-guide/project-config/register-gems/).
+有关更多信息，请参阅 [添加和删除 Gem](/docs/user-guide/project-config/add-remove-gems/) 和 [注册 Gem](/docs/user-guide/project-config/register-gems/)。
 
-### Creating a new robotic simulation project 
+### 创建一个新的机器人模拟项目
 
-#### Robotic Project Templates
+#### 机器人项目模板
 
-Project templates are useful tools to shape your initial project.
-When created with a template, a new project can start with a specific configuration. include certain enabled Gems and starting levels.
+工程模板是塑造初始工程的有用工具。
+使用模板创建时，新项目可以从特定配置开始。包括某些已启用的 Gem 和起始关卡。
 
-Robotic project templates are designed to help you to quickly start simulating robots in O3DE with ROS 2.
+机器人项目模板旨在帮助您快速开始使用 ROS 2 在 O3DE 中模拟机器人。
 
-#### ROS 2 Project Templates
+#### ROS 2 项目模板
 
-There are three templates for robotics:
-- [ROS 2 project template](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2ProjectTemplate):
-  - A versatile, lightweight template that is good for a starting project and includes a robot with differential drive.
-- [Warehouse project template](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2FleetRobotTemplate):
-  - A photorealistic warehouse with a Proteus robot, easy to customize and scale up (multi-robot).
-- [Manipulation project template](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2RoboticManipulationTemplate):
-  - Includes two levels with robotic manipulator arms: one focused on palletization, the other one on R&D.
+机器人有三个模板：
+- [ROS 2 项目模板](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2ProjectTemplate):
+  - 一个多功能、轻量级的模板，非常适合启动项目，包括一个带差动驱动的机器人。
+- [Warehouse 项目模板](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2FleetRobotTemplate):
+  - 带有 Proteus 机器人的照片级逼真仓库，易于定制和扩展（多机器人）。
+- [Manipulation 项目模板](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2RoboticManipulationTemplate):
+  - 包括两个带有机器人机械臂的级别：一个专注于码垛，另一个专注于研发。
 
-:bulb: The template repositories also include examples that you can try out by following their README files.
+:bulb: 模板存储库还包括一些示例，您可以按照其 README 文件进行试用。
 
-#### Create a new project with a template
+#### 使用模板创建新项目
 
-To create a project with a template, you may use GUI or command line.
-The quickest way is to run the following commands (adjust `PROJECT_NAME`, `PROJECT_PATH` and the template as you wish):
+要使用模板创建项目，您可以使用 GUI 或命令行。
+最快的方法是运行以下命令 (调整 `PROJECT_NAME`, `PROJECT_PATH` 和您想要的模板):
 
 ```shell
 export PROJECT_NAME=MySimulationProject
@@ -139,15 +139,15 @@ export PROJECT_PATH=${HOME}/projects/${PROJECT_NAME}
 ${O3DE_HOME}/scripts/o3de.sh create-project --project-path $PROJECT_PATH --template-path ${O3DE_EXTRAS_HOME}/Templates/Ros2ProjectTemplate 
 ```
 
-For more information, refer to [Project Creation](/docs/welcome-guide/create/)
+有关更多信息，请参阅 [项目创建](/docs/welcome-guide/create/)
 
-### Building
+### 构建
 
-The ROS 2 Gem is built when you build an O3DE project with the ROS 2 Gem enabled. 
+ROS 2 Gem 是在启用 ROS 2 Gem 的情况下构建 O3DE 项目时构建的。
 
-Make sure to [source your ROS 2 workspace](#source-your-ros-2-workspace) before building.
+在构建之前，请确保 [source your ROS 2 workspace](#source-your-ros-2-workspace) 。
 
-For convenience, here is an example of parametrized CMake calls:
+为方便起见，下面是一个参数化 CMake 调用的示例：
 
 ```shell
 cd $PROJECT_PATH
@@ -155,15 +155,15 @@ cmake -B build/linux -G "Ninja Multi-Config" -DLY_DISABLE_TEST_MODULES=ON -DCMAK
 cmake --build build/linux --config profile --target ${PROJECT_NAME} Editor ${PROJECT_NAME}.Assets 
 ```
 {{<note>}}
-Before version 24.09.0, PhysX 5 was experimental and compiled during the engine's source code compilation process. 
-If you're utilizing version 23.10.3 or an earlier release, you'll need to specify an additional flag: `-DAZ_USE_PHYSX5:BOOL=ON` :
+在版本 24.09.0 之前，PhysX 5 是实验性的，并在引擎的源代码编译过程中进行编译。 
+如果您使用的是版本 23.10.3 或更早版本，则需要指定一个附加标志：`-DAZ_USE_PHYSX5:BOOL=ON` :
 ```shell
 cmake -B build/linux -G "Ninja Multi-Config" -DLY_DISABLE_TEST_MODULES=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DLY_STRIP_DEBUG_SYMBOLS=ON -DAZ_USE_PHYSX5:BOOL=ON 
 ```
 {{</note>}}
-### Launching your project in O3DE Editor
+### 在 O3DE 编辑器中启动您的项目
 
-Once your project is built, run the following command to start the Editor:
+构建项目后，运行以下命令以启动 Editor：
 
 ```shell
 ${PROJECT_PATH}/build/linux/bin/profile/Editor

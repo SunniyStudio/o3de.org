@@ -1,27 +1,27 @@
 ---
-linkTitle: SDFormat sensors
-title: SDFormat sensors
-description: Detailed description of support of SDFormat sensors in Robot Importer.
+linkTitle: SDFormat 传感器
+title: SDFormat 传感器
+description: Robot Importer 中 SDFormat 传感器支持的详细说明。
 weight: 100
 ---
 
-## Introduction
+## 介绍
 
-Robots described in either [SDFormat](http://sdformat.org/), [URDF](http://wiki.ros.org/urdf), or [XACRO](http://wiki.ros.org/xacro) format, can be imported into your O3DE simulation project using the Robot Importer. The tool creates O3DE entities and components that model a robot. You can find more details about Robot Importer in the [documentation](/docs/user-guide/interactivity/robotics/importing-robot/). 
+[SDFormat](http://sdformat.org/), [URDF](http://wiki.ros.org/urdf), 或 [XACRO](http://wiki.ros.org/xacro) 格式描述的机器人可以使用机器人导入器导入到您的 O3DE 模拟项目中。该工具将创建用于对机器人进行建模的 O3DE 实体和组件。您可以在 [文档](/docs/user-guide/interactivity/robotics/importing-robot/)中找到有关 Robot Importer 的更多详细信息。
 
-Similarly, the robots' [sensors](http://sdformat.org/spec?ver=1.10&elem=sensor) are imported from the description files into O3DE using ROS 2 sensor components available in [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2/). Note, that the sensor's description can be stored directly in SDFormat files or using `<gazebo>` tag in URDF and XACRO files.
+同样，机器人的 [传感器](http://sdformat.org/spec?ver=1.10&elem=sensor)  使用 [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2/) 中提供的 ROS 2 传感器组件从描述文件导入到 O3DE 中。请注意，传感器的描述可以直接存储在 SDFormat 文件中，也可以使用 URDF 和 XACRO 文件中的`<gazebo>`标签。
 
-## Sensor import architecture
+## 传感器导入架构
 
-Sensor import, i.e. the mapping between Gazebo description and O3DE components, is based on the O3DE [reflection system](/docs/user-guide/programming/components/reflection/reflecting-for-serialization/). In particular, O3DE components that are designed to mirror the behavior of SDFormat sensors and/or plugins are registered using a specialized attribute tag. The import structure, called _hook_, implements the conversion scheme between the robot description parameters and O3DE data. The Robot Importer finds all active _hooks_ and checks, if any of them can be used to import SDFormat data. The mapping is extendable, allowing you to add your _hooks_ and map them to existing SDFormat data.
+传感器导入，即 Gazebo 描述和 O3DE 组件之间的映射，基于 O3DE [反射系统](/docs/user-guide/programming/components/reflection/reflecting-for-serialization/)。特别是，旨在镜像 SDFormat 传感器和/或插件行为的 O3DE 组件使用专用属性标记进行注册。名为 _hook_ 的导入结构实现了机器人描述参数和 O3DE 数据之间的转换方案。Robot Importer 查找所有活动的 _hooks_ 并检查其中任何一个可用于导入 SDFormat 数据。映射是可扩展的，允许您添加 _hooks_ 并将它们映射到现有的 SDFormat 数据。
 
-It is important to note, that implementation of sensors in [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2/) exposes ROS 2 communication interfaces by design, which makes it comparable to Gazebo sensor plugins. Therefore, you do not have to define a Gazebo sensor plugin if you want to make ROS 2 topics available. On the other hand, both sensor and plugin names must match the _hook's_ definition to be added to O3DE representation of the robot if the plugin definition exists in the robot description file. This way you can override the default behavior of the Robot Importer with your specific implementation of the same sensor.
+需要注意的是，在 [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2/)中实现传感器在设计上公开了 ROS 2 通信接口，这使得它与 Gazebo 传感器插件相当。因此，如果要使 ROS 2 主题可用，则不必定义 Gazebo 传感器插件。另一方面，如果机器人描述文件中存在插件定义，则传感器和插件名称都必须与 _hook 的 s_ 定义匹配，才能添加到机器人的 O3DE 表示中。这样，您可以使用同一传感器的特定实现来覆盖 Robot Importer 的默认行为。
 
-### SDF sensor tag mappings
+### SDF 传感器标记映射
 
-Four basic sensors' _hooks_ are predefined in Robot Importer. These can be summarized as follows:
+四个基本传感器的 _hooks_ 在 Robot Importer 中预定义。这些可以总结如下：
 
-| _Hook_ name        | Supported SDFormat sensors | Supported SDFormat plugins    | O3DE sensor component       |
+| _Hook_ 名称 |支持的 SDFormat 传感器 |支持的 SDFormat 插件 |O3DE 传感器组件       |
 | ------------------ | -------------------------- | ----------------------------- | --------------------------- |
 | _CameraSensorHook_ | `camera_sensor`            | `libgazebo_ros_camera`        | `ROS2CameraSensorComponent` |
 |                    | `depth_camera`             | `libgazebo_ros_depth_camera`  |                             |
@@ -29,21 +29,21 @@ Four basic sensors' _hooks_ are predefined in Robot Importer. These can be summa
 | _GNSSSensorHook_   | `gps`, `navsat`            | `libgazebo_ros_gps_sensor`    | `ROS2GNSSSensor`            |
 | _ImuSensorHook_    | `imu`                      | `libgazebo_ros_imu_sensor`    | `ROS2ImuSensorComponent`    |
 | _LidarSensorHook_  | `lidar`, `ray`             | `libgazebo_ros_ray_sensor`    | `ROS2LidarSensorComponent`  |
-|                    | `gpu_lidar`, `gpu_ray`     | `libgazebo_ros_laser`         | _see information below_     |
+|                    | `gpu_lidar`, `gpu_ray`     | `libgazebo_ros_laser`         | _请参阅以下信息_     |
 
-GPU implementation of ray/lidar sensors is not included in ROS 2 Gem and requires additional [O3DE RGL Gem](https://github.com/RobotecAI/o3de-rgl-gem). GPU sensors are mapped during the import to run on a CPU if this Gem is not available.
+光线/激光雷达传感器的 GPU 实现不包含在 ROS 2 Gem 中，需要额外的 [O3DE RGL Gem](https://github.com/RobotecAI/o3de-rgl-gem)。GPU 传感器在导入期间进行映射，以便在此 Gem 不可用时在 CPU 上运行。
 
-### Extending default mapping
+### 扩展默认映射
 
-You can extend the default mapping by implementing additional _hooks_ and registering them in the system based on the _SerializeContext_ reflection system. Typically, this consists of three tasks.
+您可以通过实现额外的 _hooks_ 并在基于 _SerializeContext_ 反射系统的系统中注册它们来扩展默认映射。通常，这包括三个任务。
 
-First, you need to declare `ROS2::SDFormat::SensorImporterHook` structure that consists of the following:
-* set of SDFormat sensors associated with your import scheme
-* set of plugin names associated with your import scheme
-* set of the supported parameters in the input robot description (used for import verbose only)
-* registered callback function that is invoked by Robot Importer when _hook's_ definition matches the input data
+首先，你需要声明 `ROS2::SDFormat::SensorImporterHook` 结构，它由以下内容组成：
+* 与您的导入方案关联的 SDFormat 传感器集
+* 与您的导入方案关联的插件名称集
+* 输入机器人描述中支持的参数集（仅用于导入详细）
+* 已注册的回调函数，当 _hook Robot Importer 的定义与输入数据匹配时s_该函数
 
-The registered callback function creates a number of O3DE components that are necessary to simulate a particular sensor. Additionally, it parses the robot description file to read certain processing parameters and lists the supported sensors and plugins. Your sample implementation for `sdf::SensorType::NAVSAT` that implements `libgazebo_mygps_sensor.so` in O3DE can look as follows:
+已注册的回调函数会创建许多模拟特定传感器所需的 O3DE 组件。此外，它还会解析机器人描述文件以读取某些处理参数，并列出支持的传感器和插件。在 O3DE 中实现`libgazebo_mygps_sensor.so`的`sdf::SensorType::NAVSAT`的示例实现如下所示：
 
 ```cpp
 ROS2::SDFormat::SensorImporterHook ROS2SensorHooks::MyGNSSSensor()
@@ -75,7 +75,7 @@ ROS2::SDFormat::SensorImporterHook ROS2SensorHooks::MyGNSSSensor()
 }
 ```
 
-Your second task is to implement your desired simulation behavior in an O3DE component, which would be created by the Robot Importer. Finally, you need to define and register your _hook_ via the _SerializeContext_ reflection system using `SensorImporterHooks` attribute tag. This allows the Robot Importer to find and add your _hook_ to the mapping. The registration can be done in any O3DE editor component and multiple _hooks_ can be registered at once. For simplicity, you might want to add the registration directly to your O3DE component. A sample code implementing the registration scheme can be as follows:
+您的第二个任务是在 O3DE 组件中实现所需的模拟行为，该组件将由 Robot Importer 创建。最后，您需要使用 `SensorImporterHooks` 属性标签通过 _SerializeContext_ 反射系统定义和注册 _hook_。这允许 Robot Importer 查找您的 _hook_ 并将其添加到映射中。可以在任何 O3DE 编辑器组件中完成注册，并且可以一次注册多个 _hooks_。为简单起见，您可能希望将注册直接添加到 O3DE 组件。实现注册方案的示例代码可以如下所示：
 ```cpp
 void MyO3DEEditorComponent::Reflect(AZ::ReflectContext* context)
 {
@@ -92,4 +92,4 @@ void MyO3DEEditorComponent::Reflect(AZ::ReflectContext* context)
 }
 ```
 
-<!--- TODO: add a link to the tutorial with step-by-step hook implementation -->
+<!--- TODO：添加指向包含分步 hook 实现的教程的链接 -->

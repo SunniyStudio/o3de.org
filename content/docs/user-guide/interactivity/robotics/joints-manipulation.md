@@ -1,107 +1,106 @@
 ---
-linkTitle: Joints Manipulation 
-title: Joints Manipulation
-description: Controlling joint systems such as manipulator arms with ROS 2 Gem Open 3D Engine (O3DE).
+linkTitle: 关节操作
+title: 关节操作
+description: 使用 ROS 2 Gem Open 3D Engine （O3DE） 控制关节系统，例如机械臂。
 toc: true
 weight: 510
 ---
 
-## Overview
+## 概述
 
-Manipulating joints is crucial for applications involving robotic arms or other joint systems such as legged locomotion.
-O3DE supports control of joint systems with ROS through packages such as [ros2_controllers](https://github.com/ros-controls/ros2_controllers),
-and through integration with [MoveIt2](https://moveit.ros.org/).
+对于涉及机械臂或其他关节系统（如腿部运动）的应用，操纵关节至关重要。
+O3DE 支持通过 [ros2_controllers](https://github.com/ros-controls/ros2_controllers)等软件包使用 ROS 控制关节系统，
+以及与 [MoveIt2](https://moveit.ros.org/) 的集成。
 
-### Supported features
+### 支持的功能
 
-With manipulation components, you can:
-- Publish [JointState](https://docs.ros2.org/latest/api/sensor_msgs/msg/JointState.html) ROS messages automatically with __JointsManipulationComponent__.
-- Control joint systems through [FollowJointTrajectory](https://github.com/ros-controls/control_msgs/blob/humble/control_msgs/action/FollowJointTrajectory.action) ROS action.
-- Control systems based on articulations as well as hinge and prismatic joints.
-- Extend interfaces for developers to implement your own control components through __JointsManipulationRequests__ and __JointsPositionControllerRequests__.
-- Use manipulation components in multi-robot scenarios.
+使用操作组件，您可以：
+- 使用 __JointsManipulationComponent__ 自动发布 [JointState](https://docs.ros2.org/latest/api/sensor_msgs/msg/JointState.html)  条 ROS 消息。
+- 通过 [FollowJointTrajectory](https://github.com/ros-controls/control_msgs/blob/humble/control_msgs/action/FollowJointTrajectory.action) ROS 动作控制关节系统。
+- 基于铰接以及铰链和棱柱关节的控制系统。
+- 为开发人员扩展接口，以便通过 __JointsManipulationRequests__ 和 __JointsPositionControllerRequests__ 实现您自己的控制组件。
+- 在多机器人场景中使用操作组件。
 
-### Limitations
+### 限制
 
-Manipulation components only work with single degree of freedom joints.
+操纵组件仅适用于单自由度关节。
 
-### Components and their interactions
+### 组件及其交互
 
-Movement of joints is handled through a set of interfaces and components that implement them.
+关节的移动是通过一组实现它们的接口和组件来处理的。
 
-| Interface                            | Components                                                                     | Role                                                                                           |
-|--------------------------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| __JointsPositionControllerRequests__ | __JointsArticulationControllerComponent__<br/>__JointsPIDControllerComponent__ | Move joints towards desired positions.                                                         |
-| __JointsManipulationRequests__       | __JointsManipulationComponent__                                                | Hold and publish joints state information, relay commands to controllers.                      |
-| __JointsTrajectoryRequests__         | __JointsTrajectoryComponent__                                                  | Host action server for trajectory commands, control trajectory through a sequence of positions. |
+| 接口                                   | 组件                                                                             | 规则                            |
+|--------------------------------------|--------------------------------------------------------------------------------|-------------------------------|
+| __JointsPositionControllerRequests__ | __JointsArticulationControllerComponent__<br/>__JointsPIDControllerComponent__ | 将关节移动到所需位置。                   |
+| __JointsManipulationRequests__       | __JointsManipulationComponent__                                                | 保持并发布关节状态信息，将命令中继到控制器。        |
+| __JointsTrajectoryRequests__         | __JointsTrajectoryComponent__                                                  | Host 动作服务器用于轨迹命令，通过一系列位置控制轨迹。 |
 
-## Simulating joint systems
+## 模拟关节系统
 
-### Start quickly with Manipulation Template
+### 快速开始使用 Manipulation Template
 
-If your goal is to simulate a robotic arm, the quickest way to start is to [create a project](/docs/welcome-guide/create/) from Manipulation Template.
+如果你的目标是模拟机械臂，最快的开始方法是从 Manipulation Template [创建项目](/docs/welcome-guide/create/)。
 
-If you followed the steps of [project configuration](project-configuration.md), your environment variables for `O3DE_HOME` and `PROJECT_PATH` will be set, and the templates registered.
-Create a new project with the following command:
+如果您按照 [项目配置](project-configuration.md)的步骤操作，将设置`O3DE_HOME`和 `PROJECT_PATH`的环境变量，并注册模板。
+使用以下命令创建新项目：
 
 ```shell
 ${O3DE_HOME}/scripts/o3de.sh create-project --project-path $PROJECT_PATH --template-name Ros2RoboticManipulationTemplate
 ```
 
-The template comes with a couple of examples which you can run following its [README](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2RoboticManipulationTemplate).
+该模板附带了几个示例，您可以按照其 [README](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2RoboticManipulationTemplate).
 
-### Configure your robot
+### 配置你的机器人
 
-#### Import the robot
-Once your project is up, use the [robot import](importing-robot.md) feature to load your robot of choice into O3DE.
-Make sure that the checkbox ```Use articulation for joints and rigid bodies``` is checked on the last page of the importer.
-Using articulations is strongly recommended for stable simulation of robotic arms and other joint systems.
+#### 导入机器人
+项目完成后，使用 [机器人导入](importing-robot.md) 功能将您选择的机器人加载到 O3DE 中。
+确保在导入器的最后一页上选中复选框 ```Use articulation for joints and rigid bodies```。
+强烈建议使用关节来稳定模拟机械臂和其他关节系统。
 
-#### Add necessary components
-If the import proceeded without issues, open the root entity of your newly created prefab and add three new components:
-- `JointsArticulationControllerComponent` to control the robot`s movement.
-- `JointsTrajectoryComponent` to listen for the MoveIt trajectory messages.
-- `JointsManipulationEditorComponent` which publishes ```joint_states``` and sets the initial position.
+#### 添加必要的组件
+如果导入继续没有问题，请打开新创建的预制件的根实体并添加三个新组件：
+- `JointsArticulationControllerComponent` 来控制机器人的运动。
+- `JointsTrajectoryComponent`以侦听 MoveIt 轨迹消息。
+- `JointsManipulationEditorComponent` 它发布 ```joint_states``` 并设置初始位置。
 
-#### Enable motors in joints
+#### 在关节中启用转动电机
 
-Enable motors on all joints and set ```motor force limit```, ```stiffness``` and ```damping``` values. Joints with motors enabled will keep their 
-set position.
+在所有关节上启用转动电机，并设置 ```motor force limit```, ```stiffness``` 和 ```damping``` 值。启用转动电机的关节将保持其设置位置。
 
-#### Set initial positions and topic name
+#### 设置初始位置和主题名称
 
-- In the `JointsManipulationEditorComponent`, add initial positions for all joints.
-Joint names can be found in the prefabs entities inside the `ROS2FrameComponent` joint name. The initial positions are in radians.  
-- In the `JointsTrajectoryComponent`, set the topic for controlling the trajectory.
-Typically, this topic name ends with ```joint_trajectory_controller```, but should be same as in your MoveIt configuration files.  
+- 在`JointsManipulationEditorComponent`中，为所有关节添加初始位置。
+关节名称可以在`ROS2FrameComponent`关节名称内的预制件实体中找到。初始位置以弧度为单位。 
+- 在`JointsTrajectoryComponent` 中，设置用于控制轨迹的主题。
+通常，此主题名称以 ```joint_trajectory_controller``` 结尾，但应与 MoveIt 配置文件中的名称相同。
 
-#### Start the simulation
+#### 开始模拟
 
-Start the simulation and see as the robot sets itself into its initial position. If something is not right, check the O3DE console for logs, which include all joint names.
-The robot is now ready for being controlled using MoveIt.
+开始模拟并查看机器人如何将自身设置到初始位置。如果出现错误，请检查 O3DE 控制台的日志，其中包括所有关节名称。
+现在，机器人已准备好使用 MoveIt 进行控制。
 
-### Running with MoveIt2
+### 使用 MoveIt2 运行
 
 ![MoveIt2](/images/user-guide/interactivity/robotics/robotic_arm_moveIt.png)
 
-Install moveIt packages for your ROS distribution:
+为您的 ROS 发行版安装 moveIt 软件包：
 ```shell
 sudo apt install ros-${ROS_DISTRO}-moveit ros-${ROS_DISTRO}-moveit-resources
 ```
 
-Following that, prepare MoveIt launch files. This can be achieved by creating the files manually, using configuration provided with your robot,
-or using the [MoveIt Setup Assistant](https://moveit.picknik.ai/main/doc/examples/setup_assistant/setup_assistant_tutorial.html).
+之后，准备 MoveIt 启动文件。这可以通过使用机器人提供的配置手动创建文件来实现。
+或使用 [MoveIt 设置助手](https://moveit.picknik.ai/main/doc/examples/setup_assistant/setup_assistant_tutorial.html).
 
-You can see two examples in the [Manipulation Template](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2RoboticManipulationTemplate).
+您可以在 [Manipulation Template （操作模板）](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2RoboticManipulationTemplate) 中看到两个示例。
 
-Finally, run the launch file and control your simulated joint system with MoveIt.
+最后，运行启动文件并使用 MoveIt 控制模拟的关节系统。
 
 ![MoveIt2](/images/user-guide/interactivity/robotics/rviz2_moveit.png)
 
-## Related topics
+## 相关主题
 
-| Topic                   | Description                         |
+| 主题                   | 说明                         |
 |-------------------------|-------------------------------------|
-| [Grippers](grippers.md) | Simulating robotic grippers in O3DE |
+| [抓手](grippers.md) | 在 O3DE 中模拟机器人抓手 |
 
 

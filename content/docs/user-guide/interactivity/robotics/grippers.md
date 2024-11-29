@@ -1,72 +1,73 @@
 ---
-linkTitle: Grippers 
-title: Grippers
-description: Simulating robotic grippers with ROS 2 Gem Open 3D Engine (O3DE).
+linkTitle: 抓手
+title: 抓手
+description: 使用 ROS 2 Gem Open 3D Engine （O3DE） 模拟机器人抓手。
 toc: true
 weight: 520
 ---
 
-## Overview
+## 概述
 
-Grippers are one of the most widely used effectors in robotic manipulation. 
-The simulated robotic grippers are controlled by ROS 2 action servers that allow the user to track the current status of the gipping operation.
-The API to control the gripper through an action server is available in [control_msgs](https://github.com/ros-controls/control_msgs/blob/master/control_msgs/action/GripperCommand.action).
-### Supported features
+夹持器是机器人操作中使用最广泛的效应器之一。
+模拟机器人夹持器由 ROS 2 动作服务器控制，允许用户跟踪 gipping 操作的当前状态。
+通过动作服务器控制夹持器的 API 在 [control_msgs](https://github.com/ros-controls/control_msgs/blob/master/control_msgs/action/GripperCommand.action).
 
-Two grippers are available:
- - Vacuum gripper
- - Finger gripper
+### 支持的功能
 
-#### Vacuum gripper
-The vacuum gripper simulation is simplified and amounts to adding a fixed joint to the manipulated object, which needs to have a "Grippable" tag.
-Real vacuum grippers have limited range of effectiveness, because the seal that is essential to create a vacuum needs to be created through precise positioning.
-To simulate such behavior, Vacuum Gripper component has the following parameters:
- - Effector Trigger Collider
- - Effector Articulation Link
+有两种夹具可供选择：
+ - 真空抓手
+ - 手指夹持器
 
-The effector trigger collider is an entity with a PhysX collider component. \
-The PhysX collider component has to be set to be a **trigger**. To learn more about triggers, please refer to [PhysX Collider component documentation](/docs/user-guide/components/reference/physx/collider/). \
-The PhysX collider component needs to be adjusted to the expected range of the simulated gripper. \
-The sample configuration of the trigger collider is shown below:
+#### 真空抓手
+真空抓手模拟经过简化，相当于向纵对象添加一个固定关节，该对象需要具有“Grippable”标签。
+真正的真空抓手的有效性范围有限，因为需要通过精确定位来形成对产生真空至关重要的密封。
+为了模拟此类行为，Vacuum Gripper 组件具有以下参数：
+ - Effector Trigger Collider （效果器触发器碰撞器）
+ - Effector Articulation Link（执行器关节链接）
+
+效应器触发器碰撞器是具有 PhysX 碰撞器组件的实体。 \
+PhysX collider （PhysX 碰撞器） 组件必须设置为 **trigger**。要了解有关触发器的更多信息，请参阅 [PhysX Collider （PhysX 碰撞器） 组件文档](/docs/user-guide/components/reference/physx/collider/). \
+PhysX collider （PhysX 碰撞器） 组件需要调整到模拟抓手的预期范围。\
+触发器碰撞器的示例配置如下所示：
 
 ![Gripper Screenshot](/images/user-guide/interactivity/robotics/gripper_screen.svg)\
-The effector articulation link is an entity with PhysX Articulation Link. 
-This entity will be a parent forming a joint with the manipulated object.
+Effector Articulation Link （效应器关节链接） 是具有 PhysX Articulation Link （PhysX 关节链接） 的实体。
+此实体将是与纵对象形成关节的父实体。
 
-You need to add a "Grippable" tag in [Tag Component](/docs/user-guide/components/reference/gameplay/tag/) to an entity for it to be gripped in the simulation. This prevents the gripper from attaching to the ground and other unintended objects:\
+您需要在 [标签组件](/docs/user-guide/components/reference/gameplay/tag/) 中为实体添加“可抓取”标签，以便在模拟中抓取该实体。这可以防止抓手附着在地面和其他意外物体上：\
 ![Gripper tag](/images/user-guide/interactivity/robotics/tag.png)
 
-To summarize, here is a sample configuration of the vacuum gripper used in ROS2 Manipulation Template:\
+总而言之，以下是 ROS2 操作模板中使用的真空抓手的示例配置：\
 ![Gripper Config](/images/user-guide/interactivity/robotics/vacuumGripperConfig.png)
 
 
-#### Finger gripper
+#### 手指夹持器
 
-Finger grippers are widely used in robotics and consist of at least two digits which can be brought closer to each other to capture an object. Finger gripper in ROS 2 Gem is simulated through collision and contact. 
-It is a component that controls the motor at the top of the PhysX Articulation Link that is attached to the same entity tree.
+手指夹持器广泛用于机器人技术，由至少两个数字组成，这两个数字可以彼此靠近以捕获物体。ROS 2 Gem 中的手指抓手是通过碰撞和接触来模拟的。
+它是一个组件，用于控制附加到同一实体树的 PhysX Articulation Link 顶部的转动电机。
 
-The Finger Gripper component has the following parameters, which are necessary to fine-tune the behavior of the gripper:
-- Velocity epsilon, which determines maximum velocity the gripper can have to still be considered stationary.
-- Goal tolerance, which is the maximum distance the gripper can be from its goal position that still counts as reaching the goal.
-- Stall time, a parameter used to determine if the gripper's fingers are moving or not. This is the time that needs to pass to consider the gripper is stationary. In other words, short stall time can lead to reporting success prematurely.
+Finger Gripper 组件具有以下参数，这些参数是微调夹持器行为所必需的：
+- 速度 epsilon，它确定夹持器仍可被视为静止的最大速度。
+- 目标容差，即夹持器与目标位置之间的最大距离，仍算作达到目标。
+- Stall time（失速时间），用于确定夹持器的手指是否移动的参数。这是考虑夹持器静止需要的时间。换句话说，较短的停顿时间可能会导致过早报告成功。
 
 
-#### Gripper action server
-The Gripper Action Server component communicates with the Vacuum gripper or the Finger gripper and exposes their APIs as an action server to ROS. It allows you to configure the action server name. 
+#### 夹爪动作服务器
+Gripper Action Server 组件与 Vacuum 抓手或 Finger 抓手通信，并将其 API 作为动作服务器公开给 ROS。它允许您配置 action server 名称。
 
-### Limitations 
+### 局限性
 
-- Currently, both grippers work only with PhysX articulations. 
-- They can interact with rigid bodies and articulations but can be attached only to articulation links.
-- Vacuum gripper is simple and can grip only objects with a "Grippable" tag.
+- 目前，这两个夹持器都仅适用于 PhysX 关节。
+- 它们可以与刚体和关节交互，但只能附加到关节链接。
+- 真空抓手很简单，只能抓取带有“Grippable”标签的物体。
 
 ## Running with MoveIt2
 
-You can configure the [MoveIt2](https://github.com/ros-planning/moveit2) framework to have a move group that can plan the movement of the gripper. 
-Such a move group is implemented in [ROS 2 launch](https://github.com/o3de/o3de-extras/blob/development/Templates/Ros2RoboticManipulationTemplate/Template/Examples/panda_moveit_config_demo.launch.py) file provided with [Ros2RoboticManipulationTemplate](https://github.com/o3de/o3de-extras/blob/development/Templates/Ros2RoboticManipulationTemplate/README.md). 
-In provided example, change the "Planning Group" in "MotionPlanning" plugin for Rviz2 to "hand".
-You can now move joints of the gripper using the "Joints" tag.
+您可以将 [MoveIt2](https://github.com/ros-planning/moveit2) 框架配置为具有一个可以规划夹持器移动的移动组。
+这样的移动组是在 [Ros2RoboticManipulationTemplate](https://github.com/o3de/o3de-extras/blob/development/Templates/Ros2RoboticManipulationTemplate/README.md)提供的 [ROS 2 launch](https://github.com/o3de/o3de-extras/blob/development/Templates/Ros2RoboticManipulationTemplate/Template/Examples/panda_moveit_config_demo.launch.py) 文件中实现的。
+在提供的示例中，将 Rviz2 的“MotionPlanning”插件中的“规划组”更改为“hand”。
+您现在可以使用“Joints”标签移动机械手的关节。
 
 ![Panda Gripper](/images/user-guide/interactivity/robotics/panda_gripper.png)
 
-See [Joints Manipulation](joints-manipulation.md) to learn more about integration and control with MoveIt2.
+请参阅 [关节操纵](joints-manipulation.md)了解有关使用 MoveIt2 进行集成和控制的更多信息。

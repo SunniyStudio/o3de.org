@@ -1,79 +1,79 @@
 ---
-linkTitle: Vehicle Dynamics
-title: ROS 2 Vehicle Dynamics
-description: Understanding basic concepts and structure of the ROS 2 Gem's vehicle dynamics in Open 3D Engine (O3DE).
+linkTitle: 车辆动力学
+title: ROS 2 车辆动力学
+description: 了解 ROS 2 Gem 在 Open 3D Engine （O3DE） 中的车辆动力学的基本概念和结构。
 toc: true
 weight: 500
 ---
 
 ## Vehicle Model
 
-**VehicleModelComponent** serves the purpose of converting inputs such as target velocity, steering or acceleration to physical forces on parts of a vehicle (robot). **VehicleModel** has a **VehicleConfiguration** which is used to define axles, parametrize and assign wheels. The model requires a **WheelControllerComponent** present in each wheel entity. It also uses an implementation of **DriveModel**, which converts vehicle inputs to forces acting on steering elements and wheels.
+VehicleModelComponent 用于将目标速度、转向或加速度等输入转换为车辆（机器人）部件上的物理力。**VehicleModel** 有一个 **VehicleConfiguration**，用于定义车轴、参数化和分配车轮。该模型需要每个轮子实体中都存在 **WheelControllerComponent**。它还使用 **DriveModel** 的实现，将车辆输入转换为作用在转向元件和车轮上的力。
 
 ### Wheel Controller
 
-A wheel controller is a controller that should be attached to the vehicle's wheel. The wheel entity should have PhysX Hinge Joint attached. The Joint controller should have:
- - **Motor Configuration / Use Motor** enabled,
- - **Motor Configuration / Force Limit Value** set to a desirable value.
+车轮控制器是应连接到车辆车轮的控制器。轮子实体应附加 PhysX Hinge Joint （PhysX 铰链关节）。联合控制器应具有：
+ - **Motor Configuration / Use Motor** 已启用。
+ - **Motor Configuration / Force Limit Value** 设置为 可取的 值。
 
 ![PhysX Joint](/images/user-guide/gems/ros2/physx_joint.png)
 
-The wheel controller has the following parameters shown below.
+车轮控制器具有以下参数，如下所示。
 
 ![Wheel Controller](/images/user-guide/gems/ros2/wheelController.png)  
 
-| Parameter Name               | Description                                                                      |
+| 参数名              | 说明                                                                      |
 |------------------------------|----------------------------------------------------------------------------------|
-| **Steering Entity**          | The entity that has a PhysX Hinge Joint that changes the direction of the wheel. |
-| **Scale of steering axis**   | Allows the user to change the ratio or / and direction of wheel steering.        |
+| **Steering Entity**          | 具有 PhysX Hinge Joint （PhysX 铰链关节） 的实体，该关节可更改轮子的方向。 |
+| **Scale of steering axis**   | 允许用户更改车轮转向的比率或/和方向。       |
 
 ### Ackermann Drive Model
 
-The implementation of **AckermannDriveModel** uses [PID controllers](https://en.wikipedia.org/wiki/PID_controller) from [control_toolbox](https://github.com/ros-controls/control_toolbox) package. The model computes velocities or forces in the joints of the vehicle and applies it accordingly to commanded velocity.
+**AckermannDriveModel** 的实现使用[control_toolbox](https://github.com/ros-controls/control_toolbox)包中的 [PID 控制器](https://en.wikipedia.org/wiki/PID_controller)。该模型计算车辆接头中的速度或力，并相应地将其应用于命令速度。
 
 ![AckermannModel](/images/user-guide/gems/ros2/ackermanModel.png)
 
-Parameters of the model are exposed to the user via **AckermannVehicleModelComponent**:
+模型的参数通过 **AckermannVehicleModelComponent**公开给用户：
 
-| Parameter Name                                    | Description                                                              |
+| 参数名              | 说明                                                                      |
 |---------------------------------------------------|--------------------------------------------------------------------------|
-| **DriveModel / Axles**                            | List of axles of the vehicle.                                            |
-| **DriveModel / Axles / Axle Wheels**              | List of wheels in axis.                                                  |
-| **DriveModel / Axles / Is it a steering**         | If it is enabled the Ackermann Drive Model will apply a steering angle.  |
-| **DriveModel / Axles / Is it a drive**            | If it is enabled the Ackermann Drive Model will apply drive force.       |
-| **DriveModel / Axles / Track**                    | Distance between front and rear axis.                                    |
-| **DriveModel / Axles / Wheelbase**                | Distance between left and right wheel.                                   |
-| **DriveModel / Steering PID / P**                 | Proportional gain of PID controller for steering servo.                  |
-| **DriveModel / Steering PID / I**                 | Integral gain of PID controller for steering servo.                      |
-| **DriveModel / Steering PID / D**                 | Derivative gain of PID controller for steering servo.                    |
-| **DriveModel / Steering PID / IMin**              | Minimum integration impact of PID.                                       |
-| **DriveModel / Steering PID / IMax**              | Maximum integration impact of PID.                                       |
-| **DriveModel / Steering PID / AntiWindUp**        | Prevents integral wind-up in PID.                                        |
-| **DriveModel / Steering PID / OutputLimit**       | Clamps output to maximum value.                                          |
-| **DriveModel / Vehicles Limits / Speed limit**    | Maximum achievable linear speed in meters per second.                    |
-| **DriveModel / Vehicles Limits / Steering limit** | Maximum achievable steering angle.                                       |
+| **DriveModel / Axles**                            | 车辆的车轴列表。                                          |
+| **DriveModel / Axles / Axle Wheels**              | 轴中的轮子列表。                                              |
+| **DriveModel / Axles / Is it a steering**         | 如果启用，Ackermann Drive Model 将应用转向角。  |
+| **DriveModel / Axles / Is it a drive**            | 如果启用，Ackermann 驱动模型将施加驱动力。      |
+| **DriveModel / Axles / Track**                    | 前后轴之间的距离。                               |
+| **DriveModel / Axles / Wheelbase**                | 左右轮之间的距离。                              |
+| **DriveModel / Steering PID / P**                 | 用于转向伺服的 PID 控制器的比例增益。                |
+| **DriveModel / Steering PID / I**                 | 用于转向伺服的 PID 控制器的积分增益。                    |
+| **DriveModel / Steering PID / D**                 | 转向伺服的 PID 控制器的导数增益。                   |
+| **DriveModel / Steering PID / IMin**              | PID 的集成影响最小。                                       |
+| **DriveModel / Steering PID / IMax**              | PID 的集成影响最大。                                       |
+| **DriveModel / Steering PID / AntiWindUp**        | 防止 PID 中的积分缠绕。                                     |
+| **DriveModel / Steering PID / OutputLimit**       | 将输出钳制到最大值。                                       |
+| **DriveModel / Vehicles Limits / Speed limit**    | 可实现的最大线速度（以米/秒为单位）。                   |
+| **DriveModel / Vehicles Limits / Steering limit** | 可实现的最大转向角。                                      |
 
 ### Skid Steering Drive Model
-The model computes velocities in the joints of the vehicle and applies it accordingly to commanded velocity and configuration.
+该模型计算车辆接头中的速度，并将其相应地应用于命令的速度和配置。
 
 ![SkidSteeringModel](/images/user-guide/gems/ros2/skidSteeringModel.png)  
-Parameters of the model are exposed to the user via **AckermannVehicleModelComponent**:
+模型的参数通过 **AckermannVehicleModelComponent**公开给用户：
 
-| Parameter Name                                         | Description                                                        |
+| 参数名              | 说明                                                                      |
 |--------------------------------------------------------|--------------------------------------------------------------------|
-| **DriveModel / Axles**                                 | List of axles of the vehicle.                                      |
-| **DriveModel / Axles / Axle Wheels**                   | List of wheels in axis.                                            |
-| **DriveModel / Axles / Is it a steering**              | It is ignored in this model.                                       |
-| **DriveModel / Axles / Is it a drive**                 | If it is enabled, the Skid Steering Drive Model will apply velocities to the axis' wheels.|
-| **DriveModel / Axles / Track**                         | Distance between front and rear axis.                              |
-| **DriveModel / Axles / Wheelbase**                     | Distance between left and right wheel.                             |
-| **DriveModel / Vehicles Limits / Linear speed limit**  | Maximum achievable linear speed in meters per second.              |
-| **DriveModel / Vehicles Limits / Angular speed limit** | Maximum achievable angular speed in radians per second.            |
+| **DriveModel / Axles**                                 | 车辆的车轴列表。                                      |
+| **DriveModel / Axles / Axle Wheels**                   | 轴中的轮子列表。                                     |
+| **DriveModel / Axles / Is it a steering**              | 在此模型中，它将被忽略。                                    |
+| **DriveModel / Axles / Is it a drive**                 | 如果启用，Skid Steering Drive Model 会将速度应用于轴的车轮。|
+| **DriveModel / Axles / Track**                         | 前后轴之间的距离。                           |
+| **DriveModel / Axles / Wheelbase**                     | 左右轮之间的距离。                         |
+| **DriveModel / Vehicles Limits / Linear speed limit**  | 可实现的最大线速度（以米/秒为单位）。             |
+| **DriveModel / Vehicles Limits / Angular speed limit** | 可达到的最大角速度（以弧度/秒为单位）。          |
 
-### Manual control
+### 手动控制
 
-The **VehicleModel** will handle input events with names "steering" and "accelerate". This means you can add an [InputComponent](/docs/user-guide/components/reference/gameplay/input/) to the same entity and define an input map for your input devices (such as a keyboard or a gamepad) to control the vehicle manually.
+**VehicleModel** 将处理名称为“steering”和“accelerate”的输入事件。这意味着您可以将 [InputComponent](/docs/user-guide/components/reference/gameplay/input/) 添加到同一实体，并为输入设备（例如键盘或游戏手柄）定义输入映射以手动控制车辆。
 
-You can use tools such as [rqt_robot_steering](https://index.ros.org/p/rqt_robot_steering/) to move your robot with Twist messages. **RobotControl** is suitable to use with [ROS 2 navigation stack](https://navigation.ros.org/).
+您可以使用 [rqt_robot_steering](https://index.ros.org/p/rqt_robot_steering/) 等工具通过 Twist 消息移动您的机器人。**RobotControl** 适合与 [ROS 2 导航堆栈](https://navigation.ros.org/) 一起使用。
 
-It is possible to implement your own control mechanisms with this component.
+可以使用此组件实现自己的控制机制。

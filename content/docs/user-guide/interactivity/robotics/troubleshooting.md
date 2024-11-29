@@ -1,50 +1,50 @@
 ---
-linkTitle: Troubleshooting
-title: Troubleshooting
-description: Troubleshooting common issues with Robot Operating System (ROS) and and the ROS 2 Gem in Open 3D Engine (O3DE).
+linkTitle: 故障排除
+title: 故障排除
+description: 排查机器人操作系统 （ROS） 和 Open 3D Engine （O3DE） 中的 ROS 2 Gem 的常见问题。
 weight: 600
 ---
 
-In this section, you will learn helpful hints and what to check when your robotics simulation in Open 3D Engine (O3DE) is not working as expected.
-You will also find solutions for some of the most commonly occurring problems.
+在本节中，您将学习有用的提示，以及当 Open 3D Engine （O3DE） 中的机器人仿真未按预期工作时应检查的内容。
+您还将找到一些最常见问题的解决方案。
 
-If you don't find your problem covered here, try searching the issues and discussions in [`o3de-extras`](https://github.com/o3de/o3de-extras) repo or asking in the `#sig-simulation` channel of the [O3DE Discord](https://{{< links/o3de-discord >}}).
+如果你没有找到你的问题，请尝试在[`o3de-extras`](https://github.com/o3de/o3de-extras)仓库中搜索问题和讨论，或在[O3DE Discord](https://{{< links/o3de-discord >}})的`#sig-simulation` 频道中提问。
 
-## Is it a ROS 2 issue?
+## 这是 ROS 2 的问题吗？
 
-### Look into error messages and logs
+### 查看错误消息和日志
 
-- Check the console outputs for errors.
-- Look into the Editor logs. From the Project folder, check `user/log/Editor.log`.
+- 检查控制台输出是否有错误。
+- 查看 Editor 日志。在 Project 文件夹中，选中`user/log/Editor.log`.
 
-### Check your ROS configuration
+### 检查你的 ROS 配置
 
-#### Correct installation
-Is your ROS 2 installed? Is it sourced properly? Was it also true when your project was built? Check `ROS_DISTRO` and `AMENT_PREFIX_PATH`.
-  - `echo $ROS_DISTRO` should show non-empty value, for example `humble`.
-  - `echo $AMENT_PREFIX_PATH` should include your ROS 2 distribution installation path as well as any additional workspaces you have sourced (if any). 
-  - If you are using ROS services in your project, make sure that the `RMW_IMPLEMENTATION` environment variable is the same on the both ends (check in each).
+#### 正确安装
+您的 ROS 2 已安装吗？来源正确吗？当您的项目构建时也是如此吗？检查 `ROS_DISTRO` 和 `AMENT_PREFIX_PATH`。
+  - `echo $ROS_DISTRO` 应显示非空值，例如 `humble`.
+  - `echo $AMENT_PREFIX_PATH` 应包括您的 ROS 2 发行版安装路径以及您已获得的任何其他工作区（如果有）。
+  - 如果您在项目中使用 ROS 服务，请确保两端的`RMW_IMPLEMENTATION`环境变量相同（签入每个端点）。
 
-#### Node and topic visibility
+#### 节点和主题可见性
 
-If your simulation is running, you should see both ROS node(s) and topics.
-  - Run `ros2 node list`. You should see at least `/o3de_ros2_node`.
-  - Run `ros2 topic list` to list the topics. You should always see `/parameters` and `/rosout`.
-    - You should see additional topics such as `/clock` and `/tf` if your simulation is running.
+如果您的模拟正在运行，您应该会看到 ROS 节点和主题。
+  - 运行 `ros2 node list`。您至少应该看到 `/o3de_ros2_node`。
+  - 运行 `ros2 topic list` 列出主题。你应该始终能看到 `/parameters` 和 `/rosout`。
+    - 如果您的模拟正在运行，您应该会看到其他主题，例如`/clock` 和 `/tf`。
 
-#### Message traffic
+#### 消息流量
 
-- Is there traffic on ROS 2 topics? When your simulation is running, messages should be published.
-  - Check `ros2 topic hz` or `ros2 topic echo`. If you are seeing no traffic it could be caused by a firewall, disabled multicast or issues with your docker (if running from a docker).
-  - Please refer to the [Troubleshooting guide](#ros2-2-troubleshooting-guide).
+- ROS 2 主题是否有流量？当您的模拟正在运行时，应发布消息。
+  - 检查 `ros2 topic hz` 或 `ros2 topic echo`。如果您没有看到流量，则可能是由防火墙、禁用多播或 Docker 问题（如果从 Docker 运行）引起的。
+  - 请参考 [故障排除指南](#ros2-2-troubleshooting-guide)。
   
-#### ROS 2 troubleshooting guide
+#### ROS 2 故障排除指南
 
-For additional solution, refer to ROS 2's [Installation troubleshooting](https://docs.ros.org/en/rolling/How-To-Guides/Installation-Troubleshooting.html) page.
+有关其他解决方案，请参阅 ROS 2 的 [安装故障排除](https://docs.ros.org/en/rolling/How-To-Guides/Installation-Troubleshooting.html) 页面。
 
-## Is it a Gem or O3DE issue?
+## 这是 Gem 还是 O3DE 问题？
 
-If your debugging confirm that the issue is with either the ROS 2 Gem or O3DE, please help the community by raising an issue in [`o3de-extras`](https://github.com/o3de/o3de-extras/issues) or [`o3de`](https://github.com/o3de/o3de/issues) repos. First, please check the list of reported issues to avoid duplicates. 
+如果您的调试确认问题与 ROS 2 Gem 或 O3DE 有关，请通过在 [`o3de-extras`](https://github.com/o3de/o3de-extras/issues) 或 [`o3de`](https://github.com/o3de/o3de/issues)存储库中提出问题来帮助社区。首先，请检查报告的问题列表以避免重复。
 
-Even better, help us to fix it and make the open source simulation for robotics better for everyone.
-Follow the [Contribution Guide](/docs/contributing/) to learn how to submit fixes and improvements.
+更好的是，帮助我们修复它，让机器人的开源仿真更好地为每个人服务。
+按照 [贡献指南](/docs/contributing/) 了解如何提交修复和改进。

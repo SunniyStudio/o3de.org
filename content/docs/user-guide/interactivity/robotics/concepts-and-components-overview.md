@@ -1,26 +1,26 @@
 ---
-linkTitle: Concepts and Structure
-title: ROS 2 Concepts and Structure
-description: Understanding basic concepts and structure of the ROS 2 Gem in Open 3D Engine (O3DE).
+linkTitle: 概念和结构
+title: ROS 2 概念和结构
+description: 了解 Open 3D Engine （O3DE） 中 ROS 2 Gem 的基本概念和结构。
 weight: 300
 toc: true
 ---
 
-This topic describes the underlying concepts and structure of the [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2/) in **Open 3D Engine (O3DE)**.
-You will learn about how ROS 2 and O3DE communicate, and how ROS 2 components interface with each other to perform various functions in a robotics simulation.
+本文介绍了 Open 3D Engine （O3DE） 中 [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2/)  的底层概念和结构。
+您将了解 ROS 2 和 O3DE 如何通信，以及 ROS 2 组件如何相互连接以在机器人模拟中执行各种功能。
 
-## ROS 2 Concepts
+## ROS 2 概念
 
-For a quick introduction to ROS 2 concepts, please refer to [ROS 2 Concepts documentation](https://docs.ros.org/en/humble/Concepts.html).
+有关 ROS 2 概念的快速介绍，请参阅 [ROS 2 概念文档](https://docs.ros.org/en/humble/Concepts.html).
 
-## Structure and Communication
+## 结构和通信
 
-The Gem creates a [ROS 2 node](https://docs.ros.org/en/humble/Tutorials/Understanding-ROS2-Nodes.html) which is directly a part of the ROS 2 ecosystem. As such, your simulation will not use any bridges to communicate and is subject to configuration through settings such as Environment Variables. It is truly a part of the ecosystem.
+Gem 创建了一个 [ROS 2 节点](https://docs.ros.org/en/humble/Tutorials/Understanding-ROS2-Nodes.html)，它直接成为 ROS 2 生态系统的一部分。因此，您的模拟不会使用任何桥接进行通信，并且会通过 Environment Variables（环境变量）等设置进行配置。它确实是生态系统的一部分。
 
-Note that the simulation node is handled through `ROS2SystemComponent` - a singleton. However, you are free to create and use your own nodes if you need more than one.
+请注意，模拟节点是通过`ROS2SystemComponent` - 一个单例来处理的。但是，如果您需要多个节点，则可以自由创建和使用自己的节点。
 
-Typically, you will be creating publishers and subscriptions in order to communicate with the ROS 2 ecosystem using common topics.
-This is done through [rclcpp API](https://docs.ros.org/en/humble/p/rclcpp/generated/classrclcpp_1_1Node.html#classrclcpp_1_1Node). Example:
+通常，您将创建发布者和订阅，以便使用常见主题与 ROS 2 生态系统进行通信。
+这是通过 [rclcpp API](https://docs.ros.org/en/humble/p/rclcpp/generated/classrclcpp_1_1Node.html#classrclcpp_1_1Node) 完成的。例：
 
 ```
 auto ros2Node = ROS2Interface::Get()->GetNode();
@@ -28,9 +28,9 @@ AZStd::string fullTopic = ROS2Names::GetNamespacedName(GetNamespace(), m_MyTopic
 m_myPublisher = ros2Node->create_publisher<sensor_msgs::msg::PointCloud2>(fullTopic.data(), QoS());
 ```
 
-Note that QoS class is a simple wrapper to [`rclcpp::QoS`](https://docs.ros.org/en/humble/p/rclcpp/generated/classrclcpp_1_1QoS.html).
+请注意，QoS 类是一个简单的包装器[`rclcpp::QoS`](https://docs.ros.org/en/humble/p/rclcpp/generated/classrclcpp_1_1QoS.html).
 
-## Components overview
+## 组件概述
 
 - __Central Singleton__
   - `ROS2SystemComponent`
@@ -66,104 +66,104 @@ Note that QoS class is a simple wrapper to [`rclcpp::QoS`](https://docs.ros.org/
 
 ### Frames
 
-`ROS2FrameComponent` is a representation of an interesting physical part of the robot. It handles the spatio-temporal relationship between this part and other frames of reference. It also encapsulates namespaces, which help to distinguish between different robots and different parts of the robot, such as in the case of multiple identical sensors on one robot.
+`ROS2FrameComponent` 表示机器人的一个有趣的物理部分。它处理此部分与其他参考系之间的时空关系。它还封装了命名空间，这有助于区分不同的机器人和机器人的不同部分，例如在一个机器人上有多个相同的传感器的情况下。
 
-All Sensors and the Robot Control components require `ROS2FrameComponent`.
+所有传感器和机器人控制组件都需要`ROS2FrameComponent`.
 
-### Sensors
+### 传感器
 
-Sensors acquire data from the simulated environment and publish it to ROS 2 domain. Sensor components derive from `ROS2SensorComponentBase`.
+传感器从模拟环境获取数据并将其发布到 ROS 2 域。传感器组件源自 `ROS2SensorComponentBase`.
 
-- Each sensor has a configuration, including one or more Publishers.
-- Sensors publish at a given rate (frequency), using one of two event sources: frame update or physics scene simulation events.
-- Some sensors can be visualized.
+- 每个传感器都有一个配置，包括一个或多个发布者。
+- 传感器使用以下两个事件源之一以给定的速率（频率）发布：帧更新或物理场景模拟事件。
+- 一些传感器可以可视化。
 
-If your sensor is not supported by the provided sensor components, you will most likely need to create a new component deriving from `ROS2SensorComponentBase`. 
-When developing a new sensor, it is useful to look at how sensors that are already provided within the ROS2 Gem are implemented. 
-Consider adding your new sensor as a separate Gem. A good example of such sensor Gem is the [RGL Gem](https://github.com/RobotecAI/o3de-rgl-gem).
+如果提供的传感器组件不支持您的传感器，您很可能需要创建一个派生自`ROS2SensorComponentBase`. 
+在开发新传感器时，查看 ROS2 Gem 中已经提供的传感器是如何实现的非常有用的。
+考虑将新传感器添加为单独的 Gem。这种传感器 Gem 的一个很好的例子是[RGL Gem](https://github.com/RobotecAI/o3de-rgl-gem).
 
-### Robot Control
+### 机器人控制
 
-The Gem comes with `ROS2RobotControlComponent`, which you can use to move your robot through:
+该 Gem 带有 `ROS2RobotControlComponent`，您可以使用它来移动您的机器人：
 
-- [Twist](https://github.com/ros2/common_interfaces/blob/master/geometry_msgs/msg/Twist.msg) messages
+- [Twist](https://github.com/ros2/common_interfaces/blob/master/geometry_msgs/msg/Twist.msg) 消息
 - [AckermannDrive](https://github.com/ros-drivers/ackermann_msgs/blob/master/msg/AckermannDrive.msg)
  
-The component subscribes to these command messages on a configured topic. The topic is `cmd_vel` by default, in a namespace as dictated by __ROS2Frame__.
+组件在配置的主题上订阅这些命令消息。默认情况下，该主题是 `cmd_vel` 的，位于 __ROS2Frame__ 指定的命名空间中。
 
-To make use of received command messages, use either `AckermannControlComponent`, `RigidBodyTwistControlComponent`, or `SkidSteeringControlComponent`, depending on the steering type.
-You can also implement your own control component or use Lua scripting to handle these commands. 
-Unless scripting is used, control components should translate ROS 2 commands to events on `VehicleInputControlBus`.
-These events will be handled by a [`VehicleModelComponent`](#vehicle-model) if it is present.
-You can use tools such as [rqt_robot_steering](https://index.ros.org/p/rqt_robot_steering/) to move your robot with Twist messages.
-`RobotControl` is suitable to use with [ROS 2 navigation stack](https://navigation.ros.org/).
-It is possible to implement your own control mechanisms with this component.
+要使用收到的命令消息，请使用`AckermannControlComponent`, `RigidBodyTwistControlComponent`, 或 `SkidSteeringControlComponent`，具体取决于转向类型。
+您还可以实现自己的控制组件或使用 Lua 脚本来处理这些命令。
+除非使用脚本，否则控制组件应将 ROS 2 命令转换为 `VehicleInputControlBus`.
+如果存在 [`VehicleModelComponent`](#vehicle-model)，则这些事件将由[`VehicleModelComponent`](#vehicle-model)处理。
+您可以使用 [rqt_robot_steering](https://index.ros.org/p/rqt_robot_steering/) 等工具通过 Twist 消息移动您的机器人。
+`RobotControl` 适合与 [ROS 2 导航堆栈](https://navigation.ros.org/).
+可以使用此组件实现自己的控制机制。
 
-### Joints and Manipulators
+### 关节和操纵器
 
-To control robotic joints systems such as manipulator arms, some integration with [MoveIt2](https://github.com/ros-planning/moveit2) is in place.
-Two kinds of simulated joint systems are supported:
-- Articulation links, which benefit from stability of reduced coordinate articulations in the physics engine.
-- Hinge and prismatic joint components.
-When [importing a robot](importing-robot.md) with joints, you decide which of these systems to use.
+为了控制机械臂等机器人关节系统，与 [MoveIt2](https://github.com/ros-planning/moveit2) 进行了一些集成。
+支持两种模拟关节系统：
+- 接合链接，受益于物理引擎中简化的坐标接合的稳定性。
+- 铰链和棱柱关节组件。
+当 [导入机器人](importing-robot.md) 带有关节时，您可以决定使用哪些系统。
 
-There are three interfaces to control joint systems: `JointsPositionControllerRequests`, `JointsManipulationRequests` and `JointsTrajectoryRequest`.
-Each of these has one or more implementations within ROS 2 Gem, and it is possible to develop custom behaviors in a modular way using these interfaces.
+有三个接口可用于控制关节系统： `JointsPositionControllerRequests`, `JointsManipulationRequests` and `JointsTrajectoryRequest`.
+这些接口中的每一个在 ROS 2 Gem 中都有一个或多个实现，并且可以使用这些接口以模块化方式开发自定义行为。
 
-`JointManipulationComponent` allows you to set target positions for all joints. If you wish to control the movement using trajectory through 
-[FollowJointTrajectory action](https://github.com/ros-controls/control_msgs/blob/master/control_msgs/action/FollowJointTrajectory.action), use `JointsTrajectoryComponent`.
+`JointManipulationComponent` 允许您为所有关节设置目标位置。如果您希望使用 trajectory through 控制移动
+[FollowJointTrajectory 操作](https://github.com/ros-controls/control_msgs/blob/master/control_msgs/action/FollowJointTrajectory.action), 使用 `JointsTrajectoryComponent`.
 
 #### Joint States
 
-`JointsManipulationComponent` also publishes [joint states](https://docs.ros2.org/latest/api/sensor_msgs/msg/JointState.html) by default.
+`JointsManipulationComponent` 默认也发布 [关节状态](https://docs.ros2.org/latest/api/sensor_msgs/msg/JointState.html)。
 
 ### Vehicle Model
 
-`VehicleModelComponent` serves the purpose of converting inputs such as target velocity, steering or acceleration to physical forces on parts of a vehicle (robot). `VehicleModel` has a `VehicleConfiguration` which is used to define axles, parametrize and assign wheels. The model requires a `WheelControllerComponent` present in each wheel entity. It also uses an implementation of `DriveModel`, which converts vehicle inputs to forces acting on steering elements and wheels.
+`VehicleModelComponent`用于将目标速度、转向或加速度等输入转换为车辆部件（机器人）上的物理力。 `VehicleModel` 有一个 `VehicleConfiguration`，用于定义车轴、参数化和分配车轮。 该模型需要每个轮子实体中都存在一个 `WheelControllerComponent` 。它还使用了 `DriveModel` 的实现，将车辆输入转换为作用在转向元件和车轮上的力。
 
 ### Vehicle Dynamics
 
-See the [Vehicle Dynamics](vehicle-dynamics.md) section.
+见 [Vehicle Dynamics](vehicle-dynamics.md) 章节。
 
 ### Spawner
 
-`ROS2SpawnerComponent` handles spawning entities during a simulation.
-Before the simulation, you must set up as the component's available spawnables and define the named spawn points in the component's properties via the **O3DE Editor**.
-This can be done by adding `ROS2SpawnPointComponent` to a child entity of an entity with `ROS2SpawnerComponent`. 
-During the simulation you can access the names of available spawnables and request spawning by using ROS 2 services.
-The names of services are `/get_available_spawnable_names` and `/spawn_entity` respectivly.
-_GetWorldProperties.srv_ and _SpawnEntity.srv_ types are used to handle these features.
-In order to request the defined spawn point names, you can use the `/get_spawn_points_names` service with the `GetWorldProperties.srv` type.
-Detailed information about specific spawn point, such as pose, can be accessed using the `/get_spawn_point_info` service with the `GetModelState.srv` type.
-All used services types are defined in the **gazebo_msgs** package.
+`ROS2SpawnerComponent` 处理在模拟期间生成实体。
+在模拟之前，您必须设置为组件的可用可生成项，并通过 **O3DE 编辑器** 在组件的属性中定义命名的生成点。
+这可以通过将 `ROS2SpawnPointComponent` 添加到具有 `ROS2SpawnerComponent` 的实体的子实体来完成。
+在模拟期间，您可以使用 ROS 2 服务访问可用可生成对象的名称并请求生成。
+服务的名称分布包括`/get_available_spawnable_names` 和 `/spawn_entity` 。
+_GetWorldProperties.srv_ 和 _SpawnEntity.srv_ 类型用于处理这些功能。
+为了请求定义的生成点名称，您可以使用带有`GetWorldProperties.srv` 类型的`/get_spawn_points_names`服务。
+有关特定生成点的详细信息，例如姿势，可以使用具有`GetModelState.srv`类型的`/get_spawn_point_info`服务进行访问。
+所有使用的服务类型都在 **gazebo_msgs** 包中定义。
 
-- **Spawning**: To spawn, you must pass in the spawnable name into `request.name` and the position of entity into `request.initial_pose`.
-  - Example call: 
+- **Spawning**: 要生成，您必须将可生成名称传入`request.name` 中，将实体的位置传入 `request.initial_pose` 中。
+  - 示例调用: 
   ```
   ros2 service call /spawn_entity gazebo_msgs/srv/SpawnEntity "{name: 'robot', initial_pose: {position:{ x: 4.0, y: 4.0, z: 0.2 }, orientation: { x: 0.0, y: 0.0, z: 0.0, w: 0.0 } } }"
   ```
-- **Spawning in defined spawn point**: Pass in a spawnable into `request.name` and the name of the spawn point into `request.xml`.
-  - Example call:
+- **Spawning in defined spawn point**: 将可生成对象传入 `request.name` 中，将生成点的名称传入 `request.xml` 中。
+  - 示例调用:
     ``` 
     ros2 service call /spawn_entity gazebo_msgs/srv/SpawnEntity "{name: 'robot', xml: 'spawn_spot'}"
     ```
-- **Spawning using WGS84 coordinates**: You can also spawn objects using geographical location when [Georeference component](georeference.md) is enabled. Set the `reference_frame` to _wgs84_ and provide the coordinates.
-  - Example call spawning at 52°14′22″N, 21°02′44″E:
+- **Spawning using WGS84 coordinates**: 启用 [Georeference 组件](georeference.md) 时，您还可以使用地理位置生成对象。将 `reference_frame` 设置为 _wgs84_ 并提供坐标。
+  - 示例调用 生成在 52°14′22″N, 21°02′44″E:
     ```
     ros2 service call /spawn_entity gazebo_msgs/srv/SpawnEntity "{name: 'robot', initial_pose: { position: { x: 52.2406855386909, y: 21.04264386637526, z: 0.0 }, orientation: {  x: 0.0, y: 0.0, z: 0.0, w: 0.0 } }, reference_frame: 'wgs84'}"
     ```
-- **Available spawnable names access**: Send the names of available spawnables into `response.model_names`.
-  - Example call:
+- **Available spawnable names access**: 将可用可生成对象的名称发送到 `response.model_names` 中。
+  - 示例调用:
     ```
     ros2 service call /get_available_spawnable_names gazebo_msgs/srv/GetWorldProperties
     ```
-- **Defined spawn points' names access**: Send the names of defined points into `response.model_names`
-  - Example call:
+- **Defined spawn points' names access**: 将已定义点的名称发送到 `response.model_names`
+  - 示例调用:
     ```
     ros2 service call /get_spawn_points_names gazebo_msgs/srv/GetWorldProperties
     ```
-- **Detailed spawn point info access**: Pass in the spawn point name into `request.model_name` and the defined pose into `response.pose`.
-  - Example call:
+- **Detailed spawn point info access**: 将生成点名称传入 `request.model_name` 中，将定义的姿势传入 `response.pose` 中。
+  - 示例调用:
     ```
     ros2 service call /get_spawn_point_info gazebo_msgs/srv/GetModelState "{model_name: 'spawn_spot'}"
     ```

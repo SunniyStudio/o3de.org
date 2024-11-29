@@ -1,154 +1,154 @@
 ---
-linkTitle: Importing robot
-title: Importing robots
-description: Importing robots from description file with ROS 2 Gem in Open 3D Engine (O3DE).
+linkTitle: 导入机器人
+title: 导入机器人
+description: 在 Open 3D Engine （O3DE） 中使用 ROS 2 Gem 从描述文件导入机器人。
 weight: 450
 toc: true
 ---
 
-[ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2/) for **Open 3D Engine (O3DE)** includes a **Robot Importer** tool that imports robots' descriptions used in the ROS 2 ecosystem.
+**Open 3D Engine （O3DE**中的[ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2/)  包括一个 **机器人导入器** 工具，用于导入 ROS 2 生态系统中使用的机器人描述。
 
-## About supported robot description formats
+## 关于支持的 robot 描述格式
 
-SDFormat, URDF, and XACRO are widely used robot description standards within the ROS (Robot Operating System) ecosystem.
+SDFormat、URDF 和 XACRO 是 ROS（机器人操作系统）生态系统中广泛使用的机器人描述标准。
 
-[SDFormat](http://sdformat.org/) is an XML-based file format used to describe objects and environments for robot simulations. Originally developed for the [Gazebo](https://gazebosim.org/home) simulator, SDFormat has evolved into a comprehensive standard that covers all aspects of simulation, including static and dynamic objects, visual materials, and physics properties.
+[SDFormat](http://sdformat.org/)是一种基于 XML 的文件格式，用于描述 robot 模拟的对象和环境。SDFormat 最初是为[Gazebo](https://gazebosim.org/home) 模拟器开发的，现已发展成为一个涵盖模拟所有方面的综合标准，包括静态和动态对象、视觉材质和物理属性。
 
-[Unified Robot Description Format (URDF)](http://wiki.ros.org/urdf) is an XML-based file format that describes the physical characteristics of a robot in a structured and standardized way. It includes information about the robot's joints, links, sensors, and other components, as well as their properties such as mass, inertia, and geometry. 
+[Unified Robot Description Format (URDF)](http://wiki.ros.org/urdf) 是一种基于 XML 的文件格式，它以结构化和标准化的方式描述机器人的物理特性。它包括有关机器人的关节、链接、传感器和其他组件的信息，以及它们的属性，例如质量、惯性和几何形状。
 
-[XML Macros (XACRO)](http://wiki.ros.org/xacro) is a macro language that simplifies the creation and maintenance of URDF files. XACRO allows you to generate URDF files using XML macros. In XACRO, you can define parameters and include files, which is useful to change and iterate on robot models. You can also expand and reuse XACRO across multiple robot models. 
+[XML Macros (XACRO)](http://wiki.ros.org/xacro) 是一种宏语言，可简化 URDF 文件的创建和维护。XACRO 允许您使用 XML 宏生成 URDF 文件。在 XACRO 中，您可以定义参数并包含文件，这对于更改和迭代机器人模型非常有用。您还可以在多个机器人模型中扩展和重用 XACRO。
 
-URDF, XACRO, and SDFormat files contain complete robot descriptions, including references to external geometry files. While you can define primitive geometries directly within the robot description file, it is a common practice to use external mesh files, in formats such as DAE (Collada) or STL, to represent the visual and collision shapes of the robot.
+URDF、XACRO 和 SDFormat 文件包含完整的机器人描述，包括对外部几何文件的引用。虽然您可以直接在机器人描述文件中定义基元几何图形，但通常的做法是使用 DAE （Collada） 或 STL 等格式的外部网格文件来表示机器人的视觉和碰撞形状。
 
-Robot models are typically available in packages that include the robot description file and additional geometry files with visualizations and collision shapes, either as primitive geometries or external mesh files. These packages may be distributed as ROS workspaces, which are more straightforward to use in ROS applications. 
+机器人模型通常以软件包的形式提供，其中包括机器人描述文件和具有可视化和碰撞形状的其他几何文件，可以是基元几何图形，也可以是外部网格文件。这些软件包可以作为 ROS 工作区分发，在 ROS 应用程序中使用起来更直接。
 
-## Introduction to Robot Importer
+## Robot Importer 简介
 
-Import robots into your O3DE simulation project using the Robot Importer that's included in the ROS 2 Gem. Robot Importer has the following features:
+使用 ROS 2 Gem 中包含的 Robot Importer 将机器人导入您的 O3DE 模拟项目。Robot Importer 具有以下功能：
 
-- Guides you through the import process step by step.
-- Allows you to change parameters of the import, including search paths for assets.
-- Reads SDFormat, URDF and XACRO files.
-- Copies all required assets files to the `Assets` folder of your O3DE project.
-- Creates a prefab with a multi-body structure using articulations or classic rigid bodies and joints components.
+- 指导您逐步完成导入过程。
+- 允许您更改导入的参数，包括资产的搜索路径。
+- 读取 SDFormat、URDF 和 XACRO 文件。
+- 将所有必需的 assets 文件复制到 O3DE 项目的 `Assets` 文件夹中。
+- 使用关节或经典刚体和关节组件创建具有多体结构的预制件。
 
-## Importing a robot into your simulation project
+## 将机器人导入到你的模拟项目中
 
-### Prerequisite
+### 先决条件
 
-Depending on a content of robot description files, you might need to build a ROS workspace with the package and its dependencies. This ensures that Robot Importer can find all the required files. In some cases, it is possible to append paths used by the Robot Importer in the Wizard instead, and to skip the build of a ROS workspace completely.
+根据机器人描述文件的内容，您可能需要使用软件包及其依赖项构建 ROS 工作区。这可确保 Robot Importer 可以找到所有必需的文件。在某些情况下，可以改为在向导中附加 Robot Importer 使用的路径，并完全跳过 ROS 工作区的构建。
 
-To build, create a workspace and run `colcon build`. Do not forget to source ROS 2 workspace before launching the O3DE Editor. 
+要构建，请创建一个工作区并运行`colcon build`。在启动 O3DE 编辑器之前，不要忘记获取 ROS 2 工作区。
 
-For more information, refer to the robot description package's documentation, which is often included in the GitHub repository's README file. 
+有关更多信息，请参阅机器人描述包的文档，该文档通常包含在 GitHub 存储库的 README 文件中。
 
-### Loading the robot definition file with Robot Importer
+### 使用 Robot Importer 加载机器人定义文件
 
-1. Load your project and select a level in O3DE Editor.
+1. 加载您的项目并在 O3DE 编辑器中选择一个级别。
 
-2. Launch Robot Importer from the Editor by doing either of the following:
-   - Select **Main Menu > Tools > Robot Importer**
-   - Select the **Robot Importer** icon in the toolbar 
+2. 通过执行以下任一操作，从 Editor 启动 Robot Importer：
+   - 选择 **Main Menu > Tools > Robot Importer**
+   - 在工具栏中点击 **Robot Importer** 图标 
   
         ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_button.png)
 
-3. Read the information page in the Robot Importer. Then select **Next**.
+3. 阅读 Robot Importer 中的信息页面。然后选择 **Next**.
 
-4. Load a description file by doing the following:
+4. 通过执行以下操作加载描述文件：
 
-   - Select an SDFormat, URDF, or XACRO file to import by clicking on the **[...]** button.
-   - A number of options are available to modify the behavior of the importer:
-        * Use Articulations - Determines whether PhysX articulation components should be used for joints and rigid bodies.
-        * Preserve URDF fixed joint - When set, preserves any fixed joints found when importing a URDF file. This prevents the joint reduction logic in libsdformat from merging links of those joints.
-        * Fix URDF to be compatible with libsdformat - It allows you to import some URDFs or XACRO files that are not fully compatible. With this feature enabled, Robot Importer will try to adjust the URDF code to be compatible.
-        * Path Resolvers - SDFormat, URDF, and XACRO files are almost always referencing some other files (like meshes, and textures). This feature allows you to give a hint to Robot Importer where to find those assets.
-                           This feature can be useful, in an advanced situation like importing legacy files or trying to import ROS 1 packages. \
-                           **Important** This feature does not affect the XACRO parsing, since the XACRO bundled with ROS 2 installation is used at this moment.
-        * Use `AMENT_PREFIX_PATH` - Uses the [AMENT_PREFIX_PATH](https://design.ros2.org/articles/ament.html) environment variable to locate asset references. It is a default behavior for ROS 2 description packages.
-        * Prefix Replacement - This is a map that allows you to determine paths for the Path Resolvers, described earlier.
-    - Click **Next**.
+   - 通过单击 **[...]** 按钮选择要导入的 SDFormat、URDF 或 XACRO 文件。
+   - 有许多选项可用于修改导入器的行为：
+        * Use Articulations （使用关节） - 确定是否应该将 PhysX 关节组件用于关节和刚体。
+        * 保留 URDF 固定关节 - 设置后，将保留在导入 URDF 文件时找到的任何固定关节。这可以防止 libsdformat 中的关节缩减逻辑合并这些关节的链接。
+        * 修复 URDF 以与 libsdformat 兼容 - 它允许您导入一些不完全兼容的 URDF 或 XACRO 文件。启用此功能后，Robot Importer 将尝试调整 URDF 代码以使其兼容。
+        * 路径解析器 - SDFormat、URDF 和 XACRO 文件几乎总是引用一些其他文件（如网格和纹理）。此功能允许您提示 Robot Importer 在何处查找这些资产。
+                           在高级情况下，例如导入旧文件或尝试导入 ROS 1 包，此功能可能很有用。 \
+                           **重要** 此功能不会影响 XACRO 解析，因为此时使用的是与 ROS 2 安装捆绑在一起的 XACRO。
+        * 使用 `AMENT_PREFIX_PATH` - 使用 [AMENT_PREFIX_PATH](https://design.ros2.org/articles/ament.html) 环境变量来查找资产引用。这是 ROS 2 描述包的默认行为。
+        * Prefix Replacement （前缀替换） - 这是一个映射，允许您确定前面描述的 Path Resolvers 的路径。
+    - 点击 **Next**.
 
    ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_load_file.png)
 
-5. (Optional) If you are importing an XACRO file which file contains parameters, set the parameters' values. To edit parameters, **double-click** on the value. When you're finished, click **Next**.
+5. （可选）如果要导入的文件包含参数的 XACRO 文件，请设置参数的值。要编辑参数，请 **双击** 该值。完成后，单击 **Next**。
 
     ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_XACRO_parameters.png)
 
     {{< note >}}
-How you set the parameters depends on the XACRO project that you are importing. For a successful import, refer to the XACRO project's documentation.
+如何设置参数取决于要导入的 XACRO 项目。要成功导入，请参阅 XACRO 项目的文档。
 
-If your XACRO project fails to import, you will see a message with the output of the ROS 2 XACRO executable, similar to the following.
+如果您的 XACRO 项目导入失败，您将看到一条消息，其中包含 ROS 2 XACRO 可执行文件的输出，类似于以下内容。
 
 ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_fail.png)
     {{< /note >}}
 
-6. (Optional) If the XACRO or URDF contains some missing information will be adjusted automatically.
-This feature is available if you enable the option 'Fix URDF to be compatible with libsdformat' in point 4.
-Currently, some common problems are resolved:
- - missing inertia matrices, masses are added with the default values,
- - Robot Importer changes names to have joint names unique.
-After this automatic adjustment, you can take a look into the changes that were made, and go through the modified URDF.
+6. （可选）如果 XACRO 或 URDF 包含一些缺失信息，将自动调整。
+如果您在第 4 点中启用“修复 URDF 以与 libsdformat 兼容”选项，则此功能可用。
+目前，一些常见问题已解决：
+ - 缺少惯性矩阵，质量以默认值添加，
+ - Robot Importer 更改名称以使关节名称唯一。
+在此自动调整之后，您可以查看所做的更改，并浏览修改后的 URDF。
 ![Robot Importer](/images/user-guide/gems/ros2/URDF_fixing_result.png)
 
     {{< note >}}
-    Option 'Fix URDF to be compatible with libsdformat' allows you to successfully import URDF files that are not compatible with simulation, but please remember to adjust the resulting prefab. 
+通过“Fix URDF to be compatible with libsdformat”选项，您可以成功导入与模拟不兼容的 URDF 文件，但请记住调整生成的预制件。
     {{< /note >}}
  
-### Processing robot assets
+### 处理机器人资产
 
-After the the description file loads, Robot Importer displays a table with a list of all the assets used in the model.
-Each row of the table describes one asset, with information divided into the following columns:
+加载描述文件后，Robot Importer 会显示一个表格，其中包含模型中使用的所有资产的列表。
+表的每一行都描述一个资产，信息分为以下列：
 
-- **URDF/SDF mesh path** - Relative file path of the mesh, as defined in the URDF file.
-- **Resolved mesh from URDF/SDF** - Absolute file path of the mesh located in your filesystem.
-- **Product asset** - Relative file path of the generated product asset (e.g. `*.azmodel`, `*.pxmesh`) in your O3DE project's `Cache` directory.
-- **Source asset** - Relative file path of the source asset in your O3DE project's `Assets` directory.
-- **Type** - The type of the asset.
+- **URDF/SDF mesh path** - 网格的相对文件路径，如 URDF 文件中所定义。
+- **Resolved mesh from URDF/SDF** - 位于文件系统中的网格的绝对文件路径。
+- **Product asset** - 生成的产品资产（例如`*.azmodel`, `*.pxmesh`）在 O3DE 项目的 `Cache` 目录中的相对文件路径。
+- **Source asset** - O3DE 项目的 `Assets` 目录中源资产的相对文件路径。
+- **Type** - 资产的类型。
 
-    Assets that loaded successfully have a green checkmark, whereas assets that failed to load are marked red. 
+    成功加载的资产带有绿色复选标记，而加载失败的资产则标记为红色。
 
-To see additional information about each asset, **double-click** its row. This opens the O3DE Asset Processor, which shows import details. This information is especially helpful to troubleshoot assets that failed to import.
+要查看有关每个资产的其他信息，请 **双击** 其行。这将打开 O3DE Asset Processor，其中显示导入详细信息。此信息对于排查导入失败的资源问题特别有用。
 
-Click **Next** when finished.
+完成后单击 **Next**。
 
 ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_mesh_list.png)
 
-**What to do if there are problems with importing assets?**
+**如果导入资源时出现问题，该怎么办？**
 
-If the **Source asset** field is marked as failed, then Robot Importer cannot find a reference to the mesh file in the file system. 
-In such a situation, ensure that the robot's description package is built and sourced correctly.
-You can try to give a custom way to resolve prefixes in Point 4.
+如果 **Source asset** 字段标记为失败，则 Robot Importer 无法在文件系统中找到对网格文件的引用。
+在这种情况下，请确保正确构建和获取机器人的描述包。
+您可以尝试在第 4 点中提供一种自定义方法来解析前缀。
 
-If the **Product asset** field is marked as failed, then the Asset Builder cannot build the product asset. 
-Refer to the Asset Processor output or the log files in the `/user/log` directory.
+如果 **Product asset** 字段标记为失败，则 Asset Builder 无法构建产品资产。
+请参阅 Asset Processor 输出或`/user/log`目录中的日志文件。
 
-You can either resolve the issues now or after you finish using Robot Importer: 
-- To resolve, click **Back** and resolve problems with the mesh files. Then click **Next** to retry the import.
-- To resolve later, click **Next** and finish URDF import. Then add the missing meshes in the O3DE Editor.
+您可以立即解决问题，也可以在使用 Robot Importer 完成后解决问题：
+- 要解决此问题，请单击 **Back** 并解决网格文件的问题。然后单击 **Next** 重试导入。
+- 要稍后解决，请单击 **Next** 并完成 URDF 导入。然后在 O3DE 编辑器中添加缺失的网格。
 
-### Creating a robot prefab
+### 创建机器人预制件
 
-1. Create a prefab by doing the following:
+1. 通过执行以下操作创建预制件：
 
-   - Enter a prefab name.
-   - (Optional) Select a spawn position. 
-    If there are spawn points added to the scene, you can choose one in the drop-down menu.
-   - Click **Create Prefab**.
+- 输入预制件名称。
+   - （可选） 选择生成位置。
+    如果场景中添加了生成点，则可以在下拉菜单中选择一个生成点。
+   -点击**Create Prefab**.
 
     ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_prefab_creation.png)
 
-2. After creating a prefab, review a summary of the generated entities.
+2. 创建预制件后，查看生成的实体的摘要。
 
     ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_summary.png)
 
-3. Finally, there is a prefab in the scene. You can add one or more [sensors](/docs/user-guide/interactivity/robotics/concepts-and-components-overview/#sensors) or mobilize robot with [ROS 2 Vehicle Dynamics](/docs/user-guide/interactivity/robotics/vehicle-dynamics/) or using [Joint Manipulation](/docs/user-guide/interactivity/robotics/joints-manipulation/).
+3. 最后，场景中有一个预制件。您可以添加一个或多个 [传感器](/docs/user-guide/interactivity/robotics/concepts-and-components-overview/#sensors) 或使用 [ROS 2 车辆动力学](/docs/user-guide/interactivity/robotics/vehicle-dynamics/)或使用 [关节操作](/docs/user-guide/interactivity/robotics/joints-manipulation/)移动机器人。
 
-    ![Robot Importer](/images/user-guide/gems/ros2/URDF_result.png)
+![Robot Importer](/images/user-guide/gems/ros2/URDF_result.png)
 
-### Re-importing robots
+### 重新导入机器人
 
-Use the Robot Importer to re-import URDF files. In some cases, assets (mesh files) don't update if they were previously imported correctly. To work around this and do a complete re-import, delete the assets from your project by using the Asset Browser or in the directory.
+使用 Robot Importer 重新导入 URDF 文件。在某些情况下，如果之前正确导入了资源（网格文件），则它们不会更新。要解决此问题并执行完全重新导入，请使用 Asset Browser （资源浏览器） 或在目录中删除项目资源。
 
-### More information
+### 更多信息
 
-Details about supported SDFormat sensors are available in the [SDFormat sensors sub-page](./sdformat-sensors.md). Additional information about SDFormat model plugins are given in the [SDFormat plugins sub-page](./sdformat-plugins.md). You might be interested in checking a more thorough import description of [Turtlebot4 robot](https://clearpathrobotics.com/turtlebot-4/) in the [Importing Turtlebot4](./importing-turtlebot4.md) sub-page.
+有关支持的 SDFormat 传感器的详细信息，请参阅 [SDFormat 传感器子页面](./sdformat-sensors.md)。有关 SDFormat 模型插件的其他信息，请参见 [SDFormat 插件子页面](./sdformat-plugins.md)。您可能有兴趣在 [Importing Turtlebot4](./importing-turtlebot4.md)  子页面查看 [Turtlebot4 robot](https://clearpathrobotics.com/turtlebot-4/) 的更详尽的导入描述。

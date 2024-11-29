@@ -1,40 +1,40 @@
 ---
-linkTitle: Overview
-title: Robotics Overview
-description: An overview of concepts, Gems, templates and demos for robotics in Open 3D Engine (O3DE).
+linkTitle: 概念
+title: 机器人概念
+description: Open 3D Engine （O3DE） 中机器人技术的概念、Gem、模板和演示概述。
 weight: 100
 ---
 
-The ROS 2 Gem helps to build robotic simulations with [ROS 2 / Robot Operating System](https://docs.ros.org/en/jazzy/index.html).
+ROS 2 Gem 有助于使用 [ROS 2 / 机器人操作系统](https://docs.ros.org/en/jazzy/index.html).
 
-The ROS 2 Gem contains a number of components to build robotic simulations, such as sensors,
-controllers of different types of drives, manipulator arms, and dynamic spawning of robots. It also comes with plenty of utilities.
+ROS 2 Gem 包含许多用于构建机器人模拟的组件，例如传感器、
+不同类型驱动器的控制器、机械臂和机器人的动态生成。它还配备了许多实用程序。
 
 ## Gems
 
-There are several Gems to power robotic simulations with **Open 3D Engine (O3DE)**.
-- [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2), the central and the most important one. It provides most features and other robotics Gems depend on it. 
-- Asset Gems providing sample ROS 2 prefabs (robots) and scene decorations, including `ProteusRobot`, `RosRobotSample`, `WarehouseAssets`, `WarehouseAutomation`, and `WarehouseSample`.
+有几种 Gem 可以通过 **Open 3D Engine （O3DE）** 为机器人模拟提供支持。
+- [ROS 2 Gem](/docs/user-guide/gems/reference/robotics/ros2)，最中心也是最重要的一个。它提供了大多数功能，而 Gems 的其他机器人技术则依赖于它。
+- 提供示例 ROS 2 预制件（机器人）和场景装饰的资源 Gem，包括`ProteusRobot`, `RosRobotSample`, `WarehouseAssets`, `WarehouseAutomation`, 和 `WarehouseSample`.
 - 3rd party Gems: 
-  - [Robotec GPU Lidar (RGL) Gem](https://github.com/RobotecAI/o3de-rgl-gem) - GPU accelerated LIDAR simulation in O3DE using CUDA.
-  - [Robotec Vehicle Dynamics Gem](https://github.com/RobotecAI/robotec-vehicle-dynamics-gem) - simple vehicle controller.
+  - [Robotec GPU Lidar (RGL) Gem](https://github.com/RobotecAI/o3de-rgl-gem) - 使用 CUDA 在 O3DE 中加速 LIDAR 仿真。
+  - [Robotec Vehicle Dynamics Gem](https://github.com/RobotecAI/robotec-vehicle-dynamics-gem) - 简单的车辆控制器。
 
-## Templates
+## 模板
 
-There are three templates for robotics:
-- [ROS 2 project template](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2ProjectTemplate):
-  - A simple interior scene with ROSBot XL robot, a differential drive (skid steering) robot.
-  - It is the most lightweight and basic robotic project template.
-- [Warehouse project template](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2FleetRobotTemplate):
-  - A photorealistic warehouse with a Proteus robot.
-  - It is easy to add more robots using the included spawning component.
-- [Manipulation project template](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2RoboticManipulationTemplate):
-  - Two levels for use-cases with robotic arms: Manipulation R&D and Palletization.
-  - Suitable for use-cases with robotic arms, presenting two kinds of grippers. Items for manipulation are included.
+机器人有三个模板：
+- [ROS 2 项目模板](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2ProjectTemplate):
+  - 使用 ROSBot XL 机器人（差速驱动（滑移转向）机器人）的简单内部场景。
+  - 它是最轻量级和最基本的机器人项目模板。
+- [Warehouse 项目模板](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2FleetRobotTemplate):
+  - 带有 Proteus 机器人的照片级逼真仓库。
+  - 使用包含的生成组件可以轻松添加更多机器人。
+- [Manipulation 项目模板](https://github.com/o3de/o3de-extras/tree/development/Templates/Ros2RoboticManipulationTemplate):
+  - 机械臂用例的两个级别：操作研发和码垛化。
+  - 适用于机械臂的用例，提供两种夹爪。包括用于操作的项目。
 
-## Demos
+## 演示
 
-There are open-source project demonstrating what can be done with the ROS 2 Gem:
-- [Robot Vacuum Sample](https://github.com/o3de/RobotVacuumSample): a robot vacuum navigating in a beautiful apartment: 
-- [Robot Harvesting Sample](https://github.com/o3de/ROSConDemo): agricultural robots orchestrated through ROS 2 to pick apples in a scenic orchard.
-- [Automated Fulfillment Center](https://github.com/RobotecAI/ROSCon2023Demo): robotic arms and Autonomous Mobile Robots working on palletization and intra-logistics.
+有一些开源项目演示了 ROS 2 Gem 可以做什么：
+- [Robot Vacuum Sample](https://github.com/o3de/RobotVacuumSample): 在美丽公寓中导航的机器人吸尘器：
+- [Robot Harvesting Sample](https://github.com/o3de/ROSConDemo): 通过 ROS 2 编排的农业机器人在风景秀丽的果园中采摘苹果。
+- [Automated Fulfillment Center](https://github.com/RobotecAI/ROSCon2023Demo): 机械臂和自主移动机器人负责码垛和内部物流。

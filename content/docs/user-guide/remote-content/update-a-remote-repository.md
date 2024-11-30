@@ -1,23 +1,23 @@
 ---
-linkTitle: Update an O3DE remote repository
-title: Update an O3DE remote repository
-description: Learn how to update an O3DE remote repository's contents or meta data.
+linkTitle: 更新 O3DE 远程存储库
+title: 更新 O3DE 远程存储库
+description: 了解如何更新 O3DE 远程存储库的内容或元数据。
 weight: 400
 toc: true
 ---
 
-You can update the properties for an O3DE remote repository, add and manage Gems, Projects and Templates with the O3DE CLI.
+您可以使用 O3DE CLI 更新 O3DE 远程存储库的属性，添加和管理 Gem、Projects 和模板。
 
 
-## Use the `o3de` command line tool to update an O3DE remote repository
+## 使用`o3de`命令行工具更新 O3DE 远程存储库
 
-The `o3de edit-repo-properties` command lets you update remote repository properties, add new content and manage existing content.
+`o3de edit-repo-properties` 命令允许您更新远程存储库属性、添加新内容和管理现有内容。
 
-See the [`o3de edit-repo-properties` CLI Reference](/docs/user-guide/project-config/cli-reference/#edit-repo-properties) for the complete list of options.
+查看 [`o3de edit-repo-properties` CLI 参考](/docs/user-guide/project-config/cli-reference/#edit-repo-properties)以获取完整的选项列表。
 
-### Update remote repository properties
+### 更新远程仓库属性
 
-You can use the `o3de` CLI tool to modify properties stored in the `repo.json` file of an O3DE remote repository with the following command:
+您可以使用`o3de` CLI 工具通过以下命令修改存储在 O3DE 远程存储库的`repo.json`文件中的属性：
 
 {{< tabs name="Modify O3DE remote repository properties" >}}
 {{% tab name="Windows" %}}
@@ -39,9 +39,9 @@ You can use the `o3de` CLI tool to modify properties stored in the `repo.json` f
 {{< /tabs >}}
 
 
-### Add a new Gem or new Gem version to a remote repository, or update an existing Gem
+### 将新 Gem 或新 Gem 版本添加到远程存储库，或更新现有 Gem
 
-You can use the `o3de` CLI tool to add information from a `gem.json` file to a `repo.json` file and make an archive that you can upload with the following command:
+您可以使用`o3de` CLI 工具将 `gem.json` 文件中的信息添加到`repo.json`文件中，并创建可以使用以下命令上传的存档：
 
 {{< tabs name="Add information about a gem to `repo.json`" >}}
 {{% tab name="Windows" %}}
@@ -64,33 +64,34 @@ You can use the `o3de` CLI tool to add information from a `gem.json` file to a `
 {{% /tab %}}
 {{< /tabs >}}
 
-After running this command, the `repo.json` file will be modified so the information inside each `gem.json` file is included and the `sha256` archive file hash is correct.
+运行此命令后，将修改`repo.json`文件，以便包含每个 `gem.json`文件中的信息，并且 `sha256` 存档文件哈希值正确。
 
-If a gem with the same name already exists in the `repo.json` but the version is different, the `gem.json` data from the new version will be added to the [`versions_data`](/docs/user-guide/programming/gems/manifest/#gemjson-manifest-contents) field.  If a gem with the same name and version already exists the gem will be updated.  
+如果`repo.json`中已存在同名的 Gem，但版本不同，则新版本的`gem.json`数据将添加到[`versions_data`](/docs/user-guide/programming/gems/manifest/#gemjson-manifest-contents) 字段中。 如果已存在具有相同名称和版本的 Gem，则将更新该 Gem。
 
 {{< tip >}}
-After modifying remote repository contents, we recommend you [test the changes locally](#testing-o3de-remote-repository-changes) before uploading them to a public web server or GitHub.
+修改远程存储库内容后，我们建议您 [在本地测试更改](#testing-o3de-remote-repository-changes)然后再将其上传到公共 Web 服务器或 GitHub。
 {{< /tip >}}
 
 
-## Testing O3DE remote repository changes
+## 测试 O3DE 远程存储库更改
 
-We recommend that you use the Project Manager and O3DE CLI to test your remote repository before you upload the changes to GitHub, a web server or other source control.
+我们建议您在将更改上传到 GitHub、Web 服务器或其他源代码控制之前，使用 Project Manager 和 O3DE CLI 测试您的远程存储库。
 
-### Test with Project Manager
+### 使用 Project Manager 进行测试
 
-You can add local remote repositories in the Project Manager and verify the contents appear as expected and downloads succeed.
-1. Add your local remote repository in Project Manager on the **Remote Sources** page on the **Engine** tab, by pressing the **Add Repository** button and then use the browse button to select the folder containing your `repo.json` file and then press the **Add** button.
-1. Select the remote repository in the list and verify the expected contents are listed in the right pane.
-1. Verify any added Gems appear correctly in the **Gem Catalog**.
-1. Verify any added Projects appear correctly on the **Projects** page.
-1. Verify any added Templates appear correctly on the **Create a New Project** page.
+您可以在 Project Manager 中添加本地远程存储库，并验证内容是否按预期显示以及下载是否成功。
+1. 在 Project Manager 中，在 **Engine** 选项卡上的 **Remote Sources** 页面上，按 **Add Repository** 按钮，然后使用浏览按钮选择包含`repo.json` 文件的文件夹，然后按 **Add** 按钮。
+1. 在列表中选择远程存储库，并验证右侧窗格中是否列出了预期内容。
+1. 验证添加的任何 Gem 是否正确显示在 **Gem Catalog** 中。
+1. 验证添加的所有项目是否正确显示在 **Projects** 页面上。
+1. 验证添加的所有模板是否正确显示在 **Create a New Project** 页面上。
 
-### Test with the O3DE CLI 
 
-You can add remote repositories on your hard drive with the O3DE CLI and verify downloads succeed.
+### 使用 O3DE CLI 进行测试
 
-{{< tabs name="Register a repository on your hard drive and download a gem" >}}
+您可以使用 O3DE CLI 在硬盘驱动器上添加远程存储库并验证下载是否成功。
+
+{{< tabs name="在硬盘驱动器上注册存储库并下载 Gem" >}}
 {{% tab name="Windows" %}}
 
 ```cmd
@@ -111,10 +112,10 @@ You can add remote repositories on your hard drive with the O3DE CLI and verify 
 {{% /tab %}}
 {{< /tabs >}}
 
-After downloading the Gem, Project or Template, you should be able to inspect the contents at the download path are correct and you can use the content as expected. 
+下载 Gem、Project 或 Template 后，您应该能够检查下载路径中的内容是否正确，并且可以按预期使用内容。
 
-## Uploading to GitHub
+## 上传到 GitHub
 
-We recommend that you use the Project Manager and O3DE CLI to test your updated remote repository before you upload the changes to GitHub, a web server or other source control provider.
+我们建议您在将更改上传到 GitHub、Web 服务器或其他源代码控制提供商之前，使用 Project Manager 和 O3DE CLI 测试更新的远程存储库。
 
-See the [Remote Repository Tutorial](/docs/learning-guide/tutorials/remote-repositories/create-remote-repository/) for an example of how to create a remote repository, add content and upload the release to GitHub.
+有关如何创建远程存储库、添加内容以及将版本上传到 GitHub 的示例，请参阅 [远程存储库教程](/docs/learning-guide/tutorials/remote-repositories/create-remote-repository/) 。

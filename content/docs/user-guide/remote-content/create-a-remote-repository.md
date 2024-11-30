@@ -1,17 +1,16 @@
 ---
-linkTitle: Create an O3DE remote repository
-title: Create an O3DE remote repository
-description: Learn how to create an O3DE remote repository.
+linkTitle: 创建 O3DE 远程存储库
+title: 创建 O3DE 远程存储库
+description: 了解如何创建 O3DE 远程存储库。
 weight: 300
 toc: true
 ---
 
-You can create an O3DE remote repository with the O3DE CLI.
+您可以使用 O3DE CLI 创建 O3DE 远程存储库。
 
+## 使用`o3de`命令行工具创建 O3DE 远程仓库
 
-## Use the `o3de` command line tool to create an O3DE remote repository 
-
-You can use the `o3de` CLI tool to create a remote repository with the following command:
+您可以使用`o3de` CLI 工具通过以下命令创建远程存储库：
 
 {{< tabs name="Create an O3DE remote repository" >}}
 {{% tab name="Windows" %}}
@@ -30,8 +29,8 @@ You can use the `o3de` CLI tool to create a remote repository with the following
 {{% /tab %}}
 {{< /tabs >}}
 
-The above command will create a `repo.json` file at the specified local path.
+上述命令将在指定的本地路径创建一个 `repo.json` 文件。
 
-See the [`o3de create-repo` CLI Reference](/docs/user-guide/project-config/cli-reference/#create-repo) for the complete list of options.
+查看 [`o3de create-repo` CLI 参考](/docs/user-guide/project-config/cli-reference/#create-repo)以获取完整的选项列表。
 
-After creating your repository, [add content to your remote repository](/docs/user-guide/remote-content/update-a-remote-repository#add-a-new-gem-or-new-gem-version-to-a-remote-repository) and [test it locally](/docs/user-guide/remote-content/update-a-remote-repository#testing-o3de-remote-repository-changes) before uploading it to a public web server or GitHub.
+创建存储库后，在将其上传到公共 Web 服务器或 GitHub 之前，[将内容添加到远程存储库](/docs/user-guide/remote-content/update-a-remote-repository#add-a-new-gem-or-new-gem-version-to-a-remote-repository) 和 [在本地测试](/docs/user-guide/remote-content/update-a-remote-repository#testing-o3de-remote-repository-changes) 。

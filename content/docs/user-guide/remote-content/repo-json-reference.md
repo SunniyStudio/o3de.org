@@ -1,28 +1,29 @@
 ---
-linkTitle: Repo.json Reference 
-title: Repo.json Reference
-description: O3DE remote repositories repo.json file reference.
+linkTitle: Repo.json 参考 
+title: Repo.json 参考
+description: O3DE远程存储库repo.json文件引用。
 weight: 600
 toc: true
 ---
 
-## `repo.json` Reference 
-| Field | Required | Description |
-|-|-|-|
-| $schemaVersion | **Required** | The JSON schema version that should be used when parsing this file.  The current default is `1.0.0`. |
-| additional_info | Optional | Additional information about this O3DE remote repository and the contents it provides. |
-| gems_data | Optional | A list of Gem JSON data for each Gem provided by this repository.  The `versions_data` field inside each JSON dictionary contains the changed fields for each version. |
-| last_updated | Optional | The date and time this file was last updated in ISO8601 format with UTC offset YYYY-MM-DDTHH:MM:SS.mmmmmmTZD  (e.g. 2012-03-29T10:05:45.12345+06:00).  The following formats are also accepted:`YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS`, or `YYYY-MM-DDTHH:MM:SS`. 
-| origin | **Required** | The name of the originator for this O3DE remote repository: i.e. XYZ Inc. |
-| origin_url | Optional | The URL for the originator (author or owner) of this remote repository. |
-| projects_data | Optional | A list of Project JSON data for each Project provided by this repository.  The `versions_data` field inside each JSON dictionary contains the changed fields for each version. |
-| repo_name | **Required** | The name of this remote repository.  This name must be fewer than 64 characters and contain only alphanumeric, '_' or '-' characters, and start with a letter. |
-| repos | Optional | A list of additional remote repository URIs.  This can be useful when a Gem, Project or Template in this remote repository depends on a Gem in another remote repository. |
-| repo_uri | **Required** | The URI of this remote repository. |
-| summary | Optional | A description of this O3DE remote repository. |
-| templates_data | Optional | A list of Template JSON data for each Template provided by this repository.  The `versions_data` field inside each JSON dictionary contains the changed fields for each version. |
+## `repo.json` 参考
 
-## Example `repo.json` 
+| 字段 | 必须 | 说明 |
+|-|-|-|
+| $schemaVersion | **Required** | 解析此文件时应使用的 JSON 架构版本。 当前默认值为 `1.0.0`. |
+| additional_info | Optional | 有关此 O3DE 远程存储库及其提供的内容的其他信息。 |
+| gems_data | Optional | 此存储库提供的每个 Gem 的 Gem JSON 数据列表。每个 JSON 词典中的`versions_data`字段包含每个版本的更改字段。 |
+| last_updated | Optional | 上次以 ISO8601 格式更新 UTC 偏移量此文件的日期和时间 YYYY-MM-DDTHH:MM:SS.mmmmmmTZD  (e.g. 2012-03-29T10:05:45.12345+06:00).  还接受以下格式:`YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS`, 或 `YYYY-MM-DDTHH:MM:SS`. 
+| origin | **Required** | 此 O3DE 远程存储库的发起者的名称：即 XYZ Inc. |
+| origin_url | Optional | 此远程仓库的创建者（作者或所有者）的 URL。 |
+| projects_data | Optional | 此存储库提供的每个项目的 Project JSON 数据列表。 每个 JSON 词典中的 `versions_data`字段包含每个版本的更改字段。 |
+| repo_name | **Required** | 此远程存储库的名称。 此名称必须少于 64 个字符，并且仅包含字母数字、“_”或“-”字符，并以字母开头。 |
+| repos | Optional | 其他远程存储库 URI 的列表。 当此远程存储库中的 Gem、项目或模板依赖于另一个远程存储库中的 Gem 时，这可能非常有用。 |
+| repo_uri | **Required** | 此远程存储库的 URI。 |
+| summary | Optional | 此 O3DE 远程存储库的描述。 |
+| templates_data | Optional | A此存储库提供的每个模板的模板 JSON 数据列表。每个 JSON 词典中的`versions_data`字段包含每个版本的更改字段。 |
+
+## 示例 `repo.json` 
 
 ```json
 {

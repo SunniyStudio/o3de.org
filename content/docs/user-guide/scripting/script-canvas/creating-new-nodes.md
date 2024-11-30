@@ -1,78 +1,78 @@
 ---
-linktitle: Creating New Nodes
-title: Creating New Nodes in Script Canvas
-description: Learn about the different ways to create new Script Canvas nodes in Open 3D Engine (O3DE).
+linktitle: 创建新节点
+title: 在 Script Canvas 中创建新节点
+description: 了解在 Open 3D Engine （O3DE） 中创建新 Script Canvas 节点的不同方法。
 weight: 300
 ---
 
-Script Canvas is an _extensible_ visual scripting system. You can create new nodes in Script Canvas in the following four ways, listed in ascending order of complexity:
+Script Canvas 是一个 _extensible_ 可视化脚本系统。您可以通过以下四种方式在 Script Canvas 中创建新节点，按复杂程度升序列出：
 
-* Script Canvas functions
-* Script events
-* Behavior context binding
-* Custom nodes
+* Script Canvas 函数
+* 脚本事件
+* 行为上下文绑定
+* 自定义节点
 
-## Functions
+## 函数
 
-One of the simplest ways to create a new node is by combining the functionality of several existing nodes into one reusable function node. Use **Script Canvas Editor** to create function nodes---there's no need to write any C++ code.
+创建新节点的最简单方法之一是将多个现有节点的功能组合成一个可重用的函数节点。使用 **Script Canvas 编辑器** 创建函数节点---无需编写任何C++代码。
 
 ![Script Canvas function node example](/images/user-guide/scripting/script-canvas/function-node-example.png)
 
 {{< note >}}
-Script Canvas functions are not available outside of the Script Canvas scripting system.
+Script Canvas 函数在 Script Canvas 脚本系统之外不可用。
 {{< /note >}}
 
-For more information, refer to [Script Canvas Functions](editor-reference/functions).
+有关更多信息，请参阅 [Script Canvas 函数](editor-reference/functions).
 
-## Script events
+## 脚本事件
 
-You can create new sender and receiver event nodes in Script Canvas using **Asset Editor**. Configure a script event in Asset Editor by supplying the event name, parameters, and return value---similar to defining a function in any programming language, but with no C++ code required.
+您可以使用 Asset Editor 在 Script Canvas 中创建新的发送方和接收方事件节点。通过提供事件名称、参数和返回值在 Asset Editor 中配置脚本事件---类似于在任何编程语言中定义函数，但不需要C++代码。
 
 ![Script event node example](/images/user-guide/scripting/script-canvas/script-event-node-example.png)
 
 {{< note >}}
-Script events are available to all O3DE scripting systems, including Lua.
+脚本事件可用于所有 O3DE 脚本系统，包括 Lua。
 {{< /note >}}
 
-For more information, refer to [Script Events](/docs/user-guide/scripting/script-events/).
+有关更多信息，请参阅 [脚本事件](/docs/user-guide/scripting/script-events/).
 
-## Behavior context binding
+## 行为上下文绑定
 
-To expose new C++ classes, methods, constants, data types, and events to Script Canvas, you can create script bindings to the behavior context. This is the most common method used to create new nodes for O3DE Gems and components.
+要向 Script Canvas 公开新的 C++ 类、方法、常量、数据类型和事件，您可以创建到行为上下文的脚本绑定。这是用于为 O3DE Gem 和组件创建新节点的最常用方法。
 
 ![Example node created from behavior context binding](/images/user-guide/scripting/script-canvas/behavior-context-node-example.png)
 
 {{< note >}}
-You can use script bindings with any O3DE scripting system that uses the behavior context, such as Lua.
+您可以将脚本绑定与任何使用行为上下文的 O3DE 脚本系统（如 Lua）一起使用。
 {{< /note >}}
 
 {{< note >}}
-You don't need to specify a dependency on the Script Canvas Gem to create script bindings that reflect to the behavior context.
+您无需指定对 Script Canvas Gem 的依赖项，即可创建反映到行为上下文的脚本绑定。
 {{< /note >}}
 
-For more information, refer to [Creating Script Canvas Nodes from the Behavior Context](programmer-guide/behavior-context) in the Script Canvas Programmer Guide.
+有关更多信息，请参阅《Script Canvas 程序员指南》中的 [从行为上下文创建 Script Canvas 节点](programmer-guide/behavior-context)。
 
-## Custom nodes
+## 自定义节点
 
-For the most control and flexibility when creating new nodes, including the ability to add new functionality, you can use
-* _nodeables_, a highly customizable node implementation mechanism
-* free function nodes, a customizable node reflecting C++ free function
+为了在创建新节点时获得最大的控制和灵活性，包括添加新功能的能力，您可以使用
+* _nodeables_，一种高度可定制的节点实现机制
+* 免费函数节点，体现 C++ 免费函数的可自定义节点
 
-To create custom Script Canvas nodes, we use XML configuration, Jinja templates, and an automatic C++ code generation tool.
-Programmers can use nodeables/free function nodes to write classes/functions in C++ using an SDK that is guaranteed to generate a class interface that provides both a usable node in Script Canvas Editor and a usable object at runtime.
+为了创建自定义 Script Canvas 节点，我们使用 XML 配置、Jinja 模板和自动 C++ 代码生成工具。
+程序员可以使用 Nodeables/free 函数节点通过 SDK 在 C++ 中编写类/函数，该 SDK 保证生成一个类接口，该接口在 Script Canvas Editor 中提供可用节点，并在运行时提供可用对象。
 
 ![Example node created from nodeables](/images/user-guide/scripting/script-canvas/nodeable-node-example.png)
 
 {{< note >}}
-Nodeables are not available to other O3DE scripting systems, such as Lua.
+Nodeables 不可用于其他 O3DE 脚本系统，例如 Lua。
 {{< /note >}}
 
 {{< note >}}
-Gems that use nodeables to provide custom Script Canvas nodes must specify a dependency on the Script Canvas Gem.
+使用可节点提供自定义 Script Canvas 节点的 Gem 必须指定对 Script Canvas Gem 的依赖关系。
 {{< /note >}}
 
 {{< note >}}
-Gems that use free function nodes to provide custom Script Canvas nodes must specify a dependency on the ScriptCanvas.Extensions target.
+使用免费函数节点提供自定义 Script Canvas 节点的 Gem 必须指定对 ScriptCanvas.Extensions 目标的依赖项。
 {{< /note >}}
 
-For more information, refer to [Creating Custom Nodes in Script Canvas](programmer-guide/custom-nodes/) in the Script Canvas Programmer Guide.
+有关更多信息，请参阅《Script Canvas 程序员指南》中的 [在 Script Canvas 中创建自定义节点](programmer-guide/custom-nodes/) 。

@@ -1,154 +1,154 @@
 ---
-linktitle: Debugging
-title: Script Canvas Debugging
-description: Debug your Script Canvas graphs in Open 3D Engine (O3DE).
+linktitle: 调试
+title: Script Canvas 调试
+description: 在 Open 3D Engine （O3DE） 中调试 Script Canvas 图形。
 weight: 600
 ---
 
-Script Canvas supports live debugging of a Script Canvas graph running in game. You can use **O3DE Editor** or non-editor tools (such as game launchers) as debug targets.
+Script Canvas 支持对游戏中运行的 Script Canvas 图形进行实时调试。您可以使用 **O3DE 编辑器** 或非编辑器工具 （如游戏启动器） 作为调试目标。
 
-**To open the Script Canvas debugger and choose a target**
+打开 Script Canvas 调试器并选择目标
 
-1. From the **Script Canvas Editor**, choose **Tools**, **Debugging**. The debugger panel opens at the bottom of the Script Canvas Editor.
+1. 在 **Script Canvas Editor** 中，选择 **Tools**, **Debugging**. 调试器面板将在 Script Canvas Editor 的底部打开。
 
    ![Choose Tools, Debugging.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-1.png)
 
-1. On the **Live** tab of the debugging panel, use the dropdown menu to choose the debug target. The default target is O3DE Editor, but you can use Script Canvas to debug the game running in standalone mode. For more information, see [In-Game Debugging](#in-game-debugging).
+1. 在调试面板的 **Live** 选项卡上，使用下拉菜单选择调试目标。默认目标是 O3DE Editor，但您可以使用 Script Canvas 调试在独立模式下运行的游戏。有关详细信息，请参阅 [游戏内调试](#in-game-debugging).
 
    ![Choosing the debug target.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-2.png)
 
-## Choosing entities and graphs to debug
+## 选择要调试的实体和图形
 
-After you choose a debug target, you can choose the entities and graphs that you want to debug.
+选择调试目标后，您可以选择要调试的实体和图形。
 
-**To choose entities and graphs to debug**
+选择要调试的实体和图形
 
-1. To see entities with Script Canvas graphs that are available for debugging, expand the items on the **Entities** tab. The **Entities** tab displays the entities known to the debugger at edit time that have Script Canvas graphs.
+1. 要查看具有可用于调试的 Script Canvas 图形的实体，请展开 **Entities** 选项卡上的项目。**Entities**选项卡显示调试程序在编辑时已知的具有 Script Canvas 图形的实体。
 
    ![Entities with Script Canvas graphs.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-3.png)
 
    {{< note >}}
-Running the same graph multiple times on a single entity is not supported.
+不支持在单个实体上多次运行同一图表。
    {{< /note >}}
 
-1. To get a complete listing of all available Script Canvas graphs in the project, choose the **Graphs** tab. Each graph in the table shows all entities that are using that graph. The **Graphs** tab is useful for debugging dynamically spawned scripts. For more information, see [Debugging a Dynamically Spawned Graph](#debugging-a-dynamically-spawned-graph) later in this topic.
+1. 要获取项目中所有可用 Script Canvas 图形的完整列表，请选择 **Graphs** 选项卡。表中的每个图表都显示正在使用该图表的所有实体。**Graphs** 选项卡可用于调试动态生成的脚本。有关详细信息，请参阅本主题后面的 [调试动态生成的图形](#debugging-a-dynamically-spawned-graph)。
 
    ![Graphs that are attached to entities.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-4.png)
 
-1. On the **Entities** tab or **Graphs** tab, select the check boxes for the entities or graphs that you want to debug.
+1. 在 **Entities** 选项卡或 **Graphs** 选项卡上，选中要调试的实体或图形的复选框。
 
    ![Selecting entities to debug.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-5.png)
 
-1. To capture all instances of a selected graph, select **All Graph Instances**.
+1. 要捕获所选图形的所有实例，请选择 **All Graph Instances**.
 
    ![Selecting all instances of a graph.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-6.png)
 
-## Configuring debugger options
+## 配置调试器选项
 
-Use the following options to configure debugger behavior.
+使用以下选项配置调试器行为。
 
 **Auto Capture**
 
 ![The Auto Capture option enabled.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-7.png)
 
-Enable this option if you want the output from a specified target to be captured as soon as the debugger connects to it. For external tools, capture starts immediately when you enable this option. For O3DE Editor, capture starts when the editor enters game mode.
+如果您希望在调试器连接到指定目标后立即捕获该目标的输出，请启用此选项。对于外部工具，启用此选项后，捕获将立即开始。对于 O3DE Editor，当编辑器进入游戏模式时开始捕获。
 
 **Live Updates**
 
 ![The Live Updates option enabled.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-8.png)
 
-Enable this option to display the data as it is captured. When disabled, the data is captured silently and displays only after the capture completes.
+启用此选项可在捕获数据时显示数据。禁用后，将以静默方式捕获数据，并且仅在捕获完成后显示。
 
 {{< note >}}
-When live updates are enabled and you capture a large amount of data, editor performance decreases noticeably. For better performance, you should disable live updates, especially for longer captures.
+启用实时更新并捕获大量数据时，编辑器性能会明显下降。为了获得更好的性能，您应该禁用实时更新，尤其是对于较长的捕获。
 {{< /note >}}
 
-## Running the debugger
+## 运行调试器
 
-After you have chosen the entities or graphs to debug, you are ready to run the Script Canvas debugger.
+选择要调试的实体或图形后，您就可以运行 Script Canvas 调试器了。
 
-**To run the Script Canvas debugger**
+**运行 Script Canvas 调试器**
 
-1. Choose **Capture**. The **Capture** button puts O3DE into gameplay mode automatically.
+1. 点击 **Capture**. **Capture** 按钮自动将 O3DE 置于游戏模式。
 
    ![The Script Canvas debugger Capture button.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-9.png)
 
    {{< note >}}
-If **Editor** is selected as the capture target, the game must be running for the debugger to return results.
+如果选择 **Editor** 作为捕获目标，则游戏必须正在运行，调试器才能返回结果。
    {{< /note >}}
 
-   The Script Canvas debugger begins capturing data when the graph runs. If live updates are enabled, the data appears in the debugger panel when the graph being debugged becomes active during gameplay. Otherwise, the data appears after the capture completes.
+   Script Canvas 调试器在图形运行时开始捕获数据。如果启用了实时更新，则当正在调试的图形在游戏期间变为活动状态时，数据将显示在 debugger 面板中。否则，数据将在捕获完成后显示。
 
    ![Data being captured in the Script Canvas debugger.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-10.png)
 
-1. After you have enough data, choose **Capture** again to stop the data capture.
+1. 获得足够的数据后，再次选择 **Capture** 以停止数据捕获。
 
-## Examining captured data
+## 检查捕获的数据
 
-The captured data is presented in a log that is sorted in order of processing. Each line represents the processing of a single node.
+捕获的数据显示在日志中，该日志按处理顺序排序。每行表示单个节点的处理。
 
 ![Captured data in the Script Canvas debugger.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-11.png)
 
 {{< note >}}
-Currently, only a single instance of captured data can be stored. Previous data is lost when a new set of data is captured.
+目前，只能存储捕获数据的单个实例。捕获一组新数据时，以前的数据将丢失。
 {{< /note >}}
 
-**To examine the captured data**
+**检查捕获的数据**
 
-1. To see the Script Canvas node that corresponds to a line in the log, choose the line.
+1. 要查看与日志中的某一行对应的 Script Canvas 节点，请选择该行。
 
-   Each line typically shows the node's **In** signal and **Out** signal. If the **In** or **Out** signal is not present, the node is either the first or final node of a given line of logic. As shown in the following image, the **Set Location Rotation** node is the final node, so an **Out** signal is not present.
+   每行通常显示节点的 **In** 信号和 **Out** 信号。如果 **In** 或 **Out** 信号不存在，则该节点是给定逻辑线的第一个或最后一个节点。如下图所示，**Set Location Rotation** 节点是最后一个节点，因此不存在 **Out** 信号。
 
    ![Choosing a debugger line to show the corresponding node on a Script Canvas graph.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-12.png)
 
-1. Use the up or down arrow keys to move through the log messages in the debugger panel. As you do so, the corresponding node to in Script Canvas graph is highlighted.
+1. 使用向上或向下箭头键在 Debugger 面板中的日志消息之间移动。执行此操作时，将突出显示 Script Canvas 图形中的相应节点。
 
-1. To examine the data that the node was using, expand the log message.
+1. 要检查节点正在使用的数据，请展开日志消息。
 
    ![Expanding a log message to reveal its data.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-13.png)
 
    {{< note >}}
-Some nodes send additional information that appears in the form of annotations. For example, the **Print** node sends the full string that it displayed.
+某些节点发送以 annotation 形式显示的附加信息。例如，**Print** 节点发送它显示的完整字符串。
    {{< /note >}}
 
-1. To expand all lines, choose the ![Expand log messages.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-14.png) expand icon.
+1. 要展开所有行，请选择 ![Expand log messages.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-14.png) 展开图标。
 
-1. To collapse all lines, choose the collapse ![Collapse log messages.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-15.png) icon.
+1. 要折叠所有行，请选择折叠 ![Collapse log messages.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-15.png) 图标。
 
-1. To search for a particular node name or names, use the **Search** box.
+1. 要搜索一个或多个特定节点名称，请使用 **Search** 框。
 
    ![Using search to find specific nodes in the Script Canvas debugger.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-16.png)
 
-## Debugging a dynamically spawned graph
+## 调试动态生成的图形
 
-Dynamically spawned graphs are usually part of a spawnable object. Because dynamically-spawned graphs cannot be known at edit time, you must select them by name rather than by the entity or entities on which they are used.
+动态生成的图形通常是可生成对象的一部分。由于在编辑时无法知道动态生成的图形，因此您必须按名称选择它们，而不是按使用它们的一个或多个实体来选择它们。
 
-**To debug a dynamically spawned graph**
+调试动态生成的图形
 
-1. On the **Graphs** tab, select the name of the graph.
+1. 在 **Graphs** 选项卡上，选择图表的名称。
 
-1. Follow the same steps that you use to debug any other Script Canvas graph. The debugger records the graph's operations when the graph becomes active during gameplay.
+1. 按照用于调试任何其他 Script Canvas 图形的相同步骤进行操作。调试器会在图形在游戏过程中变为活动状态时记录图形的操作。
 
-## In-game debugging
+## 游戏内调试
 
-For in-game debugging, you use the Script Canvas debugger to connect to a running game launcher.
+对于游戏内调试，您可以使用 Script Canvas 调试器连接到正在运行的游戏启动器。
 
-**To debug a running game**
+**调试正在运行的游戏**
 
-1. Run the launcher for your game.
+1. 运行游戏的启动器。
 
-1. On the **Live** tab of the Script Canvas debugger, choose the launcher from the list of debug targets. When you choose the launcher as the debug target, Script Canvas execution is recorded for the graphs that you specify.
+1. 在 Script Canvas 调试器的 **Live** 选项卡上，从调试目标列表中选择启动器。当您选择启动器作为调试目标时，将记录您指定的图表的 Script Canvas 执行情况。
 
    ![Choosing a launcher debug target.](/images/user-guide/scripting/script-canvas/script-canvas-debugging-2.png)
 
-## Notes on debugging
+## 调试注意事项
 
-When using the Script Canvas debugger, keep the following points in mind.
+使用 Script Canvas 调试器时，请记住以下几点。
 
-### Performance
+### 性能
 
-The editor experiences a severe decrease in performance when it is capturing data. To mitigate this, disable live updates and avoid capturing lengthy sessions. Lengthy sessions can easily lead to a sharp increase in logging events. If your game runs at 60fps and you have 40 Script Canvas nodes that run on each tick, 2400 log messages must be displayed every second. After a minute, this number increases to 144,000 messages. To minimize the amount of data captured, limit the scope and intensity of logging.
+编辑器在捕获数据时性能严重下降。要缓解这种情况，请禁用实时更新并避免捕获冗长的会话。长时间的会话很容易导致日志记录事件急剧增加。如果您的游戏以 60fps 的速度运行，并且您有 40 个 Script Canvas 节点在每个时钟周期上运行，则每秒必须显示 2400 条日志消息。一分钟后，此数字将增加到 144000 条消息。要最大程度地减少捕获的数据量，请限制日志记录的范围和强度。
 
-### Saving issues
+### 保存 issue
 
-When you modify a graph and save it, some IDs are remapped in the asset, but not in the visualized Script Canvas scene. As a result, the unified ID used in the logging messages no long matches the visual presentation. This mismatch causes the visual scraping to fail. To work around this, close and re-open the Script Canvas scene.
+当您修改并保存图形时，某些 ID 会在资产中重新映射，但在可视化的 Script Canvas 场景中不会重新映射。因此，日志记录消息中使用的统一 ID 不再与视觉表示匹配。这种不匹配会导致视觉抓取失败。要解决此问题，请关闭并重新打开 Script Canvas 场景。

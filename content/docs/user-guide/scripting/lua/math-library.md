@@ -1,6 +1,6 @@
 ---
-description: Describes the API for common math functions and data types.
-title: Math Library
+description: 描述常见数学函数和数据类型的 API。
+title: 数学库
 toc: true
 weight: 400
 ---

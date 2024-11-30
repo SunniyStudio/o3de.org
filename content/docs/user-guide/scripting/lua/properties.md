@@ -1,16 +1,16 @@
 ---
-linkTitle: Properties Table
-title: The Lua Script Properties Table
-description: Specify the properties of a Lua script component that appear in O3DE Editor in Open 3D Engine.
+linkTitle: 属性表
+title: Lua Script Properties 表
+description: 指定 Open 3D Engine 的 O3DE 编辑器中显示的 Lua 脚本组件的属性。
 toc: True
 weight: 400
 ---
 
-The Properties Table configures the **Lua Script** component's user interface in **Entity Inspector** for customizing the behavior of a Lua script. With the Properties Table, you can modify numeric values, select states, and turn flags on and off. The table can even reference other entities that your script can interact with.
+Properties Table 在 **Entity Inspector** 中配置 **Lua Script** 组件的用户界面，以自定义 Lua 脚本的行为。使用 Properties Table，您可以修改数值、选择状态以及打开和关闭标志。该表甚至可以引用您的脚本可以与之交互的其他实体。
 
-The properties inside the Properties Table are exposed to **O3DE Editor**. Properties outside the Properties Table are private and not displayed in the editor.
+Properties Table 中的属性将向 **O3DE Editor **公开。Properties Table 之外的属性是私有的，不会显示在编辑器中。
 
-The following example is a Properties table for a character controller.
+以下示例是角色控制器的 Properties 表。
 
 ```lua
 -- Properties Table Example
@@ -47,21 +47,21 @@ Properties = {
 }
 ```
 
-When rendered in the user interface, properties are sorted alphabetically irrespective of their order in the script.
+在用户界面中呈现时，属性按字母顺序排序，而不管它们在脚本中的顺序如何。
 
-The result is the following **Properties** user interface in the Lua Script component:
+结果是 Lua Script 组件中的以下 **Properties** 用户界面：
 
 ![Properties in O3DE Editor defined by the Properties table](/images/user-guide/scripting/lua/character-controller.png)
 
-The type you provide as the default value determines how the property appears in the **Properties** user interface. You can further customize the representation of the property in O3DE Editor by specifying additional attributes in a table format. All property types support a description field that is displayed when you hover the mouse over the property name.
+您作为默认值提供的类型决定了属性在 **Properties** 用户界面中的显示方式。您可以通过以表格格式指定其他属性，在 O3DE Editor 中进一步自定义属性的表示形式。所有属性类型都支持将鼠标悬停在属性名称上时显示的描述字段。
 
-## Supported types 
+## 支持的类型
 
-Properties can have the types described in this section.
+属性可以具有本节中描述的类型。
 
-### Boolean values (True, False) 
+### 布尔值 （True， False）
 
-The following examples are boolean values.
+以下示例是布尔值。
 
 ```lua
 -- Boolean Examples
@@ -74,11 +74,11 @@ Properties = {
 }
 ```
 
-In O3DE Editor, boolean values are represented by a check box.
+在 O3DE 编辑器中，布尔值由复选框表示。
 
-### Numeric values (integer or floating-point numbers) 
+### 数值（整数或浮点数）
 
-The following examples are numeric values.
+以下示例是数值。
 
 ```lua
 -- Numeric Examples
@@ -100,14 +100,14 @@ Properties = {
 }
 ```
 
-In O3DE Editor, numeric values are represented by an edit field with increase/decrease arrows. Additional attributes may be included in numeric property definitions that:
-+ Provide a custom suffix to indicate units.
-+ Set minimum and maximum values.
-+ Provide a step value (how much the value increases or decreases when the user clicks the arrows on the right side of the edit field).
+在 O3DE 编辑器中，数值由带有增/减箭头的编辑字段表示。其他属性可能包含在数字属性定义中，这些属性：
++ 提供自定义后缀以指示单位。
++ 设置最小值和最大值。
++ 提供步长值（当用户单击编辑字段右侧的箭头时，该值增加或减少的程度）。
 
-### Strings 
+### 字符串
 
-The following examples are strings.
+以下示例是字符串。
 
 ```lua
 -- String Examples
@@ -120,11 +120,11 @@ Properties = {
 }
 ```
 
-In O3DE Editor, string values are represented by a text edit box.
+在 O3DE 编辑器中，字符串值由文本编辑框表示。
 
-### Reflected classes 
+### 反射类
 
-You can use any class that is reflected to both the `BehaviorContext` and the `EditContext` as a property. A good example is the `EntityId` type, which references entities.
+您可以使用同时反映到`BehaviorContext`和 `EditContext` 的任何类作为属性。一个很好的示例是引用实体的 `EntityId` 类型。
 
 ```lua
 -- Entity Examples
@@ -137,7 +137,7 @@ Properties = {
 }
 ```
 
-The editor representation is the default editor for the type reflected. For example, for `EntityId`, it's the entity reference picker. For most reflected types, it is a tree of the type's properties.
+编辑器表示是 reflected 类型的默认编辑器。例如，对于“EntityId”，它是实体引用选取器。对于大多数反射类型，它是类型属性的树。
 
 ```lua
 ...
@@ -166,9 +166,9 @@ Properties = {
 
 ![Reflected types as properties](/images/user-guide/scripting/lua/reflected-types.png)
 
-### Arrays 
+### 数组
 
-Properties can contain resizable arrays of any of the types mentioned. To create an array, declare the default value as a keyless table of values. For example, the property definitions in the following code produce the properties shown in the image below.
+属性可以包含上述任何类型的可调整大小的数组。要创建数组，请将默认值声明为无键值表。例如，以下代码中的属性定义生成下图所示的属性。
 
 ```lua
 -- Array Example
@@ -183,11 +183,11 @@ Properties = {
 
 ![Property array](/images/user-guide/scripting/lua/array-example.png)
 
-In Entity Inspector, click {{< icon "add.svg" >}} and {{< icon "delete.svg" >}} to add and remove entries in real-time. You can also use `EntityId()` for an array's values to make the array elements entity references.
+在Entity Inspector中，点击 {{< icon "add.svg" >}} 和 {{< icon "delete.svg" >}} 以实时添加和删除条目。您还可以将 `EntityId()`用于数组的值，以使数组元素成为实体引用。
 
-## Grouping properties 
+## 分组属性
 
-The following code example shows how to use variables within the Properties Table to expose named groupings of properties.
+下面的代码示例演示如何使用 Properties Table 中的变量来公开属性的命名分组。
 
 ```lua
 -- Grouped Properties Example
@@ -207,26 +207,26 @@ Properties = {
 
 ![Grouped properties](/images/user-guide/scripting/lua/property-groups.png)
 
-## Attributes 
+## 属性
 
-Add attributes to a property by including them with the default value in a property's definition. Attribute keys are not case-sensitive.
+通过将属性包含在属性定义中的默认值中，将属性添加到属性中。属性键不区分大小写。
 
-### Common attributes
+### 常见属性
 
-Common attributes can be added to any property.
+Common 属性可以添加到任何属性。
 
-| Attribute | Description |
+|属性 |描述 |
 | --- | --- |
-| Description | A string that is the text of the tooltip for the property. |
-| UI | Specifies (overrides) the UI handler that the property uses.  |
+| Description | 一个字符串，它是属性的工具提示的文本。 |
+| UI | 指定 （覆盖） 属性使用的 UI 处理程序。  |
 
-### Numeric attributes
+### 数字属性
 
-Numeric attributes can only be added to properties with numeric representations.
+数字属性只能添加到具有数字表示的属性中。
 
-| Attribute | Description |
+|属性 |描述 |
 | --- | --- |
-| Suffix | A string that denotes the attribute's unit of measurement. |
-| Min | The minimum value that the attribute can be set to in O3DE Editor. |
-| Max | The maximum value that the attribute can be set to in O3DE Editor. |
-| Step | The amount that the attribute's value will be incremented by when changed in O3DE Editor. |
+| Suffix |表示属性的度量单位的字符串。|
+| Min | 属性可在 O3DE 编辑器中设置为的最小值。 |
+| Max | 属性可以在 O3DE 编辑器中设置为的最大值。|
+| Step | 在 O3DE 编辑器中更改属性值时将递增的量。 |

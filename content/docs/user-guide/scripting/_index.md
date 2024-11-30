@@ -1,28 +1,28 @@
 ---
-linktitle: Scripting
-title: Scripting Gameplay in O3DE
-description: Learn about the scripting languages supported in Open 3D Engine (O3DE) to add gameplay logic and behaviors in your project.
+linktitle: 编写脚本
+title: 在 O3DE 中编写游戏脚本
+description: 了解 Open 3D Engine （O3DE） 中支持的脚本语言，以便在项目中添加游戏逻辑和行为。
 weight: 900
 ---
 
-**Open 3D Engine (O3DE)** provides two scripting technologies so you can add gameplay logic and behaviors in your project: **Script Canvas** and **Lua**.
+**Open 3D Engine （O3DE）** 提供两种脚本技术，因此您可以在项目中添加游戏逻辑和行为：**Script Canvas** 和 **Lua**。
 
-*Script Canvas* is a general purpose, visual scripting environment. In the **Script Canvas Editor**, you lay out and connect graphical nodes that provide a visual representation of the logic flow. Script Canvas offers an approachable environment to author behaviors using the same framework as Lua and C++. You can use Script Canvas to create scripts without coding experience.
+*Script Canvas* 是一个通用的可视化脚本环境。在 **Script Canvas Editor** 中，您可以布局和连接图形节点，以提供逻辑流的可视化表示。Script Canvas 提供了一个易于使用的环境，可以使用与 Lua 和 C++ 相同的框架来编写行为。您可以使用 Script Canvas 创建脚本，而无需编码经验。
 
-*Lua* is a powerful, fast, lightweight, embeddable scripting language. Lua facilitates quick iteration in your project because you can run your changes immediately without needing to recompile your source code.
-
-
-### How scripts communicate in O3DE
-
-O3DE functionality is exposed to Script Canvas and Lua through the _behavior context_. The behavior context reflects runtime code, making it accessible to scripts through bindings to C++ classes, methods, properties, constants, and enums. The behavior context also provides bindings for O3DE's EBus so you can dispatch and handle events through Script Canvas and Lua.
-
-Functionality for both Script Canvas and Lua is added to entities through components. You can have multiple script components and mix and match between Lua and Script Canvas within your entities. This approach enables you to create small, manageable modules of logic and behavior that can be reused throughout your projects.
+*Lua* 是一种强大、快速、轻量级、可嵌入的脚本语言。Lua 有助于在项目中进行快速迭代，因为您可以立即运行更改，而无需重新编译源代码。
 
 
-## Section topics
+### 脚本在 O3DE 中的通信方式
 
-| Topic | Description |
+O3DE 功能通过 _behavior context_ 向 Script Canvas 和 Lua 公开。行为上下文反映运行时代码，使脚本可以通过绑定到 C++ 类、方法、属性、常量和枚举来访问它。行为上下文还为 O3DE 的事件总线提供绑定，以便您可以通过 Script Canvas 和 Lua 分派和处理事件。
+
+Script Canvas 和 Lua 的功能都通过组件添加到实体中。您可以拥有多个脚本组件，并在实体中混合和匹配 Lua 和 Script Canvas。这种方法使您能够创建可在整个项目中重复使用的小型、可管理的逻辑和行为模块。
+
+
+## 章节主题
+
+| 主题 | 说明 |
 | --- | --- |
-| [Script Canvas](script-canvas/) | Learn how to get started using Script Canvas and find tips on best practices, troubleshooting, and how to use the Script Canvas debugger. Includes a reference for the Script Canvas Editor and a programmer's guide to learn how to extend Script Canvas. |
-| [Lua](lua/) | Learn how to get started adding Lua scripts to your entities and using the Lua Editor and debugger. |
-| [Script Events](script-events/) | Learn how to author script events that can send and receive data between entities, scripts, and scripting systems in O3DE. |
+| [Script Canvas](script-canvas/) | 了解如何开始使用 Script Canvas，并查找有关最佳实践、故障排除以及如何使用 Script Canvas 调试器的提示。包括 Script Canvas 编辑器的参考和了解如何扩展 Script Canvas 的程序员指南。 |
+| [Lua](lua/) | 了解如何开始将 Lua 脚本添加到您的实体以及使用 Lua 编辑器和调试器。 |
+| [Script Events](script-events/) | 了解如何编写脚本事件，以便在 O3DE 中的实体、脚本和脚本系统之间发送和接收数据。 |

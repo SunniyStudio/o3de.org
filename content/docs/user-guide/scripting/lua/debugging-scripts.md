@@ -1,18 +1,18 @@
 ---
-linkTitle: Debugging Lua Scripts
-title: Debugging Lua Scripts
-description: Learn about debugging Lua scripts in Open 3D Engine.
+linkTitle: 调试 Lua 脚本
+title: 调试 Lua 脚本
+description: 了解如何在 Open 3D Engine 中调试 Lua 脚本。
 toc: true
 weight: 850
 ---
 
-O3DE provides Lua scripts with several functions to make debugging easier.
+O3DE 为 Lua 脚本提供了多种功能，使调试更加容易。
 
-## Logging to the Console 
+## 记录到控制台
 
-To print text to **O3DE Editor** and the Console, use the `Debug.Log()` function.
+要将文本打印到 **O3DE 编辑器** 和控制台，请使用`Debug.Log()` 函数。
 
-The following example shows the use of the `Debug.Log()` function.
+以下示例显示了 `Debug.Log()` 函数的用法。
 
 ```lua
 local LoggingTest = { }
@@ -24,11 +24,11 @@ end
 return LoggingTest
 ```
 
-## Using an assert to detect potential issues 
+## 使用 assert 检测潜在问题
 
-You can use the `assert` function to display an error message in the console when conditions are detected that might result in an execution fault. The `assert` function takes two arguments: a condition that evaluates to true or false, and a message to display if the condition is false.
+当检测到可能导致执行错误的条件时，您可以使用 `assert` 函数在控制台中显示错误消息。`assert`函数有两个参数：一个计算结果为 true 或 false 的条件，以及如果条件为 false，则显示一条消息。
 
-The following example shows the use of the `assert` function.
+以下示例显示了`assert` 函数的用法。
 
 ```lua
 function SampleScript:DoStuff()
@@ -40,11 +40,11 @@ end
 -- [Error] Lua error (2 - [string "q:/lyengine/branches/systems/dev/samplespro..."]:61: Expected a positive value! Got: -5) during call samplescript:DoStuff
 ```
 
-## Communicating errors 
+## 传达错误
 
-You can use the `Debug.Error()` function to display an error in the console and halt execution of the current script function. This does not halt all execution of the script. If you have active handlers, they can still be called when the engine posts notifications. The `Debug.Error()` function takes arguments similar to the `Debug.Assert` function: a condition and a message. The message is displayed in bright red and execution halts only if the condition is false.
+您可以使用 `Debug.Error()` 函数在控制台中显示错误并停止执行当前脚本函数。这不会停止脚本的所有执行。如果您有活动的处理程序，则仍可在引擎发布通知时调用它们。`Debug.Error()`函数采用类似于 `Debug.Assert`函数的参数：条件和消息。该消息以亮红色显示，并且仅当条件为 false 时，执行才会停止。
 
-The following example shows the use of the `Debug.Error()` function.
+以下示例显示了`Debug.Error()`函数的用法。
 
 ```lua
 function SampleScript:CheckAndError()
@@ -56,11 +56,11 @@ end
 -- [Error] Error on argument 0: Detected a negative value: -5
 ```
 
-## Displaying a warning when user attention is required 
+## 在需要用户注意时显示警告
 
-A script condition can occur that does not adversely affect the execution of the script but might be useful for the user to know about. The `Debug.Warning()` function uses arguments similar to those of the `Error` and `Assert` functions but just displays an orange warning message in the console. It does not halt execution.
+可能会出现不会对脚本执行产生负面影响但可能有助于用户了解的脚本条件。`Debug.Warning()`函数使用的参数类似于 `Error` 和 `Assert`函数的参数，但只在控制台中显示橙色警告消息。它不会停止执行。
 
-The following example shows the use of the `Debug.Warning()` function.
+以下示例显示了`Debug.Warning()`函数的用法。
 
 ```lua
 function SampleScript:CheckValue()

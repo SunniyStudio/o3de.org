@@ -1,87 +1,87 @@
 ---
-linktitle: Functions
-title: Script Canvas Functions
-description: Create reusable functions in Script Canvas that can be inserted into other graphs as nodes.
+linktitle: 函数
+title: Script Canvas 函数
+description: 在 Script Canvas 中创建可重用的函数，这些函数可以作为节点插入到其他图形中。
 weight: 400
 ---
 
-The **Script Canvas Editor** enables you to create reusable graphs, called functions. A function is available for use as a node in your Script Canvas graphs. Similar to functions in traditional programming languages, functions in the Script Canvas Editor promote code reuse and abstraction. They help simplify your graphs by replacing a group of nodes that perform a specific task with one function node. For example, you could move a series of nodes that perform linear interpolation into a function called Interpolate, and move nodes that perform acceleration clamping into a function called ClampAcceleration. Additionally, if you're using this functionality in multiple graphs, functions make updates easier because you need to make changes only in one place.
+使用 **Script Canvas 编辑器** 可以创建可重用的图形，称为函数。函数可用作 Script Canvas 图形中的节点。与传统编程语言中的函数类似，Script Canvas Editor 中的函数可促进代码重用和抽象。它们通过将执行特定任务的一组节点替换为一个函数节点来帮助简化图形。例如，您可以将一系列执行线性插值的节点移动到名为 Interpolate 的函数中，并将执行加速度夹紧的节点移动到名为 ClampAcceleration 的函数中。此外，如果您在多个图表中使用此功能，则 Functions 会使更新更容易，因为您只需在一个位置进行更改。
 
-Your function appears alongside all the other Script Canvas nodes in the **Node Palette**, categorized under **Global Functions**.
+您的函数与 **Node Palette** 中的所有其他 Script Canvas 节点一起显示，归类在 **Global Functions** 下。
 
-When you create a function, you define the input and output variables of that function, and all the nodes in between that produce a result.
+创建函数时，定义该函数的输入和输出变量，以及两者之间产生结果的所有节点。
 
-## Creating a Script Canvas function
+## 创建 Script Canvas 函数
 
-Start creating a new function by choosing **File**, **New Script** in the Script Canvas Editor.
+通过在 Script Canvas 编辑器中选择 **File**、**New Script** 来开始创建新函数。
 
 ![Choose File, New Function in the Script Canvas Editor to start a new Script Canvas function.](/images/user-guide/scripting/script-canvas/function-new.png)
 
-Alternatively, you can create a new script using the create button located in the upper right corner of the editor canvas.
+或者，您也可以使用编辑器画布右上角的 create （创建） 按钮创建新脚本。
 
 ![Use the function create button as an alternate method for creating a new Script Canvas graph file.](/images/user-guide/scripting/script-canvas/function-quick-create.png)
 
 
-### Function entry and exit points
+### 函数入口点和出口点
 
-Functions require entry and exit points. To create these points, right-click a node's input or output execution slot and select **Expose** in the context menu. Typically, you create an entry point node from the input execution slot of the first node in your function, and an exit point node from the output execution slot of the last node in your function.
+函数需要入口点和出口点。要创建这些点，请右键单击节点的输入或输出执行槽，然后在上下文菜单中选择 **Expose**。通常，您可以从函数中第一个节点的输入执行槽创建一个入口点节点，并从函数中最后一个节点的输出执行槽创建一个出口点节点。
 
 ![Create an entry or exit point for a Script Canvas function by right-clicking an execution slot.](/images/user-guide/scripting/script-canvas/function-expose-input.gif)
 
 {{< note >}}
-To change the names of the execution slots on the function's node, edit the name field on the entry point or exit point node.
+要更改函数节点上的执行槽的名称，请编辑入口点或退出点节点上的 name 字段。
 {{< /note >}}
 
-Optionally, if you're not certain how you want to connect an entry or exit point to the rest of your function, you can create an entry or exit point node using the toolbar buttons: ![Function toolbar buttons](/images/user-guide/scripting/script-canvas/function-toolbar-buttons.png). Connect its execution slot later, when you're ready.
+或者，如果您不确定如何将入口点或出口点连接到函数的其余部分，则可以使用工具栏按钮创建入口点或出口点节点：![Function toolbar buttons](/images/user-guide/scripting/script-canvas/function-toolbar-buttons.png)。稍后在您准备好时连接其执行槽。
 
-### Function data parameters
+### 函数数据参数
 
-Functions can also have input and output data parameters. Input parameters are the values that are passed in to the function. Output parameters are the values that are returned by the function. These are both defined as variables in the **Variable Manager**. A function can also have local variables, which are not exposed on the function's node.
+函数还可以具有输入和输出数据参数。输入参数是传递给函数的值。Output parameters 是函数返回的值。这些都定义为 **变量管理器** 中的变量。函数还可以具有局部变量，这些变量不会在函数的节点上公开。
 
 ![Create function data parameters with variables in the Variable Manager.](/images/user-guide/scripting/script-canvas/function-create-parameter.gif)
 
-The scope of a variable determines if and where the variable will appear on the function node.
+变量的范围决定了变量是否以及在函数节点上的显示位置。
 
-| Scope | Location on Node | Usage |
+|范围 |节点上的位置 |用法 |
 | --- | --- | --- |
-| Local | (None) | This is a local variable, for use only by the function. |
-| In | Input slot | This is an input parameter. A value for this variable is passed in to the function. |
-| Out | Output slot | This is a result variable. The function returns its value as a result. |
-| In / Out | Both sides | This is an input parameter that can be modified by the function and returned as a result. |
+| Local | (None) | 这是一个局部变量，仅供函数使用。 |
+| In | Input slot | 这是一个输入参数。此变量的值将传入函数。 |
+| Out | Output slot | 这是一个 result 变量。该函数返回其值作为结果。 |
+| In / Out | Both sides | 这是一个输入参数，可由函数修改并作为结果返回。 |
 
-## Using a Script Canvas function in a graph
+## 在图表中使用 Script Canvas 函数
 
-Once a Script Canvas function has been saved, it automatically shows up in the **Node Palette**, under **Global Functions**. The default directory for new functions is your project's `scriptcanvas\functions` directory. If you save them in a subdirectory, or save them under a different project directory, the directory structure is used to categorize the functions within **Global Functions**.
+保存 Script Canvas 函数后，它会自动显示在 **Node Palette** 的 **Global Functions** 下。新函数的默认目录是项目的 `scriptcanvas\functions`  目录。如果将它们保存在子目录中，或将它们保存在不同的项目目录下，则目录结构用于对 **Global Functions** 中的函数进行分类。
 
-Using a function is just like using any other node in Script Canvas. Simply drag and drop the function into a graph. When it's dropped, a node that represents the function is displayed on the canvas.
+使用函数就像在 Script Canvas 中使用任何其他节点一样。只需将函数拖放到图表中即可。放置后，画布上会显示一个表示该函数的节点。
 
 ![Drag and drop functions from the Node Palette, under the Global Functions category, onto your graph.](/images/user-guide/scripting/script-canvas/function-use-node.gif)
 
-## Function example: Linear interpolation
+## 函数示例：线性插值
 
-In this example, we create a linear interpolation function. This function is represented by the formula: *Result = Start + Time \* (End - Start)*.
+在此示例中，我们创建一个线性插值函数。此函数由以下公式表示： *Result = Start + Time \* (End - Start)*.
 
-In this example you will learn how to do the following:
+在此示例中，您将学习如何执行以下操作：
 
-+ Create entry and exit points for a function.
-+ Create input parameter slots.
-+ Create return values.
++ 为函数创建入口点和出口点。
++ 创建输入参数槽。
++ 创建返回值。
 
-The final function graph should look like this:
+最终的函数图应如下所示：
 
 ![After completing the steps in this example, you should end up with a linear interpolation function.](/images/user-guide/scripting/script-canvas/function-linear-interpolation.png)
 
-1. Start a new function using **File**, **New Script** or by using the function create button in the upper right corner of the canvas.
+1. 使用 **File**、**New Script** 或使用画布右上角的函数创建按钮启动新函数。
 
-1. Click the left side **Create execution nodeling** button to make an input node on the canvas.
+1. 单击左侧的 **Create execution nodeling** 按钮，在画布上创建一个输入节点。
 
-1. Click the **+** button next to Add data input to add an input parameter to the execution nodeling. This will prompt you for a name and type of the new variable. Enter **Start** as the name and **Number** as the type. Repeat this twice more for **Time** and **End**
+1. 单击 Add data input 旁边的 **+** 按钮，将输入参数添加到执行节点。这将提示您输入新变量的名称和类型。输入 **Start** 作为名称，输入 **Number** 作为类型。对 **Time** 和 **End** 再重复两次
 
-1. In the Node Inspector expand the Math category.
+1. 在 Node Inspector 中，展开 Math 类别。
 
-1. Drag an **Add**, **Subtract**, and **Multiply** node onto the canvas and arrange them similar to the image above.
+1. 将 **Add**、**Subtract** 和 **Multiply** 节点拖到画布上，并按照上图的方式排列它们。
 
-1. Using [variable references](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references), do the following:
+1. 使用 变量引用](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references)，执行以下操作：
 
    a. In the **Subtract** node, reference the *End* and *Start* variables, so that *Start* is subtracted from *End*.
 

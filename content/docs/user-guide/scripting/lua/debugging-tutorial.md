@@ -1,22 +1,22 @@
 ---
-linkTitle: Debugging with Lua Editor
-title: Debugging with Lua Editor
-description: Use Lua Editor to debug Lua scripts in Open 3D Engine (O3DE).
+linkTitle: 使用 Lua 编辑器进行调试
+title: 使用 Lua 编辑器进行调试
+description: 使用 Lua 编辑器在 Open 3D Engine （O3DE） 中调试 Lua 脚本。
 toc: true
 weight: 900
 ---
 
-**Open 3D Engine (O3DE)** **Lua Editor** (Lua IDE) offers an intuitive integrated development environment (IDE) that makes it easy to author, debug, and edit Lua scripts when you create or extend your game. Lua Editor is a standalone application, but you can open it directly in **O3DE Editor** from the Tools menu.
+**Open 3D Engine （O3DE）** **Lua Editor** （Lua IDE） 提供了一个直观的集成开发环境 （IDE），让您在创建或扩展游戏时可以轻松编写、调试和编辑 Lua 脚本。Lua Editor 是一个独立的应用程序，但您可以直接在 **O3DE Editor** 的 Tools 菜单中打开它。
 
-This tutorial shows you how to use O3DE Lua Editor to perform debugging operations on a sample script.
+本教程介绍如何使用 O3DE Lua 编辑器对示例脚本执行调试操作。
 
-## Add sample Lua Script to an entity
+## 将示例 Lua 脚本添加到实体
 
-1. Open Lua Editor from the **Tools** menu.  
+1. 从 **Tools** 菜单打开 Lua Editor。 
 
-1. Select **New** from the **File** menu to create a new Lua script.
+1. 从 **File** 菜单中选择 **New** 以创建新的 Lua 脚本。
 
-1. **Copy** and **Paste** the following code into the new script.
+1. 将以下代码 **Copy** 并 **Paste** 到新脚本中。
 
     ```lua
     -- ConstantRotation.lua
@@ -50,102 +50,102 @@ This tutorial shows you how to use O3DE Lua Editor to perform debugging operatio
     return ConstantRotation
     ```
     
-1. **Save** the script as `ConstantRotation.lua` in your project's directory.
+1. 将脚本 **Save** 为项目目录中的`ConstantRotation.lua`。
 
-1. **Close** Lua Editor.
+1. **关闭** Lua 编辑器。
 
-1. In **Entity Outliner**, choose an entity to add a **Lua Script** component to.
+1. 在 **Entity Outliner** 中，选择要向其添加 **Lua Script** 组件的实体。
 
-1. In **Entity Inspector**, choose **Add Component**, and then choose **Scripting**, **Lua Script**.
+1. 在 **Entity Inspector** 中，选择 **Add Component**，然后选择 **Scripting**、**Lua Script**。
 
-1. In **Entity Inspector**, locate the **Lua Script** component, and then click {{< icon "browse-edit-select-files.svg" >}} to open a file browser.
+1. 在 **Entity Inspector** 中，找到 **Lua Script** 组件，然后单击 {{< icon "browse-edit-select-files.svg" >}} 以打开文件浏览器。
 
-1. In the **Pick Lua Script** window, select `ConstantRotation.lua` and choose **OK**.
+1. 在 **Pick Lua Script** 窗口中，选择 `ConstantRotation.lua`，然后选择 **OK**。
 
-1. In the **Lua Script** component, click {{< icon "open-in-internal-app.svg" >}} to launch Lua Editor.
+1. 在 **Lua Script** 组件中，单击 {{< icon "open-in-internal-app.svg" >}} 以启动 Lua 编辑器。
 
     ![Launch Lua Editor from Lua Script component in O3DE Editor](/images/user-guide/scripting/lua/lua-component-open-in-lua-editor.png)
     
-## Connect to O3DE Editor
+## 连接到 O3DE 编辑器
 
-The [**Remote Tools Gem**](/docs/user-guide/gems/reference/debug/remote-tools) facilitates local connections between O3DE applications. 
+[**Remote Tools Gem**](/docs/user-guide/gems/reference/debug/remote-tools) 促进 O3DE 应用程序之间的本地连接。 
 
 {{< note >}}
-The **Remote Tools Gem** must be [enabled in your project](/docs/user-guide/project-config/add-remove-gems/#enabling-or-disabling-gems) for debugging to work.
+远程工具 Gem 必须 [在您的项目中启用](/docs/user-guide/project-config/add-remove-gems/#enabling-or-disabling-gems) 才能进行调试。
 
-**Remote Tools Gem** behavior is disabled in release builds.
+**远程工具 Gem** 行为在发布版本中被禁用。
 {{< /note >}}
 
-The Remote Tools Gem starts automatically when Lua Editor is started and must be running in the background for Lua Editor to find targets it can connect to.  Because the debugging functionality is enabled through network sockets, you must connect Lua Editor to the target that is running the script before you can debug. In this tutorial, you connect to O3DE Editor.
+Remote Tools Gem 会在 Lua Editor 启动时自动启动，并且必须在后台运行，Lua Editor 才能找到可以连接的目标。 由于调试功能是通过网络套接字启用的，因此必须先将 Lua Editor 连接到运行脚本的目标，然后才能进行调试。在本教程中，您将连接到 O3DE Editor。
 
-1. In the Lua Editor toolbar, choose **Target: None**, and then choose **Editor(*ID*)** to connect to O3DE Editor.
+1. 在 Lua Editor 工具栏中，选择 **Target: None**，然后选择 **Editor(*ID*)** 以连接到 O3DE Editor。
 
     ![Target selector](/images/user-guide/scripting/lua/lua-editor-debugger-target-editor.png)
     
     {{< note >}}
-You may need to expand the Lua Editor window to see the buttons on the Lua Editor toolbar for the next few steps.
+您可能需要展开 Lua Editor 窗口，才能看到 Lua Editor 工具栏上接下来几个步骤的按钮。
 {{< /note >}}
 
-1. In the Lua Editor toolbar, leave **Context** setting at **Default** for the debugging context. The default setting is good for debugging component entity scripts such as the one in this tutorial.
+1. 在 Lua Editor 工具栏中，将 **Context** 设置保留为 **Default** 作为调试上下文。默认设置适用于调试组件实体脚本，例如本教程中的脚本。
 
     ![Context selector](/images/user-guide/scripting/lua/lua-editor-debugger-context-choose.png)
 
-1. The **Debugging** icon turns green to show that Lua Editor and O3DE Editor are connected:
+1. **Debugging** 图标变为绿色，表示 Lua Editor 和 O3DE Editor 已连接：
 
     ![Lua Editor connected to O3DE Editor](/images/user-guide/scripting/lua/lua-editor-debugger-connected-icon.png)
 
-    Click **Classes** in the **Class Reference** to show the available Lua libraries. You can do the same for **EBuses** and **Globals**.
-    
+    单击 **Class Reference** 中的 **Classes** 以显示可用的 Lua 库。您可以对 事件总线 **EBuses**和 全局变量 **Globals**执行相同的操作。
+
     ![Classes Reference](/images/user-guide/scripting/lua/lua-editor-debugger-class-reference-pane.png)
     
     ![Classes](/images/user-guide/scripting/lua/lua-editor-debugger-class-reference-pane-open.png)
     
     {{< note >}}
-The class reference feature is active only for the default context and component entity scripts.
+类引用功能仅对默认上下文和组件实体脚本处于活动状态。
 {{< /note >}}
 
-## Setting breakpoints
+## 设置断点
 
-After you connect, you can pause a script by setting breakpoints.
+连接后，您可以通过设置断点来暂停脚本。
 
-1. In the Lua Editor toolbar, click the **Breakpoints** icon ![Breakpoints Icon](/images/user-guide/scripting/lua/lua-editor-debugger-breakpoints-icon.png) to show the **Breakpoints** window.
+1. 在 Lua Editor 工具栏中，单击 **Breakpoints** 图标 ![Breakpoints Icon](/images/user-guide/scripting/lua/lua-editor-debugger-breakpoints-icon.png) 以显示 **Breakpoints** 窗口。
 
-1. In Lua Editor, click one or more line numbers in the `constantrotation.lua` script to set one or more breakpoints. As you add breakpoints, the line number and script path for each are added to the **Breakpoints** window.
+1. 在 Lua 编辑器中，点击 `constantrotation.lua` 脚本中的一个或多个行号来设置一个或多个断点。添加断点时，每个断点的行号和脚本路径将添加到 **Breakpoints** 窗口中。
 
-1. In O3DE Editor, press **Ctrl+G** to run the game, or click the **Simulate** icon at the bottom of the viewport to enable game simulation and run scripts. Lua Editor opens with a yellow marker stopped on the first breakpoint that it encounters.
+1. 在 O3DE 编辑器中，按 **Ctrl+G** 运行游戏，或单击视区底部的 **Simulate** 图标以启用游戏模拟并运行脚本。Lua Editor 将打开，并在遇到的第一个断点处停止一个黄色标记。
 
     ![Debugger stopped on breakpoint](/images/user-guide/scripting/lua/lua-editor-debugger-stopped-on-breakpoint.png)
 
-    When execution is halted at a breakpoint, more information becomes available in the **Lua Locals**, **Stack**, and **Watched Variables** panes.
+    当执行在断点处停止时，**Lua Locals**、**Stack** 和 **Watched Variables** 窗格中将提供更多信息。
 
-1. Click the **Stack** icon ![Stack Icon](/images/user-guide/scripting/lua/lua-editor-debugger-stack-icon.png) to show the **Stack** window.
+1. 点击 **Stack** 图标 ![Stack Icon](/images/user-guide/scripting/lua/lua-editor-debugger-stack-icon.png) 以显示 **Stack** 窗口。
 
-1. Click the **Lua Locals** icon ![Lua Locals Icon](/images/user-guide/scripting/lua/lua-editor-debugger-lua-locals-icon.png) to show local Lua variables.
+1. 点击 **Lua Locals** 图标 ![Lua Locals Icon](/images/user-guide/scripting/lua/lua-editor-debugger-lua-locals-icon.png) 以显示局部 Lua 变量。
 
-1. Click **Watched Variables** icon ![Watched Variables Icon](/images/user-guide/scripting/lua/lua-editor-debugger-watched-variables-icon.png) to open the **Watched Variables** window, where you can specify variables to watch.
+1. 点击 **Watched Variables** 图标 ![Watched Variables Icon](/images/user-guide/scripting/lua/lua-editor-debugger-watched-variables-icon.png) 以打开 **Watched Variables** 窗口，您可以在其中指定要监视的变量。
 
-1. Press **F11** a few times to step through the code. Note how the contents of the **Stack**, **Lua Locals**, and **Watched Variables** windows change.
+1. 按 F11 键几次以逐步执行代码。请注意 **Stack**, **Lua Locals**, 和 **Watched Variables** 窗口的内容是如何变化的。
 
     {{< tip >}}
-For greater convenience, you can float or dock these windows.
+为了更加方便，您可以浮动或停靠这些窗口。
     {{< /tip >}}
 
-1. To detach from debugging, click **Debugging**.
+1. 要从调试中分离，请单击**Debugging**.
 
     ![Click to detach from debugging](/images/user-guide/scripting/lua/lua-editor-debugger-detach-icon.png)
 
-1. In O3DE Editor, Press **Esc** to stop the game.
+1. 在 O3DE 编辑器中，按 **Esc** 停止游戏。
 
-## Options available while debugging 
+## 调试时可用的选项
 
-The following table summarizes common options available while debugging.
+下表总结了调试时可用的常用选项。
 
-| **Icon** | **Action** | **Keyboard Shortcut** | **Description** |
+| **图标** | **动作** | **键盘快捷键** | **说明** |
 | --- | --- | --- | --- |
-| ![Run in Editor Icon](/images/user-guide/scripting/lua/lua-editor-debugger-run-in-editor.png) | Run in Editor | **Alt+F5** | Run in O3DE Editor. |
-| ![Run on Target Icon](/images/user-guide/scripting/lua/lua-editor-debugger-run-on-target.png) | Run on Target | **Ctrl+F5** | Send script to the connected target and run it. |
-| ![Run/Continue Icon](/images/user-guide/scripting/lua/lua-editor-debugger-run-continue.png) | Run/Continue | **F5** | Run or continue running the current script. |
-| ![Step Into Icon](/images/user-guide/scripting/lua/lua-editor-debugger-step-into.png) | Step Into | **F11** | Step into the function called on the current line. |
-| ![Step Out Icon](/images/user-guide/scripting/lua/lua-editor-debugger-step-out.png) | Step Out | **Shift+F11** | Step out of the called function. |
-| ![Step Over Icon](/images/user-guide/scripting/lua/lua-editor-debugger-step-over.png) | Step Over | **F10** | Step over the function called on the current line. |
-| ![Toggle Breakpoint Icon](/images/user-guide/scripting/lua/lua-editor-debugger-toggle-breakpoint.png) | Toggle Breakpoint | **F9** | Enable or disable a breakpoint on the current line. |
+| ![Run in Editor Icon](/images/user-guide/scripting/lua/lua-editor-debugger-run-in-editor.png) | Run in Editor | **Alt+F5** | 在 O3DE 编辑器中运行。 |
+| ![Run on Target Icon](/images/user-guide/scripting/lua/lua-editor-debugger-run-on-target.png) | Run on Target | **Ctrl+F5** | 将脚本发送到连接的目标并运行它。 |
+| ![Run/Continue Icon](/images/user-guide/scripting/lua/lua-editor-debugger-run-continue.png) | Run/Continue | **F5** | 运行或继续运行当前脚本。 |
+| ![Step Into Icon](/images/user-guide/scripting/lua/lua-editor-debugger-step-into.png) | Step Into | **F11** | 单步执行当前行上调用的函数。 |
+| ![Step Out Icon](/images/user-guide/scripting/lua/lua-editor-debugger-step-out.png) | Step Out | **Shift+F11** | 跳出被调用的函数。 |
+| ![Step Over Icon](/images/user-guide/scripting/lua/lua-editor-debugger-step-over.png) | Step Over | **F10** | 单步执行在当前行上调用的函数。 |
+| ![Toggle Breakpoint Icon](/images/user-guide/scripting/lua/lua-editor-debugger-toggle-breakpoint.png) | Toggle Breakpoint | **F9** | 启用或禁用当前行上的断点。 |

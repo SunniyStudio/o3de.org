@@ -1,21 +1,21 @@
 ---
-title: Referencing Entities
-description: Learn how to reference entities as targets from Script Canvas nodes.
+title: 引用实体
+description: 了解如何从 Script Canvas 节点引用实体作为目标。
 weight: 600
 ---
 
-Nodes can contain an entity property. These properties tell the node which entity to affect. By default, many nodes reference **Self**, the entity that contains the [Script Canvas](/docs/user-guide/components/reference/scripting/script-canvas/) component that specifies the script that contains the node. Alternatively, you can reference a different entity other than Self.
+节点可以包含实体属性。这些属性告诉节点要影响哪个实体。默认情况下，许多节点引用 **Self**，该实体包含 [Script Canvas](/docs/user-guide/components/reference/scripting/script-canvas/) 组件，该组件指定包含该节点的脚本。或者，您可以引用除 Self 以外的其他实体。
 
-## Referencing entities from a node
+## 从节点引用实体
 
-1. From the **Node Palette**, locate the node that you want to add to your script and drag it to the canvas.
+1. 从 **Node Palette**（节点调色板）中，找到要添加到脚本中的节点，并将其拖到画布上。
 
-1. In the node, position your pointer over the entity property and then click the target icon.
+1. 在节点中，将指针置于实体属性上，然后单击目标图标。
 
     ![Select and deselect entities for nodes in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-select-entity.png)
 
-1. In the O3DE Editor viewport or the **Entity Outliner**, select the entity that you want to reference.
+1. 在 O3DE Editor 视区或 **Entity Outliner** 中，选择要引用的实体。
 
-1. To clear the entity, position your pointer over the entity property and then click the **x** icon.
+1. 要清除实体，请将指针置于实体属性上，然后单击 **x** 图标。
 
-1. To reset a property back to self, right-click the entity property and choose **Reset Value**.
+1. 要将属性重置回自身，请右键单击实体属性，然后选择 **Reset Value**。

@@ -1,94 +1,94 @@
 ---
-linktitle: Adding and Connecting Nodes
-title: Adding and Connecting Nodes in Script Canvas
-description: Learn how to add and connect Script Canvas nodes in Open 3D Engine.
+linktitle: 添加和连接节点
+title: 在 Script Canvas 中添加和连接节点
+description: 了解如何在 Open 3D Engine 中添加和连接 Script Canvas 节点。
 weight: 100
 ---
 
-You can add nodes to a canvas by dragging and dropping them from the **Node Palette** onto the canvas. Use the Node Palette's search feature to search for a node by name.
+您可以通过将节点从 **Node Palette** 拖放到画布上来将节点添加到画布上。使用 Node Palette 的搜索功能按名称搜索节点。
 
-You can also quickly add and connect nodes without using the **Node Palette**, as described in the following sections.
+您还可以在不使用 **Node Palette** 的情况下快速添加和连接节点，如以下部分所述。
 
-## Creating a chain of linked nodes
+## 创建链接节点链
 
-You can add nodes quickly in succession to a graph by using the daisy chaining feature. Script Canvas automatically links the pins on each new node to the previous node for you.
+您可以使用菊花链功能快速连续地将节点添加到图形中。Script Canvas 会自动将每个新节点上的引脚链接到上一个节点。
 
-**To create a chain of linked nodes**
+**创建链接节点链**
 
-1. On the right side of the graph, press **Shift** + **Right-click**.
+1. 在图表右侧，按 **Shift** + **右键单击**。
 
-1. In the context menu search box, enter the name or partial name of the node that you want to add.
+1. 在上下文菜单搜索框中，输入要添加的节点的名称或部分名称。
 
-1. Press **Enter** to accept the search result, or click the name of another node in the result list.
+1. 按 Enter** 接受搜索结果，或单击结果列表中另一个节点的名称。
 
-    The new node appears on the graph with a line extended from the output pin. The context menu opens automatically, ready for you to add another node and link it to the previous one.
+    新节点显示在图表上，并带有一条从 output 引脚延伸的线。上下文菜单将自动打开，供您添加另一个节点并将其链接到前一个节点。
 
-1. Continue to add as many connected nodes as you want. Previously created nodes automatically scroll off to the left.
+1. 继续添加所需数量的已连接节点。以前创建的节点会自动向左滚动。
 
     {{< note >}}
-If you start by adding nodes on the left side of the graph, the nodes that you create quickly scroll out of view. To see the previous nodes that you created, start by pressing **Shift+Right-click** on the right side of the graph.
+如果您首先在图表左侧添加节点，则您创建的节点会快速滚动出视图。要查看您之前创建的节点，请先按图表右侧的 **Shift+右键单击**。
     {{< /note >}}
 
     ![Quickly adding nodes in succession in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-adding-and-connecting-1.gif)
 
-1. To exit the daisy-chaining mode, press **ESC**.
+1. 要退出菊花链模式，请按**ESC**.
 
-## Creating a node from the output pin of an existing node
+## 从现有节点的输出引脚创建节点
 
-**To create a connected node from an output pin of an existing node**
+**从现有节点的输出引脚创建连接的节点**
 
-1. From an output pin on the existing node, drag a line onto the canvas.
+1. 从现有节点上的输出引脚，将一条线拖动到画布上。
 
-1. In the context menu search box, enter the name or partial name of the node that you want to add.
+1. 在上下文菜单搜索框中，输入要添加的节点的名称或部分名称。
 
-1. Press **Enter** to accept the search result, or click the name of another node in the result list. The pins on the new node connect automatically to the pins on the existing node.
+1. 按 Enter** 接受搜索结果，或单击结果列表中另一个节点的名称。新节点上的引脚会自动连接到现有节点上的引脚。
 
     ![Creating a node from the output pin of an existing node in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-adding-and-connecting-2.gif)
 
-1. To create a chain of linked nodes from the output pin of an existing node, hold **Shift** and drag a line from the output pin onto the canvas.
+1. 要从现有节点的输出引脚创建链接节点链，请按住 Shift，然后从输出引脚拖动一条线到画布上。
 
-## Inserting a node between two connected nodes
+## 在两个连接的节点之间插入一个节点
 
-To insert a node between two connected nodes and connect the new node automatically, you can use the following methods:
+要在两个连接的节点之间插入节点并自动连接新节点，可以使用以下方法：
 
-* Insert an existing node between the nodes.
-* Create a new node between the nodes.
+* 在节点之间插入现有节点。
+* 在节点之间创建新节点。
 
-**To insert an existing node between two connected nodes**
+**在两个连接的节点之间插入现有节点**
 
-1. Drag a node over the line that connects the two nodes, and hold the new node in position.
+1. 将节点拖动到连接两个节点的线上，然后将新节点保持在原位。
 
-1. When an expanding, box-shaped animation appears, the node pins are connected. Script Canvas nudges surrounding nodes aside to accommodate the new node.
+1. 当出现展开的盒形动画时，表示节点引脚已连接。Script Canvas 将周围的节点推到一边以容纳新节点。
 
     ![Inserting an existing node between two connected nodes in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-adding-and-connecting-3.gif)
 
-1. The node-nudging feature is enabled by default. To change it, choose **Edit**, **Settings**, **Global Preferences** and select or clear the **Allow Node Nudging On Splice** option.
+1. 默认情况下，节点微移功能处于启用状态。要更改它，请选择**Edit**, **Settings**, **Global Preferences**并选择或清除 **Allow Node Nudging On Splice** 选项。
 
     ![Configuring the node nudging preferences in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-adding-and-connecting-4.png)
 
-**To create a node between two connected nodes**
+**在两个连接的节点之间创建节点**
 
-1. Right-click the line that connects the two nodes.
+1. 右键单击连接两个节点的线。
 
-1. In the context menu search box, do one of the following:
+1. 在上下文菜单搜索框中，执行以下操作之一：
 
-    * Enter the name of the node that you want, and press **Enter**.
-    * Choose a node from the list.
+    * 输入所需节点的名称，然后按 Enter。
+    * 从列表中选择一个节点。
 
-    The pins on the new node connect automatically to the nodes on the left and the right.
+    新节点上的引脚会自动连接到左侧和右侧的节点。
 
     ![Creating a node between two nodes and connecting it automatically in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-adding-and-connecting-5.gif)
 
-## Connecting two existing nodes automatically
+## 自动连接两个现有节点
 
-You can connect two nodes by dragging one node onto another node. Script Canvas connects the corresponding pins for you.
+您可以通过将一个节点拖动到另一个节点上来连接两个节点。Script Canvas 为您连接相应的引脚。
 
-**To connect two nodes automatically**
+**自动连接两个节点**
 
-1. Drag a node over the side of the node that you want to connect, briefly holding the new node in position. For example, drag the left side of one node onto the right side of the second node.
+1. 将节点拖动到要连接的节点一侧，同时短暂地将新节点保持在原位。例如，将一个节点的左侧拖动到第二个节点的右侧。
 
-1. When an expanding, box-shaped animation appears over the overlapping nodes, the node pins have been connected.
+1. 当重叠节点上出现展开的框形动画时，表示节点引脚已连接。
 
-1. Adjust the position of the new node on the graph.
+1. 调整新节点在图表上的位置。
 
     ![Connecting two existing nodes by superimposing them in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-adding-and-connecting-6.gif)

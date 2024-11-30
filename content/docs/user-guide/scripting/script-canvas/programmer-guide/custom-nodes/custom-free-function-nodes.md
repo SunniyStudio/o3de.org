@@ -1,21 +1,21 @@
 ---
-linktitle: Custom Free Function Nodes
-title: Creating Custom Free Function Nodes in Script Canvas
-description: Learn how to create custom Script Canvas Free Function Nodes in Open 3D Engine (O3DE).
+linktitle: 自定义自由函数节点
+title: 在 Script Canvas 中创建自定义自由函数节点
+description: 了解如何在 Open 3D Engine （O3DE） 中创建自定义 Script Canvas 自由函数节点。
 weight: 200
 ---
 
-## Instructions
-This topic guides you how to create custom Script Canvas Free Function Nodes step by step.
+## 指示
+本主题将指导您如何逐步创建自定义 Script Canvas Free Function 节点。
 
 {{< note >}}
-The [ScriptCanvasPhysics](https://github.com/o3de/o3de/tree/development/Gems/ScriptCanvasPhysics) Gem demonstrates the finished Gem that creates custom free function nodes in ScriptCanvas.
-You can reference the ScriptCanvasPhysics Gem as you follow along this tutorial.
+[ScriptCanvasPhysics](https://github.com/o3de/o3de/tree/development/Gems/ScriptCanvasPhysics) Gem演示了在 ScriptCanvas 中创建自定义免费函数节点的成品 Gem。
+在按照本教程进行操作时，您可以引用 ScriptCanvasPhysics Gem。
 {{< /note >}}
 
 ### Step 1: Adding support for custom free function nodes to a Gem
 {{< note >}}
-This step is only required once for the first time custom free function node creation.
+首次创建自定义免费函数节点时，只需执行一次此步骤。
 {{< /note >}}
 
 In your Gem's `Code/CMakeLists.txt`, add a section for `AUTOGEN_RULES` and declare `Gem::ScriptCanvas.Extensions` as a build dependency.

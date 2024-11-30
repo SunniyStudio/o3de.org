@@ -1,111 +1,111 @@
 ---
-linktitle: Variables
-title: Script Canvas Variables and the Variable Manager
-description: Use the Variable Manager in the Open 3D Engine (O3DE) Script Canvas Editor to add or manage variables and create get, set, or value-changed event nodes in your  Script Canvas graph.
+linktitle: 变量
+title: Script Canvas 变量和变量管理器
+description: 使用 Open 3D Engine （O3DE） Script Canvas 编辑器中的变量管理器添加或管理变量，并在 Script Canvas 图形中创建获取、设置或更改值的事件节点。
 weight: 300
 ---
 
-The **Variable Manager** shows the variables that are used in your Script Canvas graph. These variables represent the custom data required to build game logic. For example, you can use variables to make counters, store entity references, specify a direction, or define a color.
+**变量管理器** 显示 Script Canvas 图表中使用的变量。这些变量表示构建游戏逻辑所需的自定义数据。例如，您可以使用变量创建计数器、存储实体引用、指定方向或定义颜色。
 
-## Adding and configuring variables
+## 添加和配置变量
 
-You can add variables to your Script Canvas graph to declare and initialize them.
+您可以将变量添加到 Script Canvas 图形中，以声明和初始化它们。
 
-**To add and configure a variable**
+**添加和配置变量**
 
-1. In the **Script Canvas Editor**, open your Script Canvas graph or create one.
+1. 在 **Script Canvas 编辑器**中，打开您的 Script Canvas 图形或创建一个。
 
-1. In the **Variable Manager**, choose **Create Variable** and then choose your variable type. You can search to filter the list of variable types.
+1. 在 **Variable Manager**中，选择 **Create Variable**，然后选择您的变量类型。您可以搜索以筛选变量类型列表。
 
     {{< note >}}
-Common variable types are pinned to the top of the list by default. You can customize the pinned list to show the variable types that you use most often. To do so, choose the box to the left of a variable type to pin or unpin it.
+默认情况下，常见变量类型固定到列表顶部。您可以自定义固定列表以显示最常用的变量类型。为此，请选择变量类型左侧的框以固定或取消固定它。
     {{< /note >}}
 
     ![Choose from variable types in the Script Canvas Variable Manager.](/images/user-guide/scripting/script-canvas/variable-manager-create-variable-types.png)
 
-1. In the **Node Inspector**, configure the properties for your variable.
+1. 在 **Node Inspector **中，配置变量的属性。
 
     ![Configure variable properties in the Script Canvas Node Inspector.](/images/user-guide/scripting/script-canvas/node-inspector-properties-default.png)
 
-    For example, if you add a **Color** variable, you can do the following:
+    例如，如果添加 **Color** 变量，则可以执行以下操作：
 
-    * For **Name**, enter a name to identify that color variable. You can also double-click the name in the **Variable Manager** to rename the variable.
-    * For **Color**, enter an RGB value or use the color picker.
-    * For **Display Order**, enter the relative order in which you want the variable to appear in the Script Canvas Editor, or leave the default at -1.
-    * For **Scope**, select **In** to show the variable property and value under the assigned [Script Canvas](/docs/user-guide/components/reference/scripting/script-canvas/) component in the **Entity Inspector**, or leave the default at **Local** to keep the variable private to the graph.
+    * 对于 **Name**, 输入名称以标识该颜色变量。您还可以双击 **Variable Manager** 中的名称来重命名变量。
+    * 对于 **Color**, 输入 RGB 值或使用颜色选取器。
+    * 对于 **Display Order**,输入您希望变量在 Script Canvas Editor 中显示的相对顺序，或将默认值保留为 -1。
+    * 对于 **Scope**, 选择 **In** 以在 **Entity Inspector **中分配的(/docs/user-guide/components/reference/scripting/script-canvas/) 组件下显示变量属性和值，或将默认值保留为 **Local** 以保持变量对图形的私有。
 
         {{< note >}}
-This setting allows you to use the same Script Canvas graph for more than one entity, but customize part of the graph for a specific entity. When you change the variable value on a component, that value takes precedence over the default value that is specified in the graph.
+此设置允许您对多个实体使用相同的 Script Canvas 图形，但为特定实体自定义图形的一部分。当您更改组件上的变量值时，该值优先于图表中指定的默认值。
         {{< /note >}}
 
         ![Example of Color variable properties in the Script Canvas Node Inspector.](/images/user-guide/scripting/script-canvas/node-inspector-scope-in-example.png)
 
-1. In the Script Canvas Editor, choose **File**, **Save** to save your changes.
+1. 在 Script Canvas Editor （Script Canvas 编辑器） 中，选择 **File**, **Save** 以保存更改。
 
-## Setting Default Values for Variables
+## 设置变量的默认值
 
-You can set the default value for variables in the **Node Inspector** or the **Variable Manager**.
+您可以在 **Node Inspector** 或 **Variable Manager** 中设置变量的默认值。
 
-**To set variable values**
+**设置变量值**
 
-1. In the **Variable Manager**, select the variable that you want to update. You can search to filter the list of variables that are in your graph.
+1. 在 **变量管理器** 中，选择要更新的变量。您可以搜索以筛选图表中的变量列表。
 
-1. Do one of the following to update the properties for your variable:
+1. 执行以下操作之一以更新变量的属性：
 
-    * In the **Node Inspector**, update the variable values as needed.
+    * 在 **Node Inspector **中，根据需要更新变量值。
 
         ![Set the variable default values in the Node Inspector.](/images/user-guide/scripting/script-canvas/node-inspector-modify-variable-values.png)
 
-    * In the **Variable Manager**, update certain variable values. These values appear in a third column. You can select or double-click them.
+    * 在 **Variable Manager** 中，更新某些变量值。这些值显示在第三列中。您可以选择或双击它们。
 
         ![Set the variable default values in the Variable Manager.](/images/user-guide/scripting/script-canvas/variable-manager-modify-variable-values.png)
 
-1. In the Script Canvas Editor, choose **File**, **Save** to save your changes to the graph.
+1. 在 Script Canvas Editor （Script Canvas 编辑器） 中，选择 **File**, **Save** 以保存对图表的更改。
 
-## Creating Get or Set Variable Nodes
+## 创建 get 或 set 变量节点
 
-You can use get and set variable nodes to retrieve or set the variable's value.
+您可以使用 get 和 set variable 节点来检索或设置变量的值。
 
-**To create get or set variable nodes**
+**创建 get 或 set 变量节点**
 
-Do one of the following:
+执行以下操作之一：
 
-* Drag the variable from the **Variable Manager** to the canvas, and then choose **Get `<variable name>`** or **Set `<variable name>`**.
+* 将变量从 **Variable Manager** 拖动到画布上，然后选择 **Get `<variable name>`** 或 **Set `<variable name>`**.
 
-* **Right-click** the variable in the **Variable Manager** and choose **Get `<variable name>`** or **Set `<variable name>`**.
+* 在 **变量管理器** 中 **右键单击** 变量，然后选择**Get `<variable name>`** 或 **Set `<variable name>`**.
 
     ![Right-click to create a get or set variable in the Script Canvas Variable Manager.](/images/user-guide/scripting/script-canvas/variable-manager-create-get-set-variable.png)
 
-* Use the following keyboard shortcuts:
-  * Press **Shift** and drag the variable from the **Variable Manager** to the canvas to create a get variable node.
-  * Press **Alt** and drag the variable from the **Variable Manager** to the canvas to create a set variable node.
+* 使用以下键盘快捷键：
+  * 按 **Shift** 并将变量从 **变量管理器** 拖动到画布上，以创建获取变量节点。
+  * 按 **Alt** 并将变量从 **变量管理器** 拖动到画布上，以创建设置变量节点。
 
-## Creating Value-Changed Nodes
+## 创建值更改的节点
 
-You can use **OnVariableValueChanged** (value-changed) event nodes to react to a change in a variable's value.
+您可以使用 **OnVariableValueChanged**（值已更改）事件节点对变量值的更改做出反应。
 
-**To create value-changed nodes**
+**创建值更改的节点**
 
-Do one of the following:
+执行以下操作之一：
 
-* Drag the variable from the **Variable Manager** to the canvas, and then choose **On `<variable name>` Changed**.
+* 将变量从 **变量管理器** 拖到画布上，然后选择 **On `<variable name>` Changed**。
 
     ![Drag a variable from the Script Canvas Variable Manager to the canvas to create an on-value-changed node.](/images/user-guide/scripting/script-canvas/variable-manager-create-on-value-changed.gif)
 
-* Create a new **OnVariableValueChanged** event node in your graph and set the **Source** field to a variable using the field's gear button. For help adding a node to a graph, refer to [Adding and Connecting Nodes in Script Canvas](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/adding-and-connecting).
+* 在图表中创建新的 **OnVariableValueChanged** 事件节点，并使用该字段的齿轮按钮将 **Source** 字段设置为变量。有关向图形添加节点的帮助，请参阅 [在 Script Canvas 中添加和连接节点](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/adding-and-connecting).
 
     ![Set the Source field of an OnVariableValueChanged event node using the field's gear button.](/images/user-guide/scripting/script-canvas/variable-manager-create-on-value-changed-node.png)
 
-## Deleting Variables
+## 删除变量
 
-You can delete variables from the graph or the **Variable Manager**.
+您可以从图形或 **变量管理器** 中删除变量。
 
-**To delete a variable**
+**删除变量**
 
-Do one of the following:
+执行以下操作之一：
 
-* Select the variable node in the canvas and press **Delete**.
-* Select the variable in the **Variable Manager** and press **Delete**.
-* **Right-click** the variable in the **Variable Manager** and choose **Delete `<variable name>`**.
+* 在画布中选择变量节点，然后按 **Delete**。
+* 在 **变量管理器** 中选择变量，然后按 **Delete**。
+* 在 **变量管理器** 中 **右键单击** 变量，然后选择 **Delete `<variable name>`**.
 
     ![Delete a variable in the Script Canvas Variable Manager.](/images/user-guide/scripting/script-canvas/variable-manager-delete-variable-node.png)

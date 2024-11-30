@@ -1,83 +1,83 @@
 ---
-title: Arrays
-description: Learn how to use array variable types in the Open 3D Engine (O3DE) Script Canvas.
+title: 数组
+description: 了解如何在 Open 3D Engine （O3DE） Script Canvas 中使用数组变量类型。
 weight: 100
 ---
 
-Arrays provide a dynamic continuous area of memory that can hold storage of a given type.
+数组提供了一个动态的连续内存区域，可以保存给定类型的存储。
 
-**To create an array variable**
+**创建数组变量**
 
-1. In the **Variable Manager**, do one of the following:
-    * Choose **Create Variable**, and then choose **Array**.
+1. 在 **Variable Manager** 中，执行以下操作之一：
+    * 选择 **Create Variable**, 然后选择 **Array**.
 
-    or
+    或
 
-    * In the **Variable Type** search box, type **Array**, and then choose **Array**.
+    * 在 **Variable Type**搜索框中，输入**Array**, 然后选择 **Array**.
 
     ![Creating an array variable in Script Canvas.](/images/user-guide/scripting/script-canvas/variable-array-containers-1.png)
 
-1. Enter information to create your array, and then choose **Create**.
+1. 输入信息以创建数组，然后选择 **Create**.
 
     ![Enter information to create your array.](/images/user-guide/scripting/script-canvas/variable-array-containers-2.png)
 
-    * For **Variable Name**, enter the name for your array variable.
-    * For **Container Type**, use **Array**.
-    * For **Type**, choose the data type for the array.
-    * (Optional) To pin the array to the list of variables in the **Variable Manager**, select **Pin To Variable List**. Then, when you choose **Create Variable**, the array appears in the list as **Array<_`data_type`_>**. This is useful when you reuse the same type frequently.
+    * 对于 **Variable Name**, 输入 Array 变量的名称。
+    * 对于 **Container Type**, 使用 **Array**.
+    * 对于 **Type**, 选择数组的数据类型。
+    * （可选）要将数组固定到 **Variable Manager**中的变量列表**，请选择 **Pin To Variable List**。 然后，当您选择 **Create Variable**时，该数组在列表中显示为**Array<_`data_type`_>**. 当您经常重复使用同一类型时，这很有用。
 
     ![Array variable pinned to the variable list in Variable Manager.](/images/user-guide/scripting/script-canvas/variable-array-containers-3.png)
 
 ### Array pin icons
 
-Some nodes, like **OnEntitiesSpawned** or **Get String Array**, provide data as arrays. The data pins for the arrays on such nodes have a square icon. The color of the icon shows the data type for the array.
+某些节点（如 **OnEntitiesSpawned** 或 **Get String Array**）以数组形式提供数据。此类节点上数组的数据引脚有一个方形图标。图标的颜色显示数组的数据类型。
 
 ![Array data pins color-coded by data type.](/images/user-guide/scripting/script-canvas/variable-array-containers-4.png)
 
-### Array operation nodes
+### 数组操作节点
 
-In the **Node Palette**, the **Containers** section has nodes that you can use to add, get, and remove elements from arrays.
+在 **Node Palette** 中，**Containers** 部分包含可用于在数组中添加、获取和删除元素的节点。
 
 ![Container node operations.](/images/user-guide/scripting/script-canvas/variable-array-containers-5.png)
 
-* **Add Element at End** - Adds the element at the end of the container.
-* **Clear All Elements** - Removes all elements from the container.
-* **Erase** - Erases the element at the specified index or key.
-* **For Each** - Iterates through each element of a container.
-* **Get Element** - Returns the element at the specified index or key.
-* **Get First Element** - Returns the first element in the container.
-* **Get Last Element** - Returns the last element in the container.
-* **Get Size** - Returns the number of elements in the container.
-* **Insert** - Inserts an element into the container at the specified index or key.
-* **Is Empty** - Returns whether the container is empty.
+* **Add Element at End** - 在容器的末尾添加元素。
+* **Clear All Elements** - 从容器中删除所有元素。
+* **Erase** - 擦除指定索引或键处的元素。
+* **For Each** - 循环访问容器的每个元素。
+* **Get Element** - 返回位于指定索引或键处的元素。
+* **Get First Element** - 返回容器中的第一个元素。
+* **Get Last Element** - 返回容器中的最后一个元素。
+* **Get Size** - 返回容器中的元素数。
+* **Insert** - 将元素插入到容器中的指定索引或键处。
+* **Is Empty** - 返回容器是否为空。
 
-All container operation nodes have an **In** pin and a **Source** pin.
+所有容器操作节点都有一个 **In** 引脚和一个 **Source** 引脚。
 
-All pins have an **Out** pin except **For Each**, which has an **Each** pin that is signalled after each element in the container. The **For Each** node also has a **Break** pin and a **Finished** pin. The **Break** pin stops the iteration when signalled. The **Finished** pin is signalled when all of the elements in the container have been iterated over or the iteration is stopped by the **Break** pin.
+所有引脚都有一个 **Out** 引脚，但 **For Each** 除外，它有一个 **Each** 引脚，在容器中的每个元素之后发出信号。**For Each** 节点还有一个 **Break** 引脚和一个 **Finished** 引脚。**Break** 引脚在发出信号时停止迭代。当容器中的所有元素都已迭代或 **Break** 引脚停止迭代时，将发出 **Finished** 引脚的信号。
 
 ![For Each node connection pins.](/images/user-guide/scripting/script-canvas/variable-array-containers-6.png)
 
-#### Automatic data pin typing
+#### 自动数据引脚类型
 
-The pins on container operation are context-sensitive. Data input and output pins automatically take on the data type of the pin to which they are connected.
+容器操作上的 pin 是上下文相关的。数据输入和输出引脚自动采用它们所连接的引脚的数据类型。
 
-**Example**
+**示例**
 
-In the following example, the array type is `string`.
+在以下示例中，数组类型为 `string`.
 
 ![Connecting a Get container node to a container operation node.](/images/user-guide/scripting/script-canvas/variable-array-containers-7.png)
 
-When you connect the **Array\<String\>** pin to the **Source** pin on the **Add Element at End** node, the following changes occur automatically:
+当您将 **Array\<String\>** 引脚连接到 **Add Element at End** 节点上的 **Source** 引脚时，以下更改会自动发生：
 
-* The **Source** pin changes to the `string` type.
-* The **Add Element at End** node box expands to include a **String** text box where you can enter a string value.
-* The pin icon and line colors change to the color of the data type that you are using. In the case of this example, the color is blue.
-* A **Container** pin for chaining output appears on the target node.
+* **Source** 引脚 更改为`string` 类型。
+* **Add Element at End** 节点框将展开以包含一个 **String** 文本框，您可以在其中输入字符串值。
+* 图钉图标和线条颜色将更改为您正在使用的数据类型的颜色。在此示例中，颜色为蓝色。
+* 用于链接输出的 **Container** 引脚将显示在目标节点上。
 
 ![Example of automatic data pin typing.](/images/user-guide/scripting/script-canvas/variable-array-containers-8.png)
 
-#### Chaining Array Operation Nodes
+#### 链接数组操作节点
 
-Array operation nodes typically have a **Container** output pin. You can use this output pin to chain several operations on the same array, as the following image shows.
+数组操作节点通常具有 **Container** 输出引脚。您可以使用此输出引脚将多个操作链接到同一数组上，如下图所示。
 
 ![Chained array operation nodes.](/images/user-guide/scripting/script-canvas/variable-array-containers-9.png)

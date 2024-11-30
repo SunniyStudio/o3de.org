@@ -1,159 +1,159 @@
 ---
-linktitle: Nodes
-title: Script Canvas Nodes
-description: Learn how to place, connect, and organize nodes in the Open 3D Engine (O3DE) Script Canvas Editor.
+linktitle: 节点
+title: Script Canvas 节点
+description: 了解如何在 Open 3D Engine （O3DE） Script Canvas 编辑器中放置、连接和组织节点。
 weight: 200
 ---
 
-A node in Script Canvas consists of a title bar, inputs, and outputs.
+Script Canvas 中的节点由标题栏、输入和输出组成。
 
 ![Anatomy of a node in Script Canvas.](/images/user-guide/scripting/script-canvas/nodes-anatomy.png)
 
-**Title Bar** - The title bar of a node is in a colored band at the top of the node. A title bar can include a subtitle, but not all nodes have subtitles.
+**标题栏** - 节点的标题栏位于节点顶部的彩色带中。标题栏可以包含副标题，但并非所有节点都有字幕。
 
-**Inputs** - Located on the left side of the node. There are two types of input nodes: _execution_ and _data_. Execution inputs drive the flow of execution of a script into a given node. Data inputs provide the node with the data it requires to do processing or decision making.
+**输入** - 位于节点的左侧。有两种类型的输入节点：_执行_ 和 _数据_。执行输入将脚本的执行流驱动到给定节点中。数据输入为节点提供进行处理或决策所需的数据。
 
-**Outputs** - Located on the right side of the node. Execution and data output nodes drive the flow of execution and data into any connected nodes.
+**输出** - 位于节点的右侧。执行和数据输出节点将执行流和数据驱动到任何连接的节点中。
 
-## Inputs, outputs, and connection types
+## 输入、输出和连接类型
 
-**Open 3D Engine (O3DE)** has two main pin and connection types. Some inputs and outputs determine the flow of logic and order of execution. Other inputs and outputs pass data from one node to the next.
+**Open 3D Engine （O3DE）** 有两种主要的引脚和连接类型。一些 inputs 和 output 决定了 logic 的流程和执行顺序。其他输入和输出将数据从一个节点传递到下一个节点。
 
-**Logic inputs, outputs, and connections**
+**逻辑输入、输出和连接**
 
-The execution of a script is driven by triangular inputs and outputs on every node. These connections determine the order of execution. A Script Canvas script runs when the entity that is attached to the script is activated. Nodes are connected from the inputs on their left side. After they finish running, they activate nodes that are connected to their outputs on the right side.
+脚本的执行由每个节点上的三角形输入和输出驱动。这些连接决定了执行顺序。当附加到脚本的实体被激活时，Script Canvas 脚本将运行。节点从其左侧的输入连接。完成运行后，它们会激活连接到右侧输出的节点。
 
-An output logic pin with multiple connections runs a logic branch in sequence. The execution sequence is determined by the order that the connections were made, from earliest to most recent. If a specific execution order is required, you can specify the sequence order by using a single logic flow or a **Sequencer** node.
+具有多个 connections 的 output logic pin 按顺序运行一个 logic branch。执行顺序由建立连接的顺序（从最早到最近）确定。如果需要特定的执行顺序，您可以使用单个 logic flow 或 **Sequencer** 节点指定序列顺序。
 
-An incoming logic pin with multiple connections runs each time that the logic flow triggers the node. For example, if a node is triggered by three different nodes in a script, the node runs three times.
+每次 logic flow 触发 node 时，具有多个连接的 incoming logic pin 都会运行。例如，如果一个节点由脚本中的三个不同节点触发，则该节点将运行三次。
 
-**Data inputs, outputs, and connections**
+**数据输入、输出和连接**
 
-Data connections enable scripts to read and write data between nodes. Data is read from the right side of one node and then set on the left side of another node.
+数据连接使脚本能够在节点之间读取和写入数据。从一个节点的右侧读取数据，然后在另一个节点的左侧设置数据。
 
-## Making connections
+## 建立连接
 
-You can make connections only between pins of the same type. For example, you make logic connections only between logic pins, and data connections only between data pins of the same type. You can't create connections between incompatible pins, such as logic and data.
+您只能在相同类型的引脚之间建立连接。例如， 您仅在 logic pins之间建立logic connections，并且仅在相同类型的data pins之间建立数据连接。您不能在不兼容的引脚之间创建连接，例如 logic 和 data。
 
-**To make a connection**
+**建立连接**
 
-1. In the **Script Canvas Editor** canvas, drag from the input pin of one node to an output pin of another node. This creates a connection line between the two pins.
+1. 在 **Script Canvas Editor** 画布中，从一个节点的输入引脚拖动到另一个节点的输出引脚。这将在两个引脚之间创建一条连接线。
 
-1. To move a connection from one pin to another, drag the end of a line from one pin and drop it onto another pin.
+1. 要将连接从一个引脚移动到另一个引脚，请将线的末端从一个引脚拖放到另一个引脚上。
 
-    To delete a connection, **right-click** and choose **Delete**. You can also press and hold **Alt**, and choose the connection to delete it.
+    要删除连接，请右键单击并选择 **Delete**。您也可以按住 Alt 并选择连接以将其删除。
 
-## Variable nodes
+## 变量节点
 
-Variable nodes enable Script Canvas to read from or write to specific variables.
+变量节点使 Script Canvas 能够读取或写入特定变量。
 
 ![Variable node in Script Canvas.](/images/user-guide/scripting/script-canvas/nodes-variable-1.png)
 
 ![Variable node in Script Canvas.](/images/user-guide/scripting/script-canvas/nodes-variable-2.png)
 
-Another way to read or write a variable&mdash;without the need for a separate variable node&mdash;is to use [variable references](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references) on a node data pin.
+另一种读取或写入变量的方法（无需单独的变量节点）是在节点数据引脚上使用 [变量引用](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references)。
 
-For more information about using variables in Script Canvas, refer to [Script Canvas Variables and the Variable Manager](/docs/user-guide/scripting/script-canvas/editor-reference/variables/).
+有关在 Script Canvas 中使用变量的更多信息，请参阅 [Script Canvas 变量和变量管理器]](/docs/user-guide/scripting/script-canvas/editor-reference/variables/).
 
-## Event nodes
+## 事件节点
 
-In O3DE's [Event Bus (EBus) system](/docs/user-guide/programming/messaging/ebus/), events can be sent or received. Script Canvas surfaces this system through the use of sender nodes and receiver nodes.
+在 O3DE 的 [事件总线 （EBus） 系统](/docs/user-guide/programming/messaging/ebus/) 中，可以发送或接收事件。Script Canvas 通过使用发送方节点和接收方节点来显示此系统。
 
-### Sender nodes
+### 发送方节点
 
-Event senders send events directly to a specific entity or broadcast events to all entities that are listening for and interested in handling the event. Most events are addressable, which means they can be sent to a specific entity. Because events are usually sent to entities, the most common address type is `Entity Id`, although other address types can be used.
+事件发送方将事件直接发送到特定实体，或将事件广播到正在侦听并有兴趣处理事件的所有实体。大多数事件都是可寻址的，这意味着它们可以发送到特定实体。由于事件通常发送到实体，因此最常见的地址类型是`Entity Id`，但也可以使用其他地址类型。
 
-The following example uses Light events to create a sender node.
+以下示例使用 Light 事件创建发送方节点。
 
-**To create a sender node**
+**创建发送方节点**
 
-1. In the **Node Palette** search box, type **Light**. The results show nodes related to light.
+1. 在 **Node Palette** 搜索框中，键入 **Light**。结果显示与光相关的节点。
 ![Light-related nodes in the Script Canvas Node Palette.](/images/user-guide/scripting/script-canvas/nodes-event-sender-1.png)
 
-    In the **Node Palette**, sender events are the dark blue entries. All Light-related sender events provide a way to communicate with, configure, or alter the behavior of a given Light component. You can send any of the Light-related sender events to an entity that has a Light component. If the entity that owns the Script Canvas graph also has a Light component, it can send the event to itself.
+    在 **Node Palette** 中，sender events 是深蓝色的条目。所有与 Light 相关的发送方事件都提供了一种与给定 Light 组件通信、配置或更改其行为的方法。您可以将任何与 Light 相关的发送方事件发送到具有 Light 组件的实体。如果拥有 Script Canvas 图形的实体也具有 Light 组件，则它可以将事件发送给自身。
 
-1. Drag **Turn On** or **Turn Off** onto the canvas to create a sender node.
+1. 将 **Turn On** 或 **Turn Off** 拖到画布上以创建发送者节点。
 
     ![Light component Turn On sender node in Script Canvas.](/images/user-guide/scripting/script-canvas/nodes-event-sender-2.png)
 
     ![Light component Turn Off sender node in Script Canvas.](/images/user-guide/scripting/script-canvas/nodes-event-sender-3.png)
 
-    The **Source** pin of the sender node refers to the entity that sends the event. The default is **Self**, which means that it sends Light events for the same entity that the Script Canvas component is on. However, you can change the source to any entity in the game world.
+    发送方节点的 **Source** 引脚是指发送事件的实体。默认值为 **Self**，这意味着它会为 Script Canvas 组件所在的同一实体发送 Light 事件。但是，您可以将源更改为游戏世界中的任何实体。
 
-    The **State** pin is a Boolean value that controls the state of the light.
+    **State** 引脚是一个布尔值，用于控制光源的状态。
 
-### Receiver nodes
+### 接收器节点
 
-An event receiver implements a particular behavior when it receives a particular event.
+事件接收器在接收到特定事件时实现特定行为。
 
-The following example creates a receiver node for a Light event.
+以下示例为 Light 事件创建接收器节点。
 
-**To create a receiver node**
+**创建接收方节点**
 
-1. In the **Node Palette** search box, type **Turn**.
+1. 在 **Node Palette** 搜索框中，键入 **Turn**。
 
-    In the list of results, event receivers like **Turned Off** and **Turned On** have a light blue icon.
+    在结果列表中，**Turned Off** 和 **Turned On** 等事件接收器具有浅蓝色图标。
 
     ![Some event receiver nodes in the Script Canvas Node Palette.](/images/user-guide/scripting/script-canvas/nodes-event-receiver-1.png)
 
-1. Drag **Turned On** onto the canvas to create a receiver node.
+1. 将 **Turned On** 拖到画布上以创建接收器节点。
 
     ![A Light component Turned On event receiver node.](/images/user-guide/scripting/script-canvas/nodes-event-receiver-2.png)
 
-    The **Source** pin of the receiver node refers to the entity from which the event is received. The default is **Self**, which means the node receives Light events for the same entity that the Script Canvas component is on. You can change the target to any entity in the game world.
+    接收方节点的 **Source** 引脚是指从中接收事件的实体。默认值为 **Self**，这意味着节点接收 Script Canvas 组件所在的同一实体的光照事件。您可以将 target 更改为游戏世界中的任何实体。
 
-    You can also specify the target using a [variable reference](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references). Whenever the variable changes, the EBus handler will update the Source to match the variable reference.
+    您还可以使用 [变量引用](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references) 指定目标。每当变量发生更改时，事件总线处理程序都会更新 Source 以匹配变量引用。
 
-1. Click **Add/Remove Events**.
+1. 点击 **Add/Remove Events**.
 
-    Because receiver nodes are usually containers for multiple events, you can choose **Add/Remove Events** to view and add any of the available event receivers for a given component. In this case, the Light component exposes two events: **Turned Off** and **Turned On**.
+    由于接收方节点通常是多个事件的容器，因此您可以选择 **Add/Remove Events** 来查看和添加给定组件的任何可用事件接收器。在本例中，Light 组件公开两个事件： **Turned Off** 和 **Turned On**.
 
     ![Adding an event to a receiver node in Script Canvas.](/images/user-guide/scripting/script-canvas/nodes-event-receiver-3.png)
 
-1. Select the **Turned Off** check box to add the **Turned Off** event to the receiver node.
+1. 选中 **Turned Off** 复选框，将 **Turned Off** 事件添加到接收方节点。
 
-    A second blue band in the node appears. The node is now listening for both the **Turned On** and **Turned Off** events.
+    此时将显示节点中的第二个蓝色条带。该节点现在正在侦听 **Turned On** 和 **Turned Off** 事件。
 
     ![A receiver node with two events in Script Canvas.](/images/user-guide/scripting/script-canvas/nodes-event-receiver-4.png)
 
-1. Click **Add/Remove Events** again, and clear the **Turned Off** check box. The **Turned Off** event is removed from the receiver node.
+1. 再次单击 **Add/Remove Events**，然后清除 **Closed** 复选框。**Turned Off** 事件将从接收方节点中删除。
 
-#### Displaying and using connection controls
+#### 显示和使用连接控件
 
-All receiver nodes have connection-related pins, or controls, that are hidden by default. You can use these controls to manage when an event is connected or disconnected. Connected means that the event is ready to receive events, and disconnected means that the event is not receiving events. The connection controls can also notify you when a node successfully connects, disconnects, or experiences an error.
+所有接收器节点都有与连接相关的引脚或控件，默认情况下这些引脚或控件是隐藏的。您可以使用这些控件来管理活动何时连接或断开连接。Connected 表示事件已准备好接收事件，Connected 表示事件未接收事件。连接控件还可以在节点成功连接、断开连接或遇到错误时通知您。
 
-The following example uses the Light component **Turned On** event node.
+以下示例使用 Light 组件 **Turned On** 事件节点。
 
-**To enable and use Display Connection Controls**
+**启用和使用显示连接控件**
 
-1. Ensure that **Node Inspector** is visible. In Script Canvas Editor, choose **View**, **Node Inspector**, or press **Ctrl+Shift+I**.
+1. 确保 **Node Inspector**可见。在 Script Canvas 编辑器中，选择 **View**、**Node Inspector**，或按 **Ctrl+Shift+I**。
 
-1. Choose the Light **Turned On** node to select it.
+1. 选择 Light **Turned On** 节点以将其选中。
 
     ![Click to select a node in Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-event-connection-controls-1.png)
 
-1. In **Node Inspector**, select **Display Connection Controls**.
+1. 在 **Node Inspector**中，选择 **Display Connection Controls**.
 
     ![Select Display Connection Controls in the Node Inspector.](/images/user-guide/scripting/script-canvas/nodes-event-connection-controls-2.png)
 
-    The Light component **Turned On** receiver node expands to provide connection-related pins.
+    Light 组件 **Turned On** 接收器节点展开以提供与连接相关的引脚。
 
     ![Expanded receiver node with connection controls.](/images/user-guide/scripting/script-canvas/nodes-event-connection-controls-3.png)
 
-    * **Connect** and **Disconnect** - Use the **Disconnect** pin to prevent the receiver node from connecting. When the event should be connected and available to receive events, use the **Connect** pin.
+    * **Connect** 和 **Disconnect** - 使用 **Disconnect** 引脚来防止接收器节点连接。当事件应已连接并可用于接收事件时，请使用 **Connect** 引脚。
 
-        The **Connect** and **Disconnect** pins are especially useful when working with the **On Tick** event. For example, if you have a complex operation that you do not want processed for every tick of the game, you can disconnect the **On Tick event** until it is required.
+        **Connect** 和 **Disconnect** 引脚 在使用 **On Tick** 事件时特别有用。例如，如果您有一个复杂的操作，您不希望为游戏的每个 tick 处理该操作，则可以断开 **On Tick 事件** 的连接，直到需要为止。
 
         {{< note >}}
-When you enable a receiver node's **Display Connection Controls** property, the node no longer connects automatically. In this case, Script Canvas assumes that you want to specify when the connection occurs.
+启用接收方节点的 **Display Connection Controls** 属性时，该节点不再自动连接。在这种情况下，Script Canvas 假定您要指定连接发生的时间。
         {{< /note >}}
 
-    * **OnConnected** - Triggered when the event connects successfully. This pin is useful if you want to continue execution along the connection path when the connection occurs.
-    * **OnDisconnected** - Triggered when the event disconnects successfully. This pin is useful if you want to continue execution along the disconnection path when the connection occurs.
-    * **OnFailure** - An event fails to connect if it requires a source and no source is provided, or an invalid source is provided. The **OnFailure** pin displays diagnostic information that you can use to verify whether address data was correctly specified to the **Source** pin of the receiver node.
+    * **OnConnected** - 当事件连接成功时触发。如果要在连接发生时沿连接路径继续执行，则此 pin 非常有用。
+    * **OnDisconnected** - 当事件成功断开连接时触发。如果要在连接发生时沿断开连接路径继续执行，则此引脚非常有用。
+    * **OnFailure** - 如果事件需要源但未提供源，或者提供的源无效，则事件无法连接。**OnFailure** 引脚显示诊断信息，您可以使用这些信息来验证地址数据是否已正确指定到接收器节点的 **Source** 引脚。
 
-**Example**
+**示例**
 
-In the following example, **Display Connection Controls** is enabled for the **On Tick** event receiver node. The **Tick** event is disconnected at the start of the graph's lifetime. When the light is turned on, the example changes the light's color randomly for every tick.
+在以下示例中，为 **On Tick** 事件接收器节点启用了 **Display Connection Controls**。**Tick** 事件在图表生命周期开始时断开连接。当灯打开时，该示例会为每个刻度随机更改灯的颜色。
 
 ![Controlling the On Tick event by using connection controls.](/images/user-guide/scripting/script-canvas/nodes-event-connection-controls-4.png)

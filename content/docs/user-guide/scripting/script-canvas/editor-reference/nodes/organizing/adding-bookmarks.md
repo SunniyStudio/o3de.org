@@ -1,41 +1,41 @@
 ---
-linktitle: Adding Bookmarks
-title: Adding Bookmarks in Script Canvas
-description: Use the Open 3D Engine (O3DE) Script Canvas Editor to add bookmarks to your script.
+linktitle: 添加书签
+title: 在 Script Canvas 中添加书签
+description: 使用 Open 3D Engine （O3DE） Script Canvas 编辑器将书签添加到脚本中。
 weight: 500
 ---
 
-A bookmark is a shortcut that you can add to a specific location on your Script Canvas graph. You can then use keyboard shortcuts to move quickly to that location. For example, you may have a complex script for a massive character controller that includes sections for movement, camera, and each attack. You can add a bookmark to each section and then press the keyboard shortcut to move the graph view to the specified section.
+书签是您可以添加到 Script Canvas 图形上特定位置的快捷方式。然后，您可以使用键盘快捷键快速移动到该位置。例如，您可能有一个用于大型角色控制器的复杂脚本，其中包括移动、摄像机和每次攻击的部分。您可以向每个部分添加书签，然后按键盘快捷键将图形视图移动到指定部分。
 
 ![Simple Script Canvas script with bookmarks added to various nodes.](/images/user-guide/scripting/script-canvas/bookmarks-example.png)
 
-**To add a bookmark**
+**添加书签**
 
-1. In your script, navigate to the node, group, or region of the canvas that you want to bookmark.
+1. 在脚本中，导航到要添加书签的画布的节点、组或区域。
 
-1. Press **Ctrl+1** (or **2** to **9**) to add a bookmark. A colored diamond icon appears on the canvas (unless you have bookmarked a node group).
+1. 按下 **Ctrl+1** (或 **2** 到 **9**) 以添加书签。画布上会显示一个彩色菱形图标（除非您已为节点组添加书签）。
 
     {{< note >}}
-If you specify a number for a shortcut that a previous shortcut already uses, a dialog box appears. If you want to replace the previous shortcut, click **Yes**.
+如果为上一个快捷方式已使用的快捷方式指定编号，则会显示一个对话框。如果要替换上一个快捷键，请单击**Yes**.
     {{< /note >}}
 
-**To snap the graph view to a bookmark**
-+ Press **1** to **9** to snap the graph view to the bookmarked location.
+**将图表视图对齐到书签**
++ 按 **1** 到 **9** 将图表视图对齐到已添加书签的位置。
 
-**To move a bookmark**
+**移动书签**
 
-+ Drag the bookmark diamond to a new position in the graph.
++ 将书签菱形拖动到图表中的新位置。
 
-To move a node group bookmark, simply move the node group.
+要移动节点组书签，只需移动节点组即可。
 
-**To manage your bookmarks**
+**管理您的书签**
 
-1. In the **Script Canvas Editor**, choose **Tools**, **Bookmarks**.
+1. 在 **Script Canvas 编辑器**中，依次选择 **Tools**、**Bookmarks**。
 
-1. In the **Bookmarks** window, you can do the following:
-   + Search for the bookmark name.
-   + Double-click a bookmark and then enter a new name.
-   + Click **Create** to add a bookmark at your current location.
-   + Select a bookmark and then click **Delete** to remove it.
-   + Assign up to nine keyboard shortcuts for your bookmarks. To move to a bookmark that does not have an assigned keyboard shortcut, click the bookmark in the list.
-   + Double-click a shortcut and then select a new number.
+1. 在 **Bookmarks** 窗口中，您可以执行以下操作：
+   + 搜索书签名称。
+   + 双击书签，然后输入新名称。
+   + 单击 **Create** 以在您的当前位置添加书签。
+   + 选择一个书签，然后单击 **Delete** 将其删除。
+   + 为您的书签分配最多九个键盘快捷键。要移动到没有指定键盘快捷键的书签，请单击列表中的书签。
+   + 双击快捷方式，然后选择新号码。

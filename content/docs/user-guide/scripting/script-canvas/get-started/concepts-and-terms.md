@@ -1,41 +1,41 @@
 ---
-linktitle: Concepts and Terms
-title: Script Canvas Concepts and Terms
-description: Learn common Script Canvas concepts and terms.
+linktitle: 概念和术语
+title: Script Canvas 概念和术语
+description: 了解常见的 Script Canvas 概念和术语。
 weight: 200
 ---
 
-The following concepts and terms are commonly used in **Script Canvas**:
+以下概念和术语在 **Script Canvas** 中常用：
 
-## Script
+## Script（脚本）
 
-A script is a collection of nodes, node properties, and node connections that, when combined, create a visual script.
+脚本是节点、节点属性和节点连接的集合，当它们组合在一起时，将创建一个可视化脚本。
 
-## Node
+## Node（节点）
 
-Nodes represent the data, events, and actions that you use to create logic and behaviors in Script Canvas.
+节点表示用于在 Script Canvas 中创建逻辑和行为的数据、事件和操作。
 
-## Node types
+## 节点类型
 
-Script Canvas defines the following _node types_:
+Script Canvas 定义了以下_node types_：
 
-### Event nodes
+### Event （事件节点）
 
-Event nodes subscribe to event bus (EBus) handlers to listen for events to occur. Examples include entering a trigger area, colliding with an object, turning off a light, and when the game ticks. For more information about using the EBus interface, refer to [The Open 3D Engine Event Bus (EBus) System](/docs/user-guide/programming/messaging/ebus/).
+事件节点订阅事件总线 （EBus） 处理程序以侦听要发生的事件。示例包括进入触发区域、与对象碰撞、关闭灯光以及游戏计时。有关使用 EBus 界面的更多信息，请参阅 [Open 3D Engine 事件总线 （EBus） 系统](/docs/user-guide/programming/messaging/ebus/).
 
-### Action nodes
+### Action （操作节点）
 
-Action nodes are used to get or send data across an EBus. Examples of action nodes include getting the mass of an entity, turning on a light, setting the text of a UI element, and playing an animation.
+操作节点用于跨事件总线获取或发送数据。操作节点的示例包括获取实体的质量、打开灯、设置 UI 元素的文本以及播放动画。
 
-### Variable and data nodes
+### 变量节点和数据节点
 
-Variable and data nodes represents the custom data that can be required to build game logic. You can use these nodes to make counters, store entity references, specify a direction, define a color, and so on. Variable nodes are added to a script to declare and initialize them. Use _get_ and _set_ nodes to retrieve or set the variable's value.
+Variable 和 data 节点表示构建游戏逻辑可能需要的自定义数据。您可以使用这些节点创建计数器、存储实体引用、指定方向、定义颜色等。将变量节点添加到脚本中以声明和初始化它们。使用 _get_ 和 _set_ 节点检索或设置变量的值。
 
 {{< note >}}
-An alternative to variable nodes are [variable references](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references).
+变量节点的替代方法是 [变量引用](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references).
 {{< /note >}}
 
-The following are the commonly used data types in Script Canvas:
+以下是 Script Canvas 中常用的数据类型：
 
 + Boolean
 + Color
@@ -45,46 +45,46 @@ The following are the commonly used data types in Script Canvas:
 + Transform
 + Vector 2/3/4
 
-### Logic nodes
+### Logic （逻辑节点）
 
-Logic nodes include comparison and timing operations. You can use logic nodes to check whether two values are equal, control the execution of nodes, delay the execution of a node for a specific amount of time, and more.
+Logic 节点包括 comparison 和 timing operations 。您可以使用 logic nodes 来检查两个值是否相等、控制节点的执行、将节点的执行延迟特定时间等等。
 
-### Math nodes
+### Math （数学节点）
 
-Math nodes enable math operations, such as arithmetic, geometry, algebra, and calculus.
+数学节点支持数学运算，例如算术、几何、代数和微积分。
 
-### Debugging nodes
+### Debugging （调试节点）
 
-Debugging nodes verify whether a script is functioning as expected. You can use debugging nodes to print data to the console or viewport and check for errors. These nodes pass logic flow, but do not execute in release builds.
+调试节点验证脚本是否按预期运行。您可以使用调试节点将数据打印到控制台或视区并检查错误。这些节点传递 logic flow，但不在发布版本中执行。
 
-### User-defined nodes
+### User-defined （用户定义节点）
 
-You can build your own nodes for your project's specific needs. For more information, see [Creating Custom Nodes in Script Canvas](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/).
+您可以根据项目的特定需求构建自己的节点。有关详细信息，请参阅 [在 Script Canvas 中创建自定义节点](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/).
 
 ## Node Palette
 
-The **Node Palette** contains a searchable list of nodes. By default, the palette is docked to the left of the **Script Canvas Editor**.
+**Node Palette** 包含可搜索的节点列表。默认情况下，调色板停靠在 **Script Canvas Editor** 的左侧。
 
-**To display the Node Palette**
+**显示 Node Palette**
 
-1. From O3DE Editor, choose **Tools**, **Script Canvas**.
+1. 从 O3DE 编辑器中，依次选择 **Tools**、**Script Canvas**。
 
-1. In the Script Canvas window, do one of the following:
-   + Choose **Tools**, **Node Palette**.
-   + Press **Ctrl+Shift+L**.
+1. 在 Script Canvas 窗口中，执行以下操作之一：
+   + 选择 **Tools**, **Node Palette**.
+   + 按下 **Ctrl+Shift+L**.
 
    {{< note >}}
-If you have an existing script open, you can **right-click** the canvas to open a context menu.
+如果您打开了现有脚本，则可以 **右键单击** 画布以打开上下文菜单。
    {{< /note >}}
 
 ## Node Inspector
 
-The **Node Inspector** shows the properties of the node. You can edit each property in the inspector or directly in the node. By default, this window doesn't appear in the editor.
+**Node Inspector **显示节点的属性。您可以在 Inspector 中或直接在节点中编辑每个属性。默认情况下，此窗口不会显示在编辑器中。
 
-**To display the Node Inspector**
+**显示 Node Inspector **
 
-1. In **O3DE Editor**, choose **Tools**, **Script Canvas**.
+1. 在 **O3DE Editor**中， 选择 **Tools**, **Script Canvas**.
 
-1. Do one of the following:
-   + Choose **Tools**, **Node Inspector**.
-   + Press **Ctrl+Shift+I**.
+1. 执行以下操作之一：
+   + 选择 **Tools**, **Node Inspector**.
+   + 按下 **Ctrl+Shift+I**.

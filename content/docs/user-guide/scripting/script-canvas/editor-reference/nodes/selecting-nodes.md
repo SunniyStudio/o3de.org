@@ -1,21 +1,21 @@
 ---
-linktitle: Selecting Nodes
-title: Selecting Nodes in Script Canvas
-description: Learn how to select Script Canvas nodes in Open 3D Engine using hotkeys.
+linktitle: 选择节点
+title: 在 Script Canvas 中选择节点
+description: 了解如何使用热键在 Open 3D Engine 中选择 Script Canvas 节点。
 weight: 300
 ---
 
-Use the following hot key combinations to select groups of nodes.
+使用以下热键组合选择节点组。
 
-+ To select all nodes in a graph, press **Ctrl + A**.
-+ To select all nodes that are connected to the input pins of the selected node, press **Ctrl+Left Arrow**.
++ 要选择图表中的所有节点，请按 Ctrl + A。
++ 要选择连接到所选节点的输入引脚的所有节点，请按 Ctrl+向左箭头。
 
     ![Selecting all nodes connected to the input pins of a node in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-selecting-1.gif)
 
-+ To select all nodes that are connected to the output pins of the selected node, press **Ctrl+Right Arrow**.
++ 要选择连接到所选节点的输出引脚的所有节点，请按 Ctrl+向右箭头。
 
     ![Selecting all nodes connected to the output pins of a node in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-selecting-2.gif)
 
-+ To select all nodes that are connected to both the input and output pins of a selected node, press **Ctrl + Up Arrow**.
++ 要选择连接到所选节点的输入和输出引脚的所有节点，请按 Ctrl + 向上箭头。
 
     ![Selecting all nodes connected to the input and output pins of a node in the Script Canvas Editor.](/images/user-guide/scripting/script-canvas/nodes-selecting-3.gif)

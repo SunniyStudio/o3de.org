@@ -1,53 +1,53 @@
 ---
-linktitle: Creating Nodes from the Behavior Context
-title: Creating Script Canvas Nodes from the Behavior Context
-description: Learn about the important relationship between Script Canvas and the behavior context, and about how to create new nodes using script binding in Open 3D Engine (O3DE).
+linktitle: 从 Behavior Context 创建节点
+title: 从 Behavior Context 创建 Script Canvas 节点
+description: 了解 Script Canvas 与行为上下文之间的重要关系，以及如何在 Open 3D Engine （O3DE） 中使用脚本绑定创建新节点。
 weight: 100
 ---
 
-The [behavior context](/docs/user-guide/programming/components/reflection/behavior-context) in **Open 3D Engine (O3DE)** is a reflection system that exposes C++ classes, methods, constants, data types, and the O3DE event mechanisms, providing the necessary bindings for scripting environments to invoke the code at runtime. **Script Canvas** uses the script bindings to automatically create new nodes in the Node Palette for use in your Script Canvas graphs. Using these new nodes, you can call the C++ methods, get and set properties, retrieve constants, broadcast and handle events, and pass your custom data types through the node's data pins.
+**Open 3D Engine （O3DE）** 中的 [行为上下文](/docs/user-guide/programming/components/reflection/behavior-context) 是一个反射系统，它公开了 C++ 类、方法、常量、数据类型和 O3DE 事件机制，为脚本环境提供了在运行时调用代码所需的绑定。**Script Canvas** 使用脚本绑定在 Node Palette 中自动创建新节点，以便在 Script Canvas 图形中使用。使用这些新节点，您可以调用 C++ 方法、获取和设置属性、检索常量、广播和处理事件，以及通过节点的数据引脚传递自定义数据类型。
 
-In short, use the behavior context with Script Canvas to do the following:
+简而言之，将行为上下文与 Script Canvas 结合使用来执行以下操作：
 
-+ Call C++ methods using Script Canvas nodes.
-+ Access properties and constants from Script Canvas.
-+ Expose C++ data types to Script Canvas.
-+ Send and receive AZ::Event and EBus events through Script Canvas nodes.
++ 使用 Script Canvas 节点调用 C++ 方法。
++ 从 Script Canvas 访问属性和常量。
++ 向 Script Canvas 公开 C++ 数据类型。
++ 通过 Script Canvas 节点发送和接收 AZ：：Event 和 EBus 事件。
 
-In this topic, you will learn how Script Canvas uses the behavior context to create new nodes and expose new data types to do all of the things described. There are several illustrative examples, and each example contains tips and best practices when using the behavior context to extend Script Canvas.
+在本主题中，您将了解 Script Canvas 如何使用行为上下文创建新节点并公开新数据类型以执行所描述的所有操作。有几个说明性示例，每个示例都包含使用行为上下文扩展 Script Canvas 时的提示和最佳实践。
 
-## Script Canvas architecture
+## Script Canvas 架构
 
-The following code architecture diagram shows the relationship between Script Canvas and the behavior context in Open 3D Engine.
+以下代码架构图显示了 Script Canvas 与 Open 3D Engine 中的行为上下文之间的关系。
 
 ![Script Canvas code architecture](/images/user-guide/scripting/script-canvas/behavior-context-code-architecture.png)
 
-The core Script Canvas code is built as a static library that is linked into the dependent Gem and the Script Canvas Editor Gem. This allows the code footprint at run time to be as small as the minimum required to run a Script Canvas graph. It also allows the Script Canvas Editor Gem to contain all the code required to author and develop Script Canvas graphs.
+核心 Script Canvas 代码构建为静态库，该库链接到依赖 Gem 和 Script Canvas 编辑器 Gem。这允许运行时的代码占用量与运行 Script Canvas 图形所需的最小值一样小。它还允许 Script Canvas 编辑器 Gem 包含编写和开发 Script Canvas 图形所需的所有代码。
 
-When you use the behavior context, you do not need to write any code specific to Script Canvas. However, it is important that the way in which your code is reflected to the behavior context remains intuitive and practical in a visual scripting environment.
+使用行为上下文时，无需编写任何特定于 Script Canvas 的代码。但是，在可视化脚本环境中，将代码反映到行为上下文的方式必须保持直观和实用，这一点很重要。
 
-The combination of the Script Canvas and behavior context architectures includes the following benefits:
+Script Canvas 和行为上下文架构的组合包括以下优势：
 
-+ Support for the AZ::Event and EBus event systems enable your scripts to use decoupled, event-driven programming paradigms.
-+ Script Canvas can use functionality exposed through the behavior context from any Gem, enabling any Gem to enhance Script Canvas.
-+ Support for Gems reflecting C++ code through the behavior context means there is no need to add Gem dependencies to Script Canvas.
++ 对 AZ::Event 和 EBus 事件系统的支持使您的脚本能够使用解耦的、事件驱动的编程模式。
++ Script Canvas 可以使用通过任何 Gem 的行为上下文公开的功能，使任何 Gem 都能增强 Script Canvas。
++ 支持通过行为上下文反映 C++ 代码的 Gem，这意味着无需向 Script Canvas 添加 Gem 依赖项。
 
-## Example: Static functions
+## 示例: 静态函数
 
 {{< note >}}
-Refer to [Custom Free Function Nodes](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/custom-free-function-nodes/) for an approach with a lighter overhead.
+请参阅 [自定义自由函数节点](/docs/user-guide/scripting/script-canvas/programmer-guide/custom-nodes/custom-free-function-nodes/)  了解开销较轻的方法。
 {{< /note >}}
 
-To demonstrate how C++ code can become a Script Canvas node, this example uses the behavior context to reflect a few simple, static math library functions.
+为了演示 C++ 代码如何成为 Script Canvas 节点，此示例使用行为上下文来反映一些简单的静态数学库函数。
 
-We start with the static function declarations. The following functions return the sine and cosine of an angle. The angle is in radians:
+我们从静态函数声明开始。以下函数返回角度的正弦和余弦。角度以弧度为单位：
 
 ```cpp
 float Sin(float angle);
 float Cos(float angle);
 ```
 
-We also need a class that defines the namespace for these functions:
+我们还需要一个定义这些函数的命名空间的类：
 
 ```cpp
 class GlobalClass
@@ -63,7 +63,7 @@ public:
 };
 ```
 
-In the class's static `Reflect` method, we use the behavior context to reflect the `GlobalClass` and bind the static `Sin` and `Cos` methods that are part of the class. In this example, the functions are configured to be part of a group called `Globals`. The group is used as a subtitle on the new node and the category under which the nodes will appear in Script Canvas's Node Palette.
+在类的静态 '`Reflect`' 方法中，我们使用行为上下文来反映 '`GlobalClass`' 并绑定作为类一部分的静态 '`Sin`' 和 '`Cos`' 方法。在此示例中，函数被配置为名为“`Globals`”的组的一部分。该组用作新节点上的副标题，以及节点将显示在 Script Canvas 的 Node Palette 中的类别。
 
 ```cpp
 static void GlobalClass::Reflect(AZ::ReflectContext* context)
@@ -77,19 +77,19 @@ static void GlobalClass::Reflect(AZ::ReflectContext* context)
 }
 ```
 
-To complete the example, `GlobalClass::Reflect` must be called from a system component's Reflect function.
+要完成该示例，必须从系统组件的 Reflect 函数中调用 `GlobalClass::Reflect` 。
 
-Once the code has been compiled, it is available as a new node in Script Canvas:
+编译代码后，它可用作 Script Canvas 中的新节点：
 
 ![Sin function available as a Script Canvas node](/images/user-guide/scripting/script-canvas/behavior-context-sin-function.png)
 
-However, there are a few usability improvements that can be made to improve its appearance in Script Canvas:
+但是，可以进行一些可用性改进来改善其在 Script Canvas 中的外观：
 
-+ Provide the class with a top-level category, `My Extensions`, instead of the default `Other`.
-+ Provide a user-friendly parameter name, `Radians`, for the input pin.
-+ Provide a tooltip when a user hovers over the Radians parameter.
++ 为类提供顶级类别 '`My Extensions`'，而不是默认的 '`Other`'。
++ 为输入引脚提供用户友好的参数名称“Radians”。
++ 当用户将鼠标悬停在 `Radians` 参数上时提供工具提示。
 
-This can all be accomplished through changes to the code in the `Reflect` function:
+这一切都可以通过更改 '`Reflect`' 函数中的代码来实现：
 
 ```cpp
         behaviorContext->Class<GlobalClass>("Globals")
@@ -98,26 +98,26 @@ This can all be accomplished through changes to the code in the `Reflect` functi
           ->Method("Cos", &Cos, {{{"Radians", "The value in radians"}}});
 ```
 
-The result contains some helpful categorization and parameter information for users of this new node:
+结果包含一些对这个新节点的用户有用的分类和参数信息：
 
 ![](/images/user-guide/scripting/script-canvas/behavior-context-my-extensions-nodes.png)
 ![](/images/user-guide/scripting/script-canvas/behavior-context-sin-node-with-tooltip.png)
 
-## Example: Reflecting an EBus
+## 示例：反射事件总线
 
-The ability to bind an EBus to the behavior context enables scripting to become driven and modular. The two main use cases for reflecting EBuses to the behavior context are _event handlers_ and _events_.
+将 EBus 绑定到行为上下文的能力使脚本编写成为驱动和模块化的脚本。将事件总线反映到行为上下文的两个主要用例是 _event handlers_ 和 _events_。
 
-Events are typically defined in code as part of a request bus, and are generally handled by some code system such as a component. Event handlers are typically defined as part of a notification bus.
+事件通常在代码中定义为请求总线的一部分，并且通常由某些代码系统（如组件）处理。事件处理程序通常定义为通知总线的一部分。
 
-In this example, we'll take a look at a basic **Light** component. The example shows how its behavior context reflection translates into Script Canvas nodes.
+在此示例中，我们将了解基本的 **Light** 组件。该示例显示了其行为上下文反射如何转换为 Script Canvas 节点。
 
-In this Light component, the user can configure the light by setting parameters such as color, intensity, and radius. The Light component can also be turned on or off, and you can respond to these events when they occur. Communication with an entity's Light component is done through two EBuses: the `LightComponentRequestBus` and the `LightComponentNotificationBus`.
+在这个 Light 组件中，用户可以通过设置颜色、强度和半径等参数来配置光线。Light （光源） 组件也可以打开或关闭，您可以在这些事件发生时做出响应。与实体的 Light 组件的通信通过两个事件总线完成：'`LightComponentRequestBus`' 和 '`LightComponentNotificationBus`'。
 
-### Request bus
+### 请求总线
 
-A request bus is an EBus that can send _events_. Events can be thought of as requests that are intended for a system or object to handle. Components can reflect their event methods to the behavior context to make them available to scripting environments such as Script Canvas.
+请求总线是可以发送 _events_ 的事件总线。可以将事件视为供系统或对象处理的请求。组件可以将其事件方法反映到行为上下文，以使其可用于脚本环境，例如 Script Canvas。
 
-Here are a few of the C++ event methods in the Light component:
+以下是 Light 组件中的一些 C++ 事件方法：
 
 ```cpp
 // Turn light on. Returns true if the light was successfully turned on.
@@ -130,7 +130,7 @@ bool TurnOffLight();
 void ToggleLight();
 ```
 
-These events are part of the `LightComponentRequestBus`. Their behavior is implemented by `LightComponent`.
+这些事件是 '`LightComponentRequestBus`' 的一部分。它们的行为由 '`LightComponent`' 实现。
 
 ```cpp
 bool LightComponent::TurnOnLight()
@@ -166,7 +166,7 @@ void LightComponent::ToggleLight()
 }
 ```
 
-To make these events accessible for scripting, their methods must be reflected to the behavior context. This is done in `LightComponent::Reflect`.
+要使这些事件可用于脚本编写，必须将其方法反映到行为上下文中。这是在 '`LightComponent::Reflect`' 中完成的。
 
 ```cpp
 if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
@@ -179,37 +179,37 @@ if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(con
 }
 ```
 
-When Script Canvas examines the behavior context, it finds these events and automatically generates the corresponding nodes.
+当 Script Canvas 检查行为上下文时，它会查找这些事件并自动生成相应的节点。
 
 ![Light component nodes in Script Canvas](/images/user-guide/scripting/script-canvas/behavior-context-ebus-request-light-nodes.png)
 
-#### EBus events and EntityId
+#### 事件总线事件和 EntityId
 
-EBuses communicate with an entity's components. To do this, it needs an address. All component EBuses derive from `AZ::ComponentBus`, which is addressable by an ID of the type `AZ::EntityId`. For this reason, all nodes from a component EBus have a data pin for an **EntityID**. The presence of `Self` in the **EntityID** pin refers to the `AZ::EntityID` of the entity that owns the Script Canvas graph. However, this ID can be assigned to another entity, or even changed to an invalid ID.
+事件总线与实体的组件进行通信。为此，它需要一个地址。所有组件事件总线都派生自“`AZ::ComponentBus`”，该 ID 可通过“`AZ::EntityId`”类型的 ID 进行寻址。因此，组件事件总线中的所有节点都有一个 **EntityID** 的数据 pin。**EntityID** 引脚中存在“`Self`”是指拥有 Script Canvas 图形的实体的“`AZ::EntityID`”。但是，此 ID 可以分配给其他实体，甚至可以更改为无效的 ID。
 
 ![Self EntityID data pin](/images/user-guide/scripting/script-canvas/behavior-context-ebus-request-entityID.png)
 
-#### Tooltips
+#### 工具提示
 
-Script Canvas nodes should include a helpful tooltip for every parameter. For example, the Light component might have a `SetLightState` event with a `state` parameter:
+Script Canvas 节点应包含每个参数的有用工具提示。例如，Light 组件可能有一个带有 '`state`' 参数的 '`SetLightState`' 事件：
 
 ```cpp
 // Set the light state to on or off.
 void SetLightState(State state);
 ```
 
-You should add a tooltip in the behavior context reflection to describe the parameter. In this example, the tooltip will show `1=On, 0=Off` when a user hovers over the **State** data pin on the **SetState** node.
+您应该在行为上下文反射中添加工具提示来描述参数。在此示例中，当用户将鼠标悬停在 **SetState** 节点上的 **State** 数据引脚上时，工具提示将显示“`1=On， 0=Off`”。
 
 ```cpp
     behaviorContext->EBus<LightComponentRequestBus>("Light", "LightComponentRequestBus")
         ->Event("SetState", &LightComponentRequestBus::Events::SetLightState, {{{"State", "1=On, 0=Off"}}});
 ```
 
-### Notification bus
+### 通知总线
 
-A notification bus is an EBus that enables the use of *event handlers*. Event handlers in a component can respond to the events that are sent to the component. You can reflect event handlers to the behavior context to make them available to scripting environments such as Script Canvas.
+通知总线是支持使用事件处理程序的事件总线。组件中的事件处理程序可以响应发送到组件的事件。您可以将事件处理程序反映到行为上下文，以使其可用于脚本环境，例如 Script Canvas。
 
-Our Light component example handles the `TurnOn`, `TurnOff`, and `Toggle` events from the request bus using the following C++ event handler methods on the `LightComponentNotificationBus`:
+我们的 Light 组件示例在“`LightComponentNotificationBus`”上使用以下 C++ 事件处理程序方法处理来自请求总线的“`TurnOn`”、“`TurnOff`”和“`Toggle`”事件：
 
 ```cpp
 class LightComponentNotifications
@@ -227,9 +227,9 @@ public:
 using LightComponentNotificationBus = AZ::EBus <LightComponentNotifications>;
 ```
 
-To create the script binding between the C++ EBus and the scripting system, you must implement an EBus handler.
+要在 C++ 事件总线和脚本系统之间创建脚本绑定，您必须实施事件总线处理程序。
 
-In the following code, the `BehaviorLightComponentNotificationBusHandler` handler establishes the script binding with two event handlers: `LightTurnedOn` and `LightTurnedOff`.
+在下面的代码中，'`BehaviorLightComponentNotificationBusHandler`' 处理程序使用两个事件处理程序 '`LightTurnedOn`' 和 '`LightTurnedOff`' 建立脚本绑定。
 
 ```cpp
 class BehaviorLightComponentNotificationBusHandler : public LightComponentNotificationBus::Handler, public AZ::BehaviorEBusHandler
@@ -252,7 +252,7 @@ public:
 };
 ```
 
-Next, you need to reflect the notification bus to the behavior context in the Light component's `Reflect` method. As part of this reflection, you also specify that the `BehaviorLightComponentNotificationBusHandler` handles events for the Light component. The following code is added after the reflection of the request bus:
+接下来，您需要将通知总线反射到 Light 组件的 '`Reflect`' 方法中的行为上下文。作为此反射的一部分，您还指定 '`BehaviorLightComponentNotificationBusHandler`' 处理 Light 组件的事件。在请求总线的反射之后添加以下代码：
 
 ```cpp
 if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
@@ -265,17 +265,17 @@ if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(con
 }
 ```
 
-Once compiled, these event handlers are available to Script Canvas from the **LightNotification** node.
+编译后，这些事件处理程序可从 **LightNotification** 节点提供给 Script Canvas。
 
 ![Light notification node](/images/user-guide/scripting/script-canvas/behavior-context-ebus-light-notification-node.png)
 
-## Example: Data types
+## 示例：数据类型
 
-To make a custom data type available for use as a variable in Script Canvas, you can reflect it using the behavior context's `Class` builder. The new type is also available to pass as a parameter to functions and events.
+要使自定义数据类型可用作 Script Canvas 中的变量，您可以使用行为上下文的“`Class`”生成器来反映它。新类型还可以作为参数传递给函数和事件。
 
-This example uses the `BoxShapeConfig` class as an example. This class is defined in the file `Gems\LmbrCentral\Code\include\LmbrCentral\Shape\BoxShapeComponentBus.h` and reflected in `Gems\LmbrCentral\Code\Source\Shape\BoxShapeComponent.cpp`.
+此示例使用 '`BoxShapeConfig`' 类作为示例。 这个类被定义在`Gems\LmbrCentral\Code\include\LmbrCentral\Shape\BoxShapeComponentBus.h`文件中，在`Gems\LmbrCentral\Code\Source\Shape\BoxShapeComponent.cpp`中反射。
 
-A data type must be reflected to both the serialization context and the behavior context. The serialization context enables the data type to be stored and read from a file, and the behavior context allows it to be bound to the scripting system.
+数据类型必须反映到序列化上下文和行为上下文中。序列化上下文允许存储数据类型并从文件中读取，而行为上下文允许将其绑定到脚本系统。
 
 ```cpp
 void BoxShapeConfig::Reflect(AZ::ReflectContext* context)
@@ -297,19 +297,19 @@ void BoxShapeConfig::Reflect(AZ::ReflectContext* context)
 }
 ```
 
-Resulting variable node:
+结果变量节点：
 
 ![Get BoxShapeConfig variable node](/images/user-guide/scripting/script-canvas/behavior-context-data-types-boxshapeconfig.png)
 
-## Best practice: Displaying EBus event parameter names in nodes
+## 最佳实践：在节点中显示事件总线事件参数名称
 
-To display parameter names correctly for your EBus events, ensure that you specify custom names when you reflect your events to the behavior context.
+要正确显示事件总线事件的参数名称，请确保在将事件反映到行为上下文时指定自定义名称。
 
-If you do not specify names for the parameters, they are given default display names like `1`, `2`, or `3`, as in the following image:
+如果未指定参数的名称，则会为它们指定默认显示名称，如“`1`”、“`2`”或“`3`”，如下图所示：
 
 ![Default parameter names displayed](/images/user-guide/scripting/script-canvas/behavior-context-displaying-parameter-names-1.png)
 
-The following code produced the event node in the image:
+以下代码生成了图像中的 event 节点：
 
 ```cpp
 if (auto behaviorContext = azrtti_cast <AZ::BehaviorContext*>(reflectContext))
@@ -321,7 +321,7 @@ if (auto behaviorContext = azrtti_cast <AZ::BehaviorContext*>(reflectContext))
 }
 ```
 
-An improved version of the same code adds the parameter names `FirstParam` and `SecondParam` and corresponding tooltip text to the `Event` function:
+相同代码的改进版本将参数名称 '`FirstParam`' 和 '`SecondParam`' 以及相应的工具提示文本添加到 '`Event`' 函数中：
 
 ```cpp
 if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(reflectContext))
@@ -333,13 +333,13 @@ if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(reflectContext))
 }
 ```
 
-In the node palette window, the parameter names appear as specified:
+在 node palette （节点调色板） 窗口中，参数名称将按指定方式显示：
 
 ![Specified parameter names displayed](/images/user-guide/scripting/script-canvas/behavior-context-displaying-parameter-names-2.png)
 
-### Alternate syntax
+### 替代语法
 
-You can also use the alternate syntax `AZ::BehaviorParameterOverrides` to create parameter override instances before passing them to the `Event` function.
+您还可以使用替代语法 '`AZ::BehaviorParameterOverrides`' 创建参数覆盖实例，然后再将其传递给 '`Event`' 函数。
 
 ```cpp
 if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(reflectContext))
@@ -353,19 +353,19 @@ if (auto behaviorContext = azrtti_cast<AZ::BehaviorContext*>(reflectContext))
 }
 ```
 
-## Common behavior context problems
+## 常见行为上下文问题
 
-The following are some common problems that occur when programming with Script Canvas and the behavior context.
+以下是使用 Script Canvas 和行为上下文进行编程时出现的一些常见问题。
 
-### Reflected object does not appear in Script Canvas
+### 反射的对象未显示在 Script Canvas 中
 
-Both the serialization context and the behavior context use the same `Reflect` function:
+序列化上下文和行为上下文都使用相同的 '`Reflect`' 函数：
 
 ```cpp
 Reflect(AZ::ReflectContext*)
 ```
 
-A common mistake is to not keep the reflection scopes separate. For example, you might mistakenly place the `BehaviorContext` reflection within the `SerializeContext` scope. The following code examples show the problem and the solution.
+一个常见的错误是没有将反射范围分开。例如，您可能会错误地将 '`BehaviorContext`' 反射放在 '`SerializeContext`' 范围内。下面的代码示例显示了问题和解决方案。
 
 **Problem**
 
@@ -387,7 +387,7 @@ void Example::Reflect(AZ::ReflectContext* context)
 }
 ```
 
-**Solution**
+**解决方案**
 
 ```cpp
 void Example::Reflect(AZ::ReflectContext* context)
@@ -407,24 +407,24 @@ void Example::Reflect(AZ::ReflectContext* context)
 }
 ```
 
-### EBus handler is not getting called
+### 事件总线处理程序未被调用
 
-**Problem**
+**问题**
 
-You created an EBus handler and properly exposed it to the behavior context. However, when you try to receive the event in Script Canvas, it does not get triggered.
+您创建了一个事件总线处理程序，并将其正确地公开给行为上下文。但是，当您尝试在 Script Canvas 中接收事件时，它不会被触发。
 
-**Solution**
+**溶液**
 
-EBus handlers must be connected before they can receive events. Make sure your component connects to the bus, as in the following example:
+事件总线处理程序必须先连接，然后才能接收事件。确保您的组件连接到总线，如以下示例所示：
 
 ```cpp
 MyBus::BusConnect();
 ```
 
-Depending on the type of bus, you might have to specify an ID to connect to. For more information, refer to [The Open 3D Engine Event Bus (EBus) System](/docs/user-guide/programming/messaging/ebus/).
+根据总线的类型，您可能必须指定要连接的 ID。有关更多信息，请参阅 [Open 3D Engine Event Bus （EBus） 系统](/docs/user-guide/programming/messaging/ebus/).
 
-## Additional material
+## 附加资料
 
-To get started creating new components in O3DE that integrate the behavior context, we recommend that you read the [Programmer's Guide to Component Development](/docs/user-guide/programming/components/).
+要开始在 O3DE 中创建集成行为上下文的新组件，我们建议您阅读 [组件开发程序员指南](/docs/user-guide/programming/components/).
 
-For a closer look at the behavior context system itself, refer to [Behavior Context](/docs/user-guide/programming/components/reflection/behavior-context).
+要更详细地了解行为上下文系统本身，请参阅[Behavior Context](/docs/user-guide/programming/components/reflection/behavior-context).

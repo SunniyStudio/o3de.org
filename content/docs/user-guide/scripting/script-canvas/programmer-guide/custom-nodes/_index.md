@@ -1,40 +1,40 @@
 ---
-linktitle: Creating Custom Nodes
-title: Creating Custom Nodes in Script Canvas
-description: Learn how to create custom Script Canvas nodes in Open 3D Engine (O3DE).
+linktitle: 创建自定义节点
+title: 在 Script Canvas 中创建自定义节点
+description: 了解如何在 Open 3D Engine （O3DE） 中创建自定义 Script Canvas 节点。
 weight: 200
 ---
 
-Creating custom nodes in Script Canvas offers you maximum control and flexibility with the functionality of the node. You might wish to create a custom node in the following scenarios:
+在 Script Canvas 中创建自定义节点可为您提供对节点功能的最大控制和灵活性。在以下情况下，您可能希望创建自定义节点：
 
-* When your node has state, time, or latent results.
-* When creating complex nodes.
-* When you need control over the node's topology.
-* When you want to reflect your own C++ free functions. 
+* 当您的节点具有状态、时间或潜在结果时。
+* 创建复杂节点时。
+* 当您需要控制节点的拓扑时。
+* 当您想反映自己的 C++ 免费函数时。
 
-To make the process of creating a custom node easier, Script Canvas uses a templated, automatic code generation system called [AzAutoGen](/docs/user-guide/programming/autogen/) to significantly reduce the amount of "boilerplate code" you need to write just to get a node up and running. Using AzAutoGen allows the developer to immediately focus on the functionality of the new node, since the code required for the node to show up in the [Node Palette](/docs/user-guide/scripting/script-canvas/get-started/concepts-and-terms/#node-palette) is already there.
+为了简化创建自定义节点的过程，Script Canvas 使用名为 [AzAutoGen](/docs/user-guide/programming/autogen/) 的模板化自动代码生成系统，以显著减少启动和运行节点所需编写的“样板代码”数量。使用 AzAutoGen 可以让开发人员立即专注于新节点的功能，因为节点显示在 [Node Palette](/docs/user-guide/scripting/script-canvas/get-started/concepts-and-terms/#node-palette)中所需的代码已经存在。
 
-The following four steps are required to create a custom node:
+创建自定义节点需要执行以下四个步骤：
 
-1. Create a code generation XML file.
-1. Create the C++ files for your node.
-1. Add these files to CMake.
-1. Register your new node.
+1. 创建代码生成 XML 文件。
+1. 为您的节点创建 C++ 文件。
+1. 将这些文件添加到 CMake。
+1. 注册您的新节点。
 
-## Related information
+## 相关信息
 
-For a better understanding of creating custom nodes, we recommend reading following
-- [Nodes](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/)
-- [Text Replacement](/docs/user-guide/scripting/script-canvas/editor-reference/text-replacement/)
+为了更好地了解如何创建自定义节点，我们建议您阅读以下内容
+- [节点](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/)
+- [文本替换](/docs/user-guide/scripting/script-canvas/editor-reference/text-replacement/)
 - [AzAutoGen](/docs/user-guide/programming/autogen/)
 
 
-## Topics
+## 主题
 
-| Topic | Description |
-| --- | --- |
-| [Custom Nodeable Nodes](custom-nodeable-nodes/) | How to create custom Script Canvas Nodeable Nodes in Open 3D Engine (O3DE). |
-| [Custom Free Function Nodes](custom-free-function-nodes/) | How to create custom Script Canvas Free Function Nodes in Open 3D Engine (O3DE). |
-| [Node Definition Reference](custom-node-definition-reference/) | Reference guide for Script Canvas node definitions. |
-| [Dynamic Data Slots](dynamic-data-slots/) | Use dynamic data slots to enable a single Script Canvas node to process a variety of data types in Open 3D Engine (O3DE). |
+|主题 | 描述                                                               |
+| --- |------------------------------------------------------------------|
+| [自定义Nodeable节点](custom-nodeable-nodes/) | 如何在 Open 3D Engine （O3DE） 中创建自定义 Script Canvas Nodeable节点。               |
+| [自定义自由函数节点](custom-free-function-nodes/) | 如何在 Open 3D Engine （O3DE） 中创建自定义 Script Canvas Free Function 节点。 |
+| [节点定义参考](custom-node-definition-reference/) | Script Canvas 节点定义的参考指南。                                         |
+| [动态数据插槽](dynamic-data-slots/) | 使用动态数据槽使单个 Script Canvas 节点能够在 Open 3D Engine （O3DE） 中处理各种数据类型。  |
 

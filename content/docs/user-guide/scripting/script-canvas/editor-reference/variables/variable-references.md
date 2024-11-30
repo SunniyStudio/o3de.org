@@ -1,72 +1,72 @@
 ---
-linktitle: Variable References
-title: Creating Variable References in Script Canvas Nodes
-description: Create variable references on Open 3D Engine (O3DE) Script Canvas nodes as a shortcut to getting or setting a variable's value.
+linktitle: 变量引用
+title: 在 Script Canvas 节点中创建变量引用
+description: 在 Open 3D Engine （O3DE） Script Canvas 节点上创建变量引用，作为获取或设置变量值的快捷方式。
 weight: 300
 ---
 
-**Variable references** provide a shortcut for getting and setting variable values directly from the Script Canvas nodes that use them. Any data pin can be converted to a variable reference by dragging a variable from the **Variable Manager** directly onto the pin.
+**变量引用** 提供了一个快捷方式，用于直接从使用它们的 Script Canvas 节点获取和设置变量值。通过将变量从 **Variable Manager** 直接拖动到引脚上，可以将任何数据引脚转换为变量引用。
 
-**To create a variable reference**
+**创建变量引用**
 
-* Drag a variable from the Variable Manager onto a data input pin to create an input reference, or to a data output pin to create an output reference.
+* 将变量从 Variable Manager 拖动到数据输入引脚上以创建输入引用，或拖动到数据输出引脚以创建输出引用。
 
     ![Create a variable reference by dragging a variable from Variable Manager onto a Script Canvas node's data pin.](/images/user-guide/scripting/script-canvas/variable-reference-create.gif)
 
-    An input reference performs the same as a **Get** variable node and retrieves the value of the variable at the time of node execution.
+    输入引用的执行方式与 **Get** 变量节点相同，并在节点执行时检索变量的值。
 
-    An output reference performs the same as a **Set** variable node and assigns the output of that slot to the specified variable at the time of node execution.
+    输出引用的执行方式与 **Set** 变量节点相同，并在节点执行时将该槽的输出分配给指定的变量。
 
     {{< note >}}
-You can change the name of the variable when you have variable references to that variable. However, you might notice that the display of the new variable name is not immediately reflected in nodes containing the reference. To refresh the display of the node's variable name references, move over the node with your pointer, or close and reopen Script Canvas.
+当您具有对该变量的变量引用时，可以更改该变量的名称。但是，您可能会注意到，新变量名称的显示不会立即反映在包含引用的节点中。要刷新节点变量名称引用的显示，请使用指针在节点上移动，或关闭并重新打开 Script Canvas。
     {{< /note >}}
 
-**To select a different variable reference**
+**选择不同的变量引用**
 
-1. Choose the gear button next to the variable name on the data pin.
+1. 选择数据引脚上变量名称旁边的齿轮按钮。
 
-1. Select a different variable from the list.
+1. 从列表中选择其他变量。
 
     ![Change the variable in a variable reference by choosing the gear button next to the variable name on the data pin and selecting a different variable from the list.](/images/user-guide/scripting/script-canvas/variable-reference-change.png)
 
-**To convert a variable reference back to a value or into a variable node**
+**将变量引用转换回值或转换为变量节点**
 
-Do one of the following:
+执行以下操作之一：
 
-* Double-click on the data pin name to toggle between a reference and a value.
-* **Right-click** the data pin and choose **Convert to Value** to restore that data pin as a value.
-* **Right-click** the data pin and choose **Convert to Variable Node** to create a **Get** variable node from a data input pin, or a **Set** variable node from a data output pin.
+* 双击数据引脚名称可在引用和值之间切换。
+* **右键单击** 数据引脚，然后选择 **Convert to Value** 以将该数据引脚恢复为值。
+* 右键单击数据引脚，然后选择 **Convert to Variable Node** 以从数据输入引脚创建 **Get** 变量节点，或从数据输出引脚创建 **Set** 变量节点。
 
     ![Convert a variable reference back to a value or to a variable node by right-clicking on the data pin and choosing from the Convert options.](/images/user-guide/scripting/script-canvas/variable-reference-convert-back.gif)
 
-**To convert a data pin into a variable reference**
+将数据引脚转换为变量引用
 
-1. Do one of the following:
-   * Double-click on the data pin name to toggle between a value and a reference.
-   * **Right-click** the data pin and choose **Convert to Reference**.
+1. 执行以下操作之一：
+   * 双击数据引脚名称可在值和引用之间切换。
+   * **右键单击** 数据引脚，然后选择 **Convert to Reference**。
 
     ![Convert a data pin to use a variable reference by right-clicking on the pin and choosing Convert to Reference.](/images/user-guide/scripting/script-canvas/variable-reference-convert-pin.png)
 
-1. Use the gear button next to the variable name field that appears and select a variable to reference.
+1. 使用显示的变量名称字段旁边的齿轮按钮，然后选择要引用的变量。
 
     {{< tip >}}
-Another way to create a variable reference is to drag a variable from the **Variable Manager** onto the data pin.
+创建变量引用的另一种方法是将变量从 **Variable Manager** 拖到 data pin上。
     {{< /tip >}}
 
-**To convert a variable node into a variable reference**
+**将变量节点转换为变量引用**
 
-Do one of the following:
+执行以下操作之一：
 
-* **Right-click** a **Get** variable node and choose **Convert to References**. This converts the node into a variable reference on the node following it.
+* 右键单击 **Get** 变量节点，然后选择 **Convert to References**。这会将节点转换为其后节点上的变量引用。
 
     {{< note >}}
-If the data output from the **Get** variable node is not connected to another node, the variable node is deleted.
+如果 **Get** 变量节点的数据输出未连接到另一个节点，则变量节点将被删除。
     {{< /note >}}
 
-* **Right-click** a **Set** variable node and choose **Convert to References**. This converts the node into a variable reference on the node preceding it.
+* **右键单击** **Set** 变量节点，然后选择 **Convert to References**。这会将节点转换为其前面的节点上的变量引用。
 
     {{< note >}}
-If the data input to the **Set** variable node is not connected to another node, the variable node is deleted.
+如果 Set** 变量节点的数据输入未连接到另一个节点，则会删除该变量节点。
     {{< /note >}}
 
     ![Convert a variable node into a variable reference on a data pin by right-clicking on the variable node and choosing Convert to References.](/images/user-guide/scripting/script-canvas/variable-reference-convert-variable-node.gif)

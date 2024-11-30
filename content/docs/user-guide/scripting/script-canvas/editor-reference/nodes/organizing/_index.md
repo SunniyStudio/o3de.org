@@ -1,8 +1,8 @@
 ---
-linktitle: Organizing Nodes
-title: Organizing Script Canvas Nodes
-description: Learn tools and techniques for organizing Script Canvas nodes in Open 3D Engine.
+linktitle: 组织节点
+title: 组织 Script Canvas 节点
+description: 了解在 Open 3D Engine 中组织 Script Canvas 节点的工具和技术。
 weight: 500
 ---
 
-Script Canvas graphs can easily grow in size and complexity and become too big to fit on one screen and still be legible. This presents a challenge to find sections of interest and keep things organized. And when you or others revisit the graph later, it can be difficult to quickly remember or pick up on the logic. To help manage this organizational challenge, the **Script Canvas Editor** provides a handful of tools at your disposal. In the following topics, you will learn how to arrange, comment, and bookmark sections of your graph, and discover productivity-enhancing techniques for quickly selecting multiple nodes and navigating around your graphs.
+Script Canvas 图形的大小和复杂性很容易增加，并且变得太大而无法放在一个屏幕上，但仍然清晰易读。这为找到感兴趣的部分并保持井井有条提出了挑战。当您或其他人稍后重新访问该图表时，可能很难快速记住或掌握其中的逻辑。为了帮助应对这一组织挑战，**Script Canvas 编辑器**提供了一些工具供您使用。在以下主题中，您将学习如何排列、注释和为图表的各个部分添加书签，并发现用于快速选择多个节点和在图表中导航的工作效率增强技术。

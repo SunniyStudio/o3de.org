@@ -1,49 +1,49 @@
 ---
-linktitle: Editor Interface
-title: Script Canvas Editor Interface
-description: Understand the layout of the Script Canvas Editor.
+linktitle: 编辑器界面
+title: Script Canvas编辑器界面
+description: 了解 Script Canvas 编辑器的布局。
 weight: 100
 ---
 
-You can open the **Script Canvas Editor** from **O3DE Editor**.
+您可以从 O3DE 编辑器打开 **Script Canvas 编辑器**。
 
-**To open the Script Canvas Editor**
+**打开 Script Canvas 编辑器**
 
-1. In O3DE Editor, choose **Tools**, **Script Canvas**.
+1. 在 O3DE 编辑器中，依次选择 **Tools**、**Script Canvas**。
 
-1. Choose **File**, **New Script** or drag a node from the **Node Palette** and drop it on the canvas.
+1. 选择 **File**、**New Script** 或从 **Node Palette** 中拖动一个节点并将其拖放到画布上。
 
 ![Use the Script Canvas Editor in O3DE to create connections for nodes.](/images/user-guide/scripting/script-canvas/user-interface.png)
 
-In the Script Canvas Editor, you can do the following:
+在 Script Canvas Editor 中，您可以执行以下操作：
 
-1. Use the menu bar to do the following:
-   + Create, save, and open your scripts.
-   + Cut, copy, or undo actions.
-   + Change the Script Canvas Editor view.
+1. 使用菜单栏执行以下操作：
+   + 创建、保存和打开您的脚本。
+   + 剪切、复制或撤消操作。
+   + 更改 Script Canvas Editor （Script Canvas 编辑器） 视图。
 
-1. Use the tabs to switch between scripts.
+1. 使用选项卡在脚本之间切换。
 
-1. In the **Node Palette**, you can search for nodes.
+1. 在 **Node Palette** 中，您可以搜索节点。
 
-1. You can drag a node from the **Node Palette** to the canvas or **right-click** the canvas for a context menu.
+1. 您可以将节点从 **Node Palette** 拖到画布上，或者 **右键单击** 画布以获取上下文菜单。
 
-1. On a node, you can specify values for the parameters.
+1. 在节点上，您可以指定参数的值。
 
-1. Drag to connect an output pin of a node to an input pin of another node. This line creates a connection between the nodes.
+1. 拖动以将一个节点的输出引脚连接到另一个节点的输入引脚。此行在节点之间创建连接。
 
-1. The **Variable Manager** shows the variables that are used in the script. You can add or delete variables and set their default values. To create **Get**, **Set**, or **OnValueChanged** nodes, you can drag a variable from the **Variable Manager** onto the script. Refer to [Script Canvas Variables and the Variable Manager](/docs/user-guide/scripting/script-canvas/editor-reference/variables/) for more information.
+1. **变量管理器** 显示脚本中使用的变量。您可以添加或删除变量并设置其默认值。要创建 **Get**、**Set** 或 **OnValueChanged** 节点，您可以将变量从 **变量管理器** 拖到脚本上。请参阅 [Script Canvas 变量和变量管理器](/docs/user-guide/scripting/script-canvas/editor-reference/variables/)了解更多信息。
 
-1. In the **Node Inspector**, you can view and modify the properties for a selected node.
+1. 在 **Node Inspector** 中，您可以查看和修改所选节点的属性。
 
-## Additional Tools
+## 其他工具
 
-Script Canvas Editor has the following additional menus and tools.
+Script Canvas Editor 具有以下附加菜单和工具。
 
-### Bookmarks
+### 书签
 
-View and modify your saved bookmarks. You can use bookmarks to save locations on your script and then use keyboard shortcuts to move to that location. For more information, see [Adding Bookmarks in Script Canvas](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/adding-bookmarks).
+查看和修改已保存的书签。您可以使用书签在脚本上保存位置，然后使用键盘快捷键移动到该位置。有关详细信息，请参阅 [在 Script Canvas 中添加书签](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/adding-bookmarks).
 
-### Comments
+### 注释
 
-You can create floating blocks of text on the Script Canvas Editor canvas. For more information, see [Adding Comments in Script Canvas](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/commenting-nodes).
+您可以在 Script Canvas Editor 画布上创建浮动文本块。有关详细信息，请参阅 [在 Script Canvas 中添加注释](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/commenting-nodes).

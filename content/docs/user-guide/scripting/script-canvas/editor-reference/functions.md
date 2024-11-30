@@ -83,27 +83,27 @@ weight: 400
 
 1. 使用 变量引用](/docs/user-guide/scripting/script-canvas/editor-reference/variables/variable-references)，执行以下操作：
 
-   a. In the **Subtract** node, reference the *End* and *Start* variables, so that *Start* is subtracted from *End*.
+    a. 在 **Subtract** 节点中，引用 *End* 和 *Start* 变量，以便从 *End* 中减去 *Start*。
+    
+    b. 在 **乘法** 节点中，使用减法的结果并引用 *Time* 变量，以便 *（End - Start）* 乘以 *Time*。
+    
+    c. 在 **Add** 节点中，使用乘法结果并引用 *Start* 变量，以便将这两个值相加。
 
-   b. In the **Multiply** node, use the result of the subtraction and reference the *Time* variable, so that *(End - Start)* is multiplied by *Time*.
+1. 为您的函数创建一个退出点。
 
-   c. In the **Add** node, use the result of the multiplication and reference the *Start* variable, so that these two values are added together. 
+   a. 单击右侧的 **Create execution nodeling** 按钮，在画布上创建一个输出节点。
 
-1. Create an exit point for your function.
+   b. 单击 Add data output 旁边的 **+** 按钮，将输入参数添加到输出执行节点。这将提示您输入新变量的名称和类型。输入 **Result** 作为名称，输入 **Number** 作为类型。
 
-   a. Click the right side **Create execution nodeling** button to make an output node on the canvas.
-
-   b. Click the **+** button next to Add data output to add an input parameter to the output execution nodeling. This will prompt you for a name and type of the new variable. Enter **Result** as the name and **Number** as the type.
-
-   c. **Result** will appear in the list of variables under the Variable Manager. Drag it onto the canvas and select **Set Result** from the menu that appears.
+   c. **结果** 将出现在 Variable Manager 下的变量列表中。将其拖动到画布上，然后从出现的菜单中选择 **Set Result**。
    
-   d. Drag the new setter node between the **Add** node and the output execution nodeling.
+   d. 在 **Add** 节点和输出执行节点之间拖动新的 setter 节点。
 
-1. Drag a connection from the **Add** node output to the **Result** node **In** connector. Drag the **Add** node's Result pin to the **Result** node's number value.
+1. 将连接从 **Add** 节点输出拖动到 **Result** 节点 **In** 连接器。将 **Add** 节点的 Result 引脚拖动到 **Result** 节点的数字值。
 
-1. Drag the **Result** node's out connector to the output execution nodeling's in connector. 
+1. 将 **Result** 节点的 out 连接器拖动到输出执行节点的 in 连接器上。
 
-1. Finally, use **File**, **Save** to save the function and name it **Interpolate**. The function is now ready to use in a Script Canvas graph:
+1. 最后，使用 **File**、**Save** 保存函数并将其命名为 **Interpolate**。该函数现在可以在 Script Canvas 图形中使用：
 
    ![When a function is used in a Script Canvas graph, it appears as a node, using the function's filename as the node name.](/images/user-guide/scripting/script-canvas/function-linear-interpolation-node.png)
   

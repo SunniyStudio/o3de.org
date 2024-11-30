@@ -1,55 +1,55 @@
 ---
-linktitle: Editor Shortcuts
-title: Script Canvas Editor Shortcuts
-description: Learn keyboard and mouse shortcuts for the Script Canvas Editor in Open 3D Engine (O3DE).
+linktitle: 编辑器快捷键
+title: Script Canvas 编辑器快捷键
+description: 了解 Open 3D Engine （O3DE） 中 Script Canvas 编辑器的键盘和鼠标快捷键。
 weight: 100
 ---
 
-The **Script Canvas Editor** includes the following keyboard and mouse shortcuts:
+**Script Canvas 编辑器** 包括以下键盘和鼠标快捷键：
 
-## Keyboard shortcuts
+## 键盘快捷键
 
-| Key Combination | Action | Description |
+|组合键 |行动 |描述 |
 | --- | --- | --- |
-| **Arrow keys** | Scroll graph | Scrolls the graph left, right, up, or down. You must have focus in the graph canvas, either by clicking on a node or clicking anywhere inside the canvas. |
-| **Ctrl+C** | Copy | Copies the selected nodes and their connections to the clipboard. |
-| **Ctrl+V** | Paste | Pastes copied nodes and their connections from the clipboard into the active graph. |
-| **Ctrl+D** | Duplicate | Duplicates the selected nodes in the active graph. This is the equivalent of using **Ctrl+C** and **Ctrl+V**. |
-| **Ctrl+Left Arrow** | Select inputs | Selects all nodes that are connected to the input pins of the currently selected node. |
-| **Ctrl+Right Arrow** | Select outputs | Selects all nodes that are connected to the output pins of the currently selected node. |
-| **Ctrl+Up Arrow** | Select connected nodes | Selects all nodes that are connected to the currently selected node. |
-| **Esc** | Clear selection | Deselects any selected nodes. |
-| **Ctrl+Shift+P** | Screenshot | Creates an image of the area around all selected nodes and adds it to the clipboard. If no nodes are selected, an image of the entire active graph is added to the clipboard. |
-| **Shift+Left Arrow** | Align left | Aligns all the selected nodes along a left edge. |
-| **Shift+Right Arrow** | Align right | Aligns all the selected nodes along a right edge. |
-| **Shift+Up Arrow** | Align top | Aligns all the selected nodes along a top edge. |
-| **Shift+Down Arrow** | Align bottom | Aligns all the selected nodes along a bottom edge. |
-| **Ctrl+Alt+M** | Add comment | Adds a new comment using the properties from the default comment preset. For information about presets, see [Creating Comment and Group Presets](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/creating-comment-and-group-presets). Note that NVIDIA's GeForce Experience overlay uses a default setting for turning on/off the microphone that interferes with this hotkey. |
-| **Ctrl+Alt+O** | Make group | Creates a new group using the properties from the default node group preset. Any selected nodes become part of the new group, and are enclosed within the group border. For information about presets, see [Creating Comment and Group Presets](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/creating-comment-and-group-presets). |
-| **Ctrl+Shift+H** | Ungroup | Ungroups the currently selected group. |
-| **Ctrl+[0-9]** | Create bookmark | Creates a bookmark out of the current view and assigns it to the specified number key. If you choose a number that is already assigned to a bookmark or a bookmark-enabled group, you are prompted to reassign the existing bookmark. For more information about bookmarks, see [Adding Bookmarks in Script Canvas](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/adding-bookmarks). For information about enabling groups as bookmarks, see [Grouping Nodes](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/grouping-nodes). |
-| **[0-9]** | Jump to bookmark | Jumps to the bookmark location associated with the key that is pressed. |
-| **Ctrl+Plus Sign (+)** | Zoom in | Zooms the graph in. |
-| **Ctrl+Minus Sign (-)** | Zoom out | Zooms the graph out. |
-| **Ctrl+Shift+Up Arrow** | Zoom to selection | Centers the view on the nodes that are currently selected. |
-| **Ctrl+Shift+Down Arrow** | Show entire graph | Centers the entire graph into the current display. Zooms out as much as possible to display all nodes. |
-| **Ctrl+Shift+Left Arrow** | Show start of chain | Centers the view on the nodes that do not have any input connections, and are connected to the selected node through their output connections. |
-| **Ctrl+Shift+Right Arrow** | Show end of chain | Centers the view on the nodes that do not have any output connections, and are connected to the selected node through their input connections. |
-| **Ctrl+K** then **Ctrl+C** | Disable selected nodes | Disables the selected nodes. When a node is disabled, its color changes to gray. Disabled nodes remain visible in the Editor, but are not run at runtime. |
-| **Ctrl+K** then **Ctrl+U** | Enable selected nodes | Enables the selected nodes. |
+| **Arrow keys** | Scroll graph | 向左、向右、向上或向下滚动图表。您必须通过单击节点或单击画布内的任意位置在图形画布中具有焦点。 |
+| **Ctrl+C** | Copy | 将所选节点及其连接复制到剪贴板。 |
+| **Ctrl+V** | Paste | 将剪贴板中复制的节点及其连接粘贴到活动图形中。 |
+| **Ctrl+D** | Duplicate | 复制活动图形中的选定节点。这相当于使用 **Ctrl+C** 和 **Ctrl+V**。 |
+| **Ctrl+Left Arrow** | Select inputs | 选择连接到当前所选节点的输入引脚的所有节点。 |
+| **Ctrl+Right Arrow** | Select outputs | 选择连接到当前所选节点的输出引脚的所有节点。 |
+| **Ctrl+Up Arrow** | Select connected nodes | 选择连接到当前所选节点的所有节点。 |
+| **Esc** | Clear selection | 取消选择任何选定的节点。 |
+| **Ctrl+Shift+P** | Screenshot | 创建所有选定节点周围区域的图像，并将其添加到剪贴板。如果未选择节点，则会将整个活动图形的图像添加到剪贴板中。 |
+| **Shift+Left Arrow** | Align left | 沿左边缘对齐所有选定节点。 |
+| **Shift+Right Arrow** | Align right | 沿右边缘对齐所有选定节点。 |
+| **Shift+Up Arrow** | Align top | 沿顶部边缘对齐所有选定节点。|
+| **Shift+Down Arrow** | Align bottom | 沿底部边缘对齐所有选定节点。 |
+| **Ctrl+Alt+M** | Add comment |使用默认注释预设中的属性添加新注释。有关预设的信息，请参阅 [创建注释预设和编组预设](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/creating-comment-and-group-presets). 请注意，NVIDIA 的 GeForce Experience 叠加层使用默认设置来打开/关闭干扰此热键的麦克风。 |
+| **Ctrl+Alt+O** | Make group | 使用默认节点组预设中的属性创建新组。任何选定的节点都将成为新组的一部分，并包含在组边界内。有关预设的信息，请参阅 [创建注释预设和编组预设](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/creating-comment-and-group-presets). |
+| **Ctrl+Shift+H** | Ungroup | 取消对当前所选组的分组。 |
+| **Ctrl+[0-9]** | Create bookmark | 在当前视图中创建书签并将其分配给指定的数字键。 如果选择已分配给书签或启用书签的组的编号，则系统会提示您重新分配现有书签。有关书签的更多信息，请参阅 [在 Script Canvas 中添加书签](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/adding-bookmarks). 有关将组启用为书签的信息，请参阅 [对节点进行分组](/docs/user-guide/scripting/script-canvas/editor-reference/nodes/organizing/grouping-nodes). |
+| **[0-9]** | Jump to bookmark | JUMPS 到与所按下的键关联的书签位置。 |
+| **Ctrl+Plus Sign (+)** | Zoom in | 放大图表。 |
+| **Ctrl+Minus Sign (-)** | Zoom out | 缩小图表。 |
+| **Ctrl+Shift+Up Arrow** | Zoom to selection | 使视图以当前选定的节点为中心。 |
+| **Ctrl+Shift+Down Arrow** | Show entire graph | 将整个图形居中到当前显示中。尽可能缩小以显示所有节点。 |
+| **Ctrl+Shift+Left Arrow** | Show start of chain | 将视图以没有任何输入连接并通过其输出连接连接到所选节点的节点为中心。 |
+| **Ctrl+Shift+Right Arrow** | Show end of chain | 将视图以没有任何输出连接并通过其输入连接连接到所选节点的节点为中心。 |
+| **Ctrl+K** then **Ctrl+C** | Disable selected nodes | 禁用所选节点。禁用节点后，其颜色将变为灰色。禁用的节点在 Editor 中仍然可见，但不会在运行时运行。 |
+| **Ctrl+K** then **Ctrl+U** | Enable selected nodes | 启用所选节点。 |
 
 {{< note >}}
-If a keyboard shortcut doesn't appear to work for you, another process running in the background might have bound that key combination.
+如果键盘快捷键似乎不适合您，则可能在后台运行的另一个进程已绑定该组合键。
 {{< /note >}}
 
-## Mouse shortcuts
+## 鼠标快捷键
 
-The following shortcuts use the mouse or keyboard and mouse.
+以下快捷键使用鼠标或键盘和鼠标。
 
-| User Action | Result | Description |
+|用户操作 |结果 |描述 |
 | --- | --- | --- |
-| **Alt+LMB** on node | Disconnect and delete a single node or group | Disconnects and deletes the node or group clicked. |
-| **Alt+LMB** on connection | Delete a connection | Deletes the connection clicked from the active graph. |
-| **Alt+LMB** on slot | Delete connections |  Deletes any connections to the slot from the active graph.  Ensure that the connections that you want to delete are highlighted before pressing **Alt+Left Click**. Otherwise, you might delete the node instead.   |
-| **MMB** on graph tab | Close graph | Closes the open graph that corresponds to the tab that you clicked. If the graph has changed and has not been saved, you're prompted to save it first. |
-| **Mouse Wheel Up/Down** | Zoom in/out | Zooms in or out on the graph. |
+| **Alt+LMB** on node | 断开并删除单个节点或组 |断开并删除单击的节点或组。 |
+| **Alt+LMB** on connection | Delete a connection | 删除从活动图中单击的连接。 |
+| **Alt+LMB** on slot | Delete connections | 从活动图形中删除与槽的任何连接。 确保在按 **Alt+左键单击** 之前突出显示要删除的连接。否则，您可以改为删除该节点。   |
+| **MMB** on graph tab | Close graph |关闭与您单击的选项卡对应的打开图表。如果图表已更改且尚未保存，系统会提示您先保存它。 |
+| **Mouse Wheel Up/Down** | Zoom in/out | 放大或缩小图表。 |

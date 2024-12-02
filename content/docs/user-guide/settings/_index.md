@@ -1,13 +1,13 @@
 ---
-title: Settings Registry
-linktitle: Settings Registry
-description: Learn how to provide settings and configuration options for the tools and applications in Open 3D Engine (O3DE) with the Settings Registry.
+title: 设置注册表
+linktitle: 设置注册表
+description: 了解如何使用设置注册表为 Open 3D Engine （O3DE） 中的工具和应用程序提供设置和配置选项。
 weight: 350
 ---
 
-With the Settings Registry, you can provide settings and configurations for **Open 3D Engine (O3DE)** applications and tools.
+使用设置注册表，您可以为 Open 3D Engine （O3DE）** 应用程序和工具提供设置和配置。
 
-Settings are stored in JSON files with `.setreg` and `.setregpatch` extensions. You can define, query, and change O3DE application settings using [JSON Pointer syntax](https://tools.ietf.org/html/rfc6901). In the following example, the JSON Pointer path is `"/O3DE/CustomSetting"`:
+设置存储在扩展名为`.setreg` 和 `.setregpatch`的 JSON 文件中。您可以使用 [JSON 指针语法](https://tools.ietf.org/html/rfc6901) 定义、查询和更改 O3DE 应用程序设置。在以下示例中，JSON 指针路径为`"/O3DE/CustomSetting"`:
 
 ```JSON
 {
@@ -17,29 +17,29 @@ Settings are stored in JSON files with `.setreg` and `.setregpatch` extensions. 
 }
 ```
 
-Settings can be merged and modified through [JSON Patch](https://tools.ietf.org/html/rfc6902) or the [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) format files.
+可以通过 [JSON Patch](https://tools.ietf.org/html/rfc6902) 或 [JSON Merge Patch](https://tools.ietf.org/html/rfc7386) 格式文件来合并和修改设置。
 
-You can interact with the Settings Registry in O3DE through the following methods:
+您可以通过以下方法与 O3DE 中的设置注册表进行交互：
 
-* [Command line arguments](./command-line-arguments)
-* [AZ::Console system](./az-console)
-* [Script (Lua, Script Canvas, Python)](./script-api)
+* [命令行参数](./command-line-arguments)
+* [AZ::Console 系统](./az-console)
+* [脚本 (Lua, Script Canvas, Python)](./script-api)
 
-## Topics
+## 主题
 
-| Topic | Description |
+| 主题 | 说明 |
 | - | - |
-| [Command Line Arguments and the Settings Registry](./command-line-arguments) | Learn how to modify the Settings Registry from the command line and access the command line supplied to the application. |
-| [Settings Registry Script API](./script-api) | Learn the Settings Registry Script API with examples for Python and Lua. |
-| [Access the Settings Registry with Console Commands](./az-console) | Use Console commands to read and modify the Settings Registry. |
-| [Issue Console Commands from the Settings Registry](./issue-az-console-commands) | Learn how to run Console commands using the Settings Registry. |
-| [Output the Settings Registry to Stream with C++](./output-settings-registry) | Output the Settings Registry to an IO stream with C++. |
-| [Settings Registry Developer Guide](./developer-documentation) | Provides detailed developer information about the Settings Registry. Settings Registry examples are provided for multiple scenarios. The interaction between the CMake Build Generation system, the Settings Registry, and the Gem Module System are described in detail. |
-| [Gem Loading and the Settings Registry](./gem-loading) | Learn how the Settings Registry is used to load Gem Modules and configure Gem settings. |
-| [Settings Registry Chaining](./import-settings-registry) | Learn how the Settings Registry can trigger imports of other Settings Registry files. |
+| [命令行参数和设置注册表](./command-line-arguments) | 了解如何从命令行修改 Settings Registry 并访问提供给应用程序的命令行。 |
+| [Settings Registry Script API](./script-api) | 通过 Python 和 Lua 的示例了解 Settings Registry Script API。 |
+| [使用控制台命令访问设置注册表](./az-console) | 使用 Console 命令读取和修改 Settings Registry。 |
+| [从设置注册表发出控制台命令](./issue-az-console-commands) | 了解如何使用设置注册表运行 Console 命令。 |
+| [使用 C++ 将 Settings Registry 输出到 Stream](./output-settings-registry) | 使用 C++ 将 Settings Registry 输出到 IO 流。 |
+| [设置注册表开发人员指南](./developer-documentation) | 提供有关 Settings Registry 的详细开发人员信息。为多种情况提供了设置注册表示例。详细介绍了 CMake Build Generation 系统、Settings Registry 和 Gem Module System 之间的交互。 |
+| [Gem 加载和 Settings Registry](./gem-loading) | 了解如何使用 Settings Registry 加载 Gem 模块和配置 Gem 设置。 |
+| [设置注册表链接](./import-settings-registry) | 了解设置注册表如何触发其他设置注册表文件的导入。 |
 
-## Related topics
+## 相关主题
 
-| Topic | Description |
-| --- | --- |
-| [Gem Module system](/docs/user-guide/programming/gems/overview/) | Explains how O3DE Loads and Initializes Gems in C++. |
+| 主题 | 说明 |
+| --- |------------------------------|
+| [Gem模块系统](/docs/user-guide/programming/gems/overview/) | 说明 O3DE 如何在 C++ 中加载和初始化 Gem。 |

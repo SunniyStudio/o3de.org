@@ -1,19 +1,19 @@
 ---
-linkTitle: API Examples
-title: Settings Registry API Examples
-description: Provides information about the available Settings Registry APIs with examples
+linkTitle: API 示例
+title: Settings Registry API 示例
+description: 提供有关可用设置注册表 API 的信息和示例
 weight: 800
 ---
 
-Details the available set of APIs provided by the Settings Registry.  Examples are provided for the ability to query settings, using both the query and visitor APIs. How to define and update settings using the setter APIs.
+详细说明 Settings Registry 提供的可用 API 集。 提供了使用查询 API 和访客 API 查询设置的功能的示例。如何使用 setter API 定义和更新设置。
 
-Settings can be merged from files or in-memory JSON documents using the merge API.  Finally, notifications of when settings have been modified or removed are available using the notification API.
+可以使用合并 API 从文件或内存中的 JSON 文档中合并设置。 最后，可以使用通知 API 获取有关何时修改或删除设置的通知。
 
 ### Query API
 
 The [query API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L224-L260) supports directly querying the types of `bool`, `int64_t`, `double`, `AZStd::string`, `AZStd::fixed_string`, and any object reflected to the `SerializeContext`. The getter method of querying objects from the `SerializeContext` is safe to use, but it should be respected as an implementation detail of the Settings Registry. The `SettingsRegistryInterface::GetObject` interface will remain stable, but no assumptions should be made on how objects are serialized.
 
-The following example demonstrates the query API for builtin settings types (`bool`, `AZ::s64`, `AZ::u64` `double`, `(fixed_)string`):
+以下示例演示了内置设置类型的查询 API (`bool`, `AZ::s64`, `AZ::u64` `double`, `(fixed_)string`):
 
 ```c++
 // Setting FileIOBase alias based on values within the Settings Registry

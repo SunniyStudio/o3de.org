@@ -1,73 +1,73 @@
 ---
-title: Access the Settings Registry with Console Commands
-linktitle: Console Commands
-description: Learn how to access the Settings Registry using AZ Console Commands in Open 3D Engine (O3DE).
+title: 使用控制台命令访问设置注册表
+linktitle: 控制台命令
+description: 了解如何在 Open 3D Engine （O3DE） 中使用 AZ 控制台命令访问设置注册表。
 weight: 400
 ---
 
-The Settings Registry registers a list of commands with [AZ::Console](/docs/user-guide/programming/az-console/) that allow you to add, update, or delete a key within the Settings Registry, and dump keys to the Console output window.
+设置注册表向 [AZ::Console](/docs/user-guide/programming/az-console/) 注册命令列表，这些命令允许您在设置注册表中添加、更新或删除密钥，并将密钥转储到控制台输出窗口。
 
-## Console command list
+## 控制台命令列表
 
-Settings Registry Console commands have the prefix `sr_`, which stands for _Settings Registry_.
+设置注册表控制台命令具有前缀`sr_`，是 _Settings Registry_的缩写。
 
-| <div style="width:150px">Command</div> | Description |
+| <div style="width:150px">命令</div> | 说明 |
 | :-- | :-- |
-| `sr_regset` \<key> \<value> | Adds or modifies value at the specified key entry in the Settings Registry with the value argument. Multiple keys and values can be specified. |
-| `sr_regremove` \<key> | Removes each key and its value from the Settings Registry. Multiple keys can be specified. |
-| `sr_regdump` \<key> | Dumps each key value from the Settings Registry to the console output window. If multiple keys are specified, their values are separated by newlines. |
-| `sr_regdumpall` | Dump the entire Settings Registry to the console output window. |
-| `sr_regset_file` \<file path> \<anchor path> | Merges the Settings Registry file at the specified anchor path in the Settings Registry. The anchor path parameter merges the loaded settings under a specific settings object, for example, `"/O3DE/Settings"`. |
-| `sr_dump_origin` \<key> | Outputs the filepath responsible for the latest modification of each key in the Settings Registry.  If the key was last updated in C++ or Script, then a value of "\<in-memory>" is output.  Multiple keys can be specified.  |
+| `sr_regset` \<key> \<value> | 使用 value 参数在 Settings Registry 的指定键项处添加或修改值。可以指定多个键和值。 |
+| `sr_regremove` \<key> | 从 Settings Registry 中删除每个键及其值。可以指定多个键。 |
+| `sr_regdump` \<key> | 将 Settings Registry （设置注册表） 中的每个键值转储到控制台输出窗口。如果指定了多个键，则它们的值用换行符分隔。 |
+| `sr_regdumpall` | 将整个 Settings Registry 转储到控制台输出窗口。 |
+| `sr_regset_file` \<file path> \<anchor path> | 在 Settings Registry 的指定锚点路径处合并 Settings Registry 文件。锚点路径参数将加载的设置合并到特定设置对象下，例如，`"/O3DE/Settings"`. |
+| `sr_dump_origin` \<key> | 输出负责 Settings Registry 中每个键的最新修改的文件路径。 如果上次在 C++ 或 Script 中更新了键，则输出值 “\<in-memory>”。 可以指定多个键。  |
 
-## Examples
+## 示例
 
-### Use `sr_regset` to update or add a value
+### 使用 `sr_regset` 更新或添加值
 
-The following Console command examples update the project root path in the Settings Registry.
+以下 Console 命令示例更新 Settings Registry 中的项目根路径。
 
-| Command | Result |
+| 命令 | 结果 |
 | --- | --- |
-| `sr_regset /Amazon/AzCore/Bootstrap/project_path TestProject` | This example sets the "project_path" field under the "/Amazon/AzCore/Bootstrap" JSON object to "TestProject". |
-| `sr_regset /Amazon/AzCore/Bootstrap/project_path ProjectPath With Spaces` | This example sets the "project_path" field under the "/Amazon/AzCore/Bootstrap" JSON object to "ProjectPath With Spaces". |
+| `sr_regset /Amazon/AzCore/Bootstrap/project_path TestProject` | 此示例将“/Amazon/AzCore/Bootstrap”JSON 对象下的“project_path”字段设置为“TestProject”。 |
+| `sr_regset /Amazon/AzCore/Bootstrap/project_path ProjectPath With Spaces` | 此示例将“/Amazon/AzCore/Bootstrap”JSON 对象下的“project_path”字段设置为“带空格的 ProjectPath”。 |
 
 ![](/images/user-guide/settings/update-setting.png)
 
-### Use `sr_regremove` to remove a key value
+### 使用 `sr_regremove` 删除键值
 
-The following Console command examples remove keys and their values from the Settings Registry.
+以下 Console 命令示例从 Settings Registry 中删除键及其值。
 
-| Command | Result |
+| 命令 | 结果 |
 | --- | --- |
-| `sr_regremove /Amazon/AzCore/Bootstrap/project_path` | This removes the "project_path" field under the "/Amazon/AzCore/Bootstrap" JSON object. |
-| `sr_regremove /Your/Custom/Setting1 /My/Custom/Setting2` | This removes both the "Setting1" field under the "/Your/Custom" JSON object and the "Setting2" field under the "/My/Custom" JSON object. |
+| `sr_regremove /Amazon/AzCore/Bootstrap/project_path` | 这将删除“/Amazon/AzCore/Bootstrap”JSON 对象下的“project_path”字段。 |
+| `sr_regremove /Your/Custom/Setting1 /My/Custom/Setting2` | 这将删除“/Your/Custom”JSON 对象下的“Setting1”字段和“/My/Custom”JSON 对象下的“Setting2”字段。 |
 
 ![](/images/user-guide/settings/remove-setting.png)
 
-### Use the `sr_regdump` command to output a value
+### 使用 `sr_regdump` 命令输出值
 
-The following Console command examples output the values of specified keys to the Console.
+以下 Console 命令示例将指定键的值输出到 Console。
 
-| Command | Result |
+| 命令 | 结果 |
 | --- | --- |
-| `sr_regdump /Amazon/AzCore/Bootstrap/project_path` | This outputs current "project\_path" to the Console. |
-| `sr_regdump /Your/Custom/Setting1 /My/Custom/Setting2` | This outputs both the "Setting1" field under the "/Your/Custom" JSON object and the "Setting2" field under the "/My/Custom" JSON object to the Console. |
+| `sr_regdump /Amazon/AzCore/Bootstrap/project_path` | 这会将当前 “project\_path” 输出到 Console。 |
+| `sr_regdump /Your/Custom/Setting1 /My/Custom/Setting2` | 这会将“/Your/Custom”JSON 对象下的“Setting1”字段和“/My/Custom”JSON 对象下的“Setting2”字段输出到控制台。|
 
 ![](/images/user-guide/settings/dump-setting.png)
 
-### Use the `sr_regdumpall` command to output the entire Settings Registry
+### 使用 `sr_regdumpall` 命令输出整个设置注册表
 
-The following Console command outputs the entire Settings Registry to the Console.
+以下 Console 命令将整个 Settings Registry 输出到 Console。
 
-| Command | Result |
+| 命令 | 结果 |
 | --- | --- |
-| `sr_regdumpall` | This outputs the complete Settings Registry to the Console. |
+| `sr_regdumpall` | 这会将完整的 Settings Registry 输出到 Console。|
 
 ![](/images/user-guide/settings/dump-all-settings.png)
 
-### Use the `sr_dump_origin` command to output the filepath that last modified a key
+### 使用 `sr_dump_origin` 命令输出上次修改键的 filepath
 
-The following Console command outputs the filepath responsible for the latest modification of each key to the Console.  The code block shows an example of merging 2 JSON files in order and querying the file origin of `"/Your/Custom/Setting1"`.
+以下 Console 命令将负责对每个键进行最新修改的文件路径输出到 Console。 代码块展示了一个按顺序合并 2 个 JSON 文件并查询文件来源 `"/Your/Custom/Setting1"` 的示例。
 
 **file1.setreg**
 ```json
@@ -83,15 +83,15 @@ The following Console command outputs the filepath responsible for the latest mo
 }
 ```
 
-| Command | Result |
-| --- | --- |
-| `sr_dump_origin /Your/Custom/Setting1` | This outputs the last file which modified "/Your/Custom/Setting1" key to the Console.  The return value is `file2.setreg` |
+| 命令 | 结果 |
+| --- |------------------------------------------------------------------|
+| `sr_dump_origin /Your/Custom/Setting1` | 这会将修改 “/Your/Custom/Setting1” 键的最后一个文件输出到控制台。 返回值为`file2.setreg` |
 
 ![](/images/user-guide/settings/dump-file-origin.png)
 
-### Use the `sr_regset_file` command to merge a Settings Registry file
+### 使用 `sr_regset_file` 命令合并 Settings Registry 文件
 
-The following Console command merges a Settings Registry file to the Settings Registry from the Console. The file must be JSON formatted. The code block shows an example JSON file named `engine.json` with an example value for the `engine_name` key.
+以下 Console 命令将 Settings Registry 文件从 Console 合并到 Settings Registry 中。该文件必须采用 JSON 格式。该代码块显示了一个名为`engine.json`的示例 JSON 文件，其中包含`engine_name`键的示例值。
 
 **engine.json**
 ```json
@@ -100,9 +100,9 @@ The following Console command merges a Settings Registry file to the Settings Re
 }
 ```
 
-| Command | Result |
-| --- | --- |
-| `sr_regset_file <engine-root>/engine.json` | Merges the `engine.json` file to the Settings Registry anchor to root key of "". |
-| `sr_regset_file <engine-root>/engine.json /O3DE/EngineSettings` | Merges the `engine.json` file to the Settings Registry anchored to object of "/O3DE/EngineSettings". |
+| 命令                                                              | 结果                                                     |
+|-----------------------------------------------------------------|--------------------------------------------------------|
+| `sr_regset_file <engine-root>/engine.json`                      | 将 `engine.json` 文件合并到 “” 的 Settings Registry 锚点的根键 “”。 |
+| `sr_regset_file <engine-root>/engine.json /O3DE/EngineSettings` | 将`engine.json`文件合并到锚定到“/O3DE/EngineSettings”对象的设置注册表中。 |
 
 ![](/images/user-guide/settings/merge-regset-file.png)

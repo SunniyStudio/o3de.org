@@ -1,38 +1,38 @@
 ---
-linkTitle: Getting Started
-title: Getting Started with Test Automation
-description: Learn about the automated testing tools provided with Open 3D Engine (O3DE).
+linkTitle: 入门
+title: Test Automation 入门
+description: Learn about the automated testing tools provided with Open 3D Engine (O3DE).了解 Open 3D Engine （O3DE） 提供的自动化测试工具。
 toc: true
 weight: 500
 ---
 
-This guide introduces the automated testing tools in **Open 3D Engine (O3DE)** and covers their basic usage. More detailed information on each tool exists on their specific documentation pages, linked in each section below.
+本指南介绍了 Open 3D Engine （O3DE） 中的自动化测试工具，并介绍了它们的基本用法。有关每个工具的更多详细信息，请访问其特定的文档页面，链接在下面的每个部分中。
 
-## Overview
+## 概述
 
-O3DE uses [CMake](https://cmake.org/cmake/help/latest/), a build system that includes [CTest](https://cmake.org/cmake/help/latest/manual/ctest.1.html). CTest is a generic test runner tool which coordinates executing and reporting on tests, used by O3DE to start all automated testing. O3DE projects can also register their own tests through CTest to test their unique game code or engine extensions. By running CTest locally, developers can verify code health before committing changes.
+O3DE 使用 [CMake](https://cmake.org/cmake/help/latest/)，这是一个包含 [CTest](https://cmake.org/cmake/help/latest/manual/ctest.1.html)的构建系统。CTest 是一个通用的测试运行器工具，用于协调测试的执行和报告，O3DE 使用它来启动所有自动化测试。O3DE 项目还可以通过 CTest 注册自己的测试，以测试其独特的游戏代码或引擎扩展。通过在本地运行 CTest，开发人员可以在提交更改之前验证代码运行状况。
 
 {{< important >}}
-All CTest tests are executed in the O3DE Automated Review (AR) pipeline to help prevent bad merges. New code submissions are required to have tests; Changes to existing code must not cause regressions. Make sure to run your tests locally before any code submission to the O3DE project.
+所有 CTest 测试都在 O3DE 自动审阅 （AR） 管道中执行，以帮助防止不良合并。提交新代码需要进行测试;对现有代码的更改不得导致回归。确保在向 O3DE 项目提交任何代码之前在本地运行测试。
 {{< /important >}}
 
-The rest of this topic covers registering tests with CTest for testing O3DE code, and how to write these tests for various test runners.
+本主题的其余部分介绍如何向 CTest 注册测试以测试 O3DE 代码，以及如何为各种测试运行程序编写这些测试。
 
 ![CMake and CTest workflow](/images/user-guide/testing/getting-started/cmake_ctest_workflow.png)
 
 ## CTest
 
-CTest is similar to other test frameworks like GoogleTest, PyTest, JUnit, or NUnit; though it uses a higher-level generic interface. CTest registers each test as a string of command-line arguments, and reports on whether invoking those arguments succeeded (returned `0`) without hanging. CTest can also coordinate running tests in parallel processes. Unlike other test runners, CTest is programming language agnostic by interfacing with the OS shell. However this means a notable feature is absent from CTest: other test frameworks typically provide a lower-level interface which directly invokes functions inside a specific programming language. To provide this function-level execution, O3DE uses CTest to invoke lower-level test runners.
+CTest 类似于 GoogleTest、PyTest、JUnit 或 NUnit 等其他测试框架;尽管它使用更高级别的通用接口。CTest 将每个测试注册为一串命令行参数，并报告调用这些参数是否成功（返回“0”）而没有挂起。CTest 还可以协调并行进程中运行的测试。与其他测试运行程序不同，CTest 通过与 OS shell 连接而与编程语言无关。然而，这意味着 CTest 中缺少一个值得注意的功能：其他测试框架通常提供较低级别的接口，该接口直接调用特定编程语言中的函数。为了提供此函数级执行，O3DE 使用 CTest 来调用较低级别的测试运行程序。
 
-O3DE provides wrapper code to help register tests for frameworks such as GoogleTest and PyTest into CTest. Along with the provided test-tools libraries, these wrappers enable writing tests that can run on any operating system supported by the underlying frameworks. XML files are generated to track the low-level results not reported to CTest, and artifacts are saved such as log output and crash dumps.
+O3DE 提供包装代码，以帮助将 GoogleTest 和 PyTest 等框架的测试注册到 CTest 中。除了提供的 test-tools 库外，这些包装器还允许编写可在底层框架支持的任何操作系统上运行的测试。生成 XML 文件以跟踪未报告给 CTest 的低级结果，并保存工件，例如日志输出和故障转储。
 
 ![CTest calls other test runners](/images/user-guide/testing/getting-started/ctest_to_runners.png)
 
-In short, all tests in O3DE use CTest as a high-level test coordinator. When executed, CTest calls other lower-level test tools and then reports on their success.
+简而言之，O3DE 中的所有测试都使用 CTest 作为高级测试协调器。执行时，CTest 会调用其他较低级别的测试工具，然后报告它们的成功情况。
 
-### Starting CTest
+### 启动 CTest
 
-CTest expects its working directory to be a CMake build directory, so be sure to first navigate to this directory in a terminal. This build directory should be the same directory configured by CMake. Then, use `-C` to select a build configuration that you've already built:
+CTest 希望其工作目录是 CMake 构建目录，因此请务必先在终端中导航到此目录。此 build 目录应与 CMake 配置的目录相同。然后，使用 '-C' 选择您已经构建的构建配置：
 
 * **Windows**:
     ```cmd
@@ -47,10 +47,10 @@ CTest expects its working directory to be a CMake build directory, so be sure to
     ```
 
 {{< caution >}}
-Without a filter the command will run every registered test, and likely result in multiple hours of test execution! If you ever want to stop CTest, send an interrupt signal by selecting the terminal and pressing **Ctrl+C**.
+如果没有过滤器，该命令将运行每个已注册的测试，并可能导致数小时的测试执行！如果要停止 CTest，请选择终端并按 **Ctrl+C** 来发送中断信号。
 {{< /caution >}}
 
-CTest can also run a subset of labeled test suites with the `-L` argument. These test suites should be contained in parenthesis (`(..)`) and have their names separated with a `|` character. The following examples demonstrate this syntax for running the Main and Smoke suites for a `profile` build on Windows or Linux:
+CTest 还可以使用`-L`参数运行标记测试套件的子集。这些测试套件应包含在括号(`(..)`)并用`|`字符分隔它们的名称。以下示例演示了在 Windows 或 Linux 上运行`profile`构建的 Main 和 Smoke 套件的语法：
 
 * **Windows**:
     ```cmd
@@ -64,32 +64,32 @@ CTest can also run a subset of labeled test suites with the `-L` argument. These
     ctest -C profile -L "(SUITE_smoke|SUITE_main)"
     ```
 
-It's recommended that you verify your tests with the Main and Smoke suite on your local machine. These tests will be executed on any pull request (PR) opened against the `o3de` repository, as part of the Automated Review pipeline in the PR workflow. Both of these suites must execute relatively fast and must not intermittently fail, and are an easy way to prove your change did not break other features.
+建议您在本地计算机上使用 Main 和 Smoke 套件验证测试。这些测试将针对`o3de`存储库打开的任何拉取请求 （PR） 执行，作为 PR 工作流程中自动审查管道的一部分。这两个套件都必须执行得相对较快，并且不能间歇性地失败，并且是证明您的更改不会破坏其他功能的简单方法。
 
-After running CTest, results save to `.../<build_folder>/Testing/`.  If you prefer to see full output of failures directly in your terminal, add the flag `--output-on-failure`.
+运行 CTest 后，结果保存到 `.../<build_folder>/Testing/`。 如果您希望直接在终端中查看失败的完整输出，请添加标志`--output-on-failure`。
 
-For more information on CTest usage, refer to its [online documentation](https://cmake.org/cmake/help/latest/manual/ctest.1.html).
+有关 CTest 用法的更多信息，请参阅其 [在线文档](https://cmake.org/cmake/help/latest/manual/ctest.1.html).
 
-### Adding test modules to CTest
+### 向 CTest 添加测试模块
 
-CTest registers entire modules of test code, which typically contain multiple individual tests of the same feature. To add new tests, complete one prerequisite and three steps:
+CTest 注册测试代码的整个模块，这些模块通常包含同一功能的多个单独测试。要添加新测试，请完成一个先决条件和三个步骤：
 
-1. **Prerequisite**: Add a build target for the production code that the tests will target.
-1. Add a build target for tests that need to be compiled (not required for Python).
-1. Register your test module in a `CMakeLists.txt`.
-1. Add individual test functions into the test module.
+1. **先决条件**：为测试将针对的生产代码添加构建目标。
+1. 为需要编译的测试添加构建目标（Python 不需要）。
+1. 在`CMakeLists.txt`中注册您的测试模块。
+1. 将单个测试函数添加到测试模块中。
 
-Specific steps vary for different types of tests, discussed in later sections.
+具体步骤因不同类型的测试而异，将在后面的部分中讨论。
 
 ## GoogleTest
 
-For many tests, it's easier to write in the same language as the production code that the test targets. Since the majority of O3DE uses C++, the majority of its tests also use C++. O3DE's C++ tests are typically small [unit level](https://softwaretestingfundamentals.com/unit-testing/) tests of specific low-level functionality, which run extremely fast. O3DE uses [GoogleTest](https://github.com/google/googletest/blob/main/docs/index.md) along with utilities named [AzTest](/docs/user-guide/testing/aztest/aztest/). Part of AzTest is an execution wrapper named `AzTestRunner`. CTest calls `AzTestRunner` to load the C++ test library and the target library, and then execute any loaded GoogleTest tests.
+对于许多测试，使用与测试目标的生产代码相同的语言编写代码会更容易。由于 O3DE 的大部分都使用 C++，因此它的大部分测试也使用 C++。O3DE 的 C++ 测试通常是针对特定低级功能的小型 [单元级]https://softwaretestingfundamentals.com/unit-testing/) 测试，运行速度极快。O3DE 使用 [GoogleTest](https://github.com/google/googletest/blob/main/docs/index.md) 以及名为 [AzTest](/docs/user-guide/testing/aztest/aztest/) 的实用程序。AzTest 的一部分是名为`AzTestRunner`的执行包装器。CTest 调用`AzTestRunner`来加载 C++ 测试库和目标库，然后执行任何加载的 GoogleTest 测试。
 
-C++ production code for an O3DE feature gets built into a library, which is later loaded into an application. When writing C++ tests for this code, the test-code should similarly be built into its own separate library. This test-library then declares a dependency on loading the production library it tests. Building separate test-only libraries has the advantage of keeping production binaries lean and easy to ship, as well as free of extraneous ```#if defined``` blocks for test-only logic. This also ensures that tests target the exact same interfaces that ship with the product.
+O3DE 功能的 C++ 产品代码内置到库中，稍后加载到应用程序中。在为此代码编写 C++ 测试时，测试代码也应同样构建到其自己的单独库中。然后，这个 test-library 声明了对加载它所测试的 production 库的依赖性。构建单独的仅测试库的优点是保持生产二进制文件精简且易于发布，并且没有无关的```#if defined```块用于仅测试逻辑。这还可以确保测试以产品附带的完全相同的接口为目标。
 
-### Registering new C++ tests
+### 注册新的 C++ 测试
 
-While reading the upcoming steps, refer to the following `CMakeLists.txt` example:
+在阅读后续步骤时，请参阅以下`CMakeLists.txt`示例：
 
 ```
 # Preexisting module registration from completing the Prerequisite step
@@ -141,17 +141,17 @@ if(PAL_TRAIT_BUILD_SUPPORTS_TESTS)  # only create these test modules if the targ
 endif()
 ```
 
-#### Prerequisite: Add a production build target
+#### 先决条件：添加生产构建目标
 
-Before configuring tests, you must first define the library that you want to test. If your tests target an existing feature, then this step is already completed and you simply need to find the correct file path. Target libraries are defined in a `CMakeLists.txt`, which typically lives in the same directory as the code or in a parent directory. For more information on configuring `CMakeLists.txt` files, please refer to the [Build section](/docs/user-guide/build/). Note that you only need to define the production library that the tests target, not every feature in the production library. You can configure and write tests before you finish the production code.
+在配置测试之前，必须首先定义要测试的库。如果您的测试以现有功能为目标，则此步骤已完成，您只需找到正确的文件路径即可。Target 库在`CMakeLists.txt`中定义，该  通常与代码位于同一目录或父目录中。有关配置`CMakeLists.txt`文件的更多信息，请参阅 [构建部分](/docs/user-guide/build/)。请注意，您只需要定义测试的目标 production 库，而不是 production 库中的每个功能。您可以在完成生产代码之前配置和编写测试。
 
-#### Step 1: Add a test build target
+#### 步骤 1：添加测试生成目标
 
-Similar to the production build target, the test target defines a library in a `CMakeLists.txt` configuration file. Start by finding the `CMakeLists.txt` that you created in the prerequisite step.  It should exist at a path similar to `o3de/.../<MyModule>/CMakeLists.txt`.
+与生产构建目标类似，测试目标在`CMakeLists.txt`配置文件中定义库。首先，找到您在先决条件步骤中创建的`CMakeLists.txt`。 它应该位于类似于`o3de/.../<MyModule>/CMakeLists.txt`的路径中。
 
-Modify the `CMakeLists.txt` file to define your new test module with `ly_add_target()`. Similar to the production build target, it's easiest to create another `.cmake` file that lists the C++ files used to compile the test library.
+修改`CMakeLists.txt`文件，用`ly_add_target()` 定义你的新测试模块。与生产构建目标类似，最简单的方法是创建另一个 `.cmake` 文件，其中列出了用于编译测试库的 C++ 文件。
 
-The example above uses `o3de/.../<MyModule>/mymodule_test_files.cmake`, which has content similar to the following:
+上面的示例使用了`o3de/.../<MyModule>/mymodule_test_files.cmake`，其内容类似于以下内容：
 
 ```
 set(FILES
@@ -160,29 +160,29 @@ set(FILES
 )
 ```
 
-#### Step 2: Register the test module
+#### 第 2 步：注册测试模块
 
-In `CMakeLists.txt`, register the module with CTest by using the helper function `ly_add_googletest()`.
+在`CMakeLists.txt`中，使用帮助程序函数向 CTest 注册模块`ly_add_googletest()`。
 
 {{< important >}}
-GoogleTest modules should avoid using the `TEST_SERIAL` flag, which prevents tests from efficiently executing in parallel with other test modules. If the tests have dependencies which prevent them from executing in parallel, please start a discussion with the Testing Special Interest Group in the [O3DE Discord](https://{{< links/o3de-discord >}}) channel sig-testing!
+GoogleTest 模块应避免使用`TEST_SERIAL`标志，因为这会阻止测试与其他测试模块并行高效执行。如果测试存在依赖关系，导致它们无法并行执行，请在[O3DE Discord](https://{{< links/o3de-discord >}}) 频道 sig-testing 中与测试特别兴趣小组展开讨论！
 {{< /important >}}
 
-To verify everything is set up correctly, run the CMake configure command from **CMake CLI** or **CMake GUI** (described in the [Configure and Build](/docs/user-guide/build/configure-and-build/) section). This registers everything you just added, and emits errors if anything is misconfigured.
+要验证所有内容都已正确设置，请从 CMake CLI** 或 CMake GUI** 运行 CMake configure 命令（在 [配置和构建](/docs/user-guide/build/configure-and-build/) 部分中描述）。这将注册您刚刚添加的所有内容，如果有任何配置错误，则会发出错误。
 
-#### Step 3: Write new tests
+#### 第 3 步：编写新测试
 
-Now that you have configured CMake to create a test library and registered it with CTest, you are ready to write new tests. To simplify your module structure, create new test files inside `o3de/.../<MyModule>/tests/`.
+现在，您已经配置了 CMake 以创建测试库并将其注册到 CTest，您可以编写新的测试了。要简化模块结构，请在 `o3de/.../<MyModule>/tests/` 中创建新的测试文件。
 
-Tests are written using standard [GoogleTest](https://github.com/google/googletest/blob/main/docs/index.md) syntax, which helps you write small functions to test your code. To pull in everything from GoogleTest plus a few convenient tools, add the following statement to your C++ test file:
+测试是使用标准 [GoogleTest](https://github.com/google/googletest/blob/main/docs/index.md) 语法编写的，这有助于您编写小型函数来测试代码。要从 GoogleTest 中提取所有内容以及一些方便的工具，请将以下语句添加到您的 C++ 测试文件中：
 
 ```cpp
 #include <AzTest/AzTest.h>
 ```
 
-To keep test functions legible at a glance, we recommend using the [Osherove Naming Convention](https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html) of `UnitOfWork_StateUnderTest_ExpectedBehavior`. This helps when reading a report that includes many individual test case failures. One way to think of this pattern is to summarize the test into `WhatIsExecuted_UniqueSetupStep_MostImportantVerification` so a test failure can be understood based on the name, without always needing to investigate the code inside the test. If you are struggling to summarize the test, this may indicate the test is too complex. Try breaking complex tests into multiple smaller tests. Note that while GoogleTest documentation recommends [not using any underscores](http://google.github.io/googletest/faq.html#why-should-test-suite-names-and-test-names-not-contain-underscore) in test names, tests will function normally as long as test and fixture names never start or end with an underscore (`_`).
+为了使测试函数一目了然，我们建议使用`UnitOfWork_StateUnderTest_ExpectedBehavior` 的 [Osherove 命名约定](https://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html)。这在读取包含许多单个测试用例失败的报告时很有帮助。考虑此模式的一种方法是将测试总结为`WhatIsExecuted_UniqueSetupStep_MostImportantVerification`。以便可以根据名称理解测试失败，而无需总是调查测试中的代码。如果您难以总结测试，这可能表明测试过于复杂。尝试将复杂的测试分解为多个较小的测试。请注意，虽然 GoogleTest 文档建议在测试名称中 [不使用任何下划线](http://google.github.io/googletest/faq.html#why-should-test-suite-names-and-test-names-not-contain-underscore)，但只要 test 和 fixture 名称不以下划线(`_`)开头或结尾，测试就可以正常运行。
 
-A short example of C++ test structure:
+C++ 测试结构的简短示例：
 
 ```cpp
 // The first parameter is a test fixture, which provides shared setup to multiple tests
@@ -197,16 +197,16 @@ TEST_F(Matrix4x4Tests, MatrixMultiply_InverseMatrix_ReturnIdentityMatrix)
 }
 ```
 
-For more information on writing tests in C++, see [Using AzTest](/docs/user-guide/testing/aztest/aztest/).
+有关使用 C++ 编写测试的更多信息，请参见[使用AzTest](/docs/user-guide/testing/aztest/aztest/).
 
 ## GoogleBenchmark
 
-For performance benchmarks of small pieces of C++ code, O3DE uses [GoogleBenchmark](https://github.com/google/benchmark/blob/main/docs/index.md). GoogleBenchmark is similar to GoogleTest, but the main difference between a test and a benchmark is the definition of _failure_. In most tests a pass/fail status is directly evaluated to a boolean state, creating an objective report of success and failure. Instead, benchmarks create a subjective performance metric. These metrics are most valuable when they are periodically recorded to help detect trends over time and across code changes. The only objective failure during a benchmark occurs when the code fails to run or crashes.
+对于小段 C++ 代码的性能基准测试，O3DE 使用 [GoogleBenchmark](https://github.com/google/benchmark/blob/main/docs/index.md)。GoogleBenchmark 与 GoogleTest 类似，但测试和基准测试之间的主要区别在于 _failure_ 的定义。在大多数测试中，通过/失败状态直接评估为布尔状态，从而创建成功和失败的目标报告。相反，基准测试会创建一个主观性能指标。定期记录这些指标以帮助检测随时间和代码更改的趋势时，这些指标最有价值。基准测试期间唯一的目标失败发生在代码无法运行或崩溃时。
 
-To configure a GoogleBenchmark library, use the [steps above for GoogleTest libraries](#googletest), with the following exceptions:
+要配置 GoogleBenchmark 库，请使用 [上述 GoogleTest 库的步骤](#googletest)，但以下情况除外：
 
-* Change the include statement in your code to `#include <benchmark/benchmark.h>`.
-* Use the following CMake helper function in your `CMakeLists.txt`:
+* 将代码中的 include 语句更改为 `#include <benchmark/benchmark.h>`.
+* 在`CMakeLists.txt`中使用以下 CMake 辅助函数：
    ```
    ly_add_googlebenchmark(
        NAME MyModule.Benchmarks
@@ -215,52 +215,52 @@ To configure a GoogleBenchmark library, use the [steps above for GoogleTest libr
 
 ## PyTest
 
-Some tests are easier to write in a scripting language, and for these tests O3DE prefers Python with the [PyTest](https://docs.pytest.org/) library. The scope of these tests are often at the [integration level](https://softwaretestingfundamentals.com/integration-testing/) or higher. These tests help verify system correctness, similar to how an end-user experiences the software. Despite that positive aspect, wide scope tests are typically slow and provide less specific failure information. The number of these tests must be limited. Whenever possible verify functionality with fast unit-scope tests, and write only a few broader integration or system-wide tests. Unit tests should be written in PyTest only when the library under test is written in Python. For fast unit-scope tests of C++ code, use GoogleTest instead of PyTest.
+有些测试更容易用脚本语言编写，对于这些测试，O3DE 更喜欢使用带有 [PyTest](https://docs.pytest.org/)库的 Python。这些测试的范围通常位于 [集成级别](https://softwaretestingfundamentals.com/integration-testing/) 或更高级别。这些测试有助于验证系统的正确性，类似于最终用户体验软件的方式。尽管有积极的一面，但大范围测试通常很慢，并且提供的故障信息不太具体。这些测试的数量必须受到限制。尽可能使用快速的单元范围测试来验证功能，并且只编写一些更广泛的集成或系统范围的测试。仅当被测库是用 Python 编写的时，才应在 PyTest 中编写单元测试。要对 C++ 代码进行快速单元范围测试，请使用 GoogleTest 而不是 PyTest。
 
-While interpreted languages like Python can have low performance, tests should not perform heavy computation in Python code. Instead, tests should coordinate workflows by signalling events and then verifying a response. Leave heavy operations for the code targeted by the test, and perform simple checks in the Python test-code.
+虽然 Python 等解释型语言的性能可能较低，但测试不应在 Python 代码中执行大量计算。相反，测试应该通过向事件发送信号，然后验证响应来协调工作流程。为测试所针对的代码保留繁重的操作，并在 Python 测试代码中执行简单检查。
 
-### Multiple Python instances
+### 多个 Python 实例
 
-During execution, tests targeting O3DE can create multiple separate Python interpreter instances, which each load different scripts. Most commonly, there are two instances: the _external interpreter_ and the _Editor interpreter_. The remainder of this section helps determine which environment your test should run in, and how to execute it there.
+在执行期间，面向 O3DE 的测试可以创建多个单独的 Python 解释器实例，每个实例加载不同的脚本。最常见的是两个实例：_external interpreter_ 和 _Editor interpreter_。本节的其余部分有助于确定您的测试应该在哪个环境中运行，以及如何在那里执行它。
 
-#### Tests in the external interpreter
+#### 外部解释器中的测试
 
-The external interpreter runs outside of any active O3DE application. This is the same interpreter that launches when you run `python/python.sh` or `python\python.cmd`, and is best used for tests that involve the following:
+外部解释器在任何活动的 O3DE 应用程序之外运行。这与运行`python/python.sh` 或 `python\python.cmd`时启动的解释器相同，最适合用于涉及以下内容的测试：
 
-* Generic tests that launch applications and send external signals, often with [LyTestTools](/docs/user-guide/testing/lytesttools/).
-* Monitoring application crashes.
+* 启动应用程序并发送外部信号的通用测试，通常带有[LyTestTools](/docs/user-guide/testing/lytesttools/).
+* 监控应用程序崩溃。
 
-To target PyTest in the external interpreter, by default your tests filenames should start with `test_`.
+要在外部解释器中以 PyTest 为目标，默认情况下，您的测试文件名应以`test_`开头。
 
-#### Tests in the Editor interpreter
+#### Editor 解释器中的测试
 
-The **O3DE Editor** internally manages a Python Interpreter and exposes Editor-specific functionality through a Python bindings library. Although this environment isn't equivalent to launching `python/python.*`, it uses the same version of the Python interpreter. The Editor interpreter is best used for tests that involve the following:
+**O3DE 编辑器** 在内部管理 Python 解释器，并通过 Python 绑定库公开特定于编辑器的功能。虽然此环境不等同于启动`python/python.*`，但它使用相同版本的 Python 解释器。Editor 解释器最适合用于涉及以下内容的测试：
 
-* Target specific functionality within the Editor, using [EditorPythonBindings and EditorTest](/docs/user-guide/testing/parallel-pattern/).
-* Rely on external crash-handling (an Editor crash will cause a test script crash).
+* 在 Editor 中定位特定功能，使用[EditorPythonBindings and EditorTest](/docs/user-guide/testing/parallel-pattern/).
+* 依赖外部崩溃处理（Editor 崩溃将导致测试脚本崩溃）。
 
-To integrate with the Editor interpreter, create a test that uses `EditorPythonBindings`. These tests **must not** be in a file starting with `test_` or `tests_`, to avoid accidentally registering as failing tests.
+要与 Editor 解释器集成，请创建一个使用 `EditorPythonBindings` 的测试。这些测试**不得**位于以`test_` 或 `tests_`开头的文件中，以避免意外注册为失败的测试。
 
 {{< note >}}
-PyTest is not used within the Editor interpreter, and as a consequence PyTest functionality is unavailable to tests that run in the Editor interpreter. Avoid dependencies on PyTest fixtures when designing these tests.
+PyTest 不在 Editor 解释器中使用，因此 PyTest 功能不适用于在 Editor 解释器中运行的测试。在设计这些测试时，避免依赖 PyTest 夹具。
 
-EditorTest still uses PyTest to manage tests, and additionally handles external crash monitoring, batching, and parallelism. If this tool does not meet your needs, please reach out with a [feature request](https://github.com/o3de/o3de.org/issues/new/choose) or start a discussion with the Testing Special Interest Group in the [O3DE Discord](https://{{< links/o3de-discord >}}) channel sig-testing!
+EditorTest 仍然使用 PyTest 来管理测试，并额外处理外部崩溃监控、批处理和并行性。如果此工具不能满足您的需求，请提出 [功能请求](https://github.com/o3de/o3de.org/issues/new/choose)或在 [O3DE Discord](https://{{< links/o3de-discord >}})频道 sig-testing 中与测试特别兴趣小组展开讨论！
 {{< /note >}}
 
-### Registering a new Python test
+### 注册新的 Python 测试
 
-Registering a Python-based test is simpler than registering a C++ test. However, it still requires that you define the C++ library that you want to test, which you've likely already completed before designing integration tests. The steps below assume the production library is already defined. You can read more about defining production code in the [Build](/docs/user-guide/build/) section.
+注册基于 Python 的测试比注册 C++ 测试更简单。但是，它仍然要求您定义要测试的 C++ 库，您可能在设计集成测试之前已经完成了该库。以下步骤假定已定义 production 库。您可以在 [Build](/docs/user-guide/build/) 部分阅读有关定义生产代码的更多信息。
 
-#### Step 1: Register a PyTest target
+#### 第 1 步：注册 PyTest 目标
 
-Find the `CMakeLists.txt` that defines the system you are testing. The file should exist at a path similar to `o3de/.../<MyModule>/CMakeLists.txt`. Depending on the test, it may be more appropriate to register the test to a `CMakeLists.txt` file at another location. Reasons include:
+找到定义您正在测试的系统的`CMakeLists.txt`。该文件应位于类似于`o3de/.../<MyModule>/CMakeLists.txt`的路径中。根据测试的不同，将测试注册到其他位置的`CMakeLists.txt`文件可能更合适。原因包括：
 
-* A test for a sub-module should exist at a child directory of its module.
-* A broad test integrating across multiple features should exist in a parent directory of the features.
-* A test that relies on code or assets in a game project must exist in that game project.
-  * This avoids the case where disabling the project breaks the still-registered tests.
+* 子模块的测试应存在于其模块的子目录中。
+* 跨多个功能集成的广泛测试应存在于功能的父目录中。
+* 依赖于游戏项目中的代码或资产的测试必须存在于该游戏项目中。
+  * 这避免了禁用项目会破坏仍在注册的测试的情况。
 
-When you find the right `CMakeLists.txt` to register the test, add a line similar to the following:
+当您找到合适的`CMakeLists.txt`来注册测试时，请添加类似于以下内容的行：
 
 ```
 ly_add_pytest(
@@ -274,13 +274,13 @@ ly_add_pytest(
 )
 ```
 
-To verify everything is set up correctly, run the CMake configure command from **CMake CLI** or **CMake GUI** (described in the [Configure and Build](/docs/user-guide/build/configure-and-build/) section). This registers everything you just added, and emits errors if anything is misconfigured.
+要验证所有内容都已正确设置，请从 CMake CLI** 或 CMake GUI** 运行 CMake configure 命令（在 [配置和构建](/docs/user-guide/build/configure-and-build/) 部分中描述）。这将注册您刚刚添加的所有内容，如果有任何配置错误，则会发出错误。
 
-#### Step 2: Write new Python tests
+#### 第 2 步：编写新的 Python 测试
 
-Python-based tests use [Python 3](https://docs.python.org/3/) code along with [PyTest](https://docs.pytest.org/). Depending on the feature your test is focused on, the test may include one of two automation libraries provided with O3DE:
+基于 Python 的测试使用 [Python 3](https://docs.python.org/3/)代码以及 [PyTest](https://docs.pytest.org/)。根据测试关注的功能，测试可能包括 O3DE 提供的两个自动化库之一：
 
-* [EditorPythonBindings](/docs/user-guide/testing/parallel-pattern/) for internal tests of the O3DE Editor functionality.
-  * These tests always require the `TEST_SERIAL` CTest flag.
-* [LyTestTools](/docs/user-guide/testing/lytesttools/) module for external tests at the operating system level.
-  * These tests often use the `TEST_SERIAL` flag, unless they create no side-effects and disable heavy secondary features such as rendering.
+* [EditorPythonBindings](/docs/user-guide/testing/parallel-pattern/) 用于 O3DE 编辑器功能的内部测试。
+  * 这些测试始终需要`TEST_SERIAL` CTest 标志。
+* [LyTestTools](/docs/user-guide/testing/lytesttools/) 模块进行外部测试。
+  * 这些测试通常使用`TEST_SERIAL`标志，除非它们不会产生副作用并禁用繁重的辅助功能，例如渲染。

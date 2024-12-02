@@ -1,30 +1,30 @@
 ---
-description: Use parallel patterns to allow tests to be run in parallel in Open 3D Engine (O3DE).
-title: Parallel Pattern & Batching Test-Writing
-linkTitle: Parallel Tests
+description: 使用并行模式允许在 Open 3D Engine （O3DE） 中并行运行测试。
+title: 并行模式和批处理测试编写
+linkTitle: 并行测试
 ---
 
-## How editor automated tests work
+## 编辑器自动测试的工作原理
 
-**Open 3D Engine (O3DE)** uses [CTest](https://cmake.org/cmake/help/latest/manual/ctest.1.html) to drive all testing across the engine. Python is used for automating engine testing.
+**Open 3D Engine (O3DE)** 使用 [CTest](https://cmake.org/cmake/help/latest/manual/ctest.1.html) 来驱动整个引擎的所有测试。Python 用于自动化引擎测试。
 
 A Python automated test uses two Python interpreter instances:
 
-* **External Python interpreter**: The test driver for the test suite. The external interpreter is responsible for launching **O3DE Editor** and providing the tests to run in the embedded interpreter. This instance uses the [pytest](https://docs.pytest.org/) framework and LyTestTools for specifying the tests. LyTestTools is a set of Python tools and utilities that have been written around pytest.
-* **Embedded editor Python interpreter** : An interpreter instance inside O3DE Editor with bindings to drive editor activities and get feedback. This instance is responsible for performing the actual test and is part of the Editor Python Bindings Gem.
+* **外部 Python 解释器**：测试套件的测试驱动程序。外部解释器负责启动 **O3DE Editor** 并提供在嵌入式解释器中运行的测试。此实例使用 [pytest](https://docs.pytest.org/)框架和 LyTestTools 来指定测试。LyTestTools 是一组围绕 pytest 编写的 Python 工具和实用程序。
+* **嵌入式编辑器 Python 解释器** ：O3DE Editor 中的解释器实例，具有用于驱动编辑器活动和获取反馈的绑定。此实例负责执行实际测试，并且是 Editor Python Bindings Gem 的一部分。
 
-Upon test completion, O3DE Editor will close with an exit code depending on the result of the test, `0` for success and `0xF` for failure. Other return codes will be set by the OS if O3DE Editor crashes during a test.
+测试完成后，O3DE Editor 将根据测试结果关闭并返回退出代码，`0`表示成功，`0xF`表示失败。如果 O3DE Editor 在测试期间崩溃，则操作系统将设置其他返回代码。
 
-Both instances use the same Python executable found in `o3de/python/`. 
+这两个实例都使用`o3de/python/`中的相同 Python 可执行文件。
 
-This is the basic flow of a Python test:
+这是 Python 测试的基本流程：
 ![Python Test Flow](/images/user-guide/testing/parallel-pattern/automated-editor-test.png)
 
-## Test structure
+## 测试结构
 
-Automated tests are composed of:
+自动化测试包括：
 
-* **Test suite**:  A collection of tests, targeting a specific feature. Test classes must inherit from `EditorTestSuite`.
+* **测试套件**：针对特定功能的测试集合。测试类必须继承自`EditorTestSuite`。
 
 ```python
 # This file will be used by the external Python interpreter to launch O3DE Editor, specifying what test files will be run.
@@ -40,7 +40,7 @@ class TestAutomation(EditorTestSuite):
         from .tests import MyFeature_CheckEnterGameMode as test_module
 ```
 
-* **Individual test**: This is an actual Python test that the editor will run.
+* **单独测试**：这是编辑器将运行的实际 Python 测试。
 
 ```python
 from editor_python_test_tools.utils import Report
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     Report.start_test(MyFeature_CheckEnterGameMode)
 ```
 
-* **CMake configuration file**: To add a Python test suite into the CI pipeline, it must be registered with CTest via a `CMakeLists.txt` file.
+* **CMake 配置文件**：要将 Python 测试套件添加到 CI 管道中，必须通过`CMakeLists.txt`文件将其注册到 CTest。
 
 ```
     # PAL_TRAIT_BUILD macros are used by platform detection.
@@ -81,50 +81,50 @@ if __name__ == "__main__":
     endif()
 ```
 
-All O3DE tests must be executed using the `AutomatedTesting` project and are located inside of the `Gem/PythonTests/<Feature>` directory.
+所有 O3DE 测试都必须使用`AutomatedTesting`项目执行，并且位于`Gem/PythonTests/<Feature>`目录中。
 
-The recommended structure is the following: 
+建议的结构如下：
 
 ![Folder Structure](/images/user-guide/testing/parallel-pattern/folder-structure.png)
 
-* **/**  - The root folder of the tests should contain a `CMakeLists.txt` file and the test suites for the feature. A feature must contain one test suite file per type (Smoke, Main, Periodic, and Sandbox). These files will only be run by the external Python interpreter.
+* **/**  - 测试的根文件夹应包含`CMakeLists.txt` 文件和功能测试套件。功能必须包含每种类型（Smoke、Main、Periodic 和 Sandbox）的一个测试套件文件。这些文件将仅由外部 Python 解释器运行。
 
-* **utils/** (Optional) - A `utils` directory provides utilities common to multiple tests for the `TestSuite` files. Utilities for specific tests should be part of their test files.
-  
-    {{< note >}}
-For tools used across multiple suites, across features, or otherwise shared among the whole test infrastructure, place your utilities in the `Gem/PythonTests/EditorPythonTestTools/editor_test_tools/` directory of the `AutomatedTesting` project.
+* **utils/** (可选) - `utils` 目录为 `TestSuite` 文件的多个测试提供了通用的实用程序。用于特定测试的实用程序应作为其测试文件的一部分。
+
+{{< note >}}
+对于跨多个套件、跨功能使用或在整个测试基础架构之间共享的工具，请将您的实用程序放在 `AutomatedTesting` 项目的`Gem/PythonTests/EditorPythonTestTools/editor_test_tools/` 目录中。
 {{< /note >}}
 
-* **tests/** - The `tests` directory contains the tests themselves that are run with O3DE Editor's Python embedded interpreter. Test names must follow the pattern `<FeatureName>_<TestThatDoesSomething>.py` format. Anything that is not supposed to be a test (like utilities) must follow `UpperCamelCase`, as in the following example.
-  
+* **tests/** - `tests`目录包含使用 O3DE Editor 的 Python 嵌入式解释器运行的测试本身。测试名称必须遵循模式`<FeatureName>_<TestThatDoesSomething>.py`格式。任何不应该是测试的东西（比如 utilities）都必须遵循`UpperCamelCase`，如下例所示。
+
   ![Tests Folder Structure](/images/user-guide/testing/parallel-pattern/tests-folder-structure.png)
   
-  Subdirectories can be used to organize tests. These directories must follow `snake_case` format to be picked up by the `AutomatedTesting` project.  
+  子目录可用于组织测试。这些目录必须遵循 `snake_case` 格式才能被 `AutomatedTesting` 项目选取。
 
-## Writing an automated test
+## 编写自动化测试
 
-For writing automated tests, it is strongly recommended to use the **editor_test.py** utility offered as part of `LyTestTools`, located at `o3de/Tools/LyTestTools/ly_test_tools/o3de/editor_test.py`.
+对于编写自动化测试，强烈建议使用作为`LyTestTools` 一部分提供的 **editor_test.py** 实用程序，位于`o3de/Tools/LyTestTools/ly_test_tools/o3de/editor_test.py`.
 
-Using `editor_test.py` to write your tests provides an easy way to write suites with:
-* Minimal code and almost "data-oriented" specification of tests
-* Crash detection
-* Custom setup/teardown
-* Return code based test execution
-* Automatic **Asset Processor** life management, shared across multiple tests
-* Out-of-the-box batching and parallelization of tests
+使用 `editor_test.py`编写测试提供了一种编写套件的简单方法：
+* 最少的代码和几乎“面向数据”的测试规范
+* 车祸检测
+* 自定义设置/拆解
+* 基于返回代码的测试执行
+* 自动 **Asset Processor** 生命周期管理，在多个测试之间共享
+* 开箱即用的批处理和测试并行化
 
-The following example demonstrates the directory structure for an example feature called `MyFeature`:
+以下示例演示了名为`MyFeature`的示例功能的目录结构：
 
 ![MyFeature Folder Structure](/images/user-guide/testing/parallel-pattern/myfeature-folder-structure.png)
 
 
-### Create a test suite
+### 创建测试套件
 
-First, create the test suite. The test suite contains instructions on which tests to run, and their parameters.
+首先，创建测试套件。测试套件包含有关要运行的测试及其参数的说明。
 
 ![Specify Test Suite](/images/user-guide/testing/parallel-pattern/specify-test-suite.png)
 
-Each test suite requires a main suite class which inherits from `EditorTestSuite`, contained in the `Tools/LyTestTools/ly_test_tools/o3de/editor_test.py` directory. Inside the suite's main class, you declare subclasses inheriting from `EditorSingleTest` and load test modules from the individual tests to run in the embedded interpreter.
+每个测试套件都需要一个主套件类，该类继承自`EditorTestSuite`，包含在`Tools/LyTestTools/ly_test_tools/o3de/editor_test.py`目录中。在套件的主类中，声明继承自 `EditorSingleTest` 的子类，并加载各个测试中的测试模块，以便在嵌入式解释器中运行。
 
 ```python
 import pytest
@@ -146,7 +146,7 @@ class TestAutomation(EditorTestSuite):
         from .tests import MyFeature_DeletionWorks as test_module
 ```
 
-The `EditorTestSuite` also provides configurable parameters for its tests. Override the appropriate method or variable in the test suite class:
+`EditorTestSuite` 还为其测试提供了可配置的参数。覆盖 test suite 类中的相应方法或变量：
 
 ```python
 class TestAutomation(EditorTestSuite):
@@ -157,16 +157,16 @@ class TestAutomation(EditorTestSuite):
         from .tests import Lightning_PointLightIlluminatesMesh as test_module
 ```
 
-The following settings are available for `EditorTestSuite`:
+以下设置可用于 `EditorTestSuite`：
 
-| Setting | Description | Default |
+| 设置 | 说明 | 默认值 |
 |-|-|-|
-| `global_extra_cmdline_args` | List of command-line arguments to use for all suite tests. | `["-BatchMode", "-autotest_mode"]` |
-| `use_null_renderer` | Whether or not to use a null renderer for the tests. Null renderers are required on machines with no GPU. | `True` |
-| `timeout_editor_shared_test` | Maximum time that one O3DE Editor instance can take to run multiple tests, in seconds. | `180` |
-| `get_number_parallel_editors()` | Overridable function that returns the maximum number of O3DE Editor instances to run at the same time. | Lambda: `8` |
+| `global_extra_cmdline_args` | 用于所有套件测试的命令行参数列表。 | `["-BatchMode", "-autotest_mode"]` |
+| `use_null_renderer` |是否对测试使用 null 渲染器。在没有 GPU 的计算机上需要 Null 渲染器。 | `True` |
+| `timeout_editor_shared_test` | 一个 O3DE Editor 实例运行多个测试所需的最长时间（以秒为单位）。| `180` |
+| `get_number_parallel_editors()` | 可覆盖的函数，该函数返回要同时运行的最大 O3DE Editor 实例数。 | Lambda: `8` |
 
-There are also configurable settings per test. These depend on the type of test, as shared tests do not allow some settings.
+每个测试也有可配置的设置。这些设置取决于测试的类型，因为共享测试不允许某些设置。
 
 ```python
 class TestAutomation(EditorTestSuite):
@@ -178,20 +178,20 @@ class TestAutomation(EditorTestSuite):
 ```
 
 
-The following settings are available for `EditorSingleTest`:
+以下设置可用于`EditorSingleTest`：
 
-| Setting | Description | Default |
+| 设置 | 说明 | 默认值 |
 |-|-|-|
-| `test_module` (**required**) | The test file that this test will run. This setting is mandatory and can be set with `from .tests import <MyTest> as test_module`. | `None` |
-| `use_null_renderer` | Whether to use null renderer for this specific test. Using a null renderer is a requirement when running a test on a machine with no GPU. | `True` |
-| `timeout` | Maximum time in seconds for this test to run, in seconds. | `180` | 
-| `attach_debugger` | Prompts for attaching the debugger when starting the test. This happens at the earliest possible moment when the executable launches. | `False` | 
-| `wait_for_debugger` | Waits for a debugger for be attached in order to start the execution. | `False` | 
-| `setup()` | Custom callback that will be called before O3DE Editor is launched and loads the test. | `None` |
-| `teardown()` | Custom callback that will be called after O3DE Editor finishes running the test. | `None` |
-| `wrap_run()` | This function wraps the runtime of the test. All the code before yielding will run before launching O3DE Editor, and the code after yielding will run after closing O3DE Editor. | `None` |
+| `test_module` (**required**) | 此测试将运行的测试文件。此设置是强制性的，可以使用`from .tests import <MyTest> as test_module`. | `None` |
+| `use_null_renderer` | 是否对此特定测试使用 null 渲染器。在没有 GPU 的计算机上运行测试时，必须使用 null 渲染器。 | `True` |
+| `timeout` | 此测试运行的最长时间（以秒为单位）。 | `180` | 
+| `attach_debugger` | 启动测试时提示附加调试器。这发生在可执行文件启动时的最早时刻。 | `False` | 
+| `wait_for_debugger` | 等待 debugger for be attached 以开始执行。 | `False` | 
+| `setup()` |将在启动 O3DE 编辑器并加载测试之前调用的自定义回调。| `None` |
+| `teardown()` | 在 O3DE Editor 完成运行测试后将调用的自定义回调。 | `None` |
+| `wrap_run()` | 此函数包装测试的运行时。yield 之前的所有代码将在启动 O3DE Editor 之前运行，而 yield 后的代码将在关闭 O3DE Editor 后运行。 | `None` |
 
-`wrap_run` example:
+`wrap_run` 示例:
 ```python
 @classmethod
 def wrap_run(cls, instance, request, workspace, editor, editor_test_results, launcher_platform):
@@ -200,13 +200,13 @@ def wrap_run(cls, instance, request, workspace, editor, editor_test_results, lau
     print("After the test")
 ```
 	
-### Write individual editor tests
+### 编写单独的编辑器测试
 
-The next step is writing the tests which will run in O3DE Editor. O3DE Editor's internal Python runtime is started and loads a test specified as a command-line argument.
+下一步是编写将在 O3DE 编辑器中运行的测试。O3DE Editor 的内部 Python 运行时启动并加载指定为命令行参数的测试。
 
 ![Write Test Step](/images/user-guide/testing/parallel-pattern/write-test-step.png)
 
-Tests are structured in the following way:
+测试的结构如下：
 
 ```python
 def MyFeature_MyTest():
@@ -218,7 +218,7 @@ if __name__ == "__main__":
     Report.start_test(MyFeature_MyTest)
 ```
 
-A full example of how to structure a test that runs in O3DE Editor:
+如何构建在 O3DE Editor 中运行的测试的完整示例：
 
 ```python
 # Test Case Title : Check that entering into gamemode works
@@ -272,15 +272,15 @@ if __name__ == "__main__":
     Report.start_test(MyFeature_EnterGameModeWorks)
 ```
 
-## Running tests
+## 运行测试
 
-To manually run tests, use the following command from the root O3DE directory:
+要手动运行测试，请使用根 O3DE 目录中的以下命令：
 
 ```cmd
 python\python.cmd -m pytest --build-directory <directory containing bin/ from build> .\AutomatedTesting\Gem\PythonTests\MyFeature\TestSuite_Main.py
 ```
 
-If everything works correctly, the test run will show the following results:
+如果一切正常，测试运行将显示以下结果：
 
 ```
 ============================================ test session starts ========================================
@@ -295,7 +295,7 @@ AutomatedTesting\Gem\PythonTests\MyFeature\TestSuite_Main.py ..                 
 
 
 
-If a test fails, an error diagnostic is printed including a traceback of the failing test and the reasons for its failure. For example, the following represents a small failing test:
+如果测试失败，则会打印错误诊断，其中包括失败测试的回溯及其失败的原因。例如，下面表示一个小型失败的测试：
 
 ```python
 def MyFeature_EnterGameModeWorks():
@@ -305,7 +305,7 @@ if __name__ == "__main__":
     Report.start_test(MyFeature_EnterGameModeWorks)
 ```
 
-When this test is run, it generates the following error output on failure:
+运行此测试时，它会在失败时生成以下错误输出：
 
 ```
            Failed: Test MyFeature_EnterGameModeWorks:
@@ -326,43 +326,43 @@ E             AssertionError: Testing failure of test
 E           Test result:  FAILURE
 ```
 
-## Batch and parallelize tests
+## 批处理和并行化测试
 
-The tests which run in O3DE Editor have support for **batched** and **parallel** tests. Batched tests are collections of tests which can run together in a single O3DE Editor instance, and parallel tests launch multiple editors. A test can be both part of a batch, and run in parallel.
+在 O3DE 编辑器中运行的测试支持 **batched** 和 **parallel** 测试。批处理测试是可以在单个 O3DE Editor 实例中一起运行的测试集合，而并行测试会启动多个编辑器。测试既可以是批处理的一部分，也可以并行运行。
 
-### Batched tests
+### 批处理测试
 
-In batched mode, one single O3DE Editor instance runs a batch of tests. Batching tests reduces the time taken to launch and close Editors to run tests.
+在批处理模式下，一个 O3DE Editor 实例运行一批测试。批处理测试减少了启动和关闭 Editor 以运行测试所需的时间。
 
 ![Batched Tests](/images/user-guide/testing/parallel-pattern/batched-tests.png)
 
-### Parallel tests
+### 并行测试
 
-In parallel mode, multiple Editors launch at once to run one test each. You can set the maximum number of allowed editor instances.  If the maximum is reached, when an instance closes, a new O3DE Editor instance is launched.
+在并行模式下，多个 Editor 同时启动，每个 Editor 运行一个测试。您可以设置允许的 Editor 实例的最大数量。 如果达到最大值，则当实例关闭时，将启动新的 O3DE Editor 实例。
 
 ![Parallel tests](/images/user-guide/testing/parallel-pattern/parallelization.png)
 
-### Parallel batched tests
+### 并行批处理测试
 
-Tests can also be run in parallel batches, also called **shared tests**. Shared tests should be used when tests can run in the same O3DE Editor instance without relying on effects of any other test (batched mode) and with multiple independent editors running their each individual batch (parallel mode). When possible, tests should be made as shared tests in order to take advantage of the performance improvements offered by maximizing parallelization.
+测试也可以并行批处理运行，也称为 **共享测试 **。当测试可以在同一个 O3DE Editor 实例中运行而不依赖于任何其他测试的效果（批处理模式），并且多个独立编辑器运行每个单独的批处理（并行模式）时，应该使用共享测试。如果可能，应将测试作为共享测试，以便利用最大化并行化提供的性能改进。
 
 ![Parallel And Batch](/images/user-guide/testing/parallel-pattern/parallel-and-batch.png)
 
 {{< note >}}
-In this mode, batches are arbitrarily assigned to O3DE Editor instances.
+在此模式下，将批处理任意分配给 O3DE Editor 实例。
 {{< /note >}}
 
-### Mixed test modes
+### 混合测试模式
 
-Parallel, batched, and shared tests can be mixed together in the same test suite. Because of this, each group of tests is run sequentially based on their mode:
+并行测试、批处理测试和共享测试可以混合在同一个测试套件中。因此，每组测试都根据其模式按顺序运行：
 
 ![Mixing Tests](/images/user-guide/testing/parallel-pattern/mixing-tests.png)
 
-## Enabling batching and parallelization
+## 启用批处理和并行化
 
-In order to use any of these modes, the only necessary change is to modify the class that loads and runs each test. Use the `EditorBatchedTest`, `EditorParallelTest`, and `EditorSharedTest` superclasses in place of `EditorSingleTest`.
+为了使用这些模式中的任何一种，唯一必要的更改是修改加载和运行每个测试的类。使用 `EditorBatchedTest`, `EditorParallelTest`, 和 `EditorSharedTest` 超类代替 `EditorSingleTest`.
 
-The following example demonstrates the use of these classes:
+下面的示例演示了这些类的用法：
 
 ```python
 import pytest
@@ -396,32 +396,32 @@ class TestAutomation(EditorTestSuite):
 ```
 
 {{< important >}}
-`EditorBatchedTest`, `EditorParallelTest`, and `EditorSharedTest` have the same class variables as `EditorSingleTest`, but **don't** offer any method overrides. Batched, parallel, and shared tests cannot use `setup()`, `teardown()`, or `wrap_run()`.
+`EditorBatchedTest`, `EditorParallelTest`, 和 `EditorSharedTest` 具有与 `EditorSingleTest`相同的类。但是 **不要** 提供任何方法覆盖。批处理测试、并行测试和共享测试不能使用`setup()`, `teardown()`, 或 `wrap_run()`.
 {{< /important >}}
 
-### When to enable batching or parallelization
+### 何时启用批处理或并行化
 
-Be careful when placing a test in a batch, parallel, or shared pool! All tests should be atomic and not modify Editor state in ways which would interfere with _other_ tests that may run in the same Editor. 
+在批处理、并行或共享池中进行测试时要小心！所有测试都应该是原子的，并且不能以干扰可能在同一 Editor 中运行的 _other_ 测试的方式修改 Editor 状态。
 
-Due to the lack of support for setup, teardown, or test wrapping in batch, parallel, and shared tests, avoid placing any tests that rely on this support into a shared pool. 
+由于在批处理、并行和共享测试中缺少对设置、拆解或测试包装的支持，请避免将任何依赖此支持的测试放入共享池中。
 
-An example of a test which could be batched, but not run in parallel, is a physics test that makes a modification to the project wide physics configuration at the start and restores to the default setting when finishing. By changing the state of a resource shared between O3DE Editor instances (in disk storage), it could cause parallel tests to fail.
+可以批处理但不能并行运行的测试示例是物理测试，该测试在开始时对项目范围的物理配置进行修改，并在完成时恢复为默认设置。通过更改在 O3DE Editor 实例之间共享的资源（在磁盘存储中）的状态，可能会导致并行测试失败。
 
-In general, tests that require interacting with I/O may have these problems. As a general rule, it's better to make your test do changes in memory rather than on disk.
+通常，需要与 I/O 交互的测试可能存在这些问题。作为一般规则，最好让测试在内存中进行更改，而不是在磁盘上进行更改。
 
-### Command-line settings to configure test modes
+### 用于配置测试模式的命令行设置
 
-Certain test modes can be disabled or managed through command-line options:
+某些测试模式可以通过命令行选项禁用或管理：
 
-* `--no-editor-parallel`: Don't run tests in parallel. Parallel tests will become serial tests and shared tests will become batched.
-* `--no-editor-batch`: Don't batch tests. All tests run in a single O3DE Editor instance. Shared tests will become parallel, or if parallel tests are also disabled, shared tests become serial.
-* `--editor-parallel`: Overrides the number of maximum O3DE Editor instances to run in parallel. Setting this option to `1` is equivalent to `--no-editor-parallel`.
+* `--no-editor-parallel`: 不要并行运行测试。并行测试将变为串行测试，共享测试将变为批处理测试。
+* `--no-editor-batch`: 不要批量测试。所有测试都在单个 O3DE Editor 实例中运行。共享测试将变为并行测试，或者如果并行测试也被禁用，则共享测试将变为串行测试。
+* `--editor-parallel`: 覆盖要并行运行的最大 O3DE Editor 实例数。将此选项设置为 `1`等效于`--no-editor-parallel`.
 
-## Best practices
+## 最佳实践
 
-* **Don’t create a level unless necessary**. Use an existing empty level and don’t save the changes when the test is over.
-* **Tests should be self-contained**. No external tools should determine if the test has passed or failed. Instead, O3DE Editor should do this work. Use the one of the editor's return codes as result of the test, `0x0` for success and `0xF` for failure.
-* **Don’t read the O3DE Editor log file directly**. To read O3DE Editor log information, use the `DebugTraceBus` and `Tracer` utilities. The `DebugTraceBus` is able to capture all logged information, without needing to create an I/O dependency on a file.
+* **除非必要，否则不要创建关卡**. 使用现有的空级别，并且在测试结束时不保存更改。
+* **测试应该是独立的**。任何外部工具都不应确定测试是通过还是失败。相反，O3DE Editor 应该完成这项工作。使用编辑器的返回代码之一作为测试结果，`0x0`表示成功，`0xF`表示失败。
+* **不要直接读取 O3DE Editor 日志文件**。要读取 O3DE Editor 日志信息，请使用“`DebugTraceBus`”和“`Tracer`”实用程序。'`DebugTraceBus`' 能够捕获所有记录的信息，而无需在文件上创建 I/O 依赖项。
     
 ```python
 with Tracer() as section_tracer:
@@ -431,8 +431,8 @@ with Tracer() as section_tracer:
 if section_tracer.has_errors:
         assert False, "AZ_Errors happened during execution"
 ```
-* **Tests must be deterministic**. The application will run at different framerates and take different amounts of time to load assets. Ensure tests are deterministic under these conditions.
-* **Wait on conditions instead of waiting for time.** Some tests require performing an action and waiting for completion. To optimize the amount of time your test runs, and avoid false negatives caused by timeouts, wait on a condition instead of a set time:
+* **测试必须是确定性的**。应用程序将以不同的帧速率运行，并且加载资产所需的时间也不同。确保测试在这些条件下是确定性的。
+* **等待条件，而不是等待时间。** 某些测试需要执行操作并等待完成。要优化测试运行的时间量，并避免超时导致的漏报，请等待条件而不是设定的时间：
 
 ```python
 ### BAD ###
@@ -453,7 +453,7 @@ if entity.position.y >= 0:
         assert False, "Entity didn't fall"
 ```
 
-* **Compare values within ranges.** Using ranges for values rather than equality, especially for float values, makes tests more likely to succeed. Vector and other math constructs have utility functions for detecting values within a specific range.
+** 对值使用范围而不是相等性（尤其是对于浮点值）使用范围会使测试更有可能成功。Vector 和其他数学结构具有用于检测特定范围内值的实用函数。
 
 ```python
 ### BAD ###
@@ -465,15 +465,15 @@ if not entity.position.IsClose(azlmbr.math.Vector3(50.0, 50.0, 50.0)):
         assert False, "Entity is not in correct position"
 ```
 
-## Debugging tests
+## 调试测试
 
-During test development, it can be time-consuming to launch O3DE Editor on a test-by-test basis. Instead, you can launch O3DE Editor normally and then use the `pyRunFile` command from **Console**:
+在测试开发过程中，逐个测试启动 O3DE Editor 可能非常耗时。相反，您可以正常启动 O3DE 编辑器，然后从控制台使用“`pyRunFile`”命令：
 
 ```cmd
 pyRunFile ../../Gem/PythonTests/<MyFeature>/tests/<MyFeature>_<TestName>.py
 ```
 
-To attach a debugger to a running test, use one of the following utilities:
+要将调试器附加到正在运行的测试，请使用以下实用程序之一：
 
-* **Wait for debugger**: Use the command-line argument `--wait-for-debugger` when launching O3DE Editor to run a test. This argument pauses O3DE Editor at the earliest moment of execution and resumes the moment a debugger is attached. This behavior can also be controlled with the  `wait_for_debugger` variable in an editor test specification, or forced by calling `general.wait_for_debugger()`.
-* **Attach debugger**: Use the command-line argument `--attach-debugger` to force an immediate prompt to attach a debugger to a test. This behavior can also be controlled with the `attach_debugger` variable in an editor test specification, or forced by calling `general.attach_debugger()`.
+* **等待调试器**：启动 O3DE 编辑器时，请使用命令行参数`--wait-for-debugger`来运行测试。此参数在执行的最早时刻暂停 O3DE Editor，并在附加调试器时恢复。此行为也可以使用编辑器测试规范中的`wait_for_debugger` 变量进行控制，或者通过调用 `general.wait_for_debugger()` 来强制执行。
+* **附加调试器**：使用命令行参数 `attach_debugger` 强制立即提示将调试器附加到测试。此行为也可以使用编辑器测试规范中的`attach_debugger` 变量进行控制，或者通过调用 `general.attach_debugger()` 来强制执行。

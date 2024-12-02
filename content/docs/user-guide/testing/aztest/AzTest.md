@@ -1,23 +1,23 @@
 ---
-description: ' Write C++ unit tests for Open 3D Engine with the AzTest framework. '
-title: Using AzTest
+description: '使用 AzTest 框架为 Open 3D 引擎编写 C++ 单元测试。 '
+title: 使用 AzTest
 ---
 
-AzTest is designed to be an abstraction around test frameworks used by Open 3D Engine. By using an abstraction instead of the framework itself, O3DE isn't locked into having to make changes all over the system if frameworks change. AzTest also provides convenience functions and basic implementations that make writing tests easier for all modules that use it.
+AzTest 旨在成为 Open 3D Engine 使用的测试框架的抽象。通过使用抽象而不是框架本身，O3DE 不会被锁定在框架发生变化时必须在整个系统中进行更改。AzTest 还提供了方便的函数和基本实现，使使用它的所有模块编写测试变得更加容易。
 
-The Google Test and Google Mock frameworks are fully accessible through AzTest. Including `AzTest/AzTest.h` in custom tests gives developers access to everything Google Test and Google Mock have.
+Google Test 和 Google Mock 框架可以通过 AzTest 完全访问。在自定义测试中包含  `AzTest/AzTest.h` 使开发人员可以访问 Google Test 和 Google Mock 所具有的所有内容。
 
 ## CTest
 
-CTest is as a test executor tool which is also a part of CMake. Tests are registered and initiated by CTest, which then calls AzTestRunner. AzTestRunner helps start a module of GoogleTest tests inside a library or executable. CTest will run a dll via AzTestRunner in order to perform the tests once they are registered. For more information about using CTest in O3DE, refer to [O3DE Test Onboarding](/docs/user-guide/testing/getting-started/).
+CTest 是一个测试执行工具，也是 CMake 的一部分。测试由 CTest 注册和启动，然后调用 AzTestRunner。AzTestRunner 有助于在库或可执行文件中启动 GoogleTest 测试模块。CTest 将通过 AzTestRunner 运行 dll，以便在注册后执行测试。有关在 O3DE 中使用 CTest 的更多信息，请参阅 [O3DE 测试载入](/docs/user-guide/testing/getting-started/).
 
-## Test Hooks
+## 测试 Hook
 
-*AzTest.h* provides several macros that can be used for creating a hook that test scanner can use to call tests. These are listed below with examples of use.
+*AzTest.h* 提供了几个宏，可用于创建测试扫描程序可用于调用测试的钩子。下面列出了这些和使用示例。
 
 ### `AZ_UNIT_TEST_HOOK(...)`
 
-`AZ_UNIT_TEST_HOOK(...)` is used for unit tests, and can be used whether you have environments to initialize or not.
+`AZ_UNIT_TEST_HOOK(...)` 用于单元测试，无论您是否有要初始化的环境，都可以使用。
 
 ```cpp
 #include <AzTest/AzTest.h>
@@ -25,7 +25,7 @@ CTest is as a test executor tool which is also a part of CMake. Tests are regist
 AZ_UNIT_TEST_HOOK()  // Don't have any environments
 ```
 
-Here is how you would add environments using the same hook.
+以下是使用同一 hook 添加环境的方法。
 
 ```cpp
 #include <AzTest/AzTest.h>
@@ -59,7 +59,7 @@ private:
 AZ_UNIT_TEST_HOOK(new ExampleTestEnvironment)
 ```
 
-Use of the `AZ_TEST_CLASS_ALLOCATOR(...)` macro in a test class definition is required to properly align and manage memory created for the test environment, and prevent conflicts and errors with memory managers.
+使用 `AZ_TEST_CLASS_ALLOCATOR(...)`宏，以正确对齐和管理为测试环境创建的内存，并防止与内存管理器发生冲突和错误。
 
 ```cpp
 #include <AzTest/AzTest.h>
@@ -80,8 +80,8 @@ class ModuleSpecificTestEnvironment : public AZ::Test::ITestEnvironment
 AZ_UNIT_TEST_HOOK(new SharedTestEnvironment, new ModuleSpecificTestEnvironment)
 ```
 
-### Links
+### 链接
 
-1. [GoogleTest Documentation](https://github.com/google/googletest)
-1. [Official CTest Documentation](https://cmake.org/cmake/help/latest/manual/ctest.1.html)
+1. [GoogleTest 文档](https://github.com/google/googletest)
+1. [Official CTest 文档](https://cmake.org/cmake/help/latest/manual/ctest.1.html)
 1. [O3DE Test Onboarding](/docs/user-guide/testing/getting-started)

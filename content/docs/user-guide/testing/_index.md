@@ -1,35 +1,35 @@
 ---
-title: "Testing"
+title: "测试"
 date: 2021-03-02T00:23:56-05:00
 weight: 1300
 ---
 
-Test automation is the process of writing small snippets of code (tests) to verify the desired functionality of Open 3D Engine extensions and tools that you create.
+测试自动化是编写小代码片段（测试）以验证您创建的 Open 3D Engine 扩展和工具的所需功能的过程。
 
 {{< important >}}
-Contributors to the O3DE Project are required to write tests for their features, following the standards set by the [Open 3D Foundation Testing Special Interest Group](https://github.com/o3de/sig-testing). If you plan to contribute, make sure that you're familiar with project test standards as well as the frameworks.
+O3DE 项目的贡献者需要按照 [Open 3D Foundation Testing 特别兴趣小组](https://github.com/o3de/sig-testing) 制定的标准为其功能编写测试。如果您计划参与，请确保您熟悉项目测试标准和框架。
 {{< /important >}} 
 
-## Test Runners
+## 测试运行程序
 
-O3DE uses standard test runners to collect, execute, and gather results. The officially supported test runners are:
+O3DE 使用标准测试运行程序来收集、执行和收集结果。官方支持的测试运行程序包括：
 
 * [GoogleTest](https://github.com/google/googletest)
 * [GoogleBenchmark](https://github.com/google/benchmark)
 * [PyTest](https://docs.pytest.org)
 
-## Test Tools Packages
+## 测试工具包
 
-**Open 3D Engine (O3DE)** offers several tools packages to make writing tests quicker, safer, and more consistent. Before you write tests, take time to familiarize yourself with the tools.
+Open 3D Engine （O3DE）** 提供了多个工具包，使编写测试更快、更安全、更一致。在编写测试之前，请花点时间熟悉这些工具。
 
 ### AzTest
 
-[AzTest](/docs/api/frameworks/aztest/) is a collection of abstractions, functions, and wrappers to make writing C++ tests easier.
+[AzTest](/docs/api/frameworks/aztest/)是抽象、函数和包装器的集合，用于更轻松地编写 C++ 测试。
 
 ### EditorPythonTestTools
 
-EditorPythonTestTools are a collection of test tools focused around accessing Editor functionality. These tools should be used whenever you want to automate tasks which would occur in the Editor. 
+EditorPythonTestTools 是一组专注于访问 Editor 功能的测试工具。每当您想要自动执行 Editor 中发生的任务时，都应该使用这些工具。
 
 ### LyTestTools
 
-The [LyTestTools](/docs/user-guide/testing/lytesttools/) are testing productivity tools for writing and debugging tests that across different environments. This includes (but isn't limited to) environment manipulation, creating/collecting images and logs, and starting project launchers.
+[LyTestTools](/docs/user-guide/testing/lytesttools/) 正在测试生产力工具，用于跨不同环境编写和调试测试。这包括（但不限于）环境操作、创建/收集图像和日志以及启动项目启动器。

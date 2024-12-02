@@ -1,12 +1,12 @@
 ---
-description: ' Use LyTestTools to write tests quicker, safer, and more consistently. '
+description: ' 使用 LyTestTools 更快、更安全、更一致地编写测试。 '
 title: LyTestTools
 ---
 
-LyTestTools are tools designed to simplify writing and debugging tests that across different environments. Some of the capabilities of LyTestTools include environment manipulation, creating/collecting images and logs, and starting launchers. A large portion of what LyTestTools does is standardize testing O3DE executables with [Pytest](https://docs.pytest.org/).
+LyTestTools 是旨在简化跨不同环境编写和调试测试的工具。LyTestTools 的一些功能包括环境操作、创建/收集图像和日志以及启动启动器。LyTestTools 所做的很大一部分工作是使用 [Pytest](https://docs.pytest.org/).
 
-The LyTestTools are located in `Tools/LyTestTools`.
+LyTestTools 位于`Tools/LyTestTools`.
 
-## Topics
+## 主题
 
-+ [Getting Started](/docs/user-guide/testing/lytesttools/getting-started)
++ [入门](/docs/user-guide/testing/lytesttools/getting-started)

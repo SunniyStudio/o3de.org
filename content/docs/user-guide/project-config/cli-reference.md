@@ -1,53 +1,53 @@
 ---
-linktitle: O3DE CLI Reference
-title: O3DE Project Configuration CLI Reference
-description: The command line interface (CLI) reference for the Open 3D Engine (O3DE) Python script.
+linktitle: O3DE CLI 参考
+title: O3DE 项目配置 CLI 参考
+description: Open 3D Engine （O3DE） Python 脚本的命令行界面 （CLI） 参考。
 weight: 200
 toc: true
 ---
 
-Use the `o3de` Python script to configure your O3DE environment and its objects, including engines, projects, and Gems, from a command line interface (CLI). The script aggregates all of the functions from lower-level scripts in **Open 3D Engine (O3DE)**, so you can access them from a single point. Find the script in your engine directory at `/scripts/o3de.py`.
+使用`o3de` Python 脚本从命令行界面 （CLI） 配置 O3DE 环境及其对象，包括引擎、项目和 Gem。该脚本聚合了 Open 3D Engine （O3DE） 中较低级别脚本的所有函数，因此您可以从一个点访问它们。在 engine 目录的 `/scripts/o3de.py`中找到该脚本。
 
-You can use the `o3de` Python script for the following tasks:
+您可以使用`o3de` Python 脚本执行以下任务：
 
-- [Creating projects](/docs/welcome-guide/create/creating-projects-using-cli/)
-- Creating Gems
-- Creating templates
-- [Enabling and disabling Gems for your project](add-remove-gems/#using-the-command-line-interface-cli)
-- Registering the engine
-- Registering projects and Gems
+- [创建项目](/docs/welcome-guide/create/creating-projects-using-cli/)
+- 创建 Gem
+- 创建模板
+- [为您的项目启用和禁用 Gem](add-remove-gems/#using-the-command-line-interface-cli)
+- 注册引擎
+- 注册项目和 Gem
   
 
 <!-------------------------------------------------------------->
 
-## Prerequisites
+## 先决条件
 
-To use the `o3de` Python script, you must set up the Python runtime, which you download when you set up the engine. For instructions on downloading the runtime, refer to the **Register the engine** section of the Setting up O3DE from GitHub topic for [Windows](/docs/welcome-guide/setup/setup-from-github/building-windows/#register-the-engine) or [Linux](/docs/welcome-guide/setup/setup-from-github/building-linux/#register-the-engine).
+要使用`o3de` Python 脚本，您必须设置 Python 运行时，您可以在设置引擎时下载该运行时。有关下载运行时的说明，请参阅适用于[Windows](/docs/welcome-guide/setup/setup-from-github/building-windows/#register-the-engine) 或 [Linux](/docs/welcome-guide/setup/setup-from-github/building-linux/#register-the-engine) 的从 GitHub 设置 O3DE 主题的**注册引擎**部分。
 
 <!-------------------------------------------------------------->
 
-## Quick start
+## 快速开始
 
 {{< tabs name="Python runtime setup" >}}
 {{% tab name="Windows" %}}
 
-To run the O3DE Python runtime and a command, at a command prompt, do either of the following:
+要运行 O3DE Python 运行时和命令，请在命令提示符处执行以下任一操作：
 
-- Run the `o3de.bat` batch file directly.
+- 直接运行`o3de.bat` 批处理文件。
     ```cmd
     <engine>\scripts\o3de.bat <command>
     ```
 
-- Launch Python and run the `o3de.py` script.
+- 启动 Python 并运行`o3de.py`脚本。
     ```cmd
     <engine>\python\python.cmd <engine>\scripts\o3de.py <command>
     ```
 
 {{< note >}}
-Replace `<engine>` with the path to your engine.
+将`<engine>`替换为引擎的路径。
 {{< /note >}}
 
-For example, to register the engine, enter the following command:
+例如，要注册引擎，请输入以下命令：
 
 ```cmd
 <engine>\scripts\o3de.bat register --this-engine
@@ -56,23 +56,23 @@ For example, to register the engine, enter the following command:
 {{% /tab %}}
 {{% tab name="Linux" %}}
 
-To run the O3DE Python runtime and a command, in a terminal window, do either of the following:
+要在终端窗口中运行 O3DE Python 运行时和命令，请执行以下任一操作：
 
-- Run the `o3de.sh` shell script file directly.
+- 直接运行`o3de.sh` shell 脚本文件。
     ```bash
     <engine>/scripts/o3de.sh <command>
     ```
 
-- Launch Python and run the `o3de.py` script.
+- 启动 Python 并运行 `o3de.py` 脚本。
     ```bash
     <engine>/python/python.sh <engine>/scripts/o3de.py <command>
     ```
 
 {{< note >}}
-Replace `<engine>` with the path to your engine.
+将 `<engine>` 替换为引擎的路径。
 {{< /note >}}
 
-For example, to register the engine, enter the following command:
+例如，要注册引擎，请输入以下命令：
 
 ```bash
 <engine>/scripts/o3de.sh register --this-engine
@@ -84,128 +84,127 @@ For example, to register the engine, enter the following command:
 
 <!-------------------------------------------------------------->
 
-## Commands
+## 命令
 
-The `o3de` Python script contains the following commands, with further details in the following sections. 
+`o3de` Python 脚本包含以下命令，以下部分提供了更多详细信息。
 
-| Command | Description | 
+| 命令 | 说明 | 
 | - | - |
-| [`get-global-project`](#get-global-project) | Gets the global project that is registered to the engine. |
-| [`set-global-project`](#set-global-project) | Sets the specified project as the engine's global project. |
-| [`create-template`](#create-template) | Creates a template out of the specified source path. |
-| [`create-from-template`](#create-from-template) | Creates an instance from a generic template.  |
-| [`create-project`](#create-project) | Creates a new project. |
-| [`create-gem`](#create-gem) | Creates a new Gem. |
-| [`register`](#register) | Registers an O3DE object. |
-| [`register-show`](#register-show) | Shows the registered O3DE objects. |
-| [`get-registered`](#get-registered) | Shows the path to the registered O3DE object with the specified name. |
-| [`enable-gem`](#enable-gem) | Enables/Activates the Gem in your project. |
-| [`disable-gem`](#disable-gem) | Disables/Deactivates the Gem in your project. |
-| [`edit-engine-properties`](#edit-engine-properties) | Edits the engine's properties. |
-| [`edit-project-properties`](#edit-project-properties) | Edits the project's properties. |
-| [`edit-gem-properties`](#edit-gem-properties) | Edits the Gem's properties. |
-| [`download`](#download) | Download content from remote repositories. |
-| [`repo`](#repo) | Activate and deactivate remote repositories and update metadata. |
-| [`sha256`](#sha256) | Creates a hash value for an O3DE object using SHA-256 (Secure Hash Algorithm 256). |
-| [`android-configure`](#android-configure) | Configures the settings for the Android Project Generation script. |
-| [`android-generate`](#android-generate) | Generate an Android Gradle project script for you project. |
+| [`get-global-project`](#get-global-project) | 获取注册到引擎的全局项目。 |
+| [`set-global-project`](#set-global-project) | 将指定的项目设置为引擎的全局项目。 |
+| [`create-template`](#create-template) | 从指定的源路径创建模板。 |
+| [`create-from-template`](#create-from-template) | 从类属模板创建实例。  |
+| [`create-project`](#create-project) | 创建新项目。 |
+| [`create-gem`](#create-gem) | 创建新 Gem。 |
+| [`register`](#register) | 注册 O3DE 对象。 |
+| [`register-show`](#register-show) | 显示已注册的 O3DE 对象。 |
+| [`get-registered`](#get-registered) | 显示具有指定名称的已注册 O3DE 对象的路径。 |
+| [`enable-gem`](#enable-gem) | 在项目中启用/激活 Gem。 |
+| [`disable-gem`](#disable-gem) | 禁用/停用项目中的 Gem。 |
+| [`edit-engine-properties`](#edit-engine-properties) | 编辑引擎的属性。 |
+| [`edit-project-properties`](#edit-project-properties) | 编辑项目的属性。 |
+| [`edit-gem-properties`](#edit-gem-properties) | 编辑 Gem 的属性。 |
+| [`download`](#download) | 从远程存储库下载内容。 |
+| [`repo`](#repo) | 激活和停用远程存储库并更新元数据。 |
+| [`sha256`](#sha256) | 使用 SHA-256（安全哈希算法 256）为 O3DE 对象创建哈希值。 |
+| [`android-configure`](#android-configure) | 配置 Android Project Generation 脚本的设置。 |
+| [`android-generate`](#android-generate) | 为您的项目生成 Android Gradle 项目脚本。 |
 
 <!-------------------------------------------------------------->
 
 ## `get-global-project`
 
-Gets the global project that is registered to the engine. By default, reads the global project from `<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg`. You can also specify a file path using `-i`.
+获取注册到引擎的全局项目。默认情况下，从`<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg`读取全局项目。您还可以使用 `-i` 指定文件路径。
 
-### Format
+### 格式
 
 ```cmd
 get-global-project [-h] [-i INPUT_PATH]
 ```
 
-### Usage
+### 用法
 
-Reads the global project from `<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg`.
+从 `<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg` 读取全局项目。
 
 ```cmd
 o3de.bat get-global-project
 ```
 
-Reads the global project from a specified file.
+从指定文件中读取全局项目。
 
 ```cmd
 o3de.bat get-global-project -i <USER_DIRECTORY>\.o3de\Registry\my-custom.setreg
 ```
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-i INPUT_PATH, --input-path INPUT_PATH`**
 
-  A path to the input file that you want to read the  `/Amazon/AzCore/Bootstrap/project_path` key from. If not supplied, then this command uses the input file `<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg` instead.
-
+  要从中读取 `/Amazon/AzCore/Bootstrap/project_path` 键的输入文件的路径。如果未提供，则此命令使用输入文件 `<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg`  代替。
 
 <!-------------------------------------------------------------->
 
 ## `set-global-project`
 
-Sets the specified project as the engine's global project. By default, sets this in `<USER_DIRECTORY>\.o3de\Registry\bootstrap.setreg`. You can also specify a file path using `-o`.
+将指定的项目设置为引擎的全局项目。默认情况下，在`<USER_DIRECTORY>\.o3de\Registry\bootstrap.setreg`中设置它。您还可以使用 `-o` 指定文件路径。
 
-If you set a global project, then O3DE tools (such as **Asset Processor** and **O3DE Editor**) use the global project when you launch them from an installed engine. To override the global project, specify a project with the `project-path` parameter when you launch the O3DE tools from the command line.
+如果您设置了全局项目，则当您从已安装的引擎启动 O3DE 工具（例如 **Asset Processor** 和 **O3DE Editor**）时，它们将使用全局项目。要覆盖全局项目，请在从命令行启动 O3DE 工具时使用 `project-path` 参数指定项目。
 
-### Format 
+### 格式 
 
 ```cmd
 set-global-project [-h] (-pp PROJECT_PATH | -pn PROJECT_NAME)
                                   [-o OUTPUT_PATH] [-f]
 ```
 
-### Usage
+### 用法
 
-Sets the specified project as the global project in `<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg`.
+将指定的项目设置为 `<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg` 中的全局项目。
 
 ```cmd
 o3de.bat set-global-project -pp PROJECT_PATH
 ```
 
-Sets the specified project as the global project in the specified path.
+将指定的项目设置为指定路径中的全局项目。
 
 ```cmd
 o3de.bat set-global-project -pp PROJECT_PATH -o <USER_DIRECTORY>\.o3de\Registry\my-custom.setreg
 ```
 
-### Optional parameters
+### 可选
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-pp PROJECT_PATH, --project-path PROJECT_PATH`**
 
-  The path to the project. The path must contain the project manifest file (`project.json`) unless you also use the `--force` parameter.
+  项目的路径。该路径必须包含项目清单文件(`project.json`)，除非你还使用`--force`参数。
 
 - **`-pn PROJECT_NAME, --project-name PROJECT_NAME`**
 
-  The name of the project. You can find the name in the project's `project.json` file.
+  项目的名称。您可以在项目的`project.json`文件中找到该名称。
 
 - **`-o OUTPUT_PATH, --output-path OUTPUT_PATH`**
 
-  The path and filename where the `project_path` key is written. The file should be located in `<USER_DIRECTORY>/.o3de/Registry/` and have the file extension `.setreg`. If you don't use this parameter, `o3de` writes the key to `<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg`.
+  写入`project_path`键的路径和文件名。该文件应位于`<USER_DIRECTORY>/.o3de/Registry/`中，文件扩展名为 `.setreg`。如果您不使用此参数，`o3de`会将注册表项写入`<USER_DIRECTORY>/.o3de/Registry/bootstrap.setreg`。
 
 - **`-f, --force`**
 
-  Forcibly sets the project path in the supplied `.setreg` file.
+  在提供的`.setreg`文件中强制设置项目路径。
 
 
 <!-------------------------------------------------------------->
 
 ## `create-template`
 
-Creates a template out of the specified source path and registers the template in the O3DE manifest. Users can then create custom source content from this template using the `create-from-template` command.
+从指定的源路径创建模板，并在 O3DE 清单中注册模板。然后，用户可以使用 `create-from-template` 命令从此模板创建自定义源内容。
 
-### Format
+### 格式
 
 ``` cmd
 create-template [-h] [-v] -sp SOURCE_PATH [-tp TEMPLATE_PATH]
@@ -218,122 +217,122 @@ create-template [-h] [-v] -sp SOURCE_PATH [-tp TEMPLATE_PATH]
                 [-f] [--no-register]
 ```
 
-### Usage
+### 用法
 
-Creates a template named `StandardGem` from the source folder and saves it in the `default_templates_folder` specified in the O3DE manifest. Also registers the template in the O3DE manifest.
+从源文件夹创建名为`StandardGem`的模板，并将其保存在 O3DE 清单中指定的`default_templates_folder` 中。此外，在 O3DE 清单中注册模板。
 
 ```cmd
 o3de.bat create-template -sp C:\MyGems\StandardGem
 ```
 
-Creates a template named `StandardGem` from the source folder and saves it in `C:\MyTemplates`, without registering the template.
+从源文件夹创建名为 `StandardGem` 的模板，并将其保存在 `C:\MyTemplates` 中，而不注册模板。
 
 ```cmd
 o3de.bat create-template -sp C:\MyGems\StandardGem -tp C:\MyTemplates\StandardGem --no-register
 ```
 
-Creates a template named `StandardGem` from the source folder and saves it in the default templates folder. Additionally, it replaces any part of a file or path in the source folder containing the word `Standard` with the placeholder name `${Name}`, and any appearance of the word `Standard` in the source file content with `${SanitizedCppName}`.
+从源文件夹创建名为`StandardGem`的模板，并将其保存在默认 templates 文件夹中。此外，它还会将源文件夹中包含单词`Standard`的文件或路径的任何部分替换为占位符名称`${Name}`，并将源文件内容中出现的单词`Standard`替换为 `${SanitizedCppName}`。
 
 ```cmd
 o3de.bat create-template -sp C:\MyGems\TestGem -tp StandardGem -sn Standard
 ```
 
-Creates a template named `StandardComponent` from the source folder and saves it in the default templates folder. Additionally, it does the following:
+从源文件夹创建名为 `StandardComponent` 的模板，并将其保存在默认 templates 文件夹中。此外，它还执行以下操作：
 
-* Replaces any part of a file or path in the source folder containing the word `Standard` with the placeholder name `${Name}`.
-* Replaces any appearance of the word `Standard` in the source file content with `${SanitizedCppName}`.
-* Replaces any appearance of the word `MyGem` with `${GemName}`. This particular example is useful when creating a template where the Gem name serves as a C++ namespace.
-* Replaces the UUID `cd2c4950-7ee3-49b9-b356-51a3b6bb2373` with `${Random_Uuid}`. When the `create-from-template` command encounters `${Random_Uuid}` in a template, it replaces this placeholder with a randomly-generated UUID.
-* Keeps all licensing text in the source files that begins with `{BEGIN_LICENSE}` and ends with `{END_LICENSE}`.
+* 将源文件夹中包含单词 `Standard` 的文件或路径的任何部分替换为占位符名称`${Name}`。
+* 将源文件内容中出现的单词 `Standard` 替换为`${SanitizedCppName}`。
+* 将单词`MyGem`的任何外观替换为`${GemName}`。在创建将 Gem 名称用作 C++ 命名空间的模板时，此特定示例非常有用。
+* 将 UUID `cd2c4950-7ee3-49b9-b356-51a3b6bb2373` 替换为 `${Random_Uuid}`。当 `create-from-template` 命令在模板中遇到 `${Random_Uuid}` 时，它会将此占位符替换为随机生成的 UUID。
+* 保留源文件中以 `{BEGIN_LICENSE}` 开头、以 `{END_LICENSE}` 结尾的所有许可文本。
 
 ```cmd
 o3de.bat create-template -sp C:\MyComponent -tp StandardComponent -sn Standard -kl -r MyGem ${GemName} cd2c4950-7ee3-49b9-b356-51a3b6bb2373 ${Random_Uuid}
 ```
 
 {{< note >}}
-When using the replace parameter in Windows PowerShell, you must use a single quote around any `$` replacement variables. For example: `-r MyGem '${GemName}'`.
+在 Windows PowerShell 中使用 replace 参数时，必须在任何 `$` 替换变量周围使用单引号。例如：`-r MyGem '${GemName}'`。
 {{< /note >}}
 
-### Optional parameters
+### 可选参数
   
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-v`**
 
-  If specified, provides additional logging verbosity.
+  如果指定，则提供额外的日志记录详细程度。
 
 - **`-sp SOURCE_PATH, --source-path SOURCE_PATH`**
 
-  The path to the source folder that you want to use as a template.
+  要用作模板的源文件夹的路径。
 
 - **`-tp TEMPLATE_PATH, --template-path TEMPLATE_PATH`**
 
-  The path where you want to create the template. The path can be absolute or relative to the `default_templates_folder` specified in the O3DE manifest. If not supplied, the template path is set to the default template path concatenated with `SOURCE_NAME`. If `SOURCE_NAME` is not specified, the last component of `SOURCE_PATH` is used in its place.
+  要在其中创建模板的路径。该路径可以是绝对路径，也可以是相对于 O3DE 清单中指定的`default_templates_folder`路径。如果未提供，则模板路径将设置为与 `SOURCE_NAME` 连接的默认模板路径。如果未指定 `SOURCE_NAME`，则使用`SOURCE_PATH`的最后一个组件代替它。
 
 - **`-srp SOURCE_RESTRICTED_PATH, --source-restricted-path SOURCE_RESTRICTED_PATH`**
 
-  The path to the source's restricted folder.
+  源的 restricted 文件夹的路径。
 
 - **`-srn SOURCE_RESTRICTED_NAME, --source-restricted-name SOURCE_RESTRICTED_NAME`**
 
-  The name of the source's restricted folder. If supplied, you don't need to use the `--source-restricted-path` parameter.
+  源的 restricted 文件夹的名称。如果提供，则无需使用`--source-restricted-path`参数。
 
 - **`-trp TEMPLATE_RESTRICTED_PATH, --template-restricted-path TEMPLATE_RESTRICTED_PATH`**
 
-  The path to the template's restricted folder.
+  模板的 restricted 文件夹的路径。
 
 - **`-trn TEMPLATE_RESTRICTED_NAME, --template-restricted-name TEMPLATE_RESTRICTED_NAME`**
 
-  The name of the template's restricted folder. If supplied, you don't need to use the `--template-restricted-path` parameter.
+  模板的 restricted 文件夹的名称。如果提供，则无需使用 `--template-restricted-path` 参数。
 
 - **`-sn SOURCE_NAME, --source-name SOURCE_NAME`**
 
-  Substitutes any file and path entries that match `SOURCE_NAME` with `${Name}`, and any file content that matches `SOURCE_NAME` with `${SanitizedCppName}`.
+  替换任何文件和路径条目，匹配 `SOURCE_NAME` 为 `${Name}`, 文件内容匹配 `SOURCE_NAME` 为 `${SanitizedCppName}`.
   
-  An example of substitution: `--source-name Foo` replaces the source file `FooBus.h` -> `${Name}Bus.h`, and the source content `class FooRequests` -> `class ${SanitizedCppName}Requests`.
+  替换示例：`--source-name Foo`替换源文件 `FooBus.h` -> `${Name}Bus.h`,和源内容 `class FooRequests` -> `class ${SanitizedCppName}Requests`.
 
 - **`-srprp SOURCE_RESTRICTED_PLATFORM_RELATIVE_PATH, --source-restricted-platform-relative-path SOURCE_RESTRICTED_PLATFORM_RELATIVE_PATH`**
 
-  A path to append to `SOURCE_RESTRICTED_PATH/<platform>/`, which contains the restricted source. For example: `--source-restricted-path C:/restricted --source-restricted-platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<source_name>`.
+  路径附加到 `SOURCE_RESTRICTED_PATH/<platform>/`，其中包含受限源。例如： `--source-restricted-path C:/restricted --source-restricted-platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<source_name>`.
 
 - **`-trprp TEMPLATE_RESTRICTED_PLATFORM_RELATIVE_PATH, --template-restricted-platform-relative-path TEMPLATE_RESTRICTED_PLATFORM_RELATIVE_PATH`**
 
-  A path to append to `TEMPLATE_RESTRICTED_PATH/<platform>`, which contains the restricted template source. For example: `--template-restricted-path C:/restricted --template-restricted-platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<template_name>`.
+  路径附加到 `TEMPLATE_RESTRICTED_PATH/<platform>`，其中包含受限模板源。例如： `--template-restricted-path C:/restricted --template-restricted-platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<template_name>`.
 
 - **`-kr, --keep-restricted-in-template`**
 
-  If included, creates the restricted platforms in the template folder. By default, creates the restricted files in the restricted folder located at TEMPLATE_RESTRICTED_PATH.
+  如果包含，则在模板文件夹中创建受限平台。默认情况下，在位于 TEMPLATE_RESTRICTED_PATH 的 restricted 文件夹中创建受限制的文件。
 
 - **`-kl, --keep-license-text`**
 
-  If included, keeps all of the lines of license text, starting at {BEGIN_LICENSE} and ending at {END_LICENSE}. By default, the license text isn't included.
+  如果包含，则保留许可证文本的所有行，从 {BEGIN_LICENSE} 开始，到 {END_LICENSE} 结束。默认情况下，不包含许可证文本。
 
 - **`-r [REPLACE [REPLACE ...]], --replace [REPLACE [REPLACE ...]]`**
 
-  Add A to B replacement pairs. For example: `-r MyUsername ${User} 1723905 ${id}`. This replaces `MyUsername` with `${User}`, and `1723905` with `${id}`.
+  将 A 添加到 B 替换对。例如： `-r MyUsername ${User} 1723905 ${id}`。这将替换 `MyUsername` 为 `${User}`, 替换 `1723905` 为 `${id}`.
 
   {{< note >}}
-When using the replace parameter in Windows PowerShell, you must use a single quote around any `$` replacement variables. For example: `-r MyUsername '${User}'`.
+在 Windows PowerShell 中使用 replace 参数时，必须在任何 `$` 替换变量周围使用单引号。例如： `-r MyUsername '${User}'`.
   {{< /note >}}
 
 - **`-f, --force`**
 
-  Forces the new template directory to override the existing one, if one exists.
+  强制新模板目录覆盖现有模板目录（如果存在）。
 
 - **`--no-register`**
 
-  Prevents registration of the template path in the O3DE manifest.
+  阻止在 O3DE 清单中注册模板路径。
 
 
 <!-------------------------------------------------------------->
 
 ## `create-from-template`
 
-Creates an instance of a generic template based on the specified template.
+基于指定的模板创建类属模板的实例。
 
-### Format
+### 格式
 
 ```cmd
 create-from-template [-h] [-v] -dp DESTINATION_PATH
@@ -347,114 +346,114 @@ create-from-template [-h] [-v] -dp DESTINATION_PATH
                                     [-f] [--no-register]
 ```
 
-### Usage
+### 用法
 
-Instantiates an object based on the template that is located in the specified template path and saves it in the specified destination path.
+基于位于指定模板路径中的模板实例化对象，并将其保存在指定的目标路径中。
 
 ```cmd
 o3de.bat create-from-template -dp DESTINATION_PATH -tp TEMPLATE_PATH
 ```
 
-Instantiates an object based on the template named `DefaultComponent` and saves it in the directory `NewComponent` in the current path. Additionally, it replaces all occurrences of `${GemName}` in the template with `MyGem`.
+基于名为`DefaultComponent`的模板实例化一个对象，并将其保存在当前路径的`NewComponent`目录中。此外，它还将模板中出现的所有 `${GemName}` 替换为 `MyGem`。
 
 ```cmd
 o3de.bat create-from-template -dp NewComponent -dn MyTest -tn DefaultComponent -kr -r ${GemName} MyGem
 ```
 
 {{< note >}}
-When using the replace parameter in Windows PowerShell, you must use a single quote around any `$` replacement variables. Example: `-r '${GemName}' MyGem`.
+在 Windows PowerShell 中使用 replace 参数时，必须在任何 `$` 替换变量周围使用单引号。例： `-r '${GemName}' MyGem`.
 {{< /note >}}
 
-To create the component in an existing directory, such as the `Code` directory of a Gem that's in progress, add the `-f` option to the `create-from-template` command to force the creation of the component files there.
+要在现有目录中创建组件，例如正在进行的 Gem 的 `Code` 目录，请在`create-from-template`命令中添加 `-f` 选项，以强制在该目录中创建组件文件。
 
-For example, to create a component called `MyTestComponent` in the `MyGem` namespace in the Gem's `Code` directory, do the following:
+例如，要在 Gem 的 `Code` 目录的`MyGem` 命名空间中创建名为 `MyTestComponent`的组件，请执行以下操作：
 
 ```cmd
 scripts\o3de.bat create-from-template -dp C:\Gems\MyGem\Code -dn MyTest -tn DefaultComponent -kr -r ${GemName} MyGem -f
 ```
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-v`**
 
-  If specified, provides additional logging verbosity.
+  如果指定，则提供额外的日志记录详细程度。
 
 - **`-dp DESTINATION_PATH, --destination-path DESTINATION_PATH`**
 
-  The path to instantiate the new template in. The path can be absolute or relative to the O3DE development source folder. For example: DESTINATION_PATH = `C:/o3de/NewTemplate`.
+  实例化新模板的路径。该路径可以是绝对路径，也可以是相对于 O3DE 开发源文件夹的路径。例如：DESTINATION_PATH = `C:/o3de/NewTemplate`.
 
 - **`-tp TEMPLATE_PATH, --template-path TEMPLATE_PATH`**
 
-  The path to the template that you want to instantiate. The path can be absolute or relative to the O3DE development source folder. For example: TEMPLATE_PATH = `C:/o3de/Template/SomeTemplate`.
+  要实例化的模板的路径。该路径可以是绝对路径，也可以是相对于 O3DE 开发源文件夹的路径。例如： TEMPLATE_PATH = `C:/o3de/Template/SomeTemplate`.
 
 - **`-tn TEMPLATE_NAME, --template-name TEMPLATE_NAME`**
 
-  The name of the registered template to instantiate. If supplied, you don't need to use the `--template-path` parameter.
+  要实例化的已注册模板的名称。如果提供，则无需使用`--template-path` 参数。
 
 - **`-dn DESTINATION_NAME, --destination-name DESTINATION_NAME`**
 
-  The name to replace `${Name}` with in the instantiated template. The name must be alphanumeric, though it can contain underscores (_) and hyphens (-). If you don't provide the destination name, this command uses the last component of the destination path.
+  在实例化模板中替换 `${Name}` 的名称。名称必须是字母数字，但可以包含下划线 （_） 和连字符 （-）。如果您未提供目标名称，则此命令将使用目标路径的最后一个组件。
 
 - **`-drp DESTINATION_RESTRICTED_PATH, --destination-restricted-path DESTINATION_RESTRICTED_PATH`**
 
-  The path where `o3de` writes the restricted files.
+  `o3de` 写入受限制文件的路径。
 
 - **`-drn DESTINATION_RESTRICTED_NAME, --destination-restricted-name DESTINATION_RESTRICTED_NAME`**
 
-  The name of the registered restricted path where `o3de` writes the restricted files. If supplied, you don't need to use the `--destination-restricted-path` parameter.
+  `o3de` 写入受限制文件的已注册受限路径的名称。如果提供，则无需使用`--destination-restricted-path`参数。
 
 - **`-trp TEMPLATE_RESTRICTED_PATH, --template-restricted-path TEMPLATE_RESTRICTED_PATH`**
 
-  The path to the restricted directory that `o3de` adds restricted platform sources to, if any.
+  `o3de` 将受限平台源添加到的受限目录的路径（如果有）。
 
 - **`-trn TEMPLATE_RESTRICTED_NAME, --template-restricted-name TEMPLATE_RESTRICTED_NAME`**
-  
-  The name of the restricted directory that `o3de` adds restricted platform sources to, if any. If supplied, you don't need to use the `--template-restricted-path` parameter.
+
+  `o3de` 将受限平台源添加到的受限目录的名称（如果有）。 如果提供，则无需使用`--template-restricted-path` 参数。
 
 - **`-drprp DESTINATION_RESTRICTED_PLATFORM_RELATIVE_PATH, --destination-restricted-platform-relative-path DESTINATION_RESTRICTED_PLATFORM_RELATIVE_PATH`**
 
-  A path to append to `DESTINATION_RESTRICTED_PATH/<platform>`, which contains the restricted destination. For example: `--destination-restricted-path C:/instance --destination-restricted-platform-relative-path some/folder` => `C:/instance/<platform>/some/folder/<destination_name>`.
+  要追加到`DESTINATION_RESTRICTED_PATH/<platform>`的路径 ，其中包含受限目标。例如： `--destination-restricted-path C:/instance --destination-restricted-platform-relative-path some/folder` => `C:/instance/<platform>/some/folder/<destination_name>`.
 
 - **`-trprp TEMPLATE_RESTRICTED_PLATFORM_RELATIVE_PATH, --template-restricted-platform-relative-path TEMPLATE_RESTRICTED_PLATFORM_RELATIVE_PATH`**
 
-  A path to append to `TEMPLATE_RESTRICTED_PATH/<platform>`, which contains the restricted template. For example: `--template-restricted-path C:/restricted --template-restricted-platform-relaive-path some/folder` => `C:/restricted/<platform>/some/folder/<template_name>`.
+  要追加到`TEMPLATE_RESTRICTED_PATH/<platform>`的路径 ，其中包含受限模板。例如： `--template-restricted-path C:/restricted --template-restricted-platform-relaive-path some/folder` => `C:/restricted/<platform>/some/folder/<template_name>`.
 
 - **`-kr, --keep-restricted-in-instance`**
 
-  If specified, creates the restricted platforms in the new template folder. If not specified, creates the restricted files in the restricted folder located at TEMPLATE_RESTRICTED_PATH.
+  如果指定，则在新模板文件夹中创建受限平台。如果未指定，则在位于 TEMPLATE_RESTRICTED_PATH 的 restricted 文件夹中创建受限制的文件。
 
 - **`-kl, --keep-license-text`**
 
-  If specified, keeps all license text found in the template files. If not specified, the license text isn't included. License text includes all of the lines of text starting on a line containing {BEGIN_LICENSE} and ending on the line containing {END_LICENSE}.
+  如果指定，则保留在模板文件中找到的所有许可证文本。如果未指定，则不包括许可证文本。许可证文本包括从包含 {BEGIN_LICENSE} 的行开始到包含 {END_LICENSE} 的行结束的所有文本行。
 
 - **`-r [REPLACE [REPLACE ...]], --replace [REPLACE [REPLACE ...]]`**
 
-  Add A to B replacement pairs. For example: `-r ${User} MyUsername ${id} 1723905`. This replaces `${User}` with `MyUsername`, and `${id}` with `1723905`. Note: \<DestinationName\> is the last component of the DESTINATION_PATH. The following replacement pairs already exist: `${Name}` to \<DestinationName\>, `${NameLower}` to \<destinationname\>, `${NameUpper}` to \<DESTINATIONNAME\>.
+  将 A 添加到 B 替换对。例如： `-r ${User} MyUsername ${id} 1723905`. 这将替换 `${User}` 为 `MyUsername`, 替换 `${id}` 为 `1723905`. 注意: \<DestinationName\> 是DESTINATION_PATH的最后部分。以下替换对已存在：`${Name}` 替换为 \<DestinationName\>, `${NameLower}` 替换为 \<destinationname\>, `${NameUpper}` 替换为 \<DESTINATIONNAME\>.
 
   {{< note >}}
-When using the replace parameter in Windows PowerShell, you must use a single quote around any `$` replacement variables. For example: `-r '${User}' MyUsername`.
+在 Windows PowerShell 中使用 replace 参数时，必须在任何 `$` 替换变量周围使用单引号。例如：`-r '${User}' MyUsername`.
   {{< /note >}}
 
 - **`-f, --force`**
 
-  Overwrites files in the destination directory if they already exist.
+  覆盖目标目录中的文件（如果已存在）。
 
 - **`--no-register`**
 
-  Prevents registration of the project in the O3DE manifest.
+  阻止在 O3DE 清单中注册项目。
 
 
 <!-------------------------------------------------------------->
 
 ## `create-project`
 
-Creates a new project at the specified path and registers it to the `o3de_manifest.json` file. However, if you create the project in the engine directory, this command registers the project to the engine's `engine.json` file instead.
+在指定路径创建新项目并将其注册到`o3de_manifest.json`文件中。但是，如果您在 engine 目录中创建项目，则此命令会将项目注册到引擎的`engine.json`文件中。
 
-### Format
+### 格式
 
 ``` cmd
 create-project [-h] -pp PROJECT_PATH [-pn PROJECT_NAME]
@@ -469,106 +468,104 @@ create-project [-h] -pp PROJECT_PATH [-pn PROJECT_NAME]
                     [--module-id MODULE_ID] [-f]
 ```
 
-### Usage
+### 用法
 
-Creates a new project at the specified path using the "DefaultProject" template. 
+使用 “`DefaultProject`” 模板在指定路径处创建新项目。
 
 ```cmd
 o3de.bat create-project -pp PROJECT_PATH
 ```
 
-Creates a new project at the specified path using the specified project template. The template must have a valid `project.json` file.
+使用指定的项目模板在指定的路径处创建新项目。模板必须具有有效的 '`project.json`' 文件。
 
 ```cmd
 o3de.bat create-project --project-path PROJECT_PATH --template-path TEMPLATE_PATH
 ```
 
-### Optional parameters
+### 可选参数
 
   
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-pp PROJECT_PATH, --project-path PROJECT_PATH`**
 
-  The path to your newly created project. The project's path can be absolute or relative to the O3DE development source folder. For example: PROJECT_PATH = `C:/o3de/TestProject`.
+  新创建的项目的路径。项目的路径可以是绝对路径，也可以是相对于 O3DE 开发源文件夹的路径。例如：PROJECT_PATH = `C:/o3de/TestProject`.
 
 - **`-pn PROJECT_NAME, --project-name PROJECT_NAME`**
 
-  The name of your new project. The name must be alphanumeric, though it can contain underscores (_) and hyphens (-). If you don't provide the project name, this command uses the last component of the project path. For example: New_Project-123.
+  新项目的名称。名称必须是字母数字，但可以包含下划线 （_） 和连字符 （-）。如果您未提供项目名称，则此命令将使用项目路径的最后一个组件。例如：New_Project-123。
 
 - **`-tp TEMPLATE_PATH, --template-path TEMPLATE_PATH`**
 
-  The path to the template that you want to create a new project from. The path can be absolute or relative to the default template's path.
+  要从中创建新项目的模板的路径。该路径可以是绝对路径，也可以是相对于默认模板路径的路径。
 
 - **`-tn TEMPLATE_NAME, --template-name TEMPLATE_NAME`**
 
-  The name of the template that you want to create a new project from. If supplied, you don't need to use the `--template-path` parameter.
+  要从中创建新项目的模板的名称。如果提供，则无需使用 `--template-path`参数。
 
 - **`-prp PROJECT_RESTRICTED_PATH, --project-restricted-path PROJECT_RESTRICTED_PATH`**
 
-  The path to the project's restricted folder. The path can be absolute or relative to `restricted="projects"`. 
+  项目的 restricted 文件夹的路径。路径可以是绝对路径，也可以是相对于`restricted="projects"`的路径。
 
 - **`-prn PROJECT_RESTRICTED_NAME, --project-restricted-name PROJECT_RESTRICTED_NAME`**
 
-  The name of the project's restricted path. If supplied, you do not need to use the `--project-restricted-path` parameter.
+  项目的受限路径的名称。如果提供，则无需使用`--project-restricted-path`参数。
 
 - **`-trp TEMPLATE_RESTRICTED_PATH, --template-restricted-path TEMPLATE_RESTRICTED_PATH`**
 
-  The path to the template's restricted folder. The path can be absolute or relative to `restricted="templates"`.
+  模板的 restricted 文件夹的路径。路径可以是绝对路径，也可以是相对于`restricted="templates"`的路径。
 
 - **`-trn TEMPLATE_RESTRICTED_NAME, --template-restricted-name TEMPLATE_RESTRICTED_NAME`**
 
-  The name of the template's restricted path. If supplied, you don't need to use the `--template-restricted-path` parameter.
+  模板的受限路径的名称。如果提供，则无需使用`--template-restricted-path`参数。
 
 - **`-prprp PROJECT_RESTRICTED_PLATFORM_RELATIVE_PATH, --project-restricted-platform-relative-path PROJECT_RESTRICTED_PLATFORM_RELATIVE_PATH`**
 
-  A path to append to `PROJECT_RESTRICTED_PATH/<platform>`, and that contains the restricted project. For example: `--project-restricted-path C:/restricted --project- restricted-platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<project_name>`.
+  附加到`PROJECT_RESTRICTED_PATH/<platform>`的路径，其中包含受限项目。例如：`--project-restricted-path C:/restricted --project- restricted-platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<project_name>`.
 
 - **`-trprp TEMPLATE_RESTRICTED_PLATFORM_RELATIVE_PATH, --template-restricted-platform-relative-path TEMPLATE_RESTRICTED_PLATFORM_RELATIVE_PATH`**
 
-  A path to append to `TEMPLATE_RESTRICTED_PATH/<platform>`, and that contains the restricted template source. For example: `--template-restricted-path C:/restricted --template-restricted-platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<template_name>`.
+  附加到`TEMPLATE_RESTRICTED_PATH/<platform>`，其中包含受限模板源。例如：`--template-restricted-path C:/restricted --template-restricted-platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<template_name>`.
 
 - **`-kr, --keep-restricted-in-project`**
 
-  If true, creates the restricted platforms in the project folder. If false, creates the restricted files in the restricted folder located at TEMPLATE_RESTRICTED_PATH. By default, this parameter is false.
+  如果为 true，则在项目文件夹中创建受限平台。如果为 false，则在位于 TEMPLATE_RESTRICTED_PATH 的受限文件夹中创建受限文件。默认情况下，此参数为 false。
 
 - **`-kl, --keep-license-text`**
 
-  If true, keeps the license text (located in the `template.json` file) in the new project's `project.json` file. If false, the license text isn't included. By default, this parameter is false. The license text is all of the lines of text, starting at {BEGIN_LICENSE} and ending at {END_LICENSE}.
+  如果为 true，则将许可证文本（位于`template.json`文件中）保留在新项目的`project.json`文件中。如果为 false，则不包含许可证文本。默认情况下，此参数为 false。许可证文本是所有文本行，从 {BEGIN_LICENSE} 开始，到 {END_LICENSE} 结束。
 
 - **`-r [REPLACE [REPLACE ...]], --replace [REPLACE [REPLACE ...]]`**
 
-  Add A to B replacement pairs. `o3de` automatically infers `${Name}` and all of the other standard project replacements from the project name. These replacements supersede all inferred replacements. For example: `--replace MyUsername ${User} 1723905 ${id}`. This replaces `MyUsername` with `${User}`, and `1723905` with `${id}`. Note: \<ProjectName\> is the last component of the template_path. The following replacement pairs already exist: `${Name}` to \<ProjectName\>, `${NameLower}` to \<projectname\>, `${NameUpper}` to \<PROJECTNAME\>.
+  将 A 添加到 B 替换对。`o3de`会自动从项目名称推断出 `${Name}` 和所有其他标准项目替换。这些替换将取代所有推断的替换。例如：`--replace MyUsername ${User} 1723905 ${id}`。这会将`MyUsername`替换为`${User}`，将`1723905`替换为`${id}`。注意：\<ProjectName\> 是template_path的最后一个组件。以下替换对已存在：`${Name}` 到 \<ProjectName\>，`${NameLower}` 到 \<projectname\>，'`${NameUpper}` 到 \<PROJECTNAME\>。
 
 - **`--system-component-class-id SYSTEM_COMPONENT_CLASS_ID`**
 
-  A UUID that you want to associate with the system class
-component. The default is a random UUID. For example, 
+  要与系统类组件关联的 UUID。默认值为随机 UUID。例如
 {b60c92eb-3139-454b-a917-a9d3c5819594}.
 
 - **`--editor-system-component-class-id EDITOR_SYSTEM_COMPONENT_CLASS_ID`**
 
-  A UUID that you want to associate with the editor system
-class component. The default is a random UUID. For example, {b60c92eb-3139-454b-a917-a9d3c5819594}.
+  要与 Editor 系统类组件关联的 UUID。默认值为随机 UUID。例如{b60c92eb-3139-454b-a917-a9d3c5819594}.
 
 - **`--module-id MODULE_ID`**
 
-  A UUID that you want to associate with the module. The default is a random UUID. For example, {b60c92eb-3139-454b-a917-a9d3c5819594}. 
+  要与模块关联的 UUID。默认值为随机 UUID。例如 {b60c92eb-3139-454b-a917-a9d3c5819594}. 
 
 - **`-f, --force`**
 
-  Forces the new project directory to override the existing one, if one exists. 
+  强制新项目目录覆盖现有项目目录（如果存在）。
 
 
 <!-------------------------------------------------------------->
 
 ## `create-gem`
 
-Creates a new Gem at the specified path.
+在指定路径处创建新 Gem。
 
-### Format
+### 格式
 
 ```cmd
 create-gem [-h] -gp GEM_PATH [-gn GEM_NAME]
@@ -583,102 +580,102 @@ create-gem [-h] -gp GEM_PATH [-gn GEM_NAME]
                     [--module-id MODULE_ID] [-f]
 ```
 
-### Usage
+### 用法
 
-Create a new Gem at the specified path using the "DefaultGem" template.
+使用 “DefaultGem” 模板在指定路径处创建一个新 Gem。
 
 ```cmd
 o3de.bat create-gem -gp GEM_PATH
 ```
 
-Create a new Gem at the specified path using the specified Gem template. The template must have a valid `gem.json` file.
+使用指定的 Gem 模板在指定的路径处创建新 Gem。模板必须具有有效的`gem.json`文件。
 
 ```cmd
 o3de.bat create-gem -gp GEM_PATH --template-path TEMPLATE_PATH
 ```
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-gp GEM_PATH, --gem-path GEM_PATH`**
 
-  The path to create a new Gem at. The Gem's path can be absolute or relative to the default Gems path.  
+  创建新 Gem 的路径。Gem 的路径可以是绝对路径，也可以是相对于默认 Gem 路径的路径。  
 
 - **`-gn GEM_NAME, --gem-name GEM_NAME`**
 
-  The name of your new Gem. The name must be alphanumeric, though it can contain underscores (_) and hyphens (-). If you don't provide the Gem name, this command uses the last component of the Gem path. For example: New_Gem.
+  新 Gem 的名称。名称必须是字母数字，但可以包含下划线 （_） 和连字符 （-）。如果您未提供 Gem 名称，则此命令将使用 Gem 路径的最后一个组件。例如：New_Gem。
 
 - **`-tp TEMPLATE_PATH, --template-path TEMPLATE_PATH`**
 
-  The path to the template that you want to create a new Gem from. The path can be absolute or relative to the default template's path.
+  要从中创建新 Gem 的模板的路径。该路径可以是绝对路径，也可以是相对于默认模板路径的路径。
 
 - **`-tn TEMPLATE_NAME, --template-name TEMPLATE_NAME`**
 
-  The name of the template that you want to create a new Gem from. If supplied, you don't need to use the `--template-path` parameter.
+  要从中创建新 Gem 的模板的名称。如果提供，则无需使用`--template-path`参数。
 
 - **`-grp GEM_RESTRICTED_PATH, --gem-restricted-path GEM_RESTRICTED_PATH`**
 
-  The path to the Gem's restricted folder, if any. The path can be absolute or relative to the O3DE development source folder. The default is `<o3de-development-source>/restricted`.
+  Gem 的 restricted 文件夹的路径（如果有）。该路径可以是绝对路径，也可以是相对于 O3DE 开发源文件夹的路径。默认值为`<o3de-development-source>/restricted`.
 
 - **`-grn GEM_RESTRICTED_NAME, --gem-restricted-name GEM_RESTRICTED_NAME`**
 
-  The name of the Gem's restricted path, if any. If supplied, you don't need to use the `--gem-restricted-path` parameter.
+  Gem 的受限路径的名称 （如果有）。如果提供，则无需使用`--gem-restricted-path` 参数。
 
 - **`-trp TEMPLATE_RESTRICTED_PATH, --template-restricted-path TEMPLATE_RESTRICTED_PATH`**
 
-  The path to the template's restricted folder. The path can be absolute or relative to `restricted="templates"`.
+  模板的 restricted 文件夹的路径。路径可以是绝对路径，也可以是相对于`restricted="templates"`的路径。
 
 - **`-trn TEMPLATE_RESTRICTED_NAME, --template-restricted-name TEMPLATE_RESTRICTED_NAME`**
 
-  The name of the template's restricted path. If supplied, you don't need to use the `--template-restricted-path` parameter.
+  模板的受限路径的名称。如果提供，则无需使用`--template-restricted-path`参数。
 
 - **`-grprp GEM_RESTRICTED_PLATFORM_RELATIVE_PATH, --gem-restricted-platform-relative-path GEM_RESTRICTED_PLATFORM_RELATIVE_PATH`**
 
-  A path to append to `GEM_RESTRICTED_PATH/<platform>`, which contains the restricted template. For example: `--gem-restricted-path C:/restricted --gem-restricted- platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<gem_name>`.
+  附加到`GEM_RESTRICTED_PATH/<platform>`的路径，其中包含受限模板。例如： `--gem-restricted-path C:/restricted --gem-restricted- platform-relative-path some/folder` => `C:/restricted/<platform>/some/folder/<gem_name>`.
 
 - **`-trprp TEMPLATE_RESTRICTED_PLATFORM_RELATIVE_PATH, --template-restricted-platform-relative-path TEMPLATE_RESTRICTED_PLATFORM_RELATIVE_PATH`**
 
-  A path to append to `TEMPLATE_RESTRICTED_PATH/<platform>`, which contains the restricted template. For example: `--template-restricted-path C:/restricted --template-restricted-platform-relaive-path some/folder` => `C:/restricted/<platform>/some/folder/<template_name>`.
+  附加到`TEMPLATE_RESTRICTED_PATH/<platform>`的路径，其中包含受限模板。例如： `--template-restricted-path C:/restricted --template-restricted-platform-relaive-path some/folder` => `C:/restricted/<platform>/some/folder/<template_name>`.
 
 - **`-r [REPLACE [REPLACE ...]], --replace [REPLACE [REPLACE ...]]`**
 
-  Add A to B replacement pairs. `o3de` automatically infers `${Name}` and all of the other standard Gem replacements from the Gem name. These replacements supersede all inferred replacement pairs. For example: `--replace ${DATE} 1/1/2020 ${id} 1723905`. This replaces `${DATE}` with `1/1/2020`, and  `${id}` with `1723905`. Note:  \<GemName> is the last component of the GEM_PATH. The following replacement pairs already exist: `${Name}` to \<GemName\>, `${NameLower}` to \<gemname\>, `${NameUpper}` to \<GEMNAME\>.
+  将 A 添加到 B 替换对。`o3de`会自动从 Gem 名称推断出 `${Name}` 和所有其他标准 Gem 替换。这些替换将取代所有推断的替换对。例如：`--replace ${DATE} 1/1/2020 ${id} 1723905`。这会将`${DATE}`替换为 `1/1/2020`，将 `${id}` 替换为 `1723905`。注： \<GemName> 是 GEM_PATH 的最后一个组成部分。以下替换对已存在：`${Name}`到 \<GemName\>，`${NameLower}`到 \<gemname\>，`${NameUpper}` 到 \<GEMNAME\>。
 
 - **`-kr, --keep-restricted-in-gem`**
 
-  If true, creates the restricted platforms in the Gem folder. If false, creates the restricted files in the restricted folder located at TEMPLATE_RESTRICTED_PATH. By default, this parameter is false.
+  如果为 true，则在 Gem 文件夹中创建受限平台。如果为 false，则在位于 TEMPLATE_RESTRICTED_PATH 的受限文件夹中创建受限文件。默认情况下，此参数为 false。
 
 - **`-kl, --keep-license-text`**
 
-  If true, keeps the license text (located in the `template.json` file) in the new Gem's `gem.json` file. If false, the license text isn't included. By default, this parameter is false. The license text is all of the lines of text, starting at {BEGIN_LICENSE} and ending at {END_LICENSE}.
+  如果为 true，则将许可证文本（位于`template.json`文件中）保留在新 Gem 的`gem.json`文件中。如果为 false，则不包含许可证文本。默认情况下，此参数为 false。许可证文本是所有文本行，从 {BEGIN_LICENSE} 开始，到 {END_LICENSE} 结束。
 
 - **`--system-component-class-id SYSTEM_COMPONENT_CLASS_ID`**
 
-  A UUID that you want to associate the system class component with. The default is a random UUID. For example: {b60c92eb-3139-454b-a917-a9d3c5819594}.
+  要与系统类组件关联的 UUID。默认值为随机 UUID。例如：{b60c92eb-3139-454b-a917-a9d3c5819594}.
 
 - **`--editor-system-component-class-id EDITOR_SYSTEM_COMPONENT_CLASS_ID`**
 
-  A UUID that you want to associate with the editor system class component. The default is a random UUID. For example: {b60c92eb-3139-454b-a917-a9d3c5819594}.
+  要与 Editor 系统类组件关联的 UUID。默认值为随机 UUID。例如：{b60c92eb-3139-454b-a917-a9d3c5819594}.
 
 - **`--module-id MODULE_ID`**
 
-  A UUID that you want to associate with the module. The default is a random UUID. For example: {b60c92eb-3139-454b-a917-a9d3c5819594}.
+  要与模块关联的 UUID。默认值为随机 UUID。例如： {b60c92eb-3139-454b-a917-a9d3c5819594}.
 
 - **`-f, --force`**
 
-  Forces the new Gem directory to override the existing one, if one exists.
+  强制新的 Gem 目录覆盖现有 Gem 目录（如果存在）。
 
 
 <!-------------------------------------------------------------->
 
 ## `register`
 
-Registers O3DE objects to the `o3de_manifest.json` file.
+将 O3DE 对象注册到`o3de_manifest.json`文件。
 
-### Format
+### 格式
 
 ```cmd
 register [-h]
@@ -688,24 +685,24 @@ register [-h]
 ```
 
 
-### Usage
+### 用法
 <br>
 
-**Registering engines**
+**注册引擎**
 
-Registers this engine to the `o3de_manifest.json` file.  This command maps the engine's name to its path in JSON. 
+将此引擎注册到`o3de_manifest.json`文件中。 此命令将引擎的名称映射到其在 JSON 中的路径。
 
 ```cmd
 o3de.bat register --this-engine
 ```
 
-Registers the specified engine to the `o3de_manifest.json` file.  This command maps the engine's name to its path in JSON.  
+将指定的引擎注册到`o3de_manifest.json`文件。 此命令将引擎的名称映射到其在 JSON 中的路径。  
 
 ```cmd
 o3de.bat register --engine-path ENGINE_PATH
 ```
 
-Registers all of the engines in the specified path to the `o3de_manifest.json` file. This command recursively scans the specified path and registers all of the paths that have a valid `engine.json` file. It maps each engine's name to its path in JSON.  
+将指定路径中的所有引擎注册到`o3de_manifest.json`文件。此命令以递归方式扫描指定的路径，并注册具有有效`engine.json`文件的所有路径。它将每个引擎的名称映射到其在 JSON 中的路径。
 
 ```cmd
 o3de.bat register --all-engines-path ALL_ENGINES_PATH
@@ -713,21 +710,21 @@ o3de.bat register --all-engines-path ALL_ENGINES_PATH
 
 <br>
 
-**Registering projects**
+**注册项目**
 
-Registers the specified project to the engine. This command does two things: it adds the project's path to the `o3de_manifest.json` file, and it sets `engine` to the engine's name in each project's `project.json` file.
+将指定的项目注册到引擎。此命令执行两项操作：将项目的路径添加到`o3de_manifest.json`文件，并将 `engine`设置为每个项目的`project.json`文件中的引擎名称。
 
 ```cmd
 o3de.bat register -pp PROJECT_PATH
 ```
 
-Registers the specified project to the specified engine. This command does two things: it adds the project's path to the `o3de_manifest.json` file, and it sets `engine` to the engine's name in each project's `project.json` file.
+将指定的项目注册到指定的引擎。此命令执行两项操作：将项目的路径添加到`o3de_manifest.json`文件，并将`engine`设置为每个项目的`project.json`文件中的引擎名称。
 
 ```cmd
 o3de.bat register -pp PROJECT_PATH --engine-path ENGINE_PATH
 ```
 
-Registers all of the projects in the specified path. This command recursively scans the specified path and registers all of the paths that have a valid `project.json` file. This command does two things: it adds each project's path to the `o3de_manifest.json` file, and it sets `engine` to the engine's name in each project's `project.json` file.
+在指定路径中注册所有项目。此命令以递归方式扫描指定的路径，并注册具有有效`project.json`文件的所有路径。这个命令做两件事：将每个项目的路径添加到 `o3de_manifest.json` 文件，并将 `engine` 设置为每个项目的`project.json`文件中的引擎名称。
 
 ```cmd
 o3de.bat register --all-projects-path ALL_PROJECTS_PATH
@@ -735,15 +732,15 @@ o3de.bat register --all-projects-path ALL_PROJECTS_PATH
 
 <br>
 
-**Registering Gems**
+**注册Gem**
 
-Registers the Gem to the nearest o3de object manifest file above the location where the Gem is. Before registering the Gem, this command verifies that the Gem has a valid `gem.json` file. Then, it adds the Gem’s path to the `external_subdirectories` list in the nearest o3de object manifest file above the Gem location.
+将 Gem 注册到 Gem 所在位置上方最近的 o3de 对象清单文件。在注册 Gem 之前，此命令将验证 Gem 是否具有有效的`gem.json`文件。然后，它将 Gem 的路径添加到 Gem 位置上方最近的 o3de 对象清单文件中的`external_subdirectories`列表中。
 
 ```cmd
 o3de.bat register --gem-path GEM_PATH
 ```
 
-For example given the following filesystem layout of using o3de, the manifest file where the Gem will be registered changes based on the location of the Gem being registered."
+例如，给定以下使用 o3de 的文件系统布局，将注册 Gem 的清单文件会根据注册 Gem 的位置而变化。
 ```
 /home/user/.o3de
     /o3de_manifest.json
@@ -753,26 +750,26 @@ For example given the following filesystem layout of using o3de, the manifest fi
     /anothergem <-- A random gem
 ```
 
-* If `GemToRegister` is inside `anothergem` at `/home/user/repo1/anothergem/GemToRegister`, then it will be registered in the `/home/user/repo1/anothergem/gem.json` manifest.
-* If `GemToRegister` is inside the project's `Gems` folder at `/home/user/repo1/project/Gems/GemToRegister`, then it will be registered in the `/home/user/repo1/project/project.json` manifest.
-* If `GemToRegister` is inside the engine `Gems` folder at `/home/user/repo1/o3de/Gems/GemToRegister`, then it will be registered in the `/home/user/repo1/o3de/engine.json` manifest.
-* Finally, if `GemToRegister` is outside of any engine, project or any other gem directory then it will be registered with the `o3de_manifest.json`. i.e `/home/user/MyGems/GemToRegister` will register the gem in `/home/user/.o3de/o3de_manifest.json`
+* 如果 `GemToRegister` 是在 `anothergem` 中，位于 `/home/user/repo1/anothergem/GemToRegister`，然后它将被注册在`/home/user/repo1/anothergem/gem.json` manifest中。
+* 如果 `GemToRegister` 是在项目的  `Gems` 文件夹中，位于 `/home/user/repo1/project/Gems/GemToRegister`，然后它将被注册在`/home/user/repo1/project/project.json` manifest中。
+* 如果 `GemToRegister` 是在引擎的 `Gems` 文件夹中，位于 `/home/user/repo1/o3de/Gems/GemToRegister`，然后它将被注册在`/home/user/repo1/o3de/engine.json` manifest中。
+* 最终，如果 `GemToRegister` 在引擎、项目或其它Gem目录之外，然后它将被注册在`o3de_manifest.json`中，例如`/home/user/MyGems/GemToRegister` 将在`/home/user/.o3de/o3de_manifest.json`中注册Gem
 
 
 
-Registers the Gem to the project's `project.json` file. Before registering the Gem, this command verifies that the Gem has a valid `gem.json` file. Then, it adds the Gem's path to the `external_subdirectories` list in the `project.json` file. This adds the Gem to the project's build solution, so the project can recognize the Gem.
+将 Gem 注册到项目的`project.json`文件中。在注册 Gem 之前，此命令将验证 Gem 是否具有有效的`gem.json`文件。然后，它将 Gem 的路径添加到`project.json`文件中的`external_subdirectories`列表中。这会将 Gem 添加到项目的构建解决方案中，以便项目可以识别 Gem。
 
 ```cmd
 o3de.bat register -gp GEM_PATH -espp PROJECT_PATH
 ```
 
-Registers the Gem to the engine's `engine.json` file. Before registering the Gem, this command verifies that the Gem has a valid `gem.json` file. Then, it adds the Gem's path to the `external_subdirectories` list in the `engine.json` file. This adds the Gem to the engine's build solution, so the engine can recognize the Gem.
+将 Gem 注册到引擎的 `engine.json` 文件中。在注册 Gem 之前，此命令将验证 Gem 是否具有有效的 `gem.json` 文件。然后，它将 Gem 的路径添加到`engine.json`文件中的`external_subdirectories`列表中。这会将 Gem 添加到引擎的构建解决方案中，以便引擎可以识别 Gem。
 
 ```cmd
 o3de.bat register -gp GEM_PATH -espp ENGINE_PATH
 ```
 
-Registers all of the Gems in the specified path. This command recursively scans the specified path and registers all of the paths that have a valid `gem.json` file. This command adds each Gem to the `o3de_manifest.json` file.
+注册指定路径中的所有 Gem。此命令以递归方式扫描指定的路径，并注册具有有效`gem.json`文件的所有路径。此命令将每个 Gem 添加到 `o3de_manifest.json` 文件中。
 
 ```cmd
 o3de.bat register --all-gems-path ALL_GEMS_PATH
@@ -780,21 +777,21 @@ o3de.bat register --all-gems-path ALL_GEMS_PATH
 
 <br>
 
-**Registering external subdirectories**
+**注册外部子目录**
 
-Registers the specified subdirectory path to the `external_subdirectories` list in the `o3de_manifest.json` file.
+将指定的子目录路径注册到`o3de_manifest.json`文件中的 `external_subdirectories` 列表。
 
 ```cmd
 o3de.bat register --external-subdirectory EXTERNAL_SUBDIRECTORY
 ```
 
-Registers the specified subdirectory path into `external_subdirectories` in the specified engine's `engine.json` file.
+将指定的子目录路径注册到指定引擎的 `engine.json` 文件的 `external_subdirectories` 中。
 
 ```cmd
 o3de.bat register --external-subdirectory EXTERNAL_SUBDIRECTORY --external-subdirectory-engine-path ENGINE_PATH
 ```
 
-Registers the specified subdirectory path into `external_subdirectories` in the specified project's `project.json` file.
+将指定的子目录路径注册到指定项目的 `project.json` 文件的 `external_subdirectories` 中。
 
 ```cmd
 o3de.bat register --external-subdirectory EXTERNAL_SUBDIRECTORY --external-subdirectory-project-path PROJECT_PATH
@@ -802,21 +799,21 @@ o3de.bat register --external-subdirectory EXTERNAL_SUBDIRECTORY --external-subdi
 
 <br>
 
-**Registering templates**
+**注册模板**
 
-Registers the specified template to the `templates` list in the `o3de_manifest.json` file.
+将指定的模板注册到 `o3de_manifest.json` 文件的 `templates` 列表中。
 
 ```cmd
 o3de.bat register --template-path <template-path>
 ```
 
-Registers the specified template to the `templates` list in the specified engine's `engine.json` file.
+将指定的模板注册到指定引擎的 `templates` 文件的`engine.json`列表中。
 
 ```cmd
 o3de.bat register --template-path TEMPLATE_PATH --engine-path ENGINE_PATH
 ```
 
-Registers all of the templates in the specified path. This command recursively scans the specified path and registers all of the paths that have a valid `template.json` file. This command adds each template to the `templates` list in the `o3de_manifest.json` file.
+在指定路径中注册所有模板。此命令以递归方式扫描指定的路径，并注册具有有效`template.json`文件的所有路径。此命令将每个模板添加到`o3de_manifest.json`文件的`templates` 列表中。
 
 ```cmd
 o3de.bat register --all-templates-path ALL_TEMPLATES_PATH
@@ -824,15 +821,15 @@ o3de.bat register --all-templates-path ALL_TEMPLATES_PATH
 
 <br>
 
-**Registering restricted paths**
+**注册受限制的路径**
 
-Registers the specified restricted path to the `restricted` list in the `o3de_manifest.json` file.
+将指定的受限路径注册到`o3de_manifest.json`文件中的`restricted`列表。
 
 ```cmd
 o3de.bat register --restricted-path RESTRICTED_PATH
 ```
 
-Registers all of the restricted paths in the specified path to the `restricted` list in the `o3de_manifest.json` file.
+将指定路径中的所有受限路径注册到`o3de_manifest.json`文件中的 `restricted` 列表。
 
 ```cmd
 o3de.bat register --all-restricted-path ALL_RESTRICTED_PATH
@@ -840,15 +837,15 @@ o3de.bat register --all-restricted-path ALL_RESTRICTED_PATH
 
 <br>
 
-**Registering repositories**
+**注册存储库**
 
-Registers the specified repository uniform resource identifier (URI) to the `repos` list in the `o3de_manifest.json` file.
+将指定的存储库统一资源标识符 （URI） 注册到`o3de_manifest.json`文件中的`repos`列表中。
 
 ```cmd
 o3de.bat register --repo-uri REPO_URI
 ```
 
-Registers all of the repositories in the specified URI. This command recursively scans the specified path and registers all of the repositories that have a valid `repo.json` file. This command adds each repository to the `o3de_manifest.json` file.
+在指定的 URI 中注册所有存储库。此命令以递归方式扫描指定的路径，并注册具有有效`repo.json`文件的所有存储库。此命令将每个存储库添加到`o3de_manifest.json`文件中。
 
 ```cmd
 o3de.bat register --all-repo-uri ALL_REPO_URI
@@ -856,39 +853,39 @@ o3de.bat register --all-repo-uri ALL_REPO_URI
 
 <br>
 
-**Registering default folders**
+**注册默认文件夹**
 
-Registers the specified folder as the default engines directory in the `o3de_manifest.json` file.
+将指定的文件夹注册为 `o3de_manifest.json` 文件中的默认 engines 目录。
 
 ```cmd
 o3de.bat register --default-engines-folder ENGINES_FOLDER_PATH
 ```
 
-Registers the specified folder as the default projects directory in the `o3de_manifest.json` file. When creating a project by using the `create-project` command, if you provide a relative path, the project saves in the default project folder.
+将指定的文件夹注册为`o3de_manifest.json`文件中的默认项目目录。使用`create-project`命令创建项目时，如果提供相对路径，则项目将保存在默认项目文件夹中。
 
 ```cmd
 o3de.bat register --default-projects-folder PROJECTS_FOLDER_PATH
 ```
 
-Registers the specified folder as the default Gems directory in the `o3de_manifest.json` file. When creating a Gem by using the `create-gem` command, if you provide a relative path, the Gem saves in the default Gems folder.
+将指定的文件夹注册为 `o3de_manifest.json`文件中的默认 Gems 目录。使用 'create-gem' 命令创建 Gem 时，如果提供相对路径，则 Gem 将保存在默认的 Gems 文件夹中。
 
 ```cmd
 o3de.bat register --default-gems-folder GEMS_FOLDER_PATH
 ```
 
-Registers the specified folder as the default templates directory in the `o3de_manifest.json` file. When creating a template by using the `create-template` command, if you provide a relative path, the template saves in the default template folder.
+将指定的文件夹注册为`o3de_manifest.json`文件中的默认模板目录。使用`create-template`命令创建模板时，如果提供相对路径，模板将保存在默认模板文件夹中。
 
 ```cmd
 o3de.bat register --default-templates-folder TEMPLATES_FOLDER_PATH
 ```
 
-Registers the specified folder as the default restricted directory in the `o3de_manifest.json` file. The commands--`create-from-template`, `create-project`, and `create-gem`--use the default restricted directory when instantiating a template.
+将指定的文件夹注册为`o3de_manifest.json` 文件中的默认受限目录。命令 --`create-from-template`, `create-project`, 和 `create-gem` --在实例化模板时使用默认的受限目录。
 
 ```cmd
 o3de.bat register --default-restricted-folder RESTRICTED_FOLDER_PATH
 ```
 
-Registers the specified folder as the default third-party directory in the `o3de_manifest.json` file. **Project Manager** uses the default third-party directory to set the `LY_3RDPARTY_PATH` option when configuring the CMake build solution.
+将指定的文件夹注册为`o3de_manifest.json`文件中的默认第三方目录。**Project Manager** 在配置 CMake 构建解决方案时使用默认的第三方目录来设置 `LY_3RDPARTY_PATH` 选项。
 
 ```cmd
 o3de.bat register --default-third-party folder THIRD_PARTY_FOLDER_PATH
@@ -896,144 +893,144 @@ o3de.bat register --default-third-party folder THIRD_PARTY_FOLDER_PATH
 
 <br>
 
-**Updating the `o3de_manifest.json` file**
+**更新 `o3de_manifest.json` 文件**
 
-Updates the `o3de_manifest.json` file. This command validates all of the registered objects, and then removes invalid objects.
+更新 `o3de_manifest.json` 文件。此命令将验证所有已注册的对象，然后删除无效对象。
 
 ```cmd
 o3de.bat register --update
 ```
 
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`--this-engine`**
 
-  The engine running this O3DE Python script.
+  运行此 O3DE Python 脚本的引擎。
 
 - **`-ep ENGINE_PATH, --engine-path ENGINE_PATH`**
 
-  The path to the engine that you want to register or deregister.
+  要注册或取消注册的引擎的路径。
 
 - **`-pp PROJECT_PATH, --project-path PROJECT_PATH`**
 
-  The path to the project that you want to register or deregister.
+  要注册或取消注册的项目的路径。
 
 - **`-gp GEM_PATH, --gem-path GEM_PATH`**
 
-  The path to the Gem that you want to register or deregister.
+  要注册或取消注册的 Gem 的路径。
 
 - **`-es EXTERNAL_SUBDIRECTORY, --external-subdirectory EXTERNAL_SUBDIRECTORY`**
 
-  The path to the external subdirectory that you want to register or deregister.
+  要注册或取消注册的外部子目录的路径。
 
 - **`-tp TEMPLATE_PATH, --template-path TEMPLATE_PATH`**
 
-  The path to the template that you want to register or deregister.
+  要注册或取消注册的模板的路径。
 
 - **`-rp RESTRICTED_PATH, --restricted-path RESTRICTED_PATH`**
 
-  The path to the restricted folder that you want to register or deregister.
+  要注册或取消注册的受限文件夹的路径。
 
 - **`-ru REPO_URI, --repo-uri REPO_URI`**
 
-  The path to the repository that you want to register or deregister.
+  要注册或取消注册的存储库的路径。
 
 - **`-aep ALL_ENGINES_PATH, --all-engines-path ALL_ENGINES_PATH`**
 
-  All of the engines that you want to register or deregister in the specified folder.
+  要在指定文件夹中注册或取消注册的所有引擎。
 
 - **`-app ALL_PROJECTS_PATH, --all-projects-path ALL_PROJECTS_PATH`**
 
-  All of the projects that you want to register or deregister in the specified folder.
+  要在指定文件夹中注册或取消注册的所有项目。
 
 - **`-agp ALL_GEMS_PATH, --all-gems-path ALL_GEMS_PATH`**
 
-  All of the Gems that you want to register or deregister in the specified folder.
+  要在指定文件夹中注册或取消注册的所有 Gem。
 
 - **`-atp ALL_TEMPLATES_PATH, --all-templates-path ALL_TEMPLATES_PATH`**
 
-  All of the templates that you want to register or deregister in the specified folder.
+  要在指定文件夹中注册或取消注册的所有模板。
 
 - **`-arp ALL_RESTRICTED_PATH, --all-restricted-path ALL_RESTRICTED_PATH`**
   
-  All of the restricted folders that you want to register or deregister in the specified folder.
+  要在指定文件夹中注册或取消注册的所有受限文件夹。
 
 - **`-aru ALL_REPO_URI, --all-repo-uri ALL_REPO_URI`**
   
-  All of the repositories that you want to register or deregister in the specified folder.
+  要在指定文件夹中注册或取消注册的所有存储库。
 
 - **`-def DEFAULT_ENGINES_FOLDER, --default-engines-folder DEFAULT_ENGINES_FOLDER`**
 
-  The path to the default engines folder that you want to register or deregister.
+  要注册或取消注册的默认 engines 文件夹的路径。
 
 - **`-dpf DEFAULT_PROJECTS_FOLDER, --default-projects-folder DEFAULT_PROJECTS_FOLDER`**
 
-  The path to the default projects folder that you want to register or deregister.
+  要注册或取消注册的默认项目文件夹的路径。
 
 - **`-dgf DEFAULT_GEMS_FOLDER, --default-gems-folder DEFAULT_GEMS_FOLDER`**
 
-  The path to the default Gems folder that you want to register or deregister.
+  要注册或取消注册的默认 Gems 文件夹的路径。
 
 - **`-dtf DEFAULT_TEMPLATES_FOLDER, --default-templates-folder DEFAULT_TEMPLATES_FOLDER`**
 
-  The path to the default templates folder that you want to register or deregister.
+  要注册或取消注册的默认 templates 文件夹的路径。
 
 - **`-drf DEFAULT_RESTRICTED_FOLDER, --default-restricted-folder DEFAULT_RESTRICTED_FOLDER`**
 
-  The path to the default restricted folder that you want to register or deregister.
+  要注册或取消注册的默认 restricted 文件夹的路径。
 
 - **`-dtpf DEFAULT_THIRD_PARTY_FOLDER, --default-third-party-folder DEFAULT_THIRD_PARTY_FOLDER`**
 
-  The path to the default third-party folder that you want to register or deregister.
+  要注册或取消注册的默认第三方文件夹的路径。
 
 - **`-u, --update`**
 
-  Refreshes the repository cache.
+  刷新存储库缓存。
 
 - **`-r, --remove`**
 
-  Deregisters the specified entry.
+  取消注册指定的条目。
 
 - **`-f, --force`**
 
-  Forces the registration information to update, if you made any modifications.
+  如果您进行了任何修改，则强制更新注册信息。
 
 - **`-dry, --dry-run`**
 
-  Performs a dry run, reporting the result, but does not actually change anything. 
+  执行试运行，报告结果，但实际上不会更改任何内容。
 
  
 **external-subdirectory:**  
-Use the following parameters with the `--external-subdirectory` option.
+将以下参数与`--external-subdirectory`选项一起使用。
 
 - **`-esep EXTERNAL_SUBDIRECTORY_ENGINE_PATH, --external-subdirectory-engine-path EXTERNAL_SUBDIRECTORY_ENGINE_PATH`**
 
-  If supplied, registers the external subdirectory with the `engine.json` file at the specified engine path.
+  如果提供，则在指定的引擎路径中用`engine.json`文件注册 external 子目录。
 
 - **`-espp EXTERNAL_SUBDIRECTORY_PROJECT_PATH, --external-subdirectory-project-path EXTERNAL_SUBDIRECTORY_PROJECT_PATH`**
 
-  If supplied, registers the external subdirectory with the `project.json` file at the specified project path. 
+  如果提供，则在指定的项目路径中用 `project.json` 文件注册 external 子目录。
 
 - **`-esgp EXTERNAL_SUBDIRECTORY_GEM_PATH, --external-subdirectory-gem-path EXTERNAL_SUBDIRECTORY_GEM_PATH`**
 
-  If supplied, registers the external subdirectory with the `gem.json` at the gem-path location. 
+  如果提供，则在 gem-path 位置使用`gem.json`注册外部子目录。
 
 - **`-frwom, --force-register-with-o3de-manifest`**
 
-  When set, forces the registration of the external subdirectory with the `~/.o3de/o3de_manifest.json`.
+  设置后，强制使用`~/.o3de/o3de_manifest.json`注册外部子目录。
 
 <!-------------------------------------------------------------->
 
 ## `register-show`
 
-Shows the O3DE objects that are registered in the `o3de_manifest.json` file. 
+显示在`o3de_manifest.json` 文件中注册的 O3DE 对象。
 
-### Format
+### 格式
 
 ```cmd
 register-show [-h]
@@ -1042,9 +1039,9 @@ register-show [-h]
                              [-ohf OVERRIDE_HOME_FOLDER]
 ```
 
-### Usage
+### 用法
 
-Outputs the `o3de_manifest.json` file.
+输出 `o3de_manifest.json` 文件。
 
 ```cmd
 o3de.bat register-show
@@ -1052,15 +1049,15 @@ o3de.bat register-show
 
 <br>
 
-**Showing registered engines**
+**显示已注册的引擎**
 
-Outputs the current engine that is registered in the `o3de_manifest.json` file. If you use `-v`, this command also outputs the contents of the current engine's `engine.json` file.
+输出在`o3de_manifest.json` 文件中注册的当前引擎。如果使用 `-v`，此命令还会输出当前引擎的`engine.json`文件的内容。
 
 ```cmd
 o3de.bat register-show --this-engine -v
 ```
 
-Outputs the list of engines that are registered in the `o3de_manifest.json` file. If you use `-v`, then this command outputs each engine's `engine.json` file. 
+输出在`o3de_manifest.json`文件中注册的引擎列表。如果使用 `-v`，则此命令将输出每个引擎的`engine.json`文件。
 
 ```cmd
 o3de.bat register-show --engines -v
@@ -1068,21 +1065,21 @@ o3de.bat register-show --engines -v
 
 <br>
 
-**Showing registered projects**
+**显示已注册的项目**
 
-Outputs the list of projects that are registered in the `o3de_manifest.json` file. If you use `-v`, then this command outputs each project's `project.json` file.
+输出在`o3de_manifest.json`文件中注册的项目列表。如果使用`-v`，则此命令将输出每个项目的`project.json`文件。
 
 ```cmd
 o3de.bat register-show --projects -v
 ```
 
-Outputs the list of projects that are registered in the current engine's `engine.json` file. If you use `-v`, then this command outputs each project's `project.json` file.
+输出在当前引擎的`engine.json`文件中注册的项目列表。如果使用`-v`，则此命令将输出每个项目的 `project.json` 文件。
 
 ```cmd
 o3de.bat register-show --engine-projects -v
 ```
 
-Outputs the list of projects that are registered in both the `o3de_manifest.json` file and the current engine's `engine.json` file. If you use `-v`, then this command outputs each project's `project.json` file.
+输出在`o3de_manifest.json`文件和当前引擎的 `engine.json` 文件中注册的项目列表。如果使用`-v`，则此命令将输出每个项目的`project.json`文件。
 
 ```cmd
 o3de.bat register-show --all-projects -v
@@ -1090,27 +1087,27 @@ o3de.bat register-show --all-projects -v
 
 <br>
 
-**Showing registered Gems**
+**显示已注册的 Gem**
 
-Outputs the list of Gems that are registered in the `o3de_manifest.json` file. If you use `-v`, then this command outputs each Gem's `gem.json` file.
+输出在`o3de_manifest.json`文件中注册的 Gem 列表。如果您使用 `-v`，则此命令将输出每个 Gem 的 `gem.json` 文件。
 
 ```cmd
 o3de.bat register-show --gems -v
 ```
 
-Outputs the list of Gems that are registered in the current engine's `engine.json` file. If you use `-v`, then this command outputs each Gem's `gem.json` file.
+输出在当前引擎的`engine.json`文件中注册的 Gem 列表。如果您使用 `-v`，则此命令将输出每个 Gem 的 `gem.json` 文件。
 
 ```cmd
 o3de.bat register-show --engine-gems -v
 ```
 
-Outputs the list of Gems that are registered in the specified project's `project.json` file. If you use `-v`, then this command outputs each Gem's `gem.json` file.
+输出在指定项目的 `project.json` 文件中注册的 Gem 列表。如果您使用 `-v`，则此命令将输出每个 Gem 的 `gem.json` 文件。
 
 ```cmd
 o3de.bat register-show --project-gems --project-path PROJECT_PATH -v
 ```
 
-Outputs the list of Gems that are registered in both the `o3de_manifest.json` file and the current engine's `engine.json` file. If you use `-v`, then this command outputs each Gem's `gem.json` file.
+输出在 `o3de_manifest.json` 文件和当前引擎的`engine.json`文件中注册的 Gem 列表。如果您使用 `-v`，则此命令将输出每个 Gem 的 `gem.json` 文件。
 
 ```cmd
 o3de.bat register-show --all-gems -v
@@ -1118,27 +1115,27 @@ o3de.bat register-show --all-gems -v
 
 <br>
 
-**Showing registered templates**
+**显示已注册的模板**
 
-Outputs the list of templates that are registered in the `o3de_manifest.json` file. If you use `-v`, then this command outputs each template's `template.json` file.
+输出在`o3de_manifest.json`文件中注册的模板列表。如果使用 `-v`，则此命令将输出每个模板的`template.json`文件。
 
 ```cmd
 o3de.bat register-show --templates -v
 ```
 
-Outputs the list of templates that are registered in the current engine's `engine.json` file. If you use `-v`, then this command outputs each template's `template.json` file.
+输出在当前引擎的`engine.json`文件中注册的模板列表。如果使用 `-v`，则此命令将输出每个模板的`template.json`文件。
 
 ```cmd
 o3de.bat register-show --engine-templates -v
 ```
 
-Outputs the list of templates that are registered in the specified project's `project.json` file. If you use `-v`, then this command outputs each template's `template.json` file.
+输出在指定项目的`project.json`文件中注册的模板列表。如果使用 `-v`，则此命令将输出每个模板的`template.json`文件。
 
 ```cmd
 o3de.bat register-show --project-templates --project-path PROJECT_PATH -v
 ```
 
-Outputs the list of templates that are registered in both the `o3de_manifest.json` file and the current engine's `engine.json` file. If you use `-v`, then this command outputs each template's `template.json` file.
+输出在 `o3de_manifest.json`  文件和当前引擎的 `engine.json` 文件中注册的模板列表。如果使用 `-v`，则此命令将输出每个模板的`template.json`文件。
 
 ```cmd
 o3de.bat register-show --all-templates -v
@@ -1146,27 +1143,27 @@ o3de.bat register-show --all-templates -v
 
 <br>
 
-**Showing registered restricted directories**
+**显示已注册的受限目录**
 
-Outputs the list of restricted directories that are registered in the `o3de_manifest.json` file. If you use `-v`, then this command outputs each restricted directory's `restricted.json` file.
+输出在`o3de_manifest.json`文件中注册的受限目录的列表。如果使用 `-v`，则此命令将输出每个受限目录的`restricted.json`文件。
 
 ```cmd
 o3de.bat register-show --restricted -v
 ```
 
-Outputs the list of restricted directories that are registered in the current engine's `engine.json` file. If you use `-v`, then this command outputs each restricted directory's `restricted.json` file.
+输出在当前引擎的 'engine.json' 文件中注册的受限目录的列表。 如果使用 `-v`，则此命令将输出每个受限目录的`restricted.json`文件。
 
 ```cmd
 o3de.bat register-show --engine-restricted -v
 ```
 
-Outputs the list of restricted directories that are registered in the specified project's `project.json` file. If you use `-v`, then this command outputs each restricted directory's `restricted.json` file.
+输出在指定项目的 `project.json` 文件中注册的受限目录列表。如果使用 `-v`，则此命令将输出每个受限目录的`restricted.json`文件。
 
 ```cmd
 o3de.bat register-show --project-restricted --project-path PROJECT_PATH -v
 ```
 
-Outputs the list of restricted directories that are registered in both the `o3de_manifest.json` file and the current engine's `engine.json` file. If you use `-v`, then this command outputs each restricted directory's `restricted.json` file.
+输出在`o3de_manifest.json`文件和当前引擎的 `engine.json` 文件中注册的受限目录列表。如果使用 `-v`，则此命令将输出每个受限目录的`restricted.json`文件。
 
 ```cmd
 o3de.bat register-show --all-restricted -v
@@ -1174,27 +1171,27 @@ o3de.bat register-show --all-restricted -v
 
 <br>
 
-**Showing registered external subdirectories**
+**显示已注册的外部子目录**
 
-Outputs the list of external subdirectories that are registered in the `o3de_manifest.json` file.
+输出在 `o3de_manifest.json` 文件中注册的外部子目录的列表。
 
 ```cmd
 o3de.bat register-show --external-subdirectories
 ```
 
-Outputs the list of external subdirectories that are registered in the current engine's `engine.json` file.
+输出在当前引擎的`engine.json`文件中注册的外部子目录的列表。
 
 ```cmd
 o3de.bat register-show --engine-external-subdirectories
 ```
 
-Outputs the list of external subdirectories that are registered in the specified project's `project.json` file.
+输出在指定项目的`project.json`文件中注册的外部子目录的列表。
 
 ```cmd
 o3de.bat register-show --project-external-subdirectories --project-path PROJECT_PATH
 ```
 
-Outputs the list of external subdirectories that are registered in both the `o3de_manifest.json` file and the current engine's `engine.json` file.
+输出在 `o3de_manifest.json`文件和当前引擎的 `engine.json` 文件中注册的外部子目录的列表。
 
 ```cmd
 o3de.bat register-show --all-external-subdirectories
@@ -1202,120 +1199,120 @@ o3de.bat register-show --all-external-subdirectories
 
 <br>
 
-**Showing registered repositories**
+**显示已注册的存储库**
 
-Outputs the list of repositories that are registered in the `o3de_manifest.json` file.
+输出在 `o3de_manifest.json` 文件中注册的存储库列表。
 
 ```cmd
 o3de.bat register-show --repos
 ```
 
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-te, --this-engine`**
 
-  Outputs the current engine's path.
+  输出当前引擎的路径。
 
 - **`-e, --engines`**
 
-  Outputs a list of the engines that are registered in the `o3de_manifest.json` file.
+  输出在 `o3de_manifest.json` 文件中注册的引擎列表。
 
 - **`-p, --projects`**
 
-  Outputs a list of the projects that are registered in the `o3de_manifest.json` file.
+  输出在`o3de_manifest.json` 文件中注册的项目列表。
 
 - **`-g, --gems`**
 
-  Outputs a list of the Gems that are registered in the `o3de_manifest.json` file.
+  输出在 `o3de_manifest.json` 文件中注册的 Gem 的列表。
 
 - **`-t, --templates`**
 
-  Outputs a list of the templates that are registered in the `o3de_manifest.json` file.
+  输出在 `o3de_manifest.json` 文件中注册的模板列表。
 
 - **`-r, --repos`**
 
-  Outputs a list of the repos that are registered in the `o3de_manifest.json` file.
+  输出在`o3de_manifest.json` 文件中注册的存储库列表。
 
 - **`-rs, --restricted`**
 
-  Outputs a list of the restricted directories that are registered in the `o3de_manifest.json` file.
+  输出在 `o3de_manifest.json` 文件中注册的受限目录的列表。
 
 - **`-ep, --engine-projects`**
 
-  Outputs a list of the projects that are registered in the current engine's `engine.json` file. 
+  输出在当前引擎的 `engine.json` 文件中注册的项目列表。 
 
 - **`-eg, --engine-gems`**
 
-  Outputs a list of the Gems that are registered in the current engine's `engine.json` file. 
+  输出在当前引擎的 `engine.json` 文件中注册的 Gem 列表。
 
 - **`-et, --engine-templates`**
 
-  Outputs a list of the templates that are registered in the current engine's `engine.json` file. 
+  输出在当前引擎的 `engine.json` 文件中注册的模板列表。
 
 - **`-ers, --engine-restricted`**
 
-  Outputs a list of the restricted directories that are registered in the current engine's `engine.json` file.
+  输出在当前引擎的 `engine.json` 文件中注册的受限目录的列表。
 
 - **`-ees, --engine-external-subdirectories`**
 
-  Outputs a list of the external subdirectories that are registered in the current engine's `engine.json` file.
+  输出在当前引擎的`engine.json`文件中注册的外部子目录的列表。
 
 - **`-pg, --project-gems`**
 
-  Outputs a list of the Gems that are registered in the specified project's `project.json` file. You must specify the project using the `-pp` or `-pn` options.
+  输出在指定项目的`project.json`文件中注册的 Gem 列表。 您必须使用 `-pp` 或 `-pn` 选项指定项目。
 
 - **`-pt, --project-templates`**
 
-  Outputs a list of the templates that are registered in the specified project's `project.json` file. You must specify the project using the `-pp` or `-pn` options.
+  输出在指定项目的 `project.json`文件中注册的模板列表。 您必须使用 `-pp` 或 `-pn` 选项指定项目。
 
 - **`-prs, --project-restricted`**
 
-  Outputs a list of the restricted directories that are registered in the specified project's `project.json` file. You must specify the project using the `-pp` or `-pn` options.
+  输出在指定项目的 `project.json` 文件中注册的受限目录的列表。您必须使用 `-pp` 或 `-pn` 选项指定项目。
 
 - **`-pes, --project-external-subdirectories`**
 
-  Outputs a list of the external subdirectories that are registered in the specified project's `project.json` file. You must specify the project using the `-pp` or `-pn` options.
+  输出在指定项目的 `project.json` 文件中注册的外部子目录的列表。您必须使用 `-pp` 或 `-pn` 选项指定项目。
 
 - **`-ap, --all-projects`**
 
-  Outputs all of the projects that are registered in the `o3de_manifest.json` file and the current engine's `engine.json` file. 
+  输出在 `o3de_manifest.json` 文件和当前引擎的 `engine.json` 文件中注册的所有项目。 
 
 - **`-ag, --all-gems`**
 
-  Outputs all of the Gems that are registered in the `o3de_manifest.json` file and the current engine's `engine.json` file.
+  输出在`o3de_manifest.json`文件和当前引擎的`engine.json`文件中注册的所有 Gem。
 
 - **`-at, --all-templates`**
 
-  Outputs all of the templates that are registered in the `o3de_manifest.json` file and the current engine's `engine.json` file. 
+  输出在`o3de_manifest.json`文件和当前引擎的`engine.json`文件中注册的所有模板。
 
 - **`-ares, --all-restricted`**
 
-  Outputs all of the restricted directories that are registered in the `o3de_manifest.json` file and the current engine's `engine.json` file.
+  输出在`o3de_manifest.json`文件和当前引擎的`engine.json`文件中注册的所有受限目录。
 
 - **`-aes, --all-external-subdirectories`**
 
-  Outputs all of the external subdirectories that are registered in the `o3de_manifest.json` file and the current engine's `engine.json` file.
+  输出在`o3de_manifest.json`文件和当前引擎的`engine.json` 文件中注册的所有外部子目录。
 
 - **`-v, --verbose`**
 
-  If specified, outputs the contents of the listed files.
+  如果指定，则输出所列文件的内容。
 
 - **`-pp PROJECT_PATH, --project-path PROJECT_PATH`**
 
-  The path to a project.
+  项目的路径。
 
 - **`-pn PROJECT_NAME, --project-name PROJECT_NAME`**
 
-  The name of a project.
+  项目的名称。
 
 - **`-ohf OVERRIDE_HOME_FOLDER, --override-home-folder OVERRIDE_HOME_FOLDER`**
 
-  Overrides the default home folder with the specified folder. By default, the home folder is the user folder. 
+  使用指定的文件夹覆盖默认主文件夹。默认情况下，主文件夹是用户文件夹。
 
 
 
@@ -1323,9 +1320,9 @@ o3de.bat register-show --repos
 
 ## `get-registered`
 
-Shows the path to the registered O3DE object with the specified name.
+显示具有指定名称的已注册 O3DE 对象的路径。
 
-### Format
+### 格式
 
 ```cmd
 get-registered [-h]
@@ -1333,121 +1330,121 @@ get-registered [-h]
                     [-ohf OVERRIDE_HOME_FOLDER]
 ```
 
-### Usage
+### 用法
 
-Returns the first path of an engine that has the specified `engine_name` value. 
+返回具有指定 `engine_name` 值的引擎的第一个路径。
 
 ```cmd
 o3de.bat get-registered --engine-name ENGINE_NAME
 ```
 
-Returns the first path of a project that has the specified `project_name` value. 
+返回具有指定`project_name`值的项目的第一个路径。
 
 ```cmd
 o3de.bat get-registered --project-name PROJECT_NAME
 ```
 
-Returns the first path of a Gem that has the specified `gem_name` value. 
+返回具有指定 `gem_name` 值的 Gem 的第一个路径。
 
 ```cmd
 o3de.bat get-registered --gem-name GEM_NAME
 ```
 
-Returns the first path of a template that has the specified `template_name` value.
+返回具有指定 `template_name` 值的模板的第一个路径。
 
 ```cmd
 o3de.bat get-registered --template-name TEMPLATE_NAME
 ```
 
-Returns the first path of a restricted directory that has the specified `restricted_name` value.
+返回具有指定 `restricted_name` 值的受限目录的第一个路径。
 
 ```cmd
 o3de.bat get-registered --restricted-name RESTRICTED_NAME
 ```
 
-Returns the first URI for a repository that has the specified `repo_name` value.
+返回具有指定 `repo_name` 值的存储库的第一个 URI。
 
 ```cmd
 o3de.bat get-registered --repo-name REPO_NAME
 ```
 
-Returns the default engine folder that is registered in the `o3de_manifest.json` file.
+返回在 `o3de_manifest.json` 文件中注册的默认 engine 文件夹。
 
 ```cmd
 o3de.bat get-registered --default-folder engines
 ```
 
-Returns the default projects folder that is registered in the `o3de_manifest.json` file.
+返回在 `o3de_manifest.json` 文件中注册的默认项目文件夹。
 
 ```cmd
 o3de.bat get-registered --default-folder projects
 ```
 
-Returns the default Gems folder that is registered in the `o3de_manifest.json` file.
+返回在`o3de_manifest.json`文件中注册的默认 Gems 文件夹。
 
 ```cmd
 o3de.bat get-registered --default-folder gems
 ```
 
-Returns the default templates folder that is registered in the `o3de_manifest.json` file. 
+返回在`o3de_manifest.json`文件中注册的默认 templates 文件夹。
 
 ```cmd
 o3de.bat get-registered --default-folder templates
 ```
 
-Returns the default restricted folder that is registered in the `o3de_manifest.json` file.
+返回在`o3de_manifest.json`文件中注册的默认受限文件夹。
 
 ```cmd
 o3de.bat get-registered --default-folder restricted
 ```
 
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-en ENGINE_NAME, --engine-name ENGINE_NAME`**
 
-  The name of an engine.
+  引擎的名称。
 
 - **`-pn PROJECT_NAME, --project-name PROJECT_NAME`**
 
-  The name of a project.
+  项目的名称。
 
 - **`-gn GEM_NAME, --gem-name GEM_NAME`**
 
-  The name of a Gem.
+  Gem 的名称。
 
 - **`-tn TEMPLATE_NAME, --template-name TEMPLATE_NAME`**
 
-  The name of a template.
+  模板的名称。
 
 - **`-df {engines,projects,gems,templates,restricted}, --default-folder {engines,projects,gems,templates,restricted}`**
 
-  The default folders for engines, projects, Gems, templates, and restricted folders in O3DE.
+  O3DE 中引擎、项目、Gem、模板和受限文件夹的默认文件夹。
 
 - **`-rn REPO_NAME, --repo-name REPO_NAME`**
 
-  The name of a repository. 
+  存储库的名称。
 
 - **`-rsn RESTRICTED_NAME, --restricted-name RESTRICTED_NAME`**
 
-  The name of a restricted folder.
+  受限制文件夹的名称。
 
 - **`-ohf OVERRIDE_HOME_FOLDER, --override-home-folder OVERRIDE_HOME_FOLDER`**
 
-  Overrides the default home folder with the specified folder. By default, the home folder is the user folder. 
+  使用指定的文件夹覆盖默认主文件夹。默认情况下，主文件夹是用户文件夹。
 
 
 <!-------------------------------------------------------------->
 
 ## `enable-gem`
 
-Enables the specified Gem in your project, so that you can use the assets or code that the Gem provides. When you enable a Gem, this command adds its name to your project's `Code/enabled_gems.cmake` file, which adds the Gem as a build and load dependency of your project's **Game Launcher**, the Editor, and Asset Processor.
+在项目中启用指定的 Gem，以便您可以使用 Gem 提供的资产或代码。启用 Gem 时，此命令会将其名称添加到项目的`Code/enabled_gems.cmake`文件中，该文件会将 Gem 添加为项目的 **Game Launcher**、Editor 和 Asset Processor 的构建和加载依赖项。
 
-### Format
+### 格式
 
 ```cmd
 enable-gem [-h] [-v] (-pp PROJECT_PATH | -pn PROJECT_NAME)
@@ -1455,62 +1452,62 @@ enable-gem [-h] [-v] (-pp PROJECT_PATH | -pn PROJECT_NAME)
                           [-o]
 ```
 
-### Usage
+### 用法
 
 ```cmd
 o3de.bat enable-gem -gp GEM_PATH -pp PROJECT_PATH
 ```
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-v`**
 
-  Additional logging verbosity, can be -v or -vv
+  其他日志记录详细程度， 可以是-v 或 -vv
 
 - **`-pp PROJECT_PATH, --project-path PROJECT_PATH`**
 
-  The path to the project.
+  项目的路径。
 
 - **`-pn PROJECT_NAME, --project-name PROJECT_NAME`**
 
-  The name of the project.
+  项目的名称。
 
 - **`-gp GEM_PATH, --gem-path GEM_PATH`**
 
-  The path to the Gem.
+  Gem 的路径。
 
 - **`-gn GEM_NAME, --gem-name GEM_NAME`**
 
-  The name of the Gem (e.g. "atom"). May also include a version specifier, e.g. "atom>=1.2.3"
+  Gem 的名称（例如 “atom”）。还可以包括版本说明符，例如 "atom>=1.2.3"
 
 - **`agp [ALL_GEM_PATHS ...], --all-gem-paths [ALL_GEM_PATHS ...]`**
 
-  Explicitly activates all gems in the path recursively.
+  以递归方式显式激活路径中的所有 Gem。
 
 - **`-f, --force`**
 
-  Bypass version compatibility checks
+  绕过版本兼容性检查
 
 - **`-dry, --dry-run`**
 
-  Performs a dry run, reporting the result without changing anything.      
+  执行试运行，报告结果而不更改任何内容。     
 
 - **`-o, --optional`**
 
-  Marks the gem as optional so a project can still be configured if not found.
+  将 Gem 标记为可选，以便在未找到项目时仍可配置项目。
 
 
 <!-------------------------------------------------------------->
 
 ## `disable-gem`
 
-Disables the specified Gem in your project. When you disable a Gem, this command removes it from the project's `Code/enabled_gems.cmake` file, which removes the Gem as a build and load dependency of your project's Game Launcher, the Editor, and Asset Processor.
+在项目中禁用指定的 Gem。禁用 Gem 时，此命令会将其从项目的`Code/enabled_gems.cmake`文件中删除，从而将 Gem 作为项目的 Game Launcher、Editor 和 Asset Processor 的构建和加载依赖项删除。
 
-### Format
+### 格式
 
 ```cmd
 disable-gem [-h] [-v] (-pp PROJECT_PATH | -pn PROJECT_NAME)
@@ -1518,50 +1515,50 @@ disable-gem [-h] [-v] (-pp PROJECT_PATH | -pn PROJECT_NAME)
             [-egf ENABLED_GEM_FILE]
 ```
 
-### Usage
+### 用法
 
 ```cmd
 o3de.bat disable-gem -gp GEM_PATH -pp PROJECT_PATH
 ```
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-pp PROJECT_PATH, --project-path PROJECT_PATH`**
 
-  The path to the project.
+  项目的路径。
 
 - **`-pn PROJECT_NAME, --project-name PROJECT_NAME`**
 
-  The name of the project.
+  项目的名称。
 
 - **`-gp GEM_PATH, --gem-path GEM_PATH`**
 
-  The path to the Gem.
+  Gem 的路径。
 
 - **`-gn GEM_NAME, --gem-name GEM_NAME`**
 
-  The name of the Gem.
+  Gem 的名称。
 
 - **`-agp [ALL_GEM_PATHS ...], --all-gem-paths [ALL_GEM_PATHS ...]`**
 
-  Removes explicit activation of all gems in the path recursively.
+  以递归方式删除路径中所有 Gem 的显式激活。
 
 - **`-egf ENABLED_GEM_FILE, --enabled-gem-file ENABLED_GEM_FILE`**
 
-  The CMake file that manages the list of enabled Gems. When disabling a Gem, this command removes it from the specified file. If not specified, this command uses the `Code/enabled_gem.cmake` file.
+  管理已启用 Gem 列表的 CMake 文件。禁用 Gem 时，此命令会将其从指定文件中删除。如果未指定，则此命令使用 `Code/enabled_gem.cmake` 文件。
 
 
 <!-------------------------------------------------------------->
 
 ## `edit-engine-properties`
 
-Edits the specified engine's properties by modifying the `engine.json` file. 
+通过修改 `engine.json` 文件来编辑指定引擎的属性。
 
-### Format
+### 格式
 
 ```cmd
 edit-engine-properties [-h] 
@@ -1574,9 +1571,9 @@ edit-engine-properties [-h]
                         [REPLACE_API_VERSIONS ...]]
 ```
 
-### Usage
+### 用法
 
-Updates the `engine_name` field in the `engine.json` file located in the specified engine's folder.
+更新位于指定引擎文件夹中的 `engine.json` 文件中的`engine_name` 字段。
 
 ```cmd
 o3de.bat edit-engine-properties --engine-path ENGINE_PATH --engine-new-name ENGINE_NEW_NAME
@@ -1587,73 +1584,70 @@ o3de.bat edit-engine-properties --engine-name ENGINE_NAME --engine-new-name ENGI
 ```
 
 
-### Optional parameters
+### 可选参数
 
   
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-ep ENGINE_PATH, --engine-path ENGINE_PATH`**
 
-  The path to the engine.
+  引擎的路径。
 
 - **`-en ENGINE_NAME, --engine-name ENGINE_NAME`**
 
-  The name of the engine.
+  引擎的名称。
 
 - **`-agn [ADD_GEM_NAMES ...], --add-gem-names [ADD_GEM_NAMES ...]`**
 
-  Adds gem name(s) to gem_names field. Space delimited list, for example: -agn A B C`
+  将 Gem 名称添加到gem_names字段。空格分隔列表，例如： -agn A B C`
 
 - **`-dgn [DELETE_GEM_NAMES ...], --delete-gem-names [DELETE_GEM_NAMES ...]`**
 
-  Removes gem name(s) from the gem_names field. Space delimited list, for example: `-dgn A B C`
+  从 gem_names 字段中删除 Gem 名称。空格分隔列表，例如： `-dgn A B C`
 
 - **`-rgn [REPLACE_GEM_NAMES ...], --replace-gem-names [REPLACE_GEM_NAMES ...]`**
 
-  Replace entirety of `gem_names` field with space delimited list of values  
+  将整个`gem_names`字段替换为以空格分隔的值列表
 
 - **`-aav [ADD_API_VERSIONS ...], --add-api-versions [ADD_API_VERSIONS ...]`**
 
-  Adds api verion(s) to the api_versions field, replacing existing
-  version if the api entry already exists. Space delimited list of
-  key=value pairs, for example: `-aav framework=1.2.3`
+  将 api 版本添加到 api_versions 字段，如果 api 条目已存在，则替换现有版本。以空格分隔的 key=value 对列表，例如： `-aav framework=1.2.3`
 
 - **`-dav [DELETE_API_VERSIONS ...], --delete-api-versions [DELETE_API_VERSIONS ...]`**
 
-  Removes api entries from the api_versions field. Space delimited list, for example: `-dav framework`
+  从 api_versions 字段中删除 api 条目。空格分隔列表，例如： `-dav framework`
 
 - **`-rav [REPLACE_API_VERSIONS ...], --replace-api-versions [REPLACE_API_VERSIONS ...]`**
 
-  Replace entirety of api_versions field with space delimited list of      
-  key=value pairs, for example: `-rav framework=1.2.3`
+  将整个字段替换为以空格分隔的 key=value 对列表api_versions例如： `-rav framework=1.2.3`
 
 
-**Engine properties:**
+**引擎属性：**
 
-The following parameters modify the specified engine's properties.
+以下参数修改指定引擎的属性。
   
 - **`-enn ENGINE_NEW_NAME, --engine-new-name ENGINE_NEW_NAME`**
 
-  Sets the engine's name. 
+  设置引擎的名称。
 
 - **`-ev ENGINE_VERSION, --engine-version ENGINE_VERSION`**
 
-  Sets the engine's version.
+  设置引擎的版本。
 
 - **`-edv ENGINE_DISPLAY_VERSION, --engine-display-version ENGINE_DISPLAY_VERSION`**
 
-  Sets the display version for the engine.
+  设置引擎的显示版本。
 
 
 <!-------------------------------------------------------------->
 
 ## `edit-project-properties`
 
-Edits the specified project's properties by modifying the `project.json` file. 
+通过修改 `project.json` 文件来编辑指定项目的属性。
 
-### Format 
+### 格式 
 
 ```cmd
 edit-project-properties [-h] 
@@ -1674,163 +1668,156 @@ edit-project-properties [-h]
                         -rav [REPLACE_ENGINE_API_DEPENDENCIES ...]]
 ```
 
-### Usage
+### 用法
 
-Updates the `project_name` field in the `gem.json` file located in the supplied project path or at the path of the registered project.
+更新位于提供的项目路径或已注册项目路径中的`gem.json`文件中的`project_name`字段。
 
 ```cmd
 o3de.bat edit-project-properties --project-path PROJECT_PATH --project-new-name PROJECT_NEW_NAME
 o3de.bat edit-project-properties --project-name PROJECT_NAME --project-new-name PROJECT_NEW_NAME
 ```
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Shows the help message.
+  显示帮助消息。
 
 - **`-pp PROJECT_PATH, --project-path PROJECT_PATH`**
 
-  The path to the project.
+  项目的路径。
 
 - **`-pn PROJECT_NAME, --project-name PROJECT_NAME`**
 
-  The name of the project.
+  项目的名称。
 
 - **`-at [ADD_TAGS [ADD_TAGS ...]], --add-tags [ADD_TAGS [ADD_TAGS ...]]`**
 
-  Adds tags to the `user_tags` property. To add multiple tags, use a space-delimited list. For example: `-at A B C`.
+  向 `user_tags` 属性添加标记。要添加多个标签，请使用以空格分隔的列表。例如： `-at A B C`.
 
 - **`-dt [DELETE_TAGS [DELETE_TAGS ...]], --delete-tags [DELETE_TAGS [DELETE_TAGS ...]]`**
 
-  Removes tags from the `user_tags` property. To delete multiple tags, use a space-delimited list. For example: `-dt A B C`.
+  从 `user_tags` 属性中删除标记。要删除多个标签，请使用以空格分隔的列表。例如： `-dt A B C`.
 
 - **`-rt [REPLACE_TAGS [REPLACE_TAGS ...]], --replace-tags [REPLACE_TAGS [REPLACE_TAGS ...]]`**
 
-  Replaces the `user_tags` property with the specified space-delimited list of values.
+  将 `user_tags` 属性替换为指定的以空格分隔的值列表。
 
 - **`-agn [ADD_GEM_NAMES ...], --add-gem-names [ADD_GEM_NAMES ...]`**
 
-  Adds gem name(s) to gem_names field. Space delimited list, for example: `-agn A B C`
+  将 Gem 名称添加到gem_names字段。空格分隔列表，例如： `-agn A B C`
 
 - **`-dgn [DELETE_GEM_NAMES ...], --delete-gem-names [DELETE_GEM_NAMES ...]`**
 
-  Removes gem name(s) from the gem_names field. Space delimited list, for example: `-dgn A B C`
+  从 gem_names 字段中删除 Gem 名称。空格分隔列表，例如： `-dgn A B C`
 
 - **`-rgn [REPLACE_GEM_NAMES ...], --replace-gem-names [REPLACE_GEM_NAMES ...]`**
 
-  Replace entirety of gem_names field with space delimited list of values  
+  将整个字段替换为以空格分隔的值列表gem_names
 
 - **`-aev [ADD_COMPATIBLE_ENGINES ...], --add-compatible-engines [ADD_COMPATIBLE_ENGINES ...]`**       
 
-  Add engine version(s) this project is compatible with. Space delimited   
-  list, for example: `-aev o3de>=1.2.3 o3de-sdk~=2.3`.
+  添加与此项目兼容的引擎版本。空格分隔列表，例如： `-aev o3de>=1.2.3 o3de-sdk~=2.3`.
 
 - **`-dev [DELETE_COMPATIBLE_ENGINES ...], --delete-compatible-engines [DELETE_COMPATIBLE_ENGINES ...]`**
 
-  Removes engine version(s) from the compatible_engines property. Space    
-  delimited list, for example: `-dev o3de>=1.2.3 o3de-sdk~=2.3`.
+  从 compatible_engines 属性中删除引擎版本。空格分隔列表，例如： `-dev o3de>=1.2.3 o3de-sdk~=2.3`.
 
 - **`-rev [REPLACE_COMPATIBLE_ENGINES ...], --replace-compatible-engines [REPLACE_COMPATIBLE_ENGINES ...]`**
 
-  Replace entirety of compatible_engines field with space delimited list   
-  of values.
+  将整个字段替换为compatible_engines空格分隔的值列表。
 
 - **`-aav [ADD_ENGINE_API_DEPENDENCIES ...], --add-engine-api-dependencies [ADD_ENGINE_API_DEPENDENCIES ...]`**
 
-  Add engine api dependencies this gem is compatible with. Can be
-  specified multiple times.
+  添加与此 Gem 兼容的引擎 api 依赖项。可以多次指定。
 
 - **`-dav [DELETE_ENGINE_API_DEPENDENCIES ...], --delete-engine-api-dependencies [DELETE_ENGINE_API_DEPENDENCIES ...]`**
 
-  Removes engine api dependencies from the compatible_engines property.    
-  Can be specified multiple times.
+  从 compatible_engines 属性中删除引擎 API 依赖项。   
+  可以多次指定。
 
 - **`-rav [REPLACE_ENGINE_API_DEPENDENCIES ...], --replace-engine-api-dependencies [REPLACE_ENGINE_API_DEPENDENCIES ...]`**
 
-  Replace engine api dependencies in the compatible_engines property. Can  
-  be specified multiple times.
+  替换 compatible_engines 属性中的引擎 API 依赖项。可以多次指定。
 
-**Project properties:**
+**项目属性：**
 
-The following parameters modify the specified project's properties.
+以下参数修改指定工程的属性。
 
 - **`-pv PROJECT_VERSION, --project-version PROJECT_VERSION`**
 
-  Sets the project version.
+  设置项目版本。
 
 - **`-pnn PROJECT_NEW_NAME, --project-new-name PROJECT_NEW_NAME`**
 
-  Sets the name for the project.
+  设置项目的名称。
 
 - **`-pid PROJECT_ID, --project-id PROJECT_ID`**
 
-  Sets the ID for the project.
+  设置项目的 ID。
 
 - **`-en ENGINE_NAME, --engine-name ENGINE_NAME`**
 
-  Sets the engine name for the project.
+  设置项目的引擎名称。
 
 - **`-efcp ENGINE_FINDER_CMAKE_PATH, --engine-finder-cmake-path ENGINE_FINDER_CMAKE_PATH`**
 
-  Sets the path to the engine finder cmake file for this project.
+  设置此项目的引擎查找器 cmake 文件的路径。
 
 - **`-ep ENGINE_PATH, --engine-path ENGINE_PATH`**
 
-  Sets the engine path for the project. 
+  设置项目的引擎路径。
 {{< note >}}
-  This setting is only allowed with  the `--user` argument to avoid adding local paths to the shared `project.json`
+  此设置仅允许使用`--user`参数，以避免将本地路径添加到共享的 `project.json`
 {{< /note >}}
 
 - **`-po PROJECT_ORIGIN, --project-origin PROJECT_ORIGIN`**
 
-  Sets description or url for project origin (such as project host,        
-  repository, owner...etc).
+  设置项目来源的描述或 URL（例如项目主机、存储库、所有者...等）。
 
 - **`-pd PROJECT_DISPLAY, --project-display PROJECT_DISPLAY`**
 
-  Sets the project display name.
+  设置项目显示名称。
 
 - **`-ps PROJECT_SUMMARY, --project-summary PROJECT_SUMMARY`**
 
-  Sets the summary description of the project.
+  设置项目的摘要描述。
 
 - **`-pi PROJECT_ICON, --project-icon PROJECT_ICON`**
 
-  Sets the path to the projects icon resource.
+  设置 projects 图标资源的路径。
 
 - **`--user`**
 
-  Make changes to the `<project>/user/project.json` only. This is useful to  
-  locally override settings in `<project>/project.json` which are shared. 
+  仅对 `<project>/user/project.json` 进行更改。这对于在本地覆盖`<project>/project.json`中共享的设置很有用。
 
 - **`-pnn PROJECT_NEW_NAME, --project-new-name PROJECT_NEW_NAME`**
 
-  Sets the project's name.
+  设置项目的名称。
 
 - **`-po PROJECT_ORIGIN, --project-origin PROJECT_ORIGIN`**
 
-  Sets the description or URL for the project origin, such as the project host, repository, or owner.
+  设置项目源的描述或 URL，例如项目主机、存储库或所有者。
 
 - **`-pd PROJECT_DISPLAY, --project-display PROJECT_DISPLAY`**
 
-  Sets the project's display name.
+  设置项目的显示名称。
 
 - **`-ps PROJECT_SUMMARY, --project-summary PROJECT_SUMMARY`**
 
-  Sets the project's summary description.
+  设置项目的摘要描述。
 
 - **`-pi PROJECT_ICON, --project-icon PROJECT_ICON`**
 
-  Sets the path to the project's icon resource.
+  设置项目的 icon 资源的路径。
 
 <!-------------------------------------------------------------->
 
 ## `edit-gem-properties`
 
-Edits the specified Gem's properties by modifying the `gem.json` file. 
+通过修改`gem.json`文件来编辑指定 Gem 的属性。
 
-### Format
+### 格式
 
 ```cmd
 edit-gem-properties [-h] 
@@ -1849,9 +1836,9 @@ edit-gem-properties [-h]
                     -apl [ADD_PLATFORMS ...] | -dpl [REMOVE_PLATFORMS ...] | -rpl [REPLACE_PLATFORMS ...]]
 ```
 
-### Usage
+### 用法
 
-Updates the `gem_name` field in the `gem.json` file located in the specified Gem's folder.
+更新位于指定 Gem 文件夹中的 `gem.json`文件中的 `gem_name` 字段。
 
 ```cmd
 o3de.bat edit-gem-properties --gem-path GEM_PATH --gem-new-name GEM_NEW_NAME
@@ -1861,132 +1848,124 @@ o3de.bat edit-gem-properties --gem-path GEM_PATH --gem-new-name GEM_NEW_NAME
 o3de.bat edit-gem-properties --gem-name GEM_NAME --gem-new-name GEM_NEW_NAME
 ```
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
   
-  Shows the help message.
+  显示帮助消息。
 
 - **`-gp GEM_PATH, --gem-path GEM_PATH`**
 
-  The path to the Gem.
+  Gem 的路径。
 
 - **`-gn GEM_NAME, --gem-name GEM_NAME`**
 
-  The name of the Gem.
+  Gem 的名称。
 
 - **`-aev [ADD_COMPATIBLE_ENGINES ...], --add-compatible-engines [ADD_COMPATIBLE_ENGINES ...]`**
 
-  Add engine version(s) this gem is compatible with. Can be specified      
-  multiple times.
+  添加与此 Gem 兼容的引擎版本。可以多次指定。
 
 - **`  -dev [REMOVE_COMPATIBLE_ENGINES ...], --remove-compatible-engines [REMOVE_COMPATIBLE_ENGINES ...]`**
 
-  Removes engine version(s) from the compatible_engines property. Can be   
-  specified multiple times.
+  从 compatible_engines 属性中删除引擎版本。可以多次指定。
 
 - **`  -rev [REPLACE_COMPATIBLE_ENGINES ...], --replace-compatible-engines [REPLACE_COMPATIBLE_ENGINES ...]`**
 
-  Replace engine version(s) in the compatible_engines property. Can be     
-  specified multiple times.
+  替换 compatible_engines 属性中的引擎版本。可以多次指定。
 
 - **`  -aav [ADD_ENGINE_API_DEPENDENCIES ...], --add-engine-api-dependencies [ADD_ENGINE_API_DEPENDENCIES ...]`**
 
-  Add engine api dependency version(s) this gem is compatible with. Can    
-  be specified multiple times.
+  添加与此 Gem 兼容的引擎 api 依赖项版本。可以多次指定。
 
 - **`  -dav [REMOVE_ENGINE_API_DEPENDENCIES ...], --remove-engine-api-dependencies [REMOVE_ENGINE_API_DEPENDENCIES ...]`**
 
-  Removes engine api dependency version(s) from the compatible_engines     
-  property. Can be specified multiple times.
+  从 compatible_engines 属性中删除引擎 API 依赖项版本。可以多次指定。
 
 - **`  -rav [REPLACE_ENGINE_API_DEPENDENCIES ...], --replace-engine-api-dependencies [REPLACE_ENGINE_API_DEPENDENCIES ...]`**
 
-  Replace engine api dependency(s) in the compatible_engines property.     
-  Can be specified multiple times.
+  替换 compatible_engines 属性中的引擎 API 依赖项。  
+  可以多次指定。
 
 - **`-at [ADD_TAGS [ADD_TAGS ...]], --add-tags [ADD_TAGS [ADD_TAGS ...]]`**
 
-  Adds tags to the `user_tags` property. To add multiple tags, use a space-delimited list. For example: `-at A B C`.
+  向 `user_tags` 属性添加标记。要添加多个标签，请使用以空格分隔的列表。例如： `-at A B C`.
 
 - **`-dt [DELETE_TAGS [DELETE_TAGS ...]], --delete-tags [DELETE_TAGS [DELETE_TAGS ...]]`**
 
-  Removes tags from the `user_tags` property. To delete multiple tags, use a space-delimited list. For example: `-dt A B C`.
+  从 `user_tags` 属性中删除标记。要删除多个标签，请使用以空格分隔的列表。例如： `-dt A B C`.
 
 - **`-rt [REPLACE_TAGS [REPLACE_TAGS ...]], --replace-tags [REPLACE_TAGS [REPLACE_TAGS ...]]`**
   
-  Replaces the `user_tags` property with the specified space-delimited list of values.
+  将 `user_tags` 属性替换为指定的以空格分隔的值列表。
 
 - **`-apl [ADD_PLATFORMS ...], --add-platforms [ADD_PLATFORMS ...]`**
 
-  Adds platform(s) to platforms property. Can be specified multiple        
-  times.
+  将 platform（s） 添加到 platforms 属性。可以多次指定。
 
 - **`-dpl [REMOVE_PLATFORMS ...], --remove-platforms [REMOVE_PLATFORMS ...]`**
 
-  Removes platform(s) from the platforms property. Can be specified        
-  multiple times.
+  从 platforms 属性中删除 platform（s）。可以多次指定。
 
 - **`-rpl [REPLACE_PLATFORMS ...], --replace-platforms [REPLACE_PLATFORMS ...]`**
 
-  Replace platform(s) in platforms property. Can be specified multiple     
-  times.
+  替换 platforms 属性中的 platform（s）。可以多次指定。
 
-**Gem properties:**
+**Gem 属性:**
 
-  The following parameters modify the specified Gem's properties.
+  以下参数修改指定 Gem 的属性。
 
 - **`-gnn GEM_NEW_NAME, --gem-new-name GEM_NEW_NAME`**
 
-  Sets the Gem's name.
+  设置 Gem 的名称。
 
 - **`-gd GEM_DISPLAY, --gem-display GEM_DISPLAY`**
 
-  Sets the Gem's display name.
+  设置 Gem 的显示名称。
 
 - **`-go GEM_ORIGIN, --gem-origin GEM_ORIGIN`**
 
-  Sets the description or URL for the Gem's origin, such as the Gem host, repository, or owner.
+  设置 Gem 源的描述或 URL，例如 Gem 主机、存储库或所有者。
 
 - **`-gt {Code,Tool,Asset}, --gem-type {Code,Tool,Asset}`**
 
-  Sets the Gem type to either Code, Tool, or Asset.
+  将 Gem 类型设置为 Code、Tool 或 Asset。
 
 - **`-gs GEM_SUMMARY, --gem-summary GEM_SUMMARY`**
 
-  Sets the Gem's summary description.
+  设置 Gem 的摘要描述。
 
 - **`-gi GEM_ICON, --gem-icon GEM_ICON`**
 
-  Sets the path to the Gem's icon resource.
+  设置 Gem 的 icon 资源的路径。
 
 - **`-gr GEM_REQUIREMENTS, --gem-requirements GEM_REQUIREMENTS`**
 
-  Sets the description of the requirements that are needed to use the Gem.
+  设置使用 Gem 所需的要求的描述。
 
 - **`-gdu GEM_DOCUMENTATION_URL, --gem-documentation-url GEM_DOCUMENTATION_URL`**
 
-  Sets the url for documentation of the gem.
+  设置 Gem 文档的 URL。
 
 - **`-gl GEM_LICENSE, --gem-license GEM_LICENSE`**
 
-  Sets the name for the license of the gem.
+  设置 Gem 许可证的名称。
 
 - **`-glu GEM_LICENSE_URL, --gem-license-url GEM_LICENSE_URL`**
 
-  Sets the url for the license of the gem.
+  设置 Gem 许可证的 URL。
 
 - **`-gv GEM_VERSION, --gem-version GEM_VERSION`**
 
-  Sets the version of the gem.
+  设置 Gem 的版本。
 
 <!-------------------------------------------------------------->
 
 ## `download`
 
-Downloads engines, projects, gems or templates from remote repositories.
+从远程存储库下载引擎、项目、Gem 或模板。
 
-### Format
+### 格式
 
 ```cmd
 o3de.py download [-h]
@@ -1995,264 +1974,258 @@ o3de.py download [-h]
               [--use-source-control]
 ```
 
-### Usage
+### 用法
 
 ```cmd
 o3de.bat download --project-name "CustomProject" --dest-path "C:/projects"
 ```
-Will result in `CustomProject` being downloaded to `C:/projects/CustomProject`. 
-If `--dest-path` is not provided, `CustomProject` will download to default project folder.
+将导致`CustomProject`下载到 `C:/projects/CustomProject`。
+如果未提供`--dest-path`，则`CustomProject`将下载到默认项目文件夹。
 
 ```cmd
 o3de.bat download --gem-name "CustomGem==2.0.0"
 ```
-Will download the Gem named `CustomGem` version `2.0.0` if available.
-If only the gem name is provided, the highest version available will be downloaded.
+将下载名为`CustomGem` 版本 `2.0.0`的 Gem（如果可用）。
+如果仅提供 Gem 名称，则将下载可用的最高版本。
 
-### Optional parameters
+### 可选参数
 
 - **`-h, --help`**
 
-  Show help message and exit
+  显示帮助消息并退出
 
 - **`--engine-name ENGINE_NAME, -e ENGINE_NAME`**
 
-  Downloadable engine name.
+  可下载的引擎名称。
 
 - **`--project-name PROJECT_NAME, -p PROJECT_NAME`**
 
-  Downloadable project name with optional version specifier e.g.
-  `project==1.2.3` If no version specifier is provided, the most recent      
-  version will be downloaded.
+  带有可选版本说明符的可下载项目名称，例如 `project==1.2.3`。 如果未提供版本说明符，则将下载最新版本。
 
 - **`--gem-name GEM_NAME, -g GEM_NAME`**
 
-  Downloadable gem name with optional version specifier e.g. `gem==1.2.3`
-  If no version specifier is provided, the most recent version will be downloaded.
+  带有可选版本说明符的可下载 Gem 名称，例如`gem==1.2.3`。 如果未提供版本说明符，则将下载最新版本。
 
 - **` --template-name TEMPLATE_NAME, -t TEMPLATE_NAME`**
 
-  Downloadable template name with optional version specifier e.g.
-  `template==1.2.3` If no version specifier is provided, the most recent version will be downloaded.
+  带有可选版本说明符的可下载模板名称，例如`template==1.2.3`。 如果未提供版本说明符，则将下载最新版本。
 
 - **` --dest-path DEST_PATH, -dp DEST_PATH`**
 
-  Optional destination folder to download into.
+  要下载到的可选目标文件夹。
 
 - **` --skip-auto-register, -sar`**
 
-  Skip the automatic registration of new object download
+  跳过新对象下载的自动注册
 
 - **` --force, -f`**
 
-  Force overwrite the current object
+  强制覆盖当前对象
 
 - **` --use-source-control, --src`**
 
-  Acquire from source control instead of downloading a `.zip` archive.       
-  Requires that the object has a valid `source_control_uri`.
+  从源代码控制获取，而不是下载 `.zip`存档。      
+  要求对象具有有效的`source_control_uri`。
 
 <!-------------------------------------------------------------->
 ## `repo`
 
-Updates metadata, activates and deactivates remote repositories.
+更新元数据，激活和停用远程存储库。
 
-### Format
+### 格式
 
 ```cmd
 repo [-h] [-ar ACTIVATE_REPO | -dr DEACTIVATE_REPO | -r REFRESH_REPO | -ra] 
 ```
 
-### Usage
+### 用法
 
 ```cmd
 o3de.bat repo --refresh-all-repos
 ```
-Updates the metadata from all known remote repositories.
+更新所有已知远程仓库的元数据。
 
 ```cmd
 o3de.bat repo --deactivate-repo https://github.com/o3de/example
 ```
-Deactivates the `https://github.com/o3de/example` remote repository so that its content no longer appears in searches and is no longer available for download.
+停用`https://github.com/o3de/example` 远程存储库，以便其内容不再显示在搜索中，也不再可供下载。
 
-### Optional parameters
+### 可选参数
 
 - **`-ar ACTIVATE_REPO, --activate-repo ACTIVATE_REPO`**
 
-  Activate the specified remote repository, allowing searching and   
-  downloading of objects from it.
+  激活指定的远程存储库，允许从中搜索和下载对象。
                         
 - **`-dr DEACTIVATE_REPO, --deactivate-repo DEACTIVATE_REPO`**
 
-  Deactivate the specified remote repository, preventing searching or
-  downloading any objects from it.
+  停用指定的远程存储库，阻止搜索或从中下载任何对象。
 
 - **`-r REFRESH_REPO, --refresh-repo REFRESH_REPO`**
 
-  Fetch the latest metadata for the specified remote repository.
+  获取指定远程存储库的最新元数据。
 
 - **`-ra, --refresh-all-repos`**
 
-  Fetch the latest metadata from all known remote repository.
+  从所有已知的远程仓库中获取最新的元数据。
 
 <!-------------------------------------------------------------->
 
 ## `sha256`
 
-Creates a hash value for an O3DE object using SHA-256 (Secure Hash Algorithm 256). This command outputs the specified file path and writes the value to the `sha256` field in the specified JSON file.
+使用 SHA-256（安全哈希算法 256）为 O3DE 对象创建哈希值。此命令输出指定的文件路径，并将该值写入指定 JSON 文件的 `sha256` 字段。
 
-### Format
+### 格式
 
 ```cmd
 sha256 [-h] -f FILE_PATH [-j JSON_PATH]
 ```
 
-### Usage
+### 用法
 
 ```cmd
 o3de.bat sha256 --file-path FILE_PATH --json-path JSON_PATH
 ```
 
-### Optional parameters
+### 可选参数
 
 - **`-f FILE_PATH, --file-path FILE_PATH`**
 
-  The path to the O3DE object.
+  O3DE 对象的路径。
 
 - **`-j JSON_PATH, --json-path JSON_PATH`**
 
-  The path to the O3DE object's JSON file that you want to add the `sha256` hash value to.
+  要将`sha256`哈希值添加到的 O3DE 对象的 JSON 文件的路径。
 
 <!-------------------------------------------------------------->
 
 ## `android-configure`
 
-Manages the settings used by the Android Project Generation process to create an Android Gradle build script.
+管理 Android 项目生成过程用于创建 Android Gradle 构建脚本的设置。
 
-### Format
+### 格式
 
 ```cmd
 android-configure [-h] [--global] [-p PROJECT] [-l] [--validate] [--set-value VALUE] [--clear-value VALUE] [--set-password SETTING] [--debug]
 ```
 
-### Usage
+### 用法
 
 ```cmd
 android-configure -l
 ```
-This will list the current settings that the Android Project Generation script will use.
+这将列出 Android Project Generation 脚本将使用的当前设置。
 
 ```cmd
 android-configure --validate
 ```
-This will perform a dry run and validate that the minimal settings are configured and the prerequisite software environments are satisfied. If not, it will report a detailed error.
+这将执行试运行，并验证是否配置了最低设置以及是否满足先决条件软件环境。否则，它将报告详细错误。
 
 ```cmd
 android-configure --set-value SETTING
 ```
-This will set an Android setting based on the **SETTING** equality expression. The **SETTING** format must be in the form of `<setting>=<value>`, where **\<setting\>** is the Android setting to set, and **\<value\>** is the value to set the setting to. Note that password settings cannot be set through this argument, `--set-password` must be used instead.
+这将根据 **SETTING** 相等表达式设置 Android 设置。**SETTING** 格式必须采用`<setting>=<value>` 的形式，其中 **\<setting\>** 是要设置的 Android 设置，**\<value\>** 是要设置的值。请注意，密码设置不能通过此参数设置，必须使用 `--set-password` 代替。
 
 ```cmd
 android-configure --clear-value SETTING
 ```
-This will clear the specific android setting **SETTING**. This can be used to clear password settings as well.
+这将清除特定的 android 设置 **SETTING**。这也可用于清除密码设置。
 
 ```cmd
 android-configure --set-password SETTING
 ```
-This will set a password android setting **SETTING** through a standard password set and validate prompt.
+这将通过标准密码设置和验证提示设置密码 android 设置 **SETTING**。
 
-### Optional parameters
+### 可选参数
 
 - **`--help`**
 
-  Show the standard usage documentation for this command, as well as the list of the android settings and their descriptions.
+  显示此命令的标准使用文档，以及 android 设置及其说明的列表。
 
 - **`-p PROJECT`**
 
-  Attempt to locate and apply any project specific setting for the project registered as **\<project\>**. The default behavior for the **android-configure** command is to attempt to detect the project based on the current working directory.
+  尝试为注册为 **\<project\>** 的项目查找并应用任何特定于项目的设置。**android-configure** 命令的默认行为是尝试根据当前工作目录检测项目。
 
 - **`--global`**
 
-  Apply the **android-configure** command against the global values. Global values are applied to all projects that do not have specific values that are applied just for that project. The default behavior is to apply the command to a local project if possible.
+  对全局值应用 **android-configure** 命令。全局值将应用于没有仅应用于该项目的特定值的所有项目。默认行为是尽可能将命令应用于本地项目。
 
 - **`--debug`**
 
-  Enable more verbose debug messaging when running this command
+  在运行此命令时启用更详细的调试消息
 
 <!-------------------------------------------------------------->
 
 ## `android-generate`
 
-Generate an Android Gradle project for your project. Specific project details are configured through the android-specific settings managed by the `android-configure` command.
+为您的项目生成 Android Gradle 项目。特定项目详细信息通过由 `android-configure`命令管理的 android 特定设置进行配置。
 
-### Format
+### 格式
 
 ```cmd
 android-generate [-h] -p PROJECT -B BUILD_DIR [--platform-sdk-api-level PLATFORM_SDK_API_LEVEL] [--ndk-version NDK_VERSION] [--signconfig-store-file SIGNCONFIG_STORE_FILE] [--signconfig-key-alias SIGNCONFIG_KEY_ALIAS] [--asset-mode ASSET_MODE] [--extra-cmake-args EXTRA_CMAKE_ARGS] [--custom-jvm-args CUSTOM_JVM_ARGS] [--strip-debug] [--oculus-project] [--debug]
 ```
 
-### Usage
+### 用法
 
 ```cmd
 android-generate -p <project> -B <build-dir>
 ```
-This will generate an Android Gradle project for **\<project\>** in the directory **\<build-dir\>**. **\<project\>** can be either the path to the O3DE project, or the name of the registered project.
+这将在目录 **\<build-dir\>>** 中为 **\<project\** 生成一个 Android Gradle 项目。**\<project\>** 可以是 O3DE 项目的路径，也可以是已注册项目的名称。
 
 
-### Optional parameters
+### 可选参数
 
 - **`--help`**
 
-  Show the standard usage documentation for this command.
+  显示此命令的标准用法文档。
 
 - **`--platform-sdk-api-level PLATFORM_SDK_API_LEVEL`**
 
-  Specify a specific [Android Platform SDK API Level](https://developer.android.com/tools/releases/platforms). The default API level is controlled by the `platform.sdk.api` setting.
+  指定特定的 [Android 平台 SDK API 级别](https://developer.android.com/tools/releases/platforms). 默认 API 级别由`platform.sdk.api`设置控制。
 
 - **`--ndk-version NDK_VERSION`**
 
-  Specify the specific [Android NDK](https://developer.android.com/ndk) to [download](https://developer.android.com/ndk/downloads) and use for building the native code. The value for **NDK_VERSION** represents the version number, not the release. Wildcards are supported so that you do not need to provide the entire version. For instance, you can use `25.*` to search for and get the latest major version for revision **r25c**. The default NDK version is controlled by the `ndk.version` setting.
+  指定特定的 [Android NDK](https://developer.android.com/ndk) 到 [download](https://developer.android.com/ndk/downloads) 并用于构建本机代码。**NDK_VERSION** 的值表示版本号，而不是版本。支持通配符，因此您无需提供整个版本。例如，您可以使用 `25.*` 搜索并获取修订版 **r25c** 的最新主要版本。默认 NDK 版本由`ndk.version` 设置控制。
 
 - **`--signconfig-store-file SIGNCONFIG_STORE_FILE`**
 
-  Specify the optional Android signing configuration key store file. If the `signconfig.store.file` is set in the settings, it will be used as the default value.
+  指定可选的 Android 签名配置密钥存储文件。如果在设置中设置了`signconfig.store.file`，它将用作默认值。
 
 - **`--signconfig-key-alias SIGNCONFIG_KEY_ALIAS`**
 
-  Specify the optional Android signing configuration key alias in the key store file. If the `signconfig.key.alias` is set in the settings, it will be used as the default value.
+  在密钥存储文件中指定可选的 Android 签名配置密钥别名。如果在设置中设置了`signconfig.key.alias`，它将被用作默认值。
 
 - **`--asset-mode ASSET_MODE`**
 
-  Specify the asset deployment method to use when constructing the APK. The accepted values are :
+  指定构建 APK 时要使用的资产部署方法。接受的值为 ：
 
   - **LOOSE**
-     Loose assets the individual compiled asset files.
+     Loose assets （松散资源） 单个编译的资源文件。
 
   - **PAK**
-     Bundled release files are bundled assets that are compressed into release Pak files. See [Bundling Project Assets](/docs/user-guide/asset-bundler/bundle-assets-for-release/) for information on how to create bundled assets.
+     捆绑的发布文件是压缩为发布 Pak 文件的捆绑资产。有关如何创建捆绑资源的信息，请参阅 [捆绑项目资源](/docs/user-guide/asset-bundler/bundle-assets-for-release/) 。
 
-    The `asset.mode` setting controls the default value for the asset deployment mode.
+    `asset.mode` 设置控制 Asset Deployment Mode （资产部署模式） 的默认值。
 
 - **`--extra-cmake-args EXTRA_CMAKE_ARGS`**
 
-    Optional string to set additional cmake arguments during the native project generation within the android gradle build process. This value will be appended to the **CMake** project generation command directly and can be used to control any custom O3DE cmake variables.
+    可选字符串，用于在 android gradle 构建过程中的本机项目生成期间设置其他 cmake 参数。此值将直接附加到 **CMake** 项目生成命令中，并可用于控制任何自定义 O3DE cmake 变量。
 
-    The `extra.cmake.args` setting controls the default value for this option.
+    `extra.cmake.args` 设置 控制此选项的默认值。
 - **`--custom-jvm-args CUSTOM_JVM_ARGS`**
 
-    Customized jvm arguments to set when invoking gradle. This option is useful to tweak the [JVM memory](https://docs.gradle.org/current/userguide/config_gradle.html#sec:configuring_jvm_memory) setting when launching Gradle.
+    自定义了调用 gradle 时要设置的 jvm 参数。此选项可用于在启动 Gradle 时调整 [JVM 内存](https://docs.gradle.org/current/userguide/config_gradle.html#sec:configuring_jvm_memory)设置。
 
-    The `gradle.jvmargs` setting controls the default value for this option.
+    `gradle.jvmargs` 设置 控制此选项的默认值。
 
 - **`--strip-debug/--no-strip-debug`**
 
-    Flag to set the cmake native build rules to optionally strip out debug symbols from the built binaries. If the setting `strip.debug` is set to **False**, then the `--strip-debug` is available as the option to override and enable debug symbol stripping. If the setting is **True**, then the `--no-strip-debug` is available as the option  to override and disable symbol stripping.
+    Flag 设置 cmake 本机生成规则，以选择性地从生成的二进制文件中去除调试符号。如果设置`strip.debug`设置为 **False**，则`--strip-debug`可用作覆盖和启用调试符号剥离的选项。如果设置为 **True**，则`--no-strip-debug`可用作覆盖和禁用符号剥离的选项。
 
 - **`--oculus-project/--no-oculus-project`**
 
-    Flag to set the enable or disable oculus specific settings in the Android Gradle project. If the setting `oculus.project` is set to **False**, then the `--oculus-project` is available to enable the oculus specific settings. If the setting is **True**, then the `--no-oculus-project` is available to disable the oculus specific settings.
+    用于在 Android Gradle 项目中启用或禁用 oculus 特定设置的标志。如果设置`oculus.project`设置为 **False**，则`--oculus-project` 可用于启用 oculus 特定设置。如果设置为 **True**，则`--no-oculus-project`可用于禁用 oculus 特定设置。
 
 - **`--debug`**
 
-  Enable more verbose debug messaging when running this command
+  在运行此命令时启用更详细的调试消息

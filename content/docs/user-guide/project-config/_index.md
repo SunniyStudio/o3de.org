@@ -1,41 +1,41 @@
 ---
-linktitle: Project Configuration
-title: Project Configuration
-description: Learn the basics of project configuration in Open 3D Engine (O3DE), and get the details on the Project Manager and O3DE CLI tools.
+linktitle: 项目配置
+title: 项目配置
+description: 了解 Open 3D Engine （O3DE） 中项目配置的基础知识，并获取有关 Project Manager 和 O3DE CLI 工具的详细信息。
 weight: 100
 ---
 
-**Open 3D Engine (O3DE)** projects define and configure the set of code and assets that make up your game or other application. [Gems](/docs/user-guide/gems) that you enable for your project provide some code and assets. A project directory, sometimes referred to as the "project root", contains your projects.
+**Open 3D Engine (O3DE)** 项目定义和配置构成游戏或其他应用程序的代码和资产集。[Gems](/docs/user-guide/gems)提供一些代码和资源。项目目录（有时称为“项目根目录”）包含您的项目。
 
-To create and manage projects, you can use either the GUI-based **Project Manager** tool or the O3DE command line interface (CLI). The topics in this section provide details on creating O3DE projects using either of these options.
+要创建和管理项目，您可以使用基于 GUI 的 **Project Manager** 工具或 O3DE 命令行界面 （CLI）。本节中的主题提供了有关使用以下任一选项创建 O3DE 项目的详细信息。
 
-| Topic | Description |
+|主题 |描述 |
 | - | - |
-| [Understanding `project.json`](#understanding-project-json) | Get a detailed look at the fields in the project manifest, an important project configuration file. |
-| [Project Manager](project-manager/) | Learn how to create and manage projects using a GUI-based tool. |
-| [Adding and Removing Gems](add-remove-gems/) | Learn how to add and remove Gems in your project. |
-| [Registering Gems](register-gems/) | Learn how to register external Gems from sources outside of O3DE. |
-| [O3DE CLI Reference](cli-reference/) | Learn how to create and configure your O3DE environment and its objects, including engines, projects, and Gems, using the `o3de` Python script. |
-| [Troubleshooting](troubleshooting/) | Troubleshoot common issues that you might encounter during project configuration. |
-| [Local `project.json` Overrides](#user-project-json) | Learn how to override the engine name and path using a `project.json` override file in your project's `user` folder. |
+| [了解 `project.json`](#understanding-project-json) | 详细了解项目清单（一个重要的项目配置文件）中的字段。 |
+| [项目管理器](project-manager/) | 了解如何使用基于 GUI 的工具创建和管理项目。 |
+| [添加和移除Gem](add-remove-gems/) | 了解如何在项目中添加和删除 Gem。 |
+| [注册 Gem](register-gems/) | 了解如何从 O3DE 外部的源注册外部 Gem。 |
+| [O3DE CLI 参考](cli-reference/) | 了解如何使用`o3de` Python 脚本创建和配置 O3DE 环境及其对象，包括引擎、项目和 Gem。|
+| [故障排除](troubleshooting/) | Troubleshoot common issues that you might encounter during project configuration.排查在项目配置过程中可能遇到的常见问题。 |
+| [本地 `project.json` 覆盖](#user-project-json) | 了解如何使用项目 `user` 文件夹中的 `project.json` 覆盖文件覆盖引擎名称和路径。 |
 
-To build projects, use either Project Manager or **CMake**. For more information, refer to any of the following resources:
+要构建项目，请使用 Project Manager 或 **CMake**。有关更多信息，请参阅以下任何资源：
 
-* [Introductory tutorials](/docs/welcome-guide/create/) in the Get Started Guide.
-* [Project Manager](project-manager/) and its **Build** command in the project drop-down menu.
-* [Configure and build](/docs/user-guide/build/configure-and-build) topic in the Build section of this User Guide.
+* [入门教程](/docs/welcome-guide/create/) 在入门指南中。
+* [项目管理器](project-manager/) 及其 **Build** 命令。
+* [配置和构建](/docs/user-guide/build/configure-and-build)主题。
 
-## Understanding `project.json` {#understanding-project-json}
+## 了解 `project.json` {#understanding-project-json}
 
-Each project's root directory contains a project manifest file named `project.json`. This file stores important project configuration properties. O3DE creates this file for you during project creation.
+每个项目的根目录都包含一个名为`project.json`的项目清单文件。此文件存储重要的工程配置属性。O3DE 在项目创建期间为您创建此文件。
 
-To change any of the properties in this file, you can either edit the file manually using a text editor, or edit individual properties using the `edit-project-properties` [O3DE CLI](./cli-reference) command. Additionally, you can edit the `display_name` property in Project Manager.
+要更改此文件中的任何属性，您可以使用文本编辑器手动编辑文件，或使用 `edit-project-properties` [O3DE CLI](./cli-reference) 命令编辑单个属性。此外，您还可以在 Project Manager 中编辑 `display_name` 属性。
 
-The following table describes each of the properties in `project.json`. The default value for many of the properties contains the project name given when you created the project. We indicate this project name as "`<PROJECT_NAME>`".
+下表描述了`project.json`中的每个属性。许多属性的默认值包含创建项目时给定的项目名称。我们将此项目名称指示为 "`<PROJECT_NAME>`"。
 
-The "`<USER>`" placeholder below refers to the user's home directory based on the operating system being used. For example, if your user name is "Foo" and you are using a Windows machine, the `<USER>` directory would be `C:\Users\Foo`.
+下面的"`<USER>`"占位符是指基于所使用的操作系统的用户主目录。例如，如果您的用户名是 “Foo”，并且您使用的是 Windows 计算机，则`<USER>`目录将为`C:\Users\Foo`。
 
-| Operating System | Home Directory Path |
+|操作系统 |主目录路径 |
 | --- | --- |
 | Windows | `C:\Users\<YourUserName>` |
 | Linux | `/home/<YourUserName>` |
@@ -43,44 +43,44 @@ The "`<USER>`" placeholder below refers to the user's home directory based on th
 
 
 
-| Property | Required | Description | Default |
+|属性 |必需 |描述 |默认 |
 | --- | --- | --- | --- |
-| **project_name** | **Required** | The name of the project. The `--project-name` O3DE CLI parameter uses this name to identify the project. | "`<PROJECT_NAME>`" |
-| **display_name** | **Required** | The display name of the project in Project Manager. | "`<PROJECT_NAME>`" |
-| **engine** | Optional | The name of the engine and optional version specifier this project uses. Register engines in your O3DE manifest, located at `<USER>/.o3de/o3de_manifest.json`. | "o3de" |
-| **engine_api_dependencies** | Optional | A list of engine API dependencies.  If empty, the project is assumed compatible with all versions of any engine APIs. | "" |
-| **external_subdirectories** | Optional | The path to one or more directories to include in the project build. You can use any directory with a `CMakeLists.txt` file. When you register Gems to the project using the `register --external-subdirectory-project-path` O3DE CLI command, O3DE adds their paths here. | [ ] |
-| **canonical_tags** | **Required** | A standard field in O3DE manifests used to identify an O3DE object's type. Examples: "Gem", "Project". Projects should use the "Project" tag. | [ "Project" ] |
-| **compatible_engines** | Optional | A list of engine names and optional version specifiers that this project is known to be compatible with: i.e. `o3de>=2.0.0`, `o3de-sdk==1.2.0`, `o3de-custom` etc. If empty, the project is assumed compatible with all engines if they meet all the requirements in the `engine_api_dependencies` and `gem_names` fields. | [ ] |
-| **gem_names** | Optional | A list of gem names and optional version specifiers that this project uses, including the Gem included in the project: i.e. `Atom`, `PopcornFX==1.2.0` etc. | [ "`<PROJECT_NAME>`" ] |
-| **icon_path** | Optional | The path and filename of the project icon. Project Manager uses this icon. The file must be located in the project root directory. The current recommended size is 210px wide and 280px high. | "preview.png" |
-| **license** | **Required** | The license that the project uses, and any copyright information that you want to include. Consider providing the URL for the license. This field is intended for Project Manager to use. | "What license `<PROJECT_NAME>` uses goes here: i.e. https://opensource.org/licenses/MIT" |
-| **origin** | Optional | A URL for the project, such as the repository URL or project website. This field is intended for Project Manager to use. | "The primary repo for `<PROJECT_NAME>` goes here: i.e. http://www.mydomain.com" |
-| **project_id** | Optional | A UUID that is generated when the project is created. | "< UUID >" |
-| **restricted_name** | Optional | The name of a restricted folder to associate with the project. | "`<PROJECT_NAME>`" |
-| **summary** | Optional | A short description of the project. This field is intended for Project Manager to use. | "A short description of `<PROJECT_NAME>`." |
-| **user_tags** | Optional | Any keyword tags that you want to associate with the project. Examples: "Physics", "Assets", "AWS". For examples of the standard set of tags that Gems use, refer to the Project Manager **Gem Catalog**. Project Manager uses these tags for documentation, search, and filtering. | [ "`<PROJECT_NAME>`" ] |
-| **version** | Optional | The `MAJOR.MINOR.PATCH` [semantic version](https://semver.org/) that is updated as changes are made to the project. | "1.0.0" |
+| **project_name** | **Required** | 项目的名称。`--project-name` O3DE CLI 参数使用此名称来标识项目。 | "`<PROJECT_NAME>`" |
+| **display_name** | **Required** | 项目在 Project Manager 中的显示名称。 | "`<PROJECT_NAME>`" |
+| **engine** | Optional | 此项目使用的引擎名称和可选版本说明符。在 O3DE 清单中注册引擎，位于`<USER>/.o3de/o3de_manifest.json`. | "o3de" |
+| **engine_api_dependencies** | Optional | 引擎 API 依赖项的列表。 如果为空，则假定项目与任何插件 API 的所有版本兼容。 | "" |
+| **external_subdirectories** | Optional |要包含在项目构建中的一个或多个目录的路径。您可以使用任何带有`CMakeLists.txt`文件的目录。当您使用 `register --external-subdirectory-project-path` O3DE CLI 命令将 Gem 注册到项目时，O3DE 会在此处添加其路径。 | [ ] |
+| **canonical_tags** | **Required** | O3DE 清单中的一个标准字段，用于标识 O3DE 对象的类型。示例：“Gem”、“Project”。项目应使用 “Project” 标签。 | [ "Project" ] |
+| **compatible_engines** | Optional | 已知与此项目兼容的引擎名称和可选版本说明符的列表：即 `o3de>=2.0.0`, `o3de-sdk==1.2.0`, `o3de-custom`等。如果为空，则假定项目与所有引擎兼容（如果它们满足 `engine_api_dependencies` 和 `gem_names` 字段中的所有要求）。 | [ ] |
+| **gem_names** | Optional | 此项目使用的 Gem 名称和可选版本说明符的列表，包括项目中包含的 Gem：即`Atom`, `PopcornFX==1.2.0` 等。 | [ "`<PROJECT_NAME>`" ] |
+| **icon_path** | Optional | 项目图标的路径和文件名。Project Manager 使用此图标。该文件必须位于项目根目录中。当前建议的大小为 210 像素宽 280 像素高。 | "preview.png" |
+| **license** | **Required** | 项目使用的许可证，以及要包含的任何版权信息。请考虑提供许可证的 URL。此字段供 Project Manager 使用。 | "许可证 `<PROJECT_NAME>`使用的内容在这里：即 https://opensource.org/licenses/MIT" |
+| **origin** | Optional | 项目的 URL，例如存储库 URL 或项目网站。此字段供 Project Manager 使用。 | "`<PROJECT_NAME>` 的主存储库位于此处：即 http://www.mydomain.com" |
+| **project_id** | Optional | 创建项目时生成的 UUID。 | "< UUID >" |
+| **restricted_name** | Optional | 要与项目关联的受限文件夹的名称。 | "`<PROJECT_NAME>`" |
+| **summary** | Optional | 项目的简短描述。此字段供 Project Manager 使用。 | "`<PROJECT_NAME>`的简短概述" |
+| **user_tags** | Optional | 要与项目关联的任何关键字标签。例子： "Physics", "Assets", "AWS". 有关 Gem 使用的标准标签集的示例，请参阅项目管理器  **Gem Catalog**。Project Manager 使用这些标记进行文档、搜索和筛选。 | [ "`<PROJECT_NAME>`" ] |
+| **version** | Optional | `MAJOR.MINOR.PATCH` [semantic version](https://semver.org/) 该更新会随着对项目的更改而更新。 | "1.0.0" |
 
-## Local `project.json` Overrides {#user-project-json}
+## 本地 `project.json` 覆盖 {#user-project-json}
 
-When you have multiple engines installed locally it can be useful to make your project use an engine with a specific name or path without changing the `project.json` file shared with your team.  O3DE will use settings in the `user/project.json` overrides file in your project folder to override `project.json` file settings in the project root.
+在本地安装了多个插件时，让您的项目使用具有特定名称或路径的插件，而无需更改与团队共享的`project.json`文件，这可能很有用。 O3DE 将使用项目文件夹中的`user/project.json`覆盖文件中的设置来覆盖项目根目录中的`project.json`文件设置。
 
-To change any of the properties in the `user/project.json` overrides file, you can either edit the file manually using a text editor, or edit individual properties using the `edit-project-properties` [O3DE CLI](./cli-reference) command with the `--user` option.  The Project Manager will set the `engine_path` in this file when you add a project. 
-
-| Field | Description | Example |
+要更改 `user/project.json`覆盖文件中的任何属性，您可以使用文本编辑器手动编辑文件，或使用带有`--user` 选项的 `edit-project-properties` [O3DE CLI](./cli-reference)命令编辑单个属性。 当您添加项目时，项目经理将在此文件中设置`engine_path` 。
+2
+| 字段 | 说明 | 示例 |
 | --- | ---| --- |
-| **engine** | Engine name override with optional specifier |  "o3de==1.2.3" |
-| **engine_path** | The absolute local path to the engine to use | "C:/o3de-custom" |
+| **engine** | 使用可选说明符覆盖引擎名称 |  "o3de==1.2.3" |
+| **engine_path** | 要使用的引擎的绝对本地路径 | "C:/o3de-custom" |
 
 
-Example:
+示例:
 
-A developer is using [git worktrees](https://git-scm.com/docs/git-worktree) to work on multiple branches of the o3de GitHub repository at the same time.  The `engine_name` is the same for every engine instance, so the developer uses the `user/project.json` file to set the `engine_path` to the specific engine they want to use.
+开发人员正在使用 [git worktrees](https://git-scm.com/docs/git-worktree) 同时处理 o3de GitHub 存储库的多个分支。 每个引擎实例的 `engine_name` 都是相同的，因此开发人员使用 `user/project.json` 文件将 `engine_path` 设置为他们想要使用的特定引擎。
 
-Example:
+示例:
 
-An engine developer works on a team that stores the engine SDK and project in source control but keeps the engine source code in a separate repository.  The developer has both repositories on their machine locally:
+引擎开发人员所在的团队将引擎 SDK 和项目存储在源代码控制中，但将引擎源代码保存在单独的存储库中。 开发人员在其本地计算机上有两个存储库：
 ```
 /home/user/repo1 
             /o3de-sdk <-- engine SDK
@@ -88,4 +88,4 @@ An engine developer works on a team that stores the engine SDK and project in so
 /home/user/repo2      
             /o3de     <-- engine source code
 ```
-Because the developer is building the engine from source and doesn't want to use the SDK, they set the `engine_path` setting to `/home/user/repo2/o3de` in the project's `/home/user/repo1/project/user/project.json` overrides file.
+由于开发人员是从源代码构建引擎，并且不想使用 SDK，因此他们在项目的`/home/user/repo1/project/user/project.json`覆盖文件中将 `engine_path` 设置设置为`/home/user/repo2/o3de`。

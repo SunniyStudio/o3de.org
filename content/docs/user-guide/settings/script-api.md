@@ -1,40 +1,40 @@
 ---
-title: Settings Registry Script API
-linkTitle: Script API
-description: Learn how the Settings Registry Script API exposes the Settings Registry to Lua, Python, and Script Canvas in Open 3D Engine (O3DE).
+title: 设置注册表脚本 API
+linkTitle: 脚本 API
+description: 了解设置注册表脚本 API 如何在 Open 3D Engine （O3DE） 中向 Lua、Python 和 Script Canvas 公开设置注册表。
 weight: 300
 ---
 
-The Settings Registry is bound to Open 3D Engine (O3DE) script languages via reflection to the Behavior Context. The code that performs the reflection to the Behavior Context is found in [SettingsRegistryScriptUtils](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryScriptUtils.cpp#L377-L390).
+设置注册表通过反射到行为上下文绑定到 Open 3D Engine （O3DE） 脚本语言。执行对行为上下文的反射的代码位于 [SettingsRegistryScriptUtils](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryScriptUtils.cpp#L377-L390).
 
-## API details
+## API 详情
 
-The following tables detail the Settings Registry API classes, properties, and methods exposed to script languages.
+下表详细介绍了向脚本语言公开的 Settings Registry API 类、属性和方法。
 
-| Name | <div style="width:300px">Description</div> | Type | Arguments | Return |
+| 名称 | <div style="width:300px">Description</div> | 类型 | 参数 | 返回值 |
 | :-- | :-- | :-- | :-- | :-- |
-| `SettingsRegistryInterface` | Abstract class that provides access to the Settings Registry `<key, value>` setting, querying, and removal functions. | Class | NA | NA |
-| `g_SettingsRegistry` | Global Property that provides access to the Global Settings Registry. | Property | NA | NA |
-| `SettingsRegistry` | Function that creates a new Settings Registry object. | Method | None | SettingsRegistryInterface |
-| `MergeSetting` | Merges the supplied JSON document into the Settings Registry. Uses the [JSON Merge Patch](https://tools.ietf.org/html/rfc7386#section-1) format by default. | Method | <ul><li>String `json_data` - JSON string document to merge to Settings Registry.</li><li>Enum `format` - Format of the JSON file being merged, by default, this is JsonMergePatch. Specify `settingsregistry.JsonPatch` or `settingsregistry.JsonMergePatch`(default).</li></ul> | Boolean |
-| `MergeSettingFile` | Merges the supplied `.setreg` file into the Settings Registry at the specified JSON Pointer. Uses the [JSON Merge Patch](https://tools.ietf.org/html/rfc7386#section-1) format by default. | Method | <ul><li>String `file_path` - Path to `.setreg` file to merge into Settings Registry.</li><li>String `json_root_key` - JSON Pointer where merged JSON content should be rooted.</li><li>Enum `format` - Format of the JSON file being merged, by default, this is JsonMergePatch. Specify `settingsregistry.JsonPatch` or `settingsregistry.JsonMergePatch`(default).</li></ul> | Boolean |
-| `MergeSettingFolder` | Enumerates the `.setreg` files within the specified directory and merges them into the Settings Registry. Uses the [JSON Merge Patch](https://tools.ietf.org/html/rfc7386#section-1) format.<br><br>Specializations are tags that are checked against the text between each pair of dots(*.*) within the `.setreg` filename. For example, the filename `cmake_dependencies.automatedtesting.automatedtesting_gamelauncher.setreg` contains two tags *automatedtesting* and *automatedtesting_gamelauncher*. Each tag of the filename must match the tags specified in the specialization list.<br><br>Check the [MergeSettingFolder specialization table](#mergesettingfolder-specialization-table) below for more information.<br><br>Returns `True` if the supplied folder was merged. Whether each specific file was merged successfully is not part of the return result. | Method | <ul><li>String `folder_path` - Directory containing `.setreg` files to merge into Settings Registry.</li><li>List `specializations` - List of tags to filter `.setreg` files.</li><li>String `platform` - OS Platform folder name to walk when searching for `.setreg` files.</li></ul> | Boolean |
-| `DumpSettings` | Dumps the JSON value specified at the JSON Pointer if found within the Settings Registry. The result of the dumped value is stored in the `outputString` argument.<br><br>To dump the entire Settings Registry, a `json_pointer` with an empty string ("") must be provided.<br><br>Returns `True` if the JSON value at the JSON Pointer was dumped successfully. | Method | <ul><li>String `json_pointer` - JSON Pointer whose JSON value should be dumped.</li><li>String `outputString` - Output variable that is populated with dumped JSON value content if successful.</li></ul> | Boolean |
-| `GetBool` | Queries the Settings Registry for a boolean value at the provided JSON Pointer. If a boolean is found its value is stored in the `boolValue` argument.<br><br>The return value of `GetBool` indicates that a boolean key at the specific JSON Pointer was found. If the return value is `True`, then the actual value of the boolean is stored in `boolValue`. | Method | <ul><li>String `json_pointer` - JSON Pointer to lookup for the boolean value.</li><li>Boolean `boolValue` - Output variable which is set with the boolean result if successful.</li></ul> | Boolean |
-| `SetBool` | Sets the JSON Pointer in the Settings Registry to the specified boolean value. | Method | <ul><li>String `json_pointer` - JSON Pointer to JSON key where the boolean value will be set.</li><li>Boolean `boolValue` - Boolean value to set at the JSON Pointer.</li></ul> | Boolean |
-| `GetInt` | Queries the Settings Registry for an integer value at the provided JSON Pointer. If an integer is found, its value is stored in the `intValue` argument. | Method | <ul><li>String `json_pointer` - JSON Pointer to lookup for integer value.</li><li>Integer `intValue` - Output variable which is set with the integer result if successful.</li></ul> | Boolean |
-| `SetInt` | Sets the JSON Pointer in the Settings Registry to the specified integer value. | Method | <ul><li>String `json_pointer` - JSON Pointer to JSON key where the integer value will be set.</li><li>Integer `intValue` - Integer value to set at the JSON Pointer.</li></ul> | Boolean |
-| `GetFloat` | Queries the Settings Registry for a floating point value at the provided JSON Pointer. If a floating point value is found, its value is stored in the `floatValue` argument. | Method | <ul><li>String `json_pointer` - JSON Pointer to lookup for floating point value.</li><li>Float `floatValue` - Output variable which is set with the floating point result if successful.</li></ul> | Boolean |
-| `SetFloat` | Sets the JSON Pointer in the Settings Registry to the specified floating point value. | Method | <ul><li>String `json_pointer` - JSON Pointer to JSON key where the floating point value will be set.</li><li>Float `floatValue` - Floating point value to set at the JSON Pointer.</li></ul> | Boolean |
-| `GetString` | Queries the Settings Registry for a string value at the provided JSON Pointer. If a string is found, its value is stored in the `stringValue` argument. | Method | <ul><li>String `json_pointer` - JSON Pointer to lookup for the string value.</li><li>String `stringValue` - Output variable which is set with the string value result if successful.</li></ul> | Boolean |
-| `SetString` | Sets the JSON Pointer in the Settings Registry to the specified string value. | Method | <ul><li>String `json_pointer` - JSON Pointer to the JSON key where the string value will be set.</li><li>String `stringValue` - String value to set at the JSON Pointer.</li></ul> | Boolean |
-| `RemoveKey` | Removes the JSON key and value at the provided JSON Pointer if it exists. | Method | <ul><li>String `json_pointer` - JSON Pointer to JSON key to remove.</li></ul> | Boolean |
+| `SettingsRegistryInterface` | 提供对设置注册表`<key, value>` 设置、查询和删除功能的访问权限的抽象类。 | Class | NA | NA |
+| `g_SettingsRegistry` | 提供对 Global Settings Registry 的访问的 Global Property。 | Property | NA | NA |
+| `SettingsRegistry` |创建新的 Settings Registry 对象的函数。| Method | None | SettingsRegistryInterface |
+| `MergeSetting` | 将提供的 JSON 文档合并到 Settings Registry 中。默认使用[JSON Merge Patch](https://tools.ietf.org/html/rfc7386#section-1) 格式。 | Method | <ul><li>String `json_data` - 要合并到 Settings Registry 的 JSON 字符串文档。</li><li>Enum `format` - 正在合并的 JSON 文件的格式，默认情况下，这是 JsonMergePatch。指定`settingsregistry.JsonPatch` 或 `settingsregistry.JsonMergePatch`(默认值).</li></ul> | Boolean |
+| `MergeSettingFile` | 将提供的`.setreg` 文件合并到指定 JSON 指针处的设置注册表中。 默认使用[JSON Merge Patch](https://tools.ietf.org/html/rfc7386#section-1) 格式。 | Method | <ul><li>String `file_path` - 要合并到设置注册表中的 `.setreg` 文件的路径。</li><li>String `json_root_key` - JSON 指针：合并的 JSON 内容应位于其中的根位置。</li><li>Enum `format` - 正在合并的 JSON 文件的格式，默认情况下，这是 JsonMergePatch。指定`settingsregistry.JsonPatch` 或 `settingsregistry.JsonMergePatch`(默认值).</li></ul> | Boolean |
+| `MergeSettingFolder` |枚举指定目录中的`.setreg`文件，并将它们合并到 Settings Registry 中。使用[JSON Merge Patch](https://tools.ietf.org/html/rfc7386#section-1)格式。<br><br>特化是针对 `.setreg` 文件名中每对点 （*.*） 之间的文本进行检查的标记。例如，`cmake_dependencies.automatedtesting.automatedtesting_gamelauncher.setreg`文件名包含两个tags *automatedtesting* 和 *automatedtesting_gamelauncher*. 文件名的每个标记必须与专用化列表中指定的标记匹配。<br><br>检查下面的 [MergeSettingFolder specialization table](#mergesettingfolder-specialization-table) 了解更多信息。<br><br>如果提供的文件夹已合并，则返回`True` 。每个特定文件是否合并成功不是返回结果的一部分。 | Method | <ul><li>String `folder_path` - Directory containing `.setreg` files to merge into Settings Registry.</li><li>List `specializations` - 用于筛选`.setreg`文件的标签列表。</li><li>String `platform` - 搜索`.setreg`文件时要遍历的 OS 平台文件夹名称。</li></ul> | Boolean |
+| `DumpSettings` | 转储在 JSON 指针处指定的 JSON 值（如果在设置注册表中找到）。转储值的结果存储在 `outputString` 参数中。<br><br>要转储整个设置注册表，必须提供带有空字符串 （“”） 的`json_pointer`。<br><br>如果 JSON 指针处的 JSON 值已成功转储，则返回 `True`。 | Method | <ul><li>String `json_pointer` - JSON 指针 应转储其 JSON 值的指针。</li><li>String `outputString` - 输出变量，如果成功，则使用转储的 JSON 值内容填充。</li></ul> | Boolean |
+| `GetBool` | 在设置注册表中查询提供的 JSON 指针处的布尔值。如果找到布尔值，则其值存储在`boolValue`参数中。<br><br>`GetBool`的返回值表示在特定 JSON 指针处找到布尔键。如果返回值为`True`，则布尔值的实际值存储在`boolValue`中。 | Method | <ul><li>String `json_pointer` - 用于查找布尔值的 JSON 指针。</li><li>Boolean `boolValue` - Output 变量，如果成功，则使用布尔值结果进行设置。</li></ul> | Boolean |
+| `SetBool` | 将 Settings Registry 中的 JSON 指针设置为指定的布尔值。| Method | <ul><li>String `json_pointer` -JSON 指针指向将设置布尔值的 JSON 键。</li><li>Boolean `boolValue` - 要在 JSON 指针处设置的布尔值。</li></ul> | Boolean |
+| `GetInt` | 在设置注册表中查询提供的 JSON 指针处的整数值。如果找到整数，则其值存储在 `intValue` 参数中。 | Method | <ul><li>String `json_pointer` - 用于查找整数值的 JSON 指针。</li><li>Integer `intValue` - Output 变量，如果成功，则使用整数结果设置。</li></ul> | Boolean |
+| `SetInt` | 将 Settings Registry 中的 JSON 指针设置为指定的整数值。 | Method | <ul><li>String `json_pointer` - JSON 指针 指向将设置整数值的 JSON 键。</li><li>Integer `intValue` - 要在 JSON 指针处设置的整数值。</li></ul> | Boolean |
+| `GetFloat` | 在设置注册表中查询提供的 JSON 指针处的浮点值。如果找到浮点值，则其值存储在`floatValue`参数中。| Method | <ul><li>String `json_pointer` - 用于查找浮点值的 JSON 指针。</li><li>Float `floatValue` - Output 变量，如果成功，则使用浮点结果设置。</li></ul> | Boolean |
+| `SetFloat` | 将 Settings Registry 中的 JSON 指针设置为指定的浮点值。| Method | <ul><li>String `json_pointer` - 指向将设置浮点值的 JSON 键的 JSON 指针。</li><li>Float `floatValue` - 要在 JSON 指针处设置的浮点值。</li></ul> | Boolean |
+| `GetString` |在设置注册表中查询提供的 JSON 指针处的字符串值。如果找到字符串，则其值存储在`stringValue`参数中。 | Method | <ul><li>String `json_pointer` - 用于查找字符串值的 JSON 指针。</li><li>String `stringValue` - 输出变量，如果成功，则使用字符串值 result 进行设置。</li></ul> | Boolean |
+| `SetString` | 将 Settings Registry 中的 JSON 指针设置为指定的字符串值。 | Method | <ul><li>String `json_pointer` - JSON 指针 指向将在其中设置字符串值的 JSON 键。</li><li>String `stringValue` - 要在 JSON 指针处设置的 String 值。</li></ul> | Boolean |
+| `RemoveKey` | 删除提供的 JSON 指针处的 JSON 键和值（如果存在）。 | Method | <ul><li>String `json_pointer` - 指向要删除的 JSON 密钥的 JSON 指针。</li></ul> | Boolean |
 
-### `MergeSettingFolder` specialization table
+### `MergeSettingFolder` 专业化表
 
-The following table illustrates when a `.setreg` file will be merged by the `MergeSettingFolder` method.
+下表说明了何时通过`MergeSettingFolder`方法合并 `.setreg` 文件。
 
-| Filename | Specializations | Will be merged |
+| 文件名 | Specializations | 将被合并 |
 | :-- | :-- | :-- |
 | `cmake_dependencies.automatedtesting.automatedtesting_gamelauncher.setreg` | automatedtesting<br>automatedtesting_game_launcher | Yes |
 | `cmake_dependencies.automatedtesting.automatedtesting_gamelauncher.setreg` | automatedtesting | No |
@@ -42,13 +42,13 @@ The following table illustrates when a `.setreg` file will be merged by the `Mer
 | `cmake_dependencies.automatedtesting.automatedtesting_gamelauncher.setreg` | <None> | No |
 | `cmake_dependencies.setreg` | <Any> | Always |
 
-## Examples
+## 示例
 
-The Settings Registry can be accessed through O3DE's supported script languages, Lua and Python.
+可以通过 O3DE 支持的脚本语言 Lua 和 Python 访问设置注册表。
 
-### Python example
+### Python 示例
 
-To access the Settings Registry in Python, ensure the **Editor Python Bindings** Gem is enabled in your project. The following sample code demonstrates using Settings Registry API.
+要在 Python 中访问 Settings Registry，请确保在项目中启用 **Editor Python Bindings** Gem。以下示例代码演示了如何使用设置注册表 API。
 
 ```python
 import azlmbr.settingsregistry as SettingsRegistry
@@ -149,9 +149,9 @@ if __name__ == '__main__':
     test_settings_registry()
 ```
 
-### Lua example
+### Lua 示例
 
-The Settings Registry is available in Lua via the Behavior Context bindings. The following example uses the Settings Registry to access the frame capture settings through Lua.
+Settings Registry 在 Lua 中可通过 Behavior Context 绑定获得。以下示例使用 Settings Registry 通过 Lua 访问帧捕获设置。
 
 ```lua
 local OutputProfileData =
@@ -232,9 +232,9 @@ end
 return OutputProfileData
 ```
 
-## Limitations
+## 限制
 
-* The API to register a notification AZ Event with the Settings Registry isn't exposed in script (this is the `SettingsRegistryInterface::RegisterNotifier` API).
-* Setting/querying of complex AZ reflected types is not supported (this is the `SettingsRegistryInterface::SetObject` and `SettingsRegistryInterface::GetObject` API).
+* 用于向设置注册表注册通知 AZ 事件的 API 未在脚本中公开（这是`SettingsRegistryInterface::RegisterNotifier`API）。
+* 不支持设置/查询复杂的 AZ 反射类型（这是`SettingsRegistryInterface::SetObject` 和 `SettingsRegistryInterface::GetObject` API）。
 
-A workaround for accessing AZ reflected types in script is to use the `DumpSettings` and `MergeSettings` functions.
+在脚本中访问 AZ 反射类型的一种解决方法是使用`DumpSettings` 和 `MergeSettings`函数。

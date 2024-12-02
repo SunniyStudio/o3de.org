@@ -1,30 +1,30 @@
 ---
-title: Issue Console Commands from the Settings Registry
-linkTitle: Issue Console Commands
-description: Learn how to run Console commands using the Settings Registry in Open 3D Engine (O3DE)
+title: 从设置注册表发出控制台命令
+linkTitle: 发出控制台命令
+description: 了解如何使用 Open 3D Engine （O3DE） 中的设置注册表运行控制台命令
 weight: 500
 ---
 
-[AZ::Console](/docs/user-guide/programming/az-console/) allows you to initiate Console commands by setting a JSON value under a specific key in the Settings Registry. The Console hooks into the Settings Registry Notification system and also the JSON Patch reporting system to detect changes to Settings Registry keys underneath the following objects:
+[AZ::Console](/docs/user-guide/programming/az-console/) 允许您通过在设置注册表中的特定键下设置 JSON 值来启动 Console 命令。控制台挂接到设置注册表通知系统以及 JSON 补丁报告系统，以检测以下对象下设置注册表项的更改：
 
-* `/O3DE/Autoexec/ConsoleCommands` - Console commands under this object are merged into `bootstrap.game.<config>.setreg` by the Settings Registry builder and are available to run in Launcher applications.
-* `/Amazon/AzCore/Runtime/ConsoleCommands` - Console commands under this object are *not* merged to the `bootstrap.game.<config>.setreg` and will *not* run in Launcher applications.
+* `/O3DE/Autoexec/ConsoleCommands` - 此对象下的控制台命令将合并到 `bootstrap.game.<config>.setreg` 并可在 Launcher 应用程序中运行。
+* `/Amazon/AzCore/Runtime/ConsoleCommands` - 此对象下的控制台命令*不会*合并到  `bootstrap.game.<config>.setreg` ，并且不会在 Launcher 应用程序中运行。
 
 {{< note >}}
-In Launcher applications, Settings Registry files can only reliably load the [`bootstrap.game.<config>.setreg`](https://github.com/o3de/o3de/blob/6b62d1131116c074831902cb6e8d30271d673288/Code/Framework/AzGameFramework/AzGameFramework/Application/GameApplication.cpp#L90-L99) file in all build configuration and host platform combinations.
+在 Launcher 应用程序中，设置注册表文件只能可靠地加载 [`bootstrap.game.<config>.setreg`](https://github.com/o3de/o3de/blob/6b62d1131116c074831902cb6e8d30271d673288/Code/Framework/AzGameFramework/AzGameFramework/Application/GameApplication.cpp#L90-L99)  文件。
 {{< /note >}}
 
-## Run Console commands from a file
+## 从文件运行 Console 命令
 
-You can run Console commands from files by using the `AZ::IConsole::ExecuteConfigFile` function. The function can load Console commands from the following file types:
+您可以使用`AZ::IConsole::ExecuteConfigFile` 函数从文件运行控制台命令。该函数可以从以下文件类型加载 Console 命令：
 
-* Windows INI Style files (`.cfg`)
-* JSON Merge Patch files (`.setreg`) - Can be authored as normal JSON files
-* JSON Patch files (`.setregpatch`)
+* Windows INI Style 文件 (`.cfg`)
+* JSON Merge Patch 文件 (`.setreg`) - 可以创作为普通 JSON 文件
+* JSON Patch 文件 (`.setregpatch`)
 
-### Config file with Console commands(`.cfg`)
+### 包含控制台命令的配置文件(`.cfg`)
 
-The following example demonstrates adding commands to a Windows-style `.cfg` file:
+以下示例演示了向 Windows 样式的`.cfg`文件添加命令：
 
 **user.cfg**
 
@@ -43,9 +43,9 @@ LoadLevel path/to/level.spawnable
 bg_ConnectToAssetProcessor false
 ```
 
-### Settings Registry file with Console commands (`.setreg`)
+### 包含控制台命令的 Settings Registry 文件 (`.setreg`)
 
-The settings underneath the "/O3DE/Autoexec/ConsoleCommands" object will be added to the aggregate `bootstrap.game.<config>.setreg` created by the Settings Registry builder when **Asset Processor** processes the `user.setreg` file. The `/Amazon/AzCore/Runtime/ConsoleCommands` settings will not be added because they are [excluded](https://github.com/o3de/o3de/blob/e878b06166dc4953b8c6c79b745375a1db7c341f/Registry/setregbuilder.assetprocessor.setreg#L22) in Asset Processor settings.
+“/O3DE/Autoexec/ConsoleCommands”对象下的设置将添加到聚合中。`bootstrap.game.<config>.setreg` 则由 **Asset Processor** 处理`user.setreg` 文件时由设置注册表生成器创建。不会添加`/Amazon/AzCore/Runtime/ConsoleCommands`设置，因为它们在 Asset Processor 设置中是 [排除](https://github.com/o3de/o3de/blob/e878b06166dc4953b8c6c79b745375a1db7c341f/Registry/setregbuilder.assetprocessor.setreg#L22)。
 
 **user.setreg**
 
@@ -78,9 +78,9 @@ The settings underneath the "/O3DE/Autoexec/ConsoleCommands" object will be adde
 }
 ```
 
-### Settings Registry Patch file with Console commands(`.setregpatch`)
+### 设置注册表 带有控制台命令的补丁文件(`.setregpatch`)
 
-The following example demonstrates adding commands to a `.setregpatch` file:
+以下示例演示了如何向`.setregpatch` 文件添加命令：
 
 **user.setregpatch**
 
@@ -99,18 +99,18 @@ The following example demonstrates adding commands to a `.setregpatch` file:
 ]
 ```
 
-## Run Console commands from a config or Settings Registry file
+## 从配置或设置注册表文件运行 Console 命令
 
-You can run config files and Settings Registry files by using a single `ExecuteConfigFile` function in the Console.
+您可以通过在 Console 中使用单个 `ExecuteConfigFile`函数来运行配置文件和设置注册表文件。
 
 ```c++
 auto console = AZ::Interface<AZ::IConsole>::Get();
 console.ExecuteConfigFile(<path to [user.cfg|user.setreg|user.setregpatch]>);
 ```
 
-Console commands within a specific config or Settings Registry file are run in the order that they appear in those files, from top to bottom.
+特定配置或 Settings Registry 文件中的控制台命令按照它们在这些文件中出现的顺序从上到下运行。
 
-The following is an example of running three Console commands using the JSON Merge Patch syntax:
+以下是使用 JSON Merge Patch 语法运行三个 Console 命令的示例：
 
 ```json
 {
@@ -126,13 +126,13 @@ The following is an example of running three Console commands using the JSON Mer
 }
 ```
 
-The preceding commands run in the order that they appear in the JSON file (testInit → testBool → testChar).
+上述命令按照它们在 JSON 文件（testInit → testBool → testChar）的顺序运行。
 
-## Run Console commands by updating a value in the Settings Registry
+## 通过更新 Settings Registry 中的值来运行控制台命令
 
-You can also run Console commands by modifying keys within the Settings Registry that are under the "/O3DE/Autoexec/ConsoleCommands" JSON object. The following example modifies a console variable (CVar):
+您还可以通过修改“/O3DE/Autoexec/ConsoleCommands”JSON 对象下的设置注册表中的键来运行控制台命令。以下示例修改控制台变量 （CVar）：
 
-**CVar Modification**
+**CVar 修改**
 
 ```c++
 //! The AZ::IConsole::ConsoleAutoexecCommandKey variable is set to the Settings Registry Console commands root key:
@@ -143,16 +143,16 @@ auto SettingsRegistry = AZ::SettingsRegistry::Get();
 settingsRegistry->Set(tScaleCVar, "0.5");
 ```
 
-## Sequencing when Console commands are invoked
+## 调用 Console 命令时的排序
 
-`ComponentApplication` loads `.setreg` and `.setregpatch` files before any Gem modules are loaded or activated in [ComponentApplication::Create](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L615-L622). The ComponentApplication also supports running the `user.cfg` in the asset cache after Gem Modules are loaded, but before they activate. You can see this in [ComponentApplication::CreateCommon](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L679-L689).
+在[ComponentApplication::Create](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L615-L622)中加载或激活任何 Gem 模块之前，`ComponentApplication` 会先加载 `.setreg` 和 `.setregpatch` 文件。ComponentApplication 还支持在加载 Gem 模块之后但在激活之前在资产缓存中运行`user.cfg`。您可以在 [ComponentApplication::CreateCommon](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L679-L689)中看到这一点。
 
-Any Console commands that cannot run immediately are added to a [deferred Console command queue](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Console/Console.cpp#L612-L628). When Gems are eventually loaded, any deferred Console commands attempt to be [dispatched again](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Module/Module.h#L113). Commands that succeed are removed from the queue, while failed commands remain in the [queue](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Console/Console.cpp#L177-L186).
+任何无法立即运行的 Console 命令都将添加到 [deferred 控制台命令队列](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Console/Console.cpp#L612-L628) 中。当 Gem 最终加载时，任何延迟的 Console 命令都会尝试 [再次调度](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Module/Module.h#L113)。成功的命令将从队列中删除，而失败的命令将保留在 [queue](https://github.com/o3de/o3de/blob/6d5a045386e20bc0d587007a65cf32f5b33baadd/Code/Framework/AzCore/AzCore/Console/Console.cpp#L177-L186) 中。
 
-This guarantees that Console commands are still invoked even if the Gems that define them are loaded later.
+这可保证即使稍后加载定义 Console 命令的 Gem 时，仍会调用 Console 命令。
 
 {{< note >}}
-Console commands that are deferred might not run in the same order as they would have, had they run immediately. For example, if a `.cfg` file contains the following Console commands:
+如果 Console 命令立即运行，则延迟的 Console 命令可能不会按与它们应有的顺序相同的顺序运行。例如，如果`.cfg` 文件包含以下控制台命令：
 
 ```ini
 immediateCommand1 42
@@ -160,19 +160,19 @@ deferredCommand2 35
 immediateCommand3 28
 ```
 
-Because the `deferredCommand2` cannot run immediately, it runs after all of the immediate commands, including the `immediateCommand3`.
+由于`deferredCommand2`无法立即运行，因此它会在所有立即命令（包括`immediateCommand3`）之后运行。
 {{< /note >}}
 
-### Console command lifecycle
+### 控制台命令生命周期
 
-While not directly related to the Settings Registry being able to run Console commands, the following information describes when the application can potentially run Console commands in relation to other application lifecycle events.
+虽然与设置注册表能够运行 Console 命令没有直接关系，但以下信息描述了应用程序何时可以针对其他应用程序生命周期事件运行控制台命令。
 
-1. Create the [Settings Registry](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#LL466C16-L466C16).
-1. Create the [AZ Console](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L466C16-L475).
-1. Create the [Archive FileIO](https://github.com/o3de/o3de/blob/bc24a8fefb5438f4782f34caa0f9ecb3504d04c3/Code/Framework/AzFramework/AzFramework/Application/Application.cpp#L106-L137)
-1. Merge all Settings Registry files (`.setreg`/`.setregpatch`) to the [registry](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L762C1-L788) and attempt to invoke any Console commands underneath the monitored [Settings Registry Console Command](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Console/Console.cpp#L527-L605) keys. Any commands that cannot run are added to the AZ Console [deferred command queue](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Console/Console.cpp#L103C8-L125).
-1. Load Dynamic Modules (Gem modules). Sends the `GemsLoaded` lifecycle event. For each loaded Gem, deferred commands attempt to [execute](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Module/Module.h#L99-L114). Any that succeed are [removed](https://github.com/o3de/o3de/blob/bc24a8fefb5438f4782f34caa0f9ecb3504d04c3/Code/Framework/AzCore/AzCore/Console/Console.cpp#L196-L203) from the deferred command queue.
-1. Attempt to run Console commands in the [user.cfg](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L843-L849) from the Projects asset cache folder (usually `<project-root>/Cache/<platform>`).
-1. Run Console commands specified on the [command line](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L851-L852). Specified using command option notation `-<console command name> <args>`). For example, `-loadlevel <levelname>`.
-1. Set the FileIO aliases `@alias@` for [all active gems](https://github.com/o3de/o3de/blob/bc24a8fefb5438f4782f34caa0f9ecb3504d04c3/Code/Framework/AzFramework/AzFramework/Application/Application.cpp#L199-L205)
-1. Activate System Components in [Gems](https://github.com/o3de/o3de/blob/bc24a8fefb5438f4782f34caa0f9ecb3504d04c3/Code/Framework/AzCore/AzCore/Module/ModuleManager.cpp#L633-L783).
+1. 创建 [Settings Registry](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#LL466C16-L466C16).
+1. 创建 [AZ Console](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L466C16-L475).
+1. 创建 [Archive FileIO](https://github.com/o3de/o3de/blob/bc24a8fefb5438f4782f34caa0f9ecb3504d04c3/Code/Framework/AzFramework/AzFramework/Application/Application.cpp#L106-L137)
+1. 将所有设置注册表文件(`.setreg`/`.setregpatch`)合并到 [注册表](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L762C1-L788)并尝试调用受监控的 [设置注册表控制台命令](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Console/Console.cpp#L527-L605)下的任何控制台命令钥匙。任何无法运行的命令都将添加到 AZ 控制台 [deferred command queue](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Console/Console.cpp#L103C8-L125)。
+1. 加载动态模块（Gem 模块）。发送 `GemsLoaded` 生命周期事件。对于每个加载的 Gem，延迟的命令会尝试 [execute](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Module/Module.h#L99-L114)。任何成功的命令都将从延迟的命令队列中 [removed](https://github.com/o3de/o3de/blob/bc24a8fefb5438f4782f34caa0f9ecb3504d04c3/Code/Framework/AzCore/AzCore/Console/Console.cpp#L196-L203)。
+1. 尝试从 Projects 资源缓存文件夹（通常为`<project-root>/Cache/<platform>`）中运行 [user.cfg](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L843-L849) 中的控制台命令。
+1. 运行在 [命令行](https://github.com/o3de/o3de/blob/7d69221a92f1eb830573ade15cb327b5ede6346c/Code/Framework/AzCore/AzCore/Component/ComponentApplication.cpp#L851-L852) 上指定的控制台命令。使用命令选项表示法`-<console command name> <args>`） 指定。例如，`-loadlevel <levelname>`。
+1. 为 [所有活动 Gems](https://github.com/o3de/o3de/blob/bc24a8fefb5438f4782f34caa0f9ecb3504d04c3/Code/Framework/AzFramework/AzFramework/Application/Application.cpp#L199-L205) 设置 FileIO 别名`@alias@`
+1. 激活 [Gems](https://github.com/o3de/o3de/blob/bc24a8fefb5438f4782f34caa0f9ecb3504d04c3/Code/Framework/AzCore/AzCore/Module/ModuleManager.cpp#L633-L783)中的系统组件。

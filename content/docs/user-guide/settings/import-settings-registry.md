@@ -5,17 +5,17 @@ description: Learn how the Settings Registry can use the $import directive to me
 weight: 1000
 ---
 
-The Settings Registry supports the ability to merge additional Settings Registry files `*.setreg(patch)` via the [JSON Importer Framework](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Serialization/Json/JsonImporter.h).  
-Any field named `$import` within a Settings Registry file can be used to specify additional `*.setreg`, `*.setregpatch`, or any other JSON format files to merge to the Settings Registry.  
+设置注册表支持通过 [JSON 导入器框架](https://github.com/o3de/o3de/blob/development/Code/Framework/AzCore/AzCore/Serialization/Json/JsonImporter.h)合并其他设置注册表文件`*.setreg(patch)`的功能。 
+设置注册表文件中名为 `$import` 的任何字段都可用于指定要合并到设置注册表的其他`*.setreg`, `*.setregpatch`或任何其他 JSON 格式文件。
 
-When a Settings Registry file is merged using the [Merge API](./developer-api#merge-api), it triggers the logic to look for `$import` directives within the settings file to merge additional JSON files.  
-The order in which the additional files are merged is determined by the location of the `$import` directive.  
-* Any setting that appears _before_ the `$import` directive can be overridden by the JSON contents of the imported file.  
-* Any setting that appears _after_ the `$import` directive can override the JSON contents of the imported file.
+当使用 [Merge API](./developer-api#merge-api)合并设置注册表文件时，它会触发逻辑以在设置文件中查找`$import`指令以合并其他 JSON 文件。
+附加文件的合并顺序由`$import`指令的位置决定。 
+* 在`$import`指令之前出现的任何设置都可以被导入文件的 JSON 内容覆盖。 
+* 在`$import`指令之后显示的任何设置都可以覆盖导入文件的 JSON 内容。
 
-## Chain import setreg file using a `$import` directive string
+## 使用 `$import`指令字符串的链导入 setreg 文件
 
-The following example shows how to use the `$import` directive to merge another Settings Registry file using a string value.
+以下示例演示如何使用 `$import` 指令通过字符串值合并另一个 Settings Registry 文件。
 
 #### `test.apple.setreg`
 ```json
@@ -34,7 +34,7 @@ The following example shows how to use the `$import` directive to merge another 
 }
 ```
 
-After `test.ios.setreg` is merged, the `test.apple.setreg` file results in the following final JSON output:
+合并`test.ios.setreg`后，`test.apple.setreg`文件会生成以下最终 JSON 输出：
 
 ### Import Result
 ```json
@@ -44,14 +44,14 @@ After `test.ios.setreg` is merged, the `test.apple.setreg` file results in the f
 }
 ```
 
-Notice that the `"pre_field"` that appear before the `$import` directive has its `"second"` field value (`202`) overridden by the imported `test.ios.setreg` file.  
-Contrast the difference with the `"post_field"` that appears after the `$import` directive. The `"2"` field value (`12`) is from the original `test.apple.setreg` file.
+请注意，出现在 `$import`指令之前的 `"pre_field"`的`"second"`字段值(`202`)被导入的`test.ios.setreg`文件覆盖。 
+将差异与 `$import`指令后面出现的`"post_field"`进行对比`"2"`字段值 (`12`)来自原始的`test.apple.setreg` 文件。
 
-## Chain import setreg file using a `$import` directive object
+## 使用`$import`指令对象链导入 setreg 文件
 
-The following shows how to use the `$import` directive to merge another Settings Registry file using a JSON object with a `filename` key.  
-The reason to use the `$import` directive object over the `$import` directive string, is that the object syntax supports an additional `"patch"` field.  
-The `"patch"` field is a JSON object, whose content will be merged directly over the imported content data before being merged over the initial Settings Registry file data.
+下面显示了如何使用`$import`指令来合并另一个使用带有 `filename` 键的 JSON 对象的 Settings Registry 文件。 
+在`$import`指令字符串上使用`$import` 指令对象的原因是，对象语法支持额外的 `"patch"` 字段。
+`"patch"` 字段是一个 JSON 对象，其内容将直接合并到导入的内容数据上，然后再合并到初始 Settings Registry 文件数据上。
 
 #### `test.mobile.setreg`
 ```json
@@ -62,7 +62,7 @@ The `"patch"` field is a JSON object, whose content will be merged directly over
 }
 ```
 
-The `test.android.setreg` patches the `"device_abis"` array of the `test.mobile.setreg` after reading the imported contents into memory, but before applying the contents to the rest of the `test.android.setreg` data.
+在将导入的内容读入内存之后，但在将内容应用于其余的`test.android.setreg`数据之前，`test.android.setreg`会修补`test.mobile.setreg`的`"device_abis"`数组。
 
 #### `test.android.setreg`
 ```json
@@ -79,13 +79,13 @@ The `test.android.setreg` patches the `"device_abis"` array of the `test.mobile.
 }
 ```
 
-## Importing multiple setreg files using a `$import` directive
+## 使用 `$import`  指令导入多个 setreg 文件
 
-The following shows how multiple uses of the same `$import` key can be used to merge multiple Settings Registry files.
+下面显示了如何使用同一`$import` 键的多次使用来合并多个 Settings Registry 文件。
 
-Given the two Settings Registry files that follow, `number.setreg` and `string.setreg`, the result of the merge depends on the order in which the files appear in the import file.
+给定后面的两个 Settings Registry 文件 `number.setreg` 和 `string.setreg`，合并的结果取决于文件在导入文件中的显示顺序。
 
-### Example Data
+### 示例数据
 
 #### `number.setreg`
 ```json
@@ -103,8 +103,8 @@ Given the two Settings Registry files that follow, `number.setreg` and `string.s
 }
 ```
 
-### Example 1
-Merging the aggregate setreg file with the following contents will merge `string.setreg` over `number.setreg`.
+### 示例 1
+将聚合 setreg 文件与以下内容合并将合并 `string.setreg` 和 `number.setreg`.。
 
 #### `aggregate.setreg`
 ```json
@@ -114,7 +114,8 @@ Merging the aggregate setreg file with the following contents will merge `string
 }
 ```
 
-The value of key `"1"` is from the `string.setreg` file.
+键 `"1"`的值来自`string.setreg`文件。
+
 #### `aggregate.setreg` (Post Import)
 ```json
 {
@@ -124,8 +125,8 @@ The value of key `"1"` is from the `string.setreg` file.
 }
 ```
 
-### Example 2
-Swapping the order of the `$import` directives changes the result of the values within the Settings Registry.
+### 示例 2
+交换 `$import` 指令的顺序会更改 Settings Registry 中值的结果。
 
 #### `aggregate2.setreg`
 ```json
@@ -135,7 +136,9 @@ Swapping the order of the `$import` directives changes the result of the values 
 }
 ```
 
-The value of key `"1"` is from the `number.setreg` file.
+
+键 `"1"`的值来自`number.setreg`文件。
+
 #### `aggregate2.setreg` (Post Import)
 ```json
 {
@@ -145,4 +148,4 @@ The value of key `"1"` is from the `number.setreg` file.
 }
 ```
 
-Using the approach shown in the preceding examples, you can merge a chain of files into the Settings Registry with the `MergeSettingsFolder` or `MergeSettingsFile` [Merge APIs](./developer-api#merge-api).
+使用前面示例中所示的方法，您可以使用 `MergeSettingsFolder` 或 `MergeSettingsFile`  将一系列文件合并到设置注册表中，[Merge APIs](./developer-api#merge-api).

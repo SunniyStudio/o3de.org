@@ -11,7 +11,7 @@ weight: 800
 
 ### Query API
 
-The [query API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L224-L260) supports directly querying the types of `bool`, `int64_t`, `double`, `AZStd::string`, `AZStd::fixed_string`, and any object reflected to the `SerializeContext`. The getter method of querying objects from the `SerializeContext` is safe to use, but it should be respected as an implementation detail of the Settings Registry. The `SettingsRegistryInterface::GetObject` interface will remain stable, but no assumptions should be made on how objects are serialized.
+[Query API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L224-L260)  支持直接查询 `bool`, `int64_t`, `double`, `AZStd::string`, `AZStd::fixed_string` 的类型，以及反映到 `SerializeContext` 的任何对象。从 `SerializeContext` 查询对象的 getter 方法可以安全使用，但应将其作为 Settings Registry 的实现细节来遵守。`SettingsRegistryInterface::GetObject`接口将保持稳定，但不应对对象的序列化方式做出任何假设。
 
 以下示例演示了内置设置类型的查询 API (`bool`, `AZ::s64`, `AZ::u64` `double`, `(fixed_)string`):
 
@@ -37,11 +37,11 @@ if (AZ::s64 intValue;
 
 ```
 
-#### Load C++ class objects with the query API
+#### 使用查询 API 加载 C++ 类对象
 
-To load C++ class objects using the Settings Registry, the type itself must be reflected to the `SerializeContext` to use the query API. Instead of calling the `SettingsRegistryInterface::Get` method for querying built-in JSON types, the `SettingsRegistry::GetObject` function is used.
+要使用 Settings Registry 加载 C++ 类对象，类型本身必须反映到 `SerializeContext` 才能使用查询 API。使用`SettingsRegistry::GetObject`函数，而不是调用`SettingsRegistryInterface::Get`方法来查询内置 JSON 类型。
 
-The following example shows how to use the `SettingsRegistryInterface::GetObject` function to load the SettingsRegistry into an `AzPhysics::SceneConfiguration`.
+以下示例演示如何使用`SettingsRegistryInterface::GetObject`函数将 SettingsRegistry 加载到`AzPhysics::SceneConfiguration`中。
 
 ```c++
 // Make sure the AzPhysics::SceneConfiguration class is reflected
@@ -73,11 +73,11 @@ if (settingsRegistry)
 
 ### Visitor API
 
-The [visitor API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L185-L194) supports recursively visiting the JSON object and array children starting at a specified JSON pointer. The visitor API allows for processing each child field which isn't available when using the `GetObject` API. It also provides type flexibility when dealing with JSON data. A visitor for the Settings Registry must implement the `AZ::SettingsRegistryInterface::Visitor` class. An instance of that class can be supplied to the `AZ::SettingsRegistryInterface::Visit()` method.
+[Visitor API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L185-L194) 支持从指定的 JSON 指针开始递归访问 JSON 对象和数组子项。访客 API 允许处理每个子字段，这在使用`GetObject` API 时不可用。它还在处理 JSON 数据时提供了类型灵活性。设置注册表的访问者必须实现`AZ::SettingsRegistryInterface::Visitor`类。该类的实例可以提供给 `AZ::SettingsRegistryInterface::Visit()` 方法。
 
-The visitor is recommended when serializing in/out complex objects that don't have any `SerializeContext` reflection. Since it isn't tied to the `SerializeContext`, the same logic could be used to read objects from the Settings Registry using the JSON facilities available within other programming languages such as Python, JavaScript, or C#.
+建议在序列化没有任何 `SerializeContext` 反射的复杂对象时，访问者。由于它未绑定到 `SerializeContext`，因此可以使用相同的逻辑从设置注册表中读取对象，使用其他编程语言（如 Python、JavaScript 或 C#）中提供的 JSON 工具。
 
-The following example demonstrates using the visitor API to gather active gem info populated under the settings object at "/O3DE/Gems".  This is done by the [GetGemsInfo](https://github.com/o3de/o3de/blob/adb37ad54d69bcef23c5b7f70c77e669f8202194/Code/Framework/AzFramework/AzFramework/Gem/GemInfo.cpp#L27-L64) function.
+以下示例演示了如何使用访客 API 收集在“/O3DE/Gems”的 settings 对象下填充的活动 Gem 信息。 这是由 [GetGemsInfo](https://github.com/o3de/o3de/blob/adb37ad54d69bcef23c5b7f70c77e669f8202194/Code/Framework/AzFramework/AzFramework/Gem/GemInfo.cpp#L27-L64) 函数完成的。
 
 ```c++
 // Queries the Settings Registry to get the list active gems targets and source paths
@@ -117,9 +117,9 @@ AZ::SettingsRegistryVisitorUtils::VisitObject(settingsRegistry, GemSettingsVisit
 
 ```
 
-The [visitor utilities API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryVisitorUtils.h#L16-L82) can simplify visiting the direct children fields of a JSON object. These classes and functions are located in `SettingsRegistryVisitorUtils.h`.
+[visitor utilities API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryVisitorUtils.h#L16-L82) 可以简化对 JSON 对象的直接子字段的访问。这些类和函数位于`SettingsRegistryVisitorUtils.h`中。
 
-For example, consider the following JSON array:
+例如，请考虑以下 JSON 数组：
 
 ```json
 {
@@ -132,7 +132,7 @@ For example, consider the following JSON array:
 }
 ```
 
-The fields of the array can be visited using the `SettingsRegistryVisitorUtils` as in the following example:
+可以使用`SettingsRegistryVisitorUtils` 访问数组的字段，如以下示例所示：
 
 ```c++
 struct AppendArrayVisitor
@@ -156,7 +156,7 @@ struct AppendArrayVisitor
 settingsRegistry->Visit(AppendArrayVisitor, "/O3DE/Array");
 ```
 
-The same approach can be used to visit the fields of an object. Consider the following JSON object:
+相同的方法可用于访问对象的字段。请考虑以下 JSON 对象：
 
 ```json
 {
@@ -169,7 +169,7 @@ The same approach can be used to visit the fields of an object. Consider the fol
 }
 ```
 
-You can use the helper visitor callback function, as in the following example:
+您可以使用帮助程序访问者回调函数，如以下示例所示：
 
 ```c++
 AZStd::unordered_map<AZStd::string, int> fieldToIntMap;
@@ -193,10 +193,9 @@ if (AZ::SettingsRegistryInterface* settingsRegistry = AZ::SettingsRegistry::Get(
 
 ## Value setter API
 
-The [value setter API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L262-L309) is used to set values within the Settings Registry for `bool`, `int64_t`, `double`, and `AZStd::string_view` types, or any type that is reflected to the `SerializeContext`.
+[value setter API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L262-L309) 用于在设置注册表中为 `bool`, `int64_t`, `double`, 和 `AZStd::string_view` 类型设置值，或者为反映到`SerializeContext`的任何类型设置值。
 
-
-The Settings Registry `SettingsRegistryInterface::Set` function can be used to store supported types such as `bool`, `AZ::s64/AZ::u64`, `double`, and `AZStd::string_view`. The following example shows how to add several directories to the Settings Registry as well as plain values:
+设置注册表`SettingsRegistryInterface::Set`函数可用于存储支持的类型，例如`bool`, `AZ::s64/AZ::u64`, `double`, 和 `AZStd::string_view`。以下示例显示了如何向 Settings Registry 添加多个目录以及 plain 值：
 
 ```c++
 // Executable folder - corresponds to the @exefolder@ alias
@@ -222,9 +221,9 @@ registry.Set("/O3DE/SignedInt", 1LL);
 registry.Set("/O3DE/UnsignedInt", 2ULL);
 ```
 
-### Store a C++ Class Object with the value setter API
+### 使用 value setter API 存储 C++ 类对象
 
-The value setter API allows transforming a C++ object into JSON data through the `SettingsRegistryInterface:SetObject`. There is a prerequisite that the C++ object must be reflected to the `SerializeContext` as in the following example:
+值设置器 API 允许通过`SettingsRegistryInterface:SetObject`将 C++ 对象转换为 JSON 数据。有一个先决条件，即 C++ 对象必须反映到`SerializeContext`，如以下示例所示：
 
 ```c++
 // Make sure the AzPhysics::SceneConfiguration class is reflected
@@ -258,9 +257,9 @@ if (settingsRegistry)
 
 ## Value notifier API
 
-The [value notifier API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L196-L222) notifies when a key at a JSON pointer within the SettingsRegistry has been modified. The `SettingsRegistryInterface::RegisterNotifier` function allows users to register a callback with the Settings Registry that is invoked when the value of a JSON key is set.
+[value notifier API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L196-L222) 当 SettingsRegistry 中 JSON 指针处的键被修改时发出通知。`SettingsRegistryInterface::RegisterNotifier`函数允许用户向设置注册表注册回调，该回调在设置 JSON 键的值时调用。
 
-The following example demonstrates logging each time the Asset Cache directory has been updated in the Settings Registry:
+以下示例演示了每次在 Settings Registry 中更新 Asset Cache 目录时的日志记录：
 
 ```c++
 SettingsRegistry& registry = *AZ::SettingsRegistry::Get();
@@ -292,13 +291,13 @@ AZ::SettingsRegistryInterface::NotifyCallback assetCacheChangedCB =
 
 ## Merge API
 
-The most complex part of the Settings Registry is the [merge API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L311-L375). There are three primary types of input that can be supplied to the Settings Registry for merging.
+设置注册表中最复杂的部分是 [merge API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistry.h#L311-L375)。有三种主要类型的输入可以提供给 Settings Registry 进行合并。
 
-* Input with the syntax \<JSONPointerPath>=\<value> - This is treated as if command line parameters are being merged.
-* An in-memory JSON document
-* A path to a file/directory containing `.setreg`/`.setregpatch` files
+* 使用语法 \<JSONPointerPath>=\<value> 输入 - 这被视为正在合并命令行参数。
+* 内存中的 JSON 文档
+* 包含`.setreg`/`.setregpatch`文件的文件/目录的路径
 
-The order in which settings are merged to the registry is important. Keys that are merged later have precedence over keys seen merged earlier. Suppose there is `streamer.setreg` that has the content at key "/O3DE/AzFramework/MyArray" such as the following example:
+将设置合并到注册表的顺序很重要。稍后合并的键优先于之前合并的键。假设有 `streamer.setreg` ，其内容位于键“/O3DE/AzFramework/MyArray”，如以下示例所示：
 
 ```json
 {
@@ -322,7 +321,7 @@ The order in which settings are merged to the registry is important. Keys that a
 
 ```
 
-Suppose there is a `streamer.editor.setreg` with the same "/O3DE/AzFramework/MyArray" key, such as the following example:
+假设有一个具有相同“/O3DE/AzFramework/MyArray”键的`streamer.editor.setreg`，例如以下示例：
 
 ```json
 {
@@ -346,7 +345,7 @@ Suppose there is a `streamer.editor.setreg` with the same "/O3DE/AzFramework/MyA
 }
 ```
 
-If the preceding `streamer.editor.setreg` is merged, the settings registry contains the following keys and values:
+如果合并了前面的`streamer.editor.setreg` ，则 settings 注册表包含以下键和值：
 
 ```ini
 "/O3DE/AzFramework/MyArray/0" = true
@@ -357,13 +356,13 @@ If the preceding `streamer.editor.setreg` is merged, the settings registry conta
 "/O3DE/AzFramework/MyObject/AssetKey" = "{80CCDA30-1F70-4982-ADE9-62D3DEE332D4}"
 ```
 
-The values that are associated with the JSON array underneath the "/O3DE/AzFramework/MyArray" key from the merger of the `streamer.setreg` file have been updated with the values of the `streamer.editor.setreg` file.
+与 `streamer.setreg` 文件合并的“/O3DE/AzFramework/MyArray”键下的 JSON 数组关联的值已更新为 `streamer.editor.setreg` 文件的值。
 
-### Merge Settings Registry files from directories
+### 合并目录中的 Settings Registry 文件
 
-Merging a specific `.setreg` or `.setregpatch` file or merging a JSON document requires only specifying the file name or JSON content. Merging a directory containing `.setreg` or `.setregpatch` files requires not only the directory name but also specifying a list of tags known as *specializations* to the merge API.
+合并特定的`.setreg` 或 `.setregpatch`文件或合并 JSON 文档只需要指定文件名或 JSON 内容。合并包含 `.setreg` 或 `.setregpatch` 文件的目录不仅需要目录名称，还需要为合并 API 指定一个称为 *specializations* 的标签列表。
 
-The following example contains the specializations of `automatedtesting`, `automatedtesting_gamelauncher`, `game` and the current build configuration tag as part of its name (debug, profile, release):
+以下示例包含`automatedtesting`, `automatedtesting_gamelauncher`, `game` 的专用化以及作为其名称（debug、profile、release）一部分的当前构建配置标记：
 
 ```c++
 SettingsRegistryInterface::Specializations specializations{"automatedtesting", "automatedtesting_gamelauncher", "game", AZ_BUILD_CONFIGURATION_TYPE };
@@ -385,15 +384,15 @@ if (registry.Get(cacheRootPath, FilePathKey_CacheRootFolder))
 }
 ```
 
-The details of specializations are explained in the following sections on Auxiliary APIs.
+以下有关辅助 API 的章节介绍了专业化的详细信息。
 
 ## Auxiliary APIs
 
-The Settings Registry merge utilities are a set of functions located in `AzCore/Settings/SettingsRegistryMergeUtils.h` which contains implementation of merging of common files, directory locations, and the command line. It also contains functions for querying and setting a specialization within the Settings Registry underneath the key of "/Amazon/AzCore/Settings/Specializations". Specializations can be used for filtering which `*.setreg` files to merge when `SettingsInterface::MergeSettingsFolder` is invoked.
+设置注册表合并实用程序是位于`AzCore/Settings/SettingsRegistryMergeUtils.h`中的一组函数，其中包含通用文件、目录位置和命令行合并的实现。它还包含用于在“/Amazon/AzCore/Settings/Specializations”键下的设置注册表中查询和设置专业化的函数。专用化可用于筛选在调用`SettingsInterface::MergeSettingsFolder`时要合并的 `*.setreg` 文件。
 
-The Settings Registry Merge Utilities also contains a function for dumping JSON values at a specific JSON pointer path to an `AZ::IO::GenericStream`.
+Settings Registry Merge Utilities 还包含一个函数，用于将特定 JSON 指针路径中的 JSON 值转储到`AZ::IO::GenericStream`中。
 
-The following list provides links to the various auxiliary APIs in `AzCore/Settings/SettingsRegistryMergeUtils.h`:
+以下列表提供了指向`AzCore/Settings/SettingsRegistryMergeUtils.h`中各种辅助 API 的链接：
 
 * [Merge to Settings Registry API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryMergeUtils.h#L133-L263)
 * [Query Specialization Tag API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryMergeUtils.h#L125-L131)
@@ -401,4 +400,4 @@ The following list provides links to the various auxiliary APIs in `AzCore/Setti
 
 ## O3DE Manifest utils API
 
-The Settings Registry Merge Utilities also provides the [O3DE Manifest Utils API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryMergeUtils.h#L349-L404), which is a collection of helper functions for visiting the set of active Gems as well as recursively visiting the O3DE manifest "external_subdirectories" to determine the set of all registered Gems.
+Settings Registry Merge Utilities 还提供 [O3DE Manifest Utils API](https://github.com/o3de/o3de/blob/02846cf44347cbf4fae0faacc4a2ba74284908ff/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryMergeUtils.h#L349-L404)，这是一个帮助程序函数的集合，用于访问活动 Gem 的集合，以及递归访问 O3DE 清单“external_subdirectories”以确定所有已注册 Gem 的集合。

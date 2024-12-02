@@ -1,15 +1,15 @@
 ---
-title: Output the Settings Registry to a Stream with C++
-linkTitle: Output the Settings Registry
-description: Learn how to dump an in-memory Settings Registry to stream using C++ in Open 3D Engine (O3DE).
+title: 使用 C++ 将 Settings Registry 输出到 Stream
+linkTitle: 输出 Settings Registry
+description: 了解如何转储内存中的设置注册表，以便在 Open 3D Engine （O3DE） 中使用 C++ 进行流式传输。
 weight: 600
 ---
 
-You might need to store the Settings Registry or a section of the Settings Registry to disk for later access. Sometimes, you might need to store the Settings Registry in a string within a running application for further processing. This topic provides examples of how to dump portions of the Settings Registry to disk at a specific key while either maintaining the ancestor JSON key hierarchy or excluding any ancestor key hierarchy.
+您可能需要将设置注册表或设置注册表的一部分存储到磁盘以供以后访问。有时，您可能需要将 Settings Registry 存储在正在运行的应用程序中的字符串中，以便进一步处理。本主题提供了一些示例，说明如何在维护上级 JSON 密钥层次结构或排除任何上级密钥层次结构的同时，将设置注册表的某些部分转储到特定密钥的磁盘上。
 
-## Use the `DumpSettingsRegistryToStream` function
+## 使用 `DumpSettingsRegistryToStream` 函数
 
-In this example, the `SettingsRegistryMergeUtils::DumpSettingsRegistryToStream` function is used to store a section of the Settings Registry to a class that implements the `AZ::IO::GenericStream` interface.
+在此示例中， `SettingsRegistryMergeUtils::DumpSettingsRegistryToStream` 函数用于将设置注册表的一部分存储到实现`AZ::IO::GenericStream` 接口的类中。
 
 ```c++
 //! Structure for configuring how values should be dumped from the Settings Registry
@@ -33,10 +33,10 @@ bool DumpSettingsRegistryToStream(SettingsRegistryInterface& registry, AZStd::st
 ```
 
 {{< important >}}
-The results of `DumpSettingsRegistryToStream` are dumped relative to the `key` parameter.
+`DumpSettingsRegistryToStream`的结果相对于`key`参数进行转储。
 {{< /important >}}
 
-To better explain, consider the following sample in-memory Settings Registry instance:
+为了更好地解释，请考虑以下示例内存中 Settings Registry 实例：
 
 **Settings Registry View**
 
@@ -65,7 +65,7 @@ To better explain, consider the following sample in-memory Settings Registry ins
 }
 ```
 
-Invoking the `SettingsRegistryMergeUtils::DumpSettingsRegistryToStream` function with a key parameter of `"/Amazon/Editor/Preferences"` as follows:
+使用关键参数`"/Amazon/Editor/Preferences"`调用`SettingsRegistryMergeUtils::DumpSettingsRegistryToStream`函数，如下所示：
 
 ```c++
 AZ::SettingsRegistryMergeUtils::DumperSettings dumperSettings;
@@ -82,7 +82,7 @@ if (!AZ::SettingsRegistryMergeUtils::DumpSettingsRegistryToStream(*registry, "/A
 
 ```
 
-Results in:
+结果:
 
 ```json
 {
@@ -96,11 +96,11 @@ Results in:
 }
 ```
 
-This shows that the ancestor objects of "Amazon", "Editor", and "Preferences" don't output to the dumped text data. If you need to write out ancestor JSON objects to the Editor Preference settings, set the `m_jsonPointerPrefix` variable in the `DumperSettings`.
+这表明 Amazon、Editor、Preferences的祖先对象没有输出到转储的文本数据。如果需要将祖先 JSON 对象写出到编辑器首选项设置，请在 `DumperSettings` 中设置 `m_jsonPointerPrefix`变量。
 
-## Storing Editor Preferences using a key and an anchor
+## 使用键和锚点存储 Editor Preferences
 
-The following example invokes the `SettingsRegistryMergeUtils::DumpSettingsRegistryToStream` function with a key parameter of "/Amazon/Editor/Preferences" and sets the JSON pointer prefix parameter in the `DumperSettings` to "/Amazon/Editor/Preferences":
+以下示例使用键参数“/Amazon/Editor/Preferences”调用`SettingsRegistryMergeUtils::DumpSettingsRegistryToStream`函数，并将`DumperSettings`中的 JSON 指针前缀参数设置为“/Amazon/Editor/Preferences”：
 
 ```c++
 AZ::SettingsRegistryMergeUtils::DumperSettings dumperSettings;
@@ -117,7 +117,7 @@ if (!AZ::SettingsRegistryMergeUtils::DumpSettingsRegistryToStream(*registry, "/A
 }
 ```
 
-The preceding example generates the following result:
+前面的示例生成以下结果：
 
 ```json
 {
@@ -140,9 +140,9 @@ The preceding example generates the following result:
 }
 ```
 
-## Storing Editor Preferences using the root key and a filter
+## 使用根键和过滤器存储 Editor Preferences
 
-Dumping the entire root of the Settings Registry with an include filter writes the ancestor objects of a setting that is anchored to a specified key. The following example invokes the `SettingsRegistryMergeUtils::DumpSettingsRegistryToStream` function with a key parameter of "" (the root) and includes a filter that maintains any JSON objects that have a JSON pointer with the `"/Amazon/Editor/Preferences"` prefix:
+使用 include 过滤器转储 Settings Registry 的整个根目录会写入锚定到指定键的设置的祖先对象。以下示例使用键参数 “”（根）调用`SettingsRegistryMergeUtils::DumpSettingsRegistryToStream`函数，并包含一个筛选条件，该筛选条件维护具有 `"/Amazon/Editor/Preferences"`前缀的 JSON 指针的任何 JSON 对象：
 
 ```c++
 AZ::SettingsRegistryMergeUtils::DumperSettings dumperSettings;
@@ -165,7 +165,7 @@ if (!AZ::SettingsRegistryMergeUtils::DumpSettingsRegistryToStream(*registry, "",
 
 ```
 
-The preceding example generates the following result:
+前面的示例生成以下结果：
 
 ```json
 {
@@ -188,11 +188,11 @@ The preceding example generates the following result:
 }
 ```
 
-By using an include filter, the hierarchy of JSON keys on the way to the Editor Preferences section are maintained and dumped into the output string.
+通过使用包含过滤器，将保留前往 Editor Preferences 部分的 JSON 键的层次结构，并将其转储到输出字符串中。
 
-## Saving a section of the Settings Registry to a file
+## 将 Settings Registry 的一部分保存到文件中
 
-The following example shows how to use the `SettingsRegistryMergeUtils::DumpSettingsRegistryToStream` function to save the Editor Preferences to a file the User local registry location (`<project-root>/User/Registry`):
+以下示例显示了如何使用`SettingsRegistryMergeUtils::DumpSettingsRegistryToStream`函数将编辑器首选项保存到用户本地注册表位置(`<project-root>/User/Registry`)的文件中：
 
 ```c++
 //! Recurses over the entire Settings Registry to the Editor Preferences settings

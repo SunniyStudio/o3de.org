@@ -1,36 +1,36 @@
 ---
-linktitle: Installing O3DE for Linux
-title: Installing O3DE for Linux
-description: Learn how to install and set up Open 3D Engine (O3DE) for Linux.
+linktitle: 安装 O3DE for Linux
+title: 安装 O3DE for Linux
+description: 了解如何安装和设置适用于 Linux 的 Open 3D Engine （O3DE）。
 weight: 200
 ---
 
-To get started quickly with O3DE in Linux, download and install the deb package. The following instructions guide you through the installation process. After a successful install, you'll have a stable, pre-built version of the engine and its Gems, and you'll be ready to create new or open existing projects with the **Project Manager** tool.
+要在 Linux 中快速开始使用 O3DE，请下载并安装 deb 软件包。以下说明将指导您完成安装过程。成功安装后，您将拥有引擎及其 Gem 的稳定、预构建版本，并且您将准备好使用 **Project Manager** 工具创建新项目或打开现有项目。
 
-## Prerequisites
+## 先决条件
 
-The following instructions assume that you have met all hardware and software requirements listed in [O3DE System Requirements](/docs/welcome-guide/requirements/#linux).
+以下说明假定您已满足 [O3DE 系统要求](/docs/welcome-guide/requirements/#linux) 中列出的所有硬件和软件要求。
 
-## Installing O3DE from a deb package
+## 从 deb 包安装 O3DE
 
-1. Get the latest version of the deb package from the [O3DE download](https://o3de.org/download/#linux) page.
+1. 从 [O3DE 下载](https://o3de.org/download/#linux) 页面获取最新版本的 deb 包。
 
-1. Run the installer from your download location.
+1. 从下载位置运行安装程序。
     ```shell
     sudo apt install <path_to_deb_package>/<debian_package_name>.deb
     ```
-    Use the following path substitutions:
-    * `<path_to_deb_package>`: The path where you downloaded the deb package. Example: `~/Downloads`.
-    * `<debian_package_name>`: The name of the package. Example: `o3de_2310_3.deb`.
+    使用以下路径替换：
+    * `<path_to_deb_package>`: 下载 deb 包的路径。例： `~/Downloads`.
+    * `<debian_package_name>`: 包的名称。例：`o3de_2310_3.deb`.
 
     {{< known-issue link="https://bugs.launchpad.net/ubuntu/+source/synaptic/+bug/1522675" >}}
-When installing the package, you may observe the following error:
+安装软件包时，您可能会看到以下错误：
 ```
 N: Download is performed unsandboxed as root as file '/home/<user>/Downloads/o3de_2310_3.deb' 
    couldn't be accessed by user '_apt'. - pkgAcquire::Run (13: Permission denied)
 ```
-This is a bug in apt that has already been fixed. The error should go away once your current Linux distribution takes the fix.
-Until your distribution takes the fix, you can workaround the issue by repairing folder permissions with the following commands:
+这是 apt 中的一个 bug，已经被修复。一旦您当前的 Linux 发行版进行了修复，该错误应该会消失。
+在分配进行修复之前，您可以通过使用以下命令修复文件夹权限来解决此问题：
 ```
 sudo chown -Rv _apt:root /var/cache/apt/archives/partial/
 sudo chmod -Rv 700 /var/cache/apt/archives/partial/
@@ -38,16 +38,16 @@ sudo chmod -Rv 700 /var/cache/apt/archives/partial/
     {{< /known-issue >}}
 
     {{< known-issue link="https://salsa.debian.org/apt-team/apt/-/merge_requests/177" >}}
-If removing and installing the package, you may observe a warning like the following:
+如果删除并安装软件包，您可能会看到如下警告：
 ```
 W: Repository is broken: o3de:amd64 (= 24.09) has no Size information
 ```
-This is a bug in apt that has already been fixed. The warning should go away once your current Linux distribution takes the fix. The issue is a warning and does not affect installing or removing.
+这是 apt 中的一个 bug，已经被修复。一旦您当前的 Linux 发行版进行了修复，该警告应该会消失。该问题是警告，不会影响安装或删除。
     {{< /known-issue >}}
 
     O3DE will be installed in the default location: `/opt/O3DE/<version>`, where `<version>` is the version of the installer. Example: `2310_3`.
 
-1. During installation, the installer downloads additional packages as needed. The process can take some time, depending on your internet connection speed and what packages were already installed. An example output looks like the following (versions and paths may not match):
+1. 在安装过程中，安装程序会根据需要下载其他软件包。该过程可能需要一些时间，具体取决于您的 Internet 连接速度和已安装的软件包。示例输出如下所示（版本和路径可能不匹配）：
     ```shell
     Reading package lists... Done
     Building dependency tree
@@ -72,20 +72,20 @@ This is a bug in apt that has already been fixed. The warning should go away onc
     Setting up o3de (2310_3) ...
     ```
     
-When installation is complete, you can find **Project Manager** and other tools in `<install-directory>/bin/Linux/profile/Default`.
+安装完成后，您可以在`<install-directory>/bin/Linux/profile/Default`中找到 **Project Manager** 和其他工具。
 
-Example of launching Project Manager from the shell:
+从 shell 启动 Project Manager 的示例：
 ```shell
 /opt/O3DE/24.09/bin/Linux/profile/Default/o3de
 ```
 
-## Removing O3DE installed from a deb package
+## 从 deb 包中删除已安装的 O3DE
 
-1. Run apt to remove o3de:
+1. 运行 apt 删除 o3de：
     ```shell
     sudo apt remove o3de
     ```
-    An output like the following will be displayed:
+    将显示如下所示的输出：
     ```shell
     Reading package lists... Done
     Building dependency tree
@@ -106,54 +106,54 @@ Example of launching Project Manager from the shell:
     Removing o3de (0.0.0.0) ...
     ```
 
-## Installing O3DE from a Snap package
+## 从 Snap 包安装 O3DE
 
 {{< note >}}
-The Snap package is experimental and may run into issues on some distros. These instructions have been tested on Ubuntu 22.04 LTS. You will need to install all of the dependencies listed in [Linux requirements](/docs/welcome-guide/requirements/#linux).
+Snap 包是实验性的，可能会在某些发行版上遇到问题。这些说明已在 Ubuntu 22.04 LTS 上进行了测试。您需要安装 [Linux 要求](/docs/welcome-guide/requirements/#linux) 中列出的所有依赖项。
 {{< /note >}}
 
-1. Download the Snap package from the [O3DE download](https://o3de.org/download/#linux) page or get instructions from the [Snap store](https://snapcraft.io/o3de).
+1. 从 [O3DE 下载](https://o3de.org/download/#linux) 页面下载 Snap 软件包，或从 [Snap 商店](https://snapcraft.io/o3de) 获取说明。
 
-1. Depending on the distro, you will need to install `snapd` in order to install the Snap package. [Refer to this guide for instructions specific to your distro](https://snapcraft.io/docs/installing-snapd).
+1. 根据发行版的不同，您需要安装`snapd`才能安装 Snap 包。[请参阅本指南，了解特定于您的发行版的说明](https://snapcraft.io/docs/installing-snapd)。
 
-1. To install the snap from the Snap store, use the following command to install the package (this automatically downloads the package from the store):
+1. 要从 Snap 存储区安装快照，请使用以下命令安装软件包（这会自动从存储区下载软件包）：
    ```shell
    snap install --classic o3de
    ```
-   To install the latest development or beta channels, use the following command:
+   要安装最新的开发或 beta 频道，请使用以下命令：
    ```shell
    snap install --classic --<channel name> o3de
    ```
-   If you downloaded the Snap package from the O3DE download page, use the following command to install the package:
+   如果您从 O3DE 下载页面下载了 Snap 软件包，请使用以下命令安装该软件包：
    ```shell
    snap install --classic --dangerous <o3de snap package filename>.snap
    ```
-   The following output will be displayed if successful:
+   如果成功，将显示以下输出：
    ```shell
    o3de <version> installed
    ```
-   Where `<version>` is the version of the installer. Example: `24.09`.
+   其中 `<version>` 是安装程序的版本。例：`24.09`.
 
-O3DE will be installed in the default location: `/snap/o3de/current/<version>`, where `<version>` is the version of the installer. Example: `24.09`.
+O3DE 将安装在默认位置：`/snap/o3de/current/<version>`，其中 `<version>` 是安装程序的版本。示例：`24.09`。
 
-When installation is complete, you can find **Project Manager** and other tools in `<install-directory>/bin/Linux/profile/Default`. `snapd` will add this `Default` directory to your shell environment's path.
+安装完成后，您可以在`<install-directory>/bin/Linux/profile/Default`中找到 **Project Manager** 和其他工具。`snapd` 会将这个 `Default` 目录添加到你的 shell 环境路径中。
 
-Example of launching Project Manager from the shell:
+从 shell 启动 Project Manager 的示例：
 ```shell
 o3de
 ```
 
 {{< important >}}
-When configuring or building using the O3DE pre-build **Snap** SDK from the command line, first export the `O3DE_SNAP` environment variable so CMake does not attempt to install Python pip requirements and fail. To export the `O3DE_SNAP` environment variable, run the command `export O3DE_SNAP` from the command line before running the CMake commands below.
+从命令行使用 O3DE 预构建 **Snap** SDK 进行配置或构建时，首先导出`O3DE_SNAP`环境变量，以便 CMake 不会尝试安装 Python pip 要求并失败。要导出`O3DE_SNAP`环境变量，请在运行下面的 CMake 命令之前从命令行运行命令`export O3DE_SNAP`。
 {{< /important >}}
 
-## Removing O3DE installed from a Snap package
+## 从 Snap 包中删除安装的 O3DE
 
-1. Run `snap` to remove O3DE:
+1. 运行 `snap` 移除O3DE:
    ```shell
    snap remove o3de
    ```
-   The following output will be displayed if successful:
+   如果成功，将显示以下输出：
    ```shell
    o3de removed
    ```

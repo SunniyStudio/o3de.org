@@ -5,49 +5,49 @@ description: Learn how to install and set up Open 3D Engine (O3DE) for Windows u
 weight: 100
 ---
 
-To get started quickly with O3DE in Windows, download and run the installer. Use the following video or written instructions to guide you through the installation process. After a successful install, you'll have a stable, pre-built version of the engine and its Gems, and you'll be ready to create new projects or open existing projects with the **Project Manager** tool.
+要在 Windows 中快速开始使用 O3DE，请下载并运行安装程序。使用以下视频或书面说明指导您完成安装过程。成功安装后，您将拥有引擎及其 Gem 的稳定预构建版本，并且您将准备好使用 **Project Manager** 工具创建新项目或打开现有项目。
 
 {{< youtube-width id="_BhkXOBDYGA" title="Installing O3DE for Windows" >}}
 
-## Prerequisites
+## 先决条件
 
-The following instructions assume that you have:
+以下说明假定您已：
 
-* Met all hardware and software requirements listed in [O3DE System Requirements](../requirements).
-* Configured the required Windows software as described in the [Microsoft Windows](../requirements/#microsoft-windows) section of the system requirements topic.
+* 满足 [O3DE 系统要求](../requirements)中列出的所有硬件和软件要求。
+* 已按照 [Microsoft Windows](../requirements/#microsoft-windows)） 部分。
 
-## Installing O3DE
+## 安装 O3DE
 
-1. Get the latest version of the Windows installer from the [O3DE download](https://o3de.org/download/#windows) page.
+1. 从 [O3DE 下载](https://o3de.org/download/#windows) 获取最新版本的 Windows 安装程序。
 
-1. Run the installer from your download location.
+1. 从下载位置运行安装程序。
 
-{{< note >}} To create an offline installer, use the following command: **`<installer exe> /layout`**. This will download a portable MSI and CAB files to the relative path of the installer. Run the MSI to start an offline install. {{< /note >}}
+{{< note >}} 要创建脱机安装程序，请使用以下命令：**`<installer exe> /layout`**。这会将便携式 MSI 和 CAB 文件下载到安装程序的相对路径。运行 MSI 以启动脱机安装。 {{< /note >}}
 
-1. During the developer preview, you might encounter the following warning from Microsoft Defender describing the program as an unrecognized app. To proceed with installation, choose **More info**, and then choose **Run anyway**.
+1. 在开发人员预览版期间，您可能会遇到来自 Microsoft Defender 的以下警告，将该程序描述为无法识别的应用程序。要继续安装，请选择 **更多信息**，然后选择 **仍然运行**。
 
     ![Microsoft Defender Windows protection dialog boxes](/images/welcome-guide/installer-defender-protection.png)
 
-1. The default install location is: `C:\O3DE\<o3de_version>`. To install O3DE here, choose **Install**. To change the install location, choose **Options**.
+1. 默认安装位置为：`C:\O3DE\<o3de_version>`。要在此处安装 O3DE，请选择 **Install**。要更改安装位置，请选择 **Options**。
 
     ![O3DE welcome and options](/images/welcome-guide/installer-welcome.png)
 
-1. During installation, additional files will be downloaded and windows might open and close&mdash;for example, when installing the Python runtime in the engine's `python` directory.
+1. 在安装过程中，将下载其他文件，并且窗口可能会打开和关闭 - 例如，在引擎的`python`目录中安装 Python 运行时时。
 
     ![O3DE install progress](/images/welcome-guide/installer-install-progress.png)
 
-1. Upon successful installation, the installer displays the message **Installation Successfully Completed**. To open Project Manager, choose **Launch**. To exit the installer, choose **Close**.
+1. 安装成功后，安装程序会显示消息 **安装成功完成**。要打开 Project Manager，请选择 **Launch**。要退出安装程序，请选择 **Close**。
 
     ![O3DE install successful](/images/welcome-guide/installer-completed-success.png)
 
-    The installer creates two shortcuts on the desktop for common O3DE applications:
+    安装程序在桌面上为常见的 O3DE 应用程序创建两个快捷方式：
 
     ![O3DE Editor icon](/images/welcome-guide/desktop-icon-editor.png) **O3DE Editor**
 
-    Editor is a central hub for O3DE's creative tools. To help you implement your project goals, use Editor to place and group entities, add components, configure properties, and open supporting tools such as **Animation Editor** and **Script Canvas**. To learn more about Editor, take the [Editor tour](/docs/welcome-guide/tours/editor-tour).
+    Editor 是 O3DE 创意工具的中心枢纽。为了帮助您实现项目目标，请使用 Editor 放置和分组实体、添加组件、配置属性以及打开支持工具，例如 **Animation Editor** 和 **Script Canvas**。要了解有关 Editor 的更多信息，请观看 [Editor 导览](/docs/welcome-guide/tours/editor-tour)。
 
     ![O3DE Project Manager icon](/images/welcome-guide/desktop-icon-project-manager.png) **O3DE Project Manager**
 
-    Create and customize projects using the Project Manager tool. To add or remove functionality for your project, you can also enable or disable Gems.
+    使用 Project Manager 工具创建和自定义项目。要为您的项目添加或删除功能，您还可以启用或禁用 Gem。
 
-    For an introduction to Project Manager and help creating your first project, continue to [Creating Projects Using the Open 3D Engine Project Manager](/docs/welcome-guide/create/creating-projects-using-project-manager) to take an introductory tutorial.
+    有关项目管理器的介绍和创建第一个项目的帮助，请继续阅读 [使用 Open 3D Engine 项目管理器创建项目](/docs/welcome-guide/create/creating-projects-using-project-manager) 以学习入门教程。

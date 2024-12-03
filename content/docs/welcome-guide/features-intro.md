@@ -1,173 +1,173 @@
 ---
-linktitle: Features
-title: Open 3D Engine Features
-description: Read about the high-level features provided with Open 3D Engine (O3DE).
+linktitle: 功能
+title: Open 3D Engine 功能
+description: 了解 Open 3D Engine （O3DE） 提供的高级功能。
 weight: 100
 toc: true
 ---
 
-**Open 3D Engine (O3DE)** is an open-source, cross-platform, real time 3D engine that you can use to create high performance interactive experiences, including games and simulations. O3DE has a physically-based renderer and a suite of tools to build and process assets, simulate physics, and create animation and cinematics. The renderer and tools are all wrapped in a modular framework that you can modify and extend with your preferred development tools.
+**Open 3D Engine (O3DE)** 是一个开源、跨平台的实时 3D 引擎，可用于创建高性能的交互式体验，包括游戏和模拟。O3DE 有一个基于物理的渲染器和一套工具，用于构建和处理资产、模拟物理以及创建动画和电影。渲染器和工具都封装在一个模块化框架中，您可以使用首选的开发工具对其进行修改和扩展。
 
-## Open source
+## 开源
 
-O3DE is open source. You can use the provided binaries and tools to build your own projects, or get the source code and extend it!
+O3DE 是开源的。您可以使用提供的二进制文件和工具来构建自己的项目，或者获取源代码并对其进行扩展！
 
-Visit [O3DE on GitHub](https://{{< links/o3de-source >}}) to get the source code, then follow the [GitHub setup instructions](/docs/welcome-guide/setup/setup-from-github) to get started.
+访问 [O3DE on GitHub](https://{{< links/o3de-source >}})获取源码，然后按照 [GitHub 设置说明](/docs/welcome-guide/setup/setup-from-github) 开始。
 
-## Modular engine and components
+## 模块化引擎和组件
 
-Take only the bits your project needs! O3DE is composed of *Gems*, which are modules that contain libraries with standard interfaces and assets. Each system in O3DE is provided by its own Gem and you can pick and choose what functionality to add based on your requirements. You can also customize O3DE, or replace functionality entirely, with your own Gems!
+只获取您的项目需要的部分！O3DE 由 *Gem*组成，Gem 是包含具有标准接口和资产的库的模块。O3DE 中的每个系统都由其自己的 Gem 提供，您可以根据自己的要求选择要添加的功能。您还可以自定义 O3DE，或用您自己的 Gem 完全替换功能！
 
-O3DE supports Gems with precompiled binaries and libraries. Adding or removing precompiled Gems does not require you to recompile O3DE. Upgrading to new engine versions only requires that you recompile projects.
+O3DE 支持具有预编译二进制文件和库的 Gem。添加或删除预编译的 Gem 不需要您重新编译 O3DE。升级到新的引擎版本只需要重新编译项目。
 
-For more information, see [the O3DE Gems documentation](/docs/user-guide/gems/).
+有关更多信息，请参阅 [O3DE Gem 文档](/docs/user-guide/gems/)。
 
-## Build with familiar tools
+## 使用熟悉的工具进行构建
 
-O3DE uses [CMake](https://cmake.org/) for creating build files, managing dependencies, testing, and automating code generation. O3DE's build system has the following advantages:
+O3DE 使用 [CMake](https://cmake.org/)  创建构建文件、管理依赖项、测试和自动化代码生成。O3DE 的构建系统具有以下优势：
 
-* Your project is created for, and built with, your native IDE and toolchain.
+* 您的项目是为您的原生 IDE 和工具链创建和构建的。
 
-* Proper dependency trees for build targets are created and maintained, keeping the build targets clean.
+* 创建并维护构建目标的适当依赖关系树，以保持构建目标的整洁。
 
-* Robust support for creating and running automated tests.
+* 对创建和运行自动化测试的强大支持。
 
-* Use debugging and profiling tools such as **Edit and Continue** when supported by compiler tools.
+* 使用调试和分析工具，例如编译器工具支持的 **编辑并继续**。
 
-For more information, refer to [Get started with O3DE builds](/docs/user-guide/build/).
+有关更多信息，请参阅 [开始使用 O3DE 版本](/docs/user-guide/build/)。
 
-## Atom physically based renderer
+## 基于 Atom 物理的渲染器
 
-O3DE uses the Atom physically based renderer. Atom is a cross-platform, modular, data-driven, and multi-threaded renderer that can be extended for a wide variety of visual and performance needs.
+O3DE 使用基于 Atom 物理的渲染器。Atom 是一个跨平台、模块化、数据驱动的多线程渲染器，可以扩展以满足各种视觉和性能需求。
 
-Some of Atom's features include:
+Atom 的一些功能包括：
 
-* Support for Forward+ and Deferred rendering.
+* 支持 Forward+ 和 Deferred 渲染。
 
-* Multi-threaded. Rendering processes run on the CPU and GPU.
+* 多线程。渲染进程在 CPU 和 GPU 上运行。
 
-* Modular framework allows development of multiple rendering paths.
+* 模块化框架允许开发多个渲染路径。
 
-* DirectX 12, Vulkan, and Metal graphics API support.
+* DirectX 12、Vulkan 和 Metal 图形 API 支持。
 
-* Optimized cluster Forward+ shading model with discrete passes that gives you greater control over Atom's final output.
+* 优化的集群 Forward+ 着色模型，具有离散通道，让您可以更好地控制 Atom 的最终输出。
 
-* The AZSL shader language is a flexible extension of HLSL that allows you to write your own shaders in a familiar syntax.
+* AZSL 着色器语言是 HLSL 的灵活扩展，允许您使用熟悉的语法编写自己的着色器。
 
-* Global Illumination on a per-mesh and per-material basis with MSAA/SSAO/SSR support.
+* 基于每个网格和每个材质的全局照明，支持 MSAA/SSAO/SSR。
 
-* Real time, hardware accelerated ray tracing.
+* 实时、硬件加速的光线追踪。
 
-* High resolution reflection cubemaps.
+* 高分辨率反射立方体贴图。
 
-* Pipeline interface abstraction allowing for platform-independent creation of Forward+, Deferred, or hybrid renderers via a pass system. Supports Forward+ by default.
+* 管道接口抽象，允许通过通道系统独立于平台创建 Forward+、Deferred 或 Hybrid 渲染器。默认支持 Forward+。
 
-* Support for parallax correction, mixed reflections per render pass, and runtime editing and visualization for lighting artists.
+* 支持视差校正、每个渲染通道的混合反射以及照明艺术家的运行时编辑和可视化。
 
-* No limitations on customizable render passes.
+* 对可自定义的渲染通道没有限制。
 
-Read the [Atom Documentation](/docs/atom-guide) to find out more!
+阅读 [Atom 文档](/docs/atom-guide) 了解更多信息！
 
-## Build runtime logic with Script Canvas or Lua
+## 使用 Script Canvas 或 Lua 构建运行时逻辑
 
-In O3DE, you have *two* scripting environments available for creating runtime logic: a visual scripting tool called Script Canvas, and a more traditional scripting model, Lua.
+在 O3DE 中，您有两个脚本环境可用于创建运行时逻辑：一个名为 Script Canvas 的可视化脚本工具和一个更传统的脚本模型 Lua。
 
-With Script Canvas, you can create scripts as flow graphs by placing and connecting functional nodes in a visual editor, no programming required. Script Canvas allows you to experiment and iterate quickly, and provides an easy yet powerful entry point to new developers.
+使用 Script Canvas，您可以通过在可视化编辑器中放置和连接功能节点来将脚本创建为流图，而无需编程。Script Canvas 允许您快速试验和迭代，并为新开发人员提供了一个简单而强大的入口点。
 
-With Lua, O3DE supports a well-established scripting language and the ability to use the editor of your choice.
+借助 Lua，O3DE 支持成熟的脚本语言，并能够使用您选择的编辑器。
 
-You don't have to choose one or the other. You can use both Script Canvas and Lua in your projects and even within the same entity.
+您不必选择一个或另一个。您可以在项目中同时使用 Script Canvas 和 Lua，甚至可以在同一个实体中使用。
 
-## Physics simulations
+## 物理模拟
 
-O3DE provides support for a suite of industry standard physics solutions that you can use to add realism to your actors and environments, and to visualize simulations. O3DE provides support for the following simulation SDKs:
+O3DE 为一套行业标准物理解决方案提供支持，您可以使用这些解决方案为角色和环境添加真实感，并可视化模拟。O3DE 支持以下模拟 SDK：
 
-* **NVIDIA PhysX:** Create static and dynamic rigid bodies, dynamic joints, and forces such as wind and gravity. PhysX can also be used for overlap testing, triggers, shapecasts, and raycasts.
+* **NVIDIA PhysX:** 创建静态和动态刚体、动态关节以及风和重力等力。PhysX 还可用于重叠测试、触发器、形状投射和光线投射。
 
-* **NVIDIA Cloth:** Create clothing and fabrics that realistically react to animated entities and physical forces. NVIDIA Cloth has robust support for colliders, constraints, and per-vertex cloth data to compute highly resolving, layered cloth simulation.
+* **NVIDIA Cloth:** 创建对动画实体和物理力做出逼真反应的服装和织物。NVIDIA Cloth 对碰撞器、约束和逐顶点布料数据提供强大支持，以计算高分辨率的分层布料模拟。
 
-* **AMD TressFX:** Create hair and fur using guide hairs and grooming data that realistically reacts to animated entities and physical forces.
+* **AMD TressFX:** 使用导向毛和修饰数据创建头发和毛发，这些数据可以真实地对动画实体和物理力做出反应。
 
-<!-- * **NVIDIA Blast:** Create dynamic destruction with multiple layers of fracturing and user defined vector and stress damage limits. -->
+<!-- * **NVIDIA Blast:** 使用多层压裂和用户定义的矢量和应力损伤限制创建动态破坏。 -->
 
-## Robust networking
+## 强大的网络
 
-O3DE comes with a high-performance networking Gem that gives you the features you need for robust communications and servers. Networking features include:
+O3DE 附带一个高性能网络 Gem，可为您提供强大的通信和服务器所需的功能。联网功能包括：
 
-* Highly flexible, TCP/UDP low latency transport layer abstracted behind a simplified API.
+* 高度灵活的 TCP/UDP 低延迟传输层抽象在简化的 API 后面。
 
-* Encryption and compression support with a built-in simulator for latency, jitter, reorder, and loss.
+* 加密和压缩支持，内置模拟器，用于延迟、抖动、重新排序和丢失。
 
-* Entity replication using unordered, unreliable data replication for lowest possible latency.
+* 使用无序、不可靠的数据复制进行实体复制，以实现尽可能低的延迟。
 
-* Support for both player hosted and dedicated server models.
+* 支持播放器托管和专用服务器模型。
 
-* Local prediction latency compensation with backward reconciliation for server authority.
+* 本地预测延迟补偿，具有服务器权限的向后对账功能。
 
-* Customizable player behaviors supporting automated desync detection and correction.
+* 可自定义的玩家行为，支持自动不同步检测和纠正。
 
 <!-- For more information, read [O3DE Networking](/docs/user-guide/networking). -->
 
-## Data-driven asset workflows and asset handling
+## 数据驱动的资产工作流程和资产处理
 
-O3DE supports industry standard asset file formats and provides a unified asset processor. O3DE includes the following asset processing features:
+O3DE 支持行业标准的资产文件格式，并提供统一的资产处理器。O3DE 包括以下资产处理功能：
 
-* Assets and asset manifests use JSON formatting allowing greater potential for scripting and automation.
+* 资产和资产清单使用 JSON 格式，从而为脚本编写和自动化提供更大的潜力。
 
-* A unified mesh format for actors, static, and dynamic objects.
+* Actor、静态和动态对象的统一网格格式。
 
-* Optimized run time assets for streaming on modern graphics hardware.
+* 优化了运行时资产，以便在现代图形硬件上进行流式传输。
 
-* Support for non-blocking, asynchronous loading of any asset type.
+* 支持任何资产类型的非阻塞、异步加载。
 
-* Asset builders can be scripted with Python.
+* 资产生成器可以使用 Python 编写脚本。
 
-## Prefab support
+## Prefab支持
 
-Complex entities can be created, shared, re-used, and dynamically spawned with O3DE's prefab system. O3DE prefabs include the following features:
+复杂实体可以通过 O3DE 的Prefab系统创建、共享、重复使用和动态生成。O3DE Prefab包括以下功能：
 
-* Reusable assets with complete properties, components, and hierarchies.
+* 具有完整属性、组件和层次结构的可重用资产。
 
-* Prefabs use a human readable text format, so you can use standard source control tools to view diffs and merge changes.
+* Prefab使用人类可读的文本格式，因此您可以使用标准源代码管理工具来查看差异和合并更改。
 
-* Prefabs can be placed and managed dynamically as *spawnables*.
+* Prefab可以作为 *spawnables* 动态放置和管理。
 
-## Scripted tools
+## 脚本化工具
 
-The O3DE Editor and tools offer extension support through [Python 3](https://www.python.org/). Create custom editor components, automate processes, and extend your development environment. With O3DE's Python scripting support, you get:
+O3DE 编辑器和工具通过 [Python 3](https://www.python.org/) 提供扩展支持。创建自定义编辑器组件、自动化流程并扩展您的开发环境。借助 O3DE 的 Python 脚本支持，您可以获得：
 
-* Extensions with access to the Qt UX library used by the O3DE editor and tools.
+* 可访问 O3DE 编辑器和工具使用的 Qt UX 库的扩展。
 
-* Asset builder customization, including pre- and post-processing steps.
+* 资产生成器自定义，包括预处理和后处理步骤。
 
-* Custom behaviors in mesh, image, and material processing, letting you split, assign, and rehome assets.
+* 网格、图像和材质处理中的自定义行为，允许您拆分、分配和重新固定资源。
 
-## High-performance math
+## 高性能数学
 
-All of Open 3D Engine is backed with a high performance math library, designed to take advantage of modern CPU capabilities for fast and precise calculations.
+所有 Open 3D Engine 都以高性能数学库为后盾，旨在利用现代 CPU 功能进行快速、精确的计算。
 
-* Libraries use optimal SIMD code for x64 SSE and ARM Neon platforms, and fallback scalar code where optimizations aren't available.
+* 库对 x64 SSE 和 ARM Neon 平台使用最佳 SIMD 代码，并在优化不可用的情况下使用回退标量代码。
 
-* SIMD-accelerated trigonometric functions that operate faster than equivalent scalar operations and are capable of performing multiple trigonometric calculations in a single call.
+* SIMD 加速的三角函数，其运行速度比等效标量运算更快，并且能够在一次调用中执行多个三角计算。
 
-## Simplified project management
+## 简化项目管理
 
-O3DE projects are managed through JSON configuration files and the CMake build system, making it simple for you to build custom management tools, or design and distribute your own customizations as Gems. Gems can add new functionality to your projects with a single line of JSON. O3DE's project design gives you:
+O3DE 项目通过 JSON 配置文件和 CMake 构建系统进行管理，使您可以轻松构建自定义管理工具，或将您自己的自定义项作为 Gem 设计和分发。Gem 可以通过一行 JSON 向您的项目添加新功能。O3DE 的项目设计为您提供：
 
-* A JSON descriptor of a Gem's contents, enabled components, and libraries.
+* Gem 内容、已启用组件和库的 JSON 描述符。
 
-* Python scripts with support for basic project management from the command line.
+* 支持从命令行进行基本项目管理的 Python 脚本。
 
-## Flexible code and data templates
+## 灵活的代码和数据模板
 
-O3DE offers a code generator powered by [Jinja2 templates](https://jinja.palletsprojects.com/en/2.11.x/), giving you the capabilities to rapidly generate boilerplate code or large amounts of similar data. Some of the features of the code generator include:
+O3DE 提供了一个由 [Jinja2 模板](https://jinja.palletsprojects.com/en/2.11.x/), 提供支持的代码生成器，使您能够快速生成样板代码或大量类似数据。代码生成器的一些功能包括：
 
-* Data-driven model powered by XML or JSON inputs.
+* 由 XML 或 JSON 输入提供支持的数据驱动模型。
 
-* Fully integrated into the CMake build system.
+* 完全集成到 CMake 构建系统中。
 
-* Regular expression and wildcard matching and replacement rules, letting you set up support for bulk file processing.
+* 正则表达式和通配符匹配和替换规则，允许您设置对批量文件处理的支持。
 
-## White Box tool
+## 白盒工具
 
-* Build levels quickly with O3DE's White Box Gem, letting you sculpt and manipulate geometric volumes quickly to get your world sketched out in-engine.
+* 使用 O3DE 的 White Box Gem 快速构建关卡，让您快速雕刻和操纵几何体，在引擎中勾勒出您的世界。

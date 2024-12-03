@@ -1,15 +1,15 @@
 ---
-description: ' Enable a LAN firewall to protect your Open 3D Engine environment '
-title: Enabling a Firewall
+description: ' 启用 LAN 防火墙以保护您的 Open 3D Engine 环境 '
+title: 启用防火墙
 weight: 600
 draft: true
 ---
 
 
 
-You can help protect your environment by enabling the firewall settings on all computers running the Asset Processor or O3DE Editor to do the following:
-+ Exclude external connections to ports 4600, 9432, 9433, and 45643 from untrusted IP addresses.
-+ Exclude connections from every address except 127.0.0.1.
-+ If you have multiple computers that work together (e.g. a PC and a Mac), you must allow connections to ports 4600, 9432, 9433, and 45643 from the IP addresses for these computers, but exclude all other connections.
+您可以通过在运行 Asset Processor 或 O3DE Editor 的所有计算机上启用防火墙设置来执行以下操作，从而帮助保护您的环境：
++ 从不受信任的 IP 地址中排除到端口 4600、9432、9433 和 45643 的外部连接。
++ 排除来自除 127.0.0.1 之外的所有地址的连接。
++ 如果您有多台协同工作的计算机（例如 PC 和 Mac），则必须允许从这些计算机的 IP 地址连接到端口 4600、9432、9433 和 45643，但不包括所有其他连接。
 
-Refer to the documentation for your operating system for how to manage your firewall settings.
+有关如何管理防火墙设置的信息，请参阅适用于您的操作系统的文档。

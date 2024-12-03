@@ -1,158 +1,158 @@
 ---
-linkTitle: Create with O3DE
-title: Create with Open 3D Engine
-description: Understand the different ways you can create with Open 3D Engine as a technical artist, designer, or programmer.
+linkTitle: 使用 O3DE 创建
+title: 使用 Open 3D Engine 进行创作
+description: 了解技术艺术家、设计师或程序员可以使用 Open 3D Engine 进行创作的不同方式。
 weight: 200
 toc: true
 ---
 
-Previously in this guide, we covered [key concepts](../key-concepts) and how to [set up **Open 3D Engine (O3DE)**](../setup). This topic provides an overview of creating with O3DE, beginning with some concepts all creators should keep in mind, then highlighting areas of interest for different creative roles.
+在本指南的前面，我们介绍了 [关键概念](../key-concepts) 以及如何 [设置 **Open 3D Engine （O3DE）**](../setup) 的 Ban S T本主题概述了如何使用 O3DE 进行创作，首先介绍所有创作者都应牢记的一些概念，然后重点介绍不同创意角色感兴趣的领域。
 
-## Modular tools and features
+## 模块化工具和功能
 
-Development in O3DE is best understood if you keep a key O3DE design philosophy in mind as you learn: *Modularity*. The packages that make up O3DE, many of the creative tools, and even the visual scripting systems in O3DE use modular concepts to provide building blocks for your creative vision.
+如果您在学习时牢记一个关键的 O3DE 设计理念，那么最好理解 O3DE 中的开发：*模块化*。构成 O3DE 的软件包、许多创意工具，甚至 O3DE 中的可视化脚本系统都使用模块化概念为您的创意愿景提供构建块。
 
-### Gems, the modules of O3DE
+### Gems，O3DE 的模块
 
-O3DE, its systems, and its environment are built as a collection of C++ modules called *Gems*. Gems are packaged code and assets that provide tools and functionality. The Atom Gem, for example, is a Gem containing several smaller Gems that provide the Atom libraries, interfaces, and tools such as **Material Editor**. The Atom Gem provides everything that is required to render your creations in real time. O3DE's Gems can contain just about anything, from runtime systems for game states and simulations, creative tools, utilities for profiling, debugging, and project management, or even assets such as models, animation, and textures.
+O3DE、其系统及其环境构建为称为 *Gem*的 C++ 模块集合。Gem 是提供工具和功能的打包代码和资产。例如，Atom Gem 是一个包含多个较小 Gem 的 Gem，这些 Gem 提供 Atom 库、接口和工具，例如 **Material Editor**。Atom Gem 提供了实时渲染您的创作所需的一切。O3DE 的 Gem 几乎可以包含任何内容，从用于游戏状态和模拟的运行时系统、创意工具、用于分析、调试和项目管理的实用程序，甚至是模型、动画和纹理等资产。
 
- Choosing the right Gems based on the combination of your project's design and your workflows will keep your development process focused and likewise simplify managing your project.
+根据项目设计和工作流程的组合选择合适的 Gem 将使您的开发过程保持专注，同样可以简化您的项目管理。
 
-All the functionality of **O3DE Editor**, the central creative tool of O3DE, is provided by Gems. O3DE ships with dozens of Gems as part of the installation, and you can acquire additional Gems from third parties, or write new ones yourself. When you build your project, the functionality of the Gems you've added are combined to create your project's runtime systems. You can obtain or create a Gem with just the functionality you need - and even maintain the code for it independent of your project! This means, for example, that a systems developer can work on AI functionality in a Gem and provide their AI Gem to creative teams. When the AI Gem is updated, designers can add or update the Gem in their project, with minimal disruption, and immediately use the new functionality the AI Gem provides.
+O3DE 的核心创意工具 **O3DE 编辑器** 的所有功能均由 Gems 提供。O3DE 在安装过程中附带了数十个 Gem，您可以从第三方获取其他 Gem，也可以自己编写新 Gem。在构建项目时，您添加的 Gem 的功能将组合在一起，以创建项目的运行时系统。您可以获取或创建仅包含所需功能的 Gem - 甚至可以独立于您的项目维护其代码！这意味着，例如，系统开发人员可以在 Gem 中开发 AI 功能，并将他们的 AI Gem 提供给创意团队。更新 AI Gem 后，设计人员可以在其项目中添加或更新 Gem，将中断降至最低，并立即使用 AI Gem 提供的新功能。
 
-Embracing the concept of modularity and creating your own Gems has a lot of benefits. By creating your own Gems you can reuse functionality and assets across projects easily, share your work with other creators, and even permit other contributors to extend and improve your Gem's functionality.
+采用模块化的概念并创建自己的 Gem 有很多好处。通过创建自己的 Gem，您可以轻松地在项目之间重复使用功能和资源，与其他创建者共享您的作品，甚至允许其他贡献者扩展和改进 Gem 的功能。
 
-### Components, the modules of entities
+### 组件、实体的模块
 
-You'll notice this philosophy of modularity throughout the tools and functionality of O3DE. For example, consider the concept of an *entity* in O3DE. An entity can represent just about anything in your project under O3DE's component entity system. By giving the entity components, you begin to shape the functionality and utility of the entity. The components are modules that specify entity behaviors and properties.
+您会注意到这种模块化理念贯穿于 O3DE 的整个工具和功能中。例如，考虑 O3DE 中的 *实体* 概念。实体可以在 O3DE 的组件实体系统下表示项目中的几乎任何内容。通过提供实体组件，您可以开始塑造实体的功能和效用。这些组件是指定实体行为和属性的模块。
 
-You might have an entity that you want to see and interact with that uses all of the following components:
+您可能有一个想要查看并与之交互的实体，该实体使用以下所有组件：
 
-* The default **Transform** component to define its position
-* A **Mesh** component to define its visual geometry
-* **NVIDIA PhysX** components to define collision characteristics and other aspects for a realistic, rigid body simulation
-* An **Input** component to reference an input event-binding definition
-* A **Script** component to automate some sort of behavior, or process input events from the player
+* 用于定义其位置的默认 **Transform** 组件
+* 一个 **Mesh** 组件，用于定义其视觉几何体
+* **NVIDIA PhysX** 组件，用于定义碰撞特性和其他方面，以实现逼真的刚体模拟
+* 一个 **Input** 组件，用于引用输入事件绑定定义
+* 一个 **Script** 组件，用于自动化某种行为，或处理来自播放器的输入事件
 
-...and many more!
+...还有很多！
 
-Other entities that you create will be invisible and provide runtime utilities and features. These entities might exist to implement triggers, spawn environmental effects, or reference assets created with tools, such as a UI that you created in **UI Editor**.
+您创建的其他实体将不可见，并提供运行时实用程序和功能。这些实体的存在可能是为了实现触发器、生成环境效果或引用使用工具创建的资产，例如您在 UI 编辑器中创建的 UI。
 
-## Working with O3DE Editor
+## 使用 O3DE 编辑器
 
-O3DE Editor is the central hub for O3DE's creative tools. A major part of assembling a project in O3DE revolves around using the O3DE Editor to do the following:
+O3DE Editor 是 O3DE 创意工具的中心枢纽。在 O3DE 中组装项目的主要部分围绕使用 O3DE 编辑器执行以下操作：
 
-* Place and group entities
-* Add components to the entities
-* Configure properties on the components
-* Use tools associated with the components
+* 放置和分组实体
+* 将组件添加到实体
+* 配置组件的属性
+* 使用与组件关联的工具
 
-Tools you might use that are associated to specific components include:
+您可能使用的与特定组件关联的工具包括：
 
-* **Script Canvas**, O3DE's visual editor for creating scripts, then reference the script from the **Script Canvas** component
-* **Animation Editor** to animate actors, then reference from the **Anim Graph** component
-* **Asset Editor** to create input bindings that bind raw player input, such as keystrokes, to events, then reference from the **Input** component
-* **Audio Controls Editor** to setup sound effects that map to audio engine controls, then reference from the **Audio Trigger** and **Audio Switch** components
+* **Script Canvas**，O3DE 用于创建脚本的可视化编辑器，然后从 **Script Canvas** 组件引用脚本
+* **Animation Editor**为角色添加动画效果，然后从 **Anim Graph** 组件中引用
+* **Asset Editor**创建将原始玩家输入（如击键）绑定到事件的输入绑定，然后从 **Input** 组件引用
+* **Audio Controls Editor**设置映射到音频引擎控件的声音效果，然后从 **Audio Trigger** 和 **Audio Switch** 组件中引用
 
-...and many more.
+...以及更多。
 
-Some tools can be opened directly from their associated component. Others require you to open them from the **Tools** menu in O3DE Editor. The modular nature of O3DE means there are additional assets, components, and tools that you can add by enabling Gems in Project Manager. O3DE comes with a library of Gems that can include new code, new assets, or both! Check the Project Manager to see the full list of Gems available with O3DE.
+某些工具可以直接从其关联的组件中打开。其他选项要求您从 O3DE Editor 的 **工具** 菜单中打开它们。O3DE 的模块化特性意味着您可以通过在 Project Manager 中启用 Gem 来添加其他资产、组件和工具。O3DE 附带一个 Gem 库，其中可以包含新代码和/或新资产！查看 Project Manager 以查看 O3DE 中可用的 Gem 的完整列表。
 
-You'll get a quick overview and navigation tutorial for O3DE Editor in the next topic, [O3DE Editor Tour](./editor-tour).
+您将在下一个主题 [O3DE Editor 导览](./editor-tour) 中获得 O3DE Editor 的快速概述和导航教程。
 
-## Development roles
+## 开发角色
 
-Depending on your role as an artist, designer, engineer, and the scope of the project that you're working on, you might not encounter all of the tools and technologies that O3DE provides. In the next section, we'll take a look at what tools and features you might want to focus on depending on your role.
+根据您作为艺术家、设计师、工程师的角色以及您所从事的项目的范围，您可能无法遇到 O3DE 提供的所有工具和技术。在下一节中，我们将根据您的角色，了解您可能希望关注哪些工具和功能。
 
-### Artist
+### 艺术家
 
-While much of your work as an artist might involve using tools outside O3DE, the tools O3DE provides bring all of your assets together into worlds and actors for people to visualize, interact with, and experience. You might work closely with a designer or double as a designer yourself. There is some overlap between the tools and functionality artists and designers use.
+虽然作为艺术家，您的大部分工作可能涉及使用 O3DE 之外的工具，但 O3DE 提供的工具将您的所有资产整合到世界和参与者中，供人们可视化、交互和体验。您可能会与设计师密切合作，或者自己兼任设计师。艺术家和设计师使用的工具和功能之间存在一些重叠。
 
-As an example, let's consider the workflow for setting up an actor in your project.
+例如，让我们考虑在项目中设置 actor 的工作流程。
 
-1.  Outside of O3DE, you create a character model, materials, textures, and rig for the actor.
+1. 在 O3DE 之外，您可以为角色创建角色模型、材质、纹理和装备。
 
-1.  O3DE's **Asset Processor** automatically processes source assets into platform-specific runtime assets, ensuring new or modified files are ready to use in O3DE as soon as possible. You can use **Scene Settings** to modify how Asset Processor produces the runtime assets if needed.
+1. O3DE 的 **Asset Processor** 会自动将源资产处理为特定于平台的运行时资产，确保新的或修改的文件尽快在 O3DE 中准备好使用。如果需要，您可以使用 **Scene Settings** 来修改 Asset Processor 生成运行时资源的方式。
 
-1.  You import your actor file in Animation Editor and create a motion set to specify the motions that you want for your actor.
+1. 在 Animation Editor 中导入角色文件并创建运动集，以指定角色所需的运动。
 
-1.  Next, you create an animation graph using nodes, including blend trees, events, and states, to create complex animated behaviors for your actor.
+1. 接下来，使用节点 （包括混合树、事件和状态） 创建动画图形，以便为角色创建复杂的动画行为。
 
-1.  When you've built and previewed the animations and are ready to try them out in a runtime environment, you can switch over to O3DE Editor.
+1. 当您构建并预览了动画并准备好在运行时环境中试用它们时，您可以切换到 O3DE 编辑器。
 
-1.  In O3DE Editor, you create or open an existing test level.
+1. 在 O3DE 编辑器中，创建或打开现有测试关卡。
 
-1.  To see your animated character, you need an entity with:
+1. 要查看动画角色，您需要一个具有以下特点的实体：
 
-    * An **Actor** component to create a controllable character with the actor file from Animation Editor and a material linked to your actor asset.
-    * An **AnimGraph** component to use the animation graph and motion set assets that you created in the Animation Editor.
+    * 一个 **Actor** 组件，用于使用 Animation Editor 中的角色文件和链接到角色资源的材质创建可控制角色。
+    * 一个 **AnimGraph** 组件，用于使用您在 Animation Editor 中创建的动画图形和运动集资源。
 
-1.  To control your character in your level, you might want to work with a designer or programmer to add an **Input** component, **PhysX** components, and script components so you can test all of your character's animations in your project's specific environment.
+1.  要控制关卡中的角色，您可能需要与设计师或程序员合作，添加 **Input** 组件、**PhysX** 组件和脚本组件，以便您可以在项目的特定环境中测试角色的所有动画。
 
-We suggest that you begin your learning path by browsing the following set of O3DE tools and technologies, and then focusing on the ones that apply to your needs:
+我们建议您通过浏览以下 O3DE 工具和技术集来开始学习路径，然后专注于适用于您需求的工具和技术：
 
-*  [O3DE Editor](/docs/user-guide/editor/)
-*  [Asset Pipeline](/docs/user-guide/assets/pipeline/)
-*  [Component Reference](/docs/user-guide/components/reference/)
+*  [O3DE 编辑器](/docs/user-guide/editor/)
+*  [资产管道](/docs/user-guide/assets/pipeline/)
+*  [组件参考](/docs/user-guide/components/reference/)
 *  [Animation Editor](/docs/user-guide/visualization/animation/animation-editor/)
-*  [Scene Settings Tool](/docs/user-guide/assets/scene-settings/)
-*  [Gem Library](/docs/user-guide/gems/)
-*  [Cinematics and the Track View Editor](/docs/user-guide/visualization/cinematics/)
-*  [Shaders and Materials](/docs/atom-guide/look-dev/)
+*  [Scene Settings 工具](/docs/user-guide/assets/scene-settings/)
+*  [Gem 库](/docs/user-guide/gems/)
+*  [过场动画和 Track View 编辑器](/docs/user-guide/visualization/cinematics/)
+*  [着色器和材质](/docs/atom-guide/look-dev/)
 
 
-### Designer
+### 设计师
 
-O3DE Editor is an important, core tool for designers. It's where you create your levels, populate them with entities, and assign components to those entities. It also provides access to important tools such as the UI Editor for UI designers, the Audio Controls Editor for sound designers, and Script Canvas for all designers who will be working with the visual scripting system in O3DE.
+O3DE Editor 是设计人员的重要核心工具。在这里，您可以创建关卡，使用实体填充关卡，并将组件分配给这些实体。它还提供对重要工具的访问，例如，UI 编辑器（用于 UI 设计人员）、音频控件编辑器（用于声音设计师）和 Script Canvas（用于所有将在 O3DE 中使用可视化脚本系统的设计人员）。
 
-Here's how you might start out:
+以下是您可能如何开始：
 
-1.  When you start O3DE Editor for the first time, you can create a new level.
+1. 首次启动 O3DE Editor 时，您可以创建一个新关卡。
 
-1.  You start populating your level in the viewport by creating entities. In O3DE, an entity can be just about anything, from the static objects you see, to the triggers you script, to interactive objects, and user interfaces.
+1. 通过创建实体，开始在视区中填充关卡。在 O3DE 中，实体几乎可以是任何东西，从您看到的静态对象到您编写脚本的触发器，再到交互式对象和用户界面。
 
-1.  You add components to your entities through the Entity Inspector tool. You can add **White Box** components, for example, to quickly sketch 3D proxy geometry to design objects and obstacles for the level.
+1. 您可以通过 Entity Inspector 工具将组件添加到实体中。例如，您可以添加 **White Box** 组件，以快速绘制 3D 代理几何体，以设计关卡的对象和障碍物。
 
-1.  To provide player control for your entities, you'll need an input binding. Using the **Asset Editor** tool, you bind raw player input from keyboard, mouse, and game controllers to events that you create. Then you can listen for and respond to these events using one of the scripting tools.
+1. 要为您的实体提供玩家控制，您需要一个输入绑定。使用 **Asset Editor** 工具，您可以将来自键盘、鼠标和游戏控制器的原始玩家输入绑定到您创建的事件。然后，您可以使用其中一个脚本工具侦听和响应这些事件。
 
-1.  Script Canvas and Lua are common scripting tools that are used in O3DE. Script Canvas provides a visual, node-based scripting system for scripting your runtime logic, while Lua provides a more traditional scripting environment based on the Lua API. Add a **Script Canvas** component or **Lua Script** component to an entity. Develop a script in one of the script editors. Then, you can add that script to the component to control that entity at runtime. Script can control an entities by responding to player input events, spawn dynamic entities at runtime, trigger audio and visual effects, and much more.
+1. Script Canvas 和 Lua 是 O3DE 中常用的脚本工具。Script Canvas 提供了一个基于节点的可视化脚本系统，用于编写运行时逻辑的脚本，而 Lua 提供了一个基于 Lua API 的更传统的脚本环境。将 **Script Canvas** 组件或 **Lua Script** 组件添加到实体。在其中一个脚本编辑器中开发脚本。然后，您可以将该脚本添加到组件中，以便在运行时控制该实体。脚本可以通过响应玩家输入事件来控制实体，在运行时生成动态实体，触发音频和视觉效果等等。
 
-1.  As you populate your world with entities, you'll learn that a great way to save time is to use the prefab system. Prefabs allow you to group and nest component entities together, save the group as a prefab, and then create multiple instances of that prefab throughout the levels of your project. In each instance of the prefab, you have the ability to make changes to that specific instance.
+1. 当您使用实体填充您的世界时，您将了解到节省时间的一个好方法是使用预制件系统。预制件允许您将组件实体分组和嵌套在一起，将组另存为预制件，然后在整个项目级别中创建该预制件的多个实例。在预制件的每个实例中，您都可以对该特定实例进行更改。
 
-1.  When you're ready to compose a UI, you use the UI Editor, where you can establish a UI canvas and layout and script the interface.
+1. 当您准备好编写 UI 时，您可以使用 UI 编辑器，您可以在其中建立 UI 画布和布局以及编写界面脚本。
 
-1.  When you're ready to add sound to your project, you establish audio events and triggers in the **Audio Controls Editor**. You can then add this audio to entities through components, and script its playback using one of the scripting systems.
+1. 当您准备好向项目添加声音时，您可以在 **Audio Controls Editor** 中建立音频事件和触发器。然后，您可以通过组件将此音频添加到实体中，并使用其中一个脚本系统编写其播放脚本。
 
-We suggest that you begin your learning path by browsing the following set of O3DE tools and technologies, and then focusing on the ones that apply to your needs:
+我们建议您通过浏览以下 O3DE 工具和技术集来开始学习路径，然后专注于适用于您需求的工具和技术：
 
-*  [O3DE Editor](/docs/user-guide/editor/)
-*  [Asset Pipeline](/docs/user-guide/assets/pipeline/)
-*  [Component Reference](/docs/user-guide/components/reference/)
-*  [Gem Library](/docs/user-guide/gems/)
-*  [Player Input / Asset Editor](/docs/user-guide/interactivity/input/using-player-input/)
+*  [O3DE 编辑器](/docs/user-guide/editor/)
+*  [资产管道](/docs/user-guide/assets/pipeline/)
+*  [组件参考](/docs/user-guide/components/reference/)
+*  [Gem 库](/docs/user-guide/gems/)
+*  [玩家输入 / Asset Editor](/docs/user-guide/interactivity/input/using-player-input/)
 *  [Script Canvas](/docs/user-guide/scripting/script-canvas/)
 *  [Lua Editor](/docs/user-guide/scripting/lua/)
 *  [Audio Controls Editor](/docs/user-guide/interactivity/audio/)
 *  [Animation Editor](/docs/user-guide/visualization/animation/animation-editor/)
 *  [UI Editor](/docs/user-guide/interactivity/user-interface/editor/)
 
-### Engineer
+### 工程师
 
-As an engineer, you will likely need to learn both how to support the designers and artists, and how to author individual components. These new components can then be added to entities in the O3DE Editor to add new functionality. You might also learn how to develop new Script Canvas nodes. These new nodes can then be used by designers in the **Script Canvas Editor** to handle new events that you created, or change the properties of your new components. On a larger scale, when you need to work on a system that can be distributed as a shareable container of code and assets, you can learn how to create a Gem.
+作为工程师，您可能需要学习如何为设计人员和艺术家提供支持，以及如何编写单个组件。然后，可以将这些新组件添加到 O3DE 编辑器中的实体中，以添加新功能。您可能还会学习如何开发新的 Script Canvas 节点。然后，设计人员可以在 **Script Canvas 编辑器** 中使用这些新节点来处理您创建的新事件，或更改新组件的属性。在更大范围内，当您需要在可以作为代码和资产的可共享容器分发的系统上工作时，您可以学习如何创建 Gem。
 
-We suggest that your learning path looks like this:
+我们建议您的学习路径如下所示：
 
-1.  Follow the intro tutorials to learn about the component entity system and the existing library of components.
+1. 按照介绍教程了解组件实体系统和现有组件库。
 
-1.  Browse the Gem library to see examples of the larger functionality they can add compared to individual components.
+1. 浏览 Gem 库，查看与单个组件相比，他们可以添加的更大功能的示例。
 
-1.  Learn about authoring your own components and Gems, where you will also learn about working with EBuses, O3DE's event bus and general-purpose messaging system; AZ Modules, a collection of C++ code built as a static or dynamic library, and more.
+1. 了解如何编写自己的组件和 Gem，您还将了解如何使用事件总线、O3DE 的事件总线和通用消息传递系统;AZ 模块，作为静态或动态库构建的 C++ 代码集合，等等。
 
-Here is a basic set of O3DE tools and technologies to focus on:
-*  [O3DE Editor](/docs/user-guide/editor/)
-*  [Programming Guide](/docs/user-guide/programming/)
+以下是一组需要关注的基本 O3DE 工具和技术：
+*  [O3DE 编辑器](/docs/user-guide/editor/)
+*  [编程指南](/docs/user-guide/programming/)
 *  [Gems](/docs/user-guide/gems/)
-*  [Component Reference](/docs/user-guide/components/reference/)
+*  [组件参考](/docs/user-guide/components/reference/)
 *  [Animation Editor](/docs/user-guide/visualization/animation/animation-editor/)
 *  [Script Canvas](/docs/user-guide/scripting/script-canvas/)
 *  [Lua Editor](/docs/user-guide/scripting/lua/)

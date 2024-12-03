@@ -6,23 +6,23 @@ weight: 400
 toc: true
 ---
 
-This guide will help you identify and resolve some common issues that you might encounter when setting up **Open 3D Engine (O3DE)** on your computer. Be aware that you might come across situations unique to your system or project that aren't addressed here. This reference is only for the most frequent setup issues that aren't affected by a known bug, or can't easily be worked around. If you don't find your problem covered here, try searching [our forums](https://github.com/o3de/o3de/discussions) or asking in the [O3DE Discord](https://{{< links/o3de-discord >}}).
+本指南将帮助您识别和解决在计算机上设置 **Open 3D Engine （O3DE）** 时可能遇到的一些常见问题。请注意，您可能会遇到系统或项目特有的情况，这些情况在此处未解决。此参考仅适用于不受已知 bug 影响或无法轻松解决的最常见设置问题。如果你没有找到这里涵盖的问题，请尝试搜索 [我们的论坛](https://github.com/o3de/o3de/discussions)或在 [O3DE Discord](https://{{< links/o3de-discord >}}) 中提问。
 
-If you believe your setup problem is due to a bug in O3DE, check [existing bug reports](https://github.com/o3de/o3de/issues) and [file an issue](https://github.com/o3de/o3de/issues/new/choose) if you can!
+如果您认为您的设置问题是由于 O3DE 中的错误引起的，请检查 [现有错误报告](https://github.com/o3de/o3de/issues) 和 [提交问题](https://github.com/o3de/o3de/issues/new/choose)如果可以的话！
 
-Looking for error logs or memory dumps? Refer to [Open 3D Engine Log Files](/docs/user-guide/appendix/log-files) for locations.
+要查找错误日志或内存转储？请参阅 [Open 3D Engine日志文件](/docs/user-guide/appendix/log-files)了解位置。
 
-## CMake not found on the PATH
+## 在 PATH 上找不到 CMake
 
-**Issue:** Running a tool from the command line in the O3DE engine directory (such as `get_python.bat`) reports that CMake was not found on the PATH and LY_CMAKE_PATH is not defined.
+**问题：** 从 O3DE 引擎目录中的命令行运行工具（例如`get_python.bat`）报告在 PATH 上找不到 CMake，并且未定义 LY_CMAKE_PATH。
 
-**Remedy:** Install CMake, if not installed. If it is already installed, the path to the CMake binaries might not be defined in your operating system. Refer to the [CMake](../requirements/#cmake) section of the O3DE System Requirements topic for instructions on how to install and configure CMake.
+**补救措施：** 如果未安装，请安装 CMake。如果已安装 CMake 二进制文件，则可能未在操作系统中定义 CMake 二进制文件的路径。请参阅 [CMake](../requirements/#cmake) 部分，以获取有关如何安装和配置 CMake 的说明。
 
-After installing CMake or defining its path on your computer, open a new command line window before attempting to run the tool again.
+安装 CMake 或在计算机上定义其路径后，请打开一个新的命令行窗口，然后再尝试再次运行该工具。
 
-## CMake error: 3rdParty folder does not exist
+## CMake 错误：3rdParty 文件夹不存在
 
-**Issue:** CMake cannot find the downloadable package directory specified by LY_3RDPARTY_PATH. This is commonly caused when the directory does not exist. The error can also be caused when the value passed to CMake ends in a `\` character.
+**问题：** CMake 找不到 LY_3RDPARTY_PATH 指定的可下载包目录。这通常是在目录不存在时导致的。当传递给 CMake 的值以 `\` 字符结尾时，也可能导致该错误。
 
 ```cmd
 CMake Error at cmake/3rdParty.cmake:34 (message):
@@ -30,15 +30,15 @@ CMake Error at cmake/3rdParty.cmake:34 (message):
   valid LY_3RDPARTY_PATH or use cmake-gui to configure it
 ```
 
-**Remedy:** Do one of the following.
+**补救措施：** 执行以下操作之一。
 
-* Create the downloadable package directory.
-* Change the value to remove the trailing `\`.
-* Change the format of your `LY_3RDPARTY_PATH` to use the platform-agnostic `/` path separator.
+* 创建可下载的软件包目录。
+* 更改值以删除尾随的`\`。
+* 更改`LY_3RDPARTY_PATH`的格式以使用与平台无关的 `/` 路径分隔符。
 
-## CMake error: MSVC compiler not found
+## CMake 错误：找不到 MSVC 编译器
 
-**Issue:** The CMake tools report a missing MSVC compiler. This produces a warning similar to:
+**问题：** CMake 工具报告缺少 MSVC 编译器。这将生成类似于以下内容的警告：
 
 ```cmd
 CMake Error at CMakeLists.txt:15 (project):
@@ -49,46 +49,46 @@ CMake Error at CMakeLists.txt:15 (project):
   is not a full path to an existing compiler tool.
 ```
 
-This is caused when Visual Studio is updated or modified, and the CMake cache holds information pointing to the previous compiler install. 
+这是在更新或修改 Visual Studio 时引起的，并且 CMake 缓存包含指向上一个编译器安装的信息。
 
-**Remedy:** This issue is most often caused during or after a Visual Studio update, without a regeneration of the O3DE project files.
-The path of the C and C++ compiler is set at configure-time by the CMake system, using the `CMAKE_C_COMPILER` and `CMAKE_CXX_COMPILER` values.
-These values are stored in the CMake cache. Clean the cache and reconfigure by doing one of the following:
+**补救措施：** 此问题通常是在 Visual Studio 更新期间或之后引起的，无需重新生成 O3DE 项目文件。
+C 和 C++ 编译器的路径由 CMake 系统在配置时使用 `CMAKE_C_COMPILER` 和 `CMAKE_CXX_COMPILER` 值进行设置。
+这些值存储在 CMake 缓存中。通过执行以下操作之一清理缓存并重新配置：
 
-* Removing the `CMakeCache.txt` file in your CMake build directory.
-* Removing the CMake build directory completely.
+* 删除 CMake 构建目录中的`CMakeCache.txt`文件。
+* 完全删除 CMake 构建目录。
 
-After cleaning the cache, the correct compiler should be detected during the CMake configuration stage.
+清理缓存后，应在 CMake 配置阶段检测到正确的编译器。
 
-## GitHub credentials don't work in Git Credential Manager
+## GitHub 凭据在 Git 凭据管理器中不起作用
 
-**Issue:** You enter your GitHub username and password in Git Credential Manager when cloning the O3DE repo, but nothing happens and the dialog box comes back.
+**问题：** 克隆 O3DE 存储库时，您在 Git Credential Manager 中输入了 GitHub 用户名和密码，但没有任何反应，对话框返回。
 
-**Remedy:** This issue typically occurs part way through cloning the O3DE repo. The Credential Manager dialog box requests your credentials for an https URL, like the one shown in the following image.
+**补救措施：** 此问题通常在克隆 O3DE 存储库的过程中发生。Credential Manager （凭据管理器） 对话框请求 https URL 的凭据，如下图所示。
 
 ![Git Credential Manager asking for credentials for an https URL](/images/welcome-guide/setup-troubleshooting-git-credential-manager.png)
 
-This URL links to a Git LFS endpoint for downloading large files. You must use a GitHub personal access token here instead of your GitHub password. Refer to the instructions on configuring credentials for Git LFS in [Setting up O3DE from GitHub](/docs/welcome-guide/setup/setup-from-github/#configure-credentials-for-git-lfs).
+此 URL 链接到用于下载大型文件的 Git LFS 终端节点。您必须在此处使用 GitHub 个人访问令牌，而不是 GitHub 密码。请参阅 [从 GitHub 设置 O3DE ](/docs/welcome-guide/setup/setup-from-github/#configure-credentials-for-git-lfs) 中有关为 Git LFS 配置凭据的说明。
 
-## Python for Windows not found when you run the `o3de` script
+## 运行 `o3de` 脚本时找不到适用于 Windows 的 Python
 
-**Issue:** You run the o3de script from the scripts directory and you get an error message that Python for Windows could not be found, even if you have Python installed on your computer.
+**问题：** 您从 scripts 目录运行 o3de 脚本，并收到一条错误消息，指出找不到 Python for Windows，即使您的计算机上安装了 Python。
 
-**Remedy:** The `o3de` script in the scripts directory expects a specific version of the Python runtime to exist in the directory <O3DE>/python/runtime. To obtain this runtime, run the following command from the directory where you installed O3DE.
+**补救措施：** scripts 目录中的 `o3de` 脚本需要 <O3DE>/python/runtime 目录中存在特定版本的 Python 运行时。要获取此运行时，请从安装 O3DE 的目录运行以下命令。
 
 ```cmd
 python\get_python.bat
 ```
 
-## More troubleshooting help
+## 更多故障排除帮助
 
-For more troubleshooting help, refer to these other O3DE troubleshooting pages:
+有关更多故障排除帮助，请参阅以下其他 O3DE 故障排除页面：
 
-* [Troubleshooting O3DE Project Configuration](/docs/user-guide/project-config/troubleshooting)
-* [Build Troubleshooting in Open 3D Engine](/docs/user-guide/build/troubleshooting)
+* [O3DE 项目配置疑难解答](/docs/user-guide/project-config/troubleshooting)
+* [在 Open 3D Engine 中构建疑难解答](/docs/user-guide/build/troubleshooting)
 
-As a reminder, you can also try searching for your issue or asking for help in these locations:
+提醒一下，您还可以尝试在以下位置搜索您的问题或寻求帮助：
 
-* [O3DE forums](https://github.com/o3de/o3de/discussions)
+* [O3DE 论坛](https://github.com/o3de/o3de/discussions)
 * [O3DE Discord](https://{{< links/o3de-discord >}})
-* [Existing bug reports](https://github.com/o3de/o3de/issues)
+* [现有 bug 报告](https://github.com/o3de/o3de/issues)

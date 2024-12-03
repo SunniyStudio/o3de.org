@@ -1,35 +1,35 @@
 ---
-linktitle: Supported Platforms
-title: Supported Platforms in Open 3D Engine
-description: Get a list of host platforms and target platforms supported by Open 3D Engine (O3DE).
+linktitle: 支持的平台
+title: Open 3D Engine 中支持的平台
+description: 获取 Open 3D Engine （O3DE） 支持的主机平台和目标平台的列表。
 weight: 250
 toc: true
 ---
 
-**Open 3D Engine (O3DE)** supports several _host platforms_ for creating and developing games and simulations, and _target platforms_ on which these projects can run.
+**Open 3D Engine (O3DE)** 支持用于创建和开发游戏和模拟的多个主机平台，以及这些项目可以运行的目标平台。
 
-### Host platforms
+### 主机平台
 
-| Host Platform | Platform-specific Documentation |
+|主机平台 |特定于平台的文档 |
 | --- | --- |
-| Microsoft Windows | <ul><li>[Windows prerequisites and configuration](requirements/#microsoft-windows)</li><li>[Installing O3DE for Windows](setup/installing-windows)</li><li>[Creating projects from the CLI on Windows](create/creating-projects-using-cli/creating-windows/)<sup>1</sup></li><li>[Building O3DE from source on Windows](setup/setup-from-github/building-windows/)</li></ul> |
-| Linux | <ul><li>[Linux prerequisites and configuration](requirements/#linux)</li><li>[Installing O3DE for Linux](setup/installing-linux)</li><li>[Creating projects from the CLI on Linux](create/creating-projects-using-cli/creating-linux/)<sup>1</sup></li><li>[Building O3DE from source on Linux](setup/setup-from-github/building-linux/)</li></ul> |
-| macOS | Support for developing on macOS is in an experimental stage. Refer to the [macOS section](requirements/#macos) of the System Requirements page for the basic requirements that you will need to get started. Ask on [Discord](https://{{< links/o3de-discord >}}) in #sig-platform for the latest setup instructions and additional help. |
+| Microsoft Windows | <ul><li>[Windows 先决条件和配置](requirements/#microsoft-windows)</li><li>[为Windows安装O3DE](setup/installing-windows)</li><li>[在 Windows 上从 CLI 创建项目](create/creating-projects-using-cli/creating-windows/)<sup>1</sup></li><li>[在 Windows 上从源构建 O3DE](setup/setup-from-github/building-windows/)</li></ul> |
+| Linux | <ul><li>[Linux 先决条件和配置](requirements/#linux)</li><li>[安装 O3DE for Linux](setup/installing-linux)</li><li>[在 Linux 上通过 CLI 创建项目](create/creating-projects-using-cli/creating-linux/)<sup>1</sup></li><li>[在 Linux 上从源构建 O3DE](setup/setup-from-github/building-linux/)</li></ul> |
+| macOS | 对在 macOS 上开发的支持处于试验阶段。请参阅系统要求页面的 [macOS 部分](requirements/#macos)，了解开始使用所需的基本要求。 在 #sig-platform 的 [Discord](https://{{< links/o3de-discord >}}) 上询问最新的设置说明和其他帮助。 |
 
-<sup>1</sup> Platform-independent documentation on creating projects using **Project Manager** can be found [here](create/creating-projects-using-project-manager).
+<sup>1</sup> P有关使用 **Project Manager** 创建项目的独立于 latform 的文档，请参见 [此处](create/creating-projects-using-project-manager)。
 
-For minimum hardware requirements for development on host platforms, refer to [System Requirements](requirements).
+有关在主机平台上进行开发的最低硬件要求，请参阅 [系统要求](requirements)。
 
-### Target platforms
+### 目标平台
 
-| Target Platform | Platform-specific Documentation |
+|Target 平台 |特定于平台的文档 |
 | --- | --- |
-| Microsoft Windows | <ul><li>[Creating a release layout for Windows](/docs/user-guide/packaging/windows-release-builds/)</li></ul> |
-| Linux | <ul><li>[Platform development support for Linux](/docs/user-guide/platforms/linux/)</li></ul> |
-| Android | <ul><li>[Platform development support for Android](/docs/user-guide/platforms/android/)</li></ul> |
-| macOS | Support for macOS as a target platform is in an experimental stage. Ask on [Discord](https://{{< links/o3de-discord >}}) in #sig-platform for development support. |
-| iOS | Support for iOS as a target platform is in an experimental stage. Ask on [Discord](https://{{< links/o3de-discord >}}) in #sig-platform for development support. |
+| Microsoft Windows | <ul><li>[为 Windows 创建发布布局](/docs/user-guide/packaging/windows-release-builds/)</li></ul> |
+| Linux | <ul><li>[Linux 的平台开发支持](/docs/user-guide/platforms/linux/)</li></ul> |
+| Android | <ul><li>[Android 的平台开发支持](/docs/user-guide/platforms/android/)</li></ul> |
+| macOS | 对 macOS 作为目标平台的支持处于试验阶段。在 #sig-platform 的 [Discord](https://{{< links/o3de-discord >}}) 上询问以获得开发支持。 |
+| iOS | 对 iOS 作为目标平台的支持正处于试验阶段。在 #sig-platform 的 [Discord](https://{{< links/o3de-discord >}})上询问以获得开发支持。 |
 
 {{< tip >}}
-For information on the state of a feature for a platform, search for the feature in the snapshot of the *feature grid* for the version of O3DE that you have installed. The feature grid snapshot can be found in the Release Notes. (For example: [23.05.0 Feature Grid](/docs/release-notes/).)
+有关平台功能状态的信息，请在已安装的 O3DE 版本的 *功能网格* 快照中搜索该功能。功能网格快照可在发行说明中找到。（例如：[23.05.0 特征网格](/docs/release-notes/))
 {{< /tip >}}

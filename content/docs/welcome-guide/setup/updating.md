@@ -1,6 +1,6 @@
 ---
-title: Updating O3DE
-description: Learn how to update the version of Open 3D Engine (O3DE) that's used in your project.
+title: 更新 O3DE
+description: 了解如何更新项目中使用的 Open 3D Engine （O3DE） 版本。
 weight: 500
 draft: true
 ---

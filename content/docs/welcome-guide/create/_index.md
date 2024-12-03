@@ -1,15 +1,15 @@
 ---
-linkTitle: Project Creation
-title: Project Creation with Open 3D Engine
-description: Learn to create, configure, and build projects in Open 3D Engine.
+linkTitle: 创建项目
+title: 使用 Open 3D Engine 创建项目
+description: 了解如何在 Open 3D Engine 中创建、配置和构建项目。
 weight: 500
 ---
 
-Now that you've [set up **Open 3D Engine (O3DE)**](../setup), you're ready to create your first O3DE project. Projects define and configure the set of code and assets that make up your game or other application. Projects need a project directory, which you can create anywhere that's convenient to you—within the O3DE directory itself, somewhere else on your computer, or even on a network drive.
+现在您已经 [安装 **Open 3D Engine (O3DE)**](../setup)，则已准备好创建您的第一个 O3DE 项目。Projects 定义和配置构成游戏或其他应用程序的代码和资产集。项目需要一个项目目录，您可以在任何方便的地方创建该目录 - 在 O3DE 目录本身内、计算机上的其他位置，甚至在网络驱动器上。
 
-You can create a project using either the GUI-based **Project Manager** tool or the command line interface (CLI). The topics in this section introduce you to creating O3DE projects using either of these options.
-
-| Topic | Description |
+您可以使用基于 GUI 的 **Project Manager** 工具或命令行界面 （CLI） 创建项目。本节中的主题介绍了如何使用这两个选项中的任何一个创建 O3DE 项目。
+3
+| 主题 | 说明 |
 | - | - |
-| [Creating Projects Using Project Manager](./creating-projects-using-project-manager) | Learn how to create new projects from a project template using the O3DE Project Manager. Choose this tutorial if you prefer using a GUI and have already installed or built the engine. |
-| [Creating Projects Using the CLI](./creating-projects-using-cli) | Learn how to create new projects from a project template using the CLI. Choose this tutorial if you're using the [source engine](/docs/welcome-guide/setup/setup-from-github/building-windows/#build-the-engine) build type and haven't yet built the engine. |
+| [使用 Project Manager 创建项目](./creating-projects-using-project-manager) | 了解如何使用 O3DE Project Manager 从项目模板创建新项目。如果您更喜欢使用 GUI 并且已经安装或构建了引擎，请选择本教程。 |
+| [使用 CLI 创建项目](./creating-projects-using-cli) | 了解如何使用 CLI 从项目模板创建新项目。如果您使用的是 [源引擎](/docs/welcome-guide/setup/setup-from-github/building-windows/#build-the-engine) 构建类型，但尚未构建引擎，请选择本教程。 |

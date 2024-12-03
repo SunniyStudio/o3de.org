@@ -1,34 +1,34 @@
 ---
-title: Setting up O3DE from GitHub
-description: Learn how to set up Open 3D Engine (O3DE) from its GitHub source.
+title: 设置 O3DE from GitHub
+description: 了解如何从 Open 3D Engine （O3DE） 的 GitHub 源中设置 Open 3D Engine。
 weight: 300
 toc: true
 ---
 
-Getting the source for **Open 3D Engine (O3DE)** from GitHub is a great way to set up your development environment. This method lets you easily sync future engine updates and make contributions to the open source project base. For instructions on setting up O3DE from GitHub, check out the following video or the tutorial on this page.
+从 GitHub 获取 **Open 3D Engine （O3DE）** 的源代码是设置开发环境的好方法。此方法可让您轻松同步未来的引擎更新，并为开源项目库做出贡献。有关从 GitHub 设置 O3DE 的说明，请观看以下视频或本页面上的教程。
 
-The video and written instructions in this section guide you through the following steps:
+本节中的视频和书面说明将指导您完成以下步骤：
 
-* Configure credentials for Git LFS.
-* Fork and clone the O3DE GitHub repo.
-* Build the O3DE engine.
-* Register the engine.
+* 为 Git LFS 配置凭证。
+* 分叉并克隆 O3DE GitHub 存储库。
+* 构建 O3DE 引擎。
+* 注册引擎。
 
 {{< youtube-width id="GZF_6SkAXPw" title="Setting up O3DE from GitHub" >}}
 
-## Prerequisites
+## 先决条件
 
-The GitHub setup instructions assume that you have:
+GitHub 设置说明假定您拥有：
 
-* [Git client](https://git-scm.com/downloads) installed (1.8.2 or later required, 2.23.4 or later recommended).
+* [Git client](https://git-scm.com/downloads) 已安装 （需要 1.8.2 或更高版本，建议使用 2.23.4 或更高版本）。
 
-## Configure credentials for Git LFS
+## 为 Git LFS 配置凭证
 
-The O3DE GitHub repo uses the Git Large File Storage (LFS) system for storing large binary files. The following instructions will prepare your PC to authenticate and download these files automatically when you clone, fetch, or pull from the repo.
+O3DE GitHub 存储库使用 Git 大型文件存储 （LFS） 系统来存储大型二进制文件。以下说明将准备您的 PC 在从存储库克隆、提取或拉取时自动验证和下载这些文件。
 
-**To configure for Git LFS**
+**要配置 Git LFS**
 
-1. Verify that **Git LFS** is installed.
+1. 验证是否已安装 **Git LFS**。
 
     {{< tabs name="Git LFS install" >}}
     {{% tab name="Windows" %}}
@@ -37,7 +37,7 @@ The O3DE GitHub repo uses the Git Large File Storage (LFS) system for storing la
 git lfs install
 ```
 
-If the output from this command is "Git LFS initialized", then you already have Git LFS installed. If you didn't have Git LFS installed, this command will install it for you.
+如果此命令的输出为“Git LFS initialized”，则您已经安装了 Git LFS。如果您尚未安装 Git LFS，此命令将为您安装它。
 
     {{% /tab %}}
     {{% tab name="Linux" %}}
@@ -49,45 +49,45 @@ sudo apt install git-lfs
     {{% /tab %}}
     {{< /tabs >}}
 
-1. Verify that you have a **credential manager** set up for Git. Recent versions of Git install a credential manager to store your credentials so that you don't have to enter them for every request.
+1. 验证您是否为 Git 设置了 **凭证管理器**。最新版本的 Git 会安装凭证管理器来存储您的凭证，这样您就不必为每个请求输入凭证。
 
     ```cmd
     git config credential.helper
     ```
 
-    Common examples of results to this `git config` command include `manager-core`, `wincred`, `osxkeychain`, and `cache`. However, if you don't see _anything_ in response to this command, you can install [Git Credential Manager Core](https://github.com/microsoft/Git-Credential-Manager-Core#readme) as your credential manager.
+    此 `git config` 命令的常见结果示例包括`manager-core`, `wincred`, `osxkeychain`, 和 `cache`。但是，如果您在响应此命令时没有看到 _anything_，则可以安装  [Git Credential Manager Core](https://github.com/microsoft/Git-Credential-Manager-Core#readme)作为您的凭证管理器。
 
-1. Create a GitHub **personal access token** with `repo` and `read:org` scope.
+1. 创建范围为`repo` and `read:org`的 GitHub **个人访问令牌**。
 
-    1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens).
+    1. 访问[https://github.com/settings/tokens](https://github.com/settings/tokens)。
 
-        (GitHub menu equivalent: Settings > Developer Settings > Personal Access Tokens)
-    1. Choose **Generate new token**.
-    1. (Optional) Add an entry under **Note**. This is only for your reference. You can use it as a personal reminder of what the token is for.
-    1. Under **Select scopes**, select the following:
+        (GitHub 菜单等效项： Settings > Developer Settings > Personal Access Tokens)
+    1. 选择 **Generate new token**。
+    1. （可选）在 **Note** 下添加一个条目。这仅供您参考。您可以将其用作令牌用途的个人提醒。
+    1. 在 **Select scopes** 下，选择以下项：
         * `repo` (all)
         * `read:org` (under admin:org)
-    1. Choose **Generate token**. Keep the token handy (but private!) for use in later steps.
+    1. 选择 **Generate token**（生成令牌）。将令牌放在手边（但要保密）以备后续步骤使用。
 
     {{< important >}}
-This token can be used in place of your GitHub password, so protect it just as you would your GitHub password!
+此令牌可以代替您的 GitHub 密码，因此请像保护 GitHub 密码一样保护它！
     {{< /important >}}
 
-## Fork and clone
+## 分叉和克隆
 
-All contributions to the O3DE repo are expected to be staged in a fork before submitting a pull request. Refer to the documentation on [Contributing to O3DE Code Sources](/docs/contributing/to-code) in the O3DE Contributor Guide for details about the contribution workflow.
+在提交拉取请求之前，对 O3DE 存储库的所有贡献都应在 fork 中暂存。有关贡献工作流程的详细信息，请参阅《O3DE 贡献者指南》中有关 [为 O3DE 代码源做贡献](/docs/contributing/to-code)  的文档。
 
-**To fork and clone O3DE on your PC from GitHub**
+**从 GitHub 在您的 PC 上分叉和克隆 O3DE**
 
-1. Create a fork of the O3DE GitHub repo from [https://{{< links/o3de-source >}}](https://{{< links/o3de-source >}}). Alternatively, if you are working as a member of a team that has already created a fork, you can skip this step and use your team's existing fork.
+1. 从 [https://{{< links/o3de-source >}}](https://{{< links/o3de-source >}}) 创建 O3DE GitHub 仓库的分支。或者，如果您作为已创建复刻的团队的成员工作，则可以跳过此步骤并使用团队的现有复刻。
 
     ![Create a fork using the Fork button on the O3DE GitHub repo](/images/welcome-guide/setup-create-fork.png)
 
-    For general instructions and help with creating and using forks in GitHub, see the GitHub Guide on [Forking Projects](https://guides.github.com/activities/forking/).
+    有关在 GitHub 中创建和使用复刻的一般说明和帮助，请参阅[克隆项目](https://guides.github.com/activities/forking/)。
 
-1. Clone your forked repo. Use your preferred Git UI or a command line to clone the repo in a directory of your choice. You will need your GitHub username and the personal access token that you created earlier.
+1. 克隆 fork 的存储库。使用您首选的 Git UI 或命令行在您选择的目录中克隆存储库。您将需要 GitHub 用户名和之前创建的个人访问令牌。
 
-    1. Clone the repo from a fork.
+    1. 从复刻克隆存储库。
 
         ```cmd
         # Cloning from your personal fork.
@@ -97,17 +97,17 @@ All contributions to the O3DE repo are expected to be staged in a fork before su
         git clone https://github.com/TEAM-FORK/o3de.git
         ```
 
-    1. If you are shown a **Connect to GitHub** dialog box, sign in to GitHub as instructed, using either your browser or your personal access token.
+    1. 如果显示 **Connect to GitHub** 对话框，请按照说明使用浏览器或 personal access token 登录到 GitHub。
 
         ![GitHub sign in dialog box](/images/welcome-guide/setup-github-signin.png)
 
-    1. Enter your credentials for the LFS endpoint in the next _sign in_ dialog box. Use your **GitHub username** and your **personal access token** for the password.
+    1. 在下一个 _sign in_ 对话框中输入 LFS 终端节点的凭证。使用您的 **GitHub 用户名** 和 **个人访问令牌** 作为密码。
 
         ![Credential manager asking for LFS credentials](/images/welcome-guide/setup-credential-manager-lfs.png)
 
-    1. Verify you have the LFS files.
+   1. 验证您有 LFS 文件。
 
-        When the clone operation completes, verify that you have all of the files from the LFS endpoint. You should no longer receive credential prompts.
+        克隆操作完成后，验证您是否拥有来自 LFS 终端节点的所有文件。您应该不会再收到凭证提示。
 
         ```cmd
         # Change to the directory name that was created when you cloned the engine repo.
@@ -117,13 +117,13 @@ All contributions to the O3DE repo are expected to be staged in a fork before su
         git lfs pull
         ```
 
-1. Add a remote to track the upstream repo. This will enable you to pull updates from the O3DE repo directly into your local clone.
+1. 添加远程以跟踪上游存储库。这将使您能够将更新从 O3DE 存储库直接拉取到本地克隆中。
 
     ```cmd
     git remote add upstream https://{{< links/o3de-source >}}.git
     ```
 
-    Verify the upstream repository. You should see the URL for the fork as `origin`, and the URL for the original repository as `upstream`.
+    验证上游仓库。您应该看到复刻的 URL 为`origin`，原始仓库的 URL 为`upstream`。
 
     ```cmd
     git remote -v
@@ -138,43 +138,43 @@ All contributions to the O3DE repo are expected to be staged in a fork before su
     upstream        https://{{< links/o3de-source >}}.git (push)
     ```
 
-1. (Optional) If you don't expect to make changes to these files, ignore this step. Otherwise, update the LFS URL to include your fork. This lets you push changes to files in the LFS. For complete instructions and the **DISTRIBUTION** to use, open the `.lfsconfig` file at the root of the repository.
+1. （可选）如果您不希望对这些文件进行更改，请忽略此步骤。否则，请更新 LFS URL 以包含您的复刻。这允许您将更改推送到 LFS 中的文件。有关完整说明和要使用的 **DISTRIBUTION**，请打开存储库根目录下的`.lfsconfig`文件。
 
     ```cmd
     git config lfs.url https://<DISTRIBUTION>.cloudfront.net/api/v1/fork/<FORK> 
     ```
 
-    You might be prompted to re-authenticate the next time that you pull or push.  Remember to use your GitHub personal access token, and not your GitHub password.
+    下次拉取或推送时，系统可能会提示您重新进行身份验证。 请记住使用 GitHub 个人访问令牌，而不是 GitHub 密码。
 
-    If you wish to revert this change, you can run the following command:
+    如果您希望还原此更改，可以运行以下命令：
 
     ```cmd
     git config --unset lfs.url 
     ```
 
-1. Any time that you want to sync the latest files from the repo and LFS, you can merge changes from the upstream branch you are working with. The default branch is **development**.
+1. 每当您想要同步存储库和 LFS 中的最新文件时，您都可以合并您正在使用的上游分支中的更改。默认分支为 **development**。
 
     ```cmd
     git fetch upstream
     git merge upstream/development
     ```
 
-1. In a typical contributor workflow, you will primarily work from a branch off of your fork's development branch. You can use the git `switch` command to create your local working branch and set it to track the upstream development branch.
+1. 在典型的 contributor 工作流程中，您将主要从 fork 的 development 分支的分支开始工作。你可以使用 git `switch`命令创建本地工作分支，并将其设置为跟踪上游开发分支。
 
     ```cmd
     git fetch upstream
     git switch -c <NEW_WORKING_BRANCH> upstream/development
     ```
 
-    When set up to track an upstream branch, you can use the git `pull` command whenever you want to sync the latest changes from upstream.
+    当设置为跟踪上游分支时，每当你想从上游同步最新更改时，都可以使用 git `pull` 命令。
 
     ```cmd
     git pull
     ```
 
-For more information and examples of common contributor workflows, refer to [O3DE Code Contribution GitHub Workflow](/docs/contributing/to-code/git-workflow) in the Contributor Guide.
+有关常见贡献者工作流程的更多信息和示例，请参阅《贡献者指南》中的 [O3DE 代码贡献 GitHub 工作流](/docs/contributing/to-code/git-workflow)。
 
-To complete setup, proceed to the engine build and registration instructions that match your platform.
+要完成设置，请继续执行与您的平台匹配的引擎构建和注册说明。
 
-* [Building for Windows](building-windows)
-* [Building for Linux](building-linux)
+* [为 Windows 构建](building-windows)
+* [为 Linux 构建](building-linux)

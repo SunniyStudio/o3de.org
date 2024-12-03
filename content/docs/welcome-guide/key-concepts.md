@@ -1,190 +1,190 @@
 ---
-linktitle: Key Concepts
-title: 'Key Concepts: How Open 3D Engine Works'
-description: Dive into the Open 3D Engine (O3DE) tools and systems, to see how they work together to help you create games and immersive experiences.
+linktitle: 关键概念
+title: '关键概念：Open 3D Engine 的工作原理'
+description: 深入了解 Open 3D Engine （O3DE） 工具和系统，了解它们如何协同工作，帮助您创建游戏和沉浸式体验。
 weight: 200
 toc: true
 ---
 
-**Open 3D Engine (O3DE)** provides a complete, end-to-end environment for developing and packaging graphically intensive games, simulations, and applications on a wide variety of platforms. Because it's a large development environment with so many different features and tools, O3DE can be intimidating at first. This topic covers the various parts of O3DE at a high level, and the common ways you can work with it depending on your role as a developer, designer, or artist.
+**Open 3D Engine (O3DE)** 提供完整的端到端环境，用于在各种平台上开发和打包图形密集型游戏、模拟和应用程序。因为它是一个大型开发环境，有这么多不同的功能和工具，所以一开始可能会让人生畏。本主题概括了 O3DE 的各个部分，以及根据您作为开发人员、设计人员或艺术家的角色，可以使用它的常见方法。
 
-O3DE consists of tools, editors, and systems that help you build your project. At its core, it provides the following:
+O3DE 由可帮助您构建项目的工具、编辑器和系统组成。它的核心是提供以下内容：
 
-* Core modules that provide math, memory management, serialization, event messaging, and more.
-* Authoring tools such as the Editor and related applications for placing objects in a level, adding components, and scripting logic.
-* A plugin and extension system for adding more features.
-* Asset pipeline tools for converting, optimizing, and bundling assets.
-* A build system to build and package a shippable launcher.
+* 提供数学、内存管理、序列化、事件消息传递等的核心模块。
+* 创作工具，例如编辑器和相关应用程序，用于在关卡中放置对象、添加组件和编写脚本逻辑。
+* 用于添加更多功能的插件和扩展系统。
+* 用于转换、优化和捆绑资源的 Asset Pipeline 工具。
+* 用于构建和打包可交付启动器的构建系统。
 
-O3DE is comprised of sub-modules, called *Gems*. As you develop a project, you can add features and functionality by including Gems that supply those features and functions. Gems might include anything from assets such as materials, textures, and models, to development tools such as Script Canvas (a visual script editor), to entire runtime systems such as the Atom renderer, AI, and Physics.
+O3DE 由称为 Gems 的子模块组成。在开发项目时，您可以通过包含提供这些特性和功能的 Gem 来添加特性和功能。Gem 可能包括任何内容，从材质、纹理和模型等资源，到 Script Canvas（可视化脚本编辑器）等开发工具，再到 Atom 渲染器、AI 和物理特性等整个运行时系统。
 
-Think of O3DE as a collection of discrete elements: code, scripts, various GUI-based editors, and command-line tools. When you compile a project, O3DE's build scripts pull in all the pieces that are specified in your project's configuration. When built, your project will only use the parts of the O3DE SDK that you included in your configuration. Likewise, the asset bundling and management tools ensure you only ship the assets that your project requires.
+将 O3DE 视为离散元素的集合：代码、脚本、各种基于 GUI 的编辑器和命令行工具。编译项目时，O3DE 的构建脚本会提取项目配置中指定的所有部分。构建后，您的项目将仅使用您包含在配置中的 O3DE SDK 部分。同样，资源捆绑和管理工具可确保您只运送项目所需的资源。
 
-The following image shows the structure of project runtimes built with O3DE:
+下图显示了使用 O3DE 构建的项目运行时的结构：
 
-![O3DE project runtime structure: O3DE provides Gem libraries and the core application runtimes like memory management, networking, and file I/O. The project itself provides configuration information to O3DE to determine what libraries to dynamically load, as well as defining the core logic and entry point to start the O3DE runtime.](/images/welcome-guide/project-runtime-structure.svg)
+![O3DE 项目运行时结构：O3DE 提供 Gem 库和核心应用程序运行时，如内存管理、联网和文件 I/O。项目本身向 O3DE 提供配置信息，以确定要动态加载的库，并定义核心逻辑和入口点以启动 O3DE 运行时。](/images/welcome-guide/project-runtime-structure.svg)
 
-## Overview of the O3DE SDK
+## O3DE SDK 概述
 
-O3DE is modular&mdash;it's constructed of a common core that all modules depend on, with plugins and extension systems that add more features. These core modules are provided by the O3DE software development kit (SDK) and are the essential frameworks to extend the engine with new features.
+O3DE 是模块化的，它由所有模块都依赖的通用内核构成，并带有可添加更多功能的插件和扩展系统。这些核心模块由 O3DE 软件开发工具包 （SDK） 提供，是使用新功能扩展引擎的基本框架。
 
-The following image illustrates the dependency graph for O3DE's core modules: `AzCore`, `AzFramework`, `AzGameFramework`, `AzToolsFramework`, and `AZQtComponents`. High-level products, such as project runtimes, command line interface (CLI) tools, and graphical user interface (GUI) tools, all depend on the core modules.
+下图说明了 O3DE 核心模块的依赖关系图： `AzCore`, `AzFramework`, `AzGameFramework`, `AzToolsFramework`, 和 `AZQtComponents`。高级产品，如项目运行时、命令行界面 （CLI） 工具和图形用户界面 （GUI） 工具，都依赖于核心模块。
 
 ![O3DE core module dependency graph](/images/user-guide/programming/o3de-architecture-dependency-graph.svg)
 
-For more information on O3DE's engine core, refer to the [Programming Guide](/docs/user-guide/programming/). 
+有关 O3DE 引擎核心的更多信息，请参阅 [编程指南](/docs/user-guide/programming/). 
 
 
-## High-level O3DE directories
+## 高级 O3DE 目录
 
-There are three primary directories to be aware of with O3DE: The *O3DE engine directory*, and the `O3DE` and `.o3de` directories in the user's home directory.
+使用 O3DE 时，有三个主要目录需要注意：*O3DE 引擎目录*，以及用户主目录中的 `O3DE` 和 `.o3de` 目录。
 
-### O3DE engine
+### O3DE 引擎
 
 {{< image-width "/images/welcome-guide/directory-o3de-engine.png" "650" "The O3DE engine directory." >}}
 
-The O3DE engine directory contains O3DE's core engine, various tools including **O3DE Editor**, and the Gems and templates that are included with the engine. The directory name depends on how you install O3DE, but here are some common variations:
-- `o3de` -- if you cloned it from the `o3de` repository in GitHub.
-- `o3de-development` -- if you downloaded the `development` branch as a ZIP folder from the `o3de` repository in GitHub. 
-- `o3de/<version>` -- if you installed the O3DE binary by running the installer.
+O3DE 引擎目录包含 O3DE 的核心引擎、各种工具（包括 O3DE 编辑器）以及引擎附带的 Gem 和模板。目录名称取决于您安装 O3DE 的方式，但以下是一些常见的变体：
+- `o3de` -- 如果您从 GitHub 中的`o3de`存储库克隆了它。
+- `o3de-development` -- 如果您从 GitHub 中的`o3de`存储库下载了`development`分支作为 ZIP 文件夹。
+- `o3de/<version>` -- 如果您通过运行安装程序安装了 O3DE 二进制文件。
 
-A *source code directory*, such as `o3de` or `o3de-development` in the preceding example, contains all of the source code that makes up O3DE's core, whereas an *install directory*, such as `o3de/<version>`, contains pre-built binaries to run O3DE and its tools.
+*源代码目录*（如前面示例中的`o3de` 或 `o3de-development`）包含构成 O3DE 核心的所有源代码，而*安装目录*（如`o3de/<version>`）包含用于运行 O3DE 及其工具的预构建二进制文件。
 
-When you begin to work in O3DE, you'll learn more about O3DE subdirectories in the [Programming](/docs/user-guide/programming/#o3de-directories) section.
+当您开始使用 O3DE 时，您将在 [编程](/docs/user-guide/programming/#o3de-directories) 部分了解有关 O3DE 子目录的更多信息。
 
 ### `O3DE`
 
-{{< image-width "/images/welcome-guide/directory-o3de.png" "500" "The O3DE directory in user's home directory." >}}
+{{< image-width "/images/welcome-guide/directory-o3de.png" "500" "用户主目录中的 O3DE 目录。" >}}
 
-The `O3DE` directory is located in the user's home directory. It contains the default locations for user-created Gems, projects, and templates.
+`O3DE` 目录位于用户的主目录中。它包含用户创建的 Gem、项目和模板的默认位置。
 
 ### `.o3de`
 
 {{< image-width "/images/welcome-guide/directory-.o3de.png" "500" "The `.o3de` directory in user's home directory." >}}
 
-The `.o3de` directory is located in the user's home directory. It contains O3DE configuration settings and **Project Manager** logs, the default location for third-party downloadable packages, and other user-specific directories:
+`.o3de`目录位于用户的主目录中。它包含 O3DE 配置设置和 **Project Manager** 日志、第三方可下载包的默认位置以及其他特定于用户的目录：
 
-- `/o3de_manifest.json`: The O3DE manifest informs O3DE of the registered engines, projects, and other external O3DE objects.
-- `/3rdParty/`: The default directory for packages from third-party libraries that are required to build some O3DE features.
-- `/Logs/O3DE.log`: A log file for the `o3de.exe` (Project Manager) application.
-- `/Registry/ProjectManager.setreg`: Project Manager registry settings.
+- `/o3de_manifest.json`: O3DE 清单通知 O3DE 已注册的引擎、项目和其他外部 O3DE 对象。
+- `/3rdParty/`: 构建某些 O3DE 功能所需的第三方库的包的默认目录。
+- `/Logs/O3DE.log`: `o3de.exe`（Project Manager）应用程序的日志文件。
+- `/Registry/ProjectManager.setreg`: Project Manager 注册表设置。
 
-## Working with Gems
+## 使用 Gem
 
-O3DE is a sandbox of development tools and assets, provided by Gems, that you can combine and use within your project. You only need to include the Gems that provide the features and functionality that your project requires. This modular approach allows the community to provide packaged features and assets to extend O3DE, and even provide alternate solutions for entire systems. Suppose you'd like to use an unsupported file format, an alternate scripting language, or a version of a system that has some cutting-edge experimental features. You can use solutions that your team or other O3DE contributors have provided in their own Gems, or you can create a Gem yourself that provides that support and share it with other O3DE users. By focusing on modularity, you can safely experiment with different features without risking progress and unintended regression on your project. Asset collections, code samples, components, libraries, tools, and even entire game projects can be distributed as Gems.
+O3DE 是由 Gems 提供的开发工具和资产的沙盒，您可以在项目中组合使用。您只需包含提供项目所需特性和功能的 Gem。这种模块化方法允许社区提供打包的功能和资产来扩展 O3DE，甚至为整个系统提供替代解决方案。假设您想要使用不受支持的文件格式、备用脚本语言或具有一些尖端实验功能的系统版本。您可以使用您的团队或其他 O3DE 贡献者在他们自己的 Gem 中提供的解决方案，也可以自己创建一个提供该支持的 Gem 并与其他 O3DE 用户共享。通过专注于模块化，您可以安全地试验不同的功能，而不会冒着项目进度和意外回归的风险。资产集合、代码示例、组件、库、工具，甚至整个游戏项目都可以作为 Gem 分发。
 
-You enable Gems when you create and configure your project. You can enable additional Gems and disable unused Gems at any time by updating your project configuration. Some Gems are core systems and are required for all O3DE projects. Other Gems are extensions for existing Gems and require their dependencies to be enabled for your project. Enabled Gems are detected and built automatically when you build your project. Refer to the [Gems Reference](/docs/user-guide/gems/reference/overview) for a complete list of Gems available in O3DE. To use them in your project, follow [Adding and Removing Gems in a Project](/docs/user-guide/project-config/add-remove-gems/).
+您可以在创建和配置项目时启用 Gem。您可以通过更新项目配置，随时启用其他 Gem 并禁用未使用的 Gem。一些 Gem 是核心系统，所有 O3DE 项目都需要。其他 Gem 是现有 Gem 的扩展，需要为您的项目启用其依赖项。在构建项目时，系统会自动检测并构建已启用的 Gem。请参阅 [Gem 参考](/docs/user-guide/gems/reference/overview)以获取 O3DE 中可用的 Gem 的完整列表。要在项目中使用它们，请按照 [在项目中添加和删除 Gem](/docs/user-guide/project-config/add-remove-gems/) 进行操作。
 
-You can create your own Gems and easily reuse and distribute your own code and assets. To get a better idea of what goes into creating a Gem, have a look at the `Gems` directory in your O3DE engine installation and examine the Gems included with O3DE. The process for creating your own Gem is very similar to creating a project. Learn to develop Gems in the [Programmer's Guide to Gem Development](/docs/user-guide/programming/gems/).
+您可以创建自己的 Gem，并轻松重用和分发自己的代码和资产。要更好地了解创建 Gem 的过程，请查看 O3DE 引擎安装中的`Gems` 目录，并检查 O3DE 附带的 Gem。创建自己的 Gem 的过程与创建项目非常相似。在 [Gem 开发程序员指南](/docs/user-guide/programming/gems/) 中学习开发。
 
-## EBus messaging system
+## 事件总线消息收发系统
 
-All of the Open 3D Engine Gems and systems, as well as the components in your projects, need a way to communicate with each other. O3DE uses a general-purpose communication system called Event Bus (EBus for short).
+所有 Open 3D Engine Gem 和系统，以及项目中的组件，都需要一种相互通信的方式。O3DE 使用称为事件总线（简称 EBus）的通用通信系统。
 
-Gems and systems are typically implemented as DLLs. EBus provides one way to communicate between these DLLs and invoke functions in one Gem or system from another. EBus provides both request and publish/subscribe event interfaces that allow calls across those DLLs. For example, if you've created a Gem for custom animation behaviors and you'd like to provide methods or properties to the physics system, you'd do so by implementing an EBus interface in your Gem.
+Gem 和系统通常作为 DLL 实现。事件总线提供了一种在这些 DLL 之间进行通信的方法，以及从一个 Gem 或系统调用另一个 Gem 或系统中的函数。事件总线提供请求和发布/订阅事件接口，允许跨这些 DLL 进行调用。例如，如果您为自定义动画行为创建了一个 Gem，并且希望为物理系统提供方法或属性，则可以通过在 Gem 中实现 EBus 接口来实现。
 
-The two types of EBuses are:
+事件总线的两种类型是：
 
-* Request bus: This EBus type registers a handler for a method that can be called by other systems.
-* Notification bus: This EBus type provides a messaging interface for notifications that systems can publish or subscribe to.
+* 请求总线：此事件总线类型为可由其他系统调用的方法注册处理程序。
+* 通知总线：此事件总线类型为系统可以发布或订阅的通知提供消息收发接口。
 
-EBuses have many advantages over traditional polling methods:
+与传统轮询方法相比，事件总线具有许多优点：
 
-* Abstraction - Minimize hard dependencies between systems.
-* Event-driven - Eliminate polling patterns for more scalable and higher performance software.
-* Cleaner application code - Safely dispatch messages without concern for what is handling them or whether they are being handled at all.
-* Concurrency - Queue events from various threads for safe execution on another thread or for distributed system applications.
-* Predictability - Provide support for ordering of handlers on a given bus.
-* Debugging - Intercept messages for reporting, profiling, and introspection purposes.
+* 抽象 - 最小化系统之间的硬依赖关系。
+* 事件驱动 - 消除轮询模式，以获得更具可扩展性和更高性能的软件。
+* 更清晰的应用程序代码 - 安全地发送消息，而无需担心什么在处理它们，或者它们是否正在被处理。
+* 并发性 - 将来自各个线程的事件排队，以便在另一个线程或分布式系统应用程序上安全执行。
+* 可预测性 - 为给定总线上的处理程序排序提供支持。
+* 调试 - 拦截消息以进行报告、分析和内省。
 
-With EBuses, you can:
+借助 EBus，您可以：
 
-* Make direct global function calls.
-* Dispatch processing to multiple handlers.
-* Queue all calls, acting like a command buffer.
-* Use as an addressable mailbox.
-* Perform either imperative or queued delivery.
-* Automatically marshal results of a function call into a buffer.
+* 进行直接全局函数调用。
+* 将处理分派给多个处理程序。
+* 将所有调用排队，就像命令缓冲区一样。
+* 用作可寻址邮箱。
+* 执行命令式或排队式交付。
+* 自动将函数调用的结果封送到缓冲区中。
 
-Interfaces are provided for the Gems and systems DLLs included with O3DE. To use the functionality in these DLLs, you use the interfaces in the headers to register for a single cast (Event) or broadcast (Broadcast) event, or through supplying a data request functor to a request bus handler.
+为 O3DE 附带的 Gem 和系统 DLL 提供了接口。要使用这些 DLL 中的功能，请使用标头中的接口来注册单个强制转换 （Event） 或广播 （Broadcast） 事件，或者通过向请求总线处理程序提供数据请求函子。
 
-Likewise, to expose functionality from your own Gems and provide data to another system, you must inherit the virtual interface that's declared in the corresponding header file and implement the handlers on that interface in your Gem's classes. You then register the handlers with the EBus system. Specifically, you'll register a handler that you create with EBus, which will pass a pointer to your class method to the targeted system or post a notification to the systems that are subscribed to it.
+同样，要从您自己的 Gem 公开功能并向其他系统提供数据，您必须继承在相应头文件中声明的虚拟接口，并在 Gem 的类中实现该接口上的处理程序。然后，您将处理程序注册到 EBus 系统。具体来说，您将注册一个使用 EBus 创建的处理程序，该处理程序会将指向类方法的指针传递给目标系统，或向订阅该方法的系统发布通知。
 
-Inside of your Gem code, you also manage the connection and disconnection of your implemented handler for the EBus. EBus is just a list of handlers that calls all the functors (function pointers) registered with it.
+在 Gem 代码中，您还可以管理为 EBus 实施的处理程序的连接和断开连接。EBus 只是一个处理程序列表，用于调用向其注册的所有函子（函数指针）。
 
-For singleton handlers where you only need one interface to communicate across DLLs, consider using [AZ::Interface](/docs/user-guide/programming/messaging/az-interface) and [AZ:Event](/docs/user-guide/programming/messaging/az-event) directly, without EBus.
+对于只需要一个接口即可跨 DLL 通信的单例处理程序，请考虑直接使用 [AZ::Interface](/docs/user-guide/programming/messaging/az-interface) 和 [AZ:Event](/docs/user-guide/programming/messaging/az-event) ，而无需使用事件总线。
 
-For details on using EBus, see [Working with the Event Bus (EBus) System](/docs/user-guide/programming/messaging/ebus)
+有关使用事件总线的详细信息，请参阅 [使用事件总线 （EBus） 系统](/docs/user-guide/programming/messaging/ebus)。
 
-## Component entity system
+## 组件实体系统
 
-Understanding the component entity system is fundamental to using O3DE. It's conceptually simple: Every in-game object you create for your project is an *entity*, with a unique ID and container. Each entity contains *components* that provide functionality. The functionality that components provide is broad and can include primitive shapes for collision and overlap detection, meshes and materials, audio, artificial intelligence behaviors, animation, physics, scripts, and so much more. There are even components that provide tool and debugging functionality.
+了解组件实体系统是使用 O3DE 的基础。从概念上讲很简单：您为项目创建的每个游戏内对象都是一个 *实体*，具有唯一的 ID 和容器。每个实体都包含提供功能的 *组件*。组件提供的功能非常广泛，可以包括用于碰撞和重叠检测的原始形状、网格和材质、音频、人工智能行为、动画、物理、脚本等等。甚至还有提供工具和调试功能的组件。
 
-As an example, suppose you want to create a door entity that can be opened and closed. You made a mesh and a couple audio files. Now, consider the functionality your door must have.
+例如，假设您要创建一个可以打开和关闭的门实体。您制作了一个网格和几个音频文件。现在，考虑一下您的门必须具备的功能。
 
-* Display the door model.
-* Play back the audio files when the door opens and closes.
-* Prevent passing through the door when it's closed.
-* Animate the door open and close.
-* Trigger the door open and close by some mechanism.
+* 显示门型号。
+* 在门打开和关闭时播放音频文件。
+* 防止门关闭时通过。
+* 为门的打开和关闭设置动画。
+* 通过某种机制触发门的打开和关闭。
 
-Knowing the functionality that your door entity needs, you add components to the entity for each aspect of the door, including its presence in the game world and the ways a player can interact with it. A *Mesh* component visually represents the door in the game world. *Audio Trigger* components provide the audio when it opens or closes. A *PhysX Collider* component prevents a player from passing through the door when it's closed. *Script Canvas* components define the behaviors, including animation and sound playback, when the door is opened or closed. Whatever behavior you need to model, each entity needs a collection of components to support it. The only component that's common to all entities is the *Transform* component, which provides the position, orientation, and scale of your entity in the game world.
+了解门实体所需的功能后，您可以为门的每个方面向实体添加组件，包括门在游戏世界中的存在以及玩家与门交互的方式。*Mesh* 组件直观地表示游戏世界中的门。*Audio Trigger* 组件在打开或关闭时提供音频。*PhysX Collider* 组件可防止玩家在门关闭时通过门。*Script Canvas* 组件定义门打开或关闭时的行为，包括动画和声音播放。无论您需要对什么行为进行建模，每个实体都需要一组组件来支持它。所有实体唯一通用的组件是 *Transform* 组件，它提供实体在游戏世界中的位置、方向和缩放。
 
-### Spawnables and prefabs
+### 可生成对象和预制件
 
-Entities are easy to grasp and create, but can become complex. If the entity requires a lot of functionality, the list of components grows quickly. What if you want to add a latch with its own animation and audio to the door? What if you want to add a breakable glass pane to the door? Suddenly, the entity goes from having five components to dozens of components. This is where *prefabs* and *spawnables* come in.
+实体很容易掌握和创建，但可能会变得复杂。如果实体需要大量功能，则组件列表会迅速增长。如果您想向门添加具有自己的动画和音频的闩锁，该怎么办？如果您想在门上添加易碎的玻璃板怎么办？突然之间，实体从具有 5 个组件变为数十个组件。这就是 *prefabs* 和 *spawnables* 的用武之地。
 
-A prefab, like an entity, is a container with a transform component. Instead of containing components, however, a prefab contains one or more configured entities and might contain other prefabs as well. To create a more complex door, you could have the initial door entity, a second entity for the latch and its components, and a third entity for the breakable glass pane and its components. These three small entities are collected into a prefab that provides a reusable, fully functional door asset.
+与实体一样，预制件是具有转换组件的容器。但是，预制件不包含组件，而是包含一个或多个已配置的实体，并且还可能包含其他预制件。要创建更复杂的门，您可以拥有初始门实体、闩锁及其组件的第二个实体，以及可碎玻璃窗格及其组件的第三个实体。这三个小实体被收集到一个预制件中，该预制件提供可重用、功能齐全的门资产。
 
-A spawnable is simply a *dynamic* prefab. Where a prefab is best suited to environmental assets such as doors and static scenery such as rocks and foliage, a *spawnable* is used to represent any dynamic object. Non-player characters, projectiles, and dynamic scenery objects are all examples of spawnables.
+可生成对象只是一个 *动态* 预制件。预制件最适合环境资产（如门）和静态场景（如岩石和树叶）时，*可生成对象*用于表示任何动态对象。非玩家角色、射弹和动态风景对象都是可生成对象的示例。
 
-Behaviors applied to a prefab or a spawnable can potentially cascade down to all of the entities that it contains, and then down to the components of that entity. However, the reverse is not true, as it would make no sense for a window shattering to apply to a door latch.
+应用于预制件或可生成对象的行为可能会级联到它包含的所有实体，然后向下级联到该实体的组件。然而，反之则不然，因为窗户破碎不适用于门闩是没有意义的。
 
-When you've internalized the spawnable > prefab > entity > component hierarchy, consider how you would use these concepts to develop the various elements potentially populating your project.
+在组件层次结构>内部化可生成对象 > 预制件>实体后，请考虑如何使用这些概念来开发可能填充项目的各种元素。
 
-## O3DE Asset Pipeline
+## O3DE 资源管道
 
-Within the context of O3DE, an asset is a resource file, saved on disk, that's consumed by your project in some way. An asset might be a font for your user interface, a bitmap file that contains a grassy terrain texture, a rock mesh you sculpted, animations for a character, and so on. Some assets might be created in O3DE. For example, you can use O3DE's **Asset Editor** to create specialized files called *inputbindings* that map buttons from a game pad to input events for your project and *physicsmaterials* that describe the physical properties of surfaces.
+在 O3DE 的上下文中，资产是保存在磁盘上的资源文件，由您的项目以某种方式使用。资源可以是用户界面的字体、包含草地地形纹理的位图文件、您雕刻的岩石网格、角色的动画等。某些资产可能是在 O3DE 中创建的。例如，您可以使用 O3DE 的 **资产编辑器** 创建名为 *inputbindings* 的专用文件，将游戏手柄中的按钮映射到项目的输入事件，以及描述表面物理属性的 *physicsmaterials*。
 
-Many assets must be processed, for performance or other reasons, before they can be consumed by O3DE. The process of converting source assets to runtime-optimized product assets is called the *Asset Pipeline*. The processing is performed automatically by **Asset Processor**.
+由于性能或其他原因，许多资产必须经过处理，然后才能被 O3DE 使用。将源资源转换为运行时优化型产品资源的过程称为 *Asset Pipeline*。该处理由 Asset Processor 自动执行。
 
-**Asset Processor** is a background process (you'll see its icon in the task tray when it's running) that constantly scans directories in your project for new and updated files. Asset Processor uses configurable rules to determine how to handle new and updated asset files. The objective is to have game ready versions of all assets for each OS and each game directory in a location called the *asset cache*. The asset cache is kept separate from your asset directories and can be automatically rebuilt entirely from your source assets by the Asset Processor.
+**Asset Processor** 是一个后台进程（当它运行时，您会在任务栏中看到它的图标），它会不断扫描项目中的目录以查找新的和更新的文件。Asset Processor 使用可配置规则来确定如何处理新的和更新的资产文件。目标是在称为 *资产缓存* 的位置为每个操作系统和每个游戏目录提供所有资产的游戏就绪版本。资源缓存与您的资源目录分开保存，并且可以由 Asset Processor 完全从源资源自动重新构建。
 
-The asset cache contains a full image of all files (except executables and related files) that are needed to run your project. Asset Processor keeps the image up to date, ensuring that new files are ready to use in the project runtime and **O3DE Editor** as soon as possible. Your project runtime will only load assets from the asset cache and never directly from your asset source directories.
+资源缓存包含运行项目所需的所有文件（可执行文件和相关文件除外）的完整映像。Asset Processor 使映像保持最新状态，确保新文件尽快准备好在项目运行时和 **O3DE 编辑器** 中使用。您的项目运行时将仅从资源缓存中加载资源，而不会直接从资源源目录中加载资源。
 
-Projects can have thousands of assets that need to be monitored and processed for multiple target operating systems. To manage this complexity, the Asset Pipeline is completely configurable. Here are just some of the configuration options available:
+项目可能有数千个资产，需要针对多个目标操作系统进行监控和处理。为了管理这种复杂性，Asset Pipeline 是完全可配置的。以下是一些可用的配置选项：
 
-* Specify what directories should be monitored for changes.
-* Specify target operating systems and tailor the Asset Pipeline's behavior per target operating system.
-* Set the number of concurrent processing tasks.
-* Use metadata information to associate file types and process side-by-side assets.
-* Add your own asset types to the Asset Pipeline.
-* Batch asset processing on a build server.
+* 指定应监控哪些目录的更改。
+* 指定目标操作系统并为每个目标操作系统定制 Asset Pipeline 的行为。
+* 设置并发处理任务的数量。
+* 使用元数据信息来关联文件类型并处理并排资产。
+* 将您自己的资源类型添加到 Asset Pipeline。
+* 在构建服务器上进行批量资源处理。
 
-When you're preparing to ship, you'll need to package the assets that your project uses. Even small projects can have hundreds of assets, including multiple versions of assets, many of them not required in your final distributable. Manually tracking and determining which assets you need to ship can be tedious, time consuming, and error prone. **Asset Bundler** solves this for you.
+当您准备发布时，您需要打包项目使用的资源。即使是小型项目也可能有数百个资产，包括多个版本的资产，其中许多版本在最终的可分发对象中不是必需的。手动跟踪和确定您需要运送的资产可能很乏味、耗时且容易出错。**Asset Bundler** 为您解决了这个问题。
 
-Asset Bundler makes shipping the specific assets that are used for the release of your game more reliable and repeatable. Reliability is based on an underlying dependency system. If you make changes to your project and add, remove, or update assets, Asset Bundler uses the dependencies to automatically determine which assets to include. Repeatability is based on underlying configuration files that provide consistency each time you run Asset Bundler.
+Asset Bundler 使用于发布游戏的特定资产的发布更加可靠和可重复。可靠性基于底层依赖关系系统。如果您对项目进行更改并添加、删除或更新资源，则 Asset Bundler 会使用依赖项自动确定要包含哪些资源。可重复性基于底层配置文件，这些文件在您每次运行 Asset Bundler 时提供一致性。
 
-## Scripting gameplay
+## 编写游戏脚本
 
-O3DE includes two scripting technologies for creating logic and behaviors: *Script Canvas* and *Lua*.
+O3DE 包括两种用于创建逻辑和行为的脚本技术：*Script Canvas* 和 *Lua*。
 
-- **Script Canvas** is a general purpose, visual scripting environment. In **Script Canvas Editor**, you lay out and connect graphical nodes that provide a visual representation of the logic flow. Script Canvas offers an approachable and easy-to-read environment to author behaviors using the same framework as Lua and C++. You can use Script Canvas to create scripts without needing to know how to code.
+- **Script Canvas** 是一个通用的可视化脚本环境。在 **Script Canvas Editor** 中，您可以布局和连接图形节点，以提供逻辑流的可视化表示。Script Canvas 提供了一个易于理解且易于阅读的环境，以便使用与 Lua 和 C++ 相同的框架来编写行为。您可以使用 Script Canvas 创建脚本，而无需知道如何编码。
 
-- **Lua** is a powerful, fast, lightweight, embeddable scripting language. Lua facilitates quick iteration in your project because you can run your changes immediately without needing to recompile your source code.
+- **Lua** 是一种功能强大、快速、轻量级、可嵌入的脚本语言。Lua 有助于在项目中进行快速迭代，因为您可以立即运行更改，而无需重新编译源代码。
 
-Learn more about Script Canvas and Lua in [Scripting Gameplay in O3DE](/docs/user-guide/scripting/).
+要了解有关 Script Canvas 和 Lua 的更多信息，请参阅 [在 O3DE 中编写游戏脚本](/docs/user-guide/scripting/)。
 
-## Release runtimes
+## 发布运行时
 
-O3DE offers both client (single-user) application and dedicated server runtime support. Your project can produce either (or both) as part of a build, allowing you to easily share code and assets where it makes sense.
+O3DE 提供客户端（单用户）应用程序和专用服务器运行时支持。您的项目可以在构建过程中生成其中一种（或两种），从而使您能够在有意义的地方轻松共享代码和资产。
 
-### Client ("Launcher")
+### 客户端（“启动器”）
 
-The **Client**, also called the **Launcher**, is the bootstrap application that loads and runs your project. This application is based on the core O3DE libraries and is responsible for loading your project and Gems. The client runtime provides enough functionality to handle bootstrapping the rest of the systems, handing application lifecycle and some core systems like input and crash handling.
+**Client**（也称为 **Launcher**）是加载和运行项目的引导应用程序。此应用程序基于核心 O3DE 库，负责加载您的项目和 Gem。客户端运行时提供了足够的功能来处理其余系统的引导，处理应用程序生命周期和一些核心系统，如输入和崩溃处理。
 
-The Client is the binary application that would be shipped to customers or end users to run.
+Client 是将交付给客户或最终用户运行的二进制应用程序。
 
-### Dedicated server runtime
+### 专用服务器运行时
 
-The *dedicated server runtime* is meant to be run in an environment where it provides a shared session to many clients. Dedicated runtimes don't have rendering or audio capabilities enabled. Instead, they load simulations and provide synchronization between them. The most common example of a dedicated runtime is a multiplayer game server.
+*专用服务器运行时* 旨在运行在为许多客户端提供共享会话的环境中。专用运行时未启用渲染或音频功能。相反，它们加载模拟并提供它们之间的同步。专用运行时的最常见示例是多人游戏服务器。

@@ -1,57 +1,57 @@
 ---
-title: Creating Projects on Linux
-description: Learn how to use the command line interface (CLI) on Linux to create and build new Open 3D Engine (O3DE) projects from the default project template.
+title: 在 Linux 上创建项目
+description: 了解如何在 Linux 上使用命令行界面 （CLI） 从默认项目模板创建和构建新的 Open 3D Engine （O3DE） 项目。
 weight: 200
 toc: true
 ---
 
-Use the instructions in this tutorial to create an O3DE project for the Linux host platform. You can create project directories either in the same directory as the O3DE root directory or outside of this directory. This documentation refers to the latter as "external projects".
+使用本教程中的说明为 Linux 主机平台创建 O3DE 项目。您可以在与 O3DE 根目录相同的目录中或在此目录之外创建项目目录。本文档将后者称为 “外部项目”。
 
-## Prerequisites
+## 先决条件
 
-The following instructions assume that you have:
+以下说明假定您已：
 
-* Met all hardware and software requirements listed in [O3DE System Requirements](/docs/welcome-guide/requirements).
-* Set up O3DE on your computer. For help, refer to [Set up Open 3D Engine](/docs/welcome-guide/setup).
-* Registered the O3DE engine in the O3DE manifest. If you set up O3DE from GitHub, you must manually register the engine. For help, refer to [Register the engine](/docs/welcome-guide/setup/setup-from-github/building-linux/#register-the-engine).
+* 满足 [O3DE 系统要求](/docs/welcome-guide/requirements) 中列出的所有硬件和软件要求。
+* 在您的计算机上设置 O3DE。有关帮助，请参阅 [设置 Open 3D Engine](/docs/welcome-guide/setup)。
+* 在 O3DE 清单中注册 O3DE 引擎。如果您从 GitHub 设置 O3DE，则必须手动注册引擎。如需帮助，请参阅 [注册引擎](/docs/welcome-guide/setup/setup-from-github/building-linux/#register-the-engine)。
 
-## Create a new O3DE project
+## 创建新的 O3DE 项目
 
-To start a project based on the standard template, complete the following steps.
+要基于标准模板启动项目，请完成以下步骤。
 
-1. Open a terminal window and change to your O3DE engine directory by doing one of the following:
+1. 打开终端窗口，然后通过执行以下操作之一更改为 O3DE 引擎目录：
 
-    * If you set up your engine as a [source engine](/docs/user-guide/appendix/glossary/#source-engine), use the engine source directory. Example:
+    * 如果你将引擎设置为 [源引擎](/docs/user-guide/appendix/glossary/#source-engine)，请使用 engine 源目录。例：
 
         ```shell
         cd $HOME/o3de
         ```
 
-    * If you installed O3DE or built your engine as an [SDK engine](/docs/user-guide/appendix/glossary/#sdk-engine) using the `INSTALL` target, use the installed engine directory. Example:
+    * 如果您安装了 O3DE 或使用`INSTALL`目标将引擎构建为 [SDK 引擎](/docs/user-guide/appendix/glossary/#sdk-engine)，请使用已安装的引擎目录。例：`
 
         ```shell
         cd $HOME/o3de-install
         ```
 
-1. To create a new project, use the `o3de` script in the `scripts` subdirectory with the `create-project` command. Supply an absolute or relative path to the directory where you want to create your new project using the `--project-path` argument. The last component of the path will become the project name, unless you override it with the `--project-name` argument. The script will create a new project using the **standard** template (the default project template).
+1. 要创建一个新项目，请使用 `scripts` 子目录中的 `o3de` 脚本和 `create-project` 命令。使用 `--project-path` 参数提供要创建新项目的目录的绝对或相对路径。路径的最后一个组件将成为项目名称，除非你用 `--project-name` 参数覆盖它。该脚本将使用 **standard** 模板（默认项目模板）创建一个新项目。
 
     ```shell
     scripts/o3de.sh create-project --project-path $HOME/O3DE/Projects/MyProject
     ```
 
-    When creating a project, this command also makes two important registrations:
+    在创建项目时，此命令还会进行两个重要的注册：
 
-    * It associates your project with an engine by registering the engine in the project's `project.json` manifest, using the engine's registered name. You can find this manifest in the project's root directory. The registration for an engine named "o3de" looks like the following example:
+    * 它通过使用引擎的注册名称在项目的`project.json`清单中注册引擎，将您的项目与引擎相关联。您可以在项目的根目录中找到此清单。名为 `o3de` 的引擎的注册类似于以下示例：
 
         ```json
         "engine": "o3de",
         ```
 
         {{< note >}}
-If you change the engine's registered name, or wish to use a different engine with the project, you will need to update this manifest entry.
+如果你更改了引擎的注册名称，或者希望在项目中使用不同的引擎，则需要更新此清单条目。
         {{< /note >}}
 
-    * It registers the project in the O3DE manifest, adding it to the list of known projects, and making **Project Manager** aware of your project. The O3DE manifest is located in `$HOME/.o3de/o3de_manifest.json`. The registration for a project located in `/home/myusername/O3DE/projects/MyProject` looks like the following example:
+    * 它在 O3DE 清单中注册项目，将其添加到已知项目列表中，并让 **Project Manager** 知道您的项目。O3DE 清单位于`$HOME/.o3de/o3de_manifest.json`中。位于`/home/myusername/O3DE/projects/MyProject` 中的项目注册类似于以下示例：
 
         ```json
         "projects": [
@@ -60,18 +60,18 @@ If you change the engine's registered name, or wish to use a different engine wi
         ```
 
         {{< note >}}
-If you move the project, you will need to update this manifest entry.
+如果移动项目，则需要更新此清单条目。
         {{< /note >}}
 
-## Create a Linux build project
+## 创建 Linux 构建项目
 
-Use **CMake** to create the Linux build project for your O3DE project.
+使用 **CMake** 为您的 O3DE 项目创建 Linux 构建项目。
 
 {{< important >}}
-When building using the O3DE pre-build **Snap** SDK, first export the `O3DE_SNAP` environment variable so CMake does not attempt to install Python pip requirements and fail. To export the `O3DE_SNAP` environment variable, run the command `export O3DE_SNAP` from the command line before running the CMake commands below.
+使用 O3DE 预构建 **Snap** SDK 进行构建时，首先导出`O3DE_SNAP`环境变量，以便 CMake 不会尝试安装 Python pip 要求并失败。要导出 `O3DE_SNAP` 环境变量，请在运行下面的 CMake 命令之前从命令行运行命令`export O3DE_SNAP` 。
 {{< /important >}}
 
-1. Create the Linux build project in your new project directory. Supply the build directory, the project source directory, the Ninja Multi-Config generator, and any other project options. Paths can be absolute or relative. Example:
+1. 在新项目目录中创建 Linux 生成项目。提供构建目录、项目源目录、Ninja Multi-Config 生成器和任何其他项目选项。路径可以是绝对路径，也可以是相对路径。例：
 
     ```shell
     cd $HOME/O3DE/Projects/MyProject
@@ -79,65 +79,64 @@ When building using the O3DE pre-build **Snap** SDK, first export the `O3DE_SNAP
     ```
 
     {{< note >}}
-CMake uses the downloadable packages directory that is defined in your O3DE manifest with `default_third_party_folder`. You can specify a different directory to use by including the `-DLY_3RDPARTY_PATH` argument. For example, if you created the package directory in `$HOME/o3de-packages`, include the argument `-DLY_3RDPARTY_PATH=$HOME/o3de-packages` in your cmake command.
+CMake 使用 O3DE 清单中定义的可下载包目录`default_third_party_folder`。您可以通过包含`-DLY_3RDPARTY_PATH`参数来指定要使用的其他目录。例如，如果您在 `$HOME/o3de-packages`中创建了包目录，请在 cmake 命令中包含参数 `-DLY_3RDPARTY_PATH=$HOME/o3de-packages`。
 
-Do not use trailing slashes when specifying the path to the packages directory.
+指定 packages 目录的路径时，不要使用尾部斜杠。
     {{< /note >}}
 
     {{< note >}}
-CMake [unity builds](https://cmake.org/cmake/help/latest/prop_tgt/UNITY_BUILD.html) are on by default. This is a CMake feature that can greatly improve build times by merging source files into single compilation units. If you encounter a build error, disabling unity builds might help debug the problem. To disable unity builds, run the previous `cmake` command with the `-DLY_UNITY_BUILD=OFF` argument to regenerate your project files.
+CMake [unity builds](https://cmake.org/cmake/help/latest/prop_tgt/UNITY_BUILD.html) 默认处于开启状态。这是一项 CMake 功能，可以通过将源文件合并为单个编译单元来大大缩短构建时间。如果遇到构建错误，禁用 Unity 构建可能有助于调试问题。要禁用 Unity 构建，请运行前面的带有 `-DLY_UNITY_BUILD=OFF` 参数的 `cmake` 命令来重新生成项目文件。
     {{< /note >}}
 
-## Build the O3DE project
+## 构建 O3DE 项目
 
-Use CMake to build the Linux build project in the build directory of your O3DE project.
+使用 CMake 在 O3DE 项目的 build 目录中构建 Linux 构建项目。
 
-1. Build the project launcher using the solution that you created in the project's `build/linux` directory. The following example shows the `profile` build configuration.
-
+1. 使用您在项目的`build/linux`目录中创建的解决方案构建项目启动器。以下示例显示了 `profile`生成配置。
     ```shell
     cmake --build build/linux --target MyProject.GameLauncher Editor --config profile -j <number of parallel build tasks>
     ```
 
     {{< important >}}
-When building the project for a pre-built SDK engine, even though you aren't building **O3DE Editor**, we still highly recommend including `Editor` as a build target. While the GameLauncher doesn't depend on the Editor target, some Gems do. If you leave off the Editor target, those Gems aren't included in the build.
+在为预构建的 SDK 引擎构建项目时，即使您没有构建 **O3DE 编辑器**，我们仍然强烈建议将`Editor`作为构建目标。虽然 GameLauncher 不依赖于 Editor 目标，但某些 Gem 依赖于 Editor。如果您关闭 Editor 目标，则这些 Gem 不会包含在构建中。
     {{< /important >}}
 
-    When building the project for a source engine, you build the **Asset Processor** and Project Manager too, since they are dependencies of O3DE Editor.
+    在为源引擎构建项目时，您还需要构建 **Asset Processor** 和 Project Manager，因为它们是 O3DE Editor 的依赖项。
 
-    The `-j` is a recommended build tool optimization. It tells the Ninja build tool the number of parallel build tasks that will be executed simultaneously. The value for 'number of parallel build tasks' is recommended to match the number of cores available on the Linux host machine.
+   `-j`是推荐的构建工具优化。它告诉 Ninja 构建工具将同时执行的并行构建任务的数量。建议使用“number of parallel build tasks”的值与 Linux 主机上可用的内核数匹配。
 
-    Example:
+    例如:
 
     ```shell
     cmake --build build/linux --target MyProject.GameLauncher Editor --config profile -j 8
     ```
 
-1. When the build is complete, you can find the project binaries in the project directory under `build/linux/bin/profile`. To verify that the project is ready to use, run O3DE Editor by doing one of the following:
+1. 构建完成后，您可以在项目目录的`build/linux/bin/profile`下找到项目二进制文件。要验证项目是否已准备就绪，请通过执行以下操作之一来运行 O3DE Editor：
 
-    * If you set up your engine as a [source engine](/docs/welcome-guide/setup/setup-from-github/building-linux/#build-the-engine), run the Editor from the project build directory.
+    * 如果您将引擎设置为 [源引擎](/docs/welcome-guide/setup/setup-from-github/building-linux/#build-the-engine)，请从项目构建目录运行 Editor。
 
         ```shell
         build/linux/bin/profile/Editor
         ```
 
         {{< note >}}
-If your project build directory is outside the project path, you must include the project path (using the `--project-path` parameter) when launching O3DE Editor.
+如果您的项目构建目录在项目路径之外，则必须在启动 O3DE Editor 时包含项目路径（使用 `--project-path`参数）。
         {{< /note >}}
 
-    * If you installed O3DE or built your engine as an [SDK engine](/docs/welcome-guide/setup/setup-from-github/building-linux/#build-the-engine) using the `INSTALL` target, run the Editor from the installed engine's build directory. (If you don't supply the project path, **Project Manager** launches instead.) The project path can be absolute or relative to the engine directory.
+    * 如果您安装了 O3DE 或使用 `INSTALL` 目标将引擎构建为 [SDK 引擎](/docs/welcome-guide/setup/setup-from-github/building-linux/#build-the-engine)，请从已安装引擎的构建目录运行 Editor。（如果您未提供项目路径，则 **Project Manager** 将启动。项目路径可以是绝对路径，也可以是相对于 engine 目录的路径。
 
         ```shell
         $HOME/o3de-install/bin/Linux/profile/Default/Editor --project-path $HOME/O3DE/Projects/MyProject
         ```
 
         {{< important >}}
-If you built the engine from source using the `INSTALL` target, make sure that you launch the Editor _and_ other tools from the installed engine's build directory, _not_ the engine's build directory. The Linux install directory typically ends in `/bin/Linux/profile/Default`.
+如果您使用 `INSTALL` 目标从源代码构建引擎，请确保从已安装引擎的构建目录（而不是引擎的构建目录）启动 Editor _和_ 其他工具。Linux 安装目录通常以 `/bin/Linux/profile/Default` 结尾。
         {{< /important >}}
 
-You can also run Project Manager (`o3de`) from the same directory to edit your project's settings, add or remove Gems from the project, rebuild your project, and launch the Editor.
+您还可以从同一目录运行 Project Manager (`o3de`) 来编辑项目的设置、在项目中添加或删除 Gem、重新构建项目以及启动 Editor。
 
 {{< caution >}}
-When you launch the Editor, the **Asset Processor** from the same directory will also launch.  To launch the Editor from a different directory, you must close any **Asset Processor** tasks that are running.
+当您启动 Editor 时，同一目录中的 **Asset Processor** 也将启动。 要从其他目录启动 Editor，您必须关闭正在运行的所有 **Asset Processor** 任务。
 {{< /caution >}}
 
-For more information about project configuration and building, refer to the [Project Configuration](/docs/user-guide/project-config) and [Build](/docs/user-guide/build) sections of the user guide.
+有关项目配置和构建的更多信息，请参阅用户指南的 [项目配置](/docs/user-guide/project-config) 和 [构建](/docs/user-guide/build) 部分。

@@ -6,85 +6,85 @@ weight: 300
 toc: true
 ---
 
-This tutorial demonstrates how to use [**Scene Settings**](/docs/user-guide/assets/scene-settings/scene-settings) to customize actor asset processing for **Open 3D Engine (O3DE)**. An actor contains one or more meshes bound to a skeleton. You can use any actor asset for this tutorial. The primary 3D scene format supported by O3DE is `.fbx`, so it's recommended to use an actor asset saved to a `.fbx` file. If you don't have your own actor source asset, you can use a character asset from a provider such as [Mixamo](https://www.mixamo.com/#/?page=1&type=Character).
+本教程演示如何使用 [**Scene Settings**](/docs/user-guide/assets/scene-settings/scene-settings) 来自定义 **Open 3D Engine （O3DE）** 的角色资产处理。角色包含一个或多个绑定到骨架的网格。在本教程中，您可以使用任何角色资源。O3DE 支持的主要 3D 场景格式是`.fbx`，因此建议使用保存到`.fbx`文件的演员资产。 如果您没有自己的角色源资源，则可以使用 [Mixamo](https://www.mixamo.com/#/?page=1&type=Character).
 
 {{< note >}}
-Understanding the [best practices](/docs/user-guide/assets/scene-settings/source-asset-best-practices#actors) for creating actor source assets can mitigate issues you might encounter when processing actors for O3DE. For technical details about the data supported by actors, refer to the [supported 3D scene data](/docs/user-guide/assets/scene-settings/scene-format-support#supported-3d-scene-data) table.
+了解用于创建角色源资源的 [最佳实践](/docs/user-guide/assets/scene-settings/source-asset-best-practices#actors)可以缓解您在处理 O3DE 角色时可能遇到的问题。有关 Actor 支持的数据的技术细节，请参考 [支持的 3D 场景数据](/docs/user-guide/assets/scene-settings/scene-format-support#supported-3d-scene-data) 表。
 {{< /note >}}
 
-| O3DE Experience | Time to Complete | Feature Focus | Last Updated |
+| O3DE 体验 |完成时间 |功能聚焦 |最后更新|
 | - | - | - | - |
-| Beginner | 10 Minutes | Customized processing of actor assets from `.fbx` files with Scene Settings. | January 4, 2023 |
+| 新手 | 10 分钟 | 使用 Scene Settings 对 `.fbx` 文件中的 actor 资源进行自定义处理。 | January 4, 2023 |
 
-## Preparation
+## 制备
 
-Place your actor `.fbx` source asset in a [scan directory](/docs/user-guide/assets/pipeline/scan-directories) for your project, such as the `Assets` subdirectory, so it can be detected by [**Asset Processor**](/docs/user-guide/assets/asset-processor).
+将角色`.fbx`源资源放在项目的 [扫描目录](/docs/user-guide/assets/pipeline/scan-directories)中，例如`Assets`子目录，以便[**Asset Processor**](/docs/user-guide/assets/asset-processor)检测到它。
 
-## Processing an actor asset
+## 处理角色资产
 
-When you placed your actor `.fbx` source asset in your project's `Assets` directory, Asset Processor detected the asset, examined its contents, and processed it with a default set of rules. These default rules might be sufficient for simple actor assets, however, actors often require additional processing for custom normals and tangents, cloth meshes, root motion extraction, or coordinate space changes. To customize the rules that process the actor asset, do the following:
+当您将角色`.fbx`源资源放在项目的`Assets`目录中时，Asset Processor 会检测到该资源，检查其内容，并使用一组默认规则对其进行处理。这些默认规则可能足以处理简单的角色资源，但是，角色通常需要对自定义法线和切线、布料网格、根运动提取或坐标空间更改进行额外处理。要自定义处理角色资产的规则，请执行以下操作：
 
-1. In **O3DE Editor**, locate your asset in **Asset Browser**. You can type the name of the asset into the search field at the top of Asset Browser to filter the list and locate your actor asset.
+1. 在 **O3DE 编辑器 **中，在 **Asset Browser** 中找到您的资源。您可以在 Asset Browser （资源浏览器） 顶部的搜索字段中键入资源的名称，以筛选列表并找到您的角色资源。
 
     ![ Search for a specific mesh asset in Asset Browser. ](/images/learning-guide/tutorials/assets/actor-search-asset-browser.png)
 
-    If your asset has already been processed, you might see a preview image of the asset, and a list of product assets below the `.fbx` source asset.
+    如果您的资产已处理完毕，您可能会看到该资产的预览图像，以及“.fbx”源资产下方的产品资产列表。
 
-1. **Double-click** the `.fbx` source asset and choose **Edit Settings...** from the context menu to open Scene Settings.
+1. **双击**  `.fbx` 源资源，然后从上下文菜单中选择 **Edit Settings...** 以打开场景设置。
 
     ![ Open Scene Settings from Asset Browser. ](/images/learning-guide/tutorials/assets/actor-edit-settings.png)
 
-1. Select the [**Meshes**](/docs/user-guide/assets/scene-settings/meshes-tab) tab.
+1. 选择 [**Meshes**](/docs/user-guide/assets/scene-settings/meshes-tab) 标签页。
 
     ![ Scene Settings meshes tab. ](/images/learning-guide/tutorials/assets/actor-mesh-scene-settings.png)
 
-    In the preceding image, there is one **Mesh group** in the **Meshes** tab. A mesh group produces a runtime optimized mesh asset. By default, all the meshes in the source asset are selected for the mesh group and are processed as a single mesh.
+    在上图中，**Meshes** 选项卡中有一个 **Mesh group**。网格组生成运行时优化的网格资产。默认情况下，源资产中的所有网格都被选中用于网格组，并作为单个网格进行处理。
 
-    Additional mesh groups can be created by choosing **Add another mesh**. However, an actor entity can only have one mesh component. All of the actor's meshes - which is to say, all the meshes that are bound to the actor's skeleton - must be included in a single mesh group. The actor in this example has one mesh, though it's common for actors to have many unique meshes.
+    可以通过选择 **Add another mesh** （添加其他网格） 来创建其他网格组。但是，一个角色实体只能有一个网格组件。角色的所有网格 - 也就是说，绑定到角色骨架的所有网格 - 必须包含在单个网格组中。此示例中的角色有一个网格，但角色通常具有许多唯一的网格。
 
-    The following table explains the important elements of the default mesh group for actors:
+    下表说明了角色的默认网格组的重要元素：
 
-    | Element | Description |
+    | 元素 | 说明 |
     | --- | --- |
-    | **Name mesh** | This property is the name of the mesh group. All product assets of this mesh group use this string as a prefix for their name. The product assets appear in Asset Browser beneath the source asset. By default, the name of the source scene file is used. |
-    | **Select meshes** | The meshes selected for processing as part of the mesh group. Choosing the {{< icon browse-edit-select-files.svg >}} **node select** button allows you to select which meshes from the `.fbx` source asset to include in the mesh group. By default, all meshes in the `.fbx` source asset are selected. |
-    | **Skin** | The [Skin](/docs/user-guide/assets/scene-settings/meshes-tab/#skin) modifier is automatically added for meshes that are bound to a skeleton. The Skin modifier sets the max weights per vertex for the mesh, and the weight threshold for bone influences. The **Max weights per vertex** property has a default value of `8`, so that up to 8 bones can influence each vertex in the mesh. The default **Weight threshold** is `0.001`. Any vertex weights that are lower than the threshold value are ignored. |
-    | **Material** | The [Material](/docs/user-guide/assets/scene-settings/meshes-tab/#material) modifier is automatically added to mesh groups. With the Material modifier, you can choose to update the materials for the processed actor, and remove unused materials that might have been previously processed for the actor. |
+    | **Name mesh** | 此属性是网格组的名称。此网格组的所有产品资产都使用此字符串作为其名称的前缀。产品资源显示在 资源浏览器 中源资源的下方。默认情况下，使用源场景文件的名称。 |
+    | **Select meshes** | 选择作为网格组的一部分进行处理的网格。选择 {{< icon browse-edit-select-files.svg >}} **node select** 按钮允许您从`.fbx`源资源中选择哪些网格以包含在网格组中。默认情况下，`.fbx`源资产中的所有网格都处于选中状态。 |
+    | **Skin** | [Skin](/docs/user-guide/assets/scene-settings/meshes-tab/#skin) 修改器会自动添加到绑定到骨架的网格。Skin （蒙皮） 修改器设置网格的每个顶点的最大权重，以及骨骼影响的权重阈值。 **Max weights per vertex** property 的默认值为 '`8`'，因此最多 8 个骨骼可以影响网格中的每个顶点。**Weight threshold** 的默认值是 `0.001`. 任何低于阈值的顶点权重都将被忽略。 |
+    | **Material** | [Material](/docs/user-guide/assets/scene-settings/meshes-tab/#material) 修改器会自动添加到网格组中。使用 Material （材质） 修改器，您可以选择更新已处理角色的材质，并删除之前可能已为角色处理过的未使用的材质。 |
 
     {{< note >}}
-If your actor has custom normals and materials that use normal maps, you might need to add [**Mesh (Advanced)**](/docs/user-guide/assets/scene-settings/meshes-tab/#mesh-advanced) and [**Tangents**](/docs/user-guide/assets/scene-settings/meshes-tab/#tangents) modifiers as well. To learn more about mesh modifiers, refer to the [Meshes Tab](/docs/user-guide/assets/scene-settings/meshes-tab) topic in the User Guide.
+如果您的角色具有使用法线贴图的自定义法线和材质，则可能需要添加[**Mesh (Advanced)**](/docs/user-guide/assets/scene-settings/meshes-tab/#mesh-advanced) 和 [**Tangents**](/docs/user-guide/assets/scene-settings/meshes-tab/#tangents)  修饰符。要了解有关网格修改器的更多信息，请参阅用户指南中的 [Meshes Tab](/docs/user-guide/assets/scene-settings/meshes-tab) 主题。
     {{< /note >}}
 
-1. Choose the {{< icon browse-edit-select-files.svg >}} file select button to view and select which meshes to include in the actor's mesh group.
+1. 点击 {{< icon browse-edit-select-files.svg >}} 文件选择按钮查看和选择要包含在角色的网格组中的网格。
 
     ![ Select meshes for actor. ](/images/learning-guide/tutorials/assets/select-actor-mesh.png)
 
-1. In the **Select nodes** dialog, select only the mesh nodes required by the actor. Mesh nodes are denoted by a mesh icon. Choose **Select** to complete the selection.
+1. 在 **Select nodes** 对话框中，仅选择角色所需的网格节点。Mesh 节点由网格图标表示。选择 **Select** 以完成选择。
 
-1. Select the [**Actors**](/docs/user-guide/assets/scene-settings/actors-tab) tab to specify the root joint of the actor's skeleton.
+1. 选择 [**Actors**](/docs/user-guide/assets/scene-settings/actors-tab) 选项卡以指定 Actor 骨架的根关节。
 
     ![ Select the Actors tab. ](/images/learning-guide/tutorials/assets/actors-tab.png)
 
-    In the preceding image, there is a single **Actor group**.
+    在上图中，有一个 **Actor group**。
 
-    The **Name actor** property is the name of the actor group. All product assets of this actor group use this string as a prefix for their name. The product assets of this actor group appear in Asset Browser beneath the source asset. By default, the name of the source scene file is used.
+    **Name actor** 属性是 actor 组的名称。此参与者组的所有产品资产都使用此字符串作为其名称的前缀。此角色组的产品资源显示在 Asset Browser 中源资源的下方。默认情况下，使用源场景文件的名称。
 
-    The **Select root bone** property specifies the root bone of the skeleton to process for the actor.
+    **Select root bone** 属性指定要为 actor 处理的骨架的根骨骼。
 
-1. Click the **Select root bone** property to expose the list of bones. From the list, select the root bone of the skeleton.
+1. 单击 **Select root bone** 属性以显示骨骼列表。从列表中选择骨架的根骨骼。
 
     ![ Specify the root bone for the actor. ](/images/learning-guide/tutorials/assets/select-actor-root.png)
 
     {{< note >}}
-The first node in the list is the scene root node, not the root of the skeleton. Make sure the bone you select is the root bone of the actor's skeleton. The skeleton root bone is critical for animation and root motion. For more information, refer to the [Data Driven Root Motion](/docs/learning-guide/tutorials/animation/data-driven-root-motion) tutorial.
+列表中的第一个节点是场景根节点，而不是骨架的根。确保您选择的骨骼是角色骨架的根骨骼。骨架根骨骼对于动画和根运动至关重要。有关更多信息，请参阅 [数据驱动的根运动](/docs/learning-guide/tutorials/animation/data-driven-root-motion) 教程。
     {{< /note >}}
 
-1. Choose **Update** to save the customized settings for the actor. The asset is immediately reprocessed with the new settings.
+1. 选择 **Update** 以保存角色的自定义设置。资产会立即使用新设置重新处理。
 
-1. Locate the actor product asset in Asset Browser and drag the actor into the viewport to create an entity for the actor.
+1. 在 资源浏览器 中找到角色产品资源，并将该角色拖动到视区中，为该角色创建实体。
 
     ![ Drag the actor from Asset Browser to create an actor entity. ](/images/learning-guide/tutorials/assets/actor-entity-instance.png)
 
-    In **Entity Inspector**, note that the entity contains a single **Actor** component that references the actor product asset that you dragged into the viewport.
+    在 **Entity Inspector** 中，请注意，该实体包含一个 **Actor** 组件，该组件引用您拖动到视区中的角色产品资产。
 
     ![ Actor entity in Entity Inspector. ](/images/learning-guide/tutorials/assets/actor-entity-components.png)

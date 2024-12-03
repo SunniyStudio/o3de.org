@@ -1,157 +1,157 @@
 ---
-linkTitle: Create Terrain Shape
-title: Create Terrain Shape
-description: Create the overall shape of the terrain in the level.
+linkTitle: 创建地形形状
+title: 创建地形形状
+description: 在关卡中创建地形的整体形状。
 weight: 300
 toc: true
 ---
 
-In this tutorial section, you will create a terrain in the level that has the desired shape and size.
+在本教程小节中，您将在关卡中创建一个具有所需形状和大小的地形。
 
-## Create the terrain
+## 创建地形
 
-Generating terrain requires multiple entities that reference each other. You can set up the entities and references manually, or you can use [Landscape Canvas](/docs/user-guide/gems/reference/environment/landscape-canvas) to place and connect nodes in a visual graph that generates terrain. The advantage of using Landscape Canvas is that it provides an artist-friendly node graph interface for creating and configuring terrain entities in the level, as well as providing a visual representation of the relationships between those entities and components.
+生成地形需要多个相互引用的实体。您可以手动设置实体和引用，也可以使用 [Landscape Canvas](/docs/user-guide/gems/reference/environment/landscape-canvas)在生成地形的可视化图形中放置和连接节点。使用 Landscape Canvas 的优势在于，它提供了一个对艺术家友好的节点图形界面，用于在关卡中创建和配置地形实体，以及提供这些实体和组件之间关系的可视化表示。
 
-It's helpful to understand how the various gradient and terrain components work together, so it's recommended that you work through both versions of the tutorial in the tabs below.
+了解各种 gradient （渐变） 和 terrain （地形） 组件如何协同工作会很有帮助，因此建议您在下面的选项卡中完成本教程的两个版本。
 
 {{< tabs name="terrain-creation-tutorials" >}}
 
 {{% tab name="Terrain creation with entities" %}}
 
-In this section, you'll create a terrain spawner entity and a gradient entity. The terrain spawner entity defines the terrain and references a gradient that provides elevation data. The gradient entity provides the gradient (a heightmap image in this example) that contains the elevation data.
+在本节中，您将创建一个地形生成器实体和一个渐变实体。terrain spawner 实体定义地形并引用提供高程数据的梯度。gradient 实体提供包含海拔数据的梯度（在本例中为高度贴图图像）。
 
-### Create a terrain spawner entity
+### 创建地形生成器实体
 
-1. Create a new entity (hotkey **Ctrl + Alt + N**). Name the entity `Terrain Spawner`.
+1. 创建新实体 (快捷键 **Ctrl + Alt + N**)。命名实体为`Terrain Spawner`。
 
-2. With the entity selected, set each dimension of the [**Transform**](/docs/user-guide/components/reference/transform) component's **Translate** values to `0.0 m` so that the entity exists at the origin of the world.
+2. 选中实体的[**Transform**](/docs/user-guide/components/reference/transform)组件的 **Translate** 值的每个数值为`0.0 m`，以便实体存在于世界的起点。
 
-3. Add a [**Terrain Layer Spawner**](/docs/user-guide/components/reference/terrain/layer_spawner) component. This component enables the entity to generate terrain.
+3. 添加 [**Terrain Layer Spawner**](/docs/user-guide/components/reference/terrain/layer_spawner)组件。此组件使实体能够生成地形。
 
-4. The **Terrain Layer Spawner** component displays a warning about missing a required component. Choose **Add Required Component** and select [**Axis Aligned Box Shape**](/docs/user-guide/components/reference/shape/axis-aligned-box-shape) from the list. This box shape defines the extents of the generated terrain.
+4. **Terrain Layer Spawner** 组件显示有关缺少必需组件的警告。选中 **Add Required Component** 并从列表中选择 [**Axis Aligned Box Shape**](/docs/user-guide/components/reference/shape/axis-aligned-box-shape)。此框形状定义生成的地形的范围。
 
-5. To generate terrain that is the same resolution as the heightmap, in the **Axis Aligned Box Shape** component, set the value of the **Dimensions:** **X** and **Y** properties to the resolution (in pixels) of the heightmap. The **Dimensions: Z** property can be used to scale the elevation. Enter a value for the **Dimensions: Z** property that roughly represents the maximum desired elevation in meters. Our tutorial heightmap image is 256 x 256 pixels and represents a 50 meter change in elevation, so set the dimensions to `(256.0, 256.0, 50.0)`. If you wish to use a different heightmap, set the dimensions as appropriate for that heightmap's resolution.
-
-    {{< tip >}}
-For the best results, the **X** and **Y** dimensions of the **Axis Aligned Box Shape** should be set to the heightmap pixel size multiplied by the **Height Query Resolution**. This ensures that there is exactly one heightmap pixel for each world unit used by the terrain system. When the **Height Query Resolution** is set to 1 meter (the default), the box size in meters should be exactly the same as the heightmap pixel resolution. If the box dimensions are too small, some heightmap pixels won't get used, which can cause unexpected smooth areas or areas of excessively sharp elevation changes.
-    {{< /tip >}}
-
-6. The **Axis Aligned Box Shape** is centered around the entity's position, so with the entity at `(0.0, 0.0, 0.0)` the box extends from `-25.0` to `25.0` on the Z axis. However, by default the minimum terrain elevation is set to `0.0`. The bottom of the box shape needs to be at least at the minimum terrain elevation value on the world Z axis because any terrain below the minimum elevation will be clipped. In the Terrain Spawner entity, in the **Transform** component, set the **Translate: Z** property to a value that is half of the value you used for the **Dimensions: Z** property in the previous step. For example, if you entered `50.0` in the previous step, use `25.0` for the **Translate: Z** property to move the entity up so that the bottom of the box is at `0.0` on the world Z axis and the top of the box extends to `50.0`.
+5. 要生成与高度贴图具有相同分辨率的地形，在 **Axis Aligned Box Shape** 组件中，设置 **Dimensions:** **X** 和 **Y** 属性的值为高度图的分辨率（单位：像素）。**Dimensions: Z** 属性可用于缩放高程。为 **Dimensions: Z** 属性输入一个值，该值大致表示所需的最大标高（以米为单位）。我们的教程高度图图像为 256 x 256 像素，表示 50 米的海拔变化，因此将尺寸设置为 `(256.0, 256.0, 50.0)`。如果您希望使用不同的高度贴图，请根据该高度贴图的分辨率设置尺寸。
 
     {{< tip >}}
-Once you have set the dimensions of the box shape, you can hide it by disabling the **Filled** property in the **Axis Aligned Box Shape** component.
+为了获得最佳效果，应将 **Axis Aligned Box Shape** 的 **X** 和 **Y** 尺寸设置为高度图像素大小乘以 **Height Query Resolution**。这可确保地形系统使用的每个世界单位只有一个高度贴图像素。当 **Height Query Resolution** 设置为 1 米（默认值）时，以米为单位的框大小应与高度贴图像素分辨率完全相同。如果框尺寸太小，则不会使用某些高度图像素，这可能会导致意外的平滑区域或过度急剧的海拔变化区域。
     {{< /tip >}}
 
-7. In Entity Inspector, add a [**Terrain Height Gradient List**](/docs/user-guide/components/reference/terrain/height_gradient_list) component to the **Terrain Spawner** entity. This component will reference the gradient entity in a later step.
+6. **Axis Aligned Box Shape**以实体的位置为中心，因此当实体位于`(0.0, 0.0, 0.0)`时，框在 Z 轴上从`-25.0` 到 `25.0`。但是，默认情况下，最小地形高程设置为`0.0`。长方体形状的底部至少需要位于世界 Z 轴上的最小地形高程值，因为任何低于最小高程的地形都将被裁剪。在 Terrain Spawner 实体的 **Transform** 组件中，将 **Translate: Z** 属性设置为一个值，该值是您在上一步中用于 **Dimensions: Z** 属性的值的一半。例如，如果您在上一步中输入了`50.0`，则对 **Translate: Z** 属性使用`25.0` 来向上移动实体，使框的底部在世界 Z 轴上位于 `0.0`，而框的顶部延伸到`50.0`。
 
-The following image is the complete **Terrain Spawner** entity:
+    {{< tip >}}
+设置框形状的尺寸后，可以通过禁用 **Axis Aligned Box Shape** 组件中的 **Filled** 属性来隐藏它。
+    {{< /tip >}}
+
+7. 在 Entity Inspector中，添加一个 [**Terrain Height Gradient List**](/docs/user-guide/components/reference/terrain/height_gradient_list) 组件到 **Terrain Spawner** 实体。此组件将在后续步骤中引用 gradient 实体。
+
+下图是完整的 **Terrain Spawner** 实体：
 
 {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/terrain-spawner-entity.png" width="450" alt="The completed Terrain Spawner entity." >}}
 
-### Create a terrain height gradient entity
+### 创建地形高度梯度实体
 
-1. With the **Terrain Spawner** entity selected, create a new child entity (hotkey **Ctrl + Alt + N**). Name the new entity `Terrain Height`.
+1. 选择 **Terrain Spawner** 实体后，创建一个新的子实体（热键 **Ctrl + Alt + N**）。为新实体命名`Terrain Height`.
 
-2. Add an [**Image Gradient**](/docs/user-guide/components/reference/gradients/image-gradient) component to the **Terrain Height** entity. You'll use the **Image Gradient** component to add and configure the heightmap for the terrain.
+2. 添加 [**Image Gradient**](/docs/user-guide/components/reference/gradients/image-gradient) 组件到 **Terrain Height** 实体。 您将使用 **Image Gradient** 组件来添加和配置地形的高度贴图。
 
-3. The **Image Gradient** component displays a warning about missing a required component. Choose **Add Required Component** and select [**Gradient Transform Modifier**](/docs/user-guide/components/reference/gradient-modifiers/gradient-transform-modifier) from the list. The **Gradient Transform Modifier** component can be used to transform the gradient in world space.
+3. **Image Gradient** 组件显示有关缺少必需组件的警告。点击 **Add Required Component** 并从列表选择 [**Gradient Transform Modifier**](/docs/user-guide/components/reference/gradient-modifiers/gradient-transform-modifier)。**Gradient Transform Modifier** 组件可用于变换世界空间中的渐变。
 
-4. The **Gradient Transform Modifier** component displays a warning about missing a required component. Choose **Add Required Component** and select **Shape Reference** from the list. In a later step, you'll add a reference to the **Axis Aligned Box Shape** component in the **Terrain Spawner** entity to ensure the terrain bounds and the gradient bounds are identical.
+4. **Gradient Transform Modifier** 组件显示有关缺少必需组件的警告。 点击 **Add Required Component** 并从列表中选择 **Shape Reference** 。在后续步骤中，您将在 **Terrain Spawner** 实体中添加对 **Axis Aligned Box Shape** 组件的引用，以确保地形边界和渐变边界相同。
 
-5. Add the heightmap to the **Terrain Height** entity. In the **Image Gradient** component, to the right of the **Image Asset** property, click the {{< icon "file-folder.svg" >}} **File** button and select the `tutorial_terrain_heightmap_gsi` heightmap asset that you saved in your tutorial level folder, or optionally any other heightmap image you would like to use.
+5. 添加高度图到**Terrain Height**实体。在**Image Gradient**组件中，在 **Image Asset** 属性右侧，点击{{< icon "file-folder.svg" >}} **File** 按钮并选择`tutorial_terrain_heightmap_gsi` 保存在 Tutorial Level 文件夹中的高度图资源，或者您想要使用的任何其他高度贴图图像（可选）。
 
     {{< tip >}}
-Change the **Sampling Type** property in the **Image Gradient** component from `Point` to `Bilinear` or `Bicubic` to make the elevation changes smoother in case the heightmap resolution and the dimensions of the **Axis Aligned Box Shape** component should ever differ.
+将 **Image Gradient** 组件中的 **Sampling Type** 属性从 `Point` 到 `Bilinear` 或 `Bicubic`，以使高度变化更平滑，以防高度贴图分辨率和 **Axis Aligned Box Shape** 组件的尺寸不同。
     {{< /tip >}}
 
-6. The **Shape Reference** component needs to reference the **Axis Aligned Box Shape** component in the **Terrain Spawner** entity. In the **Shape Reference** component, click the {{< icon "picker.svg" >}} **Picker** button, then click the **Terrain Spawner** entity in **Entity Outliner** to create the reference. The following image shows the final **Terrain Height** entity:
+6. **Shape Reference** 组件需要引用 **Terrain Spawner**实体 中的 **Axis Aligned Box Shape** 组件。在 **Shape Reference** 组件中，点击 {{< icon "picker.svg" >}} **Picker** 按钮，然后点击**Entity Outliner**中的**Terrain Spawner**实体创建引用。下图展示了最终的 **Terrain Height** 实体：
 
     {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/terrain-gradient-entity.png" width="450" alt="The completed Terrain Gradient entity." >}}
 
-7. Select the **Terrain Spawner** entity. In the **Terrain Height Gradient List** component, click the {{< icon "add.svg" >}} **Add** button to add a new gradient slot. Click the {{< icon "picker.svg" >}} **Picker** button, then click the **Terrain Height** entity in **Entity Outliner** to create a reference.
+7. 选择**Terrain Spawner**实体。在**Terrain Height Gradient List** 组件中，点击 {{< icon "add.svg" >}} **Add** 按钮以添加新的渐变槽。单击 {{< icon "picker.svg" >}} **Picker** 按钮，然后在**Entity Outliner**中点击**Terrain Height**实体创建引用。
 
-8. Select the **Terrain Height** entity. In the **Gradient Transform Modifier** component, set the **Wrapping Type** property to `Clamp To Edge`. Leaving this property set to `Unbounded` might create artifacts at the edges of the terrain.
+8. 选择**Terrain Height**实体。在**Gradient Transform Modifier**组件中，设置**Wrapping Type** 属性为 `Clamp To Edge`。将此属性设置为`Unbounded` 可能会在地形的边缘产生伪影。
 
-9. **Save** the level (hotkey **Ctrl + S**).
+9. **Save**关卡 (快捷键 **Ctrl + S**)。
 
 {{< note >}}
-Before continuing to the next section, be sure to learn about terrain setup with Landscape Canvas by selecting the tab at the top of this section.
+在继续下一部分之前，请务必通过选择本节顶部的选项卡来了解 Landscape Canvas 的地形设置。
 {{< /note >}}
 
 {{% /tab %}}
 
 {{% tab name="Terrain creation with Landscape Canvas" %}}
 
-If you worked through terrain creation with entities in the left tab, you can see how that method might be time consuming and difficult to troubleshoot. Landscape Canvas can greatly simplify the process and provide an easy to understand visual graph for the relationships between the various entities that generate the terrain. Landscape Canvas is particularly useful when you create complex networks of gradients and gradient modifiers to define terrain elevation and surface types.
+如果您在左侧选项卡中使用实体创建地形，则可以看到该方法可能非常耗时且难以排除故障。Landscape Canvas 可以大大简化该过程，并为生成地形的各种实体之间的关系提供易于理解的可视化图表。当您创建复杂的渐变和渐变修饰符网络以定义地形高程和表面类型时，Landscape Canvas 特别有用。
 
-In this section, you'll create terrain based on a heightmap with Landscape Canvas.
+在本小节中，您将使用 Landscape Canvas 基于高度贴图创建地形。
 
-1. If there is an existing terrain in your level, delete it.
+1. 如果您的关卡中存在现有地形，请将其删除。
 
-2. In O3DE Editor, from the **Tools** menu, select **Landscape Canvas**.
+2. 在 O3DE 编辑器中，从 **Tools** 菜单，选择 **Landscape Canvas**。
 
-3. In Landscape Canvas, from the **File** menu, choose **New Asset** (hotkey **Ctrl + N**). Notice that a new graph named **Entity1** appears in the Landscape Canvas view. In O3DE Editor, a corresponding entity is created that contains a **Landscape Canvas** component. As you work in Landscape Canvas, additional entities are created and added as children of **Entity1**. You can rename the entities created by Landscape Canvas.
+3. 在 Landscape Canvas 中，从 **File** 菜单，选择 **New Asset** (快捷键 **Ctrl + N**)。请注意，名为 **Entity1** 的新图形将显示在 Landscape Canvas 视图中。在 O3DE Editor 中，将创建包含 **Landscape Canvas** 组件的相应实体。当您在 Landscape Canvas 中工作时，将创建其他实体并将其添加为 **Entity1** 的子实体。您可以重命名 Landscape Canvas 创建的实体。
 
-4. In Landscape Canvas, in the **Node Palette**, expand the **Terrain** node list, and drag a **Terrain Layer Spawner** node into the graph. Notice that in O3DE Editor, a new child entity named **Entity2** is created with the necessary components for a terrain spawner. Also notice that the components are displayed in **Node Inspector** in Landscape Canvas.
+4. 在 Landscape Canvas 中，在 **Node Palette** 中，展开 **Terrain** 节点，拖拽一个 **Terrain Layer Spawner** 节点到图表中。请注意，在 O3DE 编辑器中，将创建一个名为 **Entity2** 的新子实体，其中包含地形生成器所需的组件。另请注意，这些组件显示在 Landscape Canvas 的 **Node Inspector**中。
 
-5. In Landscape Canvas, on the **Terrain Layer Spawner** node, choose **Add Extenders** and select **Terrain Height Gradient List** from the list. This adds a **Terrain Height Gradient List** component to the terrain spawner entity that you'll use to reference the heightmap later in this tutorial.
+5. 在 Landscape Canvas 中，在 **Terrain Layer Spawner** 节点上，选择 **Add Extenders** 并从列表中选择 **Terrain Height Gradient List**。这会将 **Terrain Height Gradient List** 组件添加到地形生成器实体中，您将在本教程后面使用该组件来引用高度贴图。
 
-6. In Node Inspector, in the **Axis Aligned Box Shape** component, set the value of the **Dimensions:** **X** and **Y** properties to the resolution (in pixels) of the heightmap. Enter a value for the **Dimensions: Z** property that represents the maximum desired elevation change in meters. Our tutorial heightmap image is 256 x 256 pixels and represents a 50 meter change in elevation, so set the dimensions to `(256.0, 256.0, 50.0)`. If you wish to use a different heightmap, set the dimensions as appropriate for that heightmap's resolution.
+6. 在 Node Inspector 中，在 **Axis Aligned Box Shape** 组件中，设置 **Dimensions:** **X** and **Y** 属性的值为高度图的分辨率（单位：像素）。为**Dimensions: Z**属性输入一个值，该值表示所需的最大高程变化（以米为单位）。我们的教程高度图图像为 256 x 256 像素，表示 50 米的海拔变化，因此将尺寸设置为 `(256.0, 256.0, 50.0)`。如果您希望使用不同的高度贴图，请根据该高度贴图的分辨率设置尺寸。
 
-7. In Node Inspector, in the **Transform** component, set the **Translate: Z** property to a value that is half of the value you used for the **Dimensions: Z** property in the previous step. For example, if you entered `50.0` in the previous step, use `25.0` for the **Translate: Z** property to move the entity up so that the bottom of the box is at 0 on the world Z axis. The following image shows the completed **Terrain Layer Spawner** node:
+7. 在 Node Inspector 中，在 **Transform** 组件中，设置 **Translate: Z** 属性设置为一个值，该值是您在上一步中用于 **Dimensions: Z** 属性的值的一半。例如，如果您在上一步中输入了`50.0`，则对 **Translate: Z** 属性使用 `25.0`以向上移动实体，使框的底部在世界 Z 轴上为 0。下图显示了已完成的 **Terrain Layer Spawner** 节点：
 
-    {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/landscape-canvas-terrain-layer-spawner.png" width="650" alt="The configured terrain layer spawner node in Landscape Canvas." >}}
+  {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/landscape-canvas-terrain-layer-spawner.png" width="650" alt="The configured terrain layer spawner node in Landscape Canvas." >}}
 
-8. In Landscape Canvas, in the Node Palette, expand the **Gradients** node list, and drag an **Image** node into the graph. Notice that in O3DE Editor, a new child entity named **Entity3** is created with the necessary components for an image gradient. Also notice that the components are displayed in Node Inspector in Landscape Canvas.
+8. 在 Landscape Canvas 的 Node Palette 中，展开 **Gradients** 节点列表，然后将 **Image** 节点拖动到图表中。请注意，在 O3DE 编辑器中，将创建一个名为 **Entity3** 的新子实体，其中包含图像渐变所需的组件。另请注意，组件显示在 Landscape Canvas 的 Node Inspector 中。
 
-9. In the **Image** node, in the **Image Gradient** component, to the right of the **Image Asset** property, click the {{< icon "file-folder.svg" >}} **File** button and select the `tutorial_terrain_heightmap_gsi` heightmap asset that you saved in your tutorial level folder, or optionally any other heightmap image you would like to use.
+9. 在 **Image** 节点的 **Image Gradient** 组件中，在 **Image Asset** 属性的右侧，单击  {{< icon "file-folder.svg" >}}  **File** 按钮，然后选择您保存在教程关卡文件夹中的`tutorial_terrain_heightmap_gsi` 高度贴图资产，或者您要使用的任何其他高度贴图图像（可选）。
 
-10. Click the **Bounds** pin of the **Axis Aligned Box Shape** node, and drag to the **Inbound Shape** of the **Shape Reference** node to connect the nodes and point the **Image Gradient** to use the same box as the terrain.
+10. 单击 **Axis Aligned Box Shape** 节点的 **Bounds** 引脚，然后拖动到 **Shape Reference** 节点的 **Inbound Shape** 以连接节点并指向 **Image Gradient** 以使用与地形相同的框。
 
-11. Click the **Outbound Gradient** pin of the **Image** node, and drag to the **Inbound Gradient** of the **Terrain Layer Spawner** node to connect the nodes and generate the terrain. The final graph and the **Image** node configuration are shown in the following image:
+11. 单击 **Image** 节点的 **Outbound Gradient** 引脚，然后拖动到 **Terrain Layer Spawner** 节点的 **Inbound Gradient** 以连接节点并生成地形。最终图形和 **Image** 节点配置如下图所示：
 
     {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/landscape-canvas-terrain-spawner-image-gradient.png" width="938" alt="The configured image gradient node and terrain network in Landscape Canvas." >}}
 
-12. **Save** the level (hotkey **Ctrl + S**).
+12. **Save** 关卡 (快捷键 **Ctrl + S**).
 
 {{% /tab %}}
 
 {{< /tabs >}}
 
-## Optionally adjust the height settings
+## （可选）调整高度设置
 
-With the entities complete, the **Terrain Spawner** generates untextured terrain with varying heights similar to the following example:
+实体完成后，**Terrain Spawner** 会生成具有不同高度的无纹理地形，类似于以下示例：
 
 {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/level-with-untextured-terrain.png" width="810" alt="Illustration of the level with an untextured terrain added to it." >}}
 
-You might, however, have issues where the valleys and peaks in your terrain appear flat due to clipping. The following image shows a terrain that has been placed so that the bottom of its box shape falls below the **Min Height** specified in the **Terrain World** level component:
+但是，您可能会遇到地形中的山谷和山峰由于裁剪而显得平坦的问题。下图显示了一个地形，该地形的放置使其框形状的底部低于 **Terrain World** 关卡组件中指定的 **Min Height**：
 
 {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/terrain-clipping-example.png" width="550" alt="An example terrain demonstrating clipping due to entity placement." >}}
 
-The following properties are closely related and might require special attention if you have issues with your terrain such as clipping:
+以下属性密切相关，如果您的地形存在问题（例如裁剪），则可能需要特别注意：
 
-* The **Min Height** and **Max Height** properties of the **Terrain World** level component define the vertical range in the level for terrain generation. This range should be large enough to encompass the vertical extents of the box shape of the Terrain Spawner entity. If the box shape extends below the **Min Height** value or above the **Max Height** value, the terrain valleys or peaks are clipped.
+* **Terrain World** 关卡组件的 **Min Height** 和 **Max Height** 属性定义了关卡中用于生成地形的垂直范围。此范围应足够大，以涵盖 Terrain Spawner 实体的盒形的垂直范围。如果框形状延伸到 **Min Height** 值以下或高于 **Max Height**值，则地形山谷或峰值将被剪切。
 
-* The **Dimensions** property of the **Axis Aligned Box Shape** component specifies the terrain area. The **Dimensions: Z** property, in particular, specifies the height of the terrain. Its value should not exceed the range defined in the **Terrain World** level component by the **Min Height** and **Max Height** properties.
+* **Axis Aligned Box Shape** 组件的 **Dimensions** 属性指定地形区域。特别是 **Dimensions: Z** 属性指定地形的高度。其值不应超出 **Terrain World** 关卡组件中由 **Min Height** 和 **Max Height** 属性定义的范围。
 
-* The **Translate** property of the **Transform** component of the Terrain Spawner entity places the terrain entity in the level. The translate position of the Terrain Spawner entity is at the center of the box shape that defines the terrain area. This means that if the box shape is a 512 unit cube, and the **Translate** property is `0.0` on each axis, then the terrain extends 256 units in each direction from the origin of the level. Be careful to ensure that the **Translate: Z** value places the box shape within the range defined by the **Min Height** and **Max Height** properties of the **Terrain World** level component.
+* Terrain Spawner 实体的 **Transform** 组件的 **Translate** 属性将地形实体放置在关卡中。Terrain Spawner 实体的平移位置位于定义地形区域的框形状的中心。这意味着，如果长方体形状是一个 512 个单位的立方体，并且 **Translate** 属性在每个轴上都是`0.0`，那么地形将从关卡的原点向每个方向延伸 256 个单位。请注意，确保 **Translate: Z** 值将框形状置于 **Terrain World** 关卡组件的 **Min Height** 和 **Max Height** 属性定义的范围内。
 
-## Optionally adjust the terrain mesh rendering settings
+## （可选）调整地形网格渲染设置
 
-If you are using the tutorial assets, the default terrain mesh rendering settings are sufficient. However, if you chose to use a different heightmap and terrain spawner box size than what's listed in the tutorial, and if the box size is larger than the default terrain rendering distance of 4096 meters or the default camera view distance of 1024 meters, you will need to adjust the rendering distances to make the entire terrain visible.
+如果您使用的是教程资源，则默认的地形网格渲染设置就足够了。但是，如果您选择使用与本教程中列出的不同的高度贴图和地形生成器框大小，并且框大小大于默认地形渲染距离 4096 米或默认摄像机视图距离 1024 米，则需要调整渲染距离以使整个地形可见。
 
-1. In the **Terrain World Renderer** level component, set the **Mesh render distance** to a value that is greater than the terrain spawner box size so that the entire terrain will be visible.
+1. 在 **Terrain World Renderer** 关卡组件t中，将 **Mesh render distance**（网格渲染距离）设置为大于地形生成器框大小的值，以便整个地形都可见。
 
-2. If the box size is larger than 256 x 256, do the following:
+2. 如果盒体尺寸大于 256 x 256，请执行以下操作：
 
-    i. Set the **First LOD distance** property to `256`. This sets the terrain's highest level of detail (LOD) display to a distance of 256 meters from the camera.
+    i. 设置 **First LOD distance** 属性为 `256`。这会将地形的最高细节级别 （LOD） 显示设置为距摄像机 256 米的距离。
 
-    ii. Set the **CLOD Distance** property to `32`. This sets the blend distance between LODs to 32 meters. Larger values make the LOD transitions smoother, but the value should be less than 1/4 of the **First LOD distance** value to ensure that there is enough distance to blend each LOD.
+    ii. 设置 **CLOD Distance** 属性为 `32`。这会将 LOD 之间的混合距离设置为 32 米。较大的值使 LOD 过渡更平滑，但该值应小于 **First LOD distance** 值的 1/4，以确保有足够的距离来混合每个 LOD。
 
-3. In the **Camera** entity, in the **Camera** component, set the **Far clip distance** property to a value that is greater than the box size.
+3. 在 **Camera** 实体的 **Camera** 组件中，将 **Far clip distance** 属性设置为大于框大小的值。
 
-4. In the **Camera** entity, in the **Camera** component, choose **Be this camera** to view the level through the camera entity.
+4. 在 **Camera** 实体的 **Camera** 组件中，选择 **Be this camera** 以通过相机实体查看关卡。
 
-5. In the **Edit** menu, **Editor Settings**, **Global Preferences...**, in the **Camera** preferences set the **Camera Movement Speed** to an appropriate value for the size of the terrain. `100.0` is a good reference point for large terrains.
+5. 在 **Edit** 菜单、**Editor Settings**、**Global Preferences...** 中，在 **Camera** 首选项中，将 **Camera Movement Speed** 设置为适合地形大小的值。`100.0` 是大型地形的良好参考点。
 
-These suggestions are meant to help you view the entire terrain while you build it in O3DE Editor. In Launcher applications, these settings should be tuned for an appropriate balance of performance and quality.
+这些建议旨在帮助您在 O3DE Editor 中构建地形时查看整个地形。在 Launcher 应用程序中，应调整这些设置，以便在性能和质量之间取得适当的平衡。

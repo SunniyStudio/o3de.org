@@ -1,12 +1,12 @@
 ---
 linkTitle: AI
-title: Artificial Intelligence (AI) Tutorials
-description: Learn to create artificial intelligence (AI) for your Open 3D Engine (O3DE) projects.
+title: 人工智能 （AI） 教程
+description: 了解如何为 Open 3D Engine （O3DE） 项目创建人工智能 （AI）。
 ---
 
-This section contains step-by-step tutorials related to artificial intelligence (AI) in **Open 3D Engine (O3DE)**.
+本部分包含与 Open 3D Engine （O3DE） 中的人工智能 （AI） 相关的分步教程。
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [2D Navigation with Kythera AI](navigation-2d) | Create an artificial intelligence (AI) agent that performs ground-based navigation and follows a visually scripted behavior tree. This tutorial uses the broad toolset provided by the [Kythera AI](/docs/user-guide/gems/reference/kythera-ai) Gem.  |
+| [使用 Kythera AI 进行 2D 导航](navigation-2d) | 创建一个人工智能 （AI） 代理，该代理执行基于地面的导航并遵循可视化脚本化的行为树。本教程使用 [Kythera AI](/docs/user-guide/gems/reference/kythera-ai) Gem 提供的广泛工具集。 |
 

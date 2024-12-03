@@ -1,208 +1,208 @@
 ---
-linkTitle: Texture the Terrain
-title: Texture the Terrain
-description: Add color and surface types to the terrain.
+linkTitle: 对地形进行纹理处理
+title: 对地形进行纹理处理
+description: 向地形添加颜色和表面类型。
 weight: 400
 toc: true
 ---
 
-In this tutorial section, you will add color and surface types to the terrain.
+在本教程部分中，您将向地形添加颜色和表面类型。
 
-## Apply terrain materials
+## 应用地形材质
 
-Adding color and surface types to terrain requires multiple entities that reference each other. You can set up the entities and references manually, or you can use [Landscape Canvas](/docs/user-guide/gems/reference/environment/landscape-canvas) to place and connect nodes in a visual graph that generates terrain.
+向地形添加颜色和表面类型需要多个相互引用的实体。您可以手动设置实体和引用，也可以使用[Landscape Canvas](/docs/user-guide/gems/reference/environment/landscape-canvas)在生成地形的可视化图形中放置和连接节点。
 
-It's helpful to understand how the various gradient and terrain components work together, so it's recommended that you work through both versions of the tutorial in the tabs below.
+了解各种 gradient （渐变） 和 terrain （地形） 组件如何协同工作会很有帮助，因此建议您在下面的选项卡中完成本教程的两个版本。
 
 {{< tabs name="terrain-texturing-tutorials" >}}
 
 {{% tab name="Terrain texturing with entities" %}}
 
-In this section, you'll create the entities and components needed for defining surface types and adding materials to the terrain.
+在本节中，您将创建定义表面类型和向地形添加材料所需的实体和组件。
 
-1. **Save** the level (hotkey **Ctrl + S**) before beginning this section so that you can reload and revert the steps for texturing with entities if you choose to also work through the Landscape Canvas version of terrain texturing.
+1. 在开始此部分之前 **Save** 关卡（热键 **Ctrl + S**），以便如果您同时选择使用 Landscape Canvas 版本的地形纹理，则可以重新加载和还原使用实体进行纹理处理的步骤。
 
-### Apply a macro material
+### 应用宏材质
 
-1. With the Terrain Spawner entity selected, add a **Terrain Macro Material** component.
+1. 选择 Terrain Spawner 实体后，添加 **Terrain Macro Material** 组件。
 
-2. In the **Terrain Macro Material** component, select the `tutorial_terrain_basecolor` macro color texture that you saved in your tutorial level folder, or optionally any other color texture of your choosing. This tutorial doesn't use a macro normal texture, but if your terrain authoring software supports generating one, you can select it here as well.
+2. 在 **Terrain Macro Material** 组件中，选择保存在教程关卡文件夹中的 `tutorial_terrain_basecolor`宏颜色纹理，或者选择您选择的任何其他颜色纹理。本教程不使用宏法线纹理，但是如果您的地形创作软件支持生成宏法线纹理，您也可以在此处选择它。
 
 {{< important >}}
-If you use a macro normal texture, the terrain area size must exactly match the size of the terrain in the terrain authoring software or else the normals won't point in the correct directions.
+如果使用宏法线纹理，则地形区域大小必须与地形编写软件中的地形大小完全匹配，否则法线将不会指向正确的方向。
 {{< /important >}}
 
-At this point, the terrain is colored, but up close it lacks any surface details:
+此时，地形是彩色的，但近距离观察它缺少任何表面细节：
 
 {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/level-with-macro-color-far-and-near.png" width=1000 alt="Illustrations of the macro material applied to a terrain." >}}
 
-### Apply detail materials
+### 应用详图材质
 
-To apply the materials to the terrain as detail materials, do the following:
+要将材质作为细节材质应用于地形，请执行以下操作：
 
-#### Add a default surface material
+#### 添加默认曲面材质
 
-Start by adding a default surface material to verify that the terrain detail materials you created earlier are working and provide the look that you expect.
+首先添加默认表面材质，以验证您之前创建的地形细节材质是否正常工作并提供您期望的外观。
 
-1. With the Terrain Spawner selected, add a **Terrain Surface Materials List** component.
+1. 选择 Terrain Spawner 后，添加 **Terrain Surface Materials List** 组件。
 
-2. To the right of the **Default Material** property, click the {{< icon "file-folder.svg" >}} **File** button and select the `rock_boulder_dry` material asset. The entire terrain is redrawn with the rock material you created.
+2. 在 **Default Material** 属性右侧，点击 {{< icon "file-folder.svg" >}} **File**按钮并选择`rock_boulder_dry` 材质资源。将使用您创建的岩石材质重新绘制整个地形。
 
-3. Now set the **Default Material** property to the `forrest_ground_01` material asset. This changes the entire terrain surface to grass.
+3. 现在，将 **Default Material（默认材质）** 属性设置为 `forrest_ground_01`材质资源。这会将整个地形表面更改为草地。
 
-At this point, the terrain has height variation, color variation, and a grass texture:
+此时，地形具有 Height Variation（高度变化）、Color Variation（颜色变化）和 grass texture（草地纹理）：
 
 {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/terrain-default-surface.png" width=1000 alt="Terrain covered with a single default surface material." >}}
 
-#### Create gradient entity for the grass surface weights
+#### 为草地表面权重创建渐变实体
 
-This process is the same as creating a gradient entity for a heightmap. Each gradient entity has three components:
+此过程与为高度贴图创建渐变实体相同。每个渐变实体都有三个组件：
 
-* An **Image Gradient** component that references a gradient image. Other gradient types can be used, but image gradients offer the most control and are used in many scenarios when creating terrain.
+* 引用渐变图像的 **Image Gradient** 组件。可以使用其他渐变类型，但图像渐变提供最多的控制，并且在创建地形时用于许多场景。
 
-* A **Gradient Transform Modifier** component that places the gradient in the level.
+* 一个 **Gradient Transform Modifier** 组件，用于将渐变放置在关卡中。
 
-* A shape component. Most often, this is a **Shape Reference** component that references the **Axis Aligned Box Shape** component in the Terrain Spawner entity.
+* 形状组件。大多数情况下，这是一个 **Shape Reference** 组件，它引用 Terrain Spawner 实体中的 **Axis Aligned Box Shape** 组件。
 
-1. Create a child entity of the Terrain Spawner entity named `Terrain Grass` and add an **Image Gradient**, a **Gradient Transform Modifier**, and a **Shape Reference** component.
+1. 创建名为 `Terrain Grass` 的 Terrain Spawner 实体的子实体，然后添加**Image Gradient**, **Gradient Transform Modifier** 和 **Shape Reference** 组件。
 
-2. On the Shape Reference component, click the {{< icon "picker.svg" >}} **Picker** button, then click the Terrain Spawner entity in Entity Outliner to create a reference.
+2. 在 Shape Reference （形状引用） 组件上，单击{{< icon "picker.svg" >}} **Picker** 按钮，然后单击 Entity Outliner 中的 Terrain Spawner 实体以创建引用。
 
-3. On the Image Gradient, set the Image Asset to the `tutorial_grass_splatmap_gsi` image that you downloaded into your tutorial level folder.
+3. 在 Image Gradient 上，将 Image Asset 设置为您下载到教程级别文件夹中的 `tutorial_grass_splatmap_gsi` 图像。
 
-#### Create gradient entity for the rock surface weights
+#### 为岩石表面权重创建渐变实体
 
-In levels that have many different surface types, you will typically use separate images for each surface weight. However, this tutorial only uses two surface types, so the rock gradient can be set to the inverse of the grass gradient.
+在具有许多不同表面类型的关卡中，您通常会为每个表面权重使用单独的图像。但是，本教程仅使用两种表面类型，因此可以将岩石梯度设置为草地梯度的倒数。
 
-1. Create a child entity of the Terrain Spawner entity named `Terrain Rock` and add an [**Invert Gradient Modifier**](/docs/user-guide/components/reference/gradient-modifiers/invert-gradient-modifier) component and a **Shape Reference** component to it.
+1. 创建 Terrain Spawner 实体的子实体，名为`Terrain Rock`，并向其添加[**Invert Gradient Modifier**](/docs/user-guide/components/reference/gradient-modifiers/invert-gradient-modifier)组件和一个 **Shape Reference** 组件。
 
-2. On the Shape Reference component, click the {{< icon "picker.svg" >}} **Picker** button, then click the Terrain Spawner entity in Entity Outliner to create a reference.
+2. 在 Shape Reference （形状引用） 组件上，单击 {{< icon "picker.svg" >}}  **Picker** 按钮，然后单击 Entity Outliner 中的 Terrain Spawner 实体以创建引用。
 
-3. On the Invert Gradient Modifier component, click the {{< icon "picker.svg" >}} **Picker** button, then click the Terrain Grass entity in Entity Outliner to create a reference.
+3. 在 Invert Gradient Modifier 组件上，单击 {{< icon "picker.svg" >}} **Picker** 按钮，然后单击 Entity Outliner 中的 Terrain Grass 实体以创建引用。
 
-#### Add a Terrain Surface Gradient List
+#### 添加地形表面渐变列表
 
-These steps associate the gradient entities with the surface tag names you created.
+这些步骤将渐变图元与您创建的曲面标记名称相关联。
 
-1. With the Terrain Spawner selected, add a **Terrain Surface Gradient List** component.
+1. 选中 Terrain Spawner 后，添加一个 **Terrain Surface Gradient List** 组件。
 
-2. In the **Terrain Surface Gradient List** component, click the {{< icon "add.svg" >}} **Add** button to add a new gradient slot.
+2. 在 **Terrain Surface Gradient List** 组件中，单击 {{< icon "add.svg" >}} **Add** 按钮以添加新的渐变槽。
 
-3. To the right of the **Gradient Entity** property, click the {{< icon "picker.svg" >}} **Picker** button, then click the Terrain Grass entity in Entity Outliner to reference it.
+3. 在 **Gradient Entity** 属性的右侧，单击 {{< icon "picker.svg" >}} **Picker** 按钮，然后单击 Entity Outliner 中的 Terrain Grass 实体以引用它。
 
-4. For the **Surface Tag** property, select the `tutorial_grass` surface tag name from the list. Note that the list contains the surface tag names you created in Asset Editor.
+4. 对于 **Surface Tag** 属性，从列表中选择 `tutorial_grass` Surface Tag 名称。请注意，该列表包含您在 Asset Editor 中创建的曲面标记名称。
 
-5. Repeat steps 2 though 4 to add the Terrain Rock entity and associate it with the `tutorial_rock` surface tag.
+5. 重复步骤 2 到 4 以添加 Terrain Rock 实体并将其与`tutorial_rock`表面标签关联。
 
-#### Add surface weights to the Terrain Surface Materials List
+#### 将表面权重添加到 Terrain Surface Materials List
 
-This assigns the detail materials to the terrain based on the surface tag names and associated gradient entities.
+这将根据表面标签名称和关联的渐变图元将细节材质分配给地形。
 
-1. Select the Terrain Spawner entity in the Entity Outliner.
+1. 在 Entity Outliner 中选择 Terrain Spawner 实体。
 
-2. In the **Terrain Surface Materials List** component, clear the entry for the default material. Our surface maps will cover the entire terrain, so the default material will no longer be necessary.
+2. 在 **Terrain Surface Materials List** 组件中，清除默认材质的条目。我们的表面贴图将覆盖整个地形，因此不再需要默认材质。
 
-3. To the right of the **Material Mappings** property group, click the {{< icon "add.svg" >}} **Add** button to add a new material slot.
+3. 在 **Material Mappings** 属性组的右侧，单击{{< icon "add.svg" >}} **Add** 按钮以添加新的材质槽。
 
-4. In the **Surface Tag** property, select `tutorial_grass`.
+4. 在 **Surface Tag** 属性中，选择 `tutorial_grass`。
 
-5. To the right of the **Material asset** property, click the {{< icon "file-folder.svg" >}} **File** button and select the `forest_ground_01` material asset to associate with the surface tag.
+5. 在 **Material asset** 属性右侧，点击 {{< icon "file-folder.svg" >}} **File** 按钮，然后选择要与 Surface 标记关联的`forest_ground_01`材质资源。
 
-6. Repeat steps 3 through 5 to add `tutorial_rock` and associate it with the `rock_boulder_dry` material asset.
+6. 重复步骤 3 到 5 以添加`tutorial_rock`并将其与`rock_boulder_dry`材质资源关联。
 
-As you add detail materials and surface tag name pairs to the **Terrain Surface Materials List** component, the materials appear on the terrain surface.
+当您将细节材质和表面标签名称对添加到 **Terrain Surface Materials List** 组件时，材质将显示在地形表面上。
 
 {{% /tab %}}
 
 {{% tab name="Terrain texturing with Landscape Canvas" %}}
 
-In this section, you'll color and surface the terrain using Landscape Canvas.
+在本节中，您将使用 Landscape Canvas 对地形进行着色和曲面处理。
 
-1. If you have already followed through the "Terrain texturing with entities" tab, you will need to reload your level without saving to revert the changes that you made.
+1. 如果您已经完成了“Terrain texturing with entities（使用实体进行地形纹理处理）”选项卡，您将需要重新加载您的关卡而不保存，以恢复您所做的更改。
 
-2. In the Entity Outliner, select the **Terrain Spawner** entity.
+2. 在 Entity Outliner 中，选择 **Terrain Spawner** 实体。
 
-3. If this entity does not already have a **Landscape Canvas** component on it, select **Add Component** and add the **Landscape Canvas** component to the entity.
+3. 如果此实体上还没有 **Landscape Canvas** 组件，请选择 **Add Component** 并将 **Landscape Canvas** 组件添加到实体中。
 
-4. Press the **Edit** button on the **Landscape Canvas** component to launch the Landscape Canvas tool with the correct landscape graph loaded.
+4. 按 **Landscape Canvas** 组件上的 **Edit** 按钮，以启动加载正确地形图的 Landscape Canvas 工具。
 
-### Apply a macro material in Landscape Canvas
+### 在 Landscape Canvas 中应用宏材质
 
-1. Select the **Terrain Layer Spawner** node, press **Add Extenders**, and select **Terrain Macro Material**.
+1. 选择 **Terrain Layer Spawner** 节点，按 **Add Extender**，然后选择 **Terrain Macro Material**。
 
-2. In the Node Inspector, on the **Terrain Macro Material** component, select the `tutorial_terrain_basecolor` macro color texture that you saved in your tutorial level folder, or optionally any other color texture of your choosing. This tutorial doesn't use a macro normal texture, but if your terrain authoring software supports generating one, you can select it here as well.
+2. 在 Node Inspector 的 **Terrain Macro Material** 组件上，选择您保存在教程关卡文件夹中的`tutorial_terrain_basecolor`宏颜色纹理，或者选择您选择的任何其他颜色纹理。本教程不使用宏法线纹理，但是如果您的地形创作软件支持生成宏法线纹理，您也可以在此处选择它。
 
 {{< important >}}
-If you use a macro normal texture, the terrain area size must exactly match the size of the terrain in the terrain authoring software or else the normals won't point in the correct directions.
+如果使用宏法线纹理，则地形区域大小必须与地形编写软件中的地形大小完全匹配，否则法线将不会指向正确的方向。
 {{< /important >}}
 
-At this point, the terrain is colored, but up close it lacks any surface details:
+此时，地形是彩色的，但近距离观察它缺少任何表面细节：
 
 {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/level-with-macro-color-far-and-near.png" width=1000 alt="Illustrations of the macro material applied to a terrain." >}}
 
-### Apply detail materials in Landscape Canvas
+### 在 Landscape Canvas 中应用细节材质
 
-To apply the materials to the terrain as detail materials, do the following:
+要将材质作为细节材质应用于地形，请执行以下操作：
 
-#### Add a default surface material in Landscape Canvas
+#### 在 Landscape Canvas 中添加默认表面材质
 
-Start by adding a default surface material to verify that the terrain detail materials you created earlier are working and provide the look that you expect.
+首先添加默认表面材质，以验证您之前创建的地形细节材质是否正常工作并提供您期望的外观。
 
-1. Select the **Terrain Layer Spawner** node, press **Add Extenders**, and select **Terrain Surface Materials List**.
+1. 选择 **Terrain Layer Spawner** 节点, 点击 **Add Extenders**, 并选择 **Terrain Surface Materials List**.
 
-2. In the Node Inspector, on the **Terrain Surface Materials List** component, to the right of the **Default Material** property, click the {{< icon "file-folder.svg" >}} **File** button and select the `rock_boulder_dry` material asset. The entire terrain is redrawn with the rock material you created.
+2. 在Node Inspector中，在**Terrain Surface Materials List**组件上，在**Default Material** 属性右侧, 点击 {{< icon "file-folder.svg" >}} **File** 按钮并选择`rock_boulder_dry`材质资源。将使用您创建的岩石材质重新绘制整个地形。
 
-3. Now set the **Default Material** property to the `forrest_ground_01` material asset. This changes the entire terrain surface to grass.
+3. 现在，将 **Default Material（默认材质）** 属性设置为 `forrest_ground_01` 材质资源。这会将整个地形表面更改为草地。
 
-At this point, the terrain has height variation, color variation, and a grass texture:
+此时，地形具有 Height Variation（高度变化）、Color Variation（颜色变化）和 grass texture（草地纹理）：
 
 {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/terrain-default-surface.png" width=1000 alt="Terrain covered with a single default surface material." >}}
 
-#### Create the grass surface weights in Landscape Canvas
+#### 在 Landscape Canvas 中创建草地表面权重
 
-1. In Landscape Canvas, in the Node Palette, expand the **Gradients** node list, and drag an **Image** node into the graph. Name the entity `Terrain Grass`.
+1. 在 Landscape Canvas 的 Node Palette 中，展开 **Gradients** 节点列表，然后将一个 **Image** 节点拖到图表中。将实体命名为`Terrain Grass`。
 
-2. Click the **Bounds** pin of the **Axis Aligned Box Shape** node and drag to the **Inbound Shape** of the newly-created **Shape Reference** node to connect the nodes, which lets the **Image Gradient** use the same bounding box as the terrain.
+2. 单击 **Axis Aligned Box Shape** 节点的 **Bounds** 引脚，然后拖动到新创建的 **Shape Reference** 节点的 **Inbound Shape** 以连接节点，这样 **图像渐变** 就可以使用与地形相同的边界框。
 
-3. On the Image Gradient, set the Image Asset to the `tutorial_grass_splatmap_gsi` image that you downloaded into your tutorial level folder.
+3. 在 Image Gradient（图像渐变）上，将 Image Asset（图像资源）设置为您下载到教程关卡文件夹中的`tutorial_grass_splatmap_gsi`图像。
 
-#### Create gradient entity for the rock surface weights in Landscape Canvas
+#### 在 Landscape Canvas 中为岩石表面权重创建渐变实体
 
-In levels that have many different surface types, you will typically use separate images for each surface weight. However, this tutorial only has two surface types, so the rock gradient can be set to the inverse of the grass gradient.
+在具有许多不同表面类型的关卡中，您通常会为每个表面权重使用单独的图像。但是，本教程只有两种表面类型，因此可以将岩石渐变设置为草地渐变的倒数。
 
-1. In Landscape Canvas, in the Node Palette, expand the **Gradient Modifiers** node list, and drag an **Invert** node into the graph. Name the entity `Terrain Rock`.
+1. 在 Landscape Canvas 的 Node Palette 中，展开 **Gradient Modifiers** 节点列表，然后将 **Invert** 节点拖动到图表中。将实体命名为  `Terrain Rock`。
 
-2. Click the **Outbound Gradient** pin of the **Terrain Grass** node and drag to the **Inbound Gradient** pin of the **Invert** node.
+2. 单击 **Terrain Grass** 节点的 **Outbound Gradient** 引脚，然后拖动到 **Invert** 节点的 **Inbound Gradient** 引脚。
 
-3. Click the **Bounds** pin of the **Axis Aligned Box Shape** node and drag to the **Preview Bounds** pin of the **Invert** node.
+3. 单击 **Axis Aligned Box Shape** 节点的 **Bounds** 引脚，然后拖动到 **Invert** 节点的 **Preview Bounds** 引脚。
 
-#### Add a Terrain Surface Gradient List in Landscape Canvas
+#### 在 Landscape Canvas 中添加地形表面渐变列表
 
-These steps associate the surface weights with the surface tag names you created.
+这些步骤将曲面权重与您创建的曲面标记名称相关联。
 
-1. Select the **Terrain Layer Spawner** node, press **Add Extenders**, and select **Terrain Surface Gradient List**.
+1. 选择 **Terrain Layer Spawner** 节点，按 **Add Extenders**，然后选择 **Terrain Surface Gradient List**。
 
-2. Click the **Outbound Gradient** pin of the **Terrain Grass** node and drag to the **Inbound Gradient** pin of the **Terrain Surface Gradient List**.
+2. 单击 **Terrain Grass** 节点的 **Outbound Gradient** 引脚，然后拖动到 **Terrain Surface Gradient List** 的 **入站梯度** 引脚。
 
-3. Click the **Outbound Gradient** pin of the **Terrain Rock** node and drag to the **Add Gradient** pin of the **Terrain Surface Gradient List**, which will turn into an **Inbound Gradient** pin.
+3. 单击 **Terrain Rock** 节点的 **Outbound Gradient** 引脚，然后拖动到 **Terrain Surface Gradient List** 的 **Inbound Gradient** 引脚，这将变成一个 **Inbound Gradient** 引脚。
 
-4. In the Node Inspector, in the **Terrain Surface Gradient List**, select `tutorial_grass` for the first **Surface Tag** and `tutorial_rock` for the second **Surface Tag**.
+4. 在 Node Inspector 的 **Terrain Surface Gradient List** 中，为第一个 **Surface Tag** 选择`tutorial_grass`，为第二个 **Surface Tag** 选择`tutorial_rock`。
 
-#### Add surface weights to the Terrain Surface Materials List in Landscape Canvas
+#### 将表面权重添加到 Landscape Canvas 中的 Terrain Surface Materials List
 
-This assigns the detail materials to the terrain based on the surface tag names and associated gradient entities.
+这将根据表面标签名称和关联的渐变图元将细节材质分配给地形。
 
-1. In the Node Inspector, in the **Terrain Surface Materials List** component, clear the entry for the default material. Our surface maps will cover the entire terrain, so the default material will no longer be necessary.
+1. 在 Node Inspector 的 **Terrain Surface Materials List** 组件中，清除默认材质的条目。我们的表面贴图将覆盖整个地形，因此不再需要默认材质。
 
-2. To the right of the **Material Mappings** property group, click the {{< icon "add.svg" >}} **Add** button to add a new material slot.
+2. 在 **Material Mappings** 属性组右侧，点击 {{< icon "add.svg" >}} **Add**按钮添加新的材质插槽。
 
-3. In the **Surface Tag** property, select `tutorial_grass`.
+3. 在**Surface Tag**属性中，选择`tutorial_grass`。
 
-4. To the right of the **Material asset** property, click the {{< icon "file-folder.svg" >}} **File** button and select the `forest_ground_01` material asset to associate with the surface tag.
+4. 在**Material asset** 属性右侧，点击 {{< icon "file-folder.svg" >}} **File** 按钮，然后选择要与 Surface 标记关联的`forest_ground_01`材质资源。
 
-5. Repeat steps 2 through 4 to add `tutorial_rock` and associate it with the `rock_boulder_dry` material asset.
+5. 重复步骤 2 到 4 以添加`tutorial_rock`并将其与`rock_boulder_dry`材质资产关联。
 
-As you add detail materials and surface tag name pairs to the **Terrain Surface Materials List** component, the materials appear on the terrain surface.
+当您将细节材质和表面标签名称对添加到 **Terrain Surface Materials List** 组件时，材质将显示在地形表面上。
 
 The final Landscape Canvas graph looks like this:
 
@@ -212,18 +212,18 @@ The final Landscape Canvas graph looks like this:
 
 {{< /tabs >}}
 
-## Tune material rendering settings
+## 调整材质渲染设置
 
-Now that the terrain is fully textured, the settings on the **Terrain World Renderer** component can be tuned to provide better results.
+现在，地形已完全纹理化，可以调整 **Terrain World Renderer** 组件上的设置以提供更好的结果。
 
-1. Select the **Level** entity in the Entity Outliner.
+1. 在 Entity Outliner 中选择 **Level** 实体。
 
-2. In the **Terrain World Renderer** component, enable **Height based texture blending** underneath **Detail material configuration**. This changes the terrain renderer from using pure alpha blending on detail materials to using the displacement maps on the materials to blend based on material heights. Height-based blending provides crisper details and more realistic transitions between the detail materials.
+2. 在 **Terrain World Renderer** 组件中，在 **Detail material configuration** 下启用 **Height based texture blending**。这会将地形渲染器从对细节材质使用纯 Alpha 混合更改为在材质上使用置换贴图以根据材质高度进行混合。基于高度的混合在细节材质之间提供更清晰的细节和更逼真的过渡。
 
     | Alpha blending | Height-based blending |
     | - | - |
     | {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/detail-alpha-blending.png" alt="Detail materials blended with alpha blending." >}} | {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/detail-height-based-blending.png" alt="Detail materials blended with height-based blending." >}} |
 
-    If performance becomes an issue, the detail material render and fade distances can be tuned to reduce the draw distance for the detail materials.
+    如果性能成为问题，可以调整细节材质的渲染和淡化距离，以减少细节材质的绘制距离。
 
-3. **Save** the level (hotkey **Ctrl + S**).
+3. **Save** 关卡 (快捷键 **Ctrl + S**)。

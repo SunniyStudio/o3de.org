@@ -1,167 +1,167 @@
 ---
-linkTitle: PhysX Assets
-title: Process PhysX Collider Assets
-description: Learn to customize PhysX collider asset processing in Open 3D Engine (O3DE) with Scene Settings.
+linkTitle: PhysX 资产
+title: 处理 PhysX 碰撞器资产
+description: 了解如何使用 Scene Settings（场景设置）在 Open 3D Engine （O3DE） 中自定义 PhysX 碰撞器资产处理。
 weight: 400
 toc: true
 ---
 
-**Open 3D Engine (O3DE)** has a robust set of options for generating PhysX collider assets. In [Scene Settings](/docs/user-guide/assets/scene-settings/scene-settings), you can customize PhysX collider asset generation. The generated PhysX colliders are stored in `.pxmesh` product assets. You can add the PhysX collider assets to a **PhysX Mesh Collider** component.
+**Open 3D Engine （O3DE）** 具有一组用于生成 PhysX 碰撞器资产的强大选项。在 [场景设置](/docs/user-guide/assets/scene-settings/scene-settings)中，您可以自定义 PhysX 碰撞器资产生成。 生成的 PhysX 碰撞器存储在`.pxmesh`产品资产中。您可以将 PhysX 碰撞器资产添加到 **PhysX 网格碰撞器** 组件。
 
-The generated PhysX colliders are stored in `.pxmesh` product assets. You can add the PhysX collider assets to a **PhysX Mesh Collider** component.
+生成的 PhysX 碰撞器存储在`.pxmesh`产品资产中。您可以将 PhysX 碰撞器资产添加到 **PhysX 网格碰撞器** 组件。
 
 
 {{< note >}}
-Understanding the [best practices](/docs/user-guide/assets/scene-settings/source-asset-best-practices#physx) for creating PhysX collider source assets can mitigate issues you might encounter when processing colliders for O3DE. For technical details about the data supported by colliders, refer to the [supported 3D scene data](/docs/user-guide/assets/scene-settings/scene-format-support#supported-3d-scene-data) table.
+了解用于创建 PhysX 碰撞器源资源的 [最佳实践](/docs/user-guide/assets/scene-settings/source-asset-best-practices#physx)可以缓解您在处理 O3DE 碰撞器时可能遇到的问题。碰撞体支持的数据技术详情请参考[支持的 3D 场景数据](/docs/user-guide/assets/scene-settings/scene-format-support#supported-3d-scene-data) 表。
 {{< /note >}}
 
-| O3DE Experience | Time to Complete | Feature Focus | Last Updated |
+| O3DE 体验 |完成时间 |功能聚焦 |最后更新|
 | - | - | - | - |
-| Beginner | 25 Minutes | Customized processing of PhysX collider assets from `.fbx` files with Scene Settings. | January 4, 2023 |
+| 初级 |25 分钟 |使用 Scene Settings（场景设置）对`.fbx`文件中的 PhysX 碰撞器资产进行自定义处理。 | January 4, 2023 |
 
-## Entity behavior
+## 实体行为
 
-Before you learn about collider types, you should understand the three types of entity behavior that influence the collider asset type you might choose in a given scenario:
+在了解碰撞器类型之前，您应该了解在给定场景中可能影响碰撞器资产类型的三种实体行为类型：
 
-* **Static** -- Static entities have a **PhysX Static Rigid Body** and can be collided with, but they don't move, and PhysX collisions and forces don't affect them. Static entities can use any collider type.
-* **Kinematic** -- Kinematic entities have a **PhysX Dynamic Rigid Body** component and movement that is driven by code or script. Kinematic entities can be collided with, but PhysX collisions and forces don't affect them. Kinematic entities can use any collider type.
-* **Simulated** -- Simulated entities have a **PhysX Dynamic Rigid Body** component and simulated movement that results from PhysX collisions and forces. Simulated entities can use only primitive and convex colliders.
+* **Static** -- 静态实体具有 **PhysX Static Rigid Body** （PhysX 静态刚体），可以与之碰撞，但它们不会移动，并且 PhysX 碰撞和力不会影响它们。静态实体可以使用任何碰撞器类型。
+* **Kinematic** -- 运动学实体具有 **PhysX Dynamic Rigid Body** 组件和由代码或脚本驱动的运动。运动实体可以碰撞，但 PhysX 碰撞和力不会影响它们。Kinematic 实体可以使用任何碰撞器类型。
+* **Simulated** -- 模拟实体具有 **PhysX Dynamic Rigid Body** 组件和由 PhysX 碰撞和力产生的模拟运动。模拟实体只能使用基元碰撞器和凸面碰撞器。
 
-## PhysX collider assets
+## PhysX 碰撞器资产
 
-Collider assets are based on input meshes that you specify in Scene Settings. You can use a single input mesh, use multiple input meshes, or even specify that multiple input meshes should be merged and welded into a single mesh before the collider asset is generated. The source asset is not altered when the collider asset is generated.
+碰撞器资源基于您在 Scene Settings （场景设置） 中指定的输入网格。您可以使用单个输入网格，使用多个输入网格，甚至可以指定在生成碰撞器资产之前，将多个输入网格合并并焊接成单个网格。生成碰撞器资产时，源资产不会更改。
 
-Because physics simulation can be computationally expensive, it's important to understand the various collider types, their limitations, and the scenarios in which you can use them.
+由于物理模拟的计算成本可能很高，因此了解各种碰撞器类型、它们的限制以及可以使用它们的场景非常重要。
 
-### Triangle Mesh
+### 三角形网格
 
-As the name implies, triangle mesh colliders are composed of triangle meshes. You can create a simplified mesh in a digital content creation (DCC) application specifically for the collider, or generate a triangle mesh collider based on the render mesh of the asset. Triangle mesh colliders can closely approximate a complex render mesh, but you can use them only with static and kinematic entities. Because triangle mesh colliders can contain many vertices, and the collider asset is not required to be convex, these colliders generally incur a higher performance cost than primitive colliders.
+顾名思义，三角形网格碰撞器由三角形网格组成。您可以在数字内容创建 （DCC） 应用程序中专门为碰撞器创建简化的网格，也可以基于资产的渲染网格生成三角形网格碰撞器。三角形网格碰撞器可以非常接近复杂的渲染网格，但您只能将它们用于静态和运动实体。由于三角形网格碰撞体可以包含许多顶点，并且碰撞体资产不需要是凸面的，因此这些碰撞体通常比原始碰撞体产生更高的性能成本。
 
-Triangle mesh colliders can have multiple physics material assignments. Because the collider is derived from the input mesh, you can apply a physics material to the collider for each material assignment. This is particularly useful for ground and floor colliders that transition between materials such as concrete and dirt, or wood planks and carpet.
+三角形网格碰撞体可以具有多个物理材质分配。由于碰撞器派生自输入网格，因此您可以为每个材质分配将物理材质应用于碰撞器。这对于在材质（如混凝土和泥土、木板和地毯）之间过渡的地面和地板碰撞器特别有用。
 
-Colliders occupy the same physical space as the input mesh. In the following image, a triangle mesh collider asset is offset to the right of the input mesh asset that generated the collider so that you can clearly view the collider. Note that the collider asset (right) accurately represents the render mesh (left), and that the collider supports separate physics materials for the front and back faces (magenta wireframe) and side faces (teal wireframe) of the mesh.
+碰撞体占用与输入网格相同的物理空间。在下图中，三角形网格碰撞器资产偏移到生成碰撞器的输入网格资产的右侧，以便您可以清楚地查看碰撞器。请注意，碰撞器资产（右）准确表示渲染网格（左），并且碰撞器支持网格的正面和背面（洋红色线框）和侧面（青色线框）的单独物理材质。
 
 {{< image-width "/images/learning-guide/tutorials/assets/triangle-mesh-collider-example.png" "700" "An example triangle mesh collider asset." >}}
 
-Triangle mesh colliders are commonly used for immobile environment objects that have complex shapes, such as tree trunks, floors, large stone and architectural features, and statues.
+三角形网格碰撞器通常用于具有复杂形状的固定环境对象，例如树干、地板、大型石头和建筑特征以及雕像。
 
-### Primitive
+### 基元
 
-Primitive colliders are composed of sphere, box, or capsule primitive shapes. Because simple properties such as **Radius**, **Height**, and **Width** define the primitive shapes, primitive colliders generally offer the best simulation performance. Primitive colliders are automatically fitted to the input mesh. However, depending on the complexity of the input mesh, areas of the collider might fall within or far outside of the input mesh surface. This can result in collisions that aren't visually accurate. The **Decompose Meshes** property decomposes complex input meshes into smaller parts, and fits primitive colliders to each part. You can use primitive colliders with static, kinematic, and simulated entities. These colliders can have only one physics material assignment.
+基元碰撞器由球体、长方体或胶囊体基元形状组成。由于 **Radius**、**Height** 和 **Width** 等简单属性定义了基元形状，因此基元碰撞器通常提供最佳模拟性能。基元碰撞器会自动拟合到输入网格。但是，根据输入网格的复杂程度，碰撞器的区域可能位于输入网格表面之内或远处。这可能会导致视觉上不准确的碰撞。**Decompose Meshes** 属性将复杂的输入网格分解为更小的部分，并使原始碰撞体适合每个部分。您可以将基元碰撞器与静态、运动和模拟实体一起使用。这些碰撞体只能有一个物理材质分配。
 
-Colliders occupy the same physical space as the input mesh. In the following image, a primitive collider asset is offset to the right of the input mesh asset that generated the collider so that you can clearly view the collider. The collider asset (right) is a simple box that has been automatically oriented and scaled to encompass the render mesh (left). Note that one corner of the primitive collider extends far from the input mesh and penetrates the ground plane. This demonstrates one of the drawbacks of using a primitive collider on a complex input mesh. In a scenario where this is a simulated entity, the ground plane collision would push the asset upward, and the asset would not come to rest standing upright because of the sharp corner at the bottom of the primitive collider.
+碰撞体占用与输入网格相同的物理空间。在下图中，基元碰撞器资产偏移到生成碰撞器的输入网格资产的右侧，以便您可以清楚地查看碰撞器。碰撞器资产（右）是一个简单的长方体，它已自动定向和缩放以包含渲染网格（左）。请注意，基元碰撞体的一个角从输入网格延伸得很远，并穿透地平面。这演示了在复杂输入网格上使用基元碰撞器的缺点之一。在这是模拟实体的情况下，地平面碰撞会将资产向上推，并且由于基元碰撞体底部的尖角，资产不会直立静止。
 
 {{< image-width "/images/learning-guide/tutorials/assets/primitive-collider-example.png" "700" "An example primitive collider asset." >}}
 
-Primitive colliders are commonly used when the input mesh closely resembles one of the simple primitive shapes, and in scenarios where fast dynamic collision resolution is more important than visual accuracy.
+当输入网格与简单的基元形状之一非常相似时，以及在快速动态碰撞分辨率比视觉准确性更重要的场景中，通常使用基元碰撞器。
 
-### Convex
+### 凸面
 
-Convex colliders are automatically generated convex hulls. A convex hull has no concave or hollow surface areas. For PhysX, the convex hull is constructed within a limited number of vertices and is fitted to the input mesh. Convex colliders can better approximate a complex input mesh than primitive colliders, but convex colliders incur a greater performance cost. To a lesser extent than primitive colliders, convex colliders might also have areas where the collider surface falls inside or outside of the input mesh, which can result in collisions that aren't visually accurate. The Decompose Meshes property decomposes complex input meshes into smaller parts, and fits convex colliders to each part. You can use convex colliders with static, kinematic, or simulated entities. These colliders can have only one physics material assignment.
+凸面碰撞器是自动生成的凸面外壳。凸包没有凹面或空心表面积。对于 PhysX，凸包是在有限数量的顶点内构建的，并适合输入网格。与基元碰撞器相比，凸面碰撞体可以更好地近似复杂的输入网格，但凸面碰撞体会产生更大的性能成本。与原始碰撞体相比，凸面碰撞体还可能具有碰撞体表面落在输入网格内部或外部的区域，这可能会导致碰撞在视觉上不准确。Decompose Meshes （分解网格） 属性将复杂的输入网格分解为较小的部分，并使凸面碰撞体适合每个部分。您可以将凸面碰撞体与静态、运动或模拟实体一起使用。这些碰撞体只能有一个物理材质分配。
 
-Colliders occupy the same physical space as the input mesh. In the following image, a convex collider asset is offset to the right of the input mesh asset that generated the collider so that you can clearly view the collider. Note that the collider asset (right) has been automatically generated to encompass and roughly approximate the silhouette shape of the render mesh (left). However, the convex collider does not include details such as the hole in the middle of the input mesh.
+碰撞体占用与输入网格相同的物理空间。在下图中，凸面碰撞器资产偏移到生成碰撞器的输入网格资产的右侧，以便您可以清楚地查看碰撞器。请注意，碰撞器资产（右）已自动生成，以包含并大致近似渲染网格的轮廓形状（左）。但是，凸面碰撞器不包括输入网格中间的孔等细节。
 
 {{< image-width "/images/learning-guide/tutorials/assets/convex-collider-example.png" "700" "An example convex collider asset." >}}
 
-Convex colliders are commonly used on entities with complex render meshes that must be dynamically simulated, such as interactive props, and on entities that must be decomposed into smaller parts to provide collisions with a higher level of visual accuracy.
+凸面碰撞体通常用于具有必须动态模拟的复杂渲染网格的实体，例如交互式道具，以及必须分解为较小部分以提供具有更高视觉准确性的碰撞的实体。
 
-### Summary
+### 总结
 
-The following table summarizes the most import information about the available collider types:
+下表总结了有关可用碰撞器类型的大多数导入信息：
 
-| Type | Entity behavior | Description | Limitations |
+| 类型 |实体行为 |描述 |局限性|
 | - | - | - | - |
-| **Triangle mesh** | Static, Kinematic | A collider composed of triangles. Can closely approximate complex input meshes and have more than one physics material assignment. | Can be used only with static and kinematic entities. Can be more computationally expensive to simulate than other collider types. |
-| **Primitive** | Static, Kinematic, Simulated | A collider defined by a simple primitive sphere, box, or capsule shape that is automatically fitted to the input mesh. Generally offers the best performance. | Might not closely approximate a complex input mesh. Can be fitted to input meshes, but in some scenarios, might fall within or far outside the extents of the input mesh, yielding collisions that aren't visually accurate. Can have only one physics material assignment. |
-| **Convex** | Static, Kinematic, Simulated | An automatically generated collider that is a convex hull composed of a limited number of vertices. Convex hulls have no concave or hollow surface areas, and are automatically fitted to the input mesh. This collider can better approximate input meshes than a primitive collider, but it's more computationally expensive to simulate. | Might not approximate an input mesh as well as a triangle mesh collider, or offer the performance of a primitive collider. Might fall slightly within or outside the extents of the input mesh. Can have only one physics material assignment. |
+| **Triangle mesh** | Static, Kinematic | 由三角形组成的碰撞体。可以非常接近复杂的输入网格，并具有多个物理材质分配。 | 只能用于静态和运动实体。模拟的计算成本可能比其他碰撞器类型更高。 |
+| **Primitive** | Static, Kinematic, Simulated | 由自动拟合到输入网格的简单基本球体、长方体或胶囊体形状定义的碰撞器。通常提供最佳性能。| 可能无法非常接近复杂的输入网格。可以拟合到输入网格，但在某些情况下，可能位于输入网格的范围之内或远远超出输入网格的范围，从而产生视觉上不准确的碰撞。只能有一个物理材质分配。 |
+| **Convex** | Static, Kinematic, Simulated | 自动生成的碰撞器，它是一个凸包，由有限数量的顶点组成。凸包没有凹面或空心表面积，并且会自动拟合到输入网格。与原始碰撞器相比，此碰撞器可以更好地近似输入网格，但模拟的计算成本更高。 | 可能无法近似输入网格和三角形网格碰撞器，或提供原始碰撞器的性能。可能略微落在输入网格的范围之内或之外。只能有一个物理材质分配。 |
 
-## Generate PhysX collider assets
+## Generate PhysX collider （生成 PhysX 碰撞器） 资产
 
-You can generate PhysX collider assets from any source asset that contains at least one mesh. You can customize the settings for PhysX collider generation in Scene Settings, in the **PhysX** tab. If you are unfamiliar with Scene Settings, refer to the [mesh processing tutorial](../mesh-assets) and check the [Scene Settings PhysX tab](/docs/user-guide/assets/scene-settings/physx-tab) topic for in-depth information on the options for generating PhysX collider assets.
+您可以从包含至少一个网格的任何源资产生成 PhysX 碰撞器资产。您可以在 Scene Settings（场景设置）的 **PhysX** 选项卡中自定义 PhysX 碰撞器生成的设置。如果不熟悉 Scene Settings，请参考 [网格处理教程](../mesh-assets) 并检查 [场景设置 PhysX 选项卡](/docs/user-guide/assets/scene-settings/physx-tab)主题，了解有关生成 PhysX 碰撞器资产的选项的详细信息。
 
-You can follow this tutorial using any source asset that contains at least one mesh.
+您可以使用包含至少一个网格的任何源资源来遵循本教程。
 
-1. In **O3DE Editor**, in **Asset Browser**, locate your source asset. If you don't have an asset of your own, in the search field at the top of Asset Browser, you can type `fbx` and use one of the provided `.fbx` files, such as `sphere.fbx`.
+1. 在 **O3DE 编辑器**的 **资源浏览器** 中，找到您的源资源。如果您没有自己的资源，则可以在 Asset Browser 顶部的搜索字段中键入`fbx`并使用提供的`.fbx`文件之一，例如 `sphere.fbx`.
 
     ![ Search for a specific mesh asset in Asset Browser. ](/images/learning-guide/tutorials/assets/meshes-search-asset-browser.png)
 
-    If your asset has already been processed, you might see a preview image of the asset and a list of product assets below the `.fbx` source asset.
+    如果您的资产已处理完毕，您可能会在“.fbx”源资产下方看到该资产的预览图像和产品资产列表。
 
-1. To open Scene Settings, right-click the `.fbx` source asset, and then choose **Edit settings...** from the context menu.
+1. 要打开 Scene Settings，请右键单击`.fbx`源资源，然后从上下文菜单中选择 **Edit settings...**。
 
     ![ Open Scene Settings from Asset Browser. ](/images/learning-guide/tutorials/assets/meshes-edit-settings.png)
 
-1. The Scene Settings window presents different tabs depending on the contents of the source asset file. Select the **PhysX** tab. If the tab is empty, to create a PhysX mesh group, choose **Add another physxmesh**.
+1. Scene Settings （场景设置） 窗口根据源资源文件的内容显示不同的选项卡。选择 **PhysX** 选项卡。如果选项卡为空，要创建 PhysX 网格组，请选择 **Add another physxmesh**。
 
     ![ Scene Settings PhysX tab. ](/images/learning-guide/tutorials/assets/physx-scene-settings.png)
 
-    In this image, there is a single **PhysX mesh group**. Each PhysX mesh group produces a `.pxmesh` product asset. You can create additional PhysX mesh groups for a source asset by choosing **Add another physxmesh**.
+    在此图像中，有一个 **PhysX mesh group**。每个 PhysX 网格组都会生成一个`.pxmesh`产品资产。您可以通过选择 **Add another physxmesh** （添加另一个 physxmesh） 为源资产创建其他 PhysX 网格组。
 
-    The **Name PhysX Mesh** property contains the name of the source asset. The `.pxmesh` product asset of this PhysX mesh group uses this string for its name.
+    **Name PhysX Mesh** 属性包含源资产的名称。此 PhysX 网格组的`.pxmesh`产品资产使用此字符串作为其名称。
 
-1. To select which meshes to include in the PhysX mesh group, next to the **Select meshes** property, choose the file select {{< icon browse-edit-select-files.svg >}} button. Meshes in the list are denoted by a purple mesh icon, as in the following image. You can select more than one mesh here if multiple meshes are available in the asset. If you select more than one mesh, you might additionally enable the **Merge Meshes** and **Weld Vertices** properties to ensure that the input mesh is optimized.
+1. 要选择要包含在 PhysX 网格组中的网格，请在 **Select meshes** （选择网格） 属性旁边，选择文件选择{{< icon browse-edit-select-files.svg >}} 按钮。列表中的网格由紫色网格图标表示，如下图所示。如果资产中有多个网格可用，您可以在此处选择多个网格。如果选择多个网格，则可以额外启用 **Merge Meshes** 和 **Weld Vertices** 属性，以确保输入网格得到优化。
 
     ![ Selecting a PhysX mesh. ](/images/learning-guide/tutorials/assets/select-physx-mesh.png)
 
     {{< note >}}
-To automatically assign meshes in the source asset to a PhysX mesh group, add the suffix `_phys` to the mesh node name in your DCC application. Any meshes that have `_phys` postfixed to their node name in the source asset are excluded from the default render mesh group and are automatically added to a single PhysX mesh group in Scene Settings.
+要将源资产中的网格自动分配给 PhysX 网格组，请在 DCC 应用程序中将后缀`_phys`添加到网格节点名称中。在源资源中的节点名称后加上`_phys`的任何网格都将从默认渲染网格组中排除，并自动添加到 Scene Settings （场景设置） 中的单个 PhysX 网格组中。
     {{< /note >}}
 
-1. Customize the PhysX mesh collider type by setting the **Export As** property to `Convex` so that you can create any type of entity (static, kinematic, or simulated).
+1. 通过将 **Export as** 属性设置为`Convex`来自定义 PhysX 网格碰撞器类型，以便您可以创建任何类型的实体（静态、运动或模拟）。
 
-    The customizations that you make in Scene Settings are stored in a *sidecar file* with a `.assetinfo` extension. When **Asset Processor** detects a `.assetinfo` file, it uses the settings in the file to process the related source asset. This sidecar file is treated as a source dependency for the asset. This means that if the `.assetinfo` file changes, the source asset is reprocessed, even if the source asset has not changed.
+    您在 Scene Settings 中进行的自定义存储在扩展名为 `.assetinfo` 的 *sidecar 文件*中。当 Asset Processor 检测到`.assetinfo`文件时，它会使用文件中的设置来处理相关的源资产。此 sidecar 文件被视为资产的源依赖项。这意味着，如果 `.assetinfo` 文件发生更改，则会重新处理源资产，即使源资产未发生更改。
 
-1. At the bottom right of Scene Settings, choose **Update**. This creates or updates the `.assetinfo` sidecar file and triggers Asset Processor to reprocess the asset.
+1. 在 Scene Settings （场景设置） 的右下角，选择 **Update**（更新）。这将创建或更新 `.assetinfo` sidecar 文件，并触发 Asset Processor 重新处理资产。
 
-1. Drag the `.azmodel` product asset from Asset Browser into the viewport.
+1. 将 `.azmodel` 产品资源从 Asset Browser 拖动到视区中。
 
     {{< image-width "/images/learning-guide/tutorials/assets/physx-entity.png" "900" "Drag the mesh asset into the viewport.">}}
 
-    When you drag the asset into the viewport, O3DE automatically creates an entity with a **Mesh** component that references the mesh product asset. If the source asset contains materials that have been processed, the materials are automatically applied to the mesh. Note that in Asset Browser, the `.pxmesh` product asset has been generated and appears beneath the source asset.
+    当您将资产拖动到视区中时，O3DE 会自动创建一个实体，该实体具有引用网格产品资产的 **Mesh** 组件。如果源资源包含已处理的材质，则这些材质将自动应用于网格。请注意，在 Asset Browser 中，`.pxmesh`产品资产已生成，并显示在源资产下方。
 
-1. Add a PhysX Mesh Collider component to the entity. With the entity selected in the viewport, in **Entity Inspector**, choose **Add Component**, and then select **PhysX Mesh Collider** from the component list. The component automatically detects the `.pxmesh` asset and assigns it to the **PhysX Mesh** property.
+1. 将 PhysX Mesh Collider （PhysX 网格碰撞器） 组件添加到实体。在视区中选择实体后，在 **Entity Inspector** 中选择 **Add Component**，然后从组件列表中选择 **PhysX Mesh Collider**。该组件会自动检测`.pxmesh`资产，并将其分配给 **PhysX Mesh** 属性。
 
-1. Depending on the type of entity that you want, do one of the following:
+1. 根据所需的实体类型，执行以下操作之一：
 
-    * For a static entity, , add a **PhysX Static Rigid Body** component. With the entity selected in the viewport, in **Entity Inspector**, choose **Add Component**, and then select **PhysX Static Rigid Body** from the component list. To optimize your current static entity, in the **Transform** component, enable the **Static** property. This property ensures the best runtime performance for a static entity.
+    * 对于静态实体，请添加 **PhysX Static Rigid Body** （PhysX 静态刚体） 组件。在视区中选择实体后，在 **Entity Inspector** 中选择 **Add Component**，然后从组件列表中选择 **PhysX Static Rigid Body**。要优化当前的静态实体，请在 **Transform** 组件中启用 **Static** 属性。此属性可确保静态实体的最佳运行时性能。
 
-    * For a simulated entity, add a **PhysX Dynamic Rigid Body** component. With the entity selected in the viewport, in **Entity Inspector**, choose **Add Component**, and then select **PhysX Dynamic Rigid Body** from the component list. If you choose the {{< icon simulate-physics.svg >}} simulation button now, the entity drops with gravity.
+    * 对于模拟实体，请添加 **PhysX Dynamic Rigid Body** （PhysX 动态刚体） 组件。在视区中选择实体后，在 **Entity Inspector **中，选择 **添加组件**，然后从组件列表中选择 **PhysX Dynamic Rigid Body**。如果您现在选择 {{< icon simulate-physics.svg >}} 模拟按钮，实体会随着重力而下降。
 
-    * For a kinematic entity, add a **PhysX Dynamic Rigid Body** component, like you would for a simulated entity. Then, in the **PhysX Dynamic Rigid Body** component, select **Kinematic** in the property Type.
+    * 对于运动实体，请添加 **PhysX Dynamic Rigid Body** 组件，就像对模拟实体执行的操作一样。然后，在 **PhysX Dynamic Rigid Body** 组件中，选择 Type（类型）属性中的 **Kinematic**（运动学）。
 
     
     {{< caution >}}
-For a kinematic or simulated entity, in the **Transform** component, make sure that the **Static** property is *not* enabled.
+对于运动学或模拟实体，在 **Transform** 组件中，确保 **Static** 属性*未*启用。
     {{< /caution >}}
 
-## Decompose input meshes
+## 分解输入网格
 
-Assets that are composed of multiple meshes, or assets that have complex meshes, might require similarly complex PhysX collider assets. This is particularly true for kinematic entities and for simulated entities, which can't use triangle mesh colliders. In these scenarios, you can decompose the input mesh into convex parts. You can automatically generate primitive colliders or convex colliders, fit them to each part, and process them as collider `.pxmesh` product assets.
+由多个网格组成的资产或具有复杂网格的资产可能需要类似的复杂 PhysX 碰撞器资产。对于运动实体和模拟实体尤其如此，它们不能使用三角形网格碰撞器。在这些情况下，您可以将输入网格分解为凸面部分。您可以自动生成原始碰撞体或凸面碰撞体，将它们拟合到每个部分，并将它们作为碰撞体`.pxmesh`产品资产进行处理。
 
-Mesh decomposition is part of the process of generating and fitting collider assets, and it doesn't alter the input mesh. You can use mesh decomposition only with primitive or convex colliders.
+网格分解是生成和拟合碰撞器资产过程的一部分，它不会改变输入网格。您只能对基元碰撞器或凸面碰撞器使用网格分解。
 
 {{< note >}}
-In O3DE, mesh decomposition uses the V-HACD library. For more information, including example images demonstrating decomposition of complex meshes, refer to the [V-HACD library](https://github.com/kmammou/v-hacd) on GitHub.
+在 O3DE 中，网格分解使用 V-HACD 库。有关更多信息，包括演示复杂网格分解的示例图像，请参阅GitHub上的[V-HACD 库](https://github.com/kmammou/v-hacd)。
 {{< /note >}}
 
-To use mesh decomposition, do the following:
+要使用网格分解，请执行以下操作：
 
-1. In Scene Settings, under **PhysX Mesh group**, for **Export As**, choose either `Primitive` or `Convex`.
-1. Enable **Decompose Meshes**.
+1. 在 Scene Settings 中，在**PhysX Mesh group**下，对于**Export As**，选择`Primitive` 或 `Convex`。
+1. 启用 **Decompose Meshes**.
 
-Enabling Decompose Meshes reveals many options that you can use to fine-tune mesh decomposition. For guidance on mesh decomposition options, refer to the [Decompose meshes](/docs/user-guide/assets/scene-settings/physx-tab/#decompose-meshes) section of the **Scene Settings PhysX Tab** topic.
+启用 Decompose Meshes （分解网格） 会显示许多可用于微调网格分解的选项。有关网格分解选项的指导，请参阅 **Scene Settings PhysX Tab** 主题的 [分解网格](/docs/user-guide/assets/scene-settings/physx-tab/#decompose-meshes)部分。
 
-### Primitive decomposition
+### 原始分解
 
-When you enable Decompose meshes for primitive colliders, the input mesh is decomposed into convex parts. The best fitting primitive shapes are automatically selected and transformed to encompass each part and the primitives are processed as a collider `.pxmesh` product asset. In the following image, the input mesh (left) is decomposed into four parts, and a primitive collider is automatically fitted to each part (right). The parts are fitted with box primitive colliders.
+当您为原始碰撞器启用 Decompose meshes （分解网格） 时，输入网格将分解为凸面部分。系统会自动选择并转换最适合的基元形状以包含每个部分，并将基元作为碰撞器`.pxmesh`产品资产进行处理。在下图中，输入网格（左）分解为四个部分，并且每个部分（右）都自动拟合了一个原始碰撞器。这些零件装有长方体基元碰撞器。
 
 {{< image-width "/images/learning-guide/tutorials/assets/primitive-decompose.png" "700" "An example of mesh decomposition with primitive collider assets." >}}
 
-### Convex decomposition
+### 凸分解
 
-When you enable Decompose meshes for convex colliders, the input mesh is decomposed into convex parts. A convex hull is generated for each part and the convex hulls are processed as a collider `.pxmesh` product asset. In the following image, the input mesh (left) is decomposed in to four parts and convex hulls are generated for each part (right). The convex colliders provide a fairly accurate representation of the render mesh which may be sufficient in many scenarios.
+当您为凸面碰撞器启用 Decompose meshes （分解凸面碰撞器的网格） 时，输入网格将分解为凸面部分。为每个零件生成一个凸包，并将凸包处理为碰撞器`.pxmesh`产品资产。在下图中，输入网格（左）被分解为四个部分，并为每个部分（右）生成凸包。凸面碰撞体提供了相当准确的渲染网格表示，这在许多情况下可能就足够了。
 
 
 {{< image-width "/images/learning-guide/tutorials/assets/convex-decompose.png" "700" "An example of mesh decomposition with convex collider assets." >}}
 
-In general, collider assets generated with decomposed meshes provide a more accurate representation of the render mesh than a single primitive or convex collider can. For example, notice that in both of the preceding results, the collider surface doesn't block the hole in the middle of the logo, unlike in the first example image of the convex collider asset type.
+通常，使用分解网格生成的碰撞器资产比单个基元或凸面碰撞器提供更准确的渲染网格表示。例如，请注意，在上述两个结果中，碰撞器表面不会挡住徽标中间的孔，这与凸面碰撞器资产类型的第一个示例图像不同。

@@ -1,45 +1,45 @@
 ---
-linkTitle: Create a Terrain-Ready Level
-title: Create a Terrain-Ready Level
-description: Create a new level that is ready for authoring terrain.
+linkTitle: 创建地形就绪关卡
+title: 创建地形就绪关卡
+description: 创建一个已准备好编写地形的新关卡。
 weight: 100
 toc: true
 ---
 
-In this tutorial section, you will create a new level that is ready for authoring terrain.
+在本教程部分中，您将创建一个准备好编写地形的新关卡。
 
-## Create a new level
+## 创建新关卡
 
-1. In **O3DE Editor**, create a new level. (Refer to the [Create a new level](/docs/learning-guide/tutorials/reference/environments/create-a-level) tutorial for more details)
+1. 在 **O3DE 编辑器 ** 中，创建一个新关卡。（请参阅 [创建新关卡](/docs/learning-guide/tutorials/reference/environments/create-a-level)教程了解更多详情）
 
-2. Delete the **Grid**, **Ground**, and **Shader Ball** entities underneath the **Atom Default Environment** so that the terrain you will build is fully visible.
+2. 删除 **Atom Default Environment** 下的 **Grid**、**Ground** 和 **Shader Ball** 实体，以便您将构建的地形完全可见。
 
     {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/delete-default-entities.png" alt="Delete several default entities." >}}
 
-3. On the **Global Sky** entity, delete the [**HDRi Skybox**](/docs/user-guide/components/reference/atom/hdri-skybox/) component. The default skybox has terrain in the skybox image which will clash with the terrain that you'll create below. Instead, you'll use the **Sky Atmosphere** component, which provides an empty sky background.
+3. 在 **Global Sky** 实体上，删除 [**HDRi Skybox**](/docs/user-guide/components/reference/atom/hdri-skybox/) 组件。默认天空盒图像中的地形将与您将在下面创建的地形发生冲突。相反，您将使用 **Sky Atmosphere** 组件，该组件提供空的天空背景。
 
     {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/delete-hdri-skybox.png" alt="Delete the HDRi Skybox component." >}}
 
-4. In **Entity Outliner**, select the **Sun** entity.
+4. 在 **Entity Outliner** 中，选择 **Sun** 实体。
 
-5. In **Entity Inspector**, choose **Add Component** and add the **Sky Atmosphere** component. By adding it to the **Sun** entity, the sky lighting will automatically align with the sun's orientation in the sky.
+5. 在 **Entity Inspector** 中，选择 **Add Component** 并添加 **Sky Atmosphere** 组件。通过将其添加到 **Sun** 实体，天空光照将自动与太阳在天空中的方向对齐。
 
     {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/add-sky-atmosphere.png" alt="Add the Sky Atmosphere component." >}}
 
-You now have an empty level except for a sun and blue sky.
+现在，除了太阳和蓝天之外，您有一个空的关卡。
 
 {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/terrain-empty-level.png" alt="Illustration of the new empty level with the sky component configured." >}}
 
-## Enable the terrain system
+## 启用地形系统
 
-To enable the terrain system, you must add two level components to the **Level** entity. After adding these components, the terrain system will be enabled, but no terrain will be visible yet.
+要启用地形系统，必须向 **Level** 实体添加两个级别组件。添加这些组件后，将启用地形系统，但尚不可见地形。
 
 1. In **Entity Outliner**, select the **Level** entity.
 
     {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/enable-terrain-select.png" alt="Select the Level entity." >}}
 
-2. In **Entity Inspector**, choose **Add Component** and add both the [**Terrain World**](/docs/user-guide/components/reference/terrain/world) and [**Terrain World Renderer**](/docs/user-guide/components/reference/terrain/world-renderer) level components to the **Level** entity.
+2. 在 **Entity Inspector**中，选择**Add Component**，并将 [**Terrain World**](/docs/user-guide/components/reference/terrain/world) 和 [**Terrain World Renderer**](/docs/user-guide/components/reference/terrain/world-renderer) 关卡组件添加到 **Level** 实体。
 
     {{< image-width src="/images/learning-guide/tutorials/environments/terrain-from-images/enable-terrain-components.png" width="600" alt="Add terrain level components." >}}
 
-There are many properties available in the terrain level components that configure the terrain system settings for the level. For now, leave the settings at the default values. They are easier to tune once a terrain exists in the level.
+地形关卡组件中有许多属性可用于配置关卡的地形系统设置。现在，将设置保留为默认值。一旦关卡中存在地形，它们就更容易调整。

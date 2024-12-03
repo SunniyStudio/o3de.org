@@ -1,187 +1,187 @@
 ---
-linktitle: Override a Prefab
-title: Override a Prefab
-description: Learn how to override a prefab in Open 3D Engine (O3DE).
+linktitle: 覆盖预制件
+title: 覆盖预制件
+description: 了解如何在 Open 3D Engine （O3DE） 中覆盖预制件。
 weight: 300
 toc: true
 ---
 
-When a prefab is open in [Prefab Edit Mode](/docs/learning-guide/tutorials/entities-and-prefabs/entity-and-prefab-basics#edit-a-prefab), changes to its content are automatically propagated to all instances of that prefab. Sometimes it is useful to alter a prefab instance on its own without affecting the other instances. For example, you might have multiple instances of the same car prefab in a level, but you want each car instance to be a different color. Prefab overrrides allow you to change the properties and contents of prefab instances to make them unique.
+在 [预设件编辑模式](/docs/learning-guide/tutorials/entities-and-prefabs/entity-and-prefab-basics#edit-a-prefab)中打开预设件时，对其内容的更改会自动传播到该预设件的所有实例。有时，在不影响其他实例的情况下自行更改预制件实例非常有用。例如，您可能在关卡中拥有同一汽车预制件的多个实例，但您希望每个汽车实例都是不同的颜色。Prefab overrides 允许您更改预制件实例的属性和内容，使其唯一。
 
-| O3DE Experience | Time to Complete | Feature Focus | Last Updated |
+| O3DE 体验 |完成时间 |功能聚焦 |最后更新 |
 | --- | --- | --- | --- |
-| Beginner | 15 Minutes | Using prefab overrides to make prefab instances unique. | November 20, 2023 |
+| 初级 |15 分钟 |使用预制件覆盖使预制件实例唯一。 | November 20, 2023 |
 
 
-## Prerequisites
+## 先决条件
 
-* Basic knowledge of working with [O3DE Editor](/docs/user-guide/editor).
-* A project built from the standard project template or one that contains the Gems in the standard template.
+* 具备使用 [O3DE 编辑器](/docs/user-guide/editor) 的基本知识。
+* 从标准项目模板构建的项目，或包含标准模板中的 Gem 的项目。
 
 
-## What are prefab overrides?
+## 什么是预制件覆盖？
 
-Prefab overrides are one of the major components of the prefab system. Before overrides, changing a single prefab instance would affect all instances. With overrides, we can make prefabs stand out from the rest of their siblings. Overrides give content creators much more flexibility to build large and complex scenes. It also allows for overriding default procedural prefabs that are imported via `.fbx` files.
+预制件覆盖是预制件系统的主要组件之一。在覆盖之前，更改单个预制件实例将影响所有实例。通过覆盖，我们可以使预制件从其他兄弟姐妹中脱颖而出。覆盖为内容创建者提供了更大的灵活性来构建大型和复杂的场景。它还允许覆盖通过 `.fbx`文件导入的默认程序预制件。
 
-The following image shows two instances of Car prefab in a level. With overrides enabled, the Car instances are expandable and can be opened for editing:
+下图显示了关卡中 Car 预制件的两个实例。启用覆盖后，Car 实例是可扩展的，并且可以打开进行编辑：
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/level-prefab-edit.png" width="300" alt="Level in Prefab Edit Mode in Entity Outliner." >}}
 
 {{< note >}}
-If prefab overrides are disabled, prefab instances in the level cannot be expanded for editing. In other words, you will not see the arrow icon to the left of an instance name.
+如果禁用了预制件覆盖，则无法扩展关卡中的预制件实例进行编辑。换句话说，您将不会在实例名称左侧看到箭头图标。
 {{< /note >}}
 
-Overrides applied to prefab instances are registered for that individual instance and are stored in the prefab being edited that contains the instances. In the above example, the Car instances are in a level (which is a prefab), so the prefab overrides applied to the Car instances are stored in the level when you save it.
+应用于预制件实例的覆盖将为该单个实例注册，并存储在包含实例的正在编辑的预制件中。在上面的示例中，Car 实例位于关卡（预制件）中，因此在保存关卡时，应用于 Car 实例的预制件覆盖将存储在关卡中。
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/level-prefab-edit-with-override.png" width="300" alt="Level in Prefab Edit Mode with Override Edit in Entity Outliner." >}}
 
-Modifying the Body entity's location as an override, you notice that a blue circle will appear in the Entity Outliner. This indicates an entity override. Now, if you save the level prefab, the override is also saved.
+将 Body 实体的位置修改为覆盖时，您会注意到 Entity Outliner 中将出现一个蓝色圆圈。这表示实体覆盖。现在，如果保存关卡预制件，也会保存覆盖。
 
 {{< note >}}
-A level is a prefab, and automatically enters Prefab Edit Mode when it is opened. This is indicated by the blue capsule around the level in **Entity Outliner**.
+关卡是预制件，打开时会自动进入 Prefab Edit Mode。这由 **Entity Outliner** 中关卡周围的蓝色胶囊表示。
 
-Overrides are not limited to the level. In fact, any prefab that is open for editing in Prefab Edit Mode is responsible for storing the overrides made to its nested prefabs.
+覆盖不限于关卡。事实上，在 Prefab Edit Mode 中打开以供编辑的任何预制件都负责存储对其嵌套预制件所做的覆盖。
 {{< /note >}}
 
-If you do not want to make override changes, you should follow the old Prefab Edit Mode workflow instead. In this example, you can enter Prefab Edit Mode via the Car instance in the Entity Outliner. Any changes to Car will now affect all Car instances.
+如果您不想进行覆盖更改，则应改用旧的 Prefab Edit Mode 工作流程。在此示例中，您可以通过 Entity Outliner 中的 Car 实例进入预制件编辑模式。现在，对 Car 的任何更改都将影响所有 Car 实例。
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/level-prefab-edit-enter-edit-mode.png" width="300" alt="Edit Mode Entered on Car Prefab in Entity Outliner." >}}
 
-You can apply the following types of overrides to prefabs:
+您可以将以下类型的覆盖应用于预制件：
 
-* Edit component properties
-* Add or remove components
-* Add or remove entities
-* Remove nested prefab instances
+* 编辑组件属性
+* 添加或删除组件
+* 添加或删除实体
+* 删除嵌套的预制件实例
 
 
-## Types of overrides
+## 覆盖类型
 
-### Edit component properties
+### 编辑组件属性
 
-To override a component property of an entity under a prefab instance:
+要覆盖预制件实例下实体的组件属性，请执行以下操作：
 
-1. In Entity Outliner, expand a prefab instance by clicking the arrow to the left of the instance name.
-1. Select an entity under the instance and edit one of its properties in **Inspector**.
-1. Notice that a blue circle appears on the entity's icon in Entity Outliner. This indicates that an override is applied to the entity.
+1. 在 Entity Outliner 中，通过单击实例名称左侧的箭头展开预制件实例。
+1. 选择实例下的一个实体，然后在 **Inspector**中编辑其属性之一。
+1. 请注意，Entity Outliner 中的实体图标上会显示一个蓝色圆圈。这表示覆盖已应用于实体。
 
-In the below image, the Body entity in the first Car instance has an override to change the default color of the car from red to blue:
+在下图中，第一个 Car 实例中的 Body 实体具有将汽车的默认颜色从红色更改为蓝色的覆盖：
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/prefab-override-property.png" width="750" alt="Overriding a component property." >}}
 
-When you make an override edit in the Inspector, you will notice that a blue circle appears before the property label and the label text is bolded. In the component header, a blue circle is also shown near the text, which indicates that an owning property value has been overridden.
+在 Inspector 中进行覆盖编辑时，您会注意到属性标签之前出现一个蓝色圆圈，并且标签文本以粗体显示。在组件标题中，文本附近还会显示一个蓝色圆圈，这表示拥有属性值已被覆盖。
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/prefab-override-component-property.png" width="450" alt="Overriding a component property." >}}
 
-### Add or remove components
+### 添加或删除组件
 
-To add a component of an entity under a prefab instance:
+要在预制件实例下添加实体的组件：
 
-1. In Entity Outliner, select an entity under an instance that is not in Prefab Edit Mode.
-1. In Inspector, **right-click** on empty area and choose **Hi** from the context menu.
-1. Notice that a blue plus icon appears on the component's icon to the left of the component name.
+1. 在 Entity Outliner 中，选择未处于 Prefab Edit Mode 的实例下的实体。
+1. 在 Inspector 中，右键单击空白区域，然后从上下文菜单中选择 **Hi**。
+1. 请注意，组件名称左侧的组件图标上会显示一个蓝色的加号图标。
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/prefab-override-add-component-override.png" width="450" alt="Adding a component as an override." >}}
 
-To remove a component as an override, you can choose **Delete** from the context menu instead.
+要删除组件作为覆盖，您可以改为从上下文菜单中选择 **Delete**。
 
-In Inspector, there is no visual indication of a component being deleted as an override at this time. The only way of getting rid of this override edit is through manual edit in `.prefab` file or the prefab instance being edited. Alternatively, you can revert a deletion by pressing CTRL+Z to go back to a previous state where you delete that component. However, this undo will only work if the editor has not been closed and reopened. After closing the editor, your undo stack has been cleared and you can no longer undo in this manner.
+在 Inspector 中，目前没有视觉指示组件作为覆盖删除。摆脱此覆盖编辑的唯一方法是在`.prefab`文件中手动编辑或正在编辑的预制件实例。或者，您可以通过按 Ctrl+Z 来恢复删除，以返回到删除该组件的先前状态。但是，仅当编辑器尚未关闭并重新打开时，此撤消才有效。关闭编辑器后，您的撤消堆栈已被清除，您无法再以这种方式撤消。
 
-### Add or remove entities
+### 添加或删除实体
 
-To add an entity under a prefab instance as an override:
-1. In Entity Outliner, **right-click** on a prefab instance and choose **Create entity** from the context menu.
-1. Notice that a blue plus appears on the new entity's icon in Entity Outliner. This indicates that the entity has been added as an override.
+要在预制件实例下添加实体作为覆盖，请执行以下操作：
+1. 在 Entity Outliner 中，右键单击预制件实例，然后从上下文菜单中选择 **Create entity**。
+1. 请注意，Entity Outliner 中新实体的图标上会显示一个蓝色加号。这表示该实体已添加为覆盖。
 
-In the below image, an Antenna entity has been added to the first Car prefab instance.
+在下图中，已将 Antenna 实体添加到第一个 Car 预制件实例中。
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/prefab-override-add.png" width="750" alt="Adding an entity as an override." >}}
 
-To delete an entity or a nested prefab instance as an override:
-1. In Entity Outliner, **right-click** on an entity or a nested prefab instance and choose **Delete** from the context menu.
-1. Notice that a blue circle appears on the parent entity's icon in Entity Outliner. This indicates that a child has been deleted as an override.
+要删除实体或嵌套的预制件实例作为覆盖，请执行以下操作：
+1. 在 Entity Outliner 中，右键单击实体或嵌套预制件实例，然后从上下文菜单中选择 **Delete**。
+1. 请注意，在 Entity Outliner 中，父实体的图标上会显示一个蓝色圆圈。这表示已将子项作为覆盖删除。
 
-Similarly in Entity Outliner, there is no visual indication of an entity or a prefab instance being deleted as an override at this time. You can follow the steps mentioned above to either remove the override in file or to undo the override in Editor.
-
-{{< note >}}
-You cannot revert the deletion by reverting overrides on the parent entity. See the GitHub issue [#13437](https://github.com/o3de/o3de/issues/13437) for more details.
-{{< /note >}}
-
-### Remove nested prefab instances
-
-In current workflow, it does not support adding a nested prefab instance as an override. However, you can remove a nested prefab instance as an override by following the steps mentioned above for an entity.
+同样，在 Entity Outliner 中，目前没有视觉指示表明实体或预制件实例作为覆盖被删除。您可以按照上述步骤删除文件中的覆盖或在 Editor 中撤消覆盖。
 
 {{< note >}}
-Deleting or undoing a prefab instance will not delete the actual prefab off the hard drive.
+您无法通过恢复父实体上的覆盖来恢复删除。有关更多详细信息，请参阅 GitHub issue [#13437](https://github.com/o3de/o3de/issues/13437)。
+{{< /note >}}
 
-To remove a prefab permanently, you must delete the prefab file from the Asset Browser or your OS folder operation. We recommend not doing this unless you are sure that prefab does not exist in other levels or other projects that reference it.
+### 删除嵌套的预制件实例
+
+在当前工作流程中，它不支持将嵌套的预制件实例添加为覆盖。但是，您可以按照上述实体的步骤删除嵌套的预制件实例作为覆盖。
+
+{{< note >}}
+删除或撤消预制件实例不会从硬盘驱动器中删除实际的预制件。
+
+要永久删除预制件，您必须从 Asset Browser 或 OS 文件夹操作中删除预制件文件。我们建议您不要这样做，除非您确定 prefab 不存在于其他级别或引用它的其他项目中。
 {{< /note >}}
 
 
-## Revert an override edit
+## 回退覆盖编辑
 
-Once an override has been registered, it will exist until explicitly removed. There are three ways of reverting an override:
-1. Revert an override on the property
-1. Revert some overrides on the component
-1. Revert all overrides on the entity
+注册覆盖后，它将一直存在，直到明确删除为止。有三种方法可以还原覆盖：
+1. 还原属性的覆盖
+1. 还原组件上的一些覆盖
+1. 还原实体上的所有覆盖
 
-### Revert an override on the property
+### 还原属性的覆盖
 
-You can revert individual overridden property values respectively:
-1. In Inspector, **right-click** on the property label or the blue circle and choose **Revert override** from the context menu.
-1. Notice that the property no longer has any indication of having an override.
+您可以分别还原单个覆盖的属性值：
+1. 在 Inspector 中，**右键单击**属性标签或蓝色圆圈**，然后从上下文菜单中选择 **还原覆盖**。
+1. 请注意，该属性不再有任何具有覆盖的指示。
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/prefab-override-revert-component-property-override.png" width="450" alt="Reverting a component property override." >}}
 
-### Revert some overrides on the component
+### 恢复组件上的一些覆盖
 
-In addition, you can revert all property overrides that are owned by a component:
-1. In Inspector, **right-click** on the blue circle in the component header and choose **Revert Overrides** from the context menu.
-1. Notice that all the properties no longer have any indication of having an override.
+此外，您还可以还原组件拥有的所有属性覆盖：
+1. 在 Inspector 中，**右键单击**组件标题中的蓝色圆圈**，然后从上下文菜单中选择 **Revert override**。
+1. 请注意，所有属性都不再具有任何具有覆盖的指示。
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/prefab-override-revert-component-override.png" width="450" alt="Reverting a component added as an override." >}}
 
-For a component added as an override, you can revert the addition in the same way mentioned above. Alternatively, you can delete the component with either of the following methods:
+对于作为覆盖添加的组件，您可以按照上述相同方式还原添加。或者，您可以使用以下任一方法删除组件：
 
-1. In Inspector, **right-click** a component and choose **Delete component** from the context menu.
-1. With a component selected, press **DEL**.
+1. 在 Inspector 中，右键单击组件，然后从上下文菜单中选择 **Delete component**。
+1. 选择元件后，按 **DEL**。
 
-For a component deleted as an override, you can revert the deletion by reverting all overrides on the selected entity. However, be aware that this would remove other overrides if they are present.
+对于作为覆盖删除的组件，您可以通过恢复所选实体上的所有覆盖来恢复删除。但是，请注意，如果存在其他覆盖，这将删除它们。
 
-### Revert all overrides on the entity
+### 还原实体上的所有覆盖
 
-Last but not least, you can revert all overrides applied to an entity:
-1. In Entity Outliner, **right-click** on an entity with overrides and choose **Revert Overrides** from the context menu.
-1. Notice that the entity no longer has any indication of having overrides.
+最后但同样重要的是，您可以还原应用于实体的所有覆盖：
+1. 在 Entity Outliner 中，**右键单击** 具有覆盖的实体，然后从上下文菜单中选择 **Revert Overrides**。
+1. 请注意，该实体不再有任何具有覆盖的迹象。
 
 {{< image-width src="/images/learning-guide/tutorials/entities-and-prefabs/prefab-override-revert.png" width="300" alt="Reverting overrides on an entity." >}}
 
 {{< note >}}
-If you see any unexpected overrides showing up, you can try the above methods to revert them. If it does not work out, you can open the prefab file that owns those overrides (under the `Instances` key) and remove the override patches you want.
+如果你看到任何意外的覆盖显示，你可以尝试上述方法来恢复它们。如果不起作用，您可以打开拥有这些覆盖的预制件文件（在`Instances`键下）并删除所需的覆盖补丁。
 {{< /note >}}
 
 
-## Disable prefab overrides
+## 禁用预制件覆盖
 
-Prefab overrides are a new feature. You may encounter issues that slow down or even block your workflow. You can follow the recommendations below to disable the feature in your project.
+预制件覆盖是一项新功能。您可能会遇到减慢甚至阻碍工作流程的问题。您可以按照以下建议在项目中禁用该功能。
 
-First, we recommend that you disable the prefab overrides feature in the Inspector, which should roll back to how it already worked in the 23.05 release.
-1. Open the **Console Variables (CVar)** editor in **Tool**.
-1. Turn off the `ed_enableInspectorOverrideManagement` variable.
-1. Note that you need to turn off and on the `ed_enableDPEInspector` variable to make it take effect.
+首先，我们建议您在 Inspector 中禁用预制件覆盖功能，该功能应回滚到它在 23.05 版本中的工作方式。
+1. 在**Tool**中打开**Console Variables (CVar)** 编辑器。
+1. 关闭 `ed_enableInspectorOverrideManagement` 变量。
+1. 请注意，您需要关闭和打开`ed_enableDPEInspector`变量才能使其生效。
 
 {{< note >}}
-Prefab override management in Entity Inspector is developed based on the new *[Document Property Editor (DPE)](https://github.com/o3de/sig-content/issues/11)*, which aims to replace the old *Reflected Property Editor (RPE)*. Therefore, the `ed_enableInspectorOverrideManagement` flag is dependent on the `ed_enableDPEInspector` flag.
+Entity Inspector 中的预制件覆盖管理是基于新的 *[Document Property Editor (DPE)](https://github.com/o3de/sig-content/issues/11)*开发的，旨在取代旧的 *Reflected Property Editor (RPE)*。因此，`ed_enableInspectorOverrideManagement`标志依赖于`ed_enableDPEInspector`标志。
 {{< /note >}}
 
-This will disable the feature in Inspector, but you can still manipulate override edits in Entity Outliner.
+这将禁用 Inspector 中的该功能，但您仍然可以在 Entity Outliner 中操作覆盖编辑。
 
-Second, if you want to entirely disable the feature in the O3DE Editor, you can follow these steps:
-1. Open the **Console Variables (CVar)** editor in **Tool**.
-1. Turn off the `ed_enableOutlinerOverrideManagement` variable.
-1. Note that you need to restart the O3DE Editor to make it take effect.
+其次，如果您想在 O3DE 编辑器中完全禁用该功能，您可以按照以下步骤操作：
+1. 在**Tool**中打开**Console Variables (CVar)** 编辑器。
+1. 关闭 `ed_enableInspectorOverrideManagement` 变量。
+1. 请注意，您需要重新启动 O3DE 编辑器才能使其生效。
 
-Alternatively, you can change the above flags through a settings registry file with the following contents:
+或者，您可以通过包含以下内容的设置注册表文件更改上述标志：
 
 ```json
 {
@@ -197,19 +197,19 @@ Alternatively, you can change the above flags through a settings registry file w
 }
 ```
 
-An example of such file exists as a project-specific override in the AutomatedTesting project: [`AutomatedTesting/Registry/editorpreferences.setreg`](https://github.com/o3de/o3de/blob/c8f19bbe664a89ad92007fb7674cb8c6aa165bd9/AutomatedTesting/Registry/editorpreferences.setreg)
+此类文件的示例是 AutomatedTesting 项目中特定于项目的覆盖： [`AutomatedTesting/Registry/editorpreferences.setreg`](https://github.com/o3de/o3de/blob/c8f19bbe664a89ad92007fb7674cb8c6aa165bd9/AutomatedTesting/Registry/editorpreferences.setreg)
 
 {{< note >}}
-It is recommended to add your settings registry file to the `<project-path>/user/Registry` directory as a user-specific override. Files in the user directory are ignored by git and will not be tracked for changes.
+建议将设置注册表文件作为用户特定的覆盖添加到`<project-path>/user/Registry` 目录。用户目录中的文件会被 git 忽略，并且不会跟踪更改。
 {{< /note >}}
 
-Last but not least, if disabling the feature does not resolve your issue, you can check the known issue lists:
-1. [Known issues for Prefab Overrides](https://github.com/o3de/o3de/issues?q=is%3Aopen+is%3Aissue+label%3Afeature%2Fprefabs+%22prefab+overrides%22)
-1. [Known issues for DPE Inspector](https://github.com/o3de/o3de/issues?q=is%3Aopen+is%3Aissue+%22DPE+inspector%22)
+最后但并非最不重要的一点是，如果禁用该功能无法解决您的问题，您可以查看已知问题列表：
+1. [预制件覆盖的已知问题](https://github.com/o3de/o3de/issues?q=is%3Aopen+is%3Aissue+label%3Afeature%2Fprefabs+%22prefab+overrides%22)
+1. [DPE Inspector 的已知问题](https://github.com/o3de/o3de/issues?q=is%3Aopen+is%3Aissue+%22DPE+inspector%22)
 
-If you cannot find a related issue, please report it via [GitHub Issue](https://github.com/o3de/o3de/issues/new/choose) and attach relevant tags (`sig/content`, `feature/prefabs`) to the new issue.
+如果您找不到相关问题，请通过 [GitHub Issue](https://github.com/o3de/o3de/issues/new/choose)报告，并将相关标签（`sig/content`, `feature/prefabs`）附加到新问题上。
 
 
-## Conclusion and next steps
+## 结论和下一步
 
-Now that you understand the differences between entities, prefabs, and prefab instances, and the basics of creating and working with them, you can put it into practice. Learn to [Spawn and Despawn a Prefab](spawn-a-prefab) in the next tutorial.
+现在，您已经了解了实体、预制件和预制件实例之间的区别，以及创建和使用它们的基础知识，可以将其付诸实践。在下一个教程中学习 [生成和取消生成预制件](spawn-a-prefab) 。

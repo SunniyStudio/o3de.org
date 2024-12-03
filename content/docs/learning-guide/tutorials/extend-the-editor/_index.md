@@ -1,12 +1,12 @@
 ---
-linkTitle: Extend the Editor
-title: Extend the Open 3D Engine Editor
-description: Extend the Open 3D Engine (O3DE) Editor by developing a custom tool Gem.
+linkTitle: 扩展编辑器
+title: 扩展 Open 3D Engine 编辑器
+description: 通过开发自定义工具 Gem 来扩展 Open 3D Engine （O3DE） 编辑器。
 ---
 
-Extend the **Open 3D Engine (O3DE) Editor** by creating a custom tool Gem. A tool is a dockable widget or dialog window that implements functionality in Editor. You can create custom tools in C++ or Python.
+通过创建自定义工具 Gem 来扩展 **Open 3D Engine （O3DE） 编辑器。工具是在 Editor 中实现功能的可停靠窗口小部件或对话框窗口。您可以在 C++ 或 Python 中创建自定义工具。
 
-| Tutorial | Description |
+| 教程 |描述 |
 | - | - |
-| [Create a Custom Tool Gem in C++](./shape-example-cpp.md) | Extend the Editor by creating a custom tool Gem that's written in C++. Learn how to use the **CppToolGem** template, and practice C++ development with [Qt](https://wiki.qt.io/Main), the O3DE Tools UI API, and other O3DE APIs. |
-| [Create a Custom Tool Gem in Python](./shape-example-py.md) | Extend the Editor by creating a custom tool Gem that's written in Python. Learn how to use the **PythonToolGem** template, and practice Python development with [Qt](https://wiki.qt.io/Main), the O3DE Tools UI API, and other O3DE APIs.|
+| [在 C++ 中创建自定义工具 Gem](./shape-example-cpp.md) | 通过创建用 C++ 编写的自定义工具 Gem 来扩展 Editor。了解如何使用 **CppToolGem** 模板，并使用 [Qt](https://wiki.qt.io/Main)、O3DE 工具 UI API 和其他 O3DE API 练习C++开发。 |
+| [在 Python 中创建自定义工具 Gem](./shape-example-py.md) | 通过创建用 Python 编写的自定义工具 Gem 来扩展 Editor。了解如何使用 **PythonToolGem** 模板，并使用 [Qt](https://wiki.qt.io/Main)、O3DE 工具 UI API 和其他 O3DE API 练习 Python 开发。|

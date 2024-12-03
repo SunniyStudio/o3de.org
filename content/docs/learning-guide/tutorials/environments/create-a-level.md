@@ -1,58 +1,57 @@
 ---
-linkTitle: Create a Level
-title: Create a Level in Open 3D Engine
-description: Learn to create a level in Open 3D Engine (O3DE).
+linkTitle: 创建关卡
+title: 在 Open 3D Engine 中创建关卡
+description: 了解如何在 Open 3D Engine （O3DE） 中创建关卡。
 weight: 200
 toc: true
 ---
 
-In **Open 3D Engine (O3DE)**, a *level* is a playable section of a project. Within a level, you create entities, instantiate prefabs, arrange lights and cameras, and implement scripted behaviors and interactivity. A level can be interpreted literally as a level of a game; however, levels are the basis for all O3DE projects. Non-gaming applications, such as simulations, require at least one level. A project can have a single level or many levels.
+在 **Open 3D Engine （O3DE）** 中，*关卡* 是项目的可玩部分。在关卡中，您可以创建实体、实例化预制件、排列光照和摄像机，以及实现脚本化行为和交互性。关卡可以解释为游戏的关卡;但是，关卡是所有 O3DE 项目的基础。非游戏应用程序（如模拟）至少需要一个级别。一个项目可以具有单个级别或多个级别。
 
 
 
-In O3DE, levels are stored in `.prefab` files within subdirectories of the `Levels` directory of your project. The level `.prefab` file is in JSON format. It contains a list of the entities placed in the level, including the components, values, and asset references that define the entities. All assets, including the meshes, scripts, materials, audio files, and other prefabs that compose the level, are referenced within the level `.prefab` file.
+在 O3DE 中，关卡存储在项目的 `Levels` 目录的子目录中的`.prefab` 文件中。关卡`.prefab`文件为 JSON 格式。它包含放置在关卡中的实体列表，包括定义实体的组件、值和资产引用。所有资源（包括网格、脚本、材质、音频文件和组成关卡的其他预制件）都在关卡`.prefab`文件中引用。
 
 
 {{< note >}}
-By default, all levels must be placed in the `Levels` subdirectory of the project.
+默认情况下，所有关卡都必须放置在项目的 `Levels` 子目录中。
 {{< /note >}}
 
-## Create a level
+## 创建关卡
 
-You can create levels in the **Welcome to O3DE** dialog box that appears when **O3DE Editor** is launched, or from the **File** menu within O3DE Editor.
+您可以在启动 **O3DE 编辑器** 时出现的 **欢迎使用 O3DE** 对话框中创建关卡，也可以从 O3DE 编辑器中的 **文件** 菜单创建关卡。
 
 
-1. In the Welcome to O3DE dialog box, choose the **Create new...** button to open the **New Level** dialog box. Alternatively, from the **File** menu in O3DE Editor, choose **New Level** (hotkey **Ctrl + N**) to open the New Level dialog box.
+1. 在 Welcome to O3DE 对话框中，选择 **Create new...** 按钮以打开 **New Level ** 对话框。或者，从 O3DE 编辑器的 **文件** 菜单中，选择 **New Level**（热键 **Ctrl + N**）以打开**New Level**对话框。
 
 
     ![Welcome to O3DE dialog](/images/learning-guide/tutorials/environments/create-a-level-A.png)
 
-1. In the **New Level** dialog box, enter a name for the level.
+1. 在 **New Level** 对话框中，输入级别的名称。
 
 
     ![New Level dialog](/images/learning-guide/tutorials/environments/create-a-level-B.png)
 
-1. Choose **OK** to create the level.
+1. 选择 **OK** 创建关卡。
 
 
-## Atom Default Environment contents
+## Atom Default Environment
 
-
-The new level is populated with some basic entities. In **Entity Outliner**, there is a root entity named **Atom Default Environment**. Choose the arrow to the left of the default entity in **Entity Outliner** to expand the list of child entities.
+新关卡中填充了一些基本实体。在 **Entity Outliner** 中，有一个名为 **Atom Default Environment** 的根实体。在 **Entity Outliner** 中选择默认实体左侧的箭头以展开子实体列表。
 
 
 {{< note >}}
-The Atom Default Environment is a *prefab*. A prefab is a collection of preconfigured entities that is stored on disk as a reusable `.prefab` asset file. Prefabs can be instanced in a level. You can modify the contents of the default level environment by saving your own prefab to `/o3de/Assets/Editor/Prefabs/Default_Level.prefab`.
+Atom 默认环境是一个 *prefab*。预制件是预配置实体的集合，作为可重用的`.prefab`资产文件存储在磁盘上。预制件可以在关卡中实例化。您可以通过将自己的预制件保存到 `/o3de/Assets/Editor/Prefabs/Default_Level.prefab`来修改默认关卡环境的内容。
 {{< /note >}}
 
 ![Default level prefab](/images/learning-guide/tutorials/environments/create-a-level-C.png)
 
-| Entity Name | Description |
+| 实体名称 | 说明 |
 | - | - |
-| Atom Default Environment | This is the root entity. It contains a **Transform** component and is the parent for the default environment entities. |
-| Global Sky | Contains a **Global Skylight (IBL)** component and a **HDRI Skybox** component. This entity provides image-based lighting using a high dynamic range image and displays the image as a skybox. |
-| Ground | Contains a **Mesh** component and a **Material** component to display a simple ground plane with a checkerboard material. |
-| Grid | Contains a **Grid** component aligned with the Ground entity that can be used as a construction plane for placing and aligning entities and prefabs. |
-| Shader Ball | Contains a **Mesh** component with a `shaderball_default_1m` mesh asset. This mesh asset provides a good basis for developing materials. |
-| Sun | Contains a **Directional Light** component. A directional light casts light uniformly in a single direction and simulates a distant light source. |
-| Camera | Contains a **Camera** component that provides a camera view frustum to view the level, and a **Fly Camera Input** component that takes user input and moves the camera while in **Game** mode. |
+| Atom Default Environment | 这是根实体。它包含一个 **Transform** 组件，并且是默认环境实体的父级。 |
+| Global Sky | 包含一个 **Global Skylight (IBL)** 组件和一个 **HDRI Skybox** 组件。此实体使用高动态范围图像提供基于图像的照明，并将图像显示为天空盒。 |
+| Ground | 包含一个 **Mesh** 组件和一个 **Material** 组件，用于显示带有棋盘格材质的简单地平面。 |
+| Grid | 包含一个与 Ground 实体对齐的 **Grid** 组件，该组件可用作放置和对齐实体和预制件的构造平面。 |
+| Shader Ball | 包含一个 **Mesh** 组件和一个 `shaderball_default_1m` 网格资源。此网格资源为开发材质提供了良好的基础。 |
+| Sun | 包含一个 **Directional Light** 组件。平行光将光线均匀地投射到单个方向上，并模拟远处的光源。 |
+| Camera | 包含一个 **Camera** 组件，该组件提供用于查看关卡的摄像机视图视锥体，以及一个 **Fly Camera Input** 组件，该组件接受用户输入并在 **Game** 模式下移动摄像机。 |

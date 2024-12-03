@@ -1,13 +1,13 @@
 ---
-linkTitle: Entities and Prefabs
-title: Entities and Prefabs
-description: Learn to create and work with entities and prefabs, the building blocks of Open 3D Engine (O3DE).
+linkTitle: 实体和预制件
+title: 实体和预制件
+description: 了解如何创建和使用实体和预制件，它们是 Open 3D Engine （O3DE） 的构建块。
 ---
 
-Entities and prefabs provide the foundation for building projects in **Open 3D Engine (O3DE)**. The topics in this section explain how to create, modify, and use entities and prefabs in your projects.
+实体和预制件为在 Open 3D Engine （O3DE） 中构建项目提供了基础。本节中的主题介绍如何在项目中创建、修改和使用实体和预制件。
 
-| Tutorial | Description |
+| 教程 |描述 |
 | - | - |
-| [Entity and Prefab Basics](entity-and-prefab-basics) | Learn the basics of creating and modifying entities and prefabs. |
-| [Override a Prefab](override-a-prefab) | Learn how to make changes to a single prefab instance. |
-| [Spawn and Despawn a Prefab](spawn-a-prefab.md) | Use **Script Canvas** to create a script that spawns and despawns a prefab. |
+| [实体和预制件基础知识](entity-and-prefab-basics) | 了解创建和修改实体和预制件的基础知识。 |
+| [覆盖预制件](override-a-prefab) | 了解如何更改单个预制件实例。 |
+| [生成和取消生成预制件](spawn-a-prefab.md) | 使用 **Script Canvas** 创建生成和取消生成预制件的脚本。 |

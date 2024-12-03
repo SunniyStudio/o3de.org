@@ -1,11 +1,11 @@
 ---
-linkTitle: Animation
-title: Actors and Animation
-description: Learn the concepts, tools, and process for animation in Open 3D Engine (O3DE).
+linkTitle: 动画
+title: 角色和动画
+description: 了解 Open 3D Engine （O3DE） 中动画的概念、工具和过程。
 ---
 
-The tutorials in this section explain the concepts, tools, and process for animation in Open 3D Engine (O3DE).
+本节中的教程介绍了 Open 3D Engine （O3DE） 中动画的概念、工具和过程。
 
-| Tutorial | Description |
+| 教程 |描述 |
 | - | - |
-| [Data Driven Root Motion](data-driven-root-motion) | Learn about data driven root motion and how to apply it to actors. |
+| [数据驱动的根运动](data-driven-root-motion) | 了解数据驱动的根运动以及如何将其应用于角色。 |

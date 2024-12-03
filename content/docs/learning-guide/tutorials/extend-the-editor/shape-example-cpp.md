@@ -1,120 +1,119 @@
 ---
-linkTitle: Create a Custom Tool Gem in C++
-title: Create a Custom Tool Gem in C++ to Extend Open 3D Engine Editor
-description: Learn how to extend the Open 3D Engine (O3DE) Editor by creating a custom tool Gem in C++.
+linkTitle: 在 C++ 中创建自定义工具 Gem
+title: 在 C++ 中创建自定义工具 Gem 以扩展 Open 3D Engine Editor
+description: 了解如何通过在 C++ 中创建自定义工具 Gem 来扩展 Open 3D Engine （O3DE） 编辑器。
 weight: 200
 toc: true
 ---
 
-In this tutorial, you'll learn how to extend the **Open 3D Engine (O3DE) Editor** using the `CppToolGem` template to create a custom tool Gem called **MyShapeExample**. This custom tool allows you to create entities with a Shape component and configure their component properties. The Gem is written in C++ with [Qt](https://wiki.qt.io/Main), the O3DE Tools UI API, and other O3DE APIs.
+在本教程中，您将学习如何使用`CppToolGem` 模板扩展 **Open 3D Engine （O3DE） 编辑器**，以创建名为 **MyShapeExample** 的自定义工具 Gem。此自定义工具允许您使用 Shape 组件创建实体并配置其组件属性。Gem 是使用 [Qt](https://wiki.qt.io/Main)、O3DE 工具 UI API 和其他 O3DE API C++编写的。
 
-The **ShapeExample** Gem, a sample Gem in the [`o3de/sample-code-gems` repository](https://github.com/o3de/sample-code-gems/tree/main/cpp_gems/ShapeExample), demonstrates the finished Gem that you create in this tutorial. You can reference the ShapeExample Gem sample as you follow along this tutorial.
+**ShapeExample** Gem 是[`o3de/sample-code-gems` repository](https://github.com/o3de/sample-code-gems/tree/main/cpp_gems/ShapeExample) 中的示例 Gem，演示了您在本教程中创建的成品 Gem。在学习本教程时，您可以参考 ShapeExample Gem 示例。
 
-By the end of this tutorial, you'll be able to extend the Editor by creating your own custom tools written in C++.
+在本教程结束时，您将能够通过创建自己的 C++ 编写的自定义工具来扩展 Editor。
 
-The following image is a preview of the custom tool that you create.
+下图是您创建的自定义工具的预览。
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/cpp-shape-example-demo.png" "1080" "An image of the Shape Example tool and some entities created by it." >}}
 
 
-## Prerequisites
+## 先决条件
 
-Before you start the tutorial, ensure that you have the following:
+在开始本教程之前，请确保您具备以下条件：
 
-- Set up an O3DE development environment. For instructions, refer to [Set up Open 3D Engine](/docs/welcome-guide/setup/).
+- 搭建 O3DE 开发环境。有关说明，请参阅 [设置 Open 3D Engine](/docs/welcome-guide/setup/).
 
-## Tutorial specifics
+## 教程细节
 
-This tutorial uses the following Windows directory names and locations in the examples. You may choose different folder names and locations on your disk.
+本教程在示例中使用以下 Windows 目录名称和位置。您可以在磁盘上选择不同的文件夹名称和位置。
 
-- **O3DE engine directory**: `C:\o3de`  
-    The source directory that contains the engine.
+- **O3DE 引擎目录**: `C:\o3de`  
+    包含引擎的源目录。
 
-- **`CppToolGem` template**: `C:\o3de\Templates\CppToolGem`  
-    The Gem template that your custom Gem is based off of.
+- **`CppToolGem` 模板**: `C:\o3de\Templates\CppToolGem`  
+    自定义 Gem 所基于的 Gem 模板。
 
 - **MyCppShapeExample Gem**: `C:\o3de-gems\MyCppShapeExample`  
-    Your custom Gem. You may choose a different folder name and location in your disk.
+    您的自定义 Gem。您可以在磁盘中选择不同的文件夹名称和位置。
 
 
-## Create a Gem from the `CppToolGem` template
+## 从  `CppToolGem` 模板创建 Gem
 
-Start by creating a Gem from the `CppToolGem` template, which contains a basic C++ framework to create a dockable tool (widget) in the Editor.
+首先，从 `CppToolGem`模板创建一个 Gem，该模板包含一个基本的 C++ 框架，用于在 Editor 中创建可停靠的工具（小组件）。
 
-To create a Gem from the `CppToolGem` template, complete the following steps:
+要从 `CppToolGem`模板创建 Gem，请完成以下步骤：
 
-1. Create a Gem by using the **O3DE CLI** (`o3de`) script that's in your engine directory.
+1. 使用引擎目录中的 **O3DE CLI** (`o3de`) 脚本创建 Gem。
 
     ```cmd
     scripts\o3de create-gem --gem-name MyCppShapeExample --template-name CppToolGem --gem-path C:\o3de-gems\MyCppShapeExample
     ```
 
-    This command specifies the following options: 
-    - `--gem-name`, `-gn`: The name of the new Gem. 
-    - `--gem-path`, `-gp`: The path to create the new Gem at. 
-    - `--template-name`, `-tn`: The path to the template that you want to create the new Gem from.
+    此命令指定以下选项：
+    - `--gem-name`, `-gn`: 新 Gem 的名称。
+    - `--gem-path`, `-gp`: 创建新 Gem 的路径。
+    - `--template-name`, `-tn`: 要从中创建新 Gem 的模板的路径。
 
-    This Gem is based off of the `CppToolGem` template. In this example, name the Gem `MyCppShapeExample` and create it in `C:\o3de-gems\MyCppShapeExample`.
+    此 Gem 基于`CppToolGem`模板。在此示例中，将 Gem 命名为`MyCppShapeExample`，并在`C:\o3de-gems\MyCppShapeExample`中创建它。
 
-   Depending on the Gem path, this command automatically registers the Gem to one of the manifest files: `.o3de\o3de_manifest.json`, `<engine>\engine.json`, and `<project>\project.json`.
+   根据 Gem 路径，此命令会自动将 Gem 注册到其中一个清单文件： `.o3de\o3de_manifest.json`, `<engine>\engine.json`, 和 `<project>\project.json`.
 
-2. (Optional) Register the Gem to your project. This step is optional because when you create a Gem using the O3DE CLI in the previous step, it automatically registers the Gem. If you downloaded the ShapeExample Gem from the sample code Gems repository, you must register it to your project.
+2. （可选）将 Gem 注册到您的项目中。此步骤是可选的，因为当您在上一步中使用 O3DE CLI 创建 Gem 时，它会自动注册 Gem。如果您从示例代码 Gem 存储库下载了 ShapeExample Gem，则必须将其注册到您的项目中。
 
     ```cmd
     scripts\o3de register -gp C:\o3de-gems\MyCppShapeExample -espp <project-path>
     ```
 
-3. Add the Gem in your project.
+3. 在您的项目中添加 Gem。
 
     ```cmd
     scripts\o3de enable-gem -gn MyCppShapeExample -pp <project-path>
     ```
 
-    Or, enable the Gem using the Project Manager (refer to [Adding and Removing Gems in a Project](/docs/user-guide/project-config/add-remove-gems.md)).
+    或者，使用 Project Manager 启用 Gem(请参阅 [在项目中添加和删除 Gem](/docs/user-guide/project-config/add-remove-gems.md)).
 
-4. Build the project by using the O3DE CLI (refer to [Build a project](/docs/user-guide/build/configure-and-build/#build-a-project)). Or, use the Project Manager (refer to the **Build** action in the [Project Manager](/docs/user-guide/project-config/project-manager/)) page.
+4. 使用 O3DE CLI 构建项目（参见 [构建项目](/docs/user-guide/build/configure-and-build/#build-a-project)）。或者，使用 Project Manager（请参阅 [Project Manager](/docs/user-guide/project-config/project-manager/)） 中的 **Build** 操作）页面。
 
-5. Open your project in the Editor.
+5. 在 Editor 中打开您的项目。
 
-6. Open the tool by selecting **Tools > Examples > MyCppShapeExample** from the file menu. (See A in the following image.) 
+6. 通过从文件菜单选择**Tools > Examples > MyCppShapeExample**。 (请参阅下图中的 A。) 
 
-    Or, open the tool directly by clicking on the tool's icon in the **Edit Mode Toolbar**. (See B.)
+   或者，通过单击 **Edit Mode Toolbar**（编辑模式工具栏）中的工具图标直接打开该工具。（见 B.）
 
-Now you can access the Shape Example tool! By default, this tool contains a simple user interface (UI). In the next steps, we'll design the tool's UI and code its functionality. (See C.)
+现在，您可以访问 Shape Example 工具了！默认情况下，此工具包含一个简单的用户界面 （UI）。在接下来的步骤中，我们将设计该工具的 UI 并对其功能进行编码。（见 C.）
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/cpp-tool-gem-template-in-editor.png" "1080" "Editor with a tool created using the CppToolGem template" >}}
 
 
-## Code directory
+## 代码目录
 
-This sections describes your MyCppShapeExample Gem's code structure. It's important to become familiar with your Gem's code structure because this is the entry point where you will program your tool's custom functionality. In this example, your Gem's directory is located at: `C:\o3de-gems\MyCppShapeExample`. This is the path that you specified when you created the Gem. Your Gem's code is located in the subdirectory `Code\Source`, which contains the following classes and frameworks that make up your custom tool.
+本节介绍了 MyCppShapeExample Gem 的代码结构。熟悉 Gem 的代码结构非常重要，因为这是您将对工具的自定义功能进行编程的入口点。在此示例中，您的 Gem 目录位于： `C:\o3de-gems\MyCppShapeExample`。这是您在创建 Gem 时指定的路径。Gem 的代码位于子目录`Code\Source`中，其中包含构成自定义工具的以下类和框架。
 
-Example of `Code\Source` directory:
+`Code\Source` 目录示例:
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/cpp-tool-gem-template-directory.png" "720" "Editor with a tool created using the CppToolGem template." >}}
 
 
 ### Modules and system components
 
-All Gems have modules and system component classes written in C++ that connect the tool to O3DE and allow it to communicate with other systems. The `CppToolGem` template already contains all of the code needed to run the tool in the Editor. You can find these C++ files in `Code\Source`.
+所有 Gem 都有用 C++ 编写的模块和系统组件类，这些模块和组件类将工具连接到 O3DE 并允许它与其他系统通信。`CppToolGem`模板已经包含在编辑器中运行该工具所需的所有代码。您可以在`Code\Source`中找到这些 C++ 文件。
 
-For more information on Gem modules and system components, refer to the [Overview of the Open 3D Engine Gem Module system](/docs/user-guide/programming/gems/overview/) page.
-
-
-### O3DE and Qt frameworks
-
-O3DE extends the **Qt** framework, so you will use [Qt Widgets Module](https://doc.qt.io/qt-5/qtwidgets-index.html) to create a graphical user interface (GUI). You will also use O3DE's EBuses to communicate with other O3DE interfaces, such as entities and components, and connect them to Qt elements.
-
-You will write most of your tool's functionality and UI elements in the `ShapeExample` class that's located in `Code\Source\ShapeExampleWidget.h` and `Code\Source\ShapeExampleWidget.cpp`.
+有关 Gem 模块和系统组件的更多信息，请参阅 [Open 3D Engine Gem 模块系统概述](/docs/user-guide/programming/gems/overview/) 页面。
 
 
-### Qt Resources
+### O3DE 和 Qt 框架
 
-The [Qt Resource System](https://doc.qt.io/qt-5/resources.html) allows Gems to store and load image files via a `.qrc` file. This eliminates the need to load image files from absolute paths, making it simpler for you to distribute your Gem. Later, you will store an image file to create an icon for your tool.
+O3DE 扩展了 **Qt** 框架，因此您将使用 [Qt Widgets Module](https://doc.qt.io/qt-5/qtwidgets-index.html) 来创建图形用户界面 （GUI）。您还将使用 O3DE 的事件总线与其他 O3DE 接口（如实体和组件）进行通信，并将它们连接到 Qt 元素。
 
-## Dependent modules
+您将在位于 `Code\Source\ShapeExampleWidget.h` 和 `Code\Source\ShapeExampleWidget.cpp` 中的 `ShapeExample` 类中编写工具的大部分功能和 UI 元素。
 
-Import the following dependent modules in the `Code\Source\ShapeExampleWidget.cpp` file. The `ShapeExample` class that you will create uses objects from these modules.
+### Qt 资源
+
+[Qt Resource System](https://doc.qt.io/qt-5/resources.html) 允许 Gem 通过`.qrc` 文件存储和加载图像文件。这样就无需从绝对路径加载图像文件，从而简化了 Gem 的分发。稍后，您将存储图像文件以为您的工具创建图标。
+
+## 依赖模块
+
+在 `Code\Source\ShapeExampleWidget.cpp`文件中导入以下依赖模块。 你将创建的`ShapeExample` 类使用这些模块中的对象。
 
 ```cpp
 #include <AzCore/Component/TransformBus.h>
@@ -135,19 +134,19 @@ Import the following dependent modules in the `Code\Source\ShapeExampleWidget.cp
 ```
 
 
-## Widgets and layouts
+## 小组件和布局
 
-With Qt, you can create *widgets*, which are containers for UI elements, and *layouts* which define how those UI elements are arranged. Your custom tool is a main widget that contains sub-widgets of UI elements. Each widget can have its own layout. The nested widget and layout structure allows you to organize groups of UI elements.
+使用 Qt，您可以创建 *小部件*，它是 UI 元素的容器，以及定义这些 UI 元素如何排列的 *布局*。您的自定义工具是一个主 Widget，其中包含 UI 元素的子 Widget。每个小组件都可以有自己的布局。嵌套的 Widget 和布局结构允许您组织 UI 元素组。
 
-The `ShapeExampleWidget` class inherits from `QWidget`, which creates the main widget. The following instructions walk you through how to set up the main widget's layout. Be aware that some of the instructions may already be done by the `CppToolGem` template. 
+`ShapeExampleWidget`类继承自`QWidget`，后者创建主 widget。以下说明将指导您完成如何设置主 Widget 的布局。请注意，某些指令可能已经由 `CppToolGem` 模板完成。
 
-1. At the top of your constructor, instantiate a `QVBoxLayout` called `mainLayout`.
+1. 在构造函数的顶部，实例化一个名为 `mainLayout` 的 `QVBoxLayout`。
    
-2. Later, you will create various UI elements and add them to `mainLayout`.
+2. 稍后，您将创建各种 UI 元素并将它们添加到 `mainLayout`中。
 
-3. We recommend that you add a stretch at the bottom of `mainLayout` by using `addStretch()`. This fills any expanded space when you resize the window.
+3. 我们建议您使用 `addStretch()` 在 `mainLayout` 的底部添加一个 stretch。这将在调整窗口大小时填充任何扩展的空间。
    
-4. Finally, set `mainLayout` to be the layout for this widget by using `setLayout(...)`.
+4. 最后，使用`setLayout(...)`将 `mainLayout` 设置为此小部件的布局`.
 
 ```cpp
 ShapeExampleWidget::ShapeExampleWidget(QWidget* parent)
@@ -164,20 +163,20 @@ ShapeExampleWidget::ShapeExampleWidget(QWidget* parent)
 }
 ```
 
-## Input fields and checkboxes
+## 输入字段和复选框
 
-In this step, create an input field for the entity's name and a checkbox for an option to append a suffix---the component's name---to the entity's name. For example, suppose you set the entity's name to "MyEntity" and enable the checkbox. Then, when you create an entity with a **Box Shape** component and another with a **Sphere Shape** component, they will respectively be named "MyEntity_BoxShape" and "MyEntity_SphereShape".
+在此步骤中，为实体名称创建一个输入字段，并为一个选项创建一个复选框，用于将后缀---组件的名称---附加到实体的名称。例如，假设您将实体的名称设置为 “MyEntity” 并启用该复选框。然后，当您创建具有 **Box Shape** 组件的实体和另一个具有 **Sphere Shape** 组件的实体时，它们将分别命名为“MyEntity_BoxShape”和“MyEntity_SphereShape”。
 
-By the end of this step, your input field and checkbox should look like this: 
+在此步骤结束时，您的输入字段和复选框应如下所示：
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/input-field-check-box.png" "500" "Shows UI for an input field and checkbox" >}}
 
-After instantiating `mainLayout`, wrap the input field and checkbox in their own sub-widget, set the layout, and add it to the main widget.
+实例化 `mainLayout` 后，将输入字段和复选框包装在它们自己的子 widget 中，设置布局，并将其添加到主 widget。
 
-1. To start, instantiate a `QGroupBox` called `entityNameWidget` and a `QFormLayout` called `formLayout`.
+1. 首先，实例化一个名为  `entityNameWidget` 的 `QGroupBox` 和一个名为 `formLayout` 的 `QFormLayout`。
    
-2. Later, you will create the input field and checkbox and add them to this widget. 
+2. 稍后，您将创建输入字段和复选框并将它们添加到此小部件中。
 
-3. Finally, set the layout of `entityNameWidget` to `formLayout`, and add `entityNameWidget` to `mainLayout`. 
+3. 最后，将 `entityNameWidget` 的布局设置为 `formLayout`，并将 `entityNameWidget` 添加到 `mainLayout`。
 
 ```cpp
     QGroupBox* entityNameWidget = new QGroupBox(this);  // 1
@@ -189,11 +188,11 @@ After instantiating `mainLayout`, wrap the input field and checkbox in their own
     mainLayout->addWidget(entityNameWidget);
 ```
 
-### Create an input field
+### 创建输入字段
 
-An input field is a UI element that takes text input from the user. With Qt, you can create an input field by using the `QLineEdit` object.
+输入字段是获取用户文本输入的 UI 元素。使用 Qt，您可以使用`QLineEdit`对象创建输入字段。
 
-In `ShapeExampleWidget.h`, create a private `QLineEdit*` variable. In this example, name it `m_nameInput`.
+在`ShapeExampleWidget.h`中，创建一个 private `QLineEdit*` 变量。在此示例中，命名为`m_nameInput`。
 
 ```cpp
     private:
@@ -201,13 +200,13 @@ In `ShapeExampleWidget.h`, create a private `QLineEdit*` variable. In this examp
         //...
 ```
 
-In `ShapeExampleWidget.cpp`, do the following:
+在`ShapeExampleWidget.cpp`中，执行以下操作：
 
-1. Create an input field by instantiating `QLineEdit` and assigning it to `m_nameInput`.
+1. 通过实例化`QLineEdit`并将其分配给 `m_nameInput` 来创建输入字段。
 
-2. Set the placeholder text in `m_nameInput` by calling `setPlaceholderText(...)`.
+2. 通过调用 `setPlaceholderText(...)` 设置 `m_nameInput` 中的占位符文本`.
 
-3. Enable a button to clear the text using `setClearButtonEnabled(true)`.
+3. 启用一个按钮以使用`setClearButtonEnabled(true)`清除文本。
 
 
 ```cpp
@@ -216,11 +215,11 @@ In `ShapeExampleWidget.cpp`, do the following:
     m_nameInput->setClearButtonEnabled(true);
 ```
 
-### Create a checkbox
+### 创建复选框
 
-A checkbox is an option button that users can enable or disable to trigger a user-defined behavior. With Qt, you can create an checkbox by using the `QCheckBox` object. In this example, the checkbox controls whether or not to append a suffix to the entity's name. At runtime, it will start disabled, and enable when the user enters the entity's name to the input field. You will define this behavior later.
+复选框是一个选项按钮，用户可以启用或禁用该按钮以触发用户定义的行为。在 Qt 中，您可以使用`QCheckBox` 对象创建一个复选框。在此示例中，该复选框控制是否将后缀附加到实体的名称。在运行时，它将开始禁用，并在用户将实体名称输入到输入字段时启用 enable。稍后将定义此行为。
 
-In `ShapeExampleWidget.h`, create a private `QCheckBox*` variable. In this example, name it `m_addShapeNameSuffix`.
+在 `ShapeExampleWidget.h` 中，创建一个私有`QCheckBox*`变量。在此示例中，将其命名为`m_addShapeNameSuffix`。
 
 ```cpp
     private:
@@ -229,38 +228,38 @@ In `ShapeExampleWidget.h`, create a private `QCheckBox*` variable. In this examp
         //...
 ```
 
-In `ShapeExampleWidget.cpp`, do the following:
+在`ShapeExampleWidget.cpp`中，执行以下操作：
 
-1. Create a checkbox by instantiating `QCheckBox` and assigning it to `m_addShapeNameSuffix`.
+1. 通过实例化 `QCheckBox` 并将其分配给 `m_addShapeNameSuffix` 来创建一个复选框。
 
-2. Set the checkbox to start in the disabled state by using `setDisabled(true)`.
+2. 使用 `setDisabled(true)` 将复选框设置为以禁用状态启动。
 
 ```cpp
     m_addShapeNameSuffix = new QCheckBox(this);
     m_addShapeNameSuffix->setDisabled(true);
 ```
 
-### Add a signal listener with a slot handler
+### 添加带有插槽处理程序的信号侦听器
 
-Qt uses signals and slots to communicate between objects (refer to [Signals & Slots](https://doc.qt.io/qt-5/signalsandslots.html) in the Qt Documentation). Set up a signal listener such that when the user enters text into the input field at runtime, the checkbox automatically enables. 
+Qt使用信号和插槽在对象之间进行通信（参考Qt文档中的[信号和插槽](https://doc.qt.io/qt-5/signalsandslots.html)）。设置信号侦听器，以便当用户在运行时将文本输入到输入字段中时，该复选框将自动启用。
 
-In this example, the signal listener uses a slot handler, which is essentially a C++ function that a signal can connect to. 
+在此示例中，信号侦听器使用插槽处理程序，它本质上是信号可以连接到的 C++ 函数。
 
-1. Declare a slot in `Code\Source\ShapeExampleWidget.h` by using the `Q_SLOTS` macro.
+1. 使用`Q_SLOTS`宏在`Code\Source\ShapeExampleWidget.h` 中声明一个插槽。
 
     ```cpp
     private Q_SLOTS:
         void OnNameInputTextChanged(const QString& text);
     ```
 
-2. Call `QObject::connect(...)` to create a connection between the input field (`m_nameInput`) to the signal (`QLineEdit::textChanged`) and slot (`ShapeExampleWidget::OnNameInputTextChanged`). Refer to the following line of `ShapeExampleWidget.cpp`.
+2. 调用 `QObject::connect(...)` 在输入字段 (`m_nameInput`) 到信号 (`QLineEdit::textChanged`) 和插槽 (`ShapeExampleWidget::OnNameInputTextChanged`)直接创建一个连接。请参阅以下`ShapeExampleWidget.cpp`行。
 
 
     ```cpp
         QObject::connect(m_nameInput, &QLineEdit::textChanged, this, &ShapeExampleWidget::OnNameInputTextChanged);
     ```
 
-3. Define `OnNameInputTextChanged(...)` in `ShapeExampleWidget.cpp`. This function checks if `m_nameInput` contains text, and if so, enables `m_addShapeNameSuffix`. 
+3. 在`ShapeExampleWidget.cpp`中定义 `OnNameInputTextChanged(...)`。此函数检查 `m_nameInput` 是否存在文本，如果存在，则启用 `m_addShapeNameSuffix`。
 
     ```cpp
     void ShapeExampleWidget::OnNameInputTextChanged(const QString& text)
@@ -269,29 +268,29 @@ In this example, the signal listener uses a slot handler, which is essentially a
     }
     ```
 
-### Add UI elements to layout
+### 将 UI 元素添加到布局
 
-After creating the UI elements---an input field and a checkbox---and connecting a signal listener to them, add them to the layout. To ensure they belong to the sub-widget `entityNameWidget`, add them to the corresponding layout, `formLayout`, by using `addRow(...)`.
+创建 UI 元素---输入字段和复选框---并将信号侦听器连接到它们后，将它们添加到布局中。要确保它们属于子小部件`entityNameWidget`，请使用`addRow(...)`将它们添加到相应的布局 `formLayout`中。
 
 ```cpp
     formLayout->addRow(QObject::tr("Entity name"), m_nameInput);
     formLayout->addRow(QObject::tr("Add shape name suffix"), m_addShapeNameSuffix);
 ```
 
-## Comboboxes
+## 组合框
 
-In this step, you will create a combobox that contains a list of values that you can use to scale the size of the entity.
+在此步骤中，您将创建一个组合框，其中包含可用于缩放实体大小的值列表。
 
-By the end of this step, your combobox should look like this: 
+在此步骤结束时，您的组合框应如下所示：
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/combo-box.png" "500" "Shows UI for combobox" >}}
 
-First, wrap the combobox in its own sub-widget, set the sub-widget's layout, and add it to the main widget. 
+首先，将组合框包装在其自己的子 Widget 中，设置子 Widget 的布局，并将其添加到主 Widget。
 
-1. To start, instantiate a `QGroupBox` called `comboBoxGroup` and a `QVBoxLayout` called `comboBoxLayout`.
+1. 首先，实例化一个名为 `comboBoxGroup` 的`QGroupBox` 和一个名为 `comboBoxLayout`的  `QVBoxLayout`。
    
-2. Later, you will create a combobox and define a list of scale values.
+2. 稍后，您将创建一个组合框并定义一个比例值列表。
 
-3. Finally, set the layout of `comboBoxGroup` to `comboBoxLayout`, and add `comboBoxGroup` to `mainLayout`.
+3. 最后，将 `comboBoxGroup` 的布局设置为`comboBoxLayout`，并将 `comboBoxGroup`添加到 `mainLayout` 中。
 
 ```cpp
     QGroupBox* comboBoxGroup = new QGroupBox("Choose your scale (combobox)", this);    // 1
@@ -304,11 +303,11 @@ First, wrap the combobox in its own sub-widget, set the sub-widget's layout, and
     mainLayout->addWidget(comboBoxGroup);
 ```
 
-### Create a combobox
+### 创建一个 Combobox
 
-A combobox allows users to select an item from a pop up list of items. With Qt, you can create an input field by using the `QComboBox` object.
+使用组合框，用户可以从弹出的项目列表中选择一个项目。在 Qt 中，您可以使用 `QComboBox` 对象创建输入字段。
 
-In `ShapeExampleWidget.h`, create a private `QComboBox*` variable. In this example, name it `m_scaleInput`.
+在`ShapeExampleWidget.h`中，创建一个私有的`QComboBox*`变量。在此示例中，命名为`m_scaleInput`。
 
 ```cpp
     private:
@@ -316,19 +315,19 @@ In `ShapeExampleWidget.h`, create a private `QComboBox*` variable. In this examp
         QComboBox* m_scaleInput = nullptr;
 ```
 
-In `ShapeExampleWidget.cpp`, do the following:
+在`ShapeExampleWidget.cpp`中，执行以下操作：
 
-1. Define a list of scale values. In this example, name it `scaleValues`.
+1. 定义刻度值列表。在此示例中，将其命名为`scaleValues`。
 
-2. Create a combobox by instantiating `QComboBox`. In this example, name it `m_scaleInput`. 
+2. 通过实例化`QComboBox`创建一个组合框。在此示例中，命名为`m_scaleInput`。
 
-3. Allow users to enter a custom option in the combobox by calling `setEditable(true)`. 
+3. 允许用户通过调用`setEditable(true)`在组合框中输入自定义选项。
 
-4. If a user enters a custom option, validate that the value they entered is a numerical value within a specific range and decimal place by calling `setValidator(...)`. In this example, set the lower bound to `0.0`, the upper bound to `100.0`, and the decimal places to `3`.
+4. 如果用户输入自定义选项，请通过调用 `setValidator(...)` 来验证他们输入的值是否是特定范围和小数位内的数值。在此示例中，将下限设置为 '`0.0`'，将上限设置为 '`100.0`'，将小数位数设置为 '`3`'。
 
-5. Add the list of values to the combobox by calling `addItems(...)`.
+5. 通过调用`addItems(...)`将值列表添加到组合框.
 
-6. Add the combobox to `comboBoxLayout` by calling `addWidget(...)`.
+6. 调用 `addWidget(...)`向`comboBoxLayout`添加组合框。
 
 ```cpp
     QStringList scaleValues = {                                                 // 1
@@ -346,20 +345,20 @@ In `ShapeExampleWidget.cpp`, do the following:
 ```
 
 
-## Buttons
+## 按钮
 
-In this step, you will create a collection of buttons that create an entity with different Shape components, such as with a Box Shape, Sphere Shape, Cone Shape, and so on.
+在此步骤中，您将创建一个按钮集合，这些按钮创建具有不同 Shape 组件（例如，使用 Box Shape、Sphere Shape、Cone Shape 等）的实体。
 
-By the end of this step, your buttons should look like this: 
+在此步骤结束时，您的按钮应如下所示：
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/buttons.png" "500" "Shows UI for buttons" >}}
 
-First, wrap these UI elements in their own sub-widget, set the layout, and add it to the main widget. 
+首先，将这些 UI 元素包装在它们自己的子 widget 中，设置布局，并将其添加到主 widget。
 
-1. To start, instantiate a `QGroupBox` called `shapeButtons` and a `QGridLayout` called `gridLayout`.
+1. 首先，实例化一个名为 `shapeButtons` 的 `QGroupBox` 和一个名为 `gridLayout` 的 `QGridLayout`。
    
-2. Later, you will query for all types of shape components registered with the engine, add buttons to this widget, and add signal listeners to the buttons.
+2. 稍后，您将查询向引擎注册的所有类型的形状组件，向此小组件添加按钮，并向按钮添加信号侦听器。
 
-3. Finally, set the layout of `shapeButtons` to `gridLayout`, and add `shapeButtons` to `mainLayout`. 
+3. 最后，将 `shapeButtons` 的布局设置为 `gridLayout`，并将 `shapeButtons` 添加到 `mainLayout`。
 
 ```cpp
     QGroupBox* shapeButtons = new QGroupBox(this);      // 1
@@ -371,13 +370,13 @@ First, wrap these UI elements in their own sub-widget, set the layout, and add i
     mainLayout->addWidget(shapeButtons);
 ```
 
-### Query Shape components
+### 查询 Shape 组件
 
-1. Query the types of Shape components registered with the engine. In O3DE, all components have a list of provided services that you can query from. In this example, you are looking for Shape components, which all provide "ShapeService".
+1. 查询向引擎注册的 Shape 组件的类型。在 O3DE 中，所有组件都有一个已提供服务的列表，您可以从中进行查询。在此示例中，您正在寻找 Shape 组件，这些组件都提供 “ShapeService”。
 
-   - Create a `AzToolsFramework::EntityCompositionRequests::ComponentServicesList` called `providedServices` and add "ShapeService".
+   - 创建 `AzToolsFramework::EntityCompositionRequests::ComponentServicesList` 命名为 `providedServices` 并添加"ShapeService"。
 
-    - Get a list of component types. Call `AzToolsFramework::EditorComponentAPIBus::BroadcastResult(...)` and dispatch `AzToolsFramework::EditorComponentAPIRequests::FindComponentTypeIdsByService`, which takes a list of services to include (`providedServices`) and services to exclude (an empty list) and stores the component types to `typeIds`.
+    - 获取组件类型列表。调用`AzToolsFramework::EditorComponentAPIBus::BroadcastResult(...)` 并分发`AzToolsFramework::EditorComponentAPIRequests::FindComponentTypeIdsByService`，它接受要包含的服务列表 （`providedServices`） 和要排除的服务 （空列表），并将组件类型存储到 `typeIds`。
 
     ```cpp
         AzToolsFramework::EntityCompositionRequests::ComponentServicesList providedServices;
@@ -393,9 +392,9 @@ First, wrap these UI elements in their own sub-widget, set the layout, and add i
     ```
 
 
-2. Query the names of the components to add to the buttons.
+2. 查询要添加到按钮的组件的名称。
 
-    - Get a list of component names. Call `AzToolsFramework::EditorComponentAPIBus::BroadcastResult(...)` and dispatch `AzToolsFramework::EditorComponentAPIRequests::FindComponentTypeNames`, which takes the list of component types (`typeIds`) and stores the corresponding component names to `componentNames`.
+    - 获取组件名称列表。调用 `AzToolsFramework::EditorComponentAPIBus::BroadcastResult(...)` 并调度 `AzToolsFramework::EditorComponentAPIRequests::FindComponentTypeNames`，它获取组件类型列表 (`typeIds`) 并将相应的组件名称存储到`componentNames`。
 
     ```cpp
         AZStd::vector<AZStd::string> componentNames;
@@ -407,23 +406,23 @@ First, wrap these UI elements in their own sub-widget, set the layout, and add i
     ```
 
 {{< note >}}
-You can query a list of services that components provide by calling the component's `GetProvidedServices()` method.
+您可以通过调用组件的`GetProvidedServices()` 方法来查询组件提供的服务列表。
 {{< /note >}}
 
 
-### Add buttons
+### 添加按钮
 
-A button is a UI element that the user can click to trigger a user-defined behavior. With Qt, you can create a button by using the `QPushButton` object. In this example, when the user clicks on the button, it will create an entity with a Shape component. You will define this behavior later.
+按钮是一个 UI 元素，用户可以单击该元素来触发用户定义的行为。在 Qt 中，您可以使用 `QPushButton`对象创建按钮。在此示例中，当用户单击按钮时，它将创建一个具有 Shape 组件的实体。稍后将定义此行为。
 
-Loop through the list of component names, create buttons, and add them to the `gridLayout`. For each component:
+遍历组件名称列表，创建按钮，并将它们添加到`gridLayout` 中。对于每个组件：
 
-1. Store the component's name and type from the list of component names and types that you queried earlier. In this example, we'll name them `name` and `typeId`. 
+1. 存储您之前查询的组件名称和类型列表中的组件名称和类型。在此示例中，我们将它们命名为 `name` 和 `typeId`。
 
-2. Create a button by instantiating `QPushButton`. In this example, name it `shapeButton`. Pass in `name` to add the component's name onto the button. 
+2. 通过实例化`QPushButton`创建一个按钮。在此示例中，将其命名为`shapeButton`。传入 `name` 以将组件的名称添加到按钮上。
 
-3. Later, you will connect `shapeButton` to a signal listener. 
+3. 稍后，您将 `shapeButton` 连接到信号侦听器。
 
-4. Split `gridLayout` into three columns, and add the button.
+4. 将 `gridLayout` 拆分为 3 列，并添加按钮。
 
 ```cpp
     const int maxColumnCount = 3;
@@ -442,20 +441,20 @@ Loop through the list of component names, create buttons, and add them to the `g
     }
 ```
 
-### Add a signal listener with a lambda handler
+### 添加具有 lambda 处理程序的信号侦听器
 
-Next, create a signal listener such that when the user clicks the button, an entity will be created in your scene and the corresponding Shape component will be added to that entity.
+接下来，创建一个信号侦听器，这样当用户单击该按钮时，将在场景中创建一个实体，并将相应的 Shape 组件添加到该实体中。
 
-In this example, the signal listener uses a lambda handler, so you can define the C++ function without defining a slot.
+在此示例中，信号侦听器使用 lambda 处理程序，因此您可以定义 C++ 函数，而无需定义槽。
 
-1. Define `CreateEntityWithShapeComponent` as a standard C++ function in `ShapeExampleWidget.h`. This function accepts an `AZ::TypeId&` as a parameter so it can create an entity with the specified component type.
+1. 在`ShapeExampleWidget.h`中将 `CreateEntityWithShapeComponent`定义为标准 C++ 函数。此函数接受 `AZ::TypeId&` 作为参数，以便它可以创建具有指定组件类型的实体。
 
     ```cpp
     private:
         void CreateEntityWithShapeComponent(const AZ::TypeId& typeId);
     ```
 
-2. In the loop that you created earlier, create a connection from the `clicked` signal in the `shapeButton` to the lambda function in `this`. The lambda function calls `CreateEntityWithShapeComponent(...)` and captures the `typeId` for the Shape component being iterated over.
+2. 在您之前创建的循环中，创建从 `shapeButton` 中的 `clicked` 信号到 `this` 中的 lambda 函数的连接。lambda 函数调用 `CreateEntityWithShapeComponent(...)` 并捕获正在迭代的 Shape 组件的 `typeId`。
 
     ```cpp
         QObject::connect(shapeButton, &QPushButton::clicked, this, [this, typeId]() {
@@ -464,32 +463,32 @@ In this example, the signal listener uses a lambda handler, so you can define th
     ```
 
 
-### Communicate with EBuses
+### 与 EBuse 通信
 
-Define `CreateEntityWithShapeComponent(...)`, which communicates with O3DE EBuses to create a new entity with a component specified by the `typeId` parameter.
+定义 `CreateEntityWithShapeComponent(...)`，它与 O3DE 事件总线通信，以使用由 `typeId`参数指定的组件创建新实体。
 
-1. Send a request to create a new entity by calling `EditorRequestBus::BroadcastResult(...)`. Dispatch the `EditorRequests::IsLevelDocumentOpen` event, which will return true/false if a level has been loaded or not.
-   - Attempting to create an Entity without a level loaded will cause a crash, so if a level isn't loaded, we will print a warning message and then return.
+1. 调用`EditorRequestBus::BroadcastResult(...)`发送请求以创建新实体。分发 `EditorRequests::IsLevelDocumentOpen` 事件，如果关卡已加载，则返回 true/false。
+   - 尝试在未加载关卡的情况下创建 Entity 将导致崩溃，因此如果未加载关卡，我们将打印警告消息，然后返回。
 
-2. Send a request to create a new entity by calling `EditorRequestBus::BroadcastResult(...)`. Dispatch the `EditorRequests::CreateNewEntity` event, which creates a new entity and returns its `AZ::EntityId`. The new entity's `AZ::EntityId` is stored in `newEntityId`.
+2. 调用`EditorRequestBus::BroadcastResult(...)`发送请求以创建新实体. 分发`EditorRequests::CreateNewEntity` 事件，这将创建一个新实体并返回其`AZ::EntityId`。 新实体的 `AZ::EntityId` 被存储在 `newEntityId`中。
 
-3. If the user entered a name in the input field, update the entity's name.
+3. 如果用户在输入字段中输入了名称，请更新实体的名称。
 
-   - Get the name of the entity by calling `text()`, and store it in `entityName`.
+   - 通过调用`text()`获取实体的名称，并将其存储在`entityName` 中。
 
-   - If the user enabled the checkbox to apply a suffix of the component's name to the entity's name, query the component's name. Call `EditorComponentAPIBus::BroadcastResult(...)` and dispatch the `EditorComponentAPIRequests::FindComponentTypeNames` event, which finds the component names of the provided list and stores them in `componentNames`.  
+   - 如果用户启用了复选框以将组件名称的后缀应用于实体名称，请查询组件的名称。调用 `EditorComponentAPIBus::BroadcastResult(...)`并调度 `EditorComponentAPIRequests::FindComponentTypeNames` 事件，该事件将查找所提供列表的组件名称并将其存储在  `componentNames`中。  
 
-   - Format the name and suffix, if any.
+   - 设置名称和后缀的格式（如果有）。
 
-   - Call `EditorEntityAPIBus::Event(...)` and dispatch `EditorEntityAPIRequests::SetName` to set the name of `newEntityId` to `entityName`.
+   - 调用 `EditorEntityAPIBus::Event(...)` 并调度`EditorEntityAPIRequests::SetName` 设置`newEntityId` 的名称为 `entityName`。
 
-4. Set the entity's scale.
+4. 设置实体的比例。
 
-   - Get the value in the combobox by calling `currentText()`, and store it in `scale`.
+   - 通过调用`currentText()`获取组合框中的值，并将其存储在`scale`中。
 
-   - Set the entity's scale by calling `AZ::TransformBus::Event()`. Dispatch `SetLocalUniformScale` to set the scale of `newEntityId`.
+   - 通过调用 `AZ::TransformBus::Event()`设置实体的缩放。调度 `SetLocalUniformScale` 以设置 `newEntityId`的缩放。
 
-5. Add a Shape component to the entity. Call `EditorComponentAPIBus::Broadcast(...)` and dispatch `EditorComponentAPIRequests::AddComponentsOfType`, which adds the components from the provided list to `newEntityId`.
+5. 将 Shape 组件添加到实体。调用 `EditorComponentAPIBus::Broadcast(...)`并调度 `EditorComponentAPIRequests::AddComponentsOfType`，这会将所提供列表中的组件添加到`newEntityId`。
 
 ```cpp
 void ShapeExampleWidget::CreateEntityWithShapeComponent(const AZ::TypeId& typeId)
@@ -546,21 +545,21 @@ void ShapeExampleWidget::CreateEntityWithShapeComponent(const AZ::TypeId& typeId
 ```
 
 
-## Icon
+## 图标
 
-An icon is an image file that's used to represent your tool in the Editor. The icon appears in the Edit Mode Toolbar in the Editor (see the following image).
+图标是用于在 Editor 中表示工具的图像文件。该图标显示在 Editor 的 Edit Mode 工具栏中（请参阅下图）。
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/icon.png" "500" "Add an icon for your tool in the Editor" >}}
 
 
-### Add an icon
+### 添加图标
 
-The following instructions walk you through how to store the icon using the Qt Resource System and load it from your Gem module. Be aware that some of the instructions may already be done by the `CppToolGem` template.
+以下说明将指导您了解如何使用 Qt 资源系统存储图标并从 Gem 模块加载它。请注意，某些指令可能已经由 `CppToolGem` 模板完成。
 
-1. Add an image file to the `Code\Source` directory to use as your icon. In this example, the icon is named `toolbar.svg`. We recommend that your icon adheres to the guidelines in [UI development best practices](/docs/tools-ui/uidev-component-development-guidelines/#ui-development-best-practices).
+1. 将图像文件添加到`Code\Source`目录以用作图标。在此示例中，图标名为 `toolbar.svg`。我们建议您的图标遵循 [UI 开发最佳实践](/docs/tools-ui/uidev-component-development-guidelines/#ui-development-best-practices)中的准则。
 
-2. Add your icon to MyCppShapeExample Gem's resources by updating `Code\Source\MyCppShapeExample.qrc` with your new icon's file name.
-    
+2. 通过使用新图标的文件名更新`Code\Source\MyCppShapeExample.qrc`，将您的图标添加到 MyCppShapeExample Gem 的资源中。
+
     ```xml
     <!DOCTYPE RCC><RCC version="1.0">
         <qresource prefix="/MyCppShapeExample">
@@ -569,9 +568,9 @@ The following instructions walk you through how to store the icon using the Qt R
     </RCC>
     ```
 
-3. Register MyCppShapeExample Gem's resources to Qt Resource System by adding the following code in `Code\Source\EditorModule.cpp`.
+3. 通过在 `Code\Source\EditorModule.cpp` 中添加以下代码，将 MyCppShapeExample Gem 的资源注册到 Qt 资源系统。
 
-    - Define the function `InitShapeExampleResources()` and call `Q_INIT_RESOURCE(...)` to register the Qt resources listed in `MyCppShapeExample.qrc`.
+    - 定义函数 `InitShapeExampleResources()` 并调用 `Q_INIT_RESOURCE(...)` 注册 `MyCppShapeExample.qrc` 中列出的 Qt 资源。
 
     ```cpp
     void InitShapeExampleResources()
@@ -580,44 +579,43 @@ The following instructions walk you through how to store the icon using the Qt R
     }
     ```
 
-   - Call `InitShapeExampleResources()` in the `EditorModule` class's constructor.
+   - 在`EditorModule`类构造函数中调用 `InitShapeExampleResources()`。
 
-## Build and test your tool
+## 构建和测试你的工具
 
-### Windows
+### 窗户
 
-For Windows, build and debug your custom tool using **Visual Studio**.
+对于 Windows，请使用 **Visual Studio** 构建和调试您的自定义工具。
 
-1. Launch Visual Studio and open the O3DE solution.
+1. 启动 Visual Studio 并打开 O3DE 解决方案。
 
-1. Find your Gem in the Solution Explorer. Right-click and select **Build** or **Debug**.
+1. 在 Solution Explorer 中找到您的 Gem。右键单击并选择 **Build** 或 **Debug**。
 
-1. Open your project in the Editor and load the Gem.
+1. 在 Editor 中打开您的项目并加载 Gem。
 
-Congratulations! You created a custom tool Gem that's written in C++, built it, and loaded it in the Editor. Your Shape Example tool should look something like this:
+祝贺！您创建了一个用 C++ 编写的自定义工具 Gem，构建了它，并将其加载到 Editor 中。您的 Shape Example 工具应如下所示：
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/cpp-shape-example-ui.png" "500" "An image of the Shape Example tool." >}}
 
-## Download the ShapeExample Gem sample
+## 下载 ShapeExample Gem 示例
 
-Now that you've completed this tutorial, you can compare your MyCppShapeExample Gem to the sample Gem, **ShapeExample** Gem, in [`o3de/sample-code-gems` repository](https://github.com/o3de/sample-code-gems/tree/main/cpp_gems/ShapeExample). 
+现在，您已经完成了本教程，您可以将 MyCppShapeExample Gem 与 [`o3de/sample-code-gems` repository](https://github.com/o3de/sample-code-gems/tree/main/cpp_gems/ShapeExample) 中的示例 Gem **ShapeExample** Gem 进行比较。
 
-To download this sample and load it in the Editor.
+下载此示例并将其加载到 Editor 中。
 
-1. Download or clone the repository. The ShapeExample Gem is located in `<repo>\sample-code-gems\cpp_gems\ShapeExample`.
+1. 下载或克隆存储库。ShapeExample Gem 位于 `<repo>\sample-code-gems\cpp_gems\ShapeExample`中。
 
     ```cmd
     git clone https://github.com/o3de/sample-code-gems.git
     ```
+2. 在打开“形状示例”工具之前，请执行以下操作：
 
-2. Before you can open the Shape Example tool, do the following:
+   - 注册您的 Gem。
 
-   - Register your Gem.
+   - 在您的项目中启用它。
 
-   - Enable it in your project.
+   - 重新构建您的项目。
 
-   - Rebuild your project.
+   - 在 Editor 中打开该工具。
 
-   - Open the tool in the Editor.
-
-    These steps are explained earlier in this tutorial. Refer to [Create a Gem from the `CppToolGem` template](#create-a-gem-from-the-cpptoolgem-template).
+   本教程前面将介绍这些步骤。请参阅 [从`CppToolGem`模板创建 Gem](#create-a-gem-from-the-cpptoolgem-template).

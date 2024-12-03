@@ -1,228 +1,228 @@
 ---
-linktitle: Entity and Prefab Basics
-title: Entity and Prefab Basics
-description: Learn the basics of creating and working with entities and prefabs in Open 3D Engine (O3DE).
+linktitle: 实体和预制件基础知识
+title: 实体和预制件基础知识
+description: 了解在 Open 3D Engine （O3DE） 中创建和使用实体和预制件的基础知识。
 weight: 200
 toc: true
 ---
 
-This tutorial introduces entities and prefabs, and explains how to create, modify, and save them for your **Open 3D Engine (O3DE)** projects.
+本教程介绍实体和预制件，并说明如何为 Open 3D Engine （O3DE） 项目创建、修改和保存它们。
 
-| O3DE Experience | Time to Complete | Feature Focus | Last Updated |
-| --- | --- | --- | --- |
-| Beginner | 25 Minutes | Creating, modifying, and saving entities and prefabs. | January 11, 2023 |
+|O3DE 体验 |完成时间 |功能聚焦 |最后更新 |
+|--- |--- |--- |--- |
+|初级 |25 分钟 |创建、修改和保存实体和预制件。 | January 11, 2023 |
 
-## Prerequisites
+## 先决条件
 
-* Basic knowledge of working with [O3DE Editor](/docs/user-guide/editor).
-* A project built from the standard project template or one that contains the Gems in the standard template.
+* 具备使用 [O3DE 编辑器](/docs/user-guide/editor) 的基本知识。
+* 从标准项目模板构建的项目，或包含标准模板中的 Gem 的项目。
 
-## What are entities and prefabs?
+## 什么是实体和预制件？
 
-Entities and prefabs provide the foundation for building projects in O3DE. An entity is a collection of any combination of components that define an object. The only required component for an entity is a [**Transform**](/docs/user-guide/components/reference/transform) component that places the entity in the level. An entity is an abstract concept, though, and only exists within the context of a level or a prefab. Saving an entity to disk requires saving the level that contains it, or creating a prefab from the entity.
+实体和预制件为在 O3DE 中构建项目提供了基础。实体是定义对象的组件的任意组合的集合。实体唯一需要的组件是将实体放置在关卡中的 [**Transform**](/docs/user-guide/components/reference/transform)组件。但是，实体是一个抽象概念，仅存在于关卡或预制件的上下文中。将实体保存到磁盘需要保存包含它的关卡，或从实体创建预制件。
 
-A prefab is a container that can have one or more child entities or prefab instances. Prefabs are files saved to disk that can be instantiated at edit-time or spawned at runtime. Prefabs that exist in a level are *instances* of a file prefab. Changes made to a prefab that is open for editing in **O3DE Editor** automatically propagate to the instances of that prefab.
+预制件是可以具有一个或多个子实体或预制件实例的容器。预制件是保存到磁盘的文件，可以在编辑时实例化或在运行时生成。存在于关卡中的预制件是文件预制件的 *实例*。对在 **O3DE Editor 中打开以供编辑的预设件所做的更改将自动传播到该预设件的实例。
 
-The entities and prefab instances placed in a level are shown in **Entity Outliner**. Entities are indicated by a {{< icon "entity.svg" >}} white cube icon. Prefab instances are indicated by a {{< icon "prefab.svg" >}} white container icon with a dark gray background. Prefab instances also display the prefab file name on the right.
+放置在关卡中的实体和预制件实例显示在 **Entity Outliner** 中。实体由 {{< icon "entity.svg" >}} 白色立方体图标表示。预制件实例由{{< icon "prefab.svg" >}} 白色容器图标表示，背景为深灰色。预制件实例还会在右侧显示预制件文件名。
 
 ![An entity and a prefab in Entity Outliner.](/images/learning-guide/tutorials/entities-and-prefabs/entity-outliner.png)
 
-The sections in this topic demonstrate the basics of working with entities, prefabs, and prefab instances.
+本主题中的各节演示了使用实体、预制件和预制件实例的基础知识。
 
-## Create an entity
+## 创建实体
 
-You can create an entity with either of the following methods:
+您可以使用以下任一方法创建实体：
 
-* In Entity Outliner or the viewport, **right-click** and choose **Create entity** from the context menu.
-* With Entity Outliner focused, press **Ctrl+Alt+N**.
+* 在 Entity Outliner 或视区中，右键单击并从上下文菜单中选择 **Create entity**。
+* 聚焦 Entity Outliner 时，按 **Ctrl+Alt+N**。
 
 ![Creating a new entity in Entity Outliner.](/images/learning-guide/tutorials/entities-and-prefabs/create-entity.png)
 
-To create an entity with an asset as its basis, **drag** an asset such as a `.azmodel` or a `.actor` from **Asset Browser** into Entity Outliner or the viewport. In the following video, a `.azmodel` is dragged into the viewport from Asset Browser, and a new entity with a **Mesh** component is created in the level.
+要创建以资产为基础的实体，请将 `.azmodel` 或 `.actor` 等资产从 **Asset Browser** 拖到 Entity Outliner 或视区中。在以下视频中，将`.azmodel`从 Asset Browser 拖动到视区中，并在关卡中创建具有 **Mesh** 组件的新实体。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/create-entity.mp4" info="Drag and drop to create an entity." autoplay="true" loop="true" width="900" >}}
 
-## Create a prefab
+## 创建预制件
 
-Prefabs are saved to disk and allow you to easily reuse objects by instantiating them in a level or spawning them at runtime. Prefabs are created from entities with the following steps:
+预制件保存到磁盘中，并允许您通过在关卡中实例化它们或在运行时生成它们来轻松重用对象。预制件是通过以下步骤从实体创建的：
 
-1. In Entity Outliner, **right-click** on an entity and choose **Create Prefab...** from the context menu.
-1. In the **Save As…** window, choose a directory in your project, such as the `Prefabs` directory, supply a name for the prefab, and choose **Save**.
+1. 在 Entity Outliner 中，右键单击实体，然后从上下文菜单中选择 **Create Prefab...**。
+1. 在 **Save As...** 窗口中，选择项目中的一个目录，例如`Prefabs`  目录，提供预制件的名称，然后选择 **Save**。
 
 ![Creating a prefab from an entity in Entity Outliner.](/images/learning-guide/tutorials/entities-and-prefabs/create-prefab.png)
 
-The prefab file is saved to disk and an instance of the prefab replaces the entity in O3DE Editor. The prefab instance displays the name of the instance on the left next to the {{< icon "prefab.svg" >}} prefab icon. The name of the prefab file is displayed on the right. In the following image, notice that the level itself is a prefab.
+预制件文件将保存到磁盘，并且预制件的实例将替换 O3DE Editor 中的实体。预制件实例在左侧的{{< icon "prefab.svg" >}} 预制件图标旁边显示实例的名称。预制件文件的名称显示在右侧。在下图中，请注意关卡本身是一个预制件。
 
 ![A new prefab instance in Entity Outliner.](/images/learning-guide/tutorials/entities-and-prefabs/prefab-instanced.png)
 
-### Create a prefab from a collection of entities and prefab instances
+### 从实体和预制件实例的集合创建预制件
 
-Complex prefabs might require multiple entities and prefab instances. You can create a prefab from a combination of entities and prefab instances with the following steps:
+复杂预制件可能需要多个实体和预制件实例。您可以通过以下步骤从实体和预制件实例的组合创建预制件：
 
-1. Select the entities and prefab instances you want included in the new prefab. You can select multiple entities and prefab instances by holding **SHIFT** and clicking on each entity and prefab instance. Alternatively, you can **drag** a selection box around a group of entities and prefab instances in Entity Outliner or in the viewport.
-1. In Entity Outliner, **right-click** one of the selected entities or prefab instances and choose **Create Prefab...** from the context menu.
-1. In the **Save As…** window, choose a directory in your project, such as the `Prefabs` directory, supply a name for the prefab, and choose **Save**.
+1. 选择要包含在新预制件中的实体和预制件实例。您可以通过按住 **SHIFT** 并单击每个实体和预制件实例来选择多个实体和预制件实例。或者，您可以在 Entity Outliner 或视区中围绕一组实体和预制件实例 **拖动** 选择框。
+1. 在 Entity Outliner 中，**右键单击**选定的实体或预制件实例之一，然后从上下文菜单中选择 **Create Prefab...**。
+1. 在 **Save as...** 窗口中，选择项目中的一个目录，例如`Prefabs`目录，提供预制件的名称，然后选择 **Save**。
 
-In the following video, a prefab instance and an entity with a hierarchy are selected for a new prefab. When the new prefab instance is opened in [Prefab Edit Mode](#edit-a-prefab), it displays that the hierarchy is maintained in the new prefab.
+在以下视频中，为新预制件选择了一个预制件实例和一个具有层次结构的实体。当在 [Prefab Edit Mode](#edit-a-prefab) 中打开新的 Prefab 实例时，它显示层次结构已保留在新的 Prefab 中。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/multiple-entity-prefab.mp4" info="Creating a prefab from a collection of entities and prefabs." autoplay="true" loop="true" >}}
 
-## Instantiate a prefab
+## 实例化一个预制件
 
-Prefabs can be added to a level or another prefab as a prefab instance. To instantiate a prefab, do the following:
+预制件可以作为预制件实例添加到关卡或其他预制件中。要实例化预制件，请执行以下操作：
 
-1. **Right-click** in Entity Outliner or the viewport and choose **Instantiate Prefab...** from the context menu.
-1. In the **Pick Prefab** window, navigate to the prefab file you want to instantiate and select it. Choose **OK**.
+1. 在 Entity Outliner 或视区中 **右键单击**，然后从上下文菜单中选择 **Instantiate Prefab...**。
+1. 在 **Pick Prefab** 窗口中，导航到要实例化的预制件文件并将其选中。选择 **确定**。
 
 ![Instantiate a prefab in Entity Outliner.](/images/learning-guide/tutorials/entities-and-prefabs/instantiate-prefab.png)
 
-Alternatively, you can **drag** a `.prefab` from Asset Browser into Entity Outliner or the viewport to instantiate it, as demonstrated in the following video.
+或者，您也可以将 `.prefab` 从 Asset Browser 拖动到 Entity Outliner 或视区中以实例化它，如以下视频所示。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/prefab-instance.mp4" info="Drag and drop to instantiate a prefab." autoplay="true" loop="true" width="900" >}}
 
-## Naming entities and prefab instances
+## 命名实体和预制件实例
 
-The name of a prefab instance is derived from the prefab file name. However, each prefab instance can have a unique name. You can edit the name of a selected  entity or prefab instance with any of the following methods:
+预制件实例的名称派生自预制件文件名。但是，每个预制件实例都可以具有唯一的名称。您可以使用以下任一方法编辑所选实体或预制件实例的名称：
 
-* **Click** the name of the entity or prefab instance in Entity Outliner to edit it.
-* Press **F2** to edit the name.
-* In Entity Outliner, **right-click** on the entity or prefab instance and choose **Rename** from the context menu.
-* In **Entity Inspector**, edit the name field.
+* **单击** Entity Outliner 中实体或预制件实例的名称以对其进行编辑。
+* 按 **F2** 编辑名称。
+* 在 Entity Outliner 中，右键单击实体或预制件实例，然后从上下文菜单中选择 **Rename**。
+* 在 **Entity Inspector**中，编辑 name 字段。
 
 ![Renaming a prefab.](/images/learning-guide/tutorials/entities-and-prefabs/rename-prefab.png)
 
 {{< note >}}
-Entities and prefab instances aren't required to have unique names. When you instantiate a prefab, or duplicate an entity or a prefab instance, the name of the instance or duplicate is the same as the source. Each entity and prefab instance has a unique Entity ID that is used by O3DE to identify them.
+实体和预制件实例不需要具有唯一名称。实例化预制件或复制实体或预制件实例时，实例或副本的名称与源的名称相同。每个实体和预制件实例都有一个唯一的实体 ID，O3DE 使用该 ID 来标识它们。
 {{< /note >}}
 
-## Saving entities and prefabs
+## 保存实体和预制件
 
-To save an entity, you must save the level that contains the entity (choose **Save** from the file menu or press **CTRL+S**). Alternatively, you can [create a prefab](#creating-entities-and-prefabs) from the entity.
+要保存实体，必须保存包含该实体的关卡（从文件菜单中选择 **Save** 或按 **CTRL+S**）。或者，您可以从实体 [创建预制件](#creating-entities-and-prefabs)。
 
-To save a prefab, in Entity Outliner or in the viewport, **right-click** on the prefab instance and choose **Save Prefab to file** from the context menu.
+要保存预制件，请在 Entity Outliner 或视区中右键单击预制件实例，然后从上下文菜单中选择 **Save Prefab to file**。
 
 ![Saving a prefab.](/images/learning-guide/tutorials/entities-and-prefabs/save-prefab.png)
 
 {{< note >}}
-The **Save Prefab to file** option appears in the context menu only when the prefab instance has unsaved changes. When a prefab instance has unsaved changes, it displays an **\*** to the right of the prefab file name in Entity Outliner. If you attempt to save or close a level containing prefab instances that have been edited, a window appears warning of unsaved prefabs. The warning lists the unsaved prefabs and provides an opportunity to save them.
+**Save Prefab to file** 选项仅在预制件实例具有未保存的更改时显示在上下文菜单中。当预制件实例具有未保存的更改时，它会在 Entity Outliner 中的预制件文件名右侧显示一个 **\***。如果尝试保存或关闭包含已编辑的预制件实例的关卡，则会显示一个窗口，警告未保存的预制件。该警告将列出未保存的预制件，并提供保存它们的机会。
 {{< /note >}}
 
-## View an entity or prefab instance
+## 查看实体或预制件实例
 
-To focus the viewport on a particular entity or prefab instance, use either of the following methods:
+要将视区聚焦在特定实体或预制件实例上，请使用以下任一方法：
 
-* **Right-click** the entity or prefab instance, and choose **Find in viewport** from the context menu.
-* With an entity or prefab instance selected, press **Z**.
+* **右键单击** 实体或预制件实例，然后从上下文菜单中选择 **Find in viewport**。
+* 选择实体或预制件实例后，按 **Z**。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/find-in-viewport.mp4" info="Focus the viewport on a prefab instance." autoplay="true" loop="true" width="900" >}}
 
-## Create entity and prefab hierarchies
+## 创建实体和预制件层次结构
 
-Entities and prefabs can have nested hierarchies. To create a hierarchy beneath an entity or within a prefab, **drag** an entity or prefab instance onto the root entity or prefab instance in Entity Outliner. As you drag a prefab or entity, a pale blue highlight marks where it will be placed in the hierarchy.
+实体和预制件可以具有嵌套层次结构。要在实体下或预制件中创建层次结构，请将实体或预制件实例 **拖动** 到 Entity Outliner 中的根实体或预制件实例上。拖动预制件或实体时，淡蓝色高亮显示标记它将在层次结构中的位置。
 
 {{< note >}}
-Editing the hierarchy of a prefab requires that the prefab is open for edit in [Prefab Edit Mode](#edit-a-prefab).
+编辑预设件的层次结构要求在 [预设件编辑模式](#edit-a-prefab)中打开预设件进行编辑。
 {{< /note >}}
 
-In the following video, an entity and a prefab instance are added as children of an entity.
+在以下视频中，实体和预制件实例被添加为实体的子项。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/nested-entities.mp4" info="Nesting entities." autoplay="true" loop="true" >}}
 
-Entities and prefabs can have multiple levels of nesting. You can drag and drop the nested entities and prefabs to change the hierarchy as demonstrated in the following video. 
+实体和预制件可以具有多个级别的嵌套。您可以拖放嵌套实体和预制件来更改层次结构，如以下视频所示。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/multiple-nested.mp4" info="Rearranging a nested entity hierarchy." autoplay="true" loop="true" >}}
 
 
-## Edit an entity
+## 编辑实体
 
-A basic entity has a collection of components that define an object. You can add components to a selected entity by choosing **Add Component** in Entity Inspector and selecting a component from the list. In the following video, a **Material** component is added to an entity that contains a **Mesh** component.
+基本实体具有定义对象的组件集合。您可以通过在 Entity Inspector 中选择 **Add Component** 并从列表中选择一个组件，将组件添加到所选实体。在以下视频中，将 **Material** 组件添加到包含 **Mesh** 组件的实体中。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/basic-entity.mp4" info="Adding a component to an entity." autoplay="true" loop="true" >}}
 
-## Edit a prefab
+## 编辑预制件
 
-To make changes to a prefab it must be open for editing by entering **Prefab Edit Mode**.
+要更改预制件，必须通过输入 **Prefab Edit Mode** 打开它进行编辑。
 
-### Enter Prefab Edit Mode
+### 进入预制件编辑模式
 
-Use any of the following methods to enter Prefab Edit Mode:
+使用以下任一方法进入 Prefab Edit Mode：
 
-* **Double-click** the prefab instance in Entity Outliner or in the viewport.
-* **Right-click** the prefab instance in Entity Outliner or in the viewport and choose **Open/Edit Prefab** from the context menu.
-* With the prefab instance selected, press **+**.
+* **双击** Entity Outliner 或视区中的预制件实例。
+* 在 Entity Outliner 或视区中 **右键单击** 预制件实例，然后从上下文菜单中选择 **Open/Edit Prefab**。
+* 选择预制件实例后，按 **+**。
 
 ![Edit a prefab in Prefab Edit Mode.](/images/learning-guide/tutorials/entities-and-prefabs/edit-prefab.png)
 
-In Prefab Edit Mode, the prefab's contents are exposed in Entity Outliner within a blue frame. The viewport shifts to a monochromatic mode with the opened prefab rendered in full color. The toolbar above the viewport shows the path to the prefab that is open for edit. From the toolbar you can choose the **Prefab Edit Mode** list to switch the viewport render mode from monochromatic to color. When you select an entity contained in the prefab, the entity's components are displayed in Entity Inspector.
+在 Prefab Edit Mode 中，预制件的内容显示在 Entity Outliner 中的蓝色框架内。视区将切换到单色模式，打开的预制件将以全色渲染。视区上方的工具栏显示打开以供编辑的预制件的路径。从工具栏中，您可以选择 **Prefab Edit Mode** 列表，将视口渲染模式从单色切换到彩色。当您选择预制件中包含的实体时，该实体的组件将显示在 Entity Inspector 中。
 
 {{< image-width "/images/learning-guide/tutorials/entities-and-prefabs/prefab-focus-mode.png" "1200" "A prefab opened for editing in Prefab Edit Mode" >}}
 
-### Edit a prefab in Prefab Edit Mode
+### 在 Prefab Edit Mode 中编辑预制件
 
-When Prefab Edit Mode is active, you can use any entity and prefab editing actions within the context of the prefab. You can create, duplicate, remove, and rename entities and prefab instances, edit entities, create and instantiate prefabs, and create hierarchies of entities and prefab instances using the methods described in this topic. The results of any modifications happen within the context of the prefab that is in Prefab Edit Mode.
+当 Prefab Edit Mode （预设件编辑模式） 处于活动状态时，您可以在预设件的上下文中使用任何实体和预设件编辑操作。您可以使用本主题中描述的方法创建、复制、删除和重命名实体和预制件实例，编辑实体，创建和实例化预制件，以及创建实体和预制件实例的层次结构。任何修改的结果都会在 Prefab Edit Mode 中的预制件的上下文中发生。
 
-In the following video example, an `.azmodel` is dragged from Asset Browser into the viewport while a prefab is in Prefab Edit Mode. A new entity is created for the `.azmodel` within the prefab.
+在以下视频示例中，当预制件处于预制件编辑模式时，将`.azmodel`从 Asset Browser 拖动到视区中。将为预制件中的`.azmodel`创建一个新实体。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/create-entity-focus-mode.mp4" info="Creating an entity within a prefab in Prefab Edit Mode." autoplay="true" loop="true" width="1060" >}}
 
-When a prefab has unsaved changes, an **\*** appears next to the prefab file name. [Save the prefab](#saving-entities-and-prefabs) to write the changes to disk.
+当预制件具有未保存的更改时，预制件文件名旁边会显示一个 **\***。[保存预制件](#saving-entities-and-prefabs) 将更改写入磁盘。
 
-### Exit Prefab Edit Mode
+### 退出 Prefab 编辑模式
 
-Use any of the following methods to exit Prefab Edit Mode:
+使用以下任一方法退出 Prefab Edit Mode：
 
-* **Double-click** the prefab in Entity Outliner.
-* **Right-click** the prefab in Entity Outliner and choose **Close Prefab** from the context menu.
-* Press **-**.
+* **双击** Entity Outliner 中的预制件。
+* 在 Entity Outliner 中 **右键单击** 预制件，然后从上下文菜单中选择 **Close Prefab**。
+* 点击**-**。
 
-### Prefab Edit Mode and nested prefabs
+### 预制件编辑模式和嵌套预制件
 
-You can edit a nested prefab by opening the nested prefab in Prefab Edit Mode. In the following video, the nested prefab is opened for editing, and a new entity is created within the context of the nested prefab.
+您可以通过在 Prefab Edit Mode 中打开嵌套的预制件来编辑嵌套的预制件。在以下视频中，将打开嵌套预制件进行编辑，并在嵌套预制件的上下文中创建新实体。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/nested-focus-mode.mp4" info="Open a nested prefab for edit in Prefab Edit Mode." autoplay="true" loop="true" >}}
 
-## Detach a prefab instance
+## 分离预制件实例
 
-When a prefab instance is detached, its link to the prefab file is broken and the prefab instance is converted to an entity. The hierarchy of the prefab is maintained by the new entity. To detach a prefab instance, **right-click** the prefab instance and select **Detach Prefab...** from the context menu, as demonstrated in the following video.
+分离预制件实例时，其与预制件文件的链接将断开，并且预制件实例将转换为实体。预制件的层次结构由新实体维护。要分离预制件实例，请 **右键单击** 预制件实例，然后从上下文菜单中选择 **Detach Prefab...**，如以下视频所示。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/detach-prefab.mp4" info="Detach a prefab instance." autoplay="true" loop="true" >}}
 
 {{< note >}}
-A prefab instance cannot be detached when it is in Prefab Edit Mode.
+当预制件实例处于 Prefab Edit Mode 时，无法分离该实例。
 {{< /note >}}
 
-## Duplicate an entity or a prefab instance
+## 复制实体或预制件实例
 
-Selected entities and prefab instances can be duplicated with either of the following methods:
+可以使用以下任一方法复制选定的实体和预制件实例：
 
-* **Right-click** a selected entity or prefab instance and choose **Duplicate** from the context menu.
-* With an entity or prefab instance selected, press **CTRL+D**.
+* **右键单击** 选定的实体或预制件实例，然后从上下文菜单中选择 **Duplicate**。
+* 选择实体或预制件实例后，按 **CTRL+D**。
 
-The duplicate appears below the source entity or prefab instance with a name that is identical to the source entity or prefab instance. Examining the duplicate in Entity Inspector shows the duplicate has a unique Entity ID.
+副本显示在源实体或预制件实例的下方，其名称与源实体或预制件实例相同。在 Entity Inspector 中检查重复项会显示该重复项具有唯一的 Entity ID。
 
-When multiple entities and prefabs are selected, they all are duplicated along with their hierarchies, as demonstrated in the following video.
+选择多个实体和预制件时，它们都将与其层次结构一起复制，如以下视频所示。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/multiple-duplicates.mp4" info="Duplicating multiple entities and prefab instances." autoplay="true" loop="true" >}}
 
-In the following video, a nested entity and a prefab instance are duplicated in place within the hierarchy of a prefab.
+在以下视频中，嵌套实体和预制件实例在预制件的层次结构中就地复制。
 
 {{< video src="/images/learning-guide/tutorials/entities-and-prefabs/nested-duplicate.mp4" info="Duplicating nested entities and prefab instances." autoplay="true" loop="true" >}}
 
-## Delete entities and prefab instances
+## 删除实体和预制件实例
 
-You can delete selected entities and prefab instances with either of the following methods:
+您可以使用以下任一方法删除选定的实体和预制件实例：
 
-* **Right-click** a selected entity or prefab instance and choose **Delete** from the context menu.
-* With an entity or prefab instance selected, press **DEL**.
+* **右键单击** 选定的实体或预制件实例，然后从上下文菜单中选择 **Delete**。
+* 选择实体或预制件实例后，按 **DEL**。
 
 {{< note >}}
-When an entity or a prefab instance is deleted from a level, you must save the level (press **CTRL+S**) to commit the change.
+从关卡中删除实体或预制件实例时，必须保存关卡（按 **CTRL+S**）以提交更改。
 
-When an entity or prefab instance is deleted from a prefab, you must [save the prefab](#saving-entities-and-prefabs) to commit the change.
+从预制件中删除实体或预制件实例时，您必须 [保存预制件](#saving-entities-and-prefabs)  以提交更改。
 
-Deleting a prefab instance has no effect on the prefab file that has been used to create the prefab instance. The prefab instance is removed, but the `.prefab` file on disk is not changed. 
+删除预制件实例不会影响用于创建预制件实例的预制件文件。预制件实例将被删除，但磁盘上的 `.prefab` 文件不会更改。
 {{< /note >}}
 
-## Conclusion and next steps
+## 结论和下一步
 
-Now that you understand the basics of creating and working with prefabs, you can learn how to apply an override to a single prefab instance. Learn to [Override a Prefab](override-a-prefab) in the next tutorial.
+现在，您已经了解了创建和使用预制件的基础知识，您可以学习如何将覆盖应用于单个预制件实例。在下一个教程中学习 [覆盖预制件](override-a-prefab)。

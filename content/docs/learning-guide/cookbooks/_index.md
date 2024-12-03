@@ -1,7 +1,7 @@
 ---
 linktitle: Cookbooks
 title: Open 3D Engine (O3DE) Cookbooks
-description: Discover practical, tested solutions for common scenarios in Open 3D Engine (O3DE).
+description: 在 Open 3D Engine （O3DE） 中发现适用于常见场景的实用、经过测试的解决方案。
 weight: 100
 draft: true
 ---
@@ -9,4 +9,4 @@ draft: true
 {{< todo issue="https://github.com/o3de/o3de.org/issues/1564" >}}
 {{< /todo >}}
 
-Discover practical, tested solutions for common scenarios in **Open 3D Engine (O3DE)**.
+在 **Open 3D Engine （O3DE）** 中发现适用于常见场景的实用、经过测试的解决方案。

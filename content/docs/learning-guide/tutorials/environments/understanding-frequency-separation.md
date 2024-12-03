@@ -1,85 +1,86 @@
 ---
-linkTitle: Understanding Frequency Separation
-title: Understanding Frequency Separation
-description: Learn various frequency separation techniques and how they apply to detail materials.
+linkTitle: 了解频率分离
+title: 了解频率分离
+description: 了解各种频率分离技术以及它们如何应用于细节材质。
 weight: 300
 toc: true
 ---
 
-This tutorial helps us understand the importance of Frequency Separation (FS), which is a technique used in image editing to separate the high-frequency details, such as texture and blemishes, from the low-frequency information, such as color and tone. This allows the editor to make adjustments to these different elements separately, allowing for more precise and targeted edits. For example, the Image Author could use frequency separation to smooth out the skin tone of a portrait without losing the texture of the skin, or to remove blemishes without affecting the overall skin tone. The technique involves creating two layers in the image, one for the high frequencies and one for the low frequencies, and then using blurring and other techniques to separate the two layers. Frequency separation can be a useful tool in a variety of editing situations, including portrait retouching, product photography, and landscape editing.
+本教程帮助我们了解频率分离 （FS） 的重要性，FS 是图像编辑中使用的一种技术，用于将高频细节（如纹理和瑕疵）与低频信息（如颜色和色调）分开。这允许编辑器分别对这些不同的元素进行调整，从而实现更精确和有针对性的编辑。例如，图像作者可以使用频率分离来平滑肖像的肤色而不会丢失皮肤的纹理，或者在不影响整体肤色的情况下去除瑕疵。该技术涉及在图像中创建两个图层，一个用于高频，一个用于低频，然后使用模糊和其他技术将这两个图层分开。频率分离在各种编辑情况下都是一个有用的工具，包括人像修饰、产品摄影和横向编辑。
 
-## Generating low and high pass
+## 生成低通和高通
 
-Terrain detail maps can be derived from running a high pass filter on an image. Starting from an image with lots of color and detail, we are going to separate out the low frequency and high frequency data.
-Separating low/high frequency data from an image is a manual process in an image editor, such as Photoshop.
+地形细节贴图可以通过对图像运行高通过滤器来获得。从具有大量颜色和细节的图像开始，我们将分离出低频和高频数据。
+从图像中分离低频/高频数据是图像编辑器（如 Photoshop）中的手动过程。
 
-You can generate a basic high-pass texture a number of ways:
-1. Use a High-Pass Filter in your Image Editor:
-    * Adobe® Photoshop® software: menubar > filter > other > High Pass
-    * Gimp: by using Filters->Enhance->High Pass, with Std Dev=10, Contrast=1.0.
-    * Krita: you can use the method outlined in this document
-1. Or a similar High-Pass filter in your material authoring app, such as “Adobe®  Substance3D Designer® software:
-    * Google searching "substance high-pass" or "substance luminance highpass" will get you to those help pages
+您可以通过多种方式生成基本的高通纹理：
+1. 在图像编辑器中使用高通滤波器：
+    * Adobe® Photoshop® 软件: 菜单栏 > filter > other > High Pass
+    * Gimp: 使用 Filters->Enhance->High Pass, with Std Dev=10, Contrast=1.0.
+    * Krita: 您可以使用本文档中概述的方法
+1. 或者您的材质创作应用程序中的类似高通滤波器，例如“Adobe® Substance3D Designer® 软件：
+    * 在 Google 上搜索“substance high-pass”或“substance luminance highpass”会让你进入这些帮助页面
 
-This document describes a non-filter approach that has more flexibility, which can be used to separate an image into two textures:
-1. A high-frequency variation texture that is suitable for use in a Terrain Detail Material.
-1. A low-frequency color map that can be used in Terrain Macro Color workflows.
+本文档介绍了一种具有更大灵活性的非滤镜方法，该方法可用于将图像分为两个纹理：
+1. 适合在 Terrain Detail 材质中使用的高频变化纹理。
+1. 可在 Terrain Macro Color 工作流中使用的低频颜色贴图。
 
-The following section explains how to generate layers in Photoshop that contain low and high pass filters of a base image:
-| <div style="width:250px">Original (Layer 1)</div> | <div style="width:250px">Low pass filter (Layer 2)</div> | <div style="width:250px">High pass filter (Layer 3)</div> |
+以下部分介绍如何在 Photoshop 中生成包含基本图像的低通和高通滤镜的图层：
+
+| <div style="width:250px">原始 (Layer 1)</div> | <div style="width:250px">低通滤波器(Layer 2)</div> | <div style="width:250px">高通滤波器(Layer 3)</div> |
 | :-- | :-- | :-- |
 |{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/original_image.png" width="250" alt="Original (Layer 1)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/original_low_pass.png" width="250" alt="Low pass filter (Layer 2)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/original_high_pass.png" width="250" alt="High pass filter (Layer 3)" >}}|
-|<ul><li>Base layer only</li></ul>|<ul><li>Duplicate the original image into Layer 2</li><li>Gaussian blur (I used 16)</li><li><b>NOTE:</b>The higher the blur, the less information<br>in the low pass/more information in the high pass.</li><li><b>Alternatively:</b> You can find the average single color<br>value of the entire image, and then use this solid<br>color as the low pass. This will maximize the<br>amount of detail and color variance that remains<br>in the high pass detail.</li></ul>|<ul><li>Duplicate the original image again into Layer 3</li><li>Now we are going to generate the high pass</li><li>In photoshop, with Layer 3 selected</li><li>Use the menu option: Image > Apply Image</li><li>In the dialog use the following settings<ul><li>Layer: (Use Layer 2)</li><li>Blending: (Use subtract)</li><li>Scale: (Use 2)</li><li>Offset: (Use 128)</li></ul></li></ul>This will get you a high pass image like above ^<br>{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/ps_blur_dialog.png" alt="Photoshop gaussian blur for 8-bit image" >}}<br>Note: The settings above are the settings for an 8-bit image.<br>The scale and offset settings for a 16-bit image are as follows:<ul><li>Check invert</li><li>Blending: (Use add)</li><li>Scale: (Use 2)</li><li>Offset: (Use 0)</li></ul></li></ul>{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/ps_blur_dialog_16.png" alt="Photoshop gaussian blur for 16-bit image" >}}|
+|<ul><li>Base layer only</li></ul>|<ul><li>将原始图像复制到第 2 层</li><li>高斯模糊（我用了 16）</li><li><b>注意:</b>模糊程度越高，<br>低通中的信息越少，而高通中的信息就越多。</li><li><b>Alternatively:</b> 您可以找到<br>整个图像的平均单色值，然后将此纯<br>色用作低通。这将最大化<br>高<br>通道细节中保留的细节量和颜色变化。</li></ul>|<ul><li>将原始图像再次复制到图层 3 中</li><li>现在我们将生成高通</li><li>In photoshop, with Layer 3 selected</li><li>使用菜单选项： Image > Apply Image</li><li>在对话框中，使用以下设置<ul><li>Layer: (Use Layer 2)</li><li>Blending: (Use subtract)</li><li>Scale: (Use 2)</li><li>Offset: (Use 128)</li></ul></li></ul>这将为您提供如上所示的高通图像 ^<br>{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/ps_blur_dialog.png" alt="Photoshop gaussian blur for 8-bit image" >}}<br>注： 以上设置是 8 位图像的设置。<br>16 位图像的缩放和偏移设置如下：<ul><li>Check invert</li><li>Blending: (Use add)</li><li>Scale: (Use 2)</li><li>Offset: (Use 0)</li></ul></li></ul>{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/ps_blur_dialog_16.png" alt="Photoshop gaussian blur for 16-bit image" >}}|
 
-### Tiling images
+### 平铺图像
 
-For tiling images, use the following steps before separating low and high frequencies to ensure that both the low pass and high pass tile properly:
+对于平铺图像，请在分离低频和高频之前使用以下步骤，以确保低通和高通都能正确平铺：
 
-1. Select the base image
-1. Choose  **Edit** > **Define Pattern...**
-1. Save the selected base image as a pattern
-1. Choose  **Image** > **Canvas Size...**
-1. In the Canvas Size dialog, set **Width** and  **Height** to 300%
-1. Create a 3x3 tiled image. Choose **Edit** > **Fill...** In the Fill dialog do the following:
-    * Set **Contents** to Patterns
-    * Choose **Custom Pattern** and select the pattern you made from the base image in step 3.
-1. Perform the previous steps for [Generating low and high pass](#generating-low-and-high-pass) layers
-1. Choose **Image** > **Canvas Size...**
-1. In the Canvas Size dialog set **Width** and **Height** to 33.33%, or the original image size in pixels to crop the image to the center tile.
+1. 选择基础图像
+1. 选择  **Edit** > **Define Pattern...**
+1. 将选定的基础图像存储为图案
+1. 选择  **Image** > **Canvas Size...**
+1. 在Canvas Size对话框中，设置**Width** and  **Height** 为 300%
+1. 创建 3x3 平铺图像。选择**Edit** > **Fill...**。在 Fill （填充） 对话框中，执行以下操作：
+    * 设置 **Contents** 为 Patterns
+    * 选择 **Custom Pattern** ，然后选择您在步骤 3 中从基础图像创建的图案。
+1. 执行前面的步骤 [生成低通和高通](#generating-low-and-high-pass) 图层
+1. 选择 **Image** > **Canvas Size...**
+1. 在Canvas Size对话框中，设置**Width** 和 **Height** 为 33.33%，或原始图像大小（以像素为单位）以将图像裁剪到中心图块。
 
-The preceding steps allow the Gaussian blur to take into account the wrapped tiling along the adjacent borders. When the low pass (blur) is calculated, the pixel information wraps. When it's subtracted and cropped, both the low pass and the high pass tile properly.
+前面的步骤允许高斯模糊考虑沿相邻边界的包裹平铺。计算低通（模糊）时，像素信息将换行。当它被减去和裁剪时，低通道和高通道都会正确平铺。
 
 ## Blending
 
-Next, you'll combine (blend) the low pass (Layer 2) and the high pass (Layer 3).
+接下来，您将组合（混合）低通（第 2 层）和高通（第 3 层）。
 
-In Photoshop, set the layer blend mode of the high pass to Linear light.
+在 Photoshop 中，将高通的图层混合模式设置为线性光。
 
 ![Photoshop: Set blend mode of high pass to Linear light](/images/learning-guide/tutorials/environments/detail_macro_materials/ps_linear_light.png)
 
-In the preceding screenshot, the original image fidelity is restored by properly blending the low and high pass frequencies together.
+在前面的屏幕截图中，通过将低通频率和高通频率正确混合在一起，可以恢复原始图像保真度。
 
 ## Downsampled low pass
 
-With the blending of low pass and high pass, you can downsample the low pass image and still achieve a final blended image with little perceptible loss in quality. The following example downsamples the low pass to a much smaller image, then reconstructs the image from two maps of different resolutions. Some information is lost, which might decrease aspects such as fidelity, quality, and overall data integrity of the image, but you can experiment with the levels to find an acceptable result.
+通过低通和高通的混合，您可以对低通图像进行下采样，并且仍然可以获得最终的混合图像，而质量损失很小。以下示例将低通下采样到更小的图像，然后从两个不同分辨率的映射中重建图像。一些信息会丢失，这可能会降低图像的保真度、质量和整体数据完整性等方面，但您可以尝试这些级别以找到可接受的结果。
 
 | <div style="width:160px">Original Low Pass<br>(1024 x 1024 pixels)</div> | <div style="width:160px">Downsampled<br>(64 x 64 pixels)</div> | <div style="width:160px">Interpolated<br>(Bilinear)</div> | <div style="width:160px">Reconstructed<br>(Interpolated + Original High Pass)</div> |<div style="width:160px">Difference<br>(Original - Reconstructed)</div> |
 |-|-|-|-|-|
 |{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/original_low_pass.png" width="150" alt="Original Low Pass (1024 x 1024 pixels)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/downsampled_64.png" width="150" alt="Downsampled (64 x 64 pixels)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/interpolated_64.png" width="150" alt="Interpolated (Bilinear)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/blended_64.png" width="150" alt="Interpolated + Original High Pass (Reconstructed blend)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/difference_64.png" width="150" alt="Difference (Original minus Reconstructed blend)" >}}|
 
-As you can see in the final reconstructed image, there is almost no perceptible loss in quality. This is further highlighted by how closely you need to zoom into the difference image to observe how minor the differences are.
+正如您在最终重建图像中看到的那样，质量几乎没有明显的损失。您需要放大差异图像以观察差异的微小程度，从而进一步突出了这一点。
 
-Let's try another downsampled even further.
+让我们进一步尝试另一个 downsampled。
 
 | <div style="width:160px">Original Low Pass<br>(1024 x 1024 pixels)</div> | <div style="width:160px">Downsampled<br>(16 x 16 pixels)</div> | <div style="width:160px">Interpolated<br>(Bilinear)</div> | <div style="width:160px">Reconstructed<br>(Interpolated + Original High Pass)</div> |<div style="width:160px">Difference<br>(Original - Reconstructed)</div> |
 |-|-|-|-|-|
 |{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/original_low_pass.png" width="150" alt="Original Low Pass (1024 x 1024 pixels)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/downsampled_16.png" width="150" alt="Downsampled (16 x 16 pixels)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/interpolated_16.png" width="150" alt="Interpolated (Bilinear)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/blended_16.png" width="150" alt="Interpolated + Original High Pass (Reconstructed blend)" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/difference_16.png" width="150" alt="Difference (Original minus Reconstructed blend)" >}}|
 
-At this level of downsampling, there is a perceptible difference in integrity, and the quality is arguably diminished. However, the fidelity is still good enough to be useful for terrain detail mapping use cases.
+在这个级别的下采样中，完整性存在明显的差异，质量可以说是降低了。但是，保真度仍然足够好，可用于地形细节映射用例。
 
-## Results
+## 结果
 
-Here are all three reconstructions again side-by-side, each is the final reconstructed resolution of 1024 pixels, only the low-frequency low-pass was altered. It's quite hard to visually pick out the difference, but if you look closely at the far-right version that had the most manipulation has some reduced contrast that was lost in some areas.
+以下是所有三个重建再次并排，每个是 1024 像素的最终重建分辨率，只有低频低通发生了变化。很难在视觉上分辨出差异，但如果你仔细观察处理最多的极右版本，则在某些区域丢失了一些降低的对比度。
 
 | Low Pass: 1024<br>High Pass: 1024</div> | Low Pass: 64 (Bilinear upsample)<br>High Pass: 1024</div> | Low Pass: 16 (Bilinear upsample)<br>High Pass: 1024</div> |
 |-|-|-|
@@ -87,32 +88,32 @@ Here are all three reconstructions again side-by-side, each is the final reconst
 
 ## Color Alteration
 
-This is a pretty flexible technique, as the high pass frequency can be applied across a wide range of shifts in the low pass base colors and still arrive at decent looking results. Here are a few extreme examples:
+这是一种非常灵活的技术，因为高通频率可以应用于低通基色的大范围变化，并且仍然可以获得不错的结果。以下是一些极端的例子：
 
 | <div style="width:160px">Original Low Pass<br>(1024 x 1024 pixels)</div> | <div style="width:160px">Downsampled<br>(32 x 32 pixels)</div> | <div style="width:160px">Interpolated<br>(Bilinear)</div> | <div style="width:160px">Reconstructed<br>(Interpolated + Original High Pass)</div> |
 |-|-|-|-|
 |{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/color_shift_0.png" width="150" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/color_shift_1.png" width="150" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/color_shift_2.png" width="150" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/color_shift_3.png" width="150" >}}|
 
-And in this next version, you are simple going to hue shift our original low pass colors.
+在下一个版本中，您只需简单地改变我们原来的低通颜色的色相。
 
 | <div style="width:160px">Original Low Pass<br>(1024 x 1024 pixels)</div> | <div style="width:160px">Downsampled<br>(32 x 32 pixels)</div> | <div style="width:160px">Interpolated<br>(Bilinear)</div> | <div style="width:160px">Reconstructed<br>(Interpolated + Original High Pass)</div> |
 |-|-|-|-|
 |{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/hue_shift_0.png" width="150" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/hue_shift_1.png" width="150" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/hue_shift_2.png" width="150" >}}|{{< image-width src="/images/learning-guide/tutorials/environments/detail_macro_materials/hue_shift_3.png" width="150" >}}|
 
-As you can see, you can make pretty abrupt and wild changes to the base color, and still arrive at visually interesting results!
+如您所见，您可以对基色进行非常突然和狂野的更改，但仍然可以获得视觉上有趣的结果！
 
-## Macro material low pass
+## 宏观素材低通
 
-You can use the small downsampled low pass image in texturing for our Macro material. There are a several options for this use case:
-* Use the downsampled low pass image as a texture input for texturing
-* Use the downsampled low pass to generate a color ramp (and a matching height map), which can be used as input in programs like World Machine to use in colorization
-* Use the downsampled low pass as a color swatch for painting terrain
+您可以在我们的 Macro 材质的纹理中使用小的缩减采样低通图像。此用例有以下几个选项：
+* 使用下采样的低通图像作为纹理输入进行纹理处理
+* 使用下采样的低通生成色带（和匹配的高度贴图），可以用作 World Machine 等程序的输入，用于着色
+* 使用缩减采样的低通道作为绘制地形的颜色样本
 
-Then with the proper blending and syncing the repeat, you can augment this with the high pass detail texture and result in something similar to the original image up close.
+然后，通过适当的混合和同步重复，您可以使用高通细节纹理来增强这一点，并在特写时产生类似于原始图像的效果。
 
-## High pass detail map
+## 高通道细节图
 
-You can use Photoshop's built-in high pass filter to generate a high pass detail map, and then apply that back to the original image to generate the matching low pass macro material texture with the following process:
+您可以使用 Photoshop 的内置高通滤镜生成高通细节贴图，然后将其应用回原始图像，以通过以下过程生成匹配的低通宏材质纹理：
 
 | <div style="width:160px">Generate the High Pass</div> | <div style="width:160px">Linear Burn</div> | <div style="width:160px">Linear Add</div> | <div style="width:160px">Low Pass</div> | <div style="width:160px">Low Pass<br>(Swapped ordering)</div> |
 |-|-|-|-|-|

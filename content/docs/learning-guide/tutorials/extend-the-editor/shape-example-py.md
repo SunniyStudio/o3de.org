@@ -1,121 +1,121 @@
 ---
-linkTitle: Create a Custom Tool Gem in Python
-title: Create a Custom Tool Gem in Python to Extend Open 3D Engine Editor
-description: Learn how to extend the Open 3D Engine (O3DE) Editor by creating a custom tool Gem in Python.
+linkTitle: 在 Python 中创建自定义工具 Gem
+title: 在 Python 中创建自定义工具 Gem 以扩展 Open 3D Engine Editor
+description: 了解如何通过在 Python 中创建自定义工具 Gem 来扩展 Open 3D Engine （O3DE） 编辑器。
 weight: 300
 toc: true
 ---
 
-In this tutorial, you'll learn how to extend the **Open 3D Engine (O3DE) Editor** using the `PythonToolGem` template to create a custom tool Gem called **MyPyShapeExample**. This custom tool allows you to create entities with a Shape component and configure their component properties. The Gem is written in Python with [Qt](https://wiki.qt.io/Main), the O3DE Tools UI API, and other O3DE APIs.
+在本教程中，您将学习如何使用“`PythonToolGem`”模板扩展 **Open 3D Engine （O3DE） 编辑器**，以创建名为 **MyPyShapeExample** 的自定义工具 Gem。此自定义工具允许您使用 Shape 组件创建实体并配置其组件属性。Gem 是使用 [Qt](https://wiki.qt.io/Main)、O3DE 工具 UI API 和其他 O3DE API 用 Python 编写的。
 
-The **PyShapeExample** Gem, a sample Gem in the [`o3de/sample-code-gems` repository](https://github.com/o3de/sample-code-gems/tree/main/py_gems/PyShapeExample), demonstrates the finished Gem that you create in this tutorial. You can reference the PyShapeExample Gem sample as you follow along this tutorial.
+**PyShapeExample** Gem 是 [`o3de/sample-code-gems` repository](https://github.com/o3de/sample-code-gems/tree/main/py_gems/PyShapeExample) 中的示例 Gem，演示了您在本教程中创建的成品 Gem。在学习本教程时，您可以参考 PyShapeExample Gem 示例。
 
-By the end of this tutorial, you'll be able to extend the Editor by creating your own custom tools written in Python.
+在本教程结束时，您将能够通过创建自己的 Python 编写的自定义工具来扩展 Editor。
 
-The following image is a preview of the custom tool that you create.
+下图是您创建的自定义工具的预览。
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/python-shape-example-demo.png" "1080" "An image of the Shape Example tool and some entities created by it." >}}
 
 
-## Prerequisites
+## 先决条件
 
-Before you start the tutorial, ensure that you have the following:
+在开始本教程之前，请确保您具备以下条件：
 
-- Set up an O3DE development environment. For instructions, refer to [Set up Open 3D Engine](/docs/welcome-guide/setup/).
+- 搭建 O3DE 开发环境。有关说明，请参阅 [设置 Open 3D Engine](/docs/welcome-guide/setup/).
 
 
-## Tutorial specifics
+## 教程细节
 
-This tutorial uses the following Windows directory names and locations in the examples. You may choose different folder names and locations on your disk.
+本教程在示例中使用以下 Windows 目录名称和位置。您可以在磁盘上选择不同的文件夹名称和位置。
 
-- **O3DE engine directory**: `C:\o3de`  
-    The source directory that contains the engine.
+- **O3DE 引擎目录**: `C:\o3de`  
+    包含引擎的源目录。
 
-- **`PythonToolGem` template**: `C:\o3de\Templates\PythonToolGem`  
-    The Gem template that your custom Gem is based off of.
+- **`PythonToolGem` 模板**: `C:\o3de\Templates\PythonToolGem`  
+    自定义 Gem 所基于的 Gem 模板。
 
 - **MyPyShapeExample Gem**: `C:\o3de-gems\MyPyShapeExample`  
-    Your custom Gem. You may choose a different folder name and location in disk.
+    您的自定义 Gem。您可以在磁盘中选择不同的文件夹名称和位置。
 
-## Create a Gem from the `PythonToolGem` template
+## 从 `PythonToolGem` 模板创建 Gem
 
-Start by creating a Gem from the `PythonToolGem` template, which contains a basic Python framework to create a dialog window that extends the Editor.
+首先，从`PythonToolGem`模板创建一个 Gem，该模板包含一个基本的 Python 框架，用于创建扩展 Editor 的对话框窗口。
 
-To create a Gem based on the `PythonToolGem` template, complete the following steps: 
+要基于 `PythonToolGem` 模板创建 Gem，请完成以下步骤：
 
-1. Create a Gem by using the **O3DE CLI** (`o3de`) script that's in your engine directory. 
+1. 使用引擎目录中的 **O3DE CLI** (`o3de`) 脚本创建 Gem。
 
     ```cmd
     scripts\o3de create-gem --gem-name MyPyShapeExample --gem-path C:\o3de-gems\MyPyShapeExample --template-name PythonToolGem
     ```
 
-    The command specifies the following options: 
-    - `--gem-name`, `-gn`: The name of the new Gem. 
-    - `--gem-path`, `-gp`: The path to create the new Gem at. 
-    - `--template-name`, `-tn`: The path to the template that you want to create the new Gem from.
+    该命令指定以下选项：
+    - `--gem-name`, `-gn`: 新 Gem 的名称。
+    - `--gem-path`, `-gp`: 创建新 Gem 的路径。
+    - `--template-name`, `-tn`: 要从中创建新 Gem 的模板的路径。
 
-    This Gem is based off of the `PythonToolGem` template. In this example, name the Gem `MyPyShapeExample` and create it in `C:\o3de-gems\MyPyShapeExample`.
+    此 Gem 基于`PythonToolGem`模板。在此示例中，将 Gem 命名为 `MyPyShapeExample`并在 `C:\o3de-gems\MyPyShapeExample` 中创建它。
 
-   Depending on the Gem path, this command automatically registers the Gem to one of the manifest files: `.o3de\o3de_manifest.json`, `<engine>\engine.json`, and `<project>\project.json`.
+   根据 Gem 路径，此命令会自动将 Gem 注册到其中一个清单文件： `.o3de\o3de_manifest.json`, `<engine>\engine.json`, 和 `<project>\project.json`.
 
-2. (Optional) Register the Gem to your project. This step is optional because when you create a Gem using the O3DE CLI in the previous step, it automatically registers the Gem.
+2. （可选）将 Gem 注册到您的项目中。此步骤是可选的，因为当您在上一步中使用 O3DE CLI 创建 Gem 时，它会自动注册 Gem。
 
     ```cmd
     scripts\o3de register -gp C:\o3de-gems\MyPyShapeExample -espp <project-path>
     ```
 
-3. Add the Gem in your project by using the `o3de` script.
+3. 使用`o3de`脚本将 Gem 添加到您的项目中。
 
     ```cmd
     scripts\o3de enable-gem -gn MyPyShapeExample -pp <project-path>
     ```
 
-    Or, enable the Gem using the Project Manager (refer to [Adding and Removing Gems in a Project](/docs/user-guide/project-config/add-remove-gems.md)).
+    或者，使用 Project Manager 启用 Gem（请参阅 [在项目中添加和删除 Gem](/docs/user-guide/project-config/add-remove-gems.md)).
 
-4. Build the project by using the `o3de` script (refer to [Build a project](/docs/user-guide/build/configure-and-build/#build-a-project)). Or, use the Project Manager (refer to the **Build** action in the [Project Manager](/docs/user-guide/project-config/project-manager/)) page.
+4. 使用 `o3de` 脚本构建项目（请参阅 [构建项目](/docs/user-guide/build/configure-and-build/#build-a-project))。或，使用Project Manager (请参阅[Project Manager](/docs/user-guide/project-config/project-manager/)中的**Build**操作)页面。
 
-5. Open Editor for your project.
+5. 打开项目的 Editor。
 
-6. Open the tool by selecting **Tools > Examples > MyPyShapeExample** from the file menu. (See A in the following image.)
+6. 通过从文件菜单中选择 **Tools > Examples > MyPyShapeExample** 打开该工具。（请参阅下图中的 A。
 
-    Or, open the tool directly by clicking on the tool's icon in the **Edit Mode Toolbar**. (See B.)
+    或者，通过单击 **Edit Mode Toolbar**（编辑模式工具栏）中的工具图标直接打开该工具。（见 B.）
 
-Now you can access the Shape Example tool! By default, this tool contains a simple user interface (UI). In the next steps, we'll design the tool's UI and code its functionality. (See C.)
+现在，您可以访问 Shape Example 工具了！默认情况下，此工具包含一个简单的用户界面 （UI）。在接下来的步骤中，我们将设计该工具的 UI 并对其功能进行编码。（见 C.）
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/python-tool-gem-template-in-editor.png" "1080" "Editor with a tool created using the PythonToolGem template." >}}
 
 
-## Code directory
+## 代码目录
 
-This sections describes your MyPyShapeExample Gem's code structure. It's important to become familiar with your Gem's code structure because this is the entry point where you will program your tool's custom functionality. In this example, your Gem's directory is located at: `C:\o3de-gems\MyPyShapeExample`. This is the path that you specified when you created the Gem. Your Gem's code is located in the subdirectories `Code\Source` and `Editor\Scripts`, which contains the following classes and frameworks that make up your custom tool.
+本节介绍了 MyPyShapeExample Gem 的代码结构。熟悉 Gem 的代码结构非常重要，因为这是您将对工具的自定义功能进行编程的入口点。在此示例中，您的 Gem 目录位于： `C:\o3de-gems\MyPyShapeExample`。这是您在创建 Gem 时指定的路径。Gem 的代码位于子目录`Code\Source` 和 `Editor\Scripts`中，其中包含构成自定义工具的以下类和框架。
 
-Example of `Code\Source` directory:
+`Code\Source` 目录示例:
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/python-tool-gem-template-directory.png" "720" "Editor with a tool created using the PythonToolGem template." >}}
 
-Example of `Editor\Scripts` directory:
+`Editor\Scripts` 目录示例:
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/python-tool-gem-template-directory-2.png" "620" "Editor with a tool created using the PythonToolGem template." >}}
 
-### Modules and system components
+### 模块和系统组件
 
-All Gems have modules and system component classes written in C++ that connect the tool to O3DE and allow it to communicate with other systems. The `PythonToolGem` template already contains all of the code needed to run the tool in the Editor. You can find these C++ files in `Code\Source`.
+所有 Gem 都有用 C++ 编写的模块和系统组件类，这些模块和组件类将工具连接到 O3DE 并允许它与其他系统通信。`PythonToolGem`模板已包含在 Editor 中运行该工具所需的所有代码。您可以在 `Code\Source` 中找到这些 C++ 文件。
 
-For more information on Gem modules and system components, refer to the [Overview of the Open 3D Engine Gem Module system](/docs/user-guide/programming/gems/overview/) page.
+有关 Gem 模块和系统组件的更多信息，请参阅 [Open 3D Engine Gem 模块系统概述](/docs/user-guide/programming/gems/overview/) 页面。
 
-### O3DE and Qt frameworks
+### O3DE 和 Qt 框架
 
-O3DE extends the **Qt** framework, so you will use [PySide2](https://pypi.org/project/PySide2/)---the Python bindings for Qt, [Qt for Python](https://doc.qt.io/qtforpython/)---to create a graphical user interface (GUI). You will also use O3DE's EBuses to communicate with other O3DE interfaces, such as entities and components, and connect them to Qt elements.
+O3DE 扩展了 **Qt** 框架，因此您将使用 [PySide2](https://pypi.org/project/PySide2/) ---Qt 的 Python 绑定，[Qt for Python](https://doc.qt.io/qtforpython/)---来创建图形用户界面 （GUI）。您还将使用 O3DE 的事件总线与其他 O3DE 接口（如实体和组件）进行通信，并将它们连接到 Qt 元素。
 
-You will write most of your tool's functionality and UI elements in the`PyShapeExampleDialog` class that's located in `Editor\Scripts\pyshapeexample_dialog.py`.
+您将在位于`Editor\Scripts\pyshapeexample_dialog.py`中的 `PyShapeExampleDialog` 类中编写工具的大部分功能和 UI 元素。
 
 ### Qt Resources
 
-The [Qt Resource System](https://doc.qt.io/qt-5/resources.html) allows Gems to store and load image files via a `.qrc` file. This eliminates the need to load image files from absolute paths, making it simpler for you to distribute your Gem. Later, you will store an image file to create an icon for your tool.
+[Qt Resource System](https://doc.qt.io/qt-5/resources.html)允许 Gem 通过`.qrc`文件存储和加载图像文件。这样就无需从绝对路径加载图像文件，从而简化了 Gem 的分发。稍后，您将存储图像文件以为您的工具创建图标。
 
-## Dependent modules
+## 依赖模块
 
-Import the following dependent modules in the `Editor\Scripts\pyshapeexample_dialog.py` file. The `PyShapeExampleDialog` class that you will create uses objects from these modules. 
+在`Editor\Scripts\pyshapeexample_dialog.py`文件中导入以下依赖模块。您将创建的`PyShapeExampleDialog`类使用这些模块中的对象。
 
 ```py
 import azlmbr.bus as bus
@@ -129,21 +129,21 @@ from PySide2.QtGui import QDoubleValidator
 from PySide2.QtWidgets import QCheckBox, QComboBox, QDialog, QFormLayout, QGridLayout, QGroupBox, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
 ```
 
-## Dialogs, Widgets, and layouts
+## 对话框、小组件和布局
 
-With Qt for Python, you can create a *dialogs*, or top-level windows. Within a dialog are *widgets*, which are containers for UI elements, and *layouts*, which define how those UI elements are arranged. (In comparison, Qt in C++ creates a main widget instead of a dialog.) You custom tool is a dialog that constains sub-widgets of UI elements. Each widget can have its own layout and additional sub-widgets. The nested widget and layout structure allows you to organize groups of UI elements.
+使用 Qt for Python，您可以创建 *dialogs* 或顶级窗口。对话框中有 *widgets*（UI 元素的容器）和 *layouts*（定义这些 UI 元素的排列方式）。（相比之下，C++ 中的 Qt 创建的是主小部件而不是对话框。自定义工具是一个对话框，用于限制 UI 元素的子窗口小部件。每个 Widget 都可以有自己的布局和其他子 Widget。嵌套的 Widget 和布局结构允许您组织 UI 元素组。
 
-The `PyShapeExampleDialog` class inherits from `QDialog`, which creates the dialog window. The following instructions walk you through how to set up your dialog's layout. Be aware that some of the instructions may already be done by the `PythonToolGem` template.
+`PyShapeExampleDialog`类继承自`QDialog`，后者创建对话框窗口。以下说明将引导您完成如何设置对话框的布局。请注意，某些指令可能已经由 `PythonToolGem` 模板完成。
 
-1. At the top of your constructor, instantiate a `QVBoxLayout` called `main_layout`.
+1. 在构造函数的顶部，实例化一个名为 `QVBoxLayout` 的 `main_layout`。
 
-2. Later, you will create various UI elements and add them to `main_layout`.
+2. 稍后，您将创建各种 UI 元素并将它们添加到`main_layout`。
 
-3. (Optional) You can add spacing to `main_layout` by using `setSpacing(...)`.
+3. （可选）您可以使用`setSpacing(...)`为 `main_layout` 添加间距`.
 
-4. We recommend that you add a stretch at the bottom of `main_layout` by using `addStretch()` to fill any expanded space when you resize the window.
+4. 我们建议您在调整窗口大小时，使用`addStretch()` 在 `main_layout` 的底部添加一个拉伸，以填充任何扩展的空间。
 
-5. Finally, set `main_layout` to be the layout for this dialog by using `self.setLayout(...)`.
+5. 最后，使用 `self.setLayout(...)` 将 `main_layout` 设置为此对话框的布局`.
 
 ```py
 class PyShapeExampleDialog(QDialog):
@@ -161,21 +161,21 @@ class PyShapeExampleDialog(QDialog):
 ```
 
 
-## Input fields and checkboxes
+## 输入字段和复选框
 
-In this step, create an input field for the entity's name and a checkbox for an option to append a suffix---the component's name---to the entity's name. For example, suppose you set the entity's name to "MyEntity" and enable the checkbox. Then, when you create an entity with a **Box Shape** component and another with a **Sphere Shape** component, they will respectively be named "MyEntity_BoxShape" and "MyEntity_SphereShape".
+在此步骤中，为实体名称创建一个输入字段，并为一个选项创建一个复选框，用于将后缀---组件的名称---附加到实体的名称。例如，假设您将实体的名称设置为 “MyEntity” 并启用该复选框。然后，当您创建具有 **Box Shape** 组件的实体和另一个具有 **Sphere Shape** 组件的实体时，它们将分别命名为“MyEntity_BoxShape”和“MyEntity_SphereShape”。
 
-By the end of this step, your input field and checkbox should look like this:
+在此步骤结束时，您的输入字段和复选框应如下所示：
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/input-field-check-box.png" "500" "Shows UI for an input field and checkbox" >}}
 
-After instantiating `mainLayout`, wrap these UI elements in their own sub-widget, set the layout, and add it to the main widget. 
+实例化`mainLayout`后，将这些 UI 元素包装在它们自己的子 widget 中，设置布局，并将其添加到主 widget。
 
-1. To start, instantiate a `QGroupBox` called `entity_name_widget` and a `QFormLayout` called `form_layout`.
+1. 首先，实例化一个名为`entity_name_widget`的`QGroupBox`和一个名为`form_layout`的`QFormLayout`。
 
-2. Later, you will create the input field and checkbox and add them to this widget. 
+2. 稍后，您将创建输入字段和复选框并将它们添加到此小部件中。
 
-3. Finally, set the layout of `entity_name_widget` to `form_layout`, and add `entity_name_widget` to `main_layout`.
+3. 最后，将 `entity_name_widget` 的布局设置为 `form_layout`，并将 `entity_name_widget` 添加到 `main_layout`。
 
 ```py
         entity_name_widget = QGroupBox("Name your entity (Line Edit)", self)    # 1
@@ -187,15 +187,15 @@ After instantiating `mainLayout`, wrap these UI elements in their own sub-widget
         main_layout.addWidget(entity_name_widget)
 ```
 
-### Create an input field
+### 创建输入字段
 
-An input field takes text input from the user. With Qt, you can create an input field by using the `QLineEdit` object. In this example, the input field is used to name the generated entity. You will define this behavior later.
+输入字段从用户那里获取文本输入。使用 Qt，您可以使用 `QLineEdit`  对象创建输入字段。在此示例中，input 字段用于命名生成的实体。稍后将定义此行为。
 
-1. Create an input field by instantiating `QLineEdit`. In this example, name it `name_input`.
+1. 通过实例化`QLineEdit` 创建输入字段。在此示例中，将其命名为`name_input`。
 
-2. Set the placeholder text in `name_input` by calling `setPlaceholderText(...)`.
+2. 通过调用`setPlaceholderText(...)`设置`name_input`中的占位符文本`.
 
-3. Enable a button to clear the text using `setClearButtonEnabled(True)`.
+3. 启用一个按钮以使用 `setClearButtonEnabled(True)` 清除文本。
 
 ```py
         self.name_input = QLineEdit(self)
@@ -203,13 +203,13 @@ An input field takes text input from the user. With Qt, you can create an input 
         self.name_input.setClearButtonEnabled(True)
 ```
 
-### Create a checkbox
+### 创建复选框
 
-A checkbox is an option button that users can enable or disable to trigger a user-defined behavior. With Qt, you can create an checkbox by using the `QCheckBox` object. In this example, the checkbox controls whether or not to append a suffix to the entity's name. At runtime, it will start disabled, and enable when the user enters the entity's name to the input field. You will define this behavior later.
+复选框是一个选项按钮，用户可以启用或禁用该按钮以触发用户定义的行为。在 Qt 中，您可以使用`QCheckBox` 对象创建一个复选框。在此示例中，该复选框控制是否将后缀附加到实体的名称。在运行时，它将开始禁用，并在用户将实体名称输入到输入字段时启用 enable。稍后将定义此行为。
 
-1. Create a checkbox by instantiating `QCheckBox`. In this example, name it `add_shape_name_suffix`.
+1. 通过实例化`QCheckBox`创建一个复选框。在此示例中，将其命名为 `add_shape_name_suffix`。
 
-2. Set the checkbox to start in the disabled state by using `setDisabled(True)`.
+2. 使用`setDisabled(True)`设置复选框以禁用状态启动。
 
 ```py
         self.add_shape_name_suffix = QCheckBox(self)
@@ -217,19 +217,19 @@ A checkbox is an option button that users can enable or disable to trigger a use
         self.add_shape_name_suffix.setToolTip("e.g. Entity2_BoxShape")
 ```
 
-### Add a signal listener with a slot handler
+### 添加带有插槽处理程序的信号侦听器
 
-Qt uses signals and slots to communicate between objects (refer to [Signals & Slots](https://doc.qt.io/qt-5/signalsandslots.html) in the Qt Documentation). Set up a signal listener such that when the user enters text into the input field at runtime, the checkbox automatically enables.
+Qt使用信号和插槽在对象之间进行通信（参考Qt文档中的[信号和插槽](https://doc.qt.io/qt-5/signalsandslots.html)）。设置信号侦听器，以便当用户在运行时将文本输入到输入字段中时，该复选框将自动启用。
 
-In this example, the signal listener uses a slot handler, which is essentially a Python function that a signal can connect to.
+在此示例中，信号侦听器使用插槽处理程序，该处理程序本质上是信号可以连接到的 Python 函数。
 
-1. Call `connect(...)` to create a connection between the input field (`name_input`) to the signal (`textChanged`) and slot (`on_name_input_text_changed`).
+1. 调用`connect(...)`在输入字段(`name_input`)与信号(`textChanged`)和插槽 (`on_name_input_text_changed`)之间创建连接。
 
     ```py
             self.name_input.textChanged.connect(self.on_name_input_text_changed)
     ```
 
-2. Outside of the constructor, define a slot as you would for a standard Python function. In this example, name the slot `on_name_input_text_changed`.
+2. 在构造函数之外，像对标准 Python 函数一样定义一个槽。在此示例中，将槽命名为`on_name_input_text_changed`。
 
     ```py
         def on_name_input_text_changed(self, text):
@@ -239,30 +239,30 @@ In this example, the signal listener uses a slot handler, which is essentially a
     ```
 
 
-### Add UI elements to layout
+### 将 UI 元素添加到布局
 
-After creating the UI elements---an input field and a checkbox---and connecting a signal listener to them, add them to the UI. To ensure they belong to the sub-widget `entity_name_widget`, add them to `form_layout` by calling `addRow(...)`.
+创建 UI 元素---输入字段和复选框---并将信号侦听器连接到它们后，将它们添加到 UI 中。要确保它们属于子小部件`entity_name_widget`，请通过调用`addRow(...)` 将它们添加到`form_layout`中。
 
 ```py
         form_layout.addRow("Entity name", self.name_input)
         form_layout.addRow("Add shape name suffix", self.add_shape_name_suffix)
 ```
 
-## Comboboxes
+## 组合框
 
-In this step, you will create a combobox that contains a list of values that you can use to scale the size of the entity.
+在此步骤中，您将创建一个组合框，其中包含可用于缩放实体大小的值列表。
 
-By the end of this step, your combobox should look like this:
+在此步骤结束时，您的组合框应如下所示：
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/combo-box.png" "500" "Shows UI for combobox" >}}
 
-First, wrap these UI elements in their own sub-widget, set the layout, and add it to the main widget. 
+首先，将这些 UI 元素包装在它们自己的子 widget 中，设置布局，并将其添加到主 widget。
 
-1. To start, instantiate a `QGroupBox` called `combobox_group` and a `QVBoxLayout` called `combobox_layout`.
+1. 首先，实例化一个名为 `combobox_group` 的`QGroupBox`和一个名为 `combobox_layout` 的  `QVBoxLayout`。
 
-2. Later, you will create a combobox and define a list of scale values.
+2. 稍后，您将创建一个组合框并定义一个比例值列表。
 
-3. Finally, set the layout of `combobox_group` to `combobox_layout`, and add `combobox_group` to `mainLayout`.
+3. 最后，将 `combobox_group` 的布局设置为 `combobox_layout`，并将 `combobox_group` 添加到 `mainLayout`。
 
 ```py
         combobox_group = QGroupBox("Choose your scale (combobox)", self)   # 1
@@ -274,21 +274,21 @@ First, wrap these UI elements in their own sub-widget, set the layout, and add i
         main_layout.addWidget(combobox_group)
 ```
 
-### Create a combobox
+### 创建组合框
 
-A combobox allows users to select an item from a pop up list of items. With Qt, you can create an input field by using the `QComboBox` object.
+使用组合框，用户可以从弹出的项目列表中选择一个项目。在 Qt 中，您可以使用 `QComboBox`对象创建输入字段。
 
-1. Define a list of scale values. In this example, name it `scale_values`.
+1. 定义刻度值列表。在此示例中，将其命名为 `scale_values`。
 
-2. Create a combobox by instantiating `QComboBox`. In this example, name it `scale_combobox`. 
+2. 通过实例化`QComboBox`创建一个组合框。在此示例中，将其命名为 `scale_combobox`。
 
-3. Allow users to enter a custom option in the combobox by calling `setEditable(True)`. 
+3. 允许用户通过调用 `setEditable(True)` 在组合框中输入自定义选项。
 
-4. If a user enters a custom option, validate that the value they entered is a numerical value within a specific range and decimal place by calling `setValidator(...)`. In this example, set the lower bound to `0.0`, the upper bound to `100.0`, and the decimal places to `3`. 
+4. 如果用户输入自定义选项，请通过调用`setValidator(...)`来验证他们输入的值是否是特定范围和小数位内的数值。在此示例中，将下限设置为`0.0`，将上限设置为`100.0`，将小数位数设置为 `3`。
 
-5. Add the list of values to the combobox by calling `addItems(...)`.
+5. 通过调用`addItems(...)`将值列表添加到组合框.
 
-6. Add the combobox to `combobox_layout` by calling `addWidget(...)`.
+6. 通过调用`addWidget(...)`将组合框添加到`combobox_layout` 中.
 
 ```py
         scale_values = [                                                            # 1
@@ -307,22 +307,22 @@ A combobox allows users to select an item from a pop up list of items. With Qt, 
 ```
 
 
-## Buttons
+## 按钮
 
-In this step, you will create a collection of buttons that create an entity with different Shape components, such as with a Box Shape, Sphere Shape, Cone Shape, and so on.
+在此步骤中，您将创建一个按钮集合，这些按钮创建具有不同 Shape 组件（例如，使用 Box Shape、Sphere Shape、Cone Shape 等）的实体。
 
-By the end of this step, your buttons should look like this:
+在此步骤结束时，您的按钮应如下所示：
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/buttons.png" "500" "Shows UI for buttons" >}}
 
 
-First, wrap these UI elements in their own sub-widget, set the layout, and add it to the main widget. 
+首先，将这些 UI 元素包装在它们自己的子 widget 中，设置布局，并将其添加到主 widget。
 
-1. To start, instantiate a `QGroupBox` called `shape_buttons` and a `QGridLayout` called `grid_layout`.
+1. 首先，实例化一个名为`shape_buttons` 的`QGroupBox`和一个名为 `grid_layout`的 `QGridLayout`。
 
-2. Later, you will query for all types of shape components registered with the engine, add buttons to this widget, and add signal listeners to the buttons.
+2. 稍后，您将查询向引擎注册的所有类型的形状组件，向此 widget 添加按钮，并向按钮添加信号侦听器。
 
-3. Finally, set the layout of `shape_buttons` to `grid_layout`, and add `shape_buttons` to `main_layout`.
+3. 最后，将 `shape_buttons` 的布局设置为`grid_layout`，并将 `shape_buttons` 添加到`main_layout` 中。
 
 ```py
         shape_buttons = QGroupBox("Choose your shape (Button)", self)   # 1
@@ -334,13 +334,13 @@ First, wrap these UI elements in their own sub-widget, set the layout, and add i
         main_layout.addWidget(shape_buttons)
 ```
 
-### Query Shape components
+### 查询 Shape 组件
 
-1. Query the types of Shape components that're registered with the engine. In O3DE, all components have a list of provided services that you can query from. In this example, you are looking for Shape components, which all provide "ShapeService".
+1. 查询向引擎注册的 Shape 组件的类型。在 O3DE 中，所有组件都有一个已提供服务的列表，您可以从中进行查询。在此示例中，您正在寻找 Shape 组件，这些组件都提供 “ShapeService”。
 
-   - Create a component service list called `provided_services` and add "ShapeService". 
+   - 创建名为 `provided_services` 的组件服务列表并添加 “ShapeService”。
 
-   - Get a list of component types that provide "ShapeService". Use `editor.EditorComponentAPIBus(...)` to call `bus.Broadcast` and dispatch `FindComponentTypeIdsByService`, which takes a list of services to include (`provided_services`) and services to exclude (an empty list) and stores the component types to `typeIds`.
+   - 获取提供 “ShapeService” 的组件类型列表。使用 `editor.EditorComponentAPIBus(...)` 调用 `bus.Broadcast` 和 发送`FindComponentTypeIdsByService`，它接受要包含的服务列表（`provided_services`）和要排除的服务（空列表），并将组件类型存储到`typeIds`。
 
    ```py
            shape_service = math.Crc32_CreateCrc32("ShapeService")
@@ -348,30 +348,29 @@ First, wrap these UI elements in their own sub-widget, set the layout, and add i
            type_ids = editor.EditorComponentAPIBus(bus.Broadcast, 'FindComponentTypeIdsByService', provided_services, [])
    ```
 
-2. Query the names of the Shape components. Later, you will add these name to the buttons.
+2. 查询 Shape 组件的名称。稍后，您将这些名称添加到按钮中。
 
-    - Get a list of component names. Use `editor.EditorComponentAPIBus(...)` to call `bus.Broadcast` and dispatch `FindComponentTypeNames`, takes the list of component types (`typeIds`) and stores the corresponsing component names to `component_names`.
-
+    - 获取组件名称列表。使用`editor.EditorComponentAPIBus(...)`调用 `bus.Broadcast` 和 发送 `FindComponentTypeNames`，获取组件类型列表  (`typeIds`) ，并将相应的组件名称存储到`component_names`。
     ```py
             component_names = editor.EditorComponentAPIBus(bus.Broadcast, 'FindComponentTypeNames', type_ids)
     ```
 
 {{< note >}}
-You can query a list of services that components provide by calling the component's `GetProvidedServices()` method.
+您可以通过调用组件的`GetProvidedServices()`方法来查询组件提供的服务列表。
 {{< /note >}}
 
 
-### Add buttons
+### 添加按钮
 
-A button is a UI element that the user can click to trigger a user-defined behavior. With Qt, you can create a button by using the `QPushButton` object. In this example, when the user clicks on the button, it will create an entity with a Shape component. You will define this behavior later.
+按钮是一个 UI 元素，用户可以单击该元素来触发用户定义的行为。在 Qt 中，您可以使用 `QPushButton` 对象创建按钮。在此示例中，当用户单击按钮时，它将创建一个具有 Shape 组件的实体。稍后将定义此行为。
 
-Loop through the list of component names, create buttons, and add them to the `grid_layout`. For each component:
+遍历组件名称列表，创建按钮，并将它们添加到`grid_layout`中。对于每个组件：
 
-1. Create a button by instantiating `QPushButton`. In this example, name it `name_input`. Pass in `name` to add the component's name onto the button.
+1. 通过实例化`QPushButton` 创建一个按钮。在此示例中，将其命名为`name_input`。传入 `name` 以将组件的名称添加到按钮上。
 
-2. Later, you will connect `shape_button` to a signal listener.
+2. 稍后，您将`shape_button`连接到信号侦听器。
 
-3. Split `grid_layout` into three columns, and add the button.
+3. 将 `grid_layout` 拆分为三列，然后添加按钮。
 
 ```py
         max_column_count = 3                                    
@@ -387,50 +386,50 @@ Loop through the list of component names, create buttons, and add them to the `g
             grid_layout.addWidget(shape_button, row, column)
 ```
 
-### Add a signal listener with a lambda handler
+### 添加具有 lambda 处理程序的信号侦听器
 
-Next, create a signal listener such that when the user clicks the button, an entity will be created in your scene and the corresponding Shape component will be added to that entity.
+接下来，创建一个信号侦听器，这样当用户单击该按钮时，将在场景中创建一个实体，并将相应的 Shape 组件添加到该实体中。
 
-In this example, the signal listener uses a lambda handler, so you can define the function without defining a slot.
+在此示例中，信号侦听器使用 lambda 处理程序，因此您可以定义函数，而无需定义槽。
 
-1. Declare a function `create_entity_with_shape_component` to connect to the signal listener. This function communicates with O3DE's EBuses, which you will define later.
+1. 声明一个函数`create_entity_with_shape_component`以连接到信号侦听器。此函数与 O3DE 的事件总线通信，您将在后面定义。
 
     ```py
         def create_entity_with_shape_component(self, type_id):
     ```
 
-2. In the loop that you created earlier, create a connection from the `clicked` signal in the `shape_button` to a lambda function. The lambda function calls `create_entity_with_shape_component(...)` and passes in the `type_id`.
+2. 在您之前创建的循环中，创建从 `shape_button` 中的 `clicked` 信号到 lambda 函数的连接。lambda 函数调用 `create_entity_with_shape_component(...)` 并传入 `type_id` 中。
 
     ```py
             shape_button.clicked.connect(lambda checked=False, type_id=type_id: self.create_entity_with_shape_component(type_id))
     ```
 
- ### Communicate with EBuses
+ ### 与 EBuse 通信
 
-Define `CreateEntityWithShapeComponent(...)`, which communicates with O3DE EBuses to create a new entity with a component specified by the `typeId` parameter.
+定义`CreateEntityWithShapeComponent(...)`，它与 O3DE 事件总线通信，以使用由`typeId`参数指定的组件创建新实体。
 
-1. Send a request to check if a level is loaded in the Editor by using `editor.EditorRequestBus` to call `bus.Broadcast` and dispatch `IsLevelDocumentOpen`, which will return true/false if a level has been loaded or not.
-    - Attempting to create an Entity without a level loaded will cause a crash, so if a level isn't loaded, we will print a warning message and then return.
+1. 发送请求，使用`editor.EditorRequestBus`调用`bus.Broadcast`并调度 `IsLevelDocumentOpen`，如果关卡已经加载，它将返回 true/false。
+    - 尝试在未加载关卡的情况下创建 Entity 将导致崩溃，因此如果未加载关卡，我们将打印警告消息，然后返回。
 
-2. Send a request to create a new entity by using `editor.ToolsApplicationRequestBus` to call `bus.Broadcast` and dispatch `CreateNewEntity`, which creates a new entity and returns its `AZ::EntityId`. The new entity's `AZ::EntityId` is stored in `new_entity_id`.
+2. 使用`editor.ToolsApplicationRequestBus`调用 `bus.Broadcast` 并调度 `CreateNewEntity`，后者创建一个新实体并返回其`AZ::EntityId`。新实体的`AZ::EntityId` 存储在`new_entity_id` 中。
 
-3. If the user entered a name in the input field, update the entity's name.
+3. 如果用户在输入字段中输入了名称，请更新实体的名称。
 
-   - Get the name of the entity by calling `text()`, and store it in `entity_name`.
+   - 通过调用`text()` 获取实体的名称，并将其存储在`entity_name`中。
 
-   - If the user enabled the checkbox to apply a suffix of the component's name to the entity's name, query the component's name. Use `editor.EditorComponentAPIBus` to call `bus.Broadcast` and dispatch the `FindComponentTypeNames` event, which finds the component names of the provided list and stores them in `component_names`.  
+   - 如果用户启用了复选框以将组件名称的后缀应用于实体名称，请查询组件的名称。使用 `editor.EditorComponentAPIBus`调用`bus.Broadcast`并调度 `FindComponentTypeNames`事件，该事件查找所提供列表的组件名称并将它们存储在 `component_names` 中。 
 
-   - Format the name and suffix, if any.
+   - 设置名称和后缀的格式（如果有）。
 
-   - Use `editor.EditorEntityAPIBus` to call `bus.Event`  and dispatch `"SetName"` to set the name of `new_entity_id` to `entity_name`.
+   - 使用 `editor.EditorEntityAPIBus` 调用 `bus.Event` 并调度`"SetName"` 将 `new_entity_id` 的名称设置为`entity_name`。
 
-4. Set the entity's scale.
+4. 设置实体的缩放。
    
-   - Get the value in the combobox by calling `currentText()`, and store it in `scale_text`.
+   - 通过调用`currentText()`获取组合框中的值，并将其存储在`scale_text` 中。
 
-   - Set the entity's scale by using `components.TransformBus` to call `bus.Event` and dispatch `"SetLocalUniformScale"`, which sets the scale of `new_entity_id`. Be aware that you must convert `scale_text` to a float.
+   - 使用`components.TransformBus`调用 `bus.Event` 和 dispatch `"SetLocalUniformScale"`，它设置`new_entity_id` 的比例。请注意，您必须将 `scale_text`转换为 float。
 
-5. Add a Shape component to the entity. Use `editor.EditorComponentAPIBus` to call `bus.Broadcast` and dispatch `"AddComponentsOfType"`, which adds the components from the provided list to `new_entity_id`.
+5. 将 Shape 组件添加到实体。使用 `editor.EditorComponentAPIBus` 调用 `bus.Broadcast` 并调度 `"AddComponentsOfType"`，这会将所提供列表中的组件添加到`new_entity_id`。
 
 ```py
      def create_entity_with_shape_component(self, type_id):
@@ -469,19 +468,19 @@ Define `CreateEntityWithShapeComponent(...)`, which communicates with O3DE EBuse
         editor.EditorComponentAPIBus(bus.Broadcast, "AddComponentsOfType", new_entity_id, [type_id])
 ```
 
-## Icon
+## 图标
 
-An icon is an image file that's used to represent your tool in the Editor. The icon appears in the Edit Mode Toolbar in the Editor (see the following image).
+图标是用于在 Editor 中表示工具的图像文件。该图标显示在 Editor 的 Edit Mode 工具栏中（请参阅下图）。
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/icon.png" "500" "Add an icon for your tool in the Editor" >}}
 
-### Add an icon
+### 添加图标
 
-The following instructions walk you through how to store the icon using the Qt Resource System and load it from your Gem module. Be aware that some of the instructions may already be done by the `PythonToolGem` template.
+以下说明将指导您了解如何使用 Qt 资源系统存储图标并从 Gem 模块加载它。请注意，某些指令可能已经由`PythonToolGem`模板完成。
 
-1. Add an image file to the `Code\Source` directory to use as your icon. In this example, the icon is named `toolbar.svg`. We recommend that your icon adheres to the guidelines in [UI development best practices](https://o3de.org/docs/tools-ui/uidev-component-development-guidelines/#ui-development-best-practices).
+1. 将图像文件添加到`Code\Source`目录以用作图标。在此示例中，图标名为 `toolbar.svg`。我们建议您的图标遵循 [UI 开发最佳实践](https://o3de.org/docs/tools-ui/uidev-component-development-guidelines/#ui-development-best-practices)中的准则。
 
-2. Add your icon to MyPyShapeExample Gem's resources by updating `Code\Source\ShapeExample.qrc` with your new icon's file name.
+2. 通过使用新图标的文件名更新`Code\Source\ShapeExample.qrc`，将您的图标添加到 MyPyShapeExample Gem 的资源中。
 
     ```xml
     <!DOCTYPE RCC><RCC version="1.0">
@@ -491,9 +490,9 @@ The following instructions walk you through how to store the icon using the Qt R
     </RCC>
     ```
 
-3. Register MyPyShapeExample Gem's resources to Qt Resource System by adding the following code in `Code\Source\EditorModule.cpp`. 
+3. 通过在`Code\Source\EditorModule.cpp` 中添加以下代码，将 MyPyShapeExample Gem 的资源注册到 Qt 资源系统。
 
-    - Define the function `InitShapeExampleResource()` and call `Q_INIT_RESOURCE(...)` to register the Qt resrouces listed in `ShapeExample.qrc`.
+    - 定义函数 `InitShapeExampleResource()`并调用`Q_INIT_RESOURCE(...)` 注册`ShapeExample.qrc`中列出的Qt资源。
 
         ```cpp
         void InitShapeExampleResources()
@@ -502,43 +501,43 @@ The following instructions walk you through how to store the icon using the Qt R
         }
         ```
 
-    - Call `InitShapeExampleResource()` in the `EditorModule` class's constructor.
+    - 在`EditorModule`类的构造函数中调用 `InitShapeExampleResource()`。
 
 
-## Build and test your tool
+## 构建和测试你的工具
 
-You can test your custom tool by running it from the **Python Scripts** panel in the Editor.
+您可以通过从 Editor 的 **Python Scripts** 面板运行自定义工具来测试它。
 
-1. Open Editor for your project.
+1. 为您的项目打开 Editor。
 
-2. Open the Python Scripts panel by selecting **Tools > Other > Python Scripts** from the file menu.
+2. 从文件菜单中选择 **Tools > Other > Python Scripts** 打开 Python Scripts（Python 脚本）面板。
 
-3. Open `pyshapeexample_dialog` in the Python Scripts panel.
+3. 在 Python Scripts 面板中打开 `pyshapeexample_dialog`。
 
-Congratulations! You created a custom tool Gem that's written in Python, built it, and loaded it in the Editor. Your Shape Example tool should look something like this:
+祝贺！您创建了一个用 Python 编写的自定义工具 Gem，构建了它，并将其加载到 Editor 中。您的 Shape Example 工具应如下所示：
 
 {{< image-width "/images/learning-guide/tutorials/extend-the-editor/shape-example/python-shape-example-ui.png" "500" "An image of the Shape Example tool." >}}
 
-## Download the PyShapeExample Gem sample
+## 下载 PyShapeExample Gem 示例
 
-Now that you've completed this tutorial, you can compare your MyPyShapeExample Gem to the sample, **PyShapeExample** Gem, in [`o3de/sample-code-gems` repository](https://github.com/o3de/sample-code-gems/tree/main/cpp_gems/ShapeExample).
+现在，您已经完成了本教程，您可以将 MyPyShapeExample Gem 与示例 PyShapeExample Gem 进行比较，在 [`o3de/sample-code-gems` repository](https://github.com/o3de/sample-code-gems/tree/main/cpp_gems/ShapeExample)中。
 
-To download this sample and load it in the Editor:
+要下载此示例并将其加载到 Editor 中，请执行以下操作：
 
-1. Download or clone the repository. The PyShapeExample Gem is located in `<repo>\sample-code-gems\py_gems\PyShapeExample`.
+1. 下载或克隆存储库。PyShapeExample Gem 位于`<repo>\sample-code-gems\py_gems\PyShapeExample`.
 
     ```cmd
     git clone https://github.com/o3de/sample-code-gems.git
     ```
 
-2. Before you can open the Shape Example tool, do the following:
+2. 在打开“形状示例”工具之前，请执行以下操作：
 
-   - Register your Gem.
+   - 注册您的 Gem。
 
-   - Enable it in your project.
+   - 在您的项目中启用它。
 
-   - Rebuild your project.
+   - 重新构建您的项目。
 
-   - Open the tool in the Editor.
+   - 在 Editor 中打开该工具。
 
-    These steps are explained earlier in this tutorial. Refer to [Create a Gem from the `PythonToolGem` template](#create-a-gem-from-the-pythontoolgem-template).
+   本教程前面将介绍这些步骤。指[从 `PythonToolGem` 模板创建 Gem](#create-a-gem-from-the-pythontoolgem-template).

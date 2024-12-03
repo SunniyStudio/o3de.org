@@ -1,89 +1,89 @@
 ---
-linkTitle: Grid-based Movement
-title: Grid-based Movement
-description: Learn how to implement grid-based movement from input device events in Open 3D Engine (O3DE).
+linkTitle: 基于网格的移动
+title: 基于网格的移动
+description: 了解如何在 Open 3D Engine （O3DE） 中从输入设备事件实现基于网格的移动。
 weight: 100
 ---
 
-## Overview
+## 该技术
 
-This tutorial teaches you how to use device input to move entities on a grid.  Additional sections of the tutorial introduce Script Canvas variables, event blocking with conditional checks, and creating smooth movement with linear interpolation.
+本教程将介绍如何使用设备输入在网格上移动实体。 本教程的其他部分介绍了 Script Canvas 变量、使用条件检查阻止事件以及使用线性插值创建平滑移动。
 
-| O3DE Experience | Time to Complete | Feature Focus | Last Updated |
+| O3DE 体验 |完成时间 |功能聚焦 |最后更新 |
 | - | - | - | - |
-| Beginner | 20 Minutes | Input Bindings assets, **Input** component, **Script Canvas** component | December 9, 2022 |
+| 新手 | 20 分钟 | 输入绑定资产, **Input** 组件, **Script Canvas** 组件 | December 9, 2022 |
 
-## What you will learn
+## 您将学到什么
 
-In this tutorial, you will learn how to:
-- Create an Input Bindings asset in **Asset Editor** that links input device signals to input events.
-- Enable those input events in your level by adding an Input component and referencing an Input Bindings asset.
-- Create a script with Script Canvas that listens for input events and moves an entity along a grid when they occur.
-- Add smooth entity motion over time with linear interpolation.
-- Add input event blocking while the entity is in motion.
+在本教程中，您将学习如何：
+- 在 **Asset Editor** 中创建一个 Input Bindings 资源，将输入设备信号链接到输入事件。
+- 通过添加 Input 组件并引用 Input Bindings 资源，在关卡中启用这些输入事件。
+- 使用 Script Canvas 创建一个脚本，用于侦听输入事件并在事件发生时沿网格移动实体。
+- 使用线性插值添加随时间变化的平滑实体运动。
+- 添加在实体移动时阻止输入事件。
 
-## Prerequisites
+## 先决条件
 
-- Basic working knowledge of the [Script Canvas Editor](/docs/user-guide/scripting/script-canvas/).
-- A project built from the standard project template or one that contains the Gems in the standard template.
+- [Script Canvas 编辑器](/docs/user-guide/scripting/script-canvas/)的基本应用知识。
+- 从标准项目模板构建的项目，或包含标准模板中的 Gem 的项目。
 
-## Steps
+## 步骤
 
-### Prepare the scene
+### 准备场景
 
-In this tutorial, you will modify several child entities of the Atom Default Environment, namely, the Shader Ball, Grid, and Camera.  The grid will represent a grid or tile-based terrain that the Shader Ball moves on.  You will attach the camera to the Shader Ball so that the camera follows its movements on the grid.
+在本教程中，您将修改 Atom 默认环境的多个子实体，即 Shader Ball、Grid 和 Camera。 网格将表示 Shader Ball 在其上移动的网格或基于平铺的地形。 您需要将摄像机附加到 Shader Ball，以便摄像机跟随它在网格上的移动。
 
-1. In a new level, select the Grid entity in **Entity Outliner**.  In **Entity Inspector**, set the [Grid](/docs/user-guide/components/reference/atom/grid/) component's **Primary Grid Spacing** to `5 meters`.  Set the **Secondary Grid Spacing** to `1 meter` and **Secondary Color** to white, `255, 255, 255` so that the grid spacing is more visible.
+1. 在新关卡中，在 **Entity Outliner** 中选择 Grid 实体。 在 **Entity Inspector** 中，将 [Grid](/docs/user-guide/components/reference/atom/grid/) 组件的 **Primary Grid Spacing** 设置为`5 米`。 将 **Secondary Grid Spacing** 设置为 `1 meter`，将 **Secondary Color** 设置为白色，即`255, 255, 255`，以便网格间距更加明显。
 
-1. Select the Shader Ball in Entity Outliner.  Currently, it is located at the intersection of four grid spaces and is too large to fit within a single space.  In Entity Inspector, set [Transform](/docs/user-guide/components/reference/transform/) component's **Uniform Scale** to `0.5`.  Set the **Translate** value to `X: 0.5, Y: 0.5, Z: 0.0`; the Shader Ball should now fit within a single grid space.  Remove all rotations from it by setting **Rotate** to `X: 0.0, Y: 0.0, Z: 0.0`.
+1. 在 Entity Outliner 中选择 Shader Ball。 目前，它位于四个网格空间的交汇处，太大，无法容纳在单个空间内。 在 Entity Inspector 中，将 [Transform](/docs/user-guide/components/reference/transform/) 组件的 **Uniform Scale** 设置为 `0.5`。 将 **Translate** 值设置为 `X: 0.5, Y: 0.5, Z: 0.0`; Shader Ball 现在应该适合单个网格空间。 通过将 **Rotate** 设置为 `X: 0.0, Y: 0.0, Z: 0.0` 来删除它的所有旋转。
+ 
+1. 在 Entity Outliner 中选择摄像机，**左键单击**并将其 **拖动** 到 Shader Ball 实体上，然后释放它以将摄像机作为 Shader Ball 的子实体附加。 在 Entity Inspector 中，将 Transform （变换） 组件的 **Translate** 值设置为 `X: 0.0, Y: -4.0, Z: 5.0` ，将 **Rotate** 值设置为 `X: -45.0, Y: 0.0, Z: 0.0`。 作为 Shader Ball 的子实体，摄像机的平移和旋转是相对于其父实体的;摄像机将位于 Shader Ball 的后面并俯视它。当前附加到此实体的 [Fly Camera Input](/docs/user-guide/components/reference/gameplay/fly-camera-input/) 组件将干扰您稍后创建的输入事件。 在 Entity Inspector 中右键单击 Fly Camera Input （飞行摄像机输入） 组件，然后选择 **Delete component （删除组件）**。
 
-1. Select the Camera in Entity Outliner, **left-click** and **drag** it over the Shader Ball entity and release it to attach the camera as a child entity of the Shader Ball.  In Entity Inspector, set the Transform component's **Translate** value to `X: 0.0, Y: -4.0, Z: 5.0` and the **Rotate** value to `X: -45.0, Y: 0.0, Z: 0.0`.  As a child entity of the Shader Ball, the camera's translation and rotation are relative to its parent; the camera will be positioned behind the Shader Ball and looking down on it. The [Fly Camera Input](/docs/user-guide/components/reference/gameplay/fly-camera-input/) component currently attached to this entity will interfere with the input events you create later.  **Right-click** on the Fly Camera Input component in Entity Inspector and choose **Delete component**.
-
-The following image shows the scene layout after completing these steps.
+下图显示了完成这些步骤后的场景布局。
 
 ![The grid, Shader Ball, and camera in the 3D Viewport after setting up the scene](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/prepare-scene.png)
 
-### Create an Input Bindings asset
+### 创建 Input Bindings 资产
 
-Next, you will create an Input Bindings asset that links input device event generators to input events.  In this tutorial, you will use the keyboard's `W`, `A`, `S`, and `D` keys to generate two input events that will move the Shader Ball on the X and Y-axis of the grid.  
+接下来，您将创建一个 Input Bindings 资产，用于将输入设备事件生成器链接到输入事件。 在本教程中，您将使用键盘的`W`, `A`, `S`, 和 `D` 键生成两个输入事件，这两个事件将在网格的 X 轴和 Y 轴上移动 Shader Ball。  
 
-1. Open Asset Editor from the O3DE Editor **Tools** menu. In the Asset Editor **File** menu, choose **New** and then select **Input Bindings** to create a new Input Bindings asset.
+1. 从 O3DE 编辑器的 **Tools** 菜单中打开 Asset Editor。在 Asset Editor 的 **File** 菜单中，选择 **New**，然后选择 **Input Bindings** 以创建新的 Input Bindings 资源。
 
-1. **Left-click** the {{< icon "add.svg" >}} next to **Input Event Groups** twice to add two new input events.
+1. **左键单击**输入事件组旁边的 {{{< icon "add.svg" >}}  两次，以添加两个新的输入事件。
 
-1. In the new events' **Event Name** property, name the first event `MoveY` and the second `MoveX`.  You will need to remember these event names when you begin to script the Shader Ball's movement.
+1. 在新事件的 **事件名称** 属性中，将第一个事件命名为 `MoveY`，将第二个事件命名为 `MoveX`。 当您开始编写 Shader Ball 的移动脚本时，您需要记住这些事件名称。
 
-1. **Left-click** the {{< icon "add.svg" >}} next to **Event Generators** to add a generator to an event.  Add two event generators to each event.  In the **Class to create** dialog box that appears, choose the second option, **InputEventMap**.
+1. **左键单击** **Event Generators**旁边的 {{< icon "add.svg" >}} 向事件添加一个生成器。为每个事件添加两个事件生成器。 在出现的 **Class to create** 对话框中，选择第二个选项 **InputEventMap**。
 
-1. Set each of the four generators' **Input Device Type** to **keyboard**.
+1. 将四个生成器的 **Input Device Type** 分别设置为 **keyboard**。
 
-1. For the `MoveY` event, set the **Input Name** for the event generators to **keyboard_key_alphanumeric_W** and **keyboard_key_alphanumeric_S**.  For the `MoveX` event, set the **Input Name** for the event generators to **keyboard_key_alphanumeric_D** and **keyboard_key_alphanumeric_A**.
+1. 对于`MoveY`事件，将事件生成器的 **Input Name** 设置为 **keyboard_key_alphanumeric_W** 和 **keyboard_key_alphanumeric_S**。 对于 `MoveX` 事件，将事件生成器的 **Input Name** 设置为 **keyboard_key_alphanumeric_D** 和 **keyboard_key_alphanumeric_A**。
 
-1. Change the **Event value multiplier** of the `S` and `A` keys to `-1.0` as this will correspond to a movement in the negative direction of the X and Y-axis.  You can leave the **Event value multiplier** of the `W` and `D` keys at their default value of `1.0`.  This corresponds to a movement in the positive direction on the X and Y-axis.  It can be advantageous to use **Event value multipliers** to reduce the number of events you use, and it can simplify the scripting that handling the events requires.
+1. 将 `S` 和 `A` 键的 **Event value multiplier** 更改为 `-1.0`，因为这将对应于 X 轴和 Y 轴负方向的移动。 您可以将 `W` 和 `D`键的 **Event value multiplier** 保留为默认值`1.0`。 这对应于 X 轴和 Y 轴上沿正方向的移动。 使用 **Event value multiplier** 来减少您使用的事件数量可能是有利的，并且可以简化处理事件所需的脚本。
 
-1. Save the Input Bindings asset in your project's directory as `grid-based-movement.inputbindings`.
+1. 将项目目录中的 Input Bindings 资源另存为`grid-based-movement.inputbindings`。
 
-The following image shows the completed Input Bindings asset in the Asset Editor.
+下图显示了 Asset Editor 中完成的 Input Bindings 资产。
 
 ![The completed Input Bindings asset in Asset Editor](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/input-bindings.png)
 
-### Add the Input component
+### 添加 Input 组件
 
-Next, you will add an Input component and reference the Input Bindings asset you created.
+接下来，您将添加 Input 组件并引用您创建的 Input Bindings 资产。
 
-1. Select the Shader Ball in Entity Outliner.  In Entity Inspector, add an Input component to the Shader Ball.
+1. 在 Entity Outliner 中选择 Shader Ball。 在 Entity Inspector 中，将 Input 组件添加到 Shader Ball。
 
-1. In the Input component, **left-click** the {{< icon "browse-edit-select-files.svg" >}} button next to the **Input to event bindings** property and select the Input Bindings asset you created.
+1. 在 Input （输入） 组件中，**左键单击**该组件 {{< icon "browse-edit-select-files.svg" >}} 按钮，然后选择您创建的 Input Bindings 资产。
 
 ![The Input component with the Input Bindings asset selected](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/input-component.png)
 
 {{< note >}}
-You can attach Input components to any active entity in a level; if an Input Bindings asset is referenced, all entities in the level can receive and handle its events.  
+您可以将 Input 组件附加到关卡中的任何活动实体;如果引用了 Input Bindings 资产，则关卡中的所有实体都可以接收和处理其事件。
 {{< /note >}}
 
-### Create a script with Script Canvas
+### 使用 Script Canvas 创建脚本
 
-Next, you will create a script that handles the `MoveX` and `MoveY` input events and moves the Shader Ball according to the event received and the event's value.
+接下来，您将创建一个脚本来处理 `MoveX` 和 `MoveY` 输入事件，并根据收到的事件和事件的值移动 Shader Ball。
 
 1. Select the Shader Ball in Entity Outliner.  In Entity Inspector, add a Script Canvas component to the Shader Ball. On the new Script Canvas component, **left-click** the {{< icon "open-in-internal-app.svg" >}} button to open Script Canvas Editor.
 
@@ -91,7 +91,7 @@ Next, you will create a script that handles the `MoveX` and `MoveY` input events
 
 1. There must be one **Input Handler** node for each event that you want a graph to handle.  Add two **Input Handler** nodes to the graph.  In the **Event Name** fields, type the names of your events, `MoveX` and `MoveY`.  Connect the **Out** pin of the **On Graph Start** node to the **Connect Event** pin of the two **Input Handler** nodes.  Now the nodes' **Pressed**, **Held**, and **Released** slots will execute whenever the corresponding keyboard keys are pressed. When a key is pressed, you can capture and use the event's value by connecting the **value** output slot to nodes in your graph.
 
-    After connecting these nodes, your Script canvas graph should look like the following.
+    连接这些节点后，您的 Script canvas 图形应如下所示。
 
     ![Script Canvas graph with On Graph Start and Input Handler nodes connected](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-input-handlers.png)
     

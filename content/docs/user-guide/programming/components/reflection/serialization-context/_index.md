@@ -360,7 +360,7 @@ SerializeContext::ClassData::Create<ContainerType>("AZStd::vector", GetSpecializ
 ```
 
 `Create<ContainerType>` 函数参数的说明见下表。
-1
+
 | 参数 | 说明 |
 | --- | --- |
 | "AZStd::vector" | 以 JSON 或 XML 数据流形式指定类的用户友好名称。 |

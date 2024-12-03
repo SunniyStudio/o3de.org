@@ -1,11 +1,11 @@
 ---
-linkTitle: Input and Movement
-title: Input and Movement
-description: Learn how to use the keyboard, mouse, and other input devices to move entities in Open 3D Engine (O3DE).
+linkTitle: 输入和移动
+title: 输入和移动
+description: 了解如何使用键盘、鼠标和其他输入设备在 Open 3D Engine （O3DE） 中移动实体。
 ---
 
-Device input is a key component of building interactive experiences in **Open 3D Engine (O3DE)**. The topics in this section explain how to create and use _input bindings_ that tie input device signals to the events that drive entity movement and behavior.  Learn how you can use input events to script different kinds of entity motion in your simulations and games.
+设备输入是在 Open 3D Engine （O3DE） 中构建交互式体验的关键组件。本节中的主题介绍如何创建和使用将输入设备信号与驱动实体移动和行为的事件相关联_input bindings_。 了解如何使用输入事件在模拟和游戏中编写不同类型的实体运动脚本。
 
-| Tutorial | Description |
+|教程 |描述|
 | - | - |
-| [Grid-based Movement](grid-based-movement) | Learn how to implement grid-based movement from input device events. |
+| [基于网格的移动](grid-based-movement) | 了解如何从输入设备事件实现基于网格的移动。 |

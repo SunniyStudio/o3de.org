@@ -37,7 +37,7 @@ weight: 400
 
 您可以将预设定义为节点组或注释的默认值。当您执行以下操作之一时，将创建默认组或评论：
 
-+ 在 Script Canvas 编辑器工具栏上，选择新注释 {{< icon “comment.svg” >}} 或新建组 {{< icon "group.svg" >}} 图标。
++ 在 Script Canvas 编辑器工具栏上，选择新注释 {{< icon "comment.svg" >}}  或新建组 {{< icon "group.svg" >}} 图标。
 + 按 **Ctrl+Alt+M** 创建注释。
 + 按 **Ctrl+Alt+O** 创建一个组。
 

@@ -42,7 +42,7 @@ AZ::TickBus::Handler::BusDisconnect();
 默认情况下，处理程序根据组件初始化的顺序接收事件。要控制组件接收 `OnTick`事件的顺序，可以覆盖 `GetTickOrder()`函数，返回一个自定义整数值。该整数值决定了相对于 Tick 总线上其他组件，您的组件被Tick的顺序。较低的值会在较高的值之前打勾。允许使用任何值。为方便起见`AZ::ComponentTickBus`枚举\(`TickBus.h`\)提供了一些预设值。这些值如下表所示。
 
 **Tick顺序预设值**
-1
+
 | 名称 (C++) | 名称 (Lua/Script Canvas) | 值 | 说明 |
 | --- | --- | --- | --- |
 | TICK\_FIRST | TickOrder.First | 0 | Tick处理程序顺序中的第一个位置。 |

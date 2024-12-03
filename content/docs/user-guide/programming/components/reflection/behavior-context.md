@@ -47,7 +47,7 @@ if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(con
 
 要为类绑定提供额外配置，可以在行为上下文 `Class` 函数之后链入类构建器函数。以下是可用的构建器函数：
 
-| 构建器功能 | 说明
+| 构建器功能 | 说明|
 | --- | --- |
 | **Allocator** | 允许你为你的类提供一个自定义的分配器/去分配器，以覆盖任何现有的分配模式。如果不提供自定义分配器，则使用 `aznew`(`AZ_CLASS_ALLOCATOR`)。 |
 | **Constant** | 只读属性。有关此构建函数的更多信息，请参阅 [常量](#constants) 部分。 |

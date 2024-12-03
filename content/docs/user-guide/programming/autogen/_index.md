@@ -54,7 +54,8 @@ Jinja2 的模板系统还可以使用一组数据文件来生成一组输出文�
 作为 Jinja2 模板引擎的一部分，AzAutoGen 可以访问以 Python 对象形式暴露给模板系统的数据。JSON 输入文件直接作为 Python 字典加载，XML 文件则由 Python 的 [xml.etree.ElementTree](https://docs.python.org/3/library/xml.etree.elementtree.html) 对象表示。
 
 在制作 Jinja 模板时，您可以使用以下变量。AzAutoGen 定义这些变量及其属性，设置它们的值，然后通过 Jinja 的模板系统生成输出文件。
-| Name | Value |
+
+| 名称 | 值 |
 |-|-|
 | `dataFiles` | 包含从输入文件读取的对象的字典数组。 |
 | `dataFileNames` | 输入文件名的数组。`dataFiles`和`dataFileNames` 都不保证是有序的，但 `dataFileNames[n]`始终是`dataFiles[n]`中可用对象的来源。 |

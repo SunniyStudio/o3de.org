@@ -1,98 +1,98 @@
 ---
-linkTitle: Wind Forces
-title: Create Wind Forces
-description: Create global or localized wind forces with PhysX in Open 3D Engine (O3DE).
+linkTitle: 风力
+title: 创建风力
+description: 在 Open 3D 引擎 （O3DE） 中使用 PhysX 创建全局或局部风力。
 weight: 200
 toc: true
 ---
 
-With the **PhysX Force Region** component, you can create global wind forces or localized wind forces contained within a collider volume. Wind forces act on entities with components that are affected by wind, such as [Cloth components](/docs/user-guide/components/reference/physx/cloth/). For this tutorial, make sure that you have the **NVIDIA Cloth** Gem enabled in your project so that you can easily test the results of the wind provider entity.
+使用 **PhysX Force Region** （PhysX 力区域） 组件，您可以创建碰撞器体积中包含的全局风力或局部风力。风力作用于具有受风影响的组件的实体，例如 [Cloth 组件](/docs/user-guide/components/reference/physx/cloth/)。在本教程中，请确保您在项目中启用了 **NVIDIA Cloth** Gem，以便可以轻松测试 wind provider 实体的结果。
 
 {{< note >}}
-Wind forces only affect components that support it, such as **Cloth** compopnents. Wind forces can't affect **PhysX Dynamic Rigid Body** components.
+风力仅影响支撑它的组件，例如 **Cloth** 组件。风力不会影响 **PhysX Dynamic Rigid Body** （PhysX 动态刚体） 组件。
 {{< /note >}}
 
-## Create a wind provider entity
+## 创建一个风供应商实体
 
-In this section, you'll set up an entity for the wind provider.
+在本节中，您将为 wind 提供商设置一个实体。
 
-1. Create an entity for the wind provider.
+1. 为 wind 提供商创建一个实体。
 
-1. Add a **Tag** component to the entity. The Tag component specifies whether the wind force is global or localized.
+1. 向实体添加 **Tag** 组件。Tag （标记） 组件指定风力是全局的还是局部的。
 
-1. Add a tag value to specify the wind type. To determine what value to use for the Tag component, from the **Tools** menu, choose **PhysX Configuration**. At the bottom of the **Global Configuration** tab, there is a section labeled **Wind Configuration**.
+1. 添加 tag 值以指定风的类型。要确定要用于 Tag （标记） 组件的值，请从 **Tools** 菜单中选择 **PhysX Configuration**。在 **Global Configuration** 选项卡的底部，有一个标有 **Wind Configuration** 的部分。
 
     ![PhysX Wind Configuration tags.](/images/learning-guide/tutorials/physx/wind-configuration.png)
 
-    **Wind Configuration** includes the **Global wind tag** and **Local wind tag** properties. You can use the default values or set them as desired. The PhysX system uses these tags to identify entities that provide wind forces.
+    **Wind Configuration** 包括 **Global wind tag** 和 **Local wind tag** 属性。您可以使用默认值，也可以根据需要进行设置。PhysX 系统使用这些标记来识别提供风力的实体。
 
-    For this example, use the **Global wind tag** property value. In the Tag component of the entity, choose the {{< icon "add.svg" >}} **Add** button to add a tag element. Give it the value `global_wind`.
+    对于此示例，请使用 **Global wind tag** 属性值。在实体的 Tag （标记） 组件中，选择 {{< icon "add.svg" >}} **Add** 按钮以添加标记元素。为其指定值`global_wind`。
 
     ![PhysX Wind Configuration tag component setup.](/images/learning-guide/tutorials/physx/wind-tag-setup.png)
 
     {{< note >}}
-    If you choose to use the **Local wind tag** property, the wind force affects only entities that are inside the volume of the **PhysX Primitive Collider** component that you add in the next step.
+    如果您选择使用 **Local wind tag** 属性，则风力仅影响您在下一步中添加的 **PhysX Primitive Collider** （PhysX 基元碰撞器） 组件体积内的实体。
     {{< /note >}}
 
-## Define the force region with a PhysX Primitive Collider
+## 使用 PhysX Primitive Collider （PhysX 基元碰撞器） 定义力区域
 
-In this section, you'll add a box-shaped PhysX Primitive Collider component to the wind provider entity, and position it in the level.
+在本节中，您将向风提供程序实体添加一个盒形 PhysX Primitive Collider （PhysX 基元碰撞器） 组件，并将其放置在关卡中。
 
-1. Add a PhysX Primitive Collider component to the wind provider entity. If you are using the **Local wind tag** property, this collider defines the volume that contains the wind force. With the **Global wind tag** property, the size and position of this collider aren't critical because the wind force is global. However, the collider provides a useful visualization for the global wind force.
+1. 将 PhysX Primitive Collider （PhysX 基元碰撞器） 组件添加到风提供程序实体。如果您使用的是 **Local wind tag** 属性，则此碰撞器将定义包含风力的体积。使用 **Global wind tag** 属性时，此碰撞器的大小和位置并不重要，因为风力是全局的。但是，碰撞器为全局风力提供了有用的可视化效果。
 
-1. Set the PhysX Primitive Collider component's **Shape** property to `Box`.
+1. 将 PhysX Primitive Collider （PhysX 基元碰撞器） 组件的 **Shape** 属性设置为`Box`。
 
-1. Scale the PhysX Primitive Collider component and position the entity. Set the **Box Dimensions** property in the PhysX Primitive Collider component as desired. If you are creating a localized wind force, enlarge the collider dimensions to a size that is large enough to contain the entity that receives the wind force. Use the **Move** tool to place the entity in the level. In the following example, the collider is 5 meters in each dimension, and the wind provider entity is positioned so that the bottom of the box is on the ground plane.
+1. 缩放 PhysX Primitive Collider （PhysX 基元碰撞器） 组件并定位实体。根据需要在 PhysX Primitive Collider （PhysX 基元碰撞器） 组件中设置 **Box Dimensions** （盒体尺寸） 属性。如果要创建局部风力，请将碰撞器尺寸扩大到足够大的大小，以包含接收风力的实体。使用 **Move** 工具将实体放置在关卡中。在以下示例中，碰撞器在每个维度上为 5 米，并且风提供程序实体的位置使框的底部位于地平面上。
 
     {{< image-width src="/images/learning-guide/tutorials/physx/wind-collider-setup.png" width="900" alt="Setting up a PhysX Primitive collider for a force region" >}}
 
-## Create a PhysX force region
+## 创建一个 PhysX 力区域
 
-In this section, you'll set up a PhysX Force Region component that generates a wind force.
+在本节中，您将设置一个生成风力的 PhysX Force Region （PhysX 力区域） 组件。
 
-1. Add a PhysX Force Region component to the entity. This component creates the wind force.
+1. 将 PhysX Force Region （PhysX 力区域） 组件添加到实体。此零部件产生风力。
 
-1. Next to **Forces**, choose the {{< icon "add.svg" >}} **Add** button to add a new force.
+1. 在 **Forces**旁边，选择 {{< icon "add.svg" >}} **Add**（添加）按钮以添加新的力。
 
-1. In the **Direction** property of your new force, set the **Y** component to `-1.0` and set the **Z** component to `0.0` to create a direction for the wind force.
+1. 在新力的 **Direction** 属性中，将 **Y** 分量设置为`-1.0`，并将 **Z** 分量设置为`0.0`，以创建风力的方向。
 
-1. In the **Magnitude** property, set a value of `10.0` to create magnitude for the wind force.
+1. 在 **Magnitude** 属性中，设置值 `10.0`以创建风力的大小。
 
-    The PhysX Primitive collider box displays cones representing the wind force direction.
+    PhysX Primitive collider （PhysX 基元碰撞器） 框显示表示风力方向的锥体。
 
     {{< image-width src="/images/learning-guide/tutorials/physx/wind-force-region-setup.png" width="900" alt="Setting up a PhysX Force Region component" >}}
 
-## Add a cloth prefab
+## 添加 Cloth 预制件
 
-In this section, you'll add a cloth prefab for testing.
+在本节中，您将添加用于测试的 Cloth 预制件。
 
-1. To test the wind provider, add a prefab with an NVIDIA Cloth mesh. In **Asset Browser**, navigate to `Gems\NvCloth\Assets\prefabs\Cloth`, locate `cloth_locked_edge.prefab`, and then drag it into the viewport.
+1. 要测试 wind 提供程序，请添加具有 NVIDIA Cloth 网格的预制件。在 **Asset Browser**中，导航到`Gems\NvCloth\Assets\prefabs\Cloth`，找到`cloth_locked_edge.prefab`，然后将其拖动到视区中。
 
-1. Use the Move tool to place the cloth prefab. If you are using the **Local wind tag** property, you must place the cloth asset inside the PhysX Primitive Collider volume of the wind provider entity.
+1. 使用 Move 工具放置 Cloth 预制件。如果您使用的是 **Local wind tag** 属性，则必须将布料资产放置在风提供程序实体的 PhysX Primitive Collider （PhysX 基元碰撞器） 体积内。
 
     ![Positioning the cloth prefab in the wind provider entity.](/images/learning-guide/tutorials/physx/wind-provider-cloth-prefab.png)
 
-1. With the prefab in position, you can hide the wind provider entity. In **Entity Outliner**, in the column to the right of the wind provider entity, choose the **Show/Hide Entity** toggle.
+1. 预制件就位后，您可以隐藏风提供程序实体。在 **Entity Outliner** 中，在 wind provider 实体右侧的列中，选择 **Show/Hide Entity** 切换。
 
-1. The cloth prefab has the local wind property enabled on its **Cloth** component. This generates a local wind force from the Cloth component that overrides the wind force from the wind provider entity that you created. To deactivate the local wind force of the prefab so that you can view the results of the wind provider you created, do the following:
+1. 布料预制件在其 **Cloth** 组件上启用了 local wind 属性。这将从 Cloth 组件生成局部风力，该风力将覆盖您创建的风提供程序实体中的风力。要停用预制件的局部风力，以便您可以查看您创建的风提供程序的结果，请执行以下操作：
         
-    * In Entity Outliner, double-click the {{< icon "prefab.svg" >}} **cloth_locked_edge** prefab to edit it in Focus Mode.
+    * 在 Entity Outliner 中，双击 {{< icon "prefab.svg" >}} **cloth_locked_edge** 预制件以在焦点模式下对其进行编辑。
 
-    * Choose the {{< icon "entity.svg" >}} **cloth_locked_edge** child entity to select it.
+    * 选择 {{< icon "entity.svg" >}} **cloth_locked_edge** 子实体以将其选中。
 
         ![Open the cloth prefab for editing in Focus Mode.](/images/learning-guide/tutorials/physx/edit-cloth-locked-edge-prefab.png)
 
-    * With the {{< icon "entity.svg" >}} **cloth_locked_edge** entity selected, in Entity Inspector, in the Cloth component, expand the **Wind** property group and turn off **Enable local wind velocity**.
+    * 选择 {{< icon "entity.svg" >}} **cloth_locked_edge** 实体后，在 Entity Inspector 的 Cloth 组件中，展开 **Wind** 属性组并关闭 **Enable local wind velocity**。
 
         {{< image-width src="/images/learning-guide/tutorials/physx/disable-local-wind-velocity.png" width="450" alt="Turning off local wind velocity in a Cloth component." >}}
 
-## Test the wind simulation
+## 测试风模拟
 
-Finally, you can test the simulation. With the **cloth_locked_edge** prefab open for editing in Focus Mode, do the following:
+最后，您可以测试模拟。在 Focus Mode 中打开 **cloth_locked_edge** 预制件以进行编辑后，执行以下操作：
 
-1. At the top of the Cloth component, turn on **Simulate in editor**. As the simulation begins, the cloth object might flip and stretch wildly, but it quickly settles into a breezy wind simulation.
+1. 在 Cloth 组件的顶部，打开 **Simulate in editor**。模拟开始时，布料对象可能会剧烈翻转和拉伸，但它很快就会进入微风模拟。
 
-1. The wind simulation plays while in editor mode. You can adjust the simulation by modifying the various properties of the Cloth component. Try adjusting the following properties in the Cloth component:
+1. 在编辑器模式下播放风模拟。您可以通过修改 Cloth 组件的各种属性来调整模拟。尝试在 Cloth 组件中调整以下属性：
 
     * **Air drag coefficient**
     * **Air lift coefficient**
@@ -100,6 +100,6 @@ Finally, you can test the simulation. With the **cloth_locked_edge** prefab open
 
     {{< image-width src="/images/learning-guide/tutorials/physx/cloth-simulate-in-editor.png" width="450" alt="Simulating cloth in editor." >}}
 
-The following video shows the results of using the Cloth component settings shown in the preceding image.
+以下视频显示了使用上图所示的 Cloth 组件设置的结果。
 
 {{< video src="/images/learning-guide/tutorials/physx/wind-simulation-result.mp4" autoplay="true" loop="true" info="Wind simulation in editor." >}}

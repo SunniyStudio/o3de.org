@@ -1,47 +1,47 @@
 ---
-linktitle: Sliders
-title: O3DE UI Sliders
-description: Learn about the O3DE UI style of sliders, including the slider and slider combo components.
+linktitle: 滑块
+title: O3DE UI 滑块
+description: 了解滑块的 O3DE UI 样式，包括滑块和滑块组合组件。
 toc: true
 ---
 
-Use a slider to enable users to control a variable by moving a knob or lever horizontally or vertically. The visual feedback shows users where the current value is within the range of valid values.
+使用滑块使用户能够通过水平或垂直移动旋钮或杠杆来控制变量。视觉反馈向用户显示当前值在有效值范围内的位置。
 
 **Slider**
 
-The basic slider is a styled version of the `QSlider` widget from the Qt library.
+基本滑块是 Qt 库中 `QSlider` 小部件的样式版本。
 
 ![component slider style](/images/tools-ui/component-slider-style.png)
 
-Use the `SliderInt` class for signed integer values, and the `SliderDouble` class for double values.
+对有符号整数值使用`SliderInt`类，对双精度值使用 `SliderDouble` 类。
 
 **Slider combo**
 
-A slider combo is a combination of the slider and spinbox widgets. In practice, sliders can be difficult for the user to manipulate with precision. Therefore, it is recommended that for fine control, you use a slider combo, which combines the visual feedback of the slider with the precise fine-tuning capability of the spinbox.
+滑块组合是滑块和旋转框 Widget 的组合。在实践中，用户可能很难精确地操作滑块。因此，建议对于精细控制，使用滑块组合，它将滑块的视觉反馈与旋转框的精确微调功能相结合。
 
 ![component slider combo style](/images/tools-ui/component-slider-combo-style.png)
 
-Use the `SliderCombo` class for signed integer values, and the `SliderDoubleCombo` class for double values.
+对有符号整数值使用`SliderCombo`类，对双精度值使用 `SliderDoubleCombo` 类。
 
-## Usage guidelines
+## 使用指南
 
-Follow these guidelines as you design your UI with sliders:
+在使用滑块设计 UI 时，请遵循以下准则：
 
-1.  Sliders work best when the specific value does not matter to the user, and an approximate value is good enough. Example: selecting a volume or defining the color gradient.
+1. 当特定值对用户无关紧要，并且近似值足够好时，滑块效果最佳。示例：选择卷或定义颜色渐变。
 
-1.  When placing a slider control on the UI, it's best to show the outcome side by side with the control, so a user can review and confirm if the value they select matches their expectation.
+1. 在 UI 上放置滑块控件时，最好将结果与控件并排显示，以便用户可以查看并确认他们选择的值是否符合他们的预期。
 
-Avoid these design choices when using sliders:
-+ Don't use the slider when picking an exact value is important to the goal of the interface.
-+ Don't use the slider if you don't have the start and end value for your use case. Use the number edit input box instead.
+使用滑块时，请避免以下设计选择：
++ 当选择确切值对界面目标很重要时，不要使用滑块。
++ 如果您没有用例的 start 和 end 值，请不要使用滑块。请改用 number edit 输入框。
 
-## Basic slider with midpoint
+## 带中点的基本滑块
 
 ![component slider basic](/images/tools-ui/component-slider-basic.png)
 
-The following example demonstrates the creation of a simple, integer slider using the optional midpoint style.
+下面的示例演示如何使用可选的中点样式创建简单的整数滑块。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/Slider.h>
@@ -60,13 +60,13 @@ AzQtComponents::Slider::applyMidPointStyle(sliderInt);
 sliderInt->setEnabled(false);
 ```
 
-## Slider with tooltip
+## 带工具提示的滑块
 
 ![component slider tooltip](/images/tools-ui/component-slider-tooltip.png)
 
-Add a tooltip to provide context for the value in the slider.
+添加工具提示，以便为滑块中的值提供上下文。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/Slider.h>
@@ -74,13 +74,13 @@ Add a tooltip to provide context for the value in the slider.
 sliderInt->setToolTipFormatting("Opacity", "%");
 ```
 
-## Basic slider combo
+## 基本滑块组合
 
 ![component slider combo basic](/images/tools-ui/component-slider-combo-basic.png)
 
-The following example demonstrates the creation of a double slider combo.
+以下示例演示了如何创建双滑块组合。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/SliderCombo.h>
@@ -100,9 +100,9 @@ sliderDoubleCombo->setValue(75.0);
 sliderDoubleCombo->setRange(-1.0, 100.0);
 ```
 
-## C++ API reference
+## C++ API 参考
 
-For details on the **slider** API's, see the following topic in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **滑块** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题：
 
  **Slider:**
 +  [AzQtComponents::Slider](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_slider.html)
@@ -113,5 +113,5 @@ For details on the **slider** API's, see the following topic in the [O3DE UI Ext
 +  [AzQtComponents::SliderCombo](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_slider_combo.html)
 +  [AzQtComponents::SliderDoubleCombo](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_slider_double_combo.html)
 
-Relevant Qt documentation includes the following topics:
+相关的 Qt 文档包括以下主题：
 +  [QSlider Class](https://doc.qt.io/qt-5/qslider.html)

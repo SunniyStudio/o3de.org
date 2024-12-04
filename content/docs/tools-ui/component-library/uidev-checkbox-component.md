@@ -1,39 +1,39 @@
 ---
-linktitle: Checkbox
-title: O3DE UI Checkbox Component
-description: Learn how to use O3DE UI checkboxes in O3DE Gems and tools.
+linktitle: 复选框
+title: O3DE UI 复选框组件
+description: 了解如何在 O3DE Gem 和工具中使用 O3DE UI 复选框。
 toc: true
 ---
 
-Use checkboxes to enable users to select from a list of choices, when users can select any number of choices (including zero, one, or several). Each checkbox is independent of all other checkboxes in the list, so checking one box doesn't uncheck the others.
+当用户可以选择任意数量的选项（包括零个、一个或多个）时，使用复选框使用户能够从选项列表中进行选择。每个复选框都独立于列表中的所有其他复选框，因此选中一个复选框不会取消选中其他复选框。
 
 ![component checkbox style](/images/tools-ui/component-checkbox-style.png)
 
-## Usage guidelines
+## 使用指南
 
-Follow these guidelines as you design your UI with checkboxes:
+在设计带有复选框的 UI 时，请遵循以下准则：
 
-1.  Each checkbox should have a clear yes/no state for its choice.
+1. 每个复选框都应该有一个明确的 yes/no 状态供其选择。
 
-1.  Default a checkbox to "checked" only when there is clear reason to believe that a user will expect that, or when it reflects the user's current state.
+1. 仅当有明确理由相信用户会期望这样做，或者当它反映了用户的当前状态时，才将复选框默认为“选中”。
 
-1.  Ensure that clicking or tapping the label selects the checkbox.
+1. 确保单击或点按标签以选中复选框。
 
-1.  When using checkboxes in tree views, the partial selected states should be included.
+1. 在树状图中使用复选框时，应包括部分选定的状态。
 
-Avoid these design choices when using checkboxes:
-+ Don't order checkboxes horizontally.
-+ Don't trigger an event upon selection of a radio button, such as spawning a popover, popup, new page, or new window.
+使用复选框时，请避免以下设计选择：
++ 不要水平排序复选框。
++ 选择单选按钮时不触发事件，例如生成弹出窗口、弹出窗口、新页面或新窗口。
 
-## Basic checkbox
+## 基本复选框
 
 ![component checkbox basic](/images/tools-ui/component-checkbox-basic.png)
 
-Set up and control checkboxes in Qt Designer or in code.
+在 Qt Designer 或代码中设置和控制复选框。
 
-Note that to set the "partially checked" state in tri-state checkboxes, you must use code.
+请注意，要在三态复选框中设置 “partially checked” 状态，您必须使用 code。
 
-### Example
+### 示例
 
 ```cpp
 #include <QCheckBox>
@@ -58,15 +58,15 @@ checkBox->setCheckState(Qt::PartiallyChecked);
 checkBox->setEnabled(false);
 ```
 
-## C++ API reference
+## C++ API参考
 
-For details on the **checkbox** API, see the following topic in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **复选框** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题：
 +  [AzQtComponents::CheckBox](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_check_box.html)
 
-Relevant Qt documentation includes the following topics:
+相关的 Qt 文档包括以下主题：
 +  [QCheckBox Class](https://doc.qt.io/qt-5/qcheckbox.html)
 
-## Related links
+## 相关链接
 
-For additional information related to the **checkbox** component, see the following topics:
+有关 **checkbox** 组件的其他信息，请参阅以下主题：
 +  [Toggle switch](./uidev-toggle-switch-component)

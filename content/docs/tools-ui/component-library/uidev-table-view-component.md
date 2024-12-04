@@ -1,29 +1,29 @@
 ---
-linktitle: Table View
-title: O3DE UI Table View Component
-description: Learn how to use the O3DE UI table view component to present columns of structured data in O3DE tools and Gems.
+linktitle: 表视图
+title: O3DE UI 表视图组件
+description: 了解如何使用 O3DE UI 表视图组件在 O3DE 工具和 Gem 中显示结构化数据列。
 toc: true
 ---
 
-Use the **table view** component to present multiple columns of structured data in a table format. By default, this component employs sortable columns and "zebra striping" - where the background color of rows alternate - to help you create an easily readable, scannable, and sortable presentation of data.
+使用 **table view** 组件以表格格式显示多列结构化数据。默认情况下，此组件使用可排序列和“斑马条带化”（其中行的背景色交替）来帮助您创建易于阅读、可扫描和可排序的数据表示。
 
 ![component table view example](/images/tools-ui/component-table-view-example.png)
 
 {{< note >}}
-`AzQtComponents::TableView` actually derives from `QTreeView`, not `QTableView`, to provide more customization over the size of rows.
+`AzQtComponents::TableView` 实际上派生自`QTreeView`，而不是`QTableView`，以提供对行大小的更多自定义。
 {{< /note >}}
 
 ## Basic table view
 
 ![component table view basic](/images/tools-ui/component-table-view-basic.png)
 
-Create a simple logging table view.
+创建简单的日志记录表视图。
 
 {{< note >}}
-If a table view is combined with a [tree view](/docs/tools-ui/component-library/uidev-tree-view-component), you might need to turn off zebra striping in one of the widgets using the setAlternatingRowColors(false) function.
+如果表格视图与 [树视图](/docs/tools-ui/component-library/uidev-tree-view-component) 结合使用，则可能需要使用 setAlternatingRowColors（false） 函数在其中一个小部件中关闭斑马纹条带化。
 {{< /note >}}
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/TableView.h>
@@ -63,11 +63,11 @@ logModel->AppendLine(
         QDateTime::currentMSecsSinceEpoch()));
 ```
 
-## C++ API reference
+## C++ API 参考
 
-For details on the **table view** API, see the following topic in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **table view** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题:
 +  [AzQtComponents::TableView](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_table_view.html)
 
-Relevant Qt documentation includes the following topics:
+相关的 Qt 文档包括以下主题：
 +  [QTreeView Class](https://doc.qt.io/qt-5/qtreeview.html)
 +  [QAbstractListModel Class](https://doc.qt.io/qt-5/qabstractlistmodel.html)

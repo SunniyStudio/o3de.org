@@ -1,33 +1,33 @@
 ---
-linktitle: Tree View
-title: O3DE UI Tree View Component
-description: Learn how to use the O3DE UI tree view component to give users a file or list navigation interface in O3DE tools and Gems.
+linktitle: 树视图
+title: O3DE UI 树视图组件
+description: 了解如何使用 O3DE UI 树视图组件在 O3DE 工具和 Gem 中为用户提供文件或列表导航界面。
 toc: true
 ---
 
-With the **tree view** component, users can navigate file system directories or a list of hierarchical data in O3DE. Each item, such as a node or a branch, can have sub-items. Items can be expanded to reveal sub-items.
+使用 **树视图** 组件，用户可以在 O3DE 中导航文件系统目录或分层数据列表。每个项 （如节点或分支） 都可以具有子项。可以展开项目以显示子项目。
 
-The **tree view** component is often used in the following scenarios:
-+ Show system or predefined contents, such as the settings in Inspector or system settings page.
-+ Show user created contents, such as in File Directory or Outliner.
+**树视图** 组件通常用于以下场景：
++ 显示系统或预定义内容，例如检查器或系统设置页面中的设置。
++ 显示用户创建的内容，例如在 File Directory 或 Outliner 中。
 
-Example from O3DE **Asset Browser**:
+来自 O3DE **资产浏览器**的示例：
 
 ![component tree view example](/images/tools-ui/component-tree-view-example.png)
 
-## Usage guidelines
+## 使用指南
 
-Follow these guidelines as you design your UI with tree views:
+在使用树视图设计 UI 时，请遵循以下准则：
 
-1.  When the tree hierarchy is anticipated to be deep, such as a tree view used in file directories, it is suggested to add a file path to help users know where they are in the path.
+1. 当预计树状层次结构会很深时，例如文件目录中使用的树状视图，建议添加文件路径以帮助用户了解他们在路径中的位置。
 
-## Basic tree view
+## 基本树状视图
 
 ![component tree view basic](/images/tools-ui/component-tree-view-basic.png)
 
-Create a simple tree view, with support for showing branch lines.
+创建简单的树状视图，并支持显示分支线。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/TreeView.h>
@@ -46,11 +46,11 @@ treeView->setItemDelegate(new AzQtComponents::BranchDelegate());
 AzQtComponents::TreeView::setBranchLinesEnabled(treeView, true);
 ```
 
-## C++ API reference
+## C++ API 参考
 
-For details on the **tree view** API, see the following topic in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **树视图** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题:
 +  [AzQtComponents::TreeView](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_tree_view.html)
 
-Relevant Qt documentation includes the following topics:
+相关的 Qt 文档包括以下主题：
 +  [QTreeView Class](https://doc.qt.io/qt-5/qtreeview.html)
 +  [QAbstractListModel Class](https://doc.qt.io/qt-5/qabstractlistmodel.html)

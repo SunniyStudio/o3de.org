@@ -1,112 +1,112 @@
 ---
-linktitle: Dialogs
-title: Error Messages in Dialogs
-description: Learn how to design Error/Warning/Success/Information messages in dialogs using the Blue Jay Design System (BJDS) in Open 3D Engine (O3DE).
+linktitle: 对话框
+title: 对话框中的错误消息
+description: 了解如何使用 Open 3D Engine （O3DE） 中的 Blue Jay Design System （BJDS） 在对话框中设计错误/警告/成功/信息消息。
 weight: 200
 toc: true
 ---
 
-*Dialogs* inform users about specific tasks and requires immediate response from the user. It can also contain other relevant information or request user input. A dialog is highly disruptive to the user and must be used sparingly. Dialogs may be prompted by the user's action or by the system to request input from the user or to give users critical information about their workflow.
+*对话框* 通知用户特定任务，并要求用户立即响应。它还可以包含其他相关信息或请求用户输入。对话框对用户具有高度破坏性，必须谨慎使用。对话框可能由用户的操作或系统提示，以请求用户输入或向用户提供有关其工作流程的关键信息。
 
 
-## Structure of a dialog
+## 对话框的结构
 
-1. **Header**: Contains a title and close button.
+1. **Header**: 包含标题和关闭按钮。
 
-2. **Close Button**: Closes the dialog without resolving the issue.
+2. **Close Button**: 关闭对话框而不解决问题。
 
-3. **Icon**: A standard icon and has a size of 48 x 48px. Refer to [Standard Icons](../#standard-icons). 
+3. **Icon**: 标准图标，大小为 48 x 48 像素。请参阅 [标准图标](../#standard-icons). 
 
-4. **Body**: Contains information regarding the user's task and how to resolve it. 
+4. **Body**: 包含有关用户任务以及如何解决该任务的信息。
 
-5. **Actions**: The primary and optional secondary call-to-action buttons that resolve or exit the dialog.
+5. **Actions**: 解决或退出对话框的主要和可选的辅助行动号召按钮。
 
 ![Dialog Structure](/images/tools-ui/dialogs/dialog-structure.png)
 
 
-## Types of dialogs
+## 对话框的类型
 
-| Type | Usage |
+|类型 |用法 |
 |--- |--- |
-| Modal | Displays critical information or requests necessary input from the user. |
-| Non-modal | Displays relevant information or requests non-critical input from the user. This task may not be needed to complete the user workflow. |
+|模态 |显示关键信息或请求用户提供必要的输入。|
+|非模态 |显示相关信息或请求用户的非关键输入。完成用户工作流可能不需要此任务。|
 
 ![Modal and non-modal dialogs](/images/tools-ui/dialogs/modal-dialog-and-non-modal-dialog.png)
 
 
-## Specifications
+## 规格
 
-Review these specifications when creating a dialog:
+创建对话框时，请查看以下规范：
 
-* Do not include the O3DE Logo Mark in the header of a dialog.
+* 请勿在对话框的标题中包含 O3DE 徽标标志。
 
-* Briefly describe the dialog's task or purpose in the title in the dialog's header.
+* 在对话框标题的标题中简要描述对话框的任务或目的。
 
-* Write relevant information to help users complete the dialog's task in the title and body of the dialog. Refer to [Guidelines for Writing Error Messages](../guidelines).
+* 在对话框的标题和正文中编写相关信息以帮助用户完成对话框的任务。请参阅 [编写错误消息的准则](../guidelines).
 
 
-* Include only one icon, if any. Use one of the following icons from the list of [Standard icons](../#standard-icons): error/failure, warning, success, or information icon.
+* 仅包含一个图标（如果有）。使用 [标准图标](../#standard-icons) 列表中的以下图标之一： 错误/失败、警告、成功或信息图标。
 
-* Include a primary button and/or an optional secondary button for the dialog's actions. 
+* 包括用于对话框操作的主按钮和/或可选的辅助按钮。
   
-  * Use the primary button for a primary action. Primary buttons have a blue background, making it more distinct to the user. Write an actionable text on the primary button such as "Save", "Restart", or "Open". 
+  * 使用 primary 按钮执行主要操作。主按钮具有蓝色背景，使其对用户更加明显。在主按钮上编写可操作的文本，例如“保存”、“重新启动”或“打开”。
 
-* Use the secondary button for alternative options or passive actions such as "Cancel" or "OK".
-
-
-
-## Best practices
-
-* Use dialogs sparingly. Dialogs are disruptive and can annoy the user if used incorrectly or repeatedly.
-
-* Use modal dialogs to stop the user's workflow until they resolve the dialog.
-
-* Use non-modal dialogs as a part of a positive reinforcement of a workflow.
-
-* Only use dialogs if the message requires the user to take action. 
+* 使用辅助按钮进行替代选项或被动操作，例如 “取消” 或 “确定”。
 
 
-## Examples
 
-#### Dialog without an icon
+## 最佳实践
 
-Dialogs without an icon are recommended for non-modal dialogs.
+* 请谨慎使用对话框。对话框具有破坏性，如果使用不当或重复使用，可能会使用户感到烦恼。
+
+* 使用模式对话框停止用户的工作流，直到他们解决对话框。
+
+* 使用非模式对话框作为工作流的积极强化的一部分。
+
+* 仅当消息要求用户执行操作时，才使用对话框。
+
+
+## 示例
+
+#### 没有图标的对话框
+
+对于非模式对话框，建议使用不带图标的对话框。
 
 ![O3DE dialog without icon](/images/tools-ui/dialogs/dialog-without-icon.png)
 
 
-### Dialog with one action
+### 具有一个操作的对话框
 
-Dialogs with one action may use a primary or a secondary button. This is recommended for a dialog where the user is either accepting or agreeing to something or if the dialog is purely informational.
+具有一个操作的对话框可以使用主按钮或辅助按钮。如果用户接受或同意某项内容，或者对话框纯粹是信息性的，则建议这样做。
 
 ![O3DE dialogs with one action, primary](/images/tools-ui/dialogs/dialog-with-one-action-primary.png)
 
 ![O3DE dialog with one action, secondary](/images/tools-ui/dialogs/dialog-with-one-action-secondary.png)
 
 
-### Dialog with two actions
+### 包含两个操作的对话框
 
-When using a dialog with two actions, place the primary button on the left and the secondary button on the right.
+当使用包含两个操作的对话框时，请将主按钮放在左侧，将辅助按钮放在右侧。
 
 ![O3DE dialog with two actions](/images/tools-ui/dialogs/dialog-with-two-actions.png)
 
 
-### Dialog with multiple messages
+### 包含多条消息的对话框
 
-You can consolidate multiple error messages into a single dialog by using a table. Consider using this when the user completes a set of actions and can evaluate the errors that might've occurred at one time. Since dialogs are disruptive to the user's workflow, the fewer dialogs that appear, the better. 
+您可以使用表将多个错误消息合并到一个对话框中。当用户完成一组操作并可以评估可能同时发生的错误时，请考虑使用此方法。由于对话框会破坏用户的工作流程，因此显示的对话框越少越好。
 
 ![O3DE dialog with a log of errors](/images/tools-ui/dialogs/dialog-with-multiple-messages-log.png)
 
-You can also hide the list of error messages in a collapsible table, so users can choose to view the details if they desire.
+您还可以在可折叠的表中隐藏错误消息列表，以便用户可以根据需要选择查看详细信息。
 
 ![O3DE dialog with a collapsible table of log of errors, closed state](/images/tools-ui/dialogs/dialog-with-multiple-messages-closed.png)
 
-Link to log files that are relevant to the issue, if applicable. This allows users to resolve their issues and expedite their workflow.
+链接到与问题相关的日志文件（如果适用）。这允许用户解决他们的问题并加快他们的工作流程。
 
 ![O3DE dialog with a log of errors with links to their log files.](/images/tools-ui/dialogs/dialog-with-multiple-messages-open.png)
 
-### Dialog with a long message string
+### 具有长消息字符串的对话框
 
-Error messages may need to describe lots of details to be effective to the user. In this case, consider using a dialog with a scrollbar.
+错误消息可能需要描述许多详细信息才能对用户有效。在这种情况下，请考虑使用带有滚动条的对话框。
 
 ![O3DE dialog with a long message](/images/tools-ui/dialogs/dialog-with-long-message.png)

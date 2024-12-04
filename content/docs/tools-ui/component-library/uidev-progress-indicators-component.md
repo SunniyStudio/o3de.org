@@ -1,50 +1,50 @@
 ---
-linktitle: Progress Indicators
-title: O3DE UI Progress Indicators
-description: Learn about the O3DE UI progress indicators, including the spinner and progress bar components.
+linktitle: 进度指示器
+title: O3DE UI 进度指示器
+description: 了解 O3DE UI 进度指示器，包括微调器和进度条组件。
 toc: true
 ---
 
-Use progress and status indicators to communicate to users that the O3DE application is working on a process, and what the result of that process is when it's finished. Indicators should be employed when there's a chance the user could be left wondering whether or not a process is working or hung.
+使用进度和状态指示器向用户传达 O3DE 应用程序正在处理某个进程，以及该进程完成时的结果。当用户可能想知道某个进程是否正常工作或挂起时，应使用指示器。
 
 ![component progress indicators style](/images/tools-ui/component-progress-indicators-style.png)
 
-## Usage guidelines
+## 使用指南
 
-Follow these guidelines as you design your UI with progress indicators:
+在设计带有进度指示器的 UI 时，请遵循以下准则：
 
-1.  Display progress when a latency of 3 milliseconds or more is expected.
+1. 当预期延迟为 3 毫秒或更长时间时显示进度。
 
-1.  Consider context and flow when determining where and when to show progress.
+1. 在确定何时何地展示进展时，考虑上下文和流程。
 
-1.  Progress indicators are animated to reinforce that an activity is occurring.
+1. 进度指示器以动画形式显示，以强化活动正在发生。
 
 {{< note >}}
-See additional usage guidelines in the following sections, which apply to specific types of progress indicators.
+请参阅以下部分中的其他使用指南，这些指南适用于特定类型的进度指示器。
 {{< /note >}}
 
-Avoid these design choices when using progress indicators:
-+ Don't use more than one progress indicator at a time.
+使用进度指示器时，请避免以下设计选择：
++ 不要一次使用多个进度指示器。
 
-## Basic progress bar
+## 基本进度条
 
 ![component progress bar determinate](/images/tools-ui/component-progress-bar-determinate.png)
 
-Display determinate progress as a linear progress bar, to show a process or a task that has a definite start and end. In this scenario, the system is aware of how many steps are taken, and a likelihood of time for completion.
+将确定进度显示为线性进度条，以显示具有明确开始和结束的流程或任务。在此方案中，系统知道采取了多少步骤，以及完成时间的可能性。
 
-In the case where a system is malfunctioning, or doesn't have either of these data points, consider using a spinner.
+如果系统出现故障或没有这些数据点中的任何一个，请考虑使用微调器。
 
-Additional usage guidelines for progress bars include the following:
+进度条的其他使用准则包括：
 
-1.  If possible, use text to clearly display to the user that the system is working. For particularly long processes, consider using a combination of text to indicate where they are in the process, as shown in the previous image.
+1. 如果可能，请使用文本向用户清楚地显示系统正在工作。对于特别长的流程，请考虑使用文本组合来指示它们在流程中的位置，如上图所示。
 
-1.  When available, display a numeric count under the progress bar, too.
+1. 如果可用，请在进度条下显示数字计数。
 
-1.  For progress bars in a dialog, provide a single button to cancel the process.
+1. 对于对话框中的进度条，请提供一个按钮来取消该过程。
 
-The following example demonstrates the initialization of a simple progress bar. Refer to the Qt documentation on [QProgressBar](https://doc.qt.io/qt-5/qprogressbar.html) to learn additional features.
+下面的示例演示了简单进度条的初始化。请参阅 [QProgressBar](https://doc.qt.io/qt-5/qprogressbar.html)上的 Qt 文档以了解其他功能。
 
-### Example
+### 示例
 
 ```cpp
 #include <QProgressBar>
@@ -63,17 +63,17 @@ progressBar->setTextVisible(false);
 // Note that it can also be set from the .ui file, or from Qt Designer or Creator.
 ```
 
-## Basic progress spinner
+## 基本进度微调器
 
 ![component progress spinner basic](/images/tools-ui/component-progress-spinner-basic.gif)
 
-Use spinners when it's unclear when the process will finish.
+当不清楚该过程何时完成时，请使用微调器。
 
-Additional usage guidelines for spinners include the following:
+微调器的其他使用准则包括：
 
-1.  Display spinners in the context of windows, panels, lists, or inline with other elements.
+1. 在窗口、面板、列表的上下文中显示微调器，或与其他元素内联。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/StyledBusyLabel.h>
@@ -88,11 +88,11 @@ spinner->SetBusyIconSize(18);
 spinner->SetIsBusy(true);
 ```
 
-## C++ API reference
+## C++ API参考
 
-For details on the **progress indicator** API's, see the following topics in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **进度指示器** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题：
 +  [AzQtComponents::ProgressBar](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_progress_bar.html)
 +  [AzQtComponents::StyledBusyLabel](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_styled_busy_label.html) (spinner)
 
-Relevant Qt documentation includes the following topics:
+相关的 Qt 文档包括以下主题：
 +  [QProgressBar](https://doc.qt.io/qt-5/qprogressbar.html)

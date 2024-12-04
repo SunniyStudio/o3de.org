@@ -1,21 +1,21 @@
 ---
-linktitle: Scrollbar 
-title: O3DE UI Scrollbar Styles
-description: Learn about the O3DE UI customizations to the scrollbar style in O3DE tools and Gems.
+linktitle: 滚动条 
+title: O3DE UI 滚动条样式
+description: 了解 O3DE 工具和 Gem 中滚动条样式的 O3DE UI 自定义。
 toc: true
 ---
 
-O3DE provides several style choices for your scrollbars. With the default style, the scrollbar is always visible. However, you have the option to set the scrollbar display mode so that it only appears when users hover over the scroll area. You can also apply a dark style to the scrollbar to make it more visible on light backgrounds.
+O3DE 为您的滚动条提供了多种样式选择。使用默认样式时，滚动条始终可见。但是，您可以选择设置滚动条显示模式，以便仅当用户将鼠标悬停在滚动区域上时显示该模式。您还可以将深色样式应用于滚动条，使其在浅色背景上更加明显。
 
-The following examples demonstrate how to apply these styles.
+以下示例演示如何应用这些样式。
 
-## Scrollbar display modes
+## 滚动条显示模式
 
 ![component scrollbar display modes](/images/tools-ui/component-scrollbar-display-modes.gif)
 
-Use `AzQtComponents::ScrollBar::setDisplayMode` to set the scrollbar display mode. The default mode is `AlwaysShow`.
+使用`AzQtComponents::ScrollBar::setDisplayMode` 设置滚动条显示模式。默认模式为 `AlwaysShow`。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/ScrollBar.h>
@@ -33,13 +33,13 @@ ScrollBar::setDisplayMode(scrollArea, ScrollBar::ScrollBarMode::ShowOnHover);
 ScrollBar::setDisplayMode(scrollArea, ScrollBar::ScrollBarMode::AlwaysShow);
 ```
 
-## Scrollbar with dark style
+## 深色样式的滚动条
 
-Use `AzQtComponents::ScrollBar::applyDarkStyle` to make the scrollbar more visible on light backgrounds.
+使用 `AzQtComponents::ScrollBar::applyDarkStyle` 使滚动条在浅色背景上更明显。
 
- `ScrollBar::applyLightStyle` reverts the scrollbar back to the default style.
+ `ScrollBar::applyLightStyle`将 ScrollBar 恢复为默认样式。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/ScrollBar.h>
@@ -55,10 +55,10 @@ AzQtComponents::ScrollBar::applyDarkStyle(scrollArea);
 AzQtComponents::ScrollBar::applyLightStyle(scrollArea);
 ```
 
-## C++ API reference
+## C++ API 参考
 
-For details on the **scrollbar** API, see the following topic in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **滚动条** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题：
 +  [AzQtComponents::ScrollBar](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_scroll_bar.html)
 
-Relevant Qt documentation includes the following topics:
+相关的 Qt 文档包括以下主题：
 +  [QScrollArea Class](https://doc.qt.io/qt-5/qscrollarea.html)

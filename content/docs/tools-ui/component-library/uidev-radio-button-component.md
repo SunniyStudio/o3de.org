@@ -1,39 +1,39 @@
 ---
-linktitle: Radio Button
-title: O3DE UI Radio Button Styles
-description: Learn how to apply the O3DE UI style for radio buttons in O3DE Gems and tools.
+linktitle: 单选按钮
+title: O3DE UI单选按钮样式
+description: 了解如何在 O3DE Gem 和工具中将 O3DE UI 样式应用于单选按钮。
 toc: true
 ---
 
-Use radio buttons to enable users to select from two or more options, when users must select exactly one choice. Choosing a radio button deselects the previously selected button.
+当用户必须只选择一个选项时，使用单选按钮使用户能够从两个或多个选项中进行选择。选择单选按钮将取消选择之前选择的按钮。
 
 ![component radio button style](/images/tools-ui/component-radio-button-style.png)
 
-## Usage guidelines
+## 使用指南
 
-Follow these guidelines as you design your UI with radio buttons:
+在设计带有单选按钮的 UI 时，请遵循以下准则：
 
-1.  Use radio buttons when you have two or more mutually exclusive options.
+1. 当您有两个或多个互斥的选项时，请使用单选按钮。
 
-1.  Ensure that clicking or tapping the label selects the radio button.
+1. 确保单击或点按标签以选中单选按钮。
 
-1.  One radio button should always be selected by default.
+1. 默认情况下，应始终选择一个单选按钮。
 
-1.  Keep radio buttons from the same radio group in close proximity.
+1. 将同一单选按钮组中的单选按钮放在附近。
 
-Avoid these design choices when using radio buttons:
-+ Don't order radio buttons horizontally.
-+ Don't trigger an event upon selection of a radio button, such as spawning a popover, popup, new page, or new window.
+使用单选按钮时，请避免以下设计选择：
++ 不要水平排序单选按钮。
++ 选择单选按钮时不触发事件，例如生成弹出窗口、弹出窗口、新页面或新窗口。
 
-## Basic radio button
+## 基本单选按钮
 
 ![component radio button basic](/images/tools-ui/component-radio-button-basic.png)
 
-Set up and control radio buttons in Qt Designer or in code.
+在 Qt Designer 或代码中设置和控制单选按钮。
 
-Radio buttons that belong to the same parent will automatically be part of an exclusive group. You can create your own groups too, using a `QButtonGroup`.
+属于同一父级的单选按钮将自动成为独占组的一部分。您也可以使用`QButtonGroup`创建自己的组。
 
-### Example
+### 示例
 
 ```cpp
 #include <QRadioButton>
@@ -54,10 +54,10 @@ radioButton1->setChecked(true);
 radioButton1->setEnabled(false);
 ```
 
-## C++ API reference
+## C++ API 参考
 
-For details on the **radio button** API, see the following topic in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **单选按钮** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题:
 +  [AzQtComponents::RadioButton](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_radio_button.html)
 
-Relevant Qt documentation includes the following topics:
+相关的 Qt 文档包括以下主题：
 +  [QRadioButton Class](https://doc.qt.io/qt-5/qradiobutton.html)

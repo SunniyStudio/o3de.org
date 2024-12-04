@@ -1,58 +1,58 @@
 ---
-linktitle: Writing Guidelines
-title: Writing Guidelines for Component Cards
-description: Learn how to write effective UI/UX strings for component cards using the Blue Jay Design System (BJDS) in Open 3D Engine (O3DE)
+linktitle: 编写准则
+title: 组件卡的编写准则
+description: 了解如何在 Open 3D Engine （O3DE） 中使用 Blue Jay Design System （BJDS） 为组件卡编写有效的 UI/UX 字符串
 weight: 200
 ---
 
-When writing effective UI/UX strings, especially messages, dialogs, and error strings, consider the following advice first:
+在编写有效的 UI/UX 字符串（尤其是消息、对话框和错误字符串）时，请首先考虑以下建议：
 
-* Keep strings maximally short. The more words, the more cognitive load on the user.
-* Likewise, avoid repeating words.
-* Avoid long sentences anywhere, even if there's available space. If a sentence has multiple clauses, especially independent ones, break them into separate sentences. This is easier for the user to process quickly.
-* Choose the shortest, simplest, most common words wherever appropriate. (Documentation guidelines suggest an [American 8th grade reading level](https://www.seerinteractive.com/blog/how-to-check-your-contents-reading-level-in-word-for-pc-and-mac/).)
-* Use the imperative form. Cognitively, the user wants your instruction to continue their progress.
-* Use the active voice. The passive voice sounds like an observation or a suggestion.
-* Avoid gendering and gender-specific pronouns. Use "they" if you must refer to a person other than the user, even if you're talking about Alexa!
-* Don't be creative. Metaphors, idioms, and analogies don't translate well across different humans. The same is true for many greetings, apologies, or traditionally polite phrasing.
-* Use contractions and "friendly" (informal) word syntax!
-*  Remove repetitive words. This can reduce situations where titles are too long. Example "Collision" > Continuous "Collision" Detection. The second collision is not needed in the tile as its parent already represents its owned by the collision properties.
+* 保持字符串尽可能短。单词越多，用户的认知负担就越大。
+* 同样，避免重复单词。
+* 避免在任何地方使用长句，即使有可用空间。如果一个句子有多个从句，尤其是独立的从句，请将它们分成单独的句子。这样用户更容易快速处理。
+* 在适当的情况下选择最短、最简单、最常用的单词。(文档指南建议 [美国 8 年级阅读水平](https://www.seerinteractive.com/blog/how-to-check-your-contents-reading-level-in-word-for-pc-and-mac/).)
+* 使用祈使式。在认知上，用户希望您的指令继续他们的进度。
+* 使用主动语态。被动语态听起来像是一种观察或建议。
+* 避免使用性别化和性别特异性代词。如果您必须指代用户以外的人，请使用“他们”，即使您谈论的是 Alexa！
+* 不要有创意。隐喻、成语和类比并不能很好地在不同的人之间翻译。许多问候、道歉或传统的礼貌措辞也是如此。
+* 使用缩略语和 “friendly” （非正式） 单词语法！
+* 删除重复的单词。这可以减少标题过长的情况。示例 “Collision” > Continuous “Collision” 检测。磁贴中不需要第二个碰撞，因为其父级已经表示它由碰撞属性拥有。
 
-Following this advice will save your users precious cognitive load, and will also reduce any future UI string localization time (and thus costs) significantly.
-
-
-### Grammar 
-
-In line with the guidance above, grammar should be simple and typically imperative in form. _For instructions_, tell the user exactly what to do in as simple a sentence as possible. Favor multiple short sentences rather than compound ones. As a gut check, look at your string – does it have more than one comma? Does it have a semicolon? Parentheses (or other parenthetical notation, like em-dashes)? Rewrite it as multiple short sentences instead. Move verbs to the front where you can.
-
-* Sometimes, the action you indicate will have a predictable result or consequences. Based on available widget real estate and the complexity of the action, you should consider an additional short sentence indicating the result of the action so the user can choose to continue. Example: "Click 'Restart' to close Lumberyard and relaunch it. Your current work will be saved."
-
-There are UI elements where you are not providing instruction, but are instead _communicating results or an observation about the state of the system_. The user wants the key information as soon as possible, so avoid any "set up" to the key message---it should be the first part of the first sentence, with any critical information or suggested actions in subsequent sentences.
-
-* Bad: "Uh oh! You may have forgotten to select the 'Save on Close' checkbox, so if you continue the shutdown, your work will not be automatically saved."
-* Good: "Warning: Your work will not be saved if you continue. Select the 'Save on Close' checkbox to automatically save your work before shutdown."
-
-### Units, Metrics, and Math
-
-Most units should be outside of any text entry field, to the left or right as appropriate for that unit or mathematical expression. Users are unreliable and inconsistent in adding them into an entry field. If there are multiple units possible for a field, provide a drop down or other simple selector scoped to the text entry field (or group, if it applies to more than one). If the units or expressions are complex or uncommon in usage, add a tooltip on hover over the field or label.
-
-Units of measurement should be consistently applied throughout the whole product, and can incur localization costs if not applied with consideration for the supported regions. For example, switching from "meters" to "inches" for similar operations, or within the same widget group could be very frustrating for a user. If there is available real estate, spell out the full name of the metric; save abbreviations for where there are clear limitations on available card or group space. Note that many metric abbreviations are overloaded (for example, "M" is used for both "meter" and "million" in English), so make sure the context is very clear to the user.
+遵循此建议将为用户节省宝贵的认知负荷，并且还将显著减少任何未来的 UI 字符串本地化时间（从而降低成本）。
 
 
+### 语法
 
-### Gut check!
+根据上述指南，语法应该简单，并且通常在形式上是命令式的。_For instructions_，用尽可能简单的句子准确地告诉用户该做什么。喜欢多个短句而不是复合句。作为直觉检查，请查看您的字符串 - 它是否有多个逗号？它有分号吗？括号（或其他括号表示法，如 em-dash）？改写为多个短句。尽可能将动词移到前面。
 
-Empathy is a creative's strength. When developing an error message, pause, and think: "If I found myself in this situation while using the product, what exactly would I want the UI to tell me, if it were a person? How would I want it phrased or indicated, if I wanted to keep my pace and progress?" You'll find that your initial phrasing is more on point than if you attempted to simply describe it from your own technical point of view.
+* 有时，您指示的操作将产生可预测的结果或后果。根据可用的小组件空间和操作的复杂程度，您应该考虑使用额外的短句来指示操作的结果，以便用户可以选择继续。示例：“单击 'Restart' 以关闭 Lumberyard 并重新启动它。您当前的工作将被保存。
 
-### Forbidden words
+在某些 UI 元素中，您不提供说明，而是_communicating结果或对 system_ 状态的观察。用户希望尽快获得关键信息，因此请避免对关键信息进行任何“设置”---它应该是第一句话的第一部分，并在随后的句子中包含任何关键信息或建议的操作。
 
-*Forbidden words* are words that may have negative connotations in the current world climate. These words may cause the customer to have a negative reaction. All of them have alternatives, so avoid using them in favor of the approved neutral alternative. When in doubt, ask a developer or writer for a better technical term. Likewise, API reviews often miss this consideration, so if an API name, parameter, or enumeration contains these words, request the developer to change it.
+* 坏：“呃哦！您可能忘记选中'Save on Close'复选框，因此如果您继续关闭，您的工作将不会自动保存。
+* 好：“警告：如果您继续，您的工作将不会被保存。选中 'Save on Close' 复选框，在关机前自动保存您的工作。
+
+### 单位、度量和数学
+
+大多数单位应位于任何文本输入字段之外，根据该单位或数学表达式的需要向左或向右。用户在将他们添加到输入字段时不可靠且不一致。如果一个字段可能有多个单位，请提供一个下拉列表或其他简单选择器，其范围限定为文本输入字段（或组，如果适用于多个）。如果单位或表达式很复杂或不常见，请在将鼠标悬停在字段或标签上时添加工具提示。
+
+度量单位应在整个产品中一致地应用，如果不考虑受支持的区域来应用，则可能会产生本地化成本。例如，对于类似的操作，或者在同一个小部件组中，从 “meters” 切换到 “inches” 可能会让用户非常沮丧。如果有可用的房地产，请拼出量度的全名;保存对可用 Card 或 Group Space 有明显限制的缩写。请注意，许多 metric 缩写都过载了（例如，“M”在英语中同时用于“meter”和“million”），因此请确保上下文对用户来说非常清楚。
 
 
-|Forbidden Word	|Use this instead	|
+
+### 肠道检查！
+
+同理心是创意人员的强项。在开发错误消息时，请停下来想一想：“如果我在使用产品时发现自己处于这种情况，如果它是一个人，我究竟希望 UI 告诉我什么？如果我想保持我的速度和进步，我希望它如何措辞或表示？你会发现，你最初的措辞比你试图简单地从你自己的技术角度来描述它更切中要害。
+
+### 违禁词
+
+*禁止词语* 是在当前世界气候下可能具有负面含义的词语。这些词可能会导致客户产生负面反应。它们都有替代品，因此请避免使用它们来支持经批准的中立替代品。如有疑问，请向开发人员或作者询问更好的技术术语。同样，API 审核经常忽略此注意事项，因此，如果 API 名称、参数或枚举包含这些词，请请求开发人员更改它。
+
+
+|禁忌词 |请改用此选项	|
 |---	|---	|
-|Blacklist/Whitelist	|Deny list/Allow list **or** Exclude list/Include list	|
+|Blacklist/Whitelist	|拒绝列表/允许列表 **或** 排除列表/包含列表	|
 |---	|---	|
-|Master/Slave	| The choice of an alternative depends on the technical context. Some alternatives to consider are: <ol><li> Client/Agent or Controller/Agent </li> <li>Primary/Secondary or Primary/Ancillary <li>Supervisor/Worker </li></ol>|
+|Master/Slave	| 替代方案的选择取决于技术环境。要考虑的一些替代方案是： <ol><li> Client/Agent or Controller/Agent </li> <li>Primary/Secondary or Primary/Ancillary <li>Supervisor/Worker </li></ol>|
 
-For a complete list of forbidden words and their approved alternatives, read [Terms to avoid and their alternatives](/docs/contributing/to-docs/terminology#terms-to-avoid-and-their-alternatives) in the O3DE Contributing guide.
+有关禁用词及其批准的替代方案的完整列表，请阅读 O3DE 贡献指南中的 [要避免的术语及其替代方案](/docs/contributing/to-docs/terminology#terms-to-avoid-and-their-alternatives)。

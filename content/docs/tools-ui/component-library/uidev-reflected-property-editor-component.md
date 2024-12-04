@@ -1,21 +1,21 @@
 ---
-linktitle: Reflected Property Editor
-title: O3DE UI Reflected Property Editor
-description: Use the O3DE UI reflected property editor to automatically lay out user-editable properties in O3DE tools and Gems.
+linktitle: 反射属性编辑器
+title: O3DEUI 反射属性编辑器
+description: 使用 O3DE UI 反射属性编辑器在 O3DE 工具和 Gem 中自动布局用户可编辑的属性。
 toc: true
 ---
 
-A **reflected property editor** automatically lays out controls for user-editable properties that are reflected using the edit context. It is frequently used as a content widget to populate [card](./uidev-card-widget) components.
+**反射的属性编辑器** 会自动为使用编辑上下文反映的用户可编辑属性布置控件。它经常用作内容小部件来填充[card](./uidev-card-widget)组件。
 
 ![component reflected property editor in card](/images/tools-ui/component-reflected-property-editor-in-card.png)
 
-For more information about reflecting and the edit context, refer to [Reflecting a Component for Serialization and Editing](/docs/user-guide/programming/components/reflection/reflecting-for-serialization) in the *O3DE User Guide*.
+有关反射和编辑上下文的更多信息，请参阅 *O3DE 用户指南*中的 [反射组件以进行序列化和编辑](/docs/user-guide/programming/components/reflection/reflecting-for-serialization)。
 
-## Reflected property editor in a card
+## 卡片中的反射属性编辑器
 
-The following code shows how to add a simple **reflected property editor** to a **card**, like the one pictured in the image at the beginning of this topic.
+以下代码演示如何将简单的 **反射属性编辑器** 添加到 **卡** 中，如本主题开头的图片中所示。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzToolsFramework/UI/PropertyEditor/ReflectedPropertyEditor.hxx>
@@ -35,14 +35,14 @@ auto cardPropertyEditor = aznew AzToolsFramework::ReflectedPropertyEditor(card);
 card->setContentWidget(cardPropertyEditor);
 ```
 
-## C++ API reference
+## C++ API参考
 
-For details on the **card** API, see the following topics in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **card** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题：
 +  [AzQtComponents::Card](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_card.html)
 +  [AzQtComponents::CardHeader](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_card_header.html)
 +  [AzQtComponents::CardNotification](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_card_notification.html)
 
-## Related links
+## 相关链接
 
-For additional information related to the **reflected property editor** component, see the following topics:
+有关 **reflected property editor** 组件的其他信息，请参阅以下主题：
 +  [Card Widget](./uidev-card-widget)

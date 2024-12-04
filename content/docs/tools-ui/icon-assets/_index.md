@@ -1,12 +1,12 @@
 ---
-linktitle: UI Icon Assets
-title: O3DE UI Icon Assets
-description: Browse the library of icon assets used in the Open 3D Engine development environment.
+linktitle: UI 图标资产
+title: O3DE UI 图标资产
+description: 浏览 Open 3D Engine 开发环境中使用的图标资源库。
 weight: 400
 ---
 
-Browse the library of icons used in the **Open 3D Engine (O3DE)** development environment in the following pages.
+在以下页面中浏览 **Open 3D Engine （O3DE）** 开发环境中使用的图标库。
 
-If you're looking for specific O3DE icon asset files, this O3DE file directory is a good place to start: `<engine>/Code/Framework/AzQtComponents/AzQtComponents/Components/img/`.
+如果要查找特定的 O3DE 图标资产文件，此 O3DE 文件目录是一个很好的起点：`<engine>/Code/Framework/AzQtComponents/AzQtComponents/Components/img/`.
 
-If you're looking for O3DE branding logos, you can see them on [GitHub](https://github.com/o3de/artwork).
+如果您正在寻找 O3DE 品牌徽标，您可以在 [GitHub](https://github.com/o3de/artwork) 上查看它们。

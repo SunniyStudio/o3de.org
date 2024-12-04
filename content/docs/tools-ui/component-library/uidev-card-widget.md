@@ -1,82 +1,82 @@
 ---
-linktitle: Card
-title: O3DE UI Card Widget
-description: Use the O3DE UI card widget as a container to organize component property settings and actions together.
+linktitle: 卡片
+title: O3DE UI卡片小部件
+description: 使用 O3DE UI 卡片小部件作为容器，将组件属性设置和操作组织在一起。
 toc: true
 ---
 
-Use cards to display information in highly interactive, flexible containers. Users can easily stack, reorder, and collapse these containers. All content within a card should relate to only one idea. Cards should be easy to scan for relevant and actionable information, and are predominantly used to display editable details for a component or a class.
+使用卡片在高度交互、灵活的容器中显示信息。用户可以轻松地堆叠、重新排序和折叠这些容器。卡片中的所有内容都应仅与一个构思相关。卡片应易于扫描以获取相关且可操作的信息，并且主要用于显示组件或类的可编辑详细信息。
 
-For example, a card might include common properties, action buttons, advanced settings, and a context menu for additional actions:
+例如，卡片可能包括常用属性、操作按钮、高级设置和用于其他操作的上下文菜单：
 
 ![component card concept](/images/tools-ui/component-card-concept.png)
 
-To make it easier for users to scan a card, make the content layout consistent. This includes using the same font size, style, and spacing for headings and content. Be consistent with your use of images and icons, and primary and secondary actions (if required). Card titles are key to allowing users to easily scan the content, so make sure the titles are highly visible.
+为了方便用户扫描卡片，请使内容布局保持一致。这包括对标题和内容使用相同的字体大小、样式和间距。与图像和图标的使用以及主要和次要操作（如果需要）保持一致。卡片标题是允许用户轻松扫描内容的关键，因此请确保标题高度可见。
 
-## Anatomy of the card widget
+## 卡片小部件剖析
 
-Cards allow for a certain amount of customization. The basic layout of a card includes the following features:
+卡片允许一定数量的自定义。卡片的基本布局包括以下功能：
 
 ![component card anatomy](/images/tools-ui/component-card-anatomy.png)
 
-1.  **Expander** and **header bar**
+1.  **Expander** 和 **header bar**
 
-    Cards expand or collapse when users click the arrow on the top left.
+    当用户单击左上角的箭头时，卡片会展开或折叠。
 
-    If the card can be moved, users press and drag the header bar to reposition the card.
+    如果卡片可以移动，则用户按住并拖动标题栏以重新定位卡片。
 
 1.  **Card icon**
 
-    (Optional) Cards can have their own unique icon related to their purpose. For the full list of icons, see [O3DE component icons](/docs/tools-ui/icon-assets/uidev-component-icons/).
+    （可选）卡片可以具有与其用途相关的独特图标。有关图标的完整列表，请参阅 [O3DE 组件图标](/docs/tools-ui/icon-assets/uidev-component-icons/).
    
     {{< note >}}
-Two icons are required for new components:
+新组件需要两个图标：
 
-+ A 16 x 16 SVG with a background box for the perspective window.
-+ An SVG for everywhere else in the editor, without a background box.
++ 一个 16 x 16 的 SVG，带有用于透视窗口的背景框。
++ 用于编辑器中其他任何位置的 SVG，没有背景框。
 {{< /note >}}
 
 1.  **Card name**
 
-    Each card has their own name related to their purpose. You can configure the name to change from white to orange to signify that content in the widget has been modified.
+    每张卡片都有自己的名称，与其用途相关。您可以将名称配置为从白色更改为橙色，以表示小组件中的内容已被修改。
 
 1.  **Help icon**
 
-    (Optional) Cards can display a link to documentation that describes the card's functionality.
+    （可选）卡可以显示指向描述卡功能的文档的链接。
 
 1.  **Context menu icon**
 
-    (Optional) The card's context menu opens when users choose this icon. The context menu can also be opened by right-clicking the card header with a mouse.
+    （可选）当用户选择此图标时，将打开卡的上下文菜单。也可以通过用鼠标右键单击卡标题来打开上下文菜单。
 
 1.  **Card content widget**
 
-    This area contains the content widget for the card. Most cards contain a [reflected property editor](./uidev-reflected-property-editor-component/) component, but cards can hold any widget.
+    此区域包含卡片的内容 Widget。大多数卡片都包含 [反射属性编辑器](./uidev-reflected-property-editor-component/)  组件，但卡片可以容纳任何小部件。
 
 1.  **Advanced options**
 
-    (Optional) When a secondary content widget is set, a label for it is displayed here. The Advanced options menu expands or collapses when users choose the arrow on the left of the label. You can customize the label's text.
+    （可选）设置辅助内容 Widget 后，此处会显示其标签。当用户选择标签左侧的箭头时，Advanced options （高级选项） 菜单将展开或折叠。您可以自定义标签的文本。
 
 1.  **Notifications**
 
-    (Optional) [Notifications](#card-with-notification) that you added to the card are displayed here. Buttons or other widgets can be added to notifications as a means of resolving them.
+    （可选）[通知](#card-with-notification) 将在此处显示。可以将按钮或其他小部件添加到通知中，作为解决它们的一种方式。
 
 1.  **Call to action region**
 
-    (Optional) Supplemental actions should be placed at the bottom of the card. We refer to this as the Call to Action region. Typically, a call to action is represented by a button added to the bottom of a content widget, or in a card notification. Avoid using primary buttons here because they should be reserved for the overall action on a page. Instead, use secondary or tertiary buttons, link buttons, and icon buttons here.
+    （可选）补充操作应放在卡片底部。我们将其称为 Call to Action 区域。通常，行动动员由添加到内容 Widget 底部的按钮或卡片通知表示。避免在此处使用主按钮，因为它们应该保留给页面上的整体操作。相反，请在此处使用二级或三级按钮、链接按钮和图标按钮。
 
-## Basic card
+## 基础卡片
 
 ![component card basic](/images/tools-ui/component-card-basic.png)
 
-The simplest card consists of these components:
-+ Card header
-  + Expand/collapse icon
-  + (Optional) Card icon
-  + Card name
-  + (Optional) Context menu (enabled by default)
-+ Card content
+最简单的卡片由以下组件组成：
++ 卡头
+  + 展开/折叠图标
+  +（可选）卡片图标
+  + 卡名
+  +（可选）上下文菜单（默认启用）
++ 卡片内容
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/Card.h>
@@ -100,15 +100,15 @@ card->setContentWidget(new QWidget());
 // Add the card to a UI layout as needed.
 ```
 
-## Card with context menu and help icon
+## 带有上下文菜单和帮助图标的卡片
 
 ![component card context and help](/images/tools-ui/component-card-context-and-help.png)
 
-Display a help icon on the card to redirect users to a webpage for documentation.
+在卡片上显示帮助图标，以将用户重定向到文档网页。
 
-The following code demonstrates how to set up a help link and start a context menu.
+以下代码演示了如何设置帮助链接并启动上下文菜单。
 
-### Example
+### 示例
 
 ```cpp
 // Set the card help icon.
@@ -128,13 +128,13 @@ connect(ui->basicCard, &AzQtComponents::Card::contextMenuRequested, this, [](con
 // Note: The menu can be created in advance and executed on contextMenuRequested.
 ```
 
-## Card with secondary content
+## 包含次要内容的卡片
 
 ![component card secondary content](/images/tools-ui/component-card-secondary-content.png)
 
-Display a secondary content widget. Its title is customizable.
+显示辅助内容 Widget。它的标题是可定制的。
 
-### Example
+### 示例
 
 ```cpp
 // Set the secondary content title.
@@ -144,85 +144,85 @@ card->setSecondaryTitle("Advanced Options");
 card->setSecondaryContentWidget(new QWidget());
 ```
 
-## Card with modified content
+## 包含已修改内容的卡片
 
 ![component card content modified](/images/tools-ui/component-card-content-modified.png)
 
-Configure the care title to change color when the content is edited, different from the parent slice, or has not been saved yet. We recommend enabling this functionality on all cards.
+将 Care 标题配置为在内容编辑、与父切片不同或尚未保存时更改颜色。我们建议在所有卡上启用此功能。
 
-### Example
+### 示例
 
 ```cpp
 // Set the content modified state in response to content change.
 card->header()->setContentModified(true);
 ```
 
-## Disabled card
+## 禁用卡片
 
 ![component card disabled](/images/tools-ui/component-card-disabled.png)
 
-Fully disable the card, including header bar icons and child widgets.
+完全禁用卡，包括标题栏图标和子小组件。
 
 {{< note >}}
-If you want the card content to be disabled, but allow users to still use the help button and context menu in the header bar, use the [Mock Disabled](#mock-disabled-card) state.
+如果希望禁用卡片内容，但允许用户仍使用标题栏中的帮助按钮和上下文菜单，请使用 [Mock Disabled](#mock-disabled-card)状态。
 {{< /note >}}
 
-### Example
+### 示例
 
 ```cpp
 // Disable the card widget using a Qt function. All functionality of the card is disabled.
 card->setEnabled(false);
 ```
 
-## Mock disabled card
+## 模拟禁用的卡片
 
 ![component card mock disabled](/images/tools-ui/component-card-mock-disabled.png)
 
-Disable primary and secondary widgets on the card, but keep the header bar enabled. The following card features remain functional:
-+ Expand/collapse
-+ Help
-+ Context menu
+禁用卡上的主要和辅助小组件，但保持启用标题栏。以下卡功能仍然有效：
++ 展开/折叠
++ 帮助
++ 上下文菜单
 
-### Example
+### 示例
 
 ```cpp
 // Display the card as disabled while retaining functionality in the header bar.
 card->mockDisabledState(true);
 ```
 
-## Card with warning state
+## 具有警告状态的卡
 
 ![component card warning state](/images/tools-ui/component-card-warning-state.png)
 
-Set a warning state on the card header.
+在卡头上设置警告状态。
 
 {{< note >}}
-You can independently set the disabled state and warning state.
+您可以单独设置禁用状态和警告状态。
 {{< /note >}}
 
-### Example
+### 示例
 
 ```cpp
 // Display a warning icon in the header bar to indicate a warning state.
 card->header()->setWarning(true);
 ```
 
-## Card with notification
+## 带通知的卡片
 
 ![component card notification](/images/tools-ui/component-card-notification.png)
 
-Add notifications to indicate misconfigurations and other errors. Remove the notification when the issue is resolved.
+添加通知以指示错误配置和其他错误。问题解决后删除通知。
 
-Customize the notification with the following:
-+ Message
-+ (Optional) Action button
-+ (Optional) Custom widget
+使用以下命令自定义通知：
++ 在线留言
++（可选）操作按钮
++（可选）自定义小部件
 
 {{< note >}}
-In addition to buttons, you can use `addFeature(QWidget*)` to add a custom widget to the warning notification.
+除了按钮之外，您还可以使用`addFeature(QWidget*)` 将自定义窗口小部件添加到警告通知中。
 {{< /note >}}
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/CardNotification.h>
@@ -238,14 +238,14 @@ QPushButton* button = notification->addButtonFeature("Clear Warnings");
 connect(button, &QPushButton::clicked, ui->functionalCard, &AzQtComponents::Card::clearNotifications);
 ```
 
-## C++ API reference
+## C++ API 参考
 
-For details on the **card** API, see the following topics in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **card** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题：
 +  [AzQtComponents::Card](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_card.html)
 +  [AzQtComponents::CardHeader](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_card_header.html)
 +  [AzQtComponents::CardNotification](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_card_notification.html)
 
-## Related links
+## 相关链接
 
-For additional information related to the **card** component, see the following topics:
-+  [Reflected Property Editor](./uidev-reflected-property-editor-component)
+有关 **card** 组件的其他信息，请参阅以下主题：
++ [反射属性编辑器](./uidev-reflected-property-editor-component)

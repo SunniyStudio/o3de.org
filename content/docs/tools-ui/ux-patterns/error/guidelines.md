@@ -1,68 +1,68 @@
 ---
-linkTitle: Message Guidelines
-title: Guidelines for Messages in Open 3D Engine
-description: Developer guidelines for writing error, warning, and notification messages for Open 3D Engine (O3DE).
+linkTitle: 消息准则
+title: Open 3D Engine 中的消息准则
+description: 为 Open 3D Engine （O3DE） 编写错误、警告和通知消息的开发人员指南。
 weight: 200
 toc: true
 ---
 
-Messages, especially warnings and errors, must provide clear and actionable information. Poorly written messages might confuse and frustrate users, leading to negative user feedback and sentiment. Well written messages lead users to better behaviors and workflows, enable users to report issues more effectively, and build user confidence. Writing effective messages requires more effort, but is very worthwhile.
+消息（尤其是警告和错误）必须提供清晰且可操作的信息。写得不好的消息可能会让用户感到困惑和沮丧，从而导致负面的用户反馈和情绪。写得好的消息会引导用户改进行为和工作流程，使用户能够更有效地报告问题，并建立用户信心。编写有效的信息需要更多的努力，但非常值得。
 
-When developing and debugging features, it's common to use messages to output data (such as a function's result) with little additional information. These messages, however, might be encountered by another developer or user in an unexpected context. Useful messages provide contextual information and a path forward where possible, in clear and concise language. An effective and helpful message acknowledges the inconvenience for the user and reassures them with guidance to solve the issue.
+在开发和调试功能时，通常使用消息来输出数据（例如函数的结果），而附加信息很少。但是，其他开发人员或用户可能会在意外上下文中遇到这些消息。有用的消息以清晰简洁的语言提供上下文信息和前进的道路。一条有效且有用的消息承认给用户带来的不便，并通过指导来解决问题，让他们放心。
 
-## Message considerations
+## 消息注意事项
 
-Developers often display low-level information, return values, and exceptions in messages that are narrowly scoped to the function or sub-process that generates the message. While these low level messages might be meaningful to developers, O3DE users are almost always focused on some larger task. When crafting messages, answering the following questions can help you determine how to write messages that are useful to users:
+开发人员通常在消息中显示低级信息、返回值和异常，这些消息的范围狭窄到生成消息的函数或子进程。虽然这些低级消息对开发人员可能有意义，但 O3DE 用户几乎总是专注于一些更大的任务。在制作消息时，回答以下问题可以帮助您确定如何编写对用户有用的消息：
 
-* When and where might a user might encounter this message?
-* What type of user is most likely encounter this message?
-* What might be the user's task and goal when this message is displayed?
-* What type of message is required? Is it a error, warning, informational, or status message?
+* 用户何时何地可能会遇到此消息？
+* 什么类型的用户最有可能遇到此消息？
+* 显示此消息时，用户的任务和目标可能是什么？
+* 需要什么类型的消息？是错误、警告、信息性消息还是状态消息？
 
-Suppose, for example, that you are adding a message to a function that processes custom vertex values. Input values in the range of `0.0` to `1.0` are expected. When a value outside of that range is encountered, the value is clamped to the range, and a message is raised. Asking the previous questions about this scenario might result in the following answers:
+例如，假设您要向处理自定义顶点值的函数添加一条消息。输入值应在 '0.0' 到 '1.0' 范围内。当遇到超出该范围的值时，该值将被固定到该范围，并引发一条消息。询问前面关于此方案的问题可能会得到以下答案：
 
-* A user is processing a mesh that has custom vertex attributes and they might encounter the message in Asset Processor or Scene Settings.
-* Creative users (artist and designers) are most likely to encounter this message.
-* The user is processing a mesh with custom vertex attributes that are likely intended to be used in a vertex shader, such as a cloth deformer.
-* A warning is warranted. The asset can be processed, however the loss of data might not yield the user's desired result.
+* 用户正在处理具有自定义顶点属性的网格，他们可能会在 Asset Processor 或 Scene Settings 中遇到此消息。
+* 创意用户（艺术家和设计师）最有可能看到此消息。
+* 用户正在处理具有自定义顶点属性的网格，这些属性可能旨在用于顶点着色器，例如布料变形器。
+* 警告是必要的。可以处理资产，但数据丢失可能不会产生用户所需的结果。
 
-The following table assesses some possible messages for this scenario:
+下表评估了此方案的一些可能消息：
 
-| Message | Assessment |
+| 消息 |评估 |
 | - | - |
-| *WARNING: Result: 2.35* | **Bad** - There is no context for this warning. This message might be useful for the developer of the function, but doesn't help users who might encounter it. |
-| *WARNING: Vertex data value out of range. Result: 2.35* | **Better** - Some context has been provided, but the result value is ambiguous. Advanced users might intuit what can be done to solve the issue, but this message can be improved with additional context and a next step. |
-| *WARNING: A value of 2.35 was found in vertex stream PVMass of MyAsset.fbx. Ensure all values are in the range of 0 to 1 and then reprocess the asset, otherwise, values will be clamped to the range.* | **Best** - In two short sentences, the user is given precise information about what caused the warning, and what step they can take to resolve the warning. |
+| *WARNING: Result: 2.35* | **Bad** - 此警告没有上下文。此消息可能对函数的开发人员有用，但对可能遇到它的用户没有帮助。 |
+| *WARNING: Vertex data value out of range. Result: 2.35* | **Better** - 已提供一些上下文，但 result 值不明确。高级用户可能会凭直觉知道可以采取哪些措施来解决问题，但可以通过额外的上下文和下一步来改进此消息。 |
+| *WARNING: A value of 2.35 was found in vertex stream PVMass of MyAsset.fbx. Ensure all values are in the range of 0 to 1 and then reprocess the asset, otherwise, values will be clamped to the range.* | **Best** - 通过两个简短的句子，用户可以获得有关导致警告的原因以及他们可以采取什么步骤来解决警告的准确信息. |
 
-The best message provides useful context (vertex stream name, value, asset name, expected range), and a possible solution in as few characters as possible. Determining what critical contextual information can be provided to users can help you write the most broadly useful messages.
+最佳消息以尽可能少的字符提供有用的上下文（顶点流名称、值、资产名称、预期范围）和可能的解决方案。确定可以向用户提供哪些关键的上下文信息可以帮助您编写最广泛有用的消息。
 
-## Message guidelines
+## 消息准则
 
-O3DE integrates many third party packages each with their own standards for messages. Passing low level messages, especially those generated by third-party libraries, to a dialog or console is unlikely to help users. You can improve the user's overall experience by authoring messages that are suitable for broad audiences, including less technical users.
+O3DE 集成了许多第三方软件包，每个软件包都有自己的消息标准。将低级消息（尤其是由第三方库生成的消息）传递给对话框或控制台不太可能对用户有所帮助。您可以通过创作适合广泛受众（包括技术水平较低的用户）的消息来改善用户的整体体验。
 
-Keep the following guidelines in mind when creating messages:
+创建消息时，请牢记以下准则：
 
-* Use U.S. English.
-* Avoid jargon and idioms.
-* Be concise. Use short, complete sentences. Ideally, a error message should be fewer than 200 characters.
-* Use simple grammar.
-* Use a two sentence standard:
-  * Explain the issue in the first sentence as plainly as possible.
-  * Offer a solution or link to additional information in the second sentence.
-* Use sentence casing. Excessive capitalization might set an aggressive tone.
-* Format messages for clarity. White space, commas, and quotation marks can improve readability and comprehension.
-* Use passive voice and past tense. For example, use "*An error occurred...*" rather than "*We found an error...*". Active voice, particularly when used for errors and warnings, can be perceived as judgemental and harsh.
-* Include critical details when possible. Only include the details that are necessary. Details such as asset names, user defined variable names, values, asset names, entity IDs, component names, and so on, might help users quickly resolve issues for themselves.
-* Provide a link to documentation, a PR, an Issue, or source code that can provide more information or a solution.
-* Don't pass low-level messages to the end user.
-* Don't include code in messages. Code takes up space and makes the message harder to scan.
-* Write messages with the least technical terminology possible.
+* 使用美式英语。
+* 避免使用行话和成语。
+* 简洁明了。使用简短、完整的句子。理想情况下，错误消息应少于 200 个字符。
+* 使用简单的语法。
+* 使用两句话的标准：
+  * 尽可能清楚地解释第一句话中的问题。
+  * 在第二句中提供解决方案或指向其他信息的链接。
+* 使用句子大小写。过度大写可能会设置激进的基调。
+* 为清楚起见，设置消息格式。空格、逗号和引号可以提高可读性和理解性。
+* 使用被动语态和过去时。例如，使用“*发生错误...*”而不是“*我们发现错误...*”。主动语态，尤其是用于错误和警告时，可能会被视为评判性和严厉的。
+* 尽可能包括关键细节。仅包含必要的详细信息。资产名称、用户定义的变量名称、值、资产名称、实体 ID、组件名称等详细信息可能会帮助用户快速解决问题。
+* 提供指向文档、PR、Issue 或源代码的链接，这些都可以提供更多信息或解决方案。
+* 不要将低级消息传递给最终用户。
+* 不要在消息中包含代码。代码会占用空间，并使邮件更难扫描。
+* 使用尽可能少的技术术语编写消息。
 
-    For example, suppose a user encounters an error with the user interface, such as a secondary menu failure. A message like *STACKOVERFLOWEXCEPTION: SYSTEM STATE UNKNOWN* is technical, cryptic, and alarming. A better message might be *ERROR: A stack overflow error occurred when adding the Tool menu to the menu tree. Please report this issue and restart the application.*
+    例如，假设用户在用户界面中遇到错误，例如辅助菜单失败。像 *STACKOVERFLOWEXCEPTION： SYSTEM STATE UNKNOWN* 这样的消息是技术性的、神秘的和令人担忧的。更好的消息可能是 *ERROR： A stack overflow error occurred when adding the Tool menu tree （将工具菜单添加到菜单树时发生堆栈溢出错误）。请报告此问题并重新启动应用程序。
 
-* Avoid assigning blame in messages. This applies to both users and code, including third-party libraries.
+* 避免在消息中指责。这适用于用户和代码，包括第三方库。
 
-  For example, *You supplied a value of type Complex128. Complex128 is not supported by ThirdPartyMath library.* blames both the user and a third-party library. A better solution might be *A value of an unsupported type (Complex128) was encountered.*
+  例如，*您提供了 Complex128 类型的值。ThirdPartyMath 库不支持 Complex128。* 同时归咎于用户和第三方库。更好的解决方案可能是 *遇到了不受支持的类型 （Complex128） 的值。
 
-* Use an empathetic tone. To help you establish this tone, imagine that you are encountering this error for the first time as a new O3DE user, and ask yourself whether or not you would find this error message clear and helpful, or opaque.
-* Request reviews for your messages. Talk to a technical writer, UX designer, user, or another developer to see if your messages can be improved.
+* 使用善解人意的语气。为了帮助您建立这种语气，假设您作为新的 O3DE 用户第一次遇到此错误，并问问自己，您是会发现此错误消息清晰有用，还是不透明。
+* 请求对您的消息进行审核。与技术作家、UX 设计师、用户或其他开发人员交谈，看看您的消息是否可以改进。

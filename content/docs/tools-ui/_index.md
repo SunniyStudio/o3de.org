@@ -1,8 +1,8 @@
 ---
-linkTitle: Tools UI Developer's Guide
-menuTitle: Tools UI
-title: Tools UI Developer's Guide for Open 3D Engine
-description: Looking to build your own O3DE component? Read up on the UI style and implementation.
+linkTitle: 工具 UI 开发人员指南
+menuTitle: 工具 UI
+title: 工具 Open 3D Engine 的 UI 开发人员指南
+description: 想要构建自己的 O3DE 组件？阅读 UI 样式和实现。
 weight: 500
 toc: true
 menu_uuid: tools
@@ -12,28 +12,28 @@ primary: true
 
 ![A banner of the Blue Jay Design System](/images/tools-ui/bjds-banner.png)
 
-The **Blue Jay Design System** is the modular UI framework of **Open 3D Engine (O3DE)**. This guide provides information for developers on the framework and how to use it when developing components, tools, and extensions for **O3DE Editor**.
+**Blue Jay Design System** 是 **Open 3D Engine （O3DE）** 的模块化 UI 框架。本指南为开发人员提供有关框架的信息，以及在为 **O3DE Editor **开发组件、工具和扩展时如何使用它。
 
-This guide includes guidelines and information on the custom Qt widget library, the Qt Control Gallery tool, and a gallery of UI icon assets for O3DE. This guide also provides O3DE brand guidelines and O3DE brand assets that you can incorporate into your own projects.
+本指南包括有关自定义 Qt 小部件库、Qt Control Gallery 工具和 O3DE 的 UI 图标资产库的指南和信息。本指南还提供了 O3DE 品牌指南和 O3DE 品牌资产，您可以将它们合并到自己的项目中。
 
-If you have any questions regarding the Blue Jay Design System or have a suggestion to improve it, you can [file an issue](https://github.com/o3de/sig-ui-ux/issues/new/choose) with the UI/UX Special Interest Group on GitHub.
+如果您对 Blue Jay Design System 有任何疑问或有改进它的建议，您可以 [提交问题](https://github.com/o3de/sig-ui-ux/issues/new/choose) 到 GitHub 上的 UI/UX 特别兴趣小组。
 
-Feel like having a chat? Check out our #SIG-UX-UI channel on [Discord](https://{{< links/o3de-discord >}}). The community is always happy to help!
+想聊聊吗？请在 [Discord](https://{{< links/o3de-discord >}}) 上查看我们的 #SIG-UX-UI 频道。社区总是乐于提供帮助！
 
-## Tools UI Developer's Guide Contents
+## 工具 UI 开发人员指南内容
 
-| Topic | Description |
+| 主题 |描述 |
 | --- | --- |
-| [O3DE's Branding Guidelines](branding-guidelines) | An overview of O3DE's branding guidelines, where you can download the logo assets, read about the recommended guidance for brand application, and review the details on our accepted brand colors.|
-| [O3DE UI Component Development Guidelines](ux-patterns/component-card) | An overview of O3DE UI component development and the custom Qt widget library. |
-| [O3DE's Message Guidelines](ux-patterns/error) | Reference and best practices for O3DE's UI message components, where you can find specifications, examples, and best practices for different message types, including toasts and dialogs.|
-| [O3DE Qt Control Gallery Tool](uidev-control-gallery/) | A tool included with O3DE that demonstrates the custom Qt widget library in action. Also includes sample code related to each component. |
-| [O3DE UI Component Library](component-library/) | An introduction to each UI component in O3DE and guidelines for their usage. |
-| [O3DE UI Icon Assets](icon-assets/) | A library of icon assets used in the O3DE development environment. |
+| [O3DE 的品牌指南](branding-guidelines) | O3DE 品牌指南概述，您可以在其中下载徽标资产，阅读品牌应用推荐指南，并查看我们接受的品牌颜色的详细信息。|
+| [O3DE UI 组件开发指南](ux-patterns/component-card) | O3DE UI 组件开发和自定义 Qt 小部件库的概述。 |
+| [O3DE 的消息准则](ux-patterns/error) | O3DE 的 UI 消息组件的参考和最佳实践，您可以在其中找到不同消息类型（包括 toast 和对话框）的规范、示例和最佳实践。|
+| [O3DE Qt 控件库工具](uidev-control-gallery/) | O3DE 附带的一个工具，用于演示自定义 Qt 小部件库的实际操作。还包括与每个组件相关的示例代码。 |
+| [O3DE UI 组件库](component-library/) | O3DE 中每个 UI 组件的介绍及其使用指南。 |
+| [O3DE UI 图标资产](icon-assets/) | O3DE 开发环境中使用的图标资产库。 |
 
-## Related topics
+## 相关主题
 
-| Topic | Description |
+| 主题 |描述 |
 | --- | --- |
-| [Extend the Editor Tutorials](/docs/learning-guide/tutorials/extend-the-editor/) | Tutorials to extend the **O3DE Editor** by creating a custom tool Gem with O3DE UI components. |
-| [Blue Jay Design System (BJDS) on Figma](https://www.figma.com/community/file/1232268259207644469) | A Figma library that contains visual and functional building blocks to create consistent designs across O3DE. |
+| [扩展编辑器教程](/docs/learning-guide/tutorials/extend-the-editor/) | 通过使用 O3DE UI 组件创建自定义工具 Gem 来扩展 **O3DE 编辑器** 的教程。 |
+| [Figma 上的 Blue Jay Design System （BJDS）](https://www.figma.com/community/file/1232268259207644469) | 一个 Figma 库，其中包含视觉和功能构建块，用于在 O3DE 中创建一致的设计。 |

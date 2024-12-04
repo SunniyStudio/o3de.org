@@ -1,74 +1,74 @@
 ---
-linktitle: Console Log
-title: Error Messages in Console Log
-description: Learn how to design Error/Warning/Success/Information messages in console logs using the Blue Jay Design System (BJDS) in Open 3D Engine (O3DE).
+linktitle: 控制台日志
+title: 控制台日志中的错误消息
+description: 了解如何使用 Open 3D Engine （O3DE） 中的 Blue Jay Design System （BJDS） 在控制台日志中设计错误/警告/成功/信息消息。
 weight: 100
 toc: true
 ---
 
-A *console log* displays a collection of *console messages*, which notify the user of errors or failures, warnings, and other information that occurred during an event. Console messages are color-coded and prefixed with their status to help users differentiate between the messages.
+*控制台日志* 显示一组 *控制台消息*，这些消息通知用户事件期间发生的错误或故障、警告和其他信息。控制台消息采用颜色编码，并带有其状态前缀，以帮助用户区分消息。
 
-#### Example
+#### 例
 
-For example, when you open your project in the **Open 3D Engine (O3DE) Editor**, the console log informs you of the statuses of the different systems and objects in your project. Warning messages are colored a variation of orange and prefixed with "\[Warning\]" and an error message is colored a variation of red and prefixed with "\[Error\]".
+例如，当您在 Open 3D Engine （O3DE） Editor（打开 3D 引擎 （O3DE） 编辑器）中打开项目时，控制台日志会告知您项目中不同系统和对象的状态。警告消息的颜色为橙色的变体，前缀为"\[Warning\]"，错误消息的颜色为红色的变体，前缀为"\[Error\]"。
 
 
 ![Example of console log with console messages](/images/tools-ui/console-log/console-log-messages.png)
 
-## Specification
+## 规格
 
-Review these specifications when creating a console log:
+在创建控制台日志时，请查看以下规范：
 
-- Console messages must follow the format:
+- 控制台消息必须遵循以下格式：
   
   ```
   [<status>] (<system affected>) - [<number of problems>] - <problem>. <ways to resolve the problem>.
   ```
   - `<status>`: "Error", "Failure", or "Warning".
-  - `<system affected>`: The name of the system where the error, failure, or warning occurred. 
-  - `<number of problems>`: Quantify the number of problems that occurred for in a single message, if applicable.
-  - `<problem>`: Describe the problem.
-  - `<ways to resolve the problem>`: Describe actionable steps the user can take to resolve or work around the problem.
+  - `<system affected>`: 发生错误、故障或警告的系统的名称。
+  - `<number of problems>`: 量化单封邮件中出现的问题数（如果适用）。
+  - `<problem>`: 描述问题。
+  - `<ways to resolve the problem>`: 描述用户可以采取的解决或解决问题的可行步骤。
 
-  For help on how to describe the problem and ways to resolve the problem, refer to [Guidelines for Writing Error Messages](../guidelines).
+有关如何描述问题和解决问题的方法的帮助，请参阅 [编写错误消息的准则](../guidelines)。
 
-- Color-code and prefix console messages depending on the following use cases.
+- 对控制台消息进行颜色编码和前缀处理，具体取决于以下使用案例。
 
   ![Console Log decision table](/images/tools-ui/console-log/console-log-decision-table.png)
 
-  Use the following colors for the text, depending on the console message's status and console log's theme:
-  - Dark theme: 
-    - **Error/Failure**: `#FA2727`
-    - **Warning**: `#FFAA22`
-  - Light theme: 
-    - **Error/Failure**: `#C80000`
-    - **Warning**: `#807000`
+对文本使用以下颜色，具体取决于控制台消息的状态和控制台日志的主题：
+  - 深色主题：
+    - **错误/失败**: `#FA2727`
+    - **警告**: `#FFAA22`
+  - 浅色主题：
+    - **错误/失败**: `#C80000`
+    - **警告**: `#807000`
 
   ![Console Log - Error and Warning examples](/images/tools-ui/console-log/console-log-state-colors.png)
 
-## Best practice
+## 最佳实践
 
-* Use only plain text in console messages. Do not use rich text such as icons and formatted text.
+* 在控制台消息中仅使用纯文本。请勿使用富文本，例如图标和格式化文本。
 
-* Use console messages to display passive notifications to the user. Console messages may not be seen by the user.
+* 使用控制台消息向用户显示被动通知。用户可能无法看到控制台消息。
   
-* Show multiple messages of the same status in succession. For example, list all warnings, then list all errors/failures.
+* 连续显示多条相同状态的消息。例如，列出所有警告，然后列出所有错误/失败。
 
 
-## Custom theme
+## 自定义主题
 
-You can customize the theme of the console log to suit your preference. There are two themes, **Light** and the default **Dark**.
-- Light theme background color: `#FFFFFF`
-- Dark theme background color: `#111111`
+您可以自定义控制台日志的主题以符合您的偏好。有两个主题，**浅色**和默认的**深色**。
+- 浅色主题背景色： `#FFFFFF`
+- 深色主题背景色：`#111111`
 
 ![Console Log - Global Preferences](/images/tools-ui/console-log/global-preferences.png)
 
-To customize the background: 
+要自定义背景：
 
-1. In the O3DE Editor, open the **Edit** dropdown in the tools menu. 
+1. 在 O3DE 编辑器中，打开工具菜单中的 **Edit** 下拉菜单。
 
-2. Select **Editor Settings** > **Global Preferences...** to open the **Preferences** dialog.
+2. 选择 **Editor Settings** > **Global Preferences...** 打开 **Preferences** 对话框。
 
-3. Next to **Console Background** under the **General Settings** group, select a theme option. 
+3. 在**General Settings** 组旁边的 **Console Background**，选择一个主题选项。
 
-4. Save your settings by clicking **OK**. 
+4. 点击 **OK** 保存设置。

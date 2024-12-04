@@ -1,27 +1,27 @@
 ---
-linktitle: Control Gallery Tool
-title: O3DE Qt Control Gallery Tool
-description: Learn about the Open 3D Engine (O3DE) Qt Control Gallery tool that demonstrates the O3DE UI custom Qt widget library in action, and see sample code related to each example.
+linktitle: 控件库工具
+title: O3DE Qt 控件库工具
+description: 了解 Open 3D Engine （O3DE） Qt Control Gallery 工具，该工具演示了 O3DE UI 自定义 Qt 小组件库的实际应用，并查看与每个示例相关的示例代码。
 weight: 100
 toc: true
 ---
 
-Use the **O3DE Qt Control Gallery** tool to see the O3DE UI custom Qt widget library in action. Interact with the controls, and peruse sample code and working examples of selected components.
+使用 **O3DE Qt Control Gallery** 工具查看 O3DE UI 自定义 Qt 小部件库的运行情况。与控件交互，并仔细阅读所选组件的示例代码和工作示例。
 
 ![O3DE Qt Control Gallery tool](/images/tools-ui/o3de-qt-control-gallery.png)
 
-## How to use the O3DE Qt control gallery
+## 如何使用 O3DE Qt 控件库
 
-Before you begin, make sure that you have built or installed O3DE on your computer.
+在开始之前，请确保您已在计算机上构建或安装了 O3DE。
 
-1. Open your computer's file explorer to the O3DE binaries directory. If you installed the O3DE engine, the path on your computer will be similar to `<engine>/bin/Windows/profile/Default`. If you build O3DE from source, the tool will build to your engine build directory.
+1. 打开计算机的文件资源管理器，找到 O3DE 二进制文件目录。如果您安装了 O3DE 引擎，您计算机上的路径将类似于`<engine>/bin/Windows/profile/Default`。如果您从源代码构建 O3DE，该工具将构建到您的引擎构建目录。
 
-1. Locate and then launch `O3DEQtControlGallery.exe`.
+1. 找到并启动`O3DEQtControlGallery.exe`。
 
     ![O3DE Qt Control Gallery file location](/images/tools-ui/o3de-qt-control-gallery-tool-location.png)
 
-1. Use the dropdown menu in the upper left of the tool to navigate through the available components. For each component, the right side of the tool provides an interactive example of how the widget looks and works. The left side contains sample code related to the component.
+1. 使用工具左上角的下拉菜单浏览可用组件。对于每个组件，该工具的右侧都提供了一个交互式示例，说明小组件的外观和工作方式。左侧包含与组件相关的示例代码。
 
 {{< note >}}
-The gallery does not cover how to set up a window for your tool, or the basics of how the Qt library works. Its primary objective is to illustrate the styles and features of the components in the library.
+该库未介绍如何为您的工具设置窗口，也不涵盖 Qt 库工作原理的基础知识。其主要目标是说明库中组件的样式和功能。
 {{< /note >}}

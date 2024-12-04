@@ -1,34 +1,34 @@
 ---
-linktitle: Component Development Guidelines
-title: O3DE UI Component Development Guidelines
-description: Get a high-level overview of the concepts behind Open 3D Engine (O3DE) UI component development using the custom Qt widget library.
+linktitle: 组件开发指南
+title: O3DE UI 组件开发指南
+description: 使用自定义 Qt 小部件库，简要了解 Open 3D Engine （O3DE） UI 组件开发背后的概念。
 weight: 200
 toc: true
 ---
 
 
 
-For many of the basic components (such as check boxes, push buttons, and line edits), you will use the base Qt widgets (such as `QCheckBox`, `QPushButton`, `QLineEdit`) to develop your UI. The custom styling and behavior of these widgets is applied automatically. Components that require extended functionality, or are unique to **Open 3D Engine (O3DE)**, are custom classes that can be subclassed and can include a combination of Qt widgets. In these cases, the class definitions live in this folder: `<engine>/Code/Framework/AzQtComponents/AzQtComponents/Components/.`
+对于许多基本组件（例如复选框、按钮和行编辑），您将使用基本的 Qt 小部件（例如`QCheckBox`, `QPushButton`, `QLineEdit`）来开发您的 UI。这些小组件的自定义样式和行为会自动应用。 需要扩展功能的组件，或者是 Open 3D Engine （O3DE） 独有的组件，是可以子类化的自定义类，并且可以包含 Qt 小部件的组合。在这些情况下，类定义位于此文件夹中：`<engine>/Code/Framework/AzQtComponents/AzQtComponents/Components/.`
 
-## Style sheets and StyleManager
+## 样式表和 StyleManager
 
-The O3DE UI is built upon [Qt Style Sheets](https://doc.qt.io/qt-5/stylesheet.html), which is a powerful mechanism for customizing the appearance of widgets. The concepts and syntax are similar to Cascading Style Sheets (CSS).
+O3DE UI 建立在 [Qt 样式表](https://doc.qt.io/qt-5/stylesheet.html) 之上，这是自定义小部件外观的强大机制。其概念和语法类似于级联样式表 （CSS）。
 
-In Qt Style Sheets, the `AzQtComponents` module has a `StyleManager` class, which installs a custom [QProxyStyle class](https://doc.qt.io/qt-5/qproxystyle.html) at the application level. The `QProxyStyle` class overrides the styling of all widgets with custom styling. This is how you can use a basic Qt widget (such as `QPushButton` or `QCheckBox`) and give it custom styling.
+在 Qt 样式表中，`AzQtComponents` 模块有一个 `StyleManager` 类，该类在应用程序级别安装自定义 [QProxyStyle 类(https://doc.qt.io/qt-5/qproxystyle.html) 。类的 `QProxyStyle` 使用自定义样式覆盖所有小部件的样式。这就是如何使用基本的 Qt 小部件（例如  `QPushButton` 或`QCheckBox`）并为其提供自定义样式。
 
-The StyleManager class is pre-loaded with a series of base style sheets, starting with `<engine>/Code/Framework/AzQtComponents/AzQtComponents/Components/Widgets/BaseStyleSheet.qss`.
+StyleManager 类预加载了一系列基本样式表，从`<engine>/Code/Framework/AzQtComponents/AzQtComponents/Components/Widgets/BaseStyleSheet.qss`开始。
 
-This style sheet applies custom styling for each individual widget, each of which is separated into files such as "`CheckBox.qss`" and "`PushButton.qss`". This styling is applied down through the entire widget hierarchy, starting from the top application layer. Additional custom style sheets can be applied at lower levels (such as in your own custom tool) that affect only that widget and any of its children.
+此样式表为每个单独的小部件应用自定义样式，每个小部件都分为 "`CheckBox.qss`" 和 "`PushButton.qss`" 等文件。此样式从顶部应用程序层开始，向下应用于整个 Widget 层次结构。其他自定义样式表可以应用于仅影响该 widget 及其任何子项的较低级别（例如在您自己的自定义工具中）。
 
-## Get started with UI component development
+## 开始 UI 组件开发
 
-Depending on your tools and existing code, accessing the new library of components might require some initial setup.
+根据您的工具和现有代码，访问新的组件库可能需要一些初始设置。
 
-If your tool is part of the core O3DE Editor or is part of a Gem which uses the Editor's Qt Application, you're already set up and ready to go. Just include the header for the component that you need to use from the `<engine>/Code/Framework/AzQtComponents/AzQtComponents/Components` folder.
+如果您的工具是核心 O3DE 编辑器的一部分，或者是使用编辑器的 Qt 应用程序的 Gem 的一部分，那么您已经设置好并准备好了。只需从`<engine>/Code/Framework/AzQtComponents/AzQtComponents/Components`文件夹中包含您需要使用的组件的标头。
 
-For standalone tools with their own Qt Application, you must take some extra steps to make sure that the new styling is applied correctly.
+对于具有自己的 Qt 应用程序的独立工具，您必须采取一些额外的步骤来确保正确应用新样式。
 
-1. Set the attributes to correctly handle high DPI screens before creating the QApplication.
+1. 在创建 QApplication 之前，设置属性以正确处理高 DPI 屏幕。
 
     ```cpp
     #include <QApplication>
@@ -41,7 +41,7 @@ For standalone tools with their own Qt Application, you must take some extra ste
     QApplication app(argc, argv);
     ```
 
-1. Instantiate a StyleManager, which loads the style sheets and custom settings for the new UI.
+1. 实例化 StyleManager，它加载新 UI 的样式表和自定义设置。
 
     ```cpp
     #include <AzQtComponents/Components/StyleManager.h>
@@ -51,36 +51,36 @@ For standalone tools with their own Qt Application, you must take some extra ste
     styleManager->initialize(app, useLegacyStyle);
     ```
 
-    The StyleManager automatically loads the base style sheets, but you can add other resources as well.
+    StyleManager 会自动加载基本样式表，但您也可以添加其他资源。
 
-## UI development best practices
+## UI 开发最佳实践
 
-Writing code to extend the core O3DE Editor? Here are some high-level suggestions to comply with the UI guidelines:
+编写代码来扩展核心 O3DE 编辑器？以下是符合 UI 准则的一些高级建议：
 
-+ The UI styling uses an O3DE standard color palette, which includes grays and blues. Creating a custom style and color override will have your tool looking inconsistent with the rest of the O3DE Editor. We suggest avoiding custom style overrides whenever possible so that O3DE appears as one cohesive application.
-+ The Editor now supports vector file formats for icons, which prevents them from appearing blurry or pixelated on high DPI displays. Make sure to use SVG files for your icons, and replace old PNGs and JPGs with vector graphics images in existing tools if possible.
-+ When using a custom icon not provided by O3DE, the icon should be a multiple of 16 x 16.
-+ Moving forward, we want to make sure the user experience is cohesive and familiar throughout the whole O3DE Editor. You should avoid making one-off custom changes; and when you add new features, add them to the library so that they are available to the whole Editor instead of just a single tool.
-+ Avoid subclassing or encapsulating the widgets from the component library. If you need some specific behavior, check our resources to verify if it's already available in the component library via specific settings.
++ UI 样式使用 O3DE 标准调色板，其中包括灰色和蓝色。创建自定义样式和颜色覆盖将使您的工具看起来与 O3DE 编辑器的其余部分不一致。我们建议尽可能避免自定义样式覆盖，以便 O3DE 显示为一个内聚的应用程序。
++ 编辑器现在支持图标的矢量文件格式，这可以防止它们在高 DPI 显示器上显得模糊或像素化。确保将 SVG 文件用于您的图标，并尽可能在现有工具中用矢量图形图像替换旧的 PNG 和 JPG。
++ 当使用非 O3DE 提供的自定义图标时，图标应为 16 x 16 的倍数。
++ 展望未来，我们希望确保整个 O3DE Editor 的用户体验是连贯的和熟悉的。您应该避免进行一次性的自定义更改;当您添加新功能时，请将它们添加到库中，以便它们可供整个 Editor 使用，而不仅仅是单个工具。
++ 避免从组件库中子类化或封装 widget。如果您需要某些特定行为，请查看我们的资源，通过特定设置验证它是否已在组件库中可用。
 
-## Frequently asked questions
+## 常见问题
 
-### Can I copy the code example directly from the O3DEQtControlGallery?
+### 我可以直接从 O3DEQtControlGallery 复制代码示例吗？
 
-Yes. Please note that not all settings will be covered by this tool. Use this extensions guide and the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) to find additional examples and documentation.
+是的。请注意，此工具并非涵盖所有设置。使用此扩展指南和 [O3DE UI 扩展C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html)  查找其他示例和文档。
 
-### What about visual and color modifications to the controls?
+### 控件的视觉和颜色修改呢？
 
-We do not endorse custom modifications to the layout and visual design, because we want to support an experience that feels unified across all of our tooling. Still, sometimes minor spacing and style adjustments might be needed.
+我们不支持对布局和视觉设计的自定义修改，因为我们希望支持在所有工具中感觉一致的体验。不过，有时可能需要进行细微的间距和样式调整。
 
-### Why should I use the existing widget styling instead of creating my own?
+### 为什么我应该使用现有的小部件样式而不是创建自己的样式？
 
-We've listened to feedback from all kinds of game developers, and one common note was that user experience across the different tools of the Editor should be consistent. The component library was built with this feedback in mind, and aims to bring unified and coherent standards to the whole Editor.
+我们听取了来自各种游戏开发者的反馈，一个共同点是，编辑器不同工具的用户体验应该是一致的。组件库在构建时考虑了这些反馈，旨在为整个 Editor 带来统一且连贯的标准。
 
-On the development side, this solution allows for better modularity and code reuse, with the objective of reducing the work needed from developers to create interfaces. Unifying the UI controls also allows improvements to be easily shared, since the whole Editor automatically uses them once applied, and likewise reduces the possibility of issues during library updates or core changes.
+在开发方面，该解决方案允许更好的模块化和代码重用，目的是减少开发人员创建接口所需的工作。统一 UI 控件还允许轻松共享改进，因为整个 Editor 在应用后会自动使用它们，并且同样减少了在库更新或核心更改期间出现问题的可能性。
 
-### Why should I not create subclasses or encapsulate the existing widgets?
+### 为什么我不应该创建子类或封装现有的小部件？
 
-The component library aims to simplify development and streamline the user experience. By subclassing or encapsulating the UI components to change their behavior or add features, special cases are added to the code base. These cases would then need special documentation and testing to avoid regressions. Subclassing or encapsulating UI components provides very little benefit, compared to keeping all UI components together in one place.
+组件库旨在简化开发和用户体验。通过对 UI 组件进行子类化或封装以更改其行为或添加功能，可以将特殊情况添加到代码库中。然后，这些情况将需要特殊的文档和测试以避免回归。与将所有 UI 组件放在一个位置相比，子类化或封装 UI 组件的好处非常小。
 
-Subclassing is also detrimental to discoverability, since it is much harder for a new developer to find, import and re-use code that was built specifically in a tool without creating new dependencies or duplicating code. In the past, this has lead to multiple tools creating their own special controls that did very similar things, but in wildly different ways that made it hard to unify them and verify their behavior.
+子类化也不利于可发现性，因为新开发人员很难在不创建新的依赖项或复制代码的情况下查找、导入和重用专门在工具中构建的代码。过去，这导致多个工具创建自己的特殊控件，这些控件执行非常相似的操作，但方式截然不同，这使得难以统一它们并验证它们的行为。

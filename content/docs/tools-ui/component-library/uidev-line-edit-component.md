@@ -1,57 +1,57 @@
 ---
-linktitle: Line Edit
-title: O3DE UI Line Edit Component
-description: Use the O3DE UI line edit component to capture free-form text from the user.
+linktitle: 行编辑
+title: O3DE UI 行编辑组件
+description: 使用 O3DE UI 行编辑组件从用户那里捕获自由格式的文本。
 toc: true
 ---
 
-The **line edit** component is one of several types of input boxes offered by the Qt and O3DE UI libraries. Use the line edit component to enable users to enter free-form text. Be mindful of the length of text intended for a field, and always pair with a useful, clear label.
+**行编辑** 组件是 Qt 和 O3DE UI 库提供的几种类型的输入框之一。使用行编辑组件使用户能够输入自由格式的文本。请注意字段的文本长度，并始终与有用、清晰的标签配对。
 
-## Anatomy of the line edit widget
+## 行编辑小部件剖析
 
- **Line edit** widgets have several customization options. Standard features including the following elements:
+**线条编辑** 小部件有几个自定义选项。标准功能包括以下元素：
 
 ![component line edit anatomy](/images/tools-ui/component-line-edit-anatomy.png)
 
 1.  **Label**
 
-    While not technically part of the widget, you should give input boxes a label in the UI layout.
+    虽然从技术上讲不是 Widget 的一部分，但您应该在 UI 布局中为输入框指定一个标签。
 
 1.  **Placeholder text**
 
-    (Optional) Hint text set in the UI, or using `setPlaceholderText()`, appears here when the widget text is empty.
+    （可选）当小组件文本为空时，在 UI 中设置的或使用`setPlaceholderText()`设置的提示文本会显示在此处。
 
 1.  **Input box**
 
-    Text entered by the user, or that you set using `setText()`, appears here.
+    用户输入的文本或您使用`setText()`设置的文本将在此处显示。
 
 1.  **Tooltip**
 
-    (Optional) If you set tooltip text for the widget, it will appear near where the user hovers.
+    （可选）如果您为小组件设置工具提示文本，它将出现在用户悬停位置附近。
 
     ![component line edit anatomy clear](/images/tools-ui/component-line-edit-anatomy-clear.png)
 
 1.  **Clear button**
 
-    (Optional) If you enable the clear button for the widget, it will appear when the input box is not empty. When users choose the clear button, the input box returns to an empty value.
+    （可选）如果启用小组件的清除按钮，它将在输入框不为空时显示。当用户选择清除按钮时，输入框将返回空值。
 
     ![component line edit anatomy error state](/images/tools-ui/component-line-edit-anatomy-error-state.png)
 
 1.  **Error state indicator**
 
-    (Optional) If you set a validator for the input box, and validation fails, an error state indicator icon appears at the end of the input box, before the clear button.
+    （可选）如果为输入框设置了验证器，并且验证失败，则错误状态指示器图标会显示在输入框末尾的清除按钮之前。
 
 1.  **Error tooltip**
 
-    (Optional) When an error state exists, if an error message has been set for the widget, it will appear near where the user hovers. This tooltip appears in place of the normal tooltip text while an error state exists. If you don't set the error message, the default error tooltip text is "Invalid input".
+    （可选）当存在错误状态时，如果已为小组件设置了错误消息，则它将出现在用户悬停位置附近。当存在错误状态时，此工具提示将代替正常的工具提示文本显示。如果未设置错误消息，则默认错误工具提示文本为“Invalid input”。
 
-## Basic line edit
+## 基本行编辑
 
 ![component line edit basic](/images/tools-ui/component-line-edit-basic.png)
 
-A simple **line edit** component starts with the `QLineEdit` Qt widget. You can set additional options by changing widget settings in the Qt Designer or in code.
+一个简单的 **line edit** 组件以 `QLineEdit` Qt 小部件开始。您可以通过在 Qt Designer 或代码中更改窗口小部件设置来设置其他选项。
 
-### Example
+### 示例
 
 ```cpp
 #include <QLineEdit>
@@ -72,9 +72,9 @@ lineEdit->setClearButtonEnabled(true);
 
 ![component line edit search style](/images/tools-ui/component-line-edit-search-style.png)
 
-The `AzQtComponents::LineEdit` class provides several static style functions that apply a style to a `QLineEdit` widget. One example is the search style, which adds a search icon. Additional styles are documented in the API reference for [AzQtComponents::LineEdit](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_line_edit.html).
+`AzQtComponents::LineEdit`类提供了多个静态样式函数，用于将样式应用于`QLineEdit`小部件。一个示例是搜索样式，它添加了一个搜索图标。其他样式记录在[AzQtComponents::LineEdit](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_line_edit.html)的 API 参考中。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/LineEdit.h>
@@ -89,11 +89,11 @@ connect(lineEdit, &QLineEdit::textEdited, this, [](const QString& newText) {
 });
 ```
 
-## Listening for line edit changes
+## 监听行编辑更改
 
-The following examples demonstrate how to listen for various types of text changes in a `QLineEdit` widget.
+以下示例演示了如何在 `QLineEdit` 小部件中侦听各种类型的文本更改。
 
-### Example
+### 示例
 
 ```cpp
 #include <QLineEdit>
@@ -114,13 +114,13 @@ connect(lineEdit, &QLineEdit::editingFinished, this, [lineEdit]() {
 });
 ```
 
-## Line edit as a drop target
+## 将行编辑作为放置目标
 
 ![component line edit drop target style](/images/tools-ui/component-line-edit-drop-target-style.png)
 
-The following examples demonstrate how to apply or remove the drop target style to a `QLineEdit` widget.
+以下示例演示了如何将放置目标样式应用于或删除 `QLineEdit` 构件。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/LineEdit.h>
@@ -140,11 +140,11 @@ AzQtComponents::LineEdit::removeDropTargetStyle(lineEdit);
 
 ![component line edit error state](/images/tools-ui/component-line-edit-error-state.png)
 
-In the following example, both a validator and an error message for the error tooltip have been defined. The standard tooltip appears when a mouse hovers over the widget. The error tooltip appears when a mouse hovers over the widget while an error state exists.
+在以下示例中，已定义错误工具提示的验证程序和错误消息。当鼠标悬停在 Widget 上时，将显示标准工具提示。当鼠标悬停在 Widget 上时，如果存在错误状态，则会显示错误工具提示。
 
-Error states occur when a validator has been set and its validation has failed.
+当设置验证器但其验证失败时，会出现错误状态。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/Widgets/LineEdit.h>
@@ -162,13 +162,13 @@ lineEdit->setValidator(validator);
 AzQtComponents::LineEdit::setErrorMessage(lineEdit, QStringLiteral("Value must be between 3.0 and 4.0"));
 ```
 
-## Disabled line edit
+## 禁用的行编辑
 
 ![component line edit disabled](/images/tools-ui/component-line-edit-disabled.png)
 
-In the following example, the widget and its features have been disabled in code.
+在以下示例中，小组件及其功能已在代码中禁用。
 
-### Example
+### 示例
 
 ```cpp
 #include <QLineEdit>
@@ -177,16 +177,16 @@ In the following example, the widget and its features have been disabled in code
 lineEdit->setEnabled(false);
 ```
 
-## C++ API reference
+## C++ API 参考
 
-For details on the **line edit** API, see the following topic in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **行编辑** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题：
 +  [AzQtComponents::LineEdit](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_line_edit.html)
 
-Relevant Qt documentation includes the following topics:
+相关的 Qt 文档包括以下主题：
 +  [QLineEdit Class](https://doc.qt.io/qt-5/qlineedit.html)
 
-## Related links
+## 相关链接
 
-For components related to the **line edit** component, see the following topics:
+有关与 **line edit** 组件相关的组件，请参阅以下主题：
 +  [Browse edit](./uidev-browse-edit-component)
 +  [Spinbox](./uidev-spinbox-component)

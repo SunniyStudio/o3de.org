@@ -1,55 +1,55 @@
 ---
-linktitle: Filtered Search
-title: O3DE UI Filtered Search Widget
-description: Learn how to use the O3DE UI filtered search widget to give users advanced search options in your O3DE tools and Gems.
+linktitle: 筛选搜索
+title: O3DE UI 筛选的搜索 Widget
+description: 了解如何使用 O3DE UI 筛选的搜索小部件在您的 O3DE 工具和 Gem 中为用户提供高级搜索选项。
 toc: true
 ---
 
-Use the **filtered search** widget to give users advanced search options in your O3DE UI tools. You can see this interface in action in O3DE tools such as the **Entity Outliner** and **Asset Browser**. To quickly narrow their search to the results that they're looking for, users can select one or more "type filters" to apply to the search terms that they type in the search field.
+使用 **筛选的搜索** 小组件在 O3DE UI 工具中为用户提供高级搜索选项。您可以在 O3DE 工具（如 **Entity Outliner** 和 **Asset Browser**）中看到此界面的实际效果。要快速将搜索范围缩小到他们正在寻找的结果，用户可以选择一个或多个“类型过滤器”以应用于他们在搜索字段中键入的搜索词。
 
-## Anatomy of the filtered search widget
+## 过滤搜索小部件剖析
 
-Entity Outliner in the O3DE Editor uses multiple filter categories in a filtered search widget to help users find an entity with specific components or settings. In the following example, we're looking for all entities with Script Canvas components.
+O3DE 编辑器中的 Entity Outliner 在筛选的搜索小部件中使用多个筛选条件类别，以帮助用户查找具有特定组件或设置的实体。在以下示例中，我们将查找具有 Script Canvas 组件的所有实体。
 
 ![component filtered search anatomy](/images/tools-ui/component-filtered-search-anatomy.png)
 
 1.  **Search field**
 
-    Users enter search terms here. In the **Entity Outliner**, they can enter entity names. For example, in the previous image they might enter the term `Light` to start looking for all entities that have the word "light" in their name.
+    用户在此处输入搜索词。在 **Entity Outliner** 中，他们可以输入实体名称。例如，在上图中，他们可能会输入术语 `Light` 来开始查找名称中包含 `Light` 一词的所有实体。
 
 1.  **Filter menu button**
 
-    (Optional) Add one or more type filters to your filtered search widget to show the filter menu button. When users select this button, the filter menu opens.
+    （可选）将一个或多个类型筛选器添加到筛选的搜索小组件中，以显示筛选器菜单按钮。当用户选择此按钮时，将打开筛选器菜单。
 
 1.  **Filter type search field**
 
-    Users can enter text in this field to narrow the list of filter types shown in the filter menu.
+    用户可以在此字段中输入文本，以缩小筛选器菜单中显示的筛选器类型列表。
 
 1.  **Filter type category**
 
-    When adding filter types using the `AddTypeFilter` function, you can specify a category for grouping filter types.
+    使用`AddTypeFilter`函数添加过滤器类型时，您可以指定用于对过滤器类型进行分组的类别。
 
 1.  **Filter type**
 
-    Users can select one or more filter types to narrow the search results to show only the results that match the types selected from the filter menu. You can add filter types, along with a filter type category, using the `AddTypeFilter` function.
+    用户可以选择一个或多个筛选条件类型来缩小搜索结果范围，以仅显示与从筛选菜单中选择的类型匹配的结果。您可以使用 `AddTypeFilter` 函数添加过滤器类型以及过滤器类型类别。
 
 1.  **Applied filters**
 
-    By default, any filters that users select from the filter menu will appear under the search field. You can turn this off by calling `setEnabledFiltersVisible(false)` on your filtered search widget.
+    默认情况下，用户从筛选器菜单中选择的任何筛选器都将显示在搜索字段下。您可以通过在过滤的搜索小部件上调用`setEnabledFiltersVisible(false)` 来关闭此功能。
 
-    You can also add an icon in front of the name of the applied filter. See how to do this in the [filtered type icon](#filtered-search-with-filter-type-icons) example.
+    您还可以在应用的过滤器名称前面添加图标。请参阅 [filtered type icon](#filtered-search-with-filter-type-icons) 示例中如何执行此操作。
 
 1.  **Search results**
 
-    Show the search results below the search field.
+    在搜索字段下方显示搜索结果。
 
-## Basic filtered search
+## 基本筛选搜索
 
 ![component filtered search basic](/images/tools-ui/component-filtered-search-basic.png)
 
-The following example demonstrates how to create a simple filtered search widget.
+以下示例演示如何创建简单的筛选搜索 Widget。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/FilteredSearchWidget.h>
@@ -77,13 +77,13 @@ connect(filteredSearchWidget, &AzQtComponents::FilteredSearchWidget::TypeFilterC
         proxyModel, &MyProxyModel::ApplyTypeFilters);
 ```
 
-## Filtered search with filter type icons
+## 使用筛选器类型图标进行筛选搜索
 
 ![component filtered search filter type icons](/images/tools-ui/component-filtered-search-filter-type-icons.png)
 
-Add optional icons to your filter types using the `extraIconFilename` property of the `AzQtComponents::SearchTypeFilter`.
+使用`AzQtComponents::SearchTypeFilter`的`extraIconFilename` 属性将可选图标添加到筛选器类型。
 
-### Example
+### 示例
 
 ```cpp
 #include <AzQtComponents/Components/FilteredSearchWidget.h>
@@ -102,11 +102,11 @@ for (const auto& filterType : filterTypes)
 }
 ```
 
-## Limiting the width of the search field
+## 限制搜索字段的宽度
 
 ![component filtered search width](/images/tools-ui/component-filtered-search-width.png)
 
-Use `setTextFilterFillsWidth(false)` to limit the width of the search field and prevent it from expanding to the full width of the widget.
+使用`setTextFilterFillsWidth(false)`来限制搜索字段的宽度，并防止其扩展到小部件的整个宽度。
 
 ### Example
 
@@ -114,7 +114,7 @@ Use `setTextFilterFillsWidth(false)` to limit the width of the search field and 
 filteredSearchWidget->setTextFilterFillsWidth(false);
 ```
 
-## C++ API reference
+## C++ API 参考
 
-For details on the **filtered search** API, see the following topic in the [O3DE UI Extensions C++ API Reference](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html):
+有关 **筛选搜索** API 的详细信息，请参阅 [O3DE UI 扩展 C++ API 参考](/docs/api/frameworks/azqtcomponents/namespace_az_qt_components.html) 中的以下主题：
 +  [AzQtComponents::FilteredSearchWidget](/docs/api/frameworks/azqtcomponents/class_az_qt_components_1_1_filtered_search_widget.html)

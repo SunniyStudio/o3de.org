@@ -1,222 +1,221 @@
 ---
-linktitle: Component Card
-title: Component Card UX Pattern
-description: Learn about the component card's UX pattern using the Blue Jay Design System (BJDS) and how it operates in Open 3D Engine (O3DE).
+linktitle: 组件卡
+title: 组件卡 UX 模式
+description: 了解使用 Blue Jay Design System （BJDS） 的组件卡的 UX 模式，以及它如何在 Open 3D Engine （O3DE） 中运行。
 weight: 100
 ---
 
-A *component card* groups together the related property settings of a certain feature. For instance, component cards appear in the **Inspector** in the **Open 3D Engine (O3DE) Editor**, which displays the components of the entities in your project. The component card must present the property settings in a structured and intuitive way to help a user understand how to correctly configure the property settings. If the information isn't presented clearly on the component card, the user might get confused, set the wrong values, or miss important information in the settings---all of which might cause system errors or unexpected results.
+组件卡将某个功能的相关属性设置组合在一起。例如，组件卡显示在 **Open 3D Engine （O3DE） 编辑器**的 **Inspector** 中，它显示项目中实体的组件。组件卡必须以结构化和直观的方式显示属性设置，以帮助用户了解如何正确配置属性设置。如果信息没有清楚地显示在组件卡上，用户可能会感到困惑、设置错误的值或错过设置中的重要信息---所有这些都可能导致系统错误或意外结果。
 
-**General rules for creating component cards:** When creating a new feature you should consider the following:
+**创建组件卡的一般规则：** 创建新功能时，应考虑以下事项：
 
-- Who will use this component card and what is their level of expertise?
+- 谁将使用此组件卡，他们的专业水平如何？
 
-- Is your component a *Level component* or a *standard component*?
+- 您的组件是 *Level 组件* 还是 *标准组件*？
 
-- How do you want to structure your card component?
+- 您希望如何构建您的卡片组件？
 
-- What repetitive actions are you requesting from your user to do and can this be simplified at all?
+- 您要求用户执行哪些重复操作，这些操作是否可以简化？
 
-- Have you set up the proper [default values](#provide-good-default-settings)?
+- 您是否设置了正确的 [默认值](#provide-good-default-settings)?
 
-- Are there any dependencies with your component? Refer to [Automatically add components](#can-we-automatically-add-components). 
+- 您的组件是否有任何依赖项？请参阅 [自动添加组件](#can-we-automatically-add-components). 
 
-- How will your component card [interact with the viewport](#interacting-with-the-viewport)?
+- 您的组件卡将如何 [与视区交互](#interacting-with-the-viewport)?
 
-- Does my component have buttons?
+- 我的组件有按钮吗？
 
-- Component needs to be fully inclusive and not broken into a bunch of micro components.
+- 组件需要完全包容，而不是分解成一堆微型组件。
 
-- Empty component card must include a message specifying why this component card is empty.
+- 空组件卡必须包含一条消息，说明此组件卡为空的原因。
 
-- Consider writing a small description of what the component does. Links to documentation are also allowed.
+- 考虑编写一个关于组件功能的简短描述。还允许链接到文档。
 
-- Use the toggle component for binary actions. Check boxes for multi select action  and radial for choose 1 of the following.
+- 将 toggle 组件用于二进制操作。多选操作的复选框和径向的复选框，用于以下选择之一。
 
-- Use sliders when a user needs to eyeball the results in the view-port. Please see slider for different types.
+- 当用户需要目视 view-port 中的结果时，请使用滑块。请参阅滑块了解不同类型的情况。
 
-- Use drop-downs when all the known variables can be accounted for. Try to keep the list under 20 or consider breaking the list into two drop-down to reduce the mental load of looking through a massive list. 
+- 当可以考虑所有已知变量时，请使用下拉列表。尝试将列表保持在 20 个以下，或者考虑将列表分成两个下拉列表，以减少浏览大量列表的心理负担。
 
-- Any field that need to be adjust based on 3 dimensions needs to use have the XYZ value attached before the input file
+- 任何需要根据 3 个维度进行调整的字段都需要在输入文件之前附加 XYZ 值
 
 
-## Layout and spacing
+## 布局和间距
 
-Component cards have two primary patterns 1 or 2 column layout. Priority is given to the input field when compressed.  Two column layout is the most standard. The min card width is ---- while there is no max card size. Titles will get compressed based on card size will uses ellipses with a tooltip on hover of the title. When done in reverse we remove the ellipses and show the full title.  Text is left aligned and uses only four levels of a tree hierarchy inside a component card. We try not to go any deeper than 4 levels because the indentation limits the amount of viewable space. All Input fields should fill the space available and be right aligned. 
+组件卡有两个主要模式：1 列或 2 列布局。压缩时，将优先分配给输入字段。 两列布局是最标准的。最小卡宽为 ----，而没有最大卡大小。标题将根据卡片大小进行压缩，在标题悬停时使用带有工具提示的省略号。反向操作时，我们将删除省略号并显示完整标题。 文本左对齐，并且仅使用组件卡内树层次结构的四个级别。我们尽量不要深入到 4 个级别，因为缩进限制了可视空间的大小。所有 Input 字段都应填充可用空间并右对齐。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/layout-and-spacing.png" "500" "Layout and spacing content in a card component" >}}
 
-### One column layout
+### 单列布局
 
-One column layout is best for larger input text area. For example, our comment card uses a 1 column. In this situation the priority of the component card is the maximum amount of input space. 
+单列布局最适合较大的输入文本区域。例如，我们的评论卡使用 1 列。在这种情况下，组件卡的优先级是最大输入空间量。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/one-column-layout.png" "400" "A card component with one column layout" >}}
 
 
-### Two column layout
+### 两列布局
 
-Two column layout is roughly 2/5th width by 3/5th width. A minimum size is set on both input field and title. The global minimum input field size is set based on the properties that take up the most space. That would be based on a vector 4 field layout. This leaves roughly 7 or 8 character per input field.
+两列布局大约是 2/5 宽度 x 3/5 宽度。在 input field 和 title 上都设置了最小大小。全局最小输入字段大小是根据占用最多空间的属性设置的。这将基于向量 4 字段布局。这样，每个输入字段大约有 7 或 8 个字符。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/two-column-layout.png" "400" "A card component with two column layout" >}}
 
 
-### Input field layout
+### 输入字段布局
 
-Input field layout:
-Component properties that have multiple properties all related to one function can be laid out in one the four ways by default. Please note that input field spacing takes priority over title. This means input fields are given priority over titles. All compressed items will go into overflow mode.
+输入字段布局：
+默认情况下，具有多个属性（都与一个函数相关）的组件属性可以以四种方式之一进行布局。请注意，输入字段间距优先于标题。这意味着输入字段的优先级高于标题。所有压缩的项目都将进入 overflow 模式。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/two-column-input-field.png" "400" "A card component with two column layout and input fields" >}}
 
 
-### Structuring your content
+### 构建您的内容
 
-Structuring your content: When building a component, think about how a user might want to use a set of features at the same time. Alway add the most important / most used features near the top the component card. Keep advanced features or less used feature collapsed by default to minimize the users stress factor. SubSection Headers are also bold bu default.
+构建内容：在构建组件时，请考虑用户可能希望如何同时使用一组功能。Alway 在组件卡顶部附近添加最重要/最常用的功能。默认情况下，保持高级功能或较少使用的功能处于折叠状态，以最小化用户的压力系数。SubSection Headers 也是粗体的，但默认为粗体。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/grouping-content.png" "400" "Grouping content in a card component" >}}
 
 
-## Things O3DE manages for me
+## O3DE 为我管理的事情
 
-Some operations in card components are handled by O3DE. You don't need to manage these yourself, but it's important to be aware of how O3DE handles your card components.
+卡组件中的某些操作由 O3DE 处理。您无需自己管理这些组件，但了解 O3DE 如何处理您的卡组件非常重要。
 
 
-### Status: Conflict or required components
+### 状态：冲突或必需的组件
  
-In some circumstances some components will depend on another component card to work properly. An good example of this PhysX. PhysX can't work without having mesh or shape defined. So a user would be shown the following component to add that secondary setting. While a missing component warning appears all the input fields in the card would be disabled, the header would have the checkered pattern.
+在某些情况下，某些组件将依赖于另一个组件卡才能正常工作。此 PhysX 的一个很好的示例。如果不定义网格或形状，PhysX 将无法工作。因此，将向用户显示以下组件以添加该辅助设置。当出现缺少组件警告时，卡中的所有输入字段都将被禁用，标题将具有方格图案。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/status-missing-content.png" "400" "Card component that has a conflict or is missing required components." >}}
 
 
-### Status: Component is broken
+### 状态：组件损坏
 
-In some rare situations a component can be broken based on some larger scale problem. An example of this is disabling or missing Gem. If a developer uses several Gems to create a feature. Sometime one feature can be hosted in one Gem while another can be hosted in a different Gem. In these situation we produce
+在极少数情况下，组件可能会因某些更大规模的问题而损坏。这方面的一个例子是禁用或缺少 Gem。如果开发人员使用多个 Gem 创建功能。有时，一个功能可以托管在一个 Gem 中，而另一个功能可以托管在另一个 Gem 中。在这种情况下，我们生产
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/status-not-active-content.png" "400" "A broken card component." >}}
 
 
-### Status: Disable card
+### 状态： 禁用卡
 
-Currently we offer the ability to disable cards. However using this feature should only be done if something the user can do to make it active within the same session. This state should only be used in conjunction with another visualization explaining the state change. 
+目前，我们提供禁用卡的功能。但是，仅当用户可以执行某些操作以使其在同一会话中处于活动状态时，才应使用此功能。此状态只能与解释状态更改的另一个可视化结合使用。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/status-disable-card.png" "400" "A disabled card component." >}}
 
 
-### Status: Unsaved property changes
+### 状态：未保存的属性更改
 
- This change reflects the users current state of saving.  The update will happen regardless of the header is collapsed or not. This modification will remain until the user has saved their level. The color is (E59D25). This color change should show up on three levels of the visual architecture. The title (for when the component card is collapsed), the collapsible triangles (properties that are hidden behind a collapsed section), and the property title effected by this change (directly next to the property changed).  When the use clicks save or Ctrl + S the orange is removed and it reverts back to white. Prefabs instantly reflect the changes a user has made to all other instance of that object. So why would properties show up as orange?  Good question. Even though we are reflecting the changes to those properties . These changes have not been save to disc and the ornage is a reflection of what has been saved. In our example it has only been set temporarily and still need to be saved to disc.
+此更改反映了用户当前的保存状态。 无论标头是否折叠，都会进行更新。此修改将一直保留，直到用户保存其级别。颜色为 （E59D25）。此颜色变化应显示在视觉架构的三个级别上。标题 （当组件卡折叠时）、可折叠三角形 （隐藏在折叠部分后面的属性） 以及受此更改影响的属性标题 （紧挨在已更改的属性旁边）。 当用户单击保存或 Ctrl + S 时，橙色将被删除，并恢复为白色。预制件会立即反映用户对该对象的所有其他实例所做的更改。那么，为什么房产会显示为橙色呢？ 问得好。即使我们正在反映对这些属性的更改。这些更改尚未保存到光盘中，并且 ornage 反映了已保存的内容。在我们的示例中，它只是临时设置的，仍然需要保存到光盘中。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/status-unsaved-property-changes.png" "400" "A card component with unsaved property changes." >}}
 
 
-### Status: Restricted drag state
+### 状态： 限制拖动状态
 
- In some situations a component card cannot be moved. In this situation you may see a red border around the component card. This lets the user know the action attempted is not possible. An example of this is when a user tries to drag a component inside another component. This behavior is not allowed and will result in a red board on Click drag hold. Another example would be dragging a component into another window.
+在某些情况下，无法移动组件卡。在这种情况下，您可能会在组件卡周围看到红色边框。这让用户知道尝试的操作是不可能的。例如，当用户尝试将一个组件拖动到另一个组件中时。此行为是不允许的，并且会导致 Click 拖动按住时出现红板。另一个示例是将组件拖动到另一个窗口中。
 
- ### Component buttons
+### 组件按钮
  
- Users often need to set or update a specific property related to a field in a component card. BJDS provides a set of buttons that you can include in your component card to solve most use cases.  These buttons can be found inside the icon directory (todo) in your game engine. 
+用户通常需要设置或更新与组件卡中的字段相关的特定属性。BJDS 提供了一组按钮，您可以将这些按钮包含在组件卡中，以解决大多数用例。 这些按钮可以在游戏引擎的图标目录 （todo） 中找到。
  
- If you need a button for an action that's not listed here, please contact O3DE's UX/UI Special Interest Group (SIG). We can help you create a button for your use case, and make it universal so others can use it as well. Creating unique button for some components is discouraged because it may cause confusion among users.
+如果您需要一个按钮来执行此处未列出的操作，请联系 O3DE 的 UX/UI 特别兴趣小组 （SIG）。我们可以帮助您为您的用例创建一个按钮，并使其通用，以便其他人也可以使用它。不建议为某些组件创建唯一的按钮，因为这可能会导致用户混淆。
  
-1. Back to previous : Return the user back to a previous state
+1. 返回上一个 ：将用户返回到以前的状态
 
-1. Pining: This property is set to be visible on a higher level. You can see this used on prefab properties.
+1. 固定：此属性设置为在较高级别可见。你可以看到这用于预制件属性。
 
-1. Locate on perspective window: Use this button to set a property value based on click in the perspective window to set property.
+1. 在透视窗口中定位：使用此按钮可根据在透视窗口中的单击来设置属性值。
 
-1. Clear set property: This should be used to remove a property value and or a set of properties value. Unlike delete this one should not remove the filed as well. We tried to reserve the meaning of the "X" for things like "clear this field" or "close this window". The trash can is being used for remove setting or delete elements.
+1. 清除设置属性：这应该用于删除属性值和/或一组属性值。与 delete 不同，它不应该也删除 file.我们尝试将 “X” 的含义保留为 “clear this field” 或 “close this window” 之类的内容。垃圾桶用于删除、设置或删除元素。
 
-1. See more properties:
+1. 查看更多属性：
 
-1. Configure / Play.
+1. 配置/播放。
 
-1. Run command
+1. 运行命令
 
-1. Add property. We commonly use this for adding a new property or a set of properties
+1. 添加属性。我们通常使用它来添加新属性或一组属性
 
-1. Delete property. This will completely remove the property from your component card. Most of the time this us used in connection to the plus sign
+1. 删除属性。这将从您的组件卡中完全删除该属性。大多数时候，这个 us 用于与加号
 
-1. Open new window
+1. 打开新窗口
 
-1. Refresh properties or settings
+1. 刷新属性或设置
 
-1. Find in explorer.
+1. 在 explorer 中查找。
 
-1. Override property
+1. 覆盖属性
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/component-buttons.png" "200" "A list of component buttons." >}}
 
 
-## Things you will need to manage
+## 您需要管理的事情
 
+### 级别组件 vs 标准组件
 
-### Level component vs standard component
-
-In O3DE, there are two levels of components: a *standard component* and a *level component*. A standard component deals with specific set of functionality that applies to a feature. Level components on the other hand are large features on a component that apply to the entire level and do not need to be exposed in the outliner. These level components are things like Global lighting, physics, terrain, etc. So when building your new component. Consider should this component live on  entity or is it a component that is used across your entire level  
+在 O3DE 中，有两个级别的组件：一个 *标准组件* 和一个 *关卡组件*。标准组件处理适用于功能的特定功能集。另一方面，关卡组件是组件上的大型功能，适用于整个关卡，不需要在大纲视图中显示。这些关卡组件包括 Global lighting（全局光照）、物理、地形等。因此，在构建新组件时。考虑此组件应该位于实体上，还是在整个关卡中使用的组件  
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/level-component-1.png" "400" "Example of a level component in the O3DE Editor (part 1)" >}}
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/level-component-2.jpg" "400" "Example of a level component in the O3DE Editor (part 2)" >}}
 
-### Things to avoid
+### 应避免的事项
 
-There are several patterns over the years we have learned to follow in order to create the best experience for our users.
+多年来，我们学会了遵循多种模式，以便为用户创造最佳体验。
 
-* Ask yourself, Is the setting really necessary? I know at first throwing every property on a component card seems like a good idea. However the research on this would disagree. Overwhelming users with too many choices or trivial choices cause a type of user paralysis. 
+* 问问自己，设置真的有必要吗？我知道一开始把每个属性都扔到组件卡上似乎是个好主意。然而，这方面的研究并不同意。用太多选择或琐碎的选择压倒用户会导致一种用户瘫痪。
 
-* Only show data that is useful and 80% of your user. Avoid catering the 20% advanced group.  
+* 仅显示有用的数据和 80% 的用户。避免为 20% 的先进组提供餐饮。 
 
-* Group related settings together. 
+* 将相关设置组合在一起。
 
-* We should never use single property nested under a Subsection header.
+* 我们永远不应该使用嵌套在 Subsection 标题下的单个属性。
 
-* We try to limit the number of tree structures under a card to be 3. Any more than 3 is almost impossible to read because everything is too compressed.
+* 我们尝试将一张卡下的树结构数量限制为 3 个。超过 3 几乎不可能读取，因为所有内容都被压缩得太紧了。
 
-### Empty component cards
+### 空组件卡
 
-Can you use empty component cards. Well technically there is no code limitation on this behavior but it's highly discouraged. During user research it was reported that seeing an empty card make people thing component are broken. A reason someone might want to use an empty component card is just backend plumbing and have your tool registers to a system. In the case of needing this state you should make sure the follow is done. In most cases component cards should have properties inside them that offer a customer a choice or modifying a feature or a function. If the component doesn't have any properties, you should ask yourself: Is there anything I can add to help users understand why this component would be empty.
+您可以使用空的组件卡吗。嗯，从技术上讲，这种行为没有代码限制，但强烈建议不要这样做。在用户研究期间，有报道称看到一张空卡片会使 people 事物组件损坏。有人可能想要使用空组件卡的一个原因只是后端管道，并将您的工具注册到系统中。在需要此状态的情况下，您应该确保已完成以下操作。在大多数情况下，组件卡内部应具有属性，以便客户选择或修改功能或功能。如果组件没有任何属性，你应该问自己：我有什么可以添加的东西来帮助用户理解为什么这个组件会是空的。
 
 {{< image-width "/images/tools-ui/ux-patterns/component-card/overview/empty-card.png" "400" "An empty component card with no content." >}}
 
 
-### Provide good default settings
+### 提供良好的默认设置
 
-All properties should have our best effort to select the default we think everyone would like. Sometime we will get this wrong, and that's ok. When we learn more we iterate. However the experimentation that will be required for our user to get their best guess of what should work is way too much effort. Lets save them time and set our best guess and good default values.
+所有属性都应该尽最大努力选择我们认为每个人都喜欢的默认值。有时我们会出错，这没关系。当我们学到更多时，我们会迭代。然而，我们的用户需要进行实验才能最好地猜测什么应该有效，这太费力了。让我们为他们节省时间并设置我们的最佳猜测值和良好的默认值。
 
 
-### Units of measure
+### 计量单位
 
- We support many type of units of measurements in our input fields. These unit of measurements are include inside the input field in a lighter color than the standard text. Our most common unit of measurements are Meters (M), but you might also see pixels (PX), lumens (LM), Hex (#), and  Degrees (° or deg) .. These help text are not built into the control but a modifiable property so you can add whichever unit type you would like. So it's up to you to keep our properties from becoming disjointed. We strongly suggest using universal measuring units like the metric system.  
+我们在输入字段中支持多种类型的测量单位。这些度量单位以比标准文本更浅的颜色包含在输入字段中。我们最常见的测量单位是米 （M），但您可能也会看到像素 （PX）、流明 （LM）、十六进制 （#） 和度 （° 或 deg） ..这些帮助文本不是内置于控件中，而是一个可修改的属性，因此您可以添加所需的任何单位类型。因此，您有责任防止我们的物业脱节。我们强烈建议使用通用测量单位，如公制。 
  
-(image to do)
+（图片待办）
 
 
-### Sorting inside a component (dragging)
+### 在组件内排序（拖动）
 
-Currently the basic component card doesn't support row sorting or order stacking as its not needed inside all instances. However, we do support this behavior as part of the Array component inside component cards. This will allow you to pull down stacking ordering or allowing user to reorganizing content. Please read more about this in the "Array" component.
+目前，基本组件卡不支持行排序或顺序堆叠，因为并非所有实例都需要它。但是，我们确实支持将此行为作为组件卡中 Array 组件的一部分。这将允许您下拉、堆叠、排序或允许用户重新组织内容。请在 “Array” 组件中阅读更多相关信息。
 
-### Sort order of a component card (dragging)
+### 组件卡片的排序顺序（拖动）
 
-All cards are able to be sorted inside the inspector window with the exception of the transform card. We lock the transform card to the top of the inspector so this card will always be in position 1. Changing position of the other cards allows most user to organize their by dragging around cards. Blue border and outline lets the user know this item can be moved into this position, which a red border say this location is not possible. Please note that the stacking order of component cards inside the inspector means nothing about order of importance to the editor or processor. It also doesn't effect the z-index position in the  viewport. The cards are just stacked visually to help the user not related to hidden functionality. 
+除 transform 卡外，所有卡都可以在 Inspector 窗口中进行排序。我们将转换卡锁定到 Inspector 的顶部，以便此卡始终位于位置 1。更改其他卡片的位置允许大多数用户通过拖动卡片来组织它们。蓝色边框和轮廓表示此项可以移动到此位置，而红色边框表示此位置是不可能的。请注意，Inspector 内组件卡的堆叠顺序与编辑器或处理器的重要性顺序无关。它也不会影响视区中的 z-index 位置。卡片只是在视觉上堆叠起来，以帮助用户与隐藏功能无关。
 
-### Interacting with the viewport
+### 与视互
 
-Interaction with the component card and the viewport should happen instantaneously. In some situations in which we refer to another file on disc. In these situation we might want to include a secondary button to force update change. The other major viewport change is reflect with the large "edit" button you will see at the bottom of all of our shape components. This action put the viewport into edit mode will have some visual indicators such as the blue border to let the user know changes have taken place. Please note in edit mode you can restrict the users ability to click on other action so they can focus on your workflow.
+与组件卡和视区的交互应立即发生。在某些情况下，我们引用光盘上的另一个文件。在这些情况下，我们可能需要包含一个辅助按钮来强制更新更改。另一个主要的视口变化是 reflect 在你所有形状组件底部看到的大 “edit” 按钮。此操作将视区置于编辑模式，将具有一些视觉指示器（如蓝色边框），以让用户知道已发生更改。请注意，在编辑模式下，您可以限制用户单击其他操作的能力，以便他们可以专注于您的工作流程。
 
-### Tool Tip
+### 工具提示
 
-Please use them on all properties describe the action does not what you want them to do.
+请在所有属性上使用它们 描述 操作 不是您希望它们做什么。
 
-### Component icons
+### 组件图标
 
-Component card icons should never use boxes around the icon. The boxed version is for the perspective window only. We don't want our icons to take away from the customers focus. New icons should match the appropriate color catagory for the component category. Please see the icons page for more details.
+组件卡图标不应在图标周围使用框。盒装版本仅适用于透视窗口。我们不希望我们的图标偏离以客户为中心的位置。新图标应与组件类别的相应颜色类别匹配。有关更多详细信息，请参阅图标页面。
 
-### Dependent components
+### 依赖组件
 
-When designing the component, think about the end-to-end workflow for your component. Is the component you are building part of another tool or workflow? Are there other dependent components with your component? Define the E2E workflow  With the understanding of this end-to-end workflow, you can think ahead for your users, and help your user automate their workflow as much as possible to save time.
+在设计组件时，请考虑组件的端到端工作流程。您正在构建的组件是其他工具或工作流程的一部分吗？您的组件是否有其他依赖组件？定义 E2E 工作流 了解此端到端工作流后，您可以为用户提前考虑，并帮助用户尽可能自动化其工作流以节省时间。
 
-### Can we automatically add components? 
+### 我们可以自动添加组件吗？
 
-Yes! An example of this is; If a user drags out an FBX from Asset Browser and it includes a Mesh, a Material, and a Physics collider. It would simplify the users experience to automatically add these components together. It would be easier for the user to decided they don't want some of these components and change or delete them then set them up from scratch. Please also see status 
+是的！这方面的一个例子是;如果用户从 Asset Browser 中拖出 FBX，并且它包括 Mesh、Material 和 Physics 碰撞器。自动将这些组件添加在一起将简化用户体验。用户更容易决定他们不需要其中一些组件并更改或删除它们，然后从头开始设置它们。另请参阅状态
 
-However, we do not want to force a user to keep a component they do not want. So please do not set up any systems where components are automatically added back when someone deletes that component. Forced components adding is not something we should endorse. If a user deletes a components, they had a reason. In this case please use [Status: Conflict or required Components](#status-conflict-or-required-components)
+但是，我们不想强迫用户保留他们不想要的组件。因此，请不要设置任何系统，当有人删除该组件时，组件会自动添加回来。强制添加组件不是我们应该赞同的事情。如果用户删除组件，他们是有原因的。在这种情况下，请使用 [状态：冲突或必需组件](#status-conflict-or-required-components)

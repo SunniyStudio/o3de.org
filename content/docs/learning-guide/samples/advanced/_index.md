@@ -1,13 +1,13 @@
 ---
-linktitle: Advanced
-title: Advanced
-description: Advanced O3DE games.
+linktitle: 高级
+title: 高级
+description: 高级 O3DE 游戏。
 weight: 600
 ---
 
-Advanced projects are made and maintained over a long period of times. They are used to showcase how O3DE handles a large number of entities and the workflow for big projects.
+高级项目是经过长时间制作和维护的。它们用于展示 O3DE 如何处理大量实体以及大型项目的工作流程。
 
-| Image | Link | Description | Last Updated |
+| 图像 |链接 |描述 |最后更新|
 | - | - | - | - |
-| <img src="/images/learning-guide/samples/advanced/multiplayer-sample.png" width="300px" /> | [Multiplayer Sample](https://github.com/o3de/o3de-multiplayersample) | Third-person multiplayer game where robots battle one another for dominance in an under construction, multi-tiered starbase | O3DE **23.10.3**. April 28, 2024 |
-| <img src="/images/learning-guide/samples/advanced/starter-game.jpg" width="300px" /> | [Starter Game](https://github.com/o3de/startergame-assets) | This project is a port to O3DE of the [Lumberyard "Starter Game"](https://aws.amazon.com/blogs/gametech/now-available-starter-game/) project. It is still a work-in-progress, but once complete, it will feature a large map with vegetation, third person controller and enemy AI | O3DE **24.09.0**. October 09, 2024 |
+| <img src="/images/learning-guide/samples/advanced/multiplayer-sample.png" width="300px" /> | [Multiplayer Sample](https://github.com/o3de/o3de-multiplayersample) | 第三人称多人游戏，机器人在正在建设的多层星际基地中相互战斗，争夺主导地位 | O3DE **23.10.3**. April 28, 2024 |
+| <img src="/images/learning-guide/samples/advanced/starter-game.jpg" width="300px" /> | [Starter Game](https://github.com/o3de/startergame-assets) | 此项目是 [Lumberyard “Starter Game”](https://aws.amazon.com/blogs/gametech/now-available-starter-game/) 项目的 O3DE 移植。它仍然是一个正在进行的工作，但一旦完成，它将包含一张带有植被、第三人称控制器和敌人 AI 的大地图 | O3DE **24.09.0**. October 09, 2024 |

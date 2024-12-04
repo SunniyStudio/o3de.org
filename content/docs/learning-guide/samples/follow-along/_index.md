@@ -1,20 +1,20 @@
 ---
 linktitle: Follow Along
 title: Follow Along
-description: Make a game step by step by following the documentation.
+description: 按照文档逐步制作游戏。
 weight: 100
 ---
 
-The following samples are the perfect entry for O3DE newcommers. Follow the provided video playlist to learn about basic scripting, scene editing and material setup.
+以下示例是 O3DE 新手的完美入门。按照提供的视频播放列表了解基本脚本、场景编辑和材质设置。
 
-| Image | Link | Description |
+|图像 |链接 |描述 |
 | - | - | - |
-| <img src="/images/learning-guide/samples/follow-along/pong.png" width="300px" /> | [Pong](pong) | The classic "Pong" game revisited in 3D |
-| <img src="/images/learning-guide/samples/follow-along/protect-the-moon.png" width="300px" />  | [Protect the moon](protect-the-moon) | A side-scrolling shooter inspired by "Space Invader" |
+| <img src="/images/learning-guide/samples/follow-along/pong.png" width="300px" /> | [Pong](pong) | 以 3D 形式重新审视经典的“Pong”游戏 |
+| <img src="/images/learning-guide/samples/follow-along/protect-the-moon.png" width="300px" />  | [Protect the moon](protect-the-moon) | 受《Space Invader》启发的横向卷轴射击游戏 |
 
-## Community curated
+## 社区策划
 
-| Image | Link | Description | Last Updated |
+|图像 |链接 |描述 |最后更新 |
 | - | - | - | - |
-| <img src="/images/learning-guide/samples/follow-along/o3de-book.png" width="300px" />  | [O3DE Book](https://o3debook.com/) | The book "Game programming with O3DE" by Olex Lozitskiy will have you make a multiplayer soccer game with chickens. Source code [is available here](https://github.com/SelfishOlex/O3DEBookCode2111). | N/A |
-| <img src="/images/learning-guide/samples/follow-along/multiplayer-workshop.png" width="300px" /> | [Multiplayer Workshop](https://github.com/AMZN-Gene/o3dcon-2022-multiplayer-workshop) | Basic multiplayer game with 3rd person player movement. Video of the workshop [is available here](https://www.youtube.com/watch?v=4f4olmUo44k&list=PLCQwFpnHSZQjDIkT9EqCNDWepsh8sTGMm) | N/A |
+| <img src="/images/learning-guide/samples/follow-along/o3de-book.png" width="300px" />  | [O3DE Book](https://o3debook.com/) | Olex Lozitskiy 编写的《Game programming with O3DE》一书将让您制作一个带有鸡的多人足球游戏。源代码 [可在此处获得](https://github.com/SelfishOlex/O3DEBookCode2111). | N/A |
+| <img src="/images/learning-guide/samples/follow-along/multiplayer-workshop.png" width="300px" /> | [Multiplayer Workshop](https://github.com/AMZN-Gene/o3dcon-2022-multiplayer-workshop) | 具有第 3 人称玩家移动的基本多人游戏。研讨会视频 [可在此处获取](https://www.youtube.com/watch?v=4f4olmUo44k&list=PLCQwFpnHSZQjDIkT9EqCNDWepsh8sTGMm) | N/A |

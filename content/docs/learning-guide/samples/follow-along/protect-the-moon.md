@@ -1,48 +1,48 @@
 ---
-linkTitle: Protect the moon
-title: Protect the moon
-description: Videos to guide you through creating a basic side scroller shooter in Open 3D Engine (O3DE).
+linkTitle: 保护月球
+title: 保护月球
+description: 指导您在 Open 3D Engine （O3DE） 中创建基本横向卷轴射击游戏的视频。
 toc: true
 ---
 
-| Repository | Time to Complete | Feature Focus | Last Updated |
+| 存储库 |完成时间 |功能聚焦 |最后更新 |
 | - | - | - | - |
 | [Github](https://github.com/o3de/Protect-the-Moon ) | 2 Hours | Visual scripting, UI | O3DE **23.10.3**. April 28, 2024  |
 
-This topic contains video tutorials that will guide you through creating a side scrolling shooter with **Open 3D Engine (O3DE)**.
+本主题包含视频教程，这些教程将指导您使用 Open 3D Engine （O3DE） 创建横向卷轴射击游戏。
 
-## Video Tutorial Series: Create "Protect the moon" with O3DE
+## 视频教程系列：使用 O3DE 创建“保护月球”
 
 [Take me to the full playlist!](https://www.youtube.com/playlist?list=PLCQwFpnHSZQgyIu4JeOUDCsNCVgWOz3Mf)
 
-### Project setup
+### 项目设置
 
 {{< youtube-width id="rJBAChtWPCs" title="01 Project Setup" >}}
 
-### Creating the Main Menu
+### 创建主菜单
 
 {{< youtube-width id="wMbszzKs3ME" title="02 Creating The Main Menu" >}}
 
-### Setting up project assets
+### 设置项目资源
 
 {{< youtube-width id="r0JNHOtevPA" title="03 Setting Up Project Assets" >}}
 
-### Player movement
+### 玩家移动
 
 {{< youtube-width id="DtVudWEkmOM" title="04 Player Movement" >}}
 
-### Enemies & Spawning
+### 敌人和生成
 
 {{< youtube-width id="yk3PJ-HdshQ" title="05 Enemies & Spawning" >}}
 
-### Projectiles & Collisions
+### 弹丸和碰撞
 
 {{< youtube-width id="Jqolu6iSQzM" title="06 Enemies & Spawning" >}}
 
-### Scoring and Lives part 1
+### 评分与生命 第 1 部分
 
 {{< youtube-width id="yKtTlGb7Jbo" title="07 Scoring and Lives Part 1" >}}
 
-### Scoring and Lives part 2
+### 评分与生命 第 2 部分
 
 {{< youtube-width id="2_9XsWPM-kM" title="08 Scoring and Lives Part 2" >}}

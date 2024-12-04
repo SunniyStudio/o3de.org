@@ -1,6 +1,6 @@
 ---
 description: ' 了解 O3DE Asset Bundler 术语和概念。Asset Bundler 有助于更高效地捆绑游戏发布所需的资源。 '
-title: Concepts and Terms
+title: 概念和术语
 weight: 700
 ---
 

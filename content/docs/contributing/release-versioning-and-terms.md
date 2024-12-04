@@ -1,50 +1,49 @@
 ---
-linkTitle: Versioning Terminology
-title: Open 3D Engine Versioning and Release Terminology
-description: Read this topic to understand O3DE's versioning model and release terminology
+linkTitle: 版本控制术语
+title: Open 3D Engine版本控制和发布术语
+description: 阅读本主题以了解 O3DE 的版本控制模型和发布术语
 weight: 500
 ---
 
-## Open 3D Engine (O3DE) Version Numbering
+## Open 3D Engine (O3DE)版本编号
 
-O3DE uses `MAJOR.MINOR.PATCH` [semantic versioning](https://semver.org/) for all the `version` fields in `engine.json`, `gem.json` and `project.json` files to indicate API and other important changes. 
+O3DE 使用`MAJOR.MINOR.PATCH` [语义版本控制](https://semver.org/)用于 `engine.json`, `gem.json` 和 `project.json` 文件中的所有 `version` 字段，以指示 API 和其他重要更改。
 
-- `MAJOR` is for API-breaking changes
-- `MINOR` is for non-API-breaking changes that add new APIs or change them in a non-breaking way
-- `PATCH` is for all other non-API-breaking changes, usually important fixes
+- `MAJOR` 用于 API 中断性更改
+- `MINOR` 适用于添加新 API 或以非中断性方式更改 API 的非 API 重大更改
+- `PATCH` 用于所有其他非 API 破坏性更改，通常是重要的修复
 
-The engine display version uses `YY.MM.PATCH` and is only used in the O3DE SDK. By using a date-oriented scheme for the SDK display version users can easily tell how recently an engine SDK was released, but it does not provide any information about compatibility or the kinds of changes made.
+引擎显示版本使用`YY.MM.PATCH`，并且仅在 O3DE SDK 中使用。通过对 SDK 显示版本使用面向日期的方案，用户可以轻松判断引擎 SDK 的发布时间，但它不提供有关兼容性或所做更改类型的任何信息。
 
-| | Engine display version | Engine version |
+| 引擎显示版本     | 引擎版本    |
+|------------|---------|
+| 稳定的 SDK 版本 | 23.05.0 | 1.2.0              | 
+| 开发 SDK 或源  | 00.00   | 2.0.0                  | 
+
+## O3DE 发布术语
+
+* **Stable**: 此功能已准备好供用户积极使用它进行开发。API 和功能可以被认为是稳定的，任何重要的新工作都将在进行更改之前捕获在 RFC 中。
+* **Preview**: 此功能几乎完成并且很稳定。可能仍会有小的改变。
+* **Experimental**: 此功能正在开发中。先不要依赖它;它可能会发生重大变化。
+
+## `engine.json` 中的引擎版本信息
+
+O3DE 引擎版本信息存储在引擎根目录的`engine.json` 文件中。 
+
+| 字段 |描述 | CMake 全局属性 |
 |---------------------|------------------------|------------------------|
-| Stable SDK release | 23.05.0   | 1.2.0              | 
-| Development SDK or source | 00.00 | 2.0.0                  | 
+| engine_name | 引擎的名称，在创建 SDK 时设置为`o3de-sdk`，在 O3DE GitHub 存储库源代码中设置为`o3de`。由工具用作引擎的标识符。 | | 
+| display_version | `YY.MM.PATCH`的年份和月份版本显示在 SDK 安装程序和 Project Manager 中。此值仅在创建 SDK 时设置，在 O3DE GitHub 存储库源代码中为`00.00`。  | `O3DE_DISPLAY_VERSION_STRING` |
+| version | `MAJOR.MINOR.PATCH` [语义版本控制](https://semver.org/)随着对引擎中的 API 进行更改，它会在 GitHub 存储库源代码中更新，并可用于一般引擎兼容性。开发人员可以使用其`gem.json` 或 `project.json`文件中的`compatible_engines`字段来指示其 Gem 或项目已知与哪个引擎版本兼容。 | `O3DE_VERSION_STRING` `O3DE_VERSION_MAJOR` `O3DE_VERSION_MINOR` `O3DE_VERSION_PATCH`|
+| api_versions | `MAJOR.MINOR.PATCH` [语义版本控制](https://semver.org/)对于引擎中包含的框架和工具，它们是常见的依赖项。开发人员可以使用其`gem.json` 或 `project.json`文件中的`engine_api_dependencies`字段来指示其 Gem 或项目已知与哪些引擎 API 版本兼容。 | |
+| build | 增量 SDK 内部版本号，仅在创建 SDK 时设置，在 O3DE GitHub 存储库源代码中为`0`。 | `O3DE_BUILD_VERSION` |
+| O3DEVersion | 已弃用的版本字段已替换为`display_version`。 |
+| O3DEBuildNumber | 已弃用的 build 字段，已替换为`build`。|
 
-## O3DE Release Terminology
+例：
 
-* **Stable**: This feature is ready for users to actively develop using it. APIs and functionality can be considered stable and any significant new work will be captured in an RFC before changes are made.
-* **Preview**: This feature is almost done and is stable. May still go through small changes.
-* **Experimental**: This feature is a work-in-progress. Don't depend on it yet; it may go through significant changes.
+开发人员可以使用其 `gem.json`中的`compatible_engines`字段来指示其 Gem 已知与开发中名为`o3de`版本 `2.0.0`或更高版本的任何引擎或名为`o3de-sdk`但版本为`1.2.0`的 SDK 引擎兼容。
 
-## Engine Version Information In `engine.json` 
-
-O3DE engine version information is stored inside the `engine.json` file at the root of the engine.   
-
-
-| Field | Description |  CMake Global Properties |
-|---------------------|------------------------|------------------------|
-| engine_name | The name of the engine which is set to `o3de-sdk` when the SDK is created and is `o3de` in the O3DE GitHub repository source code. Used as an identifier of the engine by tools. | | 
-| display_version | The `YY.MM.PATCH` year and month version displayed in the SDK installer and Project Manager. This value is only set when creating the SDK and is `00.00` in the O3DE GitHub repository source code.  | `O3DE_DISPLAY_VERSION_STRING` |
-| version | The `MAJOR.MINOR.PATCH` [semantic version](https://semver.org/) that is updated in the GitHub repository source code as changes are made to the APIs in the engine and can be used for general engine compatibility. Developers may use the `compatible_engines` field in their `gem.json` or `project.json` files to indicate which engine version their gem or project is known to be compatible with. | `O3DE_VERSION_STRING` `O3DE_VERSION_MAJOR` `O3DE_VERSION_MINOR` `O3DE_VERSION_PATCH`|
-| api_versions | The `MAJOR.MINOR.PATCH` [semantic version](https://semver.org/) for frameworks and tools included in the engine that are common dependencies. Developers may use the `engine_api_dependencies` field in their `gem.json` or `project.json` files to indicate which engine API versions their gem or project is known to be compatible with. | |
-| build | The incremental SDK build number that is only set when the SDK is created and is `0` in the O3DE GitHub repository source code. | `O3DE_BUILD_VERSION` |
-| O3DEVersion | Deprecated version field that has been replaced with `display_version`. |
-| O3DEBuildNumber | Deprecated build field that has been replaced with `build`. |
-
-
-Example:
-
-A developer may use the `compatible_engines` field in their `gem.json` to indicate that their gem is known to be compatible with any engine in development named `o3de` version `2.0.0` or higher or an SDK engine named `o3de-sdk` that is exactly version `1.2.0`.
 ```json
 {
     "gem_name":"CustomGem",
@@ -56,20 +55,21 @@ A developer may use the `compatible_engines` field in their `gem.json` to indica
 ```
 
 
-### Engine APIs
+### Engine API
 
-The API versions specified in the `api_versions` field in `engine.json` are currently based on the content inside the engine's `Code` folder and are provided as simple but useful way for developers to indicate compatibility when they expect their gem or tool to be compatible with multiple engine versions unless breaking changes are made to APIs inside the engine's `Code` folder.
+在`engine.json`的`api_versions`字段中指定的 API 版本目前基于引擎的`Code`文件夹中的内容，并且作为简单但有用的方式提供给开发人员，以便在他们希望其 Gem 或工具与多个引擎版本兼容时指示兼容性，除非对引擎的`Code`文件夹中的 API 进行了重大更改。
 
-| Engine API Field| Source Path |
+| Engine API 字段|源路径 |
 |---------------------|------------------------|
 | `editor` | `Code/Editor` |
 | `framework` | `Code/Framework` |
 | `launcher` | `Code/LauncherUnified` |
 | `tools` | `Code/Tools` |
 
-Example:
+例：
 
-A developer that creates a gem that includes an Editor tool, may update their `gem.json` file to indicate the gem is known to be compatible with any non-breaking version of the Editor APIs.
+创建包含 Editor 工具的 Gem 的开发人员可以更新其`gem.json`文件，以表明已知该 Gem 与 Editor API 的任何非破坏性版本兼容。
+
 ```json
 {
     "gem_name":"EditorToolGem",

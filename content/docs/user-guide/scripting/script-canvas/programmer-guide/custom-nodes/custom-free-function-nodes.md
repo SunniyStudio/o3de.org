@@ -13,30 +13,30 @@ weight: 200
 在按照本教程进行操作时，您可以引用 ScriptCanvasPhysics Gem。
 {{< /note >}}
 
-### Step 1: Adding support for custom free function nodes to a Gem
+### 第 1 步：向 Gem 添加对自定义免费函数节点的支持
 {{< note >}}
 首次创建自定义免费函数节点时，只需执行一次此步骤。
 {{< /note >}}
 
-In your Gem's `Code/CMakeLists.txt`, add a section for `AUTOGEN_RULES` and declare `Gem::ScriptCanvas.Extensions` as a build dependency.
+在 Gem 的`Code/CMakeLists.txt`中，为`AUTOGEN_RULES`添加一个部分，并将`Gem::ScriptCanvas.Extensions`声明为构建依赖项。
 
-The precise place for this section will vary depending on how your Gem is configured. 
-However, we recommend that your Gem define a `STATIC` library to make the code available to both runtime and editor projects.
+此部分的确切位置将因 Gem 的配置方式而异。
+但是，我们建议您的 Gem 定义一个`STATIC`库，以使代码可用于运行时和编辑器项目。
 
-As an example, here is partial definition of Gem's `Code/CMakeLists.txt` that supports Script Canvas custom nodes with following required changes:
-1. `Gem::ScriptCanvas.Extensions` must be declared as `BUILD_DEPENDENCIES` of `STATIC` library
-1. Add `AUTOGEN_RULES` section for custom free function under `STATIC` library
+例如，以下是 Gem 的`Code/CMakeLists.txt`的部分定义，它支持 Script Canvas 自定义节点，并进行了以下必需的更改：
+1. `Gem::ScriptCanvas.Extensions`必须声明为`STATIC`库的`BUILD_DEPENDENCIES`
+1. 在`STATIC`库下为自定义免费函数添加`AUTOGEN_RULES`部分
    ```cmake
    AUTOGEN_RULES
        *.ScriptCanvasFunction.xml,ScriptCanvasFunctionRegistry_Header.jinja,AutoGenFunctionRegistry.generated.h
        *.ScriptCanvasFunction.xml,ScriptCanvasFunctionRegistry_Source.jinja,AutoGenFunctionRegistry.generated.cpp
    ```
-1. `STATIC` library must be declared directly as `BUILD_DEPENDENCIES` of Gem runtime module (and it should be included as part of editor module build dependencies hierarchy)
-1. `MyGem.Static` includes two .cmake file lists. 
-   * We include the common files and the platform specific files which are set in `mygem_files.cmake`.
-   * We include AzAutoGen ScriptCanvas free function required templates which are set in `mygem_autogen_files.cmake` (We recommend to keep this file separately for clear scope)
+1. `STATIC`库必须直接声明为 Gem 运行时模块的`BUILD_DEPENDENCIES`（并且它应该作为编辑器模块构建依赖项层次结构的一部分包含在内）
+1. `MyGem.Static` 包括两个 .cmake 文件列表。
+   * 我们包括了在 `mygem_files.cmake` 中设置的通用文件和平台特定文件。
+   * 我们包括 AzAutoGen ScriptCanvas 免费功能所需的模板，这些模板在 `mygem_autogen_files.cmake` 中设置（我们建议将此文件单独保留以明确范围）
 
-   Example contents of `mygem_autogen_files.cmake`:
+   `mygem_autogen_files.cmake`的示例内容：
    ```cmake
    set(FILES
        ${LY_ROOT_FOLDER}/Gems/ScriptCanvas/Code/Include/ScriptCanvas/AutoGen/ScriptCanvas_Macros.jinja
@@ -45,9 +45,9 @@ As an example, here is partial definition of Gem's `Code/CMakeLists.txt` that su
    )
    ```
 
-   The list of autogen templates might be different if you create custom templates for your own purposes. 
-   For example, if you were to extend Script Canvas to do something beyond what it provides "out of the box", you could have your own set of templates to generate code in the syntax that you define.
-   For more information, refer to the documentation on [AzAutoGen](/docs/user-guide/programming/autogen/).
+   如果您出于自己的目的创建自定义模板，则 autogen 模板列表可能会有所不同。
+   例如，如果您要扩展 Script Canvas 以执行超出其“开箱即用”功能的功能，则可以拥有自己的模板集，以您定义的语法生成代码。
+   有关更多信息，请参阅 [AzAutoGen](/docs/user-guide/programming/autogen/) 上的文档。
 
 ```cmake
 ...
@@ -93,16 +93,16 @@ ly_add_target(
 ```
 
 
-### Step 2: Create an XML file for code generation {#create-an-xml-file}
-Prepare for code generation by creating an XML file that contains information about:
-1. **(Required)** The header file of functions.
-1. **(Recommended)** The namespace of functions, which is used to distinguish duplicate function name.
-1. **(Optional)** The category of functions, if not presented, will use `Global Methods` instead
-1. **(Required)** The function name of each function.
+### 第 2 步：创建用于代码生成的 XML 文件 {#create-an-xml-file}
+通过创建包含以下内容的信息的 XML 文件来准备代码生成：
+1. **(必须)** 函数的头文件。
+1. **(建议)** 函数的命名空间，用于区分重复的函数名称。
+1. **(可选)** 函数类别（如果未显示）将改用 `Global Methods`
+1. **(必须)** 每个函数的函数名称。
 
-AzAutoGen uses this file to generate C++ code for function registration and reflection.
+AzAutoGen 使用此文件生成用于函数注册和反射的 C++ 代码。
 
-For example, HelloWorldFunctions.ScriptCanvasFunction.xml
+例如， HelloWorldFunctions.ScriptCanvasFunction.xml
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <ScriptCanvas>
@@ -118,14 +118,14 @@ For example, HelloWorldFunctions.ScriptCanvasFunction.xml
 </ScriptCanvas>
 ```
 
-### Step 3: Create the function source files {#create-the-function-source-files}
-The next step is to implement the C++ functions that will be invoked by the Script Canvas node.
+### 步骤 3：创建函数源文件 {#create-the-function-source-files}
+下一步是实现将由 Script Canvas 节点调用的 C++ 函数。
 
-There are two requirements need to keep in mind:
-1. The namespace of functions should match with `Namespace` provided in XML file.
-2. The function name should match with specific one provided in XML file. (function overload is not supported)
+需要牢记两个要求：
+1. 函数的命名空间应与 XML 文件中提供的 `Namespace` 匹配。
+2. 函数名称应与 XML 文件中提供的特定函数名称匹配。（不支持函数重载）
 
-For example, HelloWorldFunctions.h
+例如， HelloWorldFunctions.h
 ```cpp
 #pragma once
 #include <AzCore/std/string/string.h>
@@ -141,7 +141,7 @@ namespace MyGem
 }
 ```
 
-For example, HelloWorldFunctions.cpp
+例如，HelloWorldFunctions.cpp
 ```cpp
 #include "HelloWorldFunctions.h"
 
@@ -162,8 +162,8 @@ namespace MyGem
 }
 ```
 
-### Step 4: Add source files to CMake {#add-source-files-to-cmake}
-Add the XML and function source files to one of Gem's .cmake files, for example `mygem_files.cmake`.
+### 第 4 步：将源文件添加到 CMake {#add-source-files-to-cmake}
+将 XML 和函数源文件添加到 Gem 的其中一个 .cmake 文件中，例如`mygem_files.cmake`。
 
 ```cmake
 set(FILES
@@ -175,22 +175,22 @@ set(FILES
 )
 ```
 
-### Step 5: Register the new node {#register-the-new-node}
+### 第 5 步：注册新节点 {#register-the-new-node}
 {{< note >}}
-This step is only required once for the first time custom free function node creation.
+首次创建自定义免费函数节点时，只需执行一次此步骤。
 {{< /note >}}
 
-The final step is to register the new node. To do this, you need to modify your Gem's [Gem module](/docs/user-guide/programming/gems/overview/) or [system component](/docs/user-guide/programming/components/system-components/).
+最后一步是注册新节点。为此，您需要修改 Gem 的 [Gem 模块](/docs/user-guide/programming/gems/overview/) 或 [系统组件](/docs/user-guide/programming/components/system-components/)。
 
-In your Gem's module or system component, include the auto-generated registry header file, and invoke `REGISTER_SCRIPTCANVAS_AUTOGEN_FUNCTION` with the sanitized Gem target name.
+在 Gem 的模块或系统组件中，包含自动生成的注册表头文件，并使用经过清理的 Gem 目标名称调用`REGISTER_SCRIPTCANVAS_AUTOGEN_FUNCTION` 。
 {{< note >}}
-Use the same auto-generated registry header file that you declared in Step 1 under `AUTOGEN_RULES` in your Gem's `Code/CMakeLists.txt`. In our example, it is `AutoGenFunctionRegistry.generated.h`.
+使用您在步骤 1 中 Gem 的`Code/CMakeLists.txt`中的`AUTOGEN_RULES`下声明的相同自动生成的注册表头文件。在我们的示例中，它是`AutoGenFunctionRegistry.generated.h`。
 {{< /note >}}
 {{< note >}}
-The sanitized Gem target name should contain letters and numbers only. In our example, it is `MyGemStatic` which refers to the `MyGem.Static` target.
+经过净化的 Gem 目标名称应仅包含字母和数字。在我们的示例中，它是`MyGemStatic`，它指的是 `MyGem.Static` 目标。
 {{< /note >}}
    
-For example, in `MyGemSystemComponent.cpp`
+例如，在 `MyGemSystemComponent.cpp` 中
 
 ```cpp
 #include <AutoGenFunctionRegistry.generated.h>
@@ -199,11 +199,11 @@ REGISTER_SCRIPTCANVAS_AUTOGEN_FUNCTION(MyGemStatic)
 ...
 ```
 
-## Advanced ScriptCanvasFunction.xml Usage
-This topic explores additional features we support in function XML file.
+## 高级使用 ScriptCanvasFunction.xml
+本主题探讨了我们在函数 XML 文件中支持的其他功能。
 
-### Basic usage
-For example, we have `Sum` function, the very basic usage
+### 基本用法
+例如，我们有 `Sum` 函数，这是非常基本的用法
 ```cpp
 namespace MyGem
 {
@@ -227,12 +227,12 @@ namespace MyGem
 </ScriptCanvas>
 ```
 
-The basic node will look like following
+基本节点将如下所示
 
 ![Basic Sum](/images/user-guide/scripting/script-canvas/basic-sum.PNG)
 
-### Verbose usage
-For the same `Sum` function, we can provide more details in XML
+### 详细用法
+对于相同的`Sum`函数，我们可以在 XML 中提供更多详细信息
 ```xml
 <Function Name="Sum">
     <Parameter Name="InputA" DefaultValue="1" Description="The input A of sum function."/>
@@ -240,27 +240,27 @@ For the same `Sum` function, we can provide more details in XML
 </Function>
 ```
 
-The verbose node will look like following
+详细节点将如下所示
 
 ![Verbose Sum](/images/user-guide/scripting/script-canvas/verbose-sum.PNG)
 
-### Branch boolean function result
-In general, node will only have single `Out` execution slot. But we can create branch on node based on function result.
-For example, we have `IsPositive` function
+### 分支布尔函数结果
+通常，node 只有一个`Out`执行槽。但是我们可以根据函数 result 在 node 上创建分支。
+例如，我们有 `IsPositive` 函数
 ```cpp
 bool IsPositive(int input);
 ```
 
-Basic usage
-* **(Required)** `Branch` attribute should be indicated as `Boolean` when function result type is boolean.
-* **(Optional)** `BranchWithValue` attribute should be indicated as `True` if you want to include result, default is `False`
+基本用法
+* **(必须)** 当函数结果类型为布尔值时，`Branch` 属性应指示为`Boolean`。
+* **(可选)** 如果要包含 result，则 `BranchWithValue`属性应指示为 `True`，默认值为  `False`
 ```xml
 <Function Name="IsPositive" Branch="Boolean" BranchWithValue="True"/>
 ```
 
 ![Basic IsPositive](/images/user-guide/scripting/script-canvas/basic-ispositive.PNG)
 
-Verbose usage
+详细用法
 ```xml
 <Function Name="IsPositive" Branch="Boolean" BranchWithValue="True">
     <Parameter Name="Input" DefaultValue="1" Description="The input of positive check function."/>
@@ -271,15 +271,15 @@ Verbose usage
 
 ![Verbose IsPositive](/images/user-guide/scripting/script-canvas/verbose-ispositive.PNG)
 
-### Branch non-boolean function result
-We can also create branch even function result is not boolean, but it has to be coupled with a helper function,
-which should take non-boolean result as input and return a boolean result.
+### 分支非布尔函数结果
+即使函数 result 不是布尔值，但它必须与辅助函数耦合，我们也可以创建 branch ，
+它应该将非布尔结果作为输入并返回布尔结果。
 
-For example, we can use `Sum` and `IsPositive` functions together
+例如，我们可以同时使用 `Sum` 和 `IsPositive` 函数
 
-Basic usage
-* **(Required)** `Branch` attribute should be indicated with helper function name which is `IsPositive` in our example.
-* **(Optional)** `BranchWithValue` attribute should be indicated as `True` if you want to include result, default is `False`
+基本用法
+* **（必需）** `Branch` 属性应使用辅助函数名称表示，在我们的示例中为`IsPositive`。
+* **（可选）** 如果要包含 result，则`BranchWithValue` 属性应指示为`True`，默认为  `False`
 ```xml
 <Function Name="IsPositive"/>
 
@@ -288,7 +288,7 @@ Basic usage
 
 ![Basic Sum IsPositive](/images/user-guide/scripting/script-canvas/basic-sum-ispositive.PNG)
 
-Verbose usage
+详细用法
 ```xml
 <Function Name="Sum" Branch="IsPositive" BranchWithValue="True">
     <Parameter Name="Input A" DefaultValue="1" Description="The input A of sum function."/>
@@ -301,16 +301,16 @@ Verbose usage
 ![Verbose Sum IsPositive](/images/user-guide/scripting/script-canvas/verbose-sum-ispositive.PNG)
 
 {{< note >}}
-For further node name, tooltip and category customization, please refer to [Text Replacement](/docs/user-guide/scripting/script-canvas/editor-reference/text-replacement/)
+更多节点名称、提示框和分类自定义请参考 [文本替换](/docs/user-guide/scripting/script-canvas/editor-reference/text-replacement/)
 {{< /note >}}
 
-## Migration instructions for generic function nodes
-This topic guides you step-by-step through migrating from generic function nodes to custom free function nodes.
+## 通用函数节点的迁移说明
+本主题将指导您逐步完成从通用函数节点迁移到自定义免费函数节点的过程。
 
-### Step 1: Locate generic function node usage
-Generic function nodes are deprecated. Support will be removed in a future release. To prepare, we recommend that you plan for migration as early as possible. Existing graphs will break once generic function nodes are removed.
+### 步骤 1：定位泛型函数节点用法
+泛型函数节点已弃用。在未来版本中将删除支持。为了做好准备，我们建议您尽早规划迁移。删除泛型函数节点后，现有图形将中断。
 
-In your Gem, locate generic function node code by searching for the following three macros:
+在您的 Gem 中，通过搜索以下三个宏来查找通用函数节点代码：
 ```cpp
 SCRIPT_CANVAS_GENERIC_FUNCTION_NODE(NODE_NAME, CATEGORY, UUID, DESCRIPTION, ...)
 SCRIPT_CANVAS_GENERIC_FUNCTION_NODE_WITH_DEFAULTS(NODE_NAME, DEFAULT_FUNC, CATEGORY, UUID, DESCRIPTION, ...)
@@ -318,19 +318,19 @@ SCRIPT_CANVAS_GENERIC_FUNCTION_MULTI_RESULTS_NODE(NODE_NAME, CATEGORY, UUID, DES
 ```
 
 {{< note >}}
-The migration process assumes that the node signature and behavior stay the same. If replacement node signature and behavior are different, you should upgrade your graph manually.
+迁移过程假定节点签名和行为保持不变。如果替换节点签名和行为不同，则应手动升级图形。
 {{< /note >}}
 
-### Step 2: Create replacement custom free function nodes
-For detailed instructions on how to create custom free function nodes, refer to the preceding topics.
+### 第 2 步：创建替换自定义免费函数节点
+有关如何创建自定义免费函数节点的详细说明，请参阅前面的主题。
 
-As an example, here is part of the migration we have done for `Math/Matrix3x3` nodes:
-1. Example of replacing `SCRIPT_CANVAS_GENERIC_FUNCTION_NODE`:
+例如，以下是我们为 `Math/Matrix3x3` 节点完成的迁移的一部分：
+1. 替换 `SCRIPT_CANVAS_GENERIC_FUNCTION_NODE`的示例：
    ```cpp
    AZ_INLINE Data::Vector3Type GetRow(const Data::Matrix3x3Type& source, Data::NumberType row) { ... }
    SCRIPT_CANVAS_GENERIC_FUNCTION_NODE(GetRow, k_categoryName, "{C4E00343-3642-4B09-8CFA-2D2F1CA6D595}", "returns vector from matrix corresponding to the Row index", "Source", "Row");
    ```
-   Replacement function and ScriptCanvasFunction.xml content:
+   替换函数和ScriptCanvasFunction.xml 内容：
    ```cpp
    Data::Vector3Type GetRow(const Data::Matrix3x3Type& source, Data::NumberType row) { ... }
    ```
@@ -341,12 +341,12 @@ As an example, here is part of the migration we have done for `Math/Matrix3x3` n
    </Function>
    ```
 
-1. Example of replacing `SCRIPT_CANVAS_GENERIC_FUNCTION_NODE_WITH_DEFAULTS`:
+1. 替换`SCRIPT_CANVAS_GENERIC_FUNCTION_NODE_WITH_DEFAULTS`的示例：
    ```cpp
    AZ_INLINE Data::BooleanType IsClose(const Data::Matrix3x3Type& lhs, const Data::Matrix3x3Type& rhs, const Data::NumberType tolerance) { ... }
    SCRIPT_CANVAS_GENERIC_FUNCTION_NODE_WITH_DEFAULTS(IsClose, MathNodeUtilities::DefaultToleranceSIMD<2>, k_categoryName, "{020C2517-F02F-4D7E-9FE9-B6E91E0D6D3F}", "returns true if each element of both Matrix are equal within some tolerance", "A", "B", "Tolerance");
    ```
-   Replacement function and ScriptCanvasFunction.xml content:
+   替换函数和ScriptCanvasFunction.xml 内容：
    ```cpp
    Data::BooleanType IsClose(const Data::Matrix3x3Type& lhs, const Data::Matrix3x3Type& rhs, const Data::NumberType tolerance) { ... }
    ```
@@ -358,12 +358,12 @@ As an example, here is part of the migration we have done for `Math/Matrix3x3` n
    </Function>
    ```
 
-1. Example of replacing `SCRIPT_CANVAS_GENERIC_FUNCTION_MULTI_RESULTS_NODE`:
+1. 替换`SCRIPT_CANVAS_GENERIC_FUNCTION_MULTI_RESULTS_NODE`的示例：
    ```cpp
    AZ_INLINE std::tuple<Data::Vector3Type, Data::Vector3Type, Data::Vector3Type> GetRows(const Data::Matrix3x3Type& source) { ... }
    SCRIPT_CANVAS_GENERIC_FUNCTION_MULTI_RESULTS_NODE(GetRows, k_categoryName, "{DDF76F4C-0C79-4856-B577-7DBA092CE59B}", "returns all rows from matrix", "Source", "Row1", "Row2", "Row3");
    ```
-   Replacement function and ScriptCanvasFunction.xml content:
+   替换函数和ScriptCanvasFunction.xml 内容：
    ```cpp
    AZStd::tuple<Data::Vector3Type, Data::Vector3Type, Data::Vector3Type> GetRows(const Data::Matrix3x3Type& source) { ... }
    ```
@@ -373,12 +373,12 @@ As an example, here is part of the migration we have done for `Math/Matrix3x3` n
    </Function>
    ```
 
-### Step 3: Update generic function node macros
-Replace each generic function node macro with the `SCRIPT_CANVAS_GENERIC_FUNCTION_REPLACEMENT` macro, using a sanitized replacement node identifier that's derived from ScriptCanvasFunction.xml. We use `Namespace` and `Function Name` to guarantee the uniqueness.
+### 步骤 3：更新泛型函数节点宏
+使用从 ScriptCanvasFunction.xml 派生的经过净化的替换节点标识符，将每个通用函数节点宏替换为`SCRIPT_CANVAS_GENERIC_FUNCTION_REPLACEMENT` 宏。我们使用`Namespace` 和 `Function Name`来保证唯一性。
 
-As an example, in [Matrix3x3.ScriptCanvasFunction.xml](https://github.com/o3de/o3de/blob/development/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Libraries/Math/Matrix3x3.ScriptCanvasFunction.xml)
+例如，在 [Matrix3x3.ScriptCanvasFunction.xml](https://github.com/o3de/o3de/blob/development/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Libraries/Math/Matrix3x3.ScriptCanvasFunction.xml)中
 * Namespace: `ScriptCanvas::Matrix3x3Functions`
-* Function Name: `GetRow`, `GetRows`, `IsClose`
+* 函数名: `GetRow`, `GetRows`, `IsClose`
 ```xml
 <ScriptCanvas>
     <Library
@@ -393,7 +393,7 @@ As an example, in [Matrix3x3.ScriptCanvasFunction.xml](https://github.com/o3de/o
     <Library/>  
 <ScriptCanvas/>
 ```
-The sanitized replacement node identifiers are: `ScriptCanvas_Matrix3x3Functions_GetRow`, `ScriptCanvas_Matrix3x3Functions_GetRows` and `ScriptCanvas_Matrix3x3Functions_IsClose`
+已清理的替换节点标识符为： `ScriptCanvas_Matrix3x3Functions_GetRow`, `ScriptCanvas_Matrix3x3Functions_GetRows` 和 `ScriptCanvas_Matrix3x3Functions_IsClose`
 ```cpp
 ...
 SCRIPT_CANVAS_GENERIC_FUNCTION_REPLACEMENT(GetRow, k_categoryName, "{C4E00343-3642-4B09-8CFA-2D2F1CA6D595}", "ScriptCanvas_Matrix3x3Functions_GetRow");
@@ -402,7 +402,7 @@ SCRIPT_CANVAS_GENERIC_FUNCTION_REPLACEMENT(IsClose, k_categoryName, "{020C2517-F
 ...
 ```
 
-### Step 4: Upgrade existing graphs that are now out of date
-At this point, the system has all the required information to do the replacement. To upgrade your graphs, do one of the following:
-1. Batch Processing - For convenience you can use the version explorer tool found in Script Canvas Editor in the **Tools / Upgrade Graphs** menu. You can select multiple source graphs in the tool and upgrade them all to the latest version. The tool will save them in the new format, or report errors if the upgrade fails.
-1. Single Processing - You can open a specific graph in Script Canvas Editor. The graph will upgrade automatically. Save the graph to keep the new format.
+### 步骤 4：升级现已过期的现有图表
+此时，系统已包含执行替换所需的所有信息。要升级图表，请执行以下操作之一：
+1. 批处理 - 为方便起见，您可以使用 Script Canvas Editor 中 **Tools/Upgrade Graphs** 菜单中的版本资源管理器工具。您可以在工具中选择多个源图，并将它们全部升级到最新版本。该工具将以新格式保存它们，或者在升级失败时报告错误。
+1. 单次处理 - 您可以在 Script Canvas Editor 中打开特定图形。图表将自动升级。保存图表以保持新格式。

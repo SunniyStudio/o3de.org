@@ -1,55 +1,55 @@
 ---
-title: Using Script Events in Script Canvas
-description: Learn how to use script events with Script Canvas in Open 3D Engine (O3DE).
+title: 在 Script Canvas 中使用脚本事件
+description: 了解如何在 Open 3D Engine （O3DE） 中将脚本事件与 Script Canvas 结合使用。
 weight: 200
 ---
 
-Script Canvas scans for and detects script event assets, so after you define a script event, you can use it in Script Canvas.
+Script Canvas 会扫描并检测脚本事件资源，因此在定义脚本事件后，您可以在 Script Canvas 中使用它。
 
-## Script events in the node palette
+## 在节点面板中编写事件脚本
 
-Script event assets appear by default in the **Script Events** category in the **Script Canvas Editor** **Node Palette**.
+默认情况下，脚本事件资源显示在 **Script Canvas 编辑器** **Node Palette**的 **Script Events** 类别中。
 
 ![The Script Events category in the Script Canvas Node Palette.](/images/user-guide/scripting/script-events/using-in-script-canvas-1.png)
 
 {{< note >}}
-To change the name of the category, open the script event's asset definition in the Asset Editor and edit the `Category` property.
+要更改类别的名称，请在 Asset Editor 中打开脚本事件的资产定义，然后编辑`Category`属性。
 {{< /note >}}
 
-## Sending events
+## 发送事件
 
-You can send an event by adding a **Send** *method\_name* node to a Script Canvas graph.
+您可以通过向 Script Canvas 图形添加 **Send** *method\_name* 节点来发送事件。
 
-**To send an event**
+**发送事件**
 
-1. Drag and drop the method that you want to send onto the Script Canvas graph.
+1. 将要发送的方法拖放到 Script Canvas 图形中。
 
-1. In the context menu, choose **Send** *method\_name*.
+1. 在上下文菜单中，选择 **Send** *method\_name*。
 
     ![Choose Send method_name in the context menu.](/images/user-guide/scripting/script-events/using-in-script-canvas-2.png)
 
-    A method send node is added to the graph.
+    方法发送节点将添加到图形中。
 
     ![A send node added to a Script Canvas graph.](/images/user-guide/scripting/script-events/using-in-script-canvas-3.png)
 
-1. Connect this node to the appropriate logic and data inputs. When the Script Canvas graph runs, it sends the event to the entities or systems to which the node is connected.
+1. 将此节点连接到适当的 logic 和 data inputs。当 Script Canvas 图形运行时，它会将事件发送到节点所连接的实体或系统。
 
-## Handling events
+## 处理事件
 
-You can handle an event by adding a **Receive** *method\_name* node to a Script Canvas graph.
+您可以通过向 Script Canvas 图形添加 **Receive** *method\_name* 节点来处理事件。
 
-**To handle an event**
+**处理事件**
 
-1. Drag and drop a script event method onto the canvas.
+1. 将脚本事件方法拖放到画布上。
 
-1. In the context menu, choose **Receive** *method\_name*.
+1. 在上下文菜单中，选择**Receive** *method\_name*.
 
     ![Choose Receive method_name in the context menu.](/images/user-guide/scripting/script-events/using-in-script-canvas-4.png)
 
-    An event handler method node is added to the graph.
+    事件处理程序方法节点将添加到图形中。
 
     ![A receive node added to a Script Canvas graph.](/images/user-guide/scripting/script-events/using-in-script-canvas-5.png)
 
-1. Connect your event handling logic to the **Out** pin of the node.
+1. 将事件处理逻辑连接到节点的 **Out** 引脚。
 
-1. Connect the data pin as needed.
+1. 根据需要连接数据引脚。

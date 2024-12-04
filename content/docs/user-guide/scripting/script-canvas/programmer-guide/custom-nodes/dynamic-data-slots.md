@@ -1,13 +1,13 @@
 ---
-linktitle: Dynamic Data Slots
-title: Dynamic Data Slots in Script Canvas
-description: Use dynamic data slots to enable a single node to process a variety of data types in Script Canvas, which is the visual scripting system in Open 3D Engine (O3DE).
+linktitle: 动态数据槽
+title: Script Canvas 中的动态数据槽
+description: 使用动态数据槽使单个节点能够在 Script Canvas 中处理各种数据类型，Script Canvas 是 Open 3D Engine （O3DE） 中的可视化脚本系统。
 weight: 300
 ---
 
-There are cases where a single node can function on multiple different input types (for example, the **Lerp Between** node can function on numbers and vector objects). To reduce the number of unique nodes, you can use dynamic data slots. Dynamic data slots enable a single node to handle a variety of data types. At the same time, they allow restrictions on the data types that can be connected.
+在某些情况下，单个节点可以处理多种不同的输入类型（例如，**Lerp Between** 节点可以处理数字和矢量对象）。要减少唯一节点的数量，您可以使用动态数据槽。动态数据槽使单个节点能够处理各种数据类型。同时，它们允许对可以连接的数据类型进行限制。
 
-You can use the `ScriptCanvas_DynamicDataSlot` tag to add a `DynamicDataSlot` to any node, as shown in the following example.
+您可以使用`ScriptCanvas_DynamicDataSlot` 标签将 `DynamicDataSlot` 添加到任何节点，如以下示例所示。
 
 ```cpp
 ScriptCanvas_DynamicDataSlot(ScriptCanvas::DynamicDataType::Value,
@@ -18,31 +18,31 @@ ScriptCanvas_DynamicDataSlot(ScriptCanvas::DynamicDataType::Value,
                             )
 ```
 
-The `ScriptCanvas_DynamicDataSlot` tag includes the following code gen attributes:
-
-| Attribute | Description |
+`ScriptCanvas_DynamicDataSlot` 标记包含以下 Code Gen 属性：
+2
+| 属性 | 说明 |
 | --- | --- |
-| DynamicDataType |  Allows the user to specify a macro category of dynamic typing information. DynamicDataType has the following supported values: <br><ul><li>**Container &ndash;** Maps or arrays of any data type.</li><li>**Value &ndash;** Any non-map or non-array value.</li><li>**Any &ndash;** Any Container or Value type.</li></ul> |
-| DynamicGroup | Unifies a group of dynamically typed slots. When one slot has a type, all slots in the group share the same type. This attribute is useful for ensuring that passthrough values or operands all share a common type. |
-| RestrictedTypeContractTag | Restricts the data types that the dynamically typed slot accepts. Takes an argument that is a list of supported data types. |
+| DynamicDataType |  允许用户指定动态类型信息的宏类别。DynamicDataType 具有以下支持的值：<br><ul><li>**Container &ndash;**任何数据类型的映射或数组。</li><li>**Value &ndash;** 任何非 map 或非数组值。</li><li>**Any &ndash;** 任何 Container 或 Value 类型。</li></ul> |
+| DynamicGroup | 统一一组动态类型的槽。当一个槽具有类型时，组中的所有槽共享相同的类型。此属性可用于确保直通值或操作数都共享一个公共类型。 |
+| RestrictedTypeContractTag | 限制动态类型槽接受的数据类型。采用一个参数，该参数是支持的数据类型列表。 |
 
-## Important notes about groups
+## 有关组的重要说明
 
-For the purposes of contract restrictions, the grouped slots act as a single unit. If one slot doesn't allow a particular type, no slots in that group allow that type. This behavior is because connection types are propagated through every member of a group and every group connected to that group. This also applies to dynamic data slots that are connected to each other and any dynamic data slots that are connected but ungrouped.
+出于合同限制的目的，分组的插槽充当单个单元。如果一个槽不允许特定类型，则该组中的任何槽都不允许该类型。此行为是因为连接类型通过组的每个成员以及连接到该组的每个组传播。这也适用于相互连接的动态数据槽以及已连接但未分组的任何动态数据槽。
 
-### Chained dynamic types
+### 链式动态类型
 
-When dynamic types are connected, the receiving slot takes on the data type and restrictions of the connecting slot.
+连接动态类型后，接收槽将采用连接槽的数据类型和限制。
 
-**Example**
+**例**
 
 ![Create a dynamically chained node.](/images/user-guide/scripting/script-canvas/script-canvas-chained-dynamic-types.gif)
 
-Like dynamic groups, any pair of dynamically typed nodes that are linked share the same restrictions. This includes any restrictions from the node group. Additionally, the slots are usually in the most unrestricted state as possible. Unless a display type gives a set of dynamically typed slots a type, the slots remain untyped.
+与动态组一样，链接的任何一对动态类型节点都共享相同的限制。这包括来自节点组的任何限制。此外，插槽通常处于尽可能不受限制的状态。除非显示类型为一组动态类型的插槽提供类型，否则插槽将保持无类型状态。
 
-## Adding dynamic data slots programmatically
+## 以编程方式添加动态数据槽
 
-You can also add dynamic slots programmatically. Use `DynamicDataSlotConfiguration` to define the slot, and then the generic `AddSlot` method to add it, as shown in the following example.
+您还可以以编程方式添加动态插槽。使用 `DynamicDataSlotConfiguration` 定义槽，然后使用通用 `AddSlot`方法添加槽，如以下示例所示。
 
 ```cpp
 SlotId MyNode::AddDynamicSlot(AZStd::string_view name, AZStd::string_view toolTip, ConnectionType connectionType)
@@ -67,4 +67,4 @@ SlotId MyNode::AddDynamicSlot(AZStd::string_view name, AZStd::string_view toolTi
 }
 ```
 
-For information about `DynamicGroup` and `DynamicDataType`, refer to the `ScriptCanvas_DynamicDataSlot` attributes table earlier in this topic.
+有关 `DynamicGroup` 和 `DynamicDataType` 的信息，请参阅本主题前面的 `ScriptCanvas_DynamicDataSlot` 属性表。

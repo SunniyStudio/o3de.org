@@ -1,28 +1,28 @@
 ---
-title: Using Script Events in Lua
-description: Learn how to use script events with Lua in Open 3D Engine (O3DE).
+title: 在 Lua 中使用脚本事件
+description: 了解如何在 Open 3D Engine （O3DE） 中将脚本事件与 Lua 结合使用。
 weight: 300
 ---
 
-Lua scripts can use script events to communicate with each other. There are two example scripts that show this communication, both available in the `Gems\ScriptEvents\Assets\Scripts\Example` directory. They are called `ScriptEvents_Addressable.lua` and `ScriptEvents_Broadcast.lua`. If an EBus is addressed, events are sent to a specific address ID. Events that are broadcast globally are received at all addresses. For more information, see [The Open 3D Engine Event Bus (EBus) System](/docs/user-guide/programming/messaging/ebus/).
+Lua 脚本可以使用脚本事件相互通信。有两个示例脚本显示此通信，它们都位于`Gems\ScriptEvents\Assets\Scripts\Example`目录中。它们分别称为 `ScriptEvents_Addressable.lua` 和 `ScriptEvents_Broadcast.lua`。如果对事件总线进行寻址，则事件将发送到特定的地址 ID。全局广播的事件将在所有地址接收。有关更多信息，请参阅 [Open 3D Engine 事件总线 （EBus） 系统](/docs/user-guide/programming/messaging/ebus/)。
 
-The following table shows only some of the available return and input values. It is not complete.
+下表仅显示了一些可用的 return 和 input 值。它并不完整。
 
-| type | syntax | input | return |
+|类型 |语法 |输入 |返回 |
 | --- | --- | --- | --- |
 | string | typeid("") | yes | yes |
 | number | typeid(0) | yes | yes |
 | entity id | typeid(EntityId()) | yes | yes |
 
-TIP: If you are struggling with the input and return limitations, consider using a JSON/string serializer/deserializer.
+提示：如果你正在努力解决 input 和 return 限制，请考虑使用 JSON/字符串序列化器/反序列化器。
 
 ---
 
 ### ScriptEvents_Addressable.lua
 
-The `ScriptEvents_Addressable.lua` example script implements a handler for a Script Event that requires an address for a handler to be invoked. It broadcasts a method, but only handlers connected to the address that matches the one specified in the event can invoke it.
+`ScriptEvents_Addressable.lua`示例脚本为脚本事件实现一个处理程序，该处理程序需要一个地址才能调用处理程序。它广播一个方法，但只有连接到与事件中指定的地址匹配的地址的处理程序才能调用它。
 
-**Example 1: one single Lua file with verifications of the results**
+**示例 1：一个包含结果验证的 Lua 文件**
 
 ```lua
 -- ScriptEvents_Addressable.lua
@@ -95,9 +95,9 @@ ScriptExpectTrue(returnValue, "Method0's return value must be true")
 Script_Event.Event.MethodWithId1("ScriptEventAddress")
 ```
 
-The next example highlights the separation of logic between the definition of the Script Event method/function in one Lua Script; and how to call it in another Lua Script. The Addressable Script Events are a good choice when you need to communicate between two, and only two different Lua Scripts. In other words, one-to-one (1:1) relationship.
+下一个示例重点介绍了一个 Lua 脚本中 Script Event 方法/函数定义之间的逻辑分离;以及如何在另一个 Lua 脚本中调用它。Addressable Script Event 是一个不错的选择，当你需要在两个不同的 Lua 脚本之间进行通信时。换句话说，一对一 （1：1） 关系。
 
-**Example 2: Define script event in one Lua script; call it in another Lua script(1:1)**
+**示例 2：在一个 Lua 脚本中定义脚本事件;在另一个 Lua 脚本中调用它 （1：1）**
 
 ```lua
 -- -- This is the first Lua file. This is where you define the Addressable Script Event and respective method(s)
@@ -158,9 +158,9 @@ end
 
 ### ScriptEvents_Broadcast.lua
 
-The `ScriptEvents_Broadcast.lua` example script implements a handler for a broadcast script event. Because broadcast script events do not specify an address type, any handler can connect to them.
+`ScriptEvents_Broadcast.lua` 示例脚本实现广播脚本事件的处理程序。由于广播脚本事件不指定地址类型，因此任何处理程序都可以连接到它们。
 
-**Example 3: one single file with verifications of the results**
+**示例 3：一个包含结果验证的单个文件**
 
 ```lua
 -- ScriptEvents_Broadcast.lua
@@ -229,9 +229,9 @@ ScriptExpectTrue(returnValue, "BroadcastMethod0's return value must be true")
 Script_Broadcast.Broadcast.BroadcastMethod1()
 ```
 
-The next example highlights the separation of logic between the definition of the Script Event method/function in one Lua Script; and how to call it in multiple/different Lua Scripts. The Broadcast Script Events are a good choice when you need to communicate between more than two Lua Scripts. In other words, one-to-many (1:M) relationship.
+下一个示例重点介绍了一个 Lua 脚本中 Script Event 方法/函数定义之间的逻辑分离;以及如何在多个/不同的 Lua 脚本中调用它。当您需要在两个以上的 Lua 脚本之间进行通信时，广播脚本事件是一个不错的选择。换句话说，一对多 （1：M） 关系。
 
-**Example 4: Define script event in one Lua script; call it in other Lua scripts (1:M)**
+**示例 4：在一个 Lua 脚本中定义脚本事件;在其他 Lua 脚本中调用它 （1：M）**
 
 ```lua
 -- -- This is the first Lua file. This is where you define the Broadcast Script Event and respective method(s)

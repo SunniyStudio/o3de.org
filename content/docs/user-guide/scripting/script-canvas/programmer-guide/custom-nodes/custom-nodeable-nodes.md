@@ -1,29 +1,29 @@
 ---
-linktitle: Custom Nodeable Nodes
-title: Creating Custom Nodeable Nodes in Script Canvas
-description: Learn how to create custom Script Canvas Nodeable Nodes in Open 3D Engine (O3DE).
+linktitle: 自定义可节点
+title: 在 Script Canvas 中创建自定义nodeable节点
+description: 了解如何在 Open 3D Engine （O3DE） 中创建自定义 Script Canvas nodeable节点。
 weight: 100
 ---
 
-This topic guides you through how to create custom Script Canvas Nodeable Nodes step by step.
+本主题将指导您逐步完成如何创建自定义 Script Canvas nodeable节点。
 
-You'll see the term _nodeable_ used throughout the O3DE source code.
-A nodeable can refer to both the node that appears in the Node Palette as a result of the AzAutoGen processing,
-and the mechanism by which a compiled Script Canvas graph can invoke C++ functions.
+您将看到整个 O3DE 源代码中使用的术语 _nodeable_。
+nodeable 可以引用由于 AzAutoGen 处理而出现在 Node Palette 中的节点，
+以及编译后的 Script Canvas 图形可以调用 C++ 函数的机制。
 
-## Step 1: Adding support for custom nodeable nodes to a Gem
+## 第 1 步：向 Gem 添加对自定义可节点节点的支持
 {{< note >}}
-This step is only required once for first time custom nodeable node creation.
+首次创建自定义可nodeable节点时，只需执行一次此步骤。
 {{< /note >}}
 
-In your Gem's `Code/CMakeLists.txt`, add a section for `AUTOGEN_RULES` and declare `Gem::ScriptCanvas` as a build dependency.
+在 Gem 的`Code/CMakeLists.txt`中，为`AUTOGEN_RULES`添加一个部分，并将`Gem::ScriptCanvas`声明为构建依赖项。
 
-The precise place for this section will vary depending on how your Gem is configured. 
-However, we recommend that your Gem define a `STATIC` library to make the code available to both runtime and editor projects.
+此部分的确切位置将因 Gem 的配置方式而异。
+但是，我们建议您的 Gem 定义一个`STATIC`库，以使代码可用于运行时和编辑器项目。
 
-As an example, here is partial definition of the StartingPointInput Gem's `Code/CMakeLists.txt` that supports Script Canvas custom nodes with following required changes:
-1. `Gem::ScriptCanvas` must be declared in the `BUILD_DEPENDENCIES` of the `STATIC` library
-1. Add an `AUTOGEN_RULES` section for custom free function under the `STATIC` library
+例如，以下是 StartingPointInput Gem 的“`Code/CMakeLists.txt`的部分定义，该定义支持 Script Canvas 自定义节点，并进行了以下所需更改：
+1. `Gem::ScriptCanvas`必须在`STATIC`库的`BUILD_DEPENDENCIES`中
+1. 在`STATIC`库下为自定义免费函数添加 `AUTOGEN_RULES` 部分
    ```cmake
    AUTOGEN_RULES
        *.ScriptCanvasNodeable.xml,ScriptCanvasNodeable_Header.jinja,$path/$fileprefix.generated.h
@@ -31,12 +31,12 @@ As an example, here is partial definition of the StartingPointInput Gem's `Code/
        *.ScriptCanvasNodeable.xml,ScriptCanvasNodeableRegistry_Header.jinja,AutoGenNodeableRegistry.generated.h
        *.ScriptCanvasNodeable.xml,ScriptCanvasNodeableRegistry_Source.jinja,AutoGenNodeableRegistry.generated.cpp
    ```
-1. The `STATIC` library must be declared directly in the `BUILD_DEPENDENCIES` of the Gem runtime module (and it should be included as part of editor module build dependencies hierarchy)
-1. `StartingPointInput.Static` includes two .cmake file lists. 
-   * We include the common files and the platform specific files which are set in `startingpointinput_files.cmake`.
-   * We include AzAutoGen ScriptCanvas free function required templates which are set in `startingpointinput_autogen_files.cmake` (We recommend to keep this file separately for clear scope)
+1. `STATIC`库必须直接在 Gem 运行时模块的`BUILD_DEPENDENCIES`中声明（并且它应该作为编辑器模块构建依赖项层次结构的一部分包含在内）
+1. `StartingPointInput.Static`包含两个 .cmake 文件列表。
+   * 我们包括了在`startingpointinput_files.cmake`中设置的通用文件和平台特定文件。
+   * 我们包括 AzAutoGen ScriptCanvas 免费功能所需的模板，这些模板在 `startingpointinput_autogen_files.cmake`中设置（我们建议将此文件单独保存以明确范围）
 
-   Example contents of `startingpointinput_autogen_files.cmake`:
+   `startingpointinput_autogen_files.cmake`的示例内容：
    ```cmake
    set(FILES
        ...
@@ -47,9 +47,9 @@ As an example, here is partial definition of the StartingPointInput Gem's `Code/
    )
    ```
 
-   The list of autogen templates might be different if you create custom templates for your own purposes. 
-   For example, if you were to extend Script Canvas to do something beyond what it provides "out of the box", you could have your own set of templates to generate code in the syntax that you define.
-   For more information, refer to the documentation on [AzAutoGen](/docs/user-guide/programming/autogen/).
+   如果您出于自己的目的创建自定义模板，则 autogen 模板列表可能会有所不同。
+   例如，如果您要扩展 Script Canvas 以执行超出其“开箱即用”功能的功能，则可以拥有自己的模板集，以您定义的语法生成代码。
+   有关更多信息，请参阅[AzAutoGen](/docs/user-guide/programming/autogen/)上的文档。
 
 ```cmake
 ...
@@ -90,16 +90,16 @@ ly_add_target(
 ```
 
 
-## Step 2: Create an XML file for code generation {#create-an-xml-file}
+## 第 2 步：创建用于代码生成的 XML 文件 {#create-an-xml-file}
 
 {{< note >}}
-The exact schema to follow when creating your XML files can be found here: [ScriptCanvasNodeable.xsd](https://github.com/o3de/o3de/blob/development/Templates/ScriptCanvasNode/Template/Source/AutoGen/ScriptCanvasNodeable.xsd)
+创建 XML 文件时要遵循的确切架构可在此处找到：[ScriptCanvasNodeable.xsd](https://github.com/o3de/o3de/blob/development/Templates/ScriptCanvasNode/Template/Source/AutoGen/ScriptCanvasNodeable.xsd)
 {{< /note >}}
-Prepare for code generation by creating an XML file that contains information about the node's class, input pins, output pins, and associated tooltip text. AzAutoGen uses this file to generate C++ code used by your node class when implementing your node's functionality.
+通过创建一个 XML 文件来准备代码生成，该文件包含有关节点类、输入引脚、输出引脚和关联的工具提示文本的信息。AzAutoGen 使用此文件生成节点类在实现节点功能时使用的 C++ 代码。
 
-We'll use the following XML, copied from the O3DE source for the **Input Handler** node<!-- , as an example to explain the important sections of this file -->.
+我们将使用以下 XML，该 XML 是从 **Input Handler** 节点的 O3DE 源复制的<!-- , 作为解释此文件重要部分的示例-->.
 
-File: [InputHandlerNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/development/Gems/StartingPointInput/Code/Source/InputHandlerNodeable.ScriptCanvasNodeable.xml)
+文件: [InputHandlerNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/development/Gems/StartingPointInput/Code/Source/InputHandlerNodeable.ScriptCanvasNodeable.xml)
 
 ```xml
 <ScriptCanvas Include="Source/InputHandlerNodeable.h" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -126,19 +126,19 @@ File: [InputHandlerNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3
 </ScriptCanvas>
 ```
 
-## Step 3: Create the node class files {#create-the-node-class-files}
+## 步骤 3：创建节点类文件 {#create-the-node-class-files}
 
-The next step is to implement the C++ functions that will be invoked by the Script Canvas node. These source files reference the auto-generated source for your node, and use the `ScriptCanvas::Nodeable` class as a base class.
+下一步是实现将由 Script Canvas 节点调用的 C++ 函数。这些源文件引用节点自动生成的源，并使用 `ScriptCanvas::Nodeable` 类作为基类。
 
-There are three critical parts that every Script Canvas nodeable header file needs:
+每个 Script Canvas 可节点头文件都需要三个关键部分：
 
-1. It must derive from `ScriptCanvas::Nodeable`.
-1. It must contain the node definition macro `SCRIPTCANVAS_NODE`.
-1. It must include the generated header.
+1. 它必须派生自`ScriptCanvas::Nodeable`。
+1. 它必须包含节点定义宏 `SCRIPTCANVAS_NODE`。
+1. 它必须包含生成的标头。
 
-The following code fragment from the `InputHandlerNodeable` header for the **Input Handler** node demonstrates these requirements:
+**Input Handler** 节点的 `InputHandlerNodeable` 头文件中的以下代码片段演示了这些要求：
 
-File: [InputHandlerNodeable.h](https://github.com/o3de/o3de/blob/development/Gems/StartingPointInput/Code/Source/InputHandlerNodeable.h)
+文件: [InputHandlerNodeable.h](https://github.com/o3de/o3de/blob/development/Gems/StartingPointInput/Code/Source/InputHandlerNodeable.h)
 
 ```cpp
 #include <ScriptCanvas/Core/Nodeable.h>
@@ -162,13 +162,13 @@ namespace StartingPointInput
 }
 ```
 
-## Step 4: Add source files to CMake {#add-source-files-to-cmake}
+## 第 4 步：将源文件添加到 CMake {#add-source-files-to-cmake}
 
-Add the XML and class source files to one of Gem's .cmake files.
+将 XML 和类源文件添加到 Gem 的 .cmake 文件之一。
 
-For example, in `InputHandlerNodeable` we must add the following lines:
+例如，在 `InputHandlerNodeable` 中，我们必须添加以下行：
 
-File: [startingpointinput_files.cmake](https://github.com/o3de/o3de/blob/development/Gems/StartingPointInput/Code/startingpointinput_files.cmake)
+文件: [startingpointinput_files.cmake](https://github.com/o3de/o3de/blob/development/Gems/StartingPointInput/Code/startingpointinput_files.cmake)
 ```cmake
 set(FILES
     ...
@@ -179,22 +179,22 @@ set(FILES
 )
 ```
 
-## Step 5: Register the new node {#register-the-new-node}
+## 第 5 步：注册新节点 {#register-the-new-node}
 {{< note >}}
-This step is only required once for first time nodeable node creation.
+首次创建可节点节点时，只需执行一次此步骤。
 {{< /note >}}
 
-The final step is to register the new node. To do this, you need to modify your Gem's [Gem module](/docs/user-guide/programming/gems/overview/) or [system component](/docs/user-guide/programming/components/system-components/). Use the **StartingPointInput** Gem from the O3DE source as a reference:
+最后一步是注册新节点。为此，您需要修改 Gem 的 [Gem 模块](/docs/user-guide/programming/gems/overview/) 或 [系统组件](/docs/user-guide/programming/components/system-components/)。使用 O3DE 源中的 **StartingPointInput** Gem 作为参考：
 
-In your Gem's module or system component, include the auto-generated registry header file, and invoke `REGISTER_SCRIPTCANVAS_AUTOGEN_NODEABLE` with the sanitized Gem target name.
+在 Gem 的模块或系统组件中，包含自动生成的注册表头文件，并使用经过净化的 Gem 目标名称调用`REGISTER_SCRIPTCANVAS_AUTOGEN_NODEABLE`。
 {{< note >}}
-Use the same auto-generated registry header file that you declared in Step 1 under `AUTOGEN_RULES` in your Gem's `Code/CMakeLists.txt`. In the **StartingPointInput** example, it is `AutoGenNodeableRegistry.generated.h`.
+使用您在步骤 1 中 Gem 的`Code/CMakeLists.txt`中的`AUTOGEN_RULES` 下声明的相同自动生成的注册表头文件。在 **StartingPointInput** 示例中，它是`AutoGenNodeableRegistry.generated.h`。
 {{< /note >}}
 {{< note >}}
-The sanitized Gem target name should contain letters and numbers only. In the **StartingPointInput** example, it is `StartingPointInputStatic` which refers to the `StartingPointInput.Static` target.
+经过净化的 Gem 目标名称应仅包含字母和数字。在 **StartingPointInput** 示例中，它是 `StartingPointInputStatic`，它指的是`StartingPointInput.Static`目标。
 {{< /note >}}
 
-For example, in [`StartingPointInputGem.cpp`](https://github.com/o3de/o3de/blob/development/Gems/StartingPointInput/Code/Source/StartingPointInputGem.cpp):
+例如，在 [`StartingPointInputGem.cpp`](https://github.com/o3de/o3de/blob/development/Gems/StartingPointInput/Code/Source/StartingPointInputGem.cpp) 中：
 
 ```cpp
 #include <AutoGenNodeableRegistry.generated.h>
@@ -204,18 +204,18 @@ REGISTER_SCRIPTCANVAS_AUTOGEN_NODEABLE(StartingPointInputStatic);
 ...
 ```
 
-## Advanced ScriptCanvasNodeable.xml usage
-This topic explores additional features that we support in the nodeable XML file.
+## 高级使用 ScriptCanvasNodeable.xml
+本主题探讨了我们在可结块 XML 文件中支持的其他功能。
 
-### Presets
-Presets are a way to pre configure default attributes across all XML tags for common types of nodeables. The currently implemented presets are shown below.
+### 预设
+预设是一种跨常见类型的可节点对象的所有 XML 标记预配置默认属性的方法。当前实施的预设如下所示。
 
-#### Compact
-You can use the Compact preset for smaller compact style nodes that do not use execution slots.
+#### 紧凑
+您可以将 Compact 预设用于不使用执行槽的较小 Compact 样式节点。
 
-As an example, here is the XML file for the **+=** node:
+例如，以下是 **+=** 节点的 XML 文件：
 
-File: [CompactAddNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/development/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Libraries/Compact/BasicOperators/CompactAddNodeable.ScriptCanvasNodeable.xml)
+文件： [CompactAddNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/development/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Libraries/Compact/BasicOperators/CompactAddNodeable.ScriptCanvasNodeable.xml)
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 
@@ -239,12 +239,12 @@ File: [CompactAddNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de
 </ScriptCanvas>
 ```
 
-### Base and derived nodeable node
-If you have shared logic across multiple nodeable nodes, you can create a base node and multiple derived nodes.
+### 基础节点和派生的可节点节点
+如果您在多个可节点之间共享逻辑，则可以创建一个基本节点和多个派生节点。
 
-The following example uses the O3DE source for the **Time Delay** node:
+以下示例使用 **Time Delay** 节点的 O3DE 源：
 
-File: [TimeDelayNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/development/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Libraries/Time/TimeDelayNodeable.ScriptCanvasNodeable.xml)
+文件： [TimeDelayNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/development/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Libraries/Time/TimeDelayNodeable.ScriptCanvasNodeable.xml)
 ```xml
 <ScriptCanvas Include="Include/ScriptCanvas/Libraries/Time/TimeDelayNodeable.h" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <Class Name="TimeDelayNodeable"
@@ -266,8 +266,8 @@ File: [TimeDelayNodeable.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/
 </ScriptCanvas>
 ```
 
-The `TimeDelayNodeable` class implements a base class, called `BaseTimer`. In the following base class XML, you can see that the base class defines the shared properties, "Units" and "TickOrder":
-File: [BaseTimer.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/development/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Internal/Nodeables/BaseTimer.ScriptCanvasNodeable.xml)
+`TimeDelayNodeable`类实现了一个名为 `BaseTimer` 的基类。在下面的基类 XML 中，您可以看到基类定义了共享属性 “Units” 和 “TickOrder”：
+文件：[BaseTimer.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/development/Gems/ScriptCanvas/Code/Include/ScriptCanvas/Internal/Nodeables/BaseTimer.ScriptCanvasNodeable.xml)
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 
@@ -298,5 +298,5 @@ File: [BaseTimer.ScriptCanvasNodeable.xml](https://github.com/o3de/o3de/blob/dev
 ```
 
 {{< note >}}
-For further node name, tooltip, and category customization, please refer to [Text Replacement](/docs/user-guide/scripting/script-canvas/editor-reference/text-replacement/).
+更多节点名称、工具提示和分类自定义请参考 [文本替换](/docs/user-guide/scripting/script-canvas/editor-reference/text-replacement/)。
 {{< /note >}}

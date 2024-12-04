@@ -1,15 +1,15 @@
 ---
 title: Script Events
-description: Use script events to enable entities to communicate with each other in Open 3D Engine (O3DE).
+description: 使用脚本事件使实体能够在 Open 3D Engine （O3DE） 中相互通信。
 weight: 200
 ---
 
-Scripting in O3DE is designed around event-driven paradigms. Rather than directly accessing information from a given entity or one of its components, you use events to send and receive information and take action in a decoupled environment.
+O3DE 中的脚本是围绕事件驱动的范例设计的。您可以使用事件在解耦的环境中发送和接收信息并执行操作，而不是直接从给定实体或其组件之一访问信息。
 
-Like entities and components, scripts can use events to communicate with each other. These events are called script events.
+与实体和组件一样，脚本可以使用事件相互通信。这些事件称为脚本事件。
 
-To author script events, use the Asset Editor or Lua. Script Canvas and Lua can send or receive the events that you create. In Script Canvas, you can add nodes that send or receive script events. Events sent from Script Canvas can be handled in Lua. Likewise, events sent from Lua can be handled in Script Canvas.
+要编写脚本事件，请使用 Asset Editor 或 Lua。Script Canvas 和 Lua 可以发送或接收您创建的事件。在 Script Canvas 中，您可以添加发送或接收脚本事件的节点。从 Script Canvas 发送的事件可以在 Lua 中处理。同样，从 Lua 发送的事件也可以在 Script Canvas 中处理。
 
-## Prerequisites
+## 先决条件
 
-To use script events, you must enable the [Script Events Gem](/docs/user-guide/gems/reference/script/script-events) in your project.
+要使用脚本事件，您必须在项目中启用[Script Events Gem](/docs/user-guide/gems/reference/script/script-events) 。

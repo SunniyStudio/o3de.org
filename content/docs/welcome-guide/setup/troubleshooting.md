@@ -1,7 +1,7 @@
 ---
-linktitle: Troubleshooting the Setup
-title: Troubleshooting the Setup of Open 3D Engine
-description: Get troubleshooting help for setting up Open 3D Engine (O3DE).
+linktitle: 设置故障排除
+title: 对 Open 3D Engine 的设置进行故障排除
+description: 获取有关设置 Open 3D Engine （O3DE） 的故障排除帮助。
 weight: 400
 toc: true
 ---

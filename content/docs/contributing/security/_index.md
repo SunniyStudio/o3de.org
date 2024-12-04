@@ -1,36 +1,36 @@
 ---
-linktitle: To Security
-title: "Contributing to O3DE Security"
-description: Learn about how you can keep Open 3D Engine (O3DE) secure.
+linktitle: 安全
+title: "为 O3DE 安全做出贡献"
+description: 了解如何确保 Open 3D Engine （O3DE） 的安全。
 toc: true
 weight: 300
 ---
 
-## Open 3D Engine: Security
-This page describes the Security and Disclosure policies for **Open 3D Engine (O3DE)**.
+## Open 3D Engine: 安全
+本页介绍了 Open 3D Engine （O3DE） 的安全和披露政策。
 
-O3DE values all contributions that help keep O3DE secure. [SIG-Security](https://github.com/o3de/sig-security) volunteers will thoroughly research and investigate all reported vulnerabilities. 
+O3DE 重视所有有助于确保 O3DE 安全的贡献。[SIG-安全](https://github.com/o3de/sig-security) 志愿者将彻底研究和调查所有报告的漏洞。
 
-# How to report a vulnerability
-We encourage all vulnerabilities to be reported through the [security@o3de.org](mailto:security@o3de.org) mailing list. Vulnerability reports should follow the same information reporting format as [standard O3DE issues](https://github.com/o3de/o3de/blob/development/.github/ISSUE_TEMPLATE/bug_template.md) along with any security specific details.
+# 漏洞报告方法
+我们鼓励通过 [security@o3de.org](mailto:security@o3de.org)  邮件列表报告所有漏洞。漏洞报告应遵循与 [标准 O3DE 问题](https://github.com/o3de/o3de/blob/development/.github/ISSUE_TEMPLATE/bug_template.md) 相同的信息报告格式，以及任何特定于安全的详细信息。
 
-## When should I report a vulnerability?
-* You have discovered a potential security issue relating to O3DE. 
-* You have discovered or are aware of a security issue relating to an O3DE dependency that may impact O3DE.
-     * If the issues is in a product that O3DE depends upon, we strongly encourage you to also engage with that project's vulnerability reporting mechanisms. 
+## 我应该何时报告漏洞？
+* 您发现了与 O3DE 相关的潜在安全问题。
+* 您已发现或意识到与 O3DE 依赖项相关的安全问题，该问题可能会影响 O3DE。
+     * 如果问题存在于 O3DE 所依赖的产品中，我们强烈建议您也参与该项目的漏洞报告机制。
 
-# When should I NOT report a vulnerability?
-* You need help setting up or have issues relating to the use of security dependencies such as OpenSSL or TLS/DTLS.
-* You need help applying a security related fix to your O3DE applications. 
-* The issue is not related to security. Please report issue using the normal [O3DE issue reporting process](https://github.com/o3de/o3de/issues).
+# 什么时候不应该报告漏洞？
+* 您需要帮助设置安全依赖项（如 OpenSSL 或 TLS/DTLS）或遇到与使用相关的问题。
+* 您需要帮助将安全相关修复程序应用于 O3DE 应用程序。
+* 此问题与安全性无关。请使用正常的 [O3DE 问题报告流程报告问题](https://github.com/o3de/o3de/issues).
 
-## Can I report a vulnerability via GitHub Issues?
-If there is publicly disclosed security information, such as a report in the [National Vulnerability Database](https://nvd.nist.gov/) then GitHub issues can be used to communicate security vulnerabilities impacting O3DE.
+## 我可以通过 GitHub Issues 报告漏洞吗？
+如果有公开披露的安全信息，例如 [国家漏洞数据库](https://nvd.nist.gov/)中的报告，则可以使用 GitHub issues 来传达影响 O3DE 的安全漏洞。
 
-# Security vulnerability response
-When a security vulnerability is reported via the [security mailing list](mailto:security@o3de.org), a member of the SIG-Security response team should respond within 3 working days. Once the issue has been acknowledged, the SIG-Security response team will follow its [documented response process](https://github.com/o3de/sig-security/issues/14) to ensure the reporter is updated and informed of current actions and next steps.
+# 安全漏洞响应
+当通过 [安全邮件清单](mailto:security@o3de.org)报告安全漏洞时，SIG-Security 响应团队的成员应在 3 个工作日内做出回应。一旦确认问题，SIG-Security 响应团队将遵循其 [记录的响应流程](https://github.com/o3de/sig-security/issues/14)，以确保报告者了解最新情况并告知当前操作和后续步骤。
 
-Any vulnerability information will be treated as confidential and will be not shared outside the security response process. Vulnerability information will not be publicly shared or disclosed without the consent of the reporter.
+任何漏洞信息都将被视为机密信息，不会在安全响应流程之外共享。未经报告者同意，不会公开共享或披露漏洞信息。
 
-# Public disclosure policy
-The public disclosure date of any security vulnerability will be negotiated between SIG-Security and the vulnerability reporter. The SIG aims to publicly disclose the issue as soon as possible, ideally once a mitigation has been identified. Disclosure time can range from almost immediately, for publicly known issues, to a few weeks depending on the complexity of issue and coordination required.
+# 公开披露政策
+任何安全漏洞的公开披露日期将由 SIG-Security 和漏洞报告者协商。SIG 旨在尽快公开披露问题，最好是在确定缓解措施后。披露时间可以从几乎立即披露（对于公开已知的问题）到几周不等，具体取决于问题的复杂程度和所需的协调。

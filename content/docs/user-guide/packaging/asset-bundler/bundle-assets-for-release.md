@@ -1,7 +1,7 @@
 ---
-linkTitle: Bundling Project Assets for Release
-title: Bundling Project Assets for a Project Game Release Layout
-description: Learn how to manage your assets and package them into asset bundles in Open 3D Engine (O3DE).
+linkTitle: 捆绑项目资源以进行发布
+title: 捆绑项目游戏发布布局的项目资源
+description: 了解如何在 Open 3D Engine （O3DE） 中管理您的资产并将其打包到资产包中。
 weight: 150
 ---
 

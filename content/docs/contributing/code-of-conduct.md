@@ -1,48 +1,43 @@
 ---
-linkTitle: Code of Conduct
-title: Open 3D Engine Code of Conduct
-description: Before you join the O3DE project, make sure you understand the conduct the community expects.
+linkTitle: 行为准则
+title: Open 3D Engine 行为准则
+description: 在加入 O3DE 项目之前，请确保您了解社区期望的行为。
 weight: 600
 ---
 
-## Community Code of Conduct v1.0
+## 社区行为准则 v1.0
 
-### Contributor Code of Conduct
+### 贡献者行为准则
 
-As contributors and maintainers of this project, and in the interest of fostering
-an open and welcoming community, we pledge to respect all people who contribute
-through reporting issues, posting feature requests, updating documentation,
-submitting pull requests or patches, and other activities.
+作为本项目的贡献者和维护者，并为了促进
+作为一个开放和热情的社区，我们承诺尊重所有做出贡献的人
+通过报告问题、发布功能请求、更新文档、
+提交拉取请求或补丁，以及其他活动。
 
-We are committed to making participation in this project a harassment-free experience for
-everyone, regardless of level of experience, gender, gender identity and expression,
-sexual orientation, disability, personal appearance, body size, race, ethnicity, age,
-religion, or nationality.
+我们致力于让参与这个项目成为一种无骚扰的体验。
+每个人，无论经验水平、性别、性别认同和表达如何，
+性取向， 残疾， 外貌， 体型， 种族， 民族， 年龄，
+宗教或国籍。
 
-Examples of unacceptable behavior by participants include:
+参与者不可接受的行为示例包括：
 
-- The use of sexualized language or imagery
-- Personal attacks
-- Trolling or insulting/derogatory comments
-- Public or private harassment
-- Publishing others' private information, such as physical or electronic addresses,
- without explicit permission
-- Other unethical or unprofessional conduct.
+- 使用色情语言或图像
+- 人身攻击
+- 挑衅或侮辱/贬损评论
+- 公开或私下骚扰
+- 发布他人的私人信息，例如实际地址或电子地址，
+ 未经明确许可
+- 其他不道德或不专业的行为。
 
-Project maintainers have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are not
-aligned to this Code of Conduct. By adopting this Code of Conduct, project maintainers
-commit themselves to fairly and consistently applying these principles to every aspect
-of managing this project. Project maintainers who do not follow or enforce the Code of
-Conduct may be permanently removed from the project team.
+项目维护者有权和责任删除、编辑或拒绝不符合本行为准则的评论、提交、代码、wiki 编辑、问题和其他贡献。通过采用本行为准则，项目维护者承诺公平、一致地将这些原则应用于管理本项目的各个方面。不遵守或不执行行为准则的项目维护者可能会被永久从项目团队中除名。
 
-This code of conduct applies both within project spaces and in public spaces
-when an individual is representing the project or its community.
+本行为准则适用于项目空间和公共空间
+当个人代表项目或其社区时。
 
-Instances of abusive, harassing, or otherwise unacceptable behavior in O3DE may be reported by contacting the [O3DE Code of Conduct Committee](https://github.com/o3de/foundation/tree/main/committee/committee-code-of-conduct) via <conduct@o3de.org>. For other projects, please contact a project maintainer.
+O3DE 中的辱骂、骚扰或其他不可接受的行为可以通过 <conduct@o3de.org> 联系 [O3DE 行为准则委员会](https://github.com/o3de/foundation/tree/main/committee/committee-code-of-conduct) 进行报告。对于其他项目，请联系项目维护者。
 
-This Code of Conduct is adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.2.0, available [here](http://contributor-covenant.org/version/1/2/0/).
+本行为准则改编自 [贡献者契约](http://contributor-covenant.org)，版本 1.2.0， [点击此处](http://contributor-covenant.org/version/1/2/0/)。
 
-### Events Code of Conduct
+### 活动行为准则
 
-O3DF events are governed by the Linux Foundation [Code of Conduct](https://events.linuxfoundation.org/code-of-conduct/) available on the event page. This is designed to be compatible with the above policy and also includes more details on responding to incidents
+O3DF 活动受 Linux 基金会 [行为准则](https://events.linuxfoundation.org/code-of-conduct/) 的约束，可在活动页面上查看。此策略旨在与上述策略兼容，并且还包含有关响应事件的更多详细信息

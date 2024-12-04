@@ -1,48 +1,48 @@
 ---
-linktitle: GitHub Workflow
-title: O3DE Code Contribution GitHub Workflow
-description: Overview and instructions for contributing code to Open 3D Engine (O3DE) through GitHub.
+linktitle: GitHub 工作流
+title: O3DE 代码贡献 GitHub 工作流
+description: 通过 GitHub 向 Open 3D Engine （O3DE） 贡献代码的概述和说明。
 toc: true
 weight: 200
 ---
 
-Looking to submit new or changed code to **Open 3D Engine (O3DE)**? Exciting! Follow the guidance below to submit your first PR.
+想要向 Open 3D Engine （O3DE） 提交新的或更改的代码？令人兴奋的！按照以下指南提交您的第一个 PR。
 
-### GitHub Code Contribution Workflow
+### GitHub 代码贡献工作流程
 
-The O3DE base repository is on GitHub at [https://{{< links/o3de-source >}}](https://{{< links/o3de-source >}}).
+O3DE 基础存储库位于 GitHub 上，网址为  [https://{{< links/o3de-source >}}](https://{{< links/o3de-source >}})。
 
 ![GitHub code contribution workflow diagram](/images/contributing/to-code/code-git-workflow.png)
 
-At a high level, the workflow is:
+概括地说，工作流是：
 
-1. Create a branch from the local clone of your fork, do your work, push it to your fork (origin), and submit a pull request from your fork to the O3DE GitHub repo (upstream).
+1. 从分叉的本地克隆创建分支，执行您的工作，将其推送到您的分叉（源），然后将分叉的拉取请求提交到 O3DE GitHub 存储库（上游）。
 
-2. Your pull request is checked for merge conflicts. If one is found, the pull request is rejected.
+2. 检查您的拉取请求是否存在合并冲突。如果找到一个，则拉取请求将被拒绝。
 
-3. If there are no merge conflicts, automated review (AR) is triggered and the pull request is flagged for code review.
+3. 如果没有合并冲突，则会触发自动审查 （AR），并将拉取请求标记为代码审查。
 
-4. If the pull requests passes code review, the SIG maintainer (or a delegate) will merge it into the `development` branch of the O3DE GitHub repo.
+4. 如果拉取请求通过了代码审查，SIG 维护者（或代表）会将其合并到 O3DE GitHub 仓库的 `development` 分支中。
 
-### Initial Git contribution workflow steps
+### 初始 Git 贡献工作流步骤
 
-1. Create a fork of `https://{{< links/o3de-source >}}.git` into your own GitHub account. To do this, go to the O3DE public GitHub repo at [https://{{< links/o3de-source >}}](https://{{< links/o3de-source >}}) and create a fork by selecting the "Fork" button in the upper-right. This will clone the O3DE public repo into your repo, and may take a few minutes. The URL for your fork will be something like `https://github.com/<YOUR GITHUB NAME HERE>/o3de.git`.
+1. 在你自己的 GitHub 账户中创建`https://{{< links/o3de-source >}}.git`的分支。为此，请转到 O3DE 公共 GitHub 存储库 [https://{{< links/o3de-source >}}](https://{{< links/o3de-source >}})，然后选择右上角的“分叉”按钮创建分叉。这会将 O3DE 公有存储库克隆到您的存储库中，并且可能需要几分钟时间。你的 fork 的 URL 将类似于`https://github.com/<YOUR GITHUB NAME HERE>/o3de.git`。
 
-1. Now, clone your fork locally by opening GitBash (or a Git-enabled shell or utility). Change directories to the folder you want to clone the repo in and run: `git clone https://github.com/<YOUR GITHUB NAME HERE>/o3de.git`. You will now have the clone of your fork on your local desktop and can work with the files directly.
+1. 现在，通过打开 GitBash（或支持 Git 的 shell 或实用程序）在本地克隆您的分支。将目录更改为要在其中克隆存储库的文件夹并运行：`git clone https://github.com/<YOUR GITHUB NAME HERE>/o3de.git`。现在，您将在本地桌面上拥有复刻的克隆，并且可以直接处理这些文件。
 
-1. However, to simplify this workflow, you must make some changes to your local Git configuration. In this case, you will be setting your fork's URL as the `origin` repo, and the O3DE public repo as your `upstream` repo, and updating the LFS URL. Run the following Git commands from **your locally cloned fork's path**:
+1. 但是，要简化此工作流程，您必须对本地 Git 配置进行一些更改。在这种情况下，您需要将分叉的 URL 设置为`origin`存储库，将 O3DE 公共存储库设置为`upstream`存储库，并更新 LFS URL。从您本地克隆的 fork 路径运行以下 Git 命令：
 
     ```bash
     git remote add upstream https://{{< links/o3de-source >}}.git
     ```
 
-    Confirm that `upstream` points to the O3DE public repo and that `origin` points to your fork:
+    确认 `upstream` 指向 O3DE 公共仓库，而 `origin` 指向你的 fork：
 
     ```bash
     git remote -v
     ```
 
-    Minimally, you should see output that looks like this:
+    至少，您应该会看到如下所示的输出：
 
     ```bash
     origin  https://github.com/<FORK>/o3de.git (fetch)
@@ -51,49 +51,49 @@ At a high level, the workflow is:
     upstream  https://{{< links/o3de-source >}}.git (push)
     ```
 
-    You can also configure upstream to target specific branches, as well.
+    您还可以将上游配置为以特定分支为目标。
 
-    Update the LFS URL to include your fork.  This will enable you to push changes to large files.  Open the .lfsconfig file at the root of the repository for complete instructions and the **DISTRIBUTION** to use.
+    更新 LFS URL 以包含您的复刻。 这将使您能够将更改推送到大文件。 打开存储库根目录下的 .lfsconfig 文件，以获取完整说明和要使用的 **DISTRIBUTION**。
 
     ```cmd
     git config lfs.url https://<DISTRIBUTION>.cloudfront.net/api/v1/fork/<FORK> 
     ```
 
-    You may be prompted to re-authenticate the next time you pull or push. Remember to use your GitHub personal access token not your GitHub password.
+    下次拉取或推送时，系统可能会提示您重新进行身份验证。请记住使用 GitHub 个人访问令牌，而不是 GitHub 密码。
 
-    If you need to revert this change later you can run the following command:
+    如果以后需要还原此更改，可以运行以下命令：
 
     ```cmd
     git config --unset lfs.url 
     ```
 
-1. Now, update your local repo by `git fetch`ing the branches currently active on the O3DE repo. You can get all working branches with `git fetch upstream --all`, or fetch a specific branch with `git fetch upstream <name-of-branch>`.
+1. 现在，通过`git fetch`来更新 O3DE 存储库上当前活动的分支，以更新您的本地存储库。你可以用 `git fetch upstream --all`获取所有工作分支，或者用`git fetch upstream <name-of-branch>`获取一个特定的分支。
 
-1. Rebase the commit history to the last commit from the upstream `development` branch:
+1. 将提交历史记录变基为上游`development`分支的最后一个提交：
 
     ```bash
     git rebase upstream/development
     ```
 
-1. Check out the branch you will be working on and **take your own branch from it** to perform your work.
+1. 查看你将要处理的分支，并从中 **获取你自己的分支** 来执行你的工作。
 
     ```bash
     git checkout <name-of-fetched-branch>
     ```
 
-    Confirm you have switched branches successfully with `git branch`. If you are on the branch you want, create your own branch from it:
+    确认你已经用`git branch`成功切换了分支。如果你在你想要的分支上，从它创建你自己的分支：
 
     ```bash
     git checkout -b <name-of-your-working-branch>
     ```
 
-### Ongoing Git workflow steps
+### 正在进行的 Git 工作流步骤
 
-Now, you're ready to do some work! After you've made some changes and saved your work, it's time to submit it as a pull request (PR) for review.
+现在，您已准备好执行一些工作！在您进行了一些更改并保存了您的工作后，是时候将其作为拉取请求 （PR） 提交以供审核了。
 
-1. (Optional): First, depending on how much time has passed since your branch was initially created, you might want to merge the latest from `upstream/development` into your branch. This will ensure your changes don't conflict with any other recent code commits, and also gives your automated review (AR) the best chance of success, because your branch will be closer to the latest development snapshot.
+1. （可选）：首先，根据自最初创建分支以来经过的时间，您可能希望将`upstream/development`中的最新内容合并到您的分支中。这将确保您的更改不会与任何其他最近的代码提交冲突，并且还会为您的自动审核 （AR） 提供最大的成功机会，因为您的分支将更接近最新的开发快照。
 
-    You can do this with the following commands (**Check which branch you are on with `git branch` first!**):
+    您可以使用以下命令执行此操作（**首先使用 `git branch` 检查您位于哪个分支上！**）：
 
     ```bash
     git fetch upstream --all
@@ -101,7 +101,7 @@ Now, you're ready to do some work! After you've made some changes and saved your
     git merge upstream/development --signoff
     ```
 
-1. Next, stage (add) the new or modified code files, commit your changes, and submit a pull request to your fork (origin) with the following commands. (**Check which branch you are on with `git branch` first!**):
+1. 接下来，暂存（添加）新的或修改的代码文件，提交您的更改，并使用以下命令向您的 fork （origin） 提交拉取请求。（**首先用 `git branch` 检查你所在的分支！**）
 
     ```bash
     git add .
@@ -109,53 +109,53 @@ Now, you're ready to do some work! After you've made some changes and saved your
     git push -u origin <your-branch-name>
     ```
 
-    This will push the update to your fork, and NOT the O3DE code repo.
+    这会将更新推送到您的 fork，而不是 O3DE 代码存储库。
 
     {{< note >}}
-We require DCO signing on all code commits. This requires that you have both your contributor name and email address in your `.gitconfig` file, or have previously run the following Git commands from a Git-enabled shell: `git config user.name "YOUR CONTRIBUTOR NAME HERE"` `git config user.email "YOUR CONTRIBUTOR CONTACT MAIL HERE"`. (This command updates your `.gitconfig.`) You must use the `-s` option on every commit. If you are using a Git-enabled IDE, such as Visual Studio or Visual Studio Code, turn on commit signing in the preferences.
+我们要求对所有代码提交进行 DCO 签名。这要求您在`.gitconfig`文件中同时包含贡献者姓名和电子邮件地址，或者之前已经从支持 Git 的 shell 运行以下 Git 命令：`git config user.name "YOUR CONTRIBUTOR NAME HERE"` `git config user.email "YOUR CONTRIBUTOR CONTACT MAIL HERE"`。（此命令会更新您的`.gitconfig`）你必须在每次提交时使用`-s`选项。如果您使用的是支持 Git 的 IDE，例如 Visual Studio 或 Visual Studio Code，请在首选项中打开提交签名。
     {{< /note >}}
 
-1. (Optional): Test your branch with Jenkins.
+1. （可选）：使用 Jenkins 测试您的分支。
 
-    The source for the code build pipeline and the required infrastructure is stored in the O3DE repo. Contributors can utilize this to spin up their own build/test pipeline or they can test locally.
+    代码构建管道的源代码和所需的基础设施存储在 O3DE 存储库中。贡献者可以利用它来启动自己的构建/测试管道，也可以在本地进行测试。
 
-    The `Jenkinsfile` (AutomatedReview/Jenkinsfile) is the source for the Automated Review (AR)/Jenkins Pipeline used by O3DE. Refer to [Simulate an automated review run](/docs/user-guide/build/configure-and-build/#simulate-an-automated-review-run) in the user guide for more information on how to run a test locally.
+    `Jenkinsfile`（AutomatedReview/Jenkinsfile） 是 O3DE 使用的自动审核 （AR）/Jenkins 管道的源。有关如何在本地运行测试的更多信息，请参阅用户指南中的 [模拟自动审核运行](/docs/user-guide/build/configure-and-build/#simulate-an-automated-review-run)。
 
-    The scripts to install all the dependencies on the build nodes and other infrastructure setup scripts are also stored in the repo for contributors and customers to use.
+    用于在构建节点上安装所有依赖项的脚本和其他基础设施设置脚本也存储在存储库中，供贡献者和客户使用。
 
-1. Submit a pull request from your fork to the O3DE code repo.
+1. 将 Fork 的拉取请求提交到 O3DE 代码存储库。
 
-    * Navigate to your fork repo in GitHub, click the **Pull Requests** tab and click **New Pull Request**.
-    * On the **Compare** page, verify the base repo and branch point is set to `O3DE/development`. (This should be set by default.)
-    * In the `head` drop down menu, select your fork repo and branch, and then select **Create Pull Request**.
+    * 导航到 GitHub 中的分支存储库，单击**Pull Requests** 标签页，点击 **New Pull Request**。
+    * 在 **Compare** 页面上，验证Base 存储库和分支点是否设置为`O3DE/development`.（这应该是默认设置。）
+    * 在 `head` 下拉菜单中，选择您的分支存储库和分支，然后选择 **Create Pull Request**。
 
     ![Creating a pull request from your fork to o3de/development.](/images/contributing/to-code/code-pr-from-fork.png)
 
-    * Add a title and description for your pull request. Provide a clear scope of your changes in as few words as you can.
-    * Add reviewers (Note: Required reviewers and other PR requirements will be finalized in a `CONTRIBUTING.md` file).
+    * 为您的拉取请求添加标题和描述。用尽可能少的字提供清晰的更改范围。
+    * 添加审阅者（注意：所需的审阅者和其他 PR 要求将在`CONTRIBUTING.md`文件中最终确定）。
 
     ![Adding reviewers to an O3DE pull request.](/images/contributing/to-code/code-add-reviewers.png)
 
-    * Now, select **Create pull request**!
+    * 现在，点击 **Create pull request**!
 
-1. The SIG maintainer/reviewer (or a delegate) for the affected component reviews the pull request. At the same time, the automated review (AR) is triggered.
+1. 受影响组件的 SIG 维护者/审阅者（或代表）审查拉取请求。同时，触发自动审核 （AR）。
 
     {{< note >}}
-The SIG maintainer/reviewer will review the pull request and must approve the AR run before it can start. This is to required to prevent the pipeline from running malicious code. The AR build that is triggered on pull requests runs on the infrastructure owned by O3DE.
+SIG 维护者/审阅者将审查拉取请求，并且必须批准 AR 运行才能开始。这是防止管道运行恶意代码所必需的。在拉取请求上触发的 AR 构建在 O3DE 拥有的基础设施上运行。
     {{< /note >}}
 
-1. Once all review comments have been addressed, a SIG member will approve the pull request.
+1. 一旦所有审查评论都得到解决，SIG 成员将批准拉取请求。
 
-    The pull request receives the required approvals from SIG and the AR passes.
+    拉取请求从 SIG 获得所需的批准，并且 AR 通过。
 
     ![An O3DE contribution pull request in a green approved state.](/images/contributing/to-code/code-pr-accepted.png)
 
-    The SIG maintainer (or a delegate) can then merge your pull request into `o3de/development`, and you're done! Nice!
+    然后 SIG 维护者（或代表）可以将您的拉取请求合并到 `o3de/development` 中，您就完成了！好！
 
-### Reviews and feedback on pull requests
+### 对拉取请求的审查和反馈
 
-The SIG maintainer/reviewer can request changes by providing feedback. You should engage with the comments and make any valid corrections or updates to your code contribution on the same branch. If the automated review (AR) fails, review the errors, make any necessary fixes, and update the pull request on the same branch.
+SIG 维护者/审阅者可以通过提供反馈来请求更改。您应该与评论互动，并在同一分支上对您的代码贡献进行任何有效的更正或更新。如果自动审查 （AR） 失败，请查看错误，进行任何必要的修复，并在同一分支上更新拉取请求。
 
 ![An example of a failed AR check in a pull request.](/images/contributing/to-code/code-ar-failed.png)
 
-If you do not make the changes to pass the AR, or ignore the code review feedback, the SIG maintainer may reject the changes in the pull request by marking it closed.
+如果您不进行更改以通过 AR，或忽略代码审查反馈，SIG 维护者可以通过将其标记为关闭来拒绝拉取请求中的更改。

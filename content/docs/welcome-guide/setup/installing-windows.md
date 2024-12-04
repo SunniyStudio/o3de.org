@@ -1,7 +1,7 @@
 ---
-linktitle: Installing O3DE for Windows
-title: Installing O3DE for Windows
-description: Learn how to install and set up Open 3D Engine (O3DE) for Windows using the installer tool.
+linktitle: 为 Windows 安装 O3DE
+title: 为 Windows 安装 O3DE
+description: 了解如何使用安装程序工具安装和设置适用于 Windows 的 Open 3D Engine （O3DE）。
 weight: 100
 ---
 

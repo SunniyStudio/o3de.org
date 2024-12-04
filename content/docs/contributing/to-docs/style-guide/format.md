@@ -6,9 +6,9 @@ weight: 300
 toc: true
 ---
 
-The **Open 3D Engine (O3DE)** documentation is written in **Goldmark Markdown syntax**. [Goldmark](https://github.com/yuin/goldmark) is the Markdown parser used by [Hugo](https://gohugo.io/), the site builder used for o3de.org.
+**Open 3D Engine （O3DE）** 文档使用 **Goldmark Markdown 语法**编写。[Goldmark](https://github.com/yuin/goldmark)是 [Hugo](https://gohugo.io/)使用的 Markdown 解析器，[Hugo](https://gohugo.io/) 是用于 o3de.org 的站点构建器。
 
-With Markdown, sometimes there are multiple methods to achieve the same result. For example, you can enclose words in underscores (`_`) or asterisks (`*`) to create italics. In these situations, it is best to use one method throughout the documentation. To keep both the documentation Markdown source files, and the O3DE documentation on-page presentation consistent, adhere to the following basic documentation standards.
+使用 Markdown，有时有多种方法可以实现相同的结果。例如，您可以将单词括在下划线(`_`)或星号 （`*`） 中以创建斜体。在这些情况下，最好在整个文档中使用一种方法。要使文档 Markdown 源文件和 O3DE 文档页面演示保持一致，请遵循以下基本文档标准。
 
 ## Topic headings
 

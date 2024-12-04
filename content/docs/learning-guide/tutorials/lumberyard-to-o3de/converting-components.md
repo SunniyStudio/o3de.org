@@ -1,50 +1,50 @@
 ---
-linkTitle: Converting Components
-title: Converting Components
-description: Learn how to convert legacy components on a lumberyard level to their O3DE equivalent and how to open lumberyard levels with O3DE.
+linkTitle: 转换组件
+title: 转换组件
+description: 了解如何将 Lumberyard 关卡的传统组件转换为其 O3DE 等效组件，以及如何使用 O3DE 打开 Lumberyard 关卡。
 weight: 300
 toc: true
 ---
 
-This tutorial teaches you how to use the **Legacy Content Conversion** on Lumberyard levels and slices. This process will convert legacy entity components to their O3DE equivalent. It is also able to target assets located in another project. Additional sections of the tutorial will show how to open a Lumberyard level with O3DE.
+本教程教您如何在 Lumberyard 关卡和切片上使用 **传统内容转换**。此过程会将旧版实体组件转换为其 O3DE 等效组件。它还能够定位位于另一个项目中的资产。本教程的其他部分将介绍如何使用 O3DE 打开 Lumberyard 关卡。
 
-| O3DE Experience | Time to Complete | Feature Focus | Last Updated |
-| - | - | - | - |
-| Intermediate | 1 Hour | Convert legacy components and open `.ly` and `.slice` files with O3DE | February 27, 2024 |
+| O3DE 体验 |完成时间 | 功能聚焦                               |最后更新 |
+| - | - |------------------------------------| - |
+| Intermediate | 1 Hour | 使用 O3DE 转换旧组件并打开`.ly` 和 `.slice`文件 | February 27, 2024 |
 
 {{< note >}}
-You will need to use a **custom build** of O3DE to follow this tutorial. Check [Settings up O3DE from GitHub](/docs/welcome-guide/setup/setup-from-github/) to learn how to proceed.
+您需要使用 O3DE 的 **自定义版本** 来学习本教程。查看 [从 GitHub 设置 O3DE](/docs/welcome-guide/setup/setup-from-github/) 以了解如何继续。
 {{< /note >}}
 
-## Check your Assets file hierarchy
+## 检查你的 Assets 文件层次结构
 
-If you followed the previous steps, your setup should currently be :
+如果您按照前面的步骤操作，则您的设置当前应为：
 
-- You have the Starter Game project and you are able to open it with Lumberyard. 
-- You have an Asset gem that contains the converted assets from the Starter Game project.
-- You have an empty O3DE project which uses your local Asset gem as a dependency
+- 您拥有 Starter Game 项目，并且能够使用 Lumberyard 打开它。
+- 您有一个 Asset Gem，其中包含从 Starter Game 项目转换的资源。
+- 您有一个空的 O3DE 项目，该项目使用本地 Asset Gem 作为依赖项
 
-In order to properly convert the levels to O3DE, you to make sure that the **relative path of your converted assets is the same as the Lumberyard project** :
+为了将关卡正确转换为 O3DE，您需要确保转换后的资源的相对路径与 Lumberyard 项目相同：
 
-- For a Gem asset the relative path starts from the **Assets** folder
-- For a Project asset the relative path starts from the **project's folder** (and not from the Assets folder that it might contain)
+- 对于 Gem 资源，相对路径从 **Assets** 文件夹开始
+- 对于项目资源，相对路径从项目的文件夹开始（而不是从它可能包含的 Assets 文件夹开始）
 
-| Path | Relative Path |
+| 路径 |相对路径 |
 | - | - |
 | C:\my-o3de-gem\\**Assets**\test.fbx | test.fbx |
 | C:\my-o3de-project\\**SamplesProject**\Assets\test.fbx | Assets\test.fbx |
 
-You don't have to overthink it, simply put folders that were in a Lumberyard Gem in a O3DE Gem, and what was in the StarterGame project in your O3DE project. Textures have been renamed during the conversion in order to be imported with the correct settings, so you don't need to rename them.
+您不必想得太多，只需将 Lumberyard Gem 中的文件夹放入 O3DE Gem 中，并将 StarterGame 项目中的文件夹放入 O3DE 项目中即可。纹理在转换过程中已重命名，以便使用正确的设置导入，因此您无需重命名它们。
 
 {{< known-issue >}}
-If you are converting the StarterGame project, you should rename or delete the `trees_atlas_am_oak_leaf_02.azmaterial`. This material is currently applied on trees while it shouldn't, and trees will not have their materials rendered if we keep it.
+如果要转换 StarterGame 项目，则应重命名或删除`trees_atlas_am_oak_leaf_02.azmaterial`。此材质目前应用于树木，而它不应该应用于树木，如果我们保留它，树木将不会渲染其材质。
 {{< /known-issue >}}
 
-## Generate the AssetCatalog file
+## 生成 AssetCatalog 文件
 
-The `assetcatalog.xml` file is a list of every assets processed for a given project along with their relative path and asset id. It is generated when you open a O3DE project (under `YOUR_PROJECT_FOLDER\Cache\pc`) and we rely on it to **find the asset ids that O3DE attributed to our converted assets**.
+`assetcatalog.xml`文件是为给定项目处理的每个资源的列表，以及它们的相对路径和资源 ID。当您打开 O3DE 项目（在`YOUR_PROJECT_FOLDER\Cache\pc`下）时，会生成它，我们依靠它来**查找 O3DE 归属于我们转换的资产的资产 ID**。
 
-We need a custom build of O3DE because this file is in binary by default and we need to change that to XML to be able to parse it in our pyton script. Open a code editor and go to `YOUR_O3DE_REPO/Tools/AssetProcessor/native/AssetManager/AssetCatalog.cpp`. In `AssetCatalog::SaveRegistry_Impl()` change `AZ::ObjectStream::ST_BINARY` to `AZ::ObjectStream::ST_XML`.
+我们需要 O3DE 的自定义版本，因为此文件默认为二进制，我们需要将其更改为 XML，以便能够在 pyton 脚本中解析它。打开代码编辑器并转到 `YOUR_O3DE_REPO/Tools/AssetProcessor/native/AssetManager/AssetCatalog.cpp`。 在 `AssetCatalog::SaveRegistry_Impl()`中，将 `AZ::ObjectStream::ST_BINARY` 改为 `AZ::ObjectStream::ST_XML`。
 
 ```cpp
 // these 3 lines are what writes the entire registry to the memory stream
@@ -55,39 +55,39 @@ AZ::ObjectStream* objStream = AZ::ObjectStream::Create(&catalogFileStream, *seri
 }
 ```
 
-Then delete the `Cache` folder inside of your project folder and relaunch the engine. You will have to wait for the asset processor tasks to be over (if you used Lumberyard before make sure to **close the Lumberyard Asset Processor** in the task bar before launching O3DE).
+然后删除项目文件夹中的 `Cache` 文件夹并重新启动引擎。您必须等待资产处理器任务结束 （如果您之前使用过 Lumberyard，请确保在启动 O3DE 之前 **关闭任务栏中的 Lumberyard Asset Processor**）。
 
-You will be able to revert this change once that you have successfuly ran the Legacy Content Conversion script.
+成功运行旧版内容转换脚本后，您将能够恢复此更改。
 
-## Remove layers from the Lumberyard level
+## 从 Lumberyard 关卡中删除图层
 
-In theory level layers are still supported by O3DE when prefab system is disabled. However in practice with levels as large as the StarterGame it will crash when you open the level. Moreover, the SerializeContextTools used to convert levels to prefab in the next section is not yet able to parse layers.
+理论上，当Prefab系统被禁用时，O3DE 仍然支持关卡层。但是，在实践中，对于像 StarterGame 这样大的关卡，当您打开关卡时，它会崩溃。此外，在下一节中用于将关卡转换为Prefab的 SerializeContextTools 尚无法解析层。
 
-This means that you **need to delete layers by hand and move their entities to a new parent entity**. For nested layers you need to do the same operation. It takes around 25 minutes to do this on the StarterGame level.
+这意味着您 **需要手动删除图层并将其实体移动到新的父实体**。对于嵌套层，您需要执行相同的操作。在 StarterGame 关卡执行此操作大约需要 25 分钟。
 
-Don't forget to close the asset processor from the task bar once that you close Lumberyard, else the O3DE asset processor will not be launched.
+关闭 Lumberyard 后，请不要忘记从任务栏关闭资产处理器，否则 O3DE 资产处理器将不会启动。
 
 {{< video src="/images/learning-guide/tutorials/lumberyard-to-o3de/remove-layer.mp4" info="Remove layers." autoplay="true" loop="true" >}}
 
-## Run the Legacy Content Conversion script
+## 运行 Legacy Content Conversion 脚本
 
-The script is located in `YOUR_O3DE_REPOSITORY\Gems\AtomLyIntegration\CommonFeatures\Assets\Editor\Scripts\LegacyContentConversion\LegacyComponentConverter.py`. By itself the script is straightforward and has no third-party dependencies, however **it expects to be launched from the Lumberyard dev folder** so you need to open a command line there. Then run (make sure to update the args) :
+该脚本位于`YOUR_O3DE_REPOSITORY\Gems\AtomLyIntegration\CommonFeatures\Assets\Editor\Scripts\LegacyContentConversion\LegacyComponentConverter.py`中。该脚本本身非常简单，没有第三方依赖项，但是 **它希望从 Lumberyard dev 文件夹启动**，因此您需要在那里打开命令行。然后运行 （确保更新 args） ：
 
 ```cmd
 YOUR_O3DE_REPOSITORY\python\python SCRIPT_PATH\LegacyComponentConverter.py -project=StarterGame -include_gems -assetCatalogOverridePath=YOUR_O3DE_PROJECT_PATH\Cache\pc\assetcatalog.xml
 ```
 
-You will see multiple warnings about *"Could not match (...) to a corresponding source atom material"*. If you look closely these warnings are always about *"_physics"* or *"_proxy"* materials. This is done on purpose as these materials are not really supported in Atom so we simply skip them (they are skipped via the "Skip White Texture Materials" in the Legacy Asset Converter).
+您将看到多个关于 *“Could not match （...） to a corresponding source atom material”* 的警告。如果您仔细观察，这些警告总是关于 *“_physics”* 或 *“_proxy”* 材料。这是故意这样做的，因为 Atom 并不真正支持这些材质，因此我们只需跳过它们（通过 Legacy Asset Converter 中的“Skip White Texture Materials”跳过它们）。
 
 {{< caution >}}
-This **tool is destructive**, it changes the files inline and does not create a copy. It is recommended that you track your Gems, Levels and Slice Lumberyard folders with Git (or make a copy) if you want to go back after the conversion.
+这个 **工具是破坏性的**，它会内联更改文件并且不会创建副本。如果要在转换后返回，建议您使用 Git 跟踪 Gems、Levels 和 Slice Lumberyard 文件夹 （或创建副本）。
 {{< /caution >}}
 
-If you want to check the diff between old and new slice files, make sure to hide whitespace changes else most lines will be marked.
+如果你想检查新旧切片文件之间的差异，请确保隐藏空格更改，否则大多数行将被标记。
 
-## (Optional) Open the modified Lumberyard level in your O3DE project
+## （可选） 在 O3DE 项目中打开修改后的 Lumberyard 关卡
 
-For now O3DE is still able to open `.slice` and `.ly` files but [support will be removed from the engine](https://github.com/o3de/sig-content/issues/148) at some point. To toggle this setup, you just need to **disable the prefab system** via an hidden user setting. Create a new file or replace the content in `YOUR_O3DE_PROJECT\user\Registry\editorpreferences.setreg` with what is shown below.
+目前 O3DE 仍然能够打开`.slice` 和 `.ly`文件，但 [引擎将取消支持](https://github.com/o3de/sig-content/issues/148)在某个时候。要切换此设置，您只需通过隐藏的用户设置**禁用Prefab系统**。创建一个新文件或将 `YOUR_O3DE_PROJECT\user\Registry\editorpreferences.setreg`中的内容替换为如下所示的内容。
 
 ```json
 {
@@ -99,18 +99,18 @@ For now O3DE is still able to open `.slice` and `.ly` files but [support will be
 }
 ```
 
-Then you will need to **copy by hand the slices and level files**. For the StarterGame project these are the most important folders that you need to copy into your O3DE project :
+然后，您需要 **手动复制切片和关卡文件**。对于 StarterGame 项目，这些是您需要复制到 O3DE 项目中的最重要的文件夹：
 
-| Lumberyard Location | O3DE Location |
+|Lumberyard 位置 |O3DE 位置 |
 | - | - |
 | dev\StarterGame\Levels | YOUR_PROJECT\Levels |
 | dev\StarterGame\Slices | YOUR_PROJECT\Slices |
 | dev\Gems\StarterGame\Environment\Assets\Slices | YOUR_GEM\Assets\Slices |
 
-After launching the editor, you will also want to set the **ed_enableDPEInspector** CVar to false before opening a level. To do so navigate to the Console tab, click on the "X" icon at the bottom and search for the CVar by name.
+启动编辑器后，您还需要在打开关卡之前将 **ed_enableDPEInspector** CVar 设置为 false。为此，请导航到 Console 选项卡，单击底部的 “X” 图标并按名称搜索 CVar。
 
 ![Disable DPE](/images/learning-guide/tutorials/lumberyard-to-o3de/disable-dpe-cvar.png)
 
-The level will be pitch black, you can create an entity and **assign it a directionnal light component** with a rotation of (-75, 0, -15) and 2 as Intensity. You will also want to update the Perspective Far Plane value from 100 to 10 000 in the Editor Settings under the Viewport section. This is what it should look like :
+关卡将是漆黑的，您可以创建一个实体并 **为其分配一个定向光组件**，旋转度为 （-75， 0， -15） 和 2 作为 Intensity。您还需要在 Viewport 部分下的 Editor Settings 中将 Perspective Far Plane 值从 100 更新到 10 000。它应该是这样的：
 
 ![Slice in O3DE](/images/learning-guide/tutorials/lumberyard-to-o3de/slice-in-o3de.png)

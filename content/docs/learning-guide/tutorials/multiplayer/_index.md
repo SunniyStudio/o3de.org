@@ -1,11 +1,11 @@
 ---
-linkTitle: Multiplayer
-title: Multiplayer Tutorials
-description: Learn to add Multiplayer support to your Open 3D Engine (O3DE) projects.
+linkTitle: 多人游戏
+title: 多人游戏教程
+description: 了解如何向 Open 3D Engine （O3DE） 项目添加多人游戏支持。
 ---
 
-This section contains step-by-step tutorials related to multiplayer in **Open 3D Engine (O3DE)**.
+本部分包含与 Open 3D Engine （O3DE） 中的多人游戏相关的分步教程。
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Your First Network Component](first-multiplayer-component) | Create multiplayer components with C++ in this introduction to network components. |
+| [您的第一个网络组件](first-multiplayer-component) | 在网络组件简介中使用 C++ 创建多人游戏组件. |

@@ -1,20 +1,20 @@
 ---
-linkTitle: Converting Materials
-title: Converting Materials
-description: Learn to run the converter tool to process Lumberyard .mtl files to O3DE .azmaterial and associated textures
+linkTitle: 转换材质
+title: 转换材质
+description: 了解如何运行转换器工具将 Lumberyard .mtl 文件处理为 O3DE .azmaterial 和关联的纹理
 weight: 200
 toc: true
 ---
 
-This tutorial teaches you how to use the **Legacy Asset Converter** to convert legacy material files (*.mtl*) to Atom materials (*.azmaterial*). This utility will also convert Metallic, Normal and Roughness textures to an acceptable Atom format.
+本教程将教您如何使用 **Legacy Asset Converter** 将传统材质文件 （*.mtl*） 转换为 Atom 材质 （*.azmaterial*）。此工具还会将 Metallic、Normal 和 Roughness 纹理转换为可接受的 Atom 格式。
 
-| O3DE Experience | Time to Complete | Feature Focus | Last Updated |
+| O3DE 体验 |完成时间 |功能聚焦 |最后更新 |
 | - | - | - | - |
-| Beginner | 15 Minutes | Convert `.mtl` files and test them in O3DE | February 27, 2024 |
+| 初级 |15 分钟 |转换 `.mtl` 文件并在 O3DE 中测试它们 | February 27, 2024 |
 
 ## Launch the Legacy Asset Converter application
 
-This utility application lies in the AtomLyIntegration gem, there is a **first-time setup** to do in order for the application to find the engine. Open the folder `YOUR_O3DE_INSTALL_FOLDER\Gems\AtomLyIntegration\TechnicalArt\DccScriptingInterface`, copy the file `settings.local.json.example` and rename it to `settings.local.json`. You will need to open it with a text editor to **replace the paths to match your install** of O3DE.
+这个实用程序应用程序位于 AtomLyIntegration gem 中，为了让应用程序找到引擎，需要做一个 **第一次设置**。打开文件夹`YOUR_O3DE_INSTALL_FOLDER\Gems\AtomLyIntegration\TechnicalArt\DccScriptingInterface`，复制文件 `settings.local.json.example`  并将其重命名为`settings.local.json`。您需要使用文本编辑器打开它，以**替换路径以匹配您的安装** O3DE。
 
 ```json
 {
@@ -26,49 +26,49 @@ This utility application lies in the AtomLyIntegration gem, there is a **first-t
 ```
 
 {{< note >}}
-"O3DE_DEV" is the location of your local O3DE github repository. "PATH_O3DE_3RDPARTY" is the 3rd party install folder (by default `C:\Users\CURRENT_USER\.o3de\3rdParty`). "PATH_O3DE_BIN" is the folder where the O3DE `editor.exe` is available. "DCCSI_LOG_PATH" is the location where the logs for this tool will be outputed, you can use anything.
+“O3DE_DEV” 是您本地 O3DE github 存储库的位置。“PATH_O3DE_3RDPARTY”是第三方安装文件夹（默认为 `C:\Users\CURRENT_USER\.o3de\3rdParty`）。“PATH_O3DE_BIN” 是 O3DE `editor.exe` 可用的文件夹。“DCCSI_LOG_PATH” 是此工具日志的输出位置，您可以使用任何东西。
 {{< /note >}}
 
-The utility rely on the **local O3DE python install**, made accessible via a `.bat` file for Windows and `.sh` for Linux. Now that the settings are set, you can open a command line on the `DccScriptingInterface` folder and run :
+该实用程序依赖于 **本地 O3DE python 安装**，Windows 可通过`.bat`文件访问，Linux 可通过`.sh`文件访问。现在设置已设置，您可以在`DccScriptingInterface`文件夹上打开命令行并运行：
 
 ```cmd
 .\python foundation.py
 .\python config.py
 ```
 
-Finally, you will be able to **open the Legacy Asset Converter** from this folder via the following command :
+最后，您将能够通过以下命令从此文件夹 **打开 Legacy Asset Converter** ：
 
 ```cmd
 .\python SDK\Maya\Scripts\Python\legacy_asset_converter\main.py
 ```
 
-## Convert materials and textures
+## 转换材质和纹理
 
-The tool will greet you with a friendly UI that will allow you to select options for the conversion. You can leave the "Actions" values to their default.
+该工具将以友好的 UI 迎接您，允许您选择转换选项。您可以将 “Actions” 值保留为默认值。
 
 ![Legacy Asset Converter](/images/learning-guide/tutorials/lumberyard-to-o3de/legacy-asset-converter.png)
 
-1. Click on the button to set the input folder containing the `.mtl` files.
-2. Click on the button to set the output folder.
-3. Click to launch the conversion
-4. You can follow the progress via this bar
+1. 单击按钮以设置包含`.mtl` 文件的输入文件夹。
+2. 单击按钮设置输出文件夹。
+3. 单击以启动转换
+4. 您可以通过此栏跟踪进度
 
-Most of the assets for the **StarterGame** project are located in the folder `LUMBERYARD_FOLDER\dev\Gems\StarterGame`. It is recommended to convert one Gem at a time by using its `Assets` folder as input, as it will keep the folder hierarchy. Some materials are not yet supported by the conversion, you can check the `legacy_asset_converter\constants.py` file to see the supported types.
+**StarterGame** 项目的大多数资源都位于文件夹`LUMBERYARD_FOLDER\dev\Gems\StarterGame`中。建议使用其 `Assets`文件夹作为输入，一次转换一个 Gem，因为它将保留文件夹层次结构。转换尚不支持某些材质，您可以查看 `legacy_asset_converter\constants.py`文件以查看支持的类型。
 
 {{< known-issue >}}
-For now the utility **only handle *.fbx* files as entry** and will only convert their associated `.mtl` files. Materials with no .fbx association such as terrain or effect materials will not be converted (will be fixed in the near future).
+目前，该实用程序 **仅将 *.fbx* 文件作为入口处理**，并且只会转换它们关联的 `.mtl` 文件。没有 .fbx 关联的材质（如地形或效果材质）将不会被转换（将在不久的将来修复）。
 {{< /known-issue >}}
 
-## Import the materials in O3DE
+## 在 O3DE 中导入材质
 
-If you plan to convert the lumberyard slices and levels, it is important to **keep the same file hierarchy** that was in place in the StarterGame. We will create a **local Gem to store the assets**, in order to do so open a command line in your O3DE folder and run :
+如果您计划转换 Lumberyard 切片和关卡，请务必 **保持与 StarterGame 中相同的文件层次结构**。我们将创建一个 **本地 Gem 来存储资产**，为此，请在 O3DE 文件夹中打开一个命令行并运行：
 
 ```cmd
 YOUR_O3DE_REPO\scripts\o3de create-gem --gem-path CUSTOM_PATH --template-name AssetGem
 ```
 
-Now the folder where you exported the materials and **copy the content of `Assets` into your O3DE gem `Assets` folder**. Do not discard the `.assetinfo` files as they provide information to O3DE on how to open the models and their Colliders/LODs. 
+现在是导出材质的文件夹，并将 `Assets` 的内容复制到 O3DE gem 的 `Assets` 文件夹中。不要丢弃`.assetinfo`文件，因为它们会向 O3DE 提供有关如何打开模型及其碰撞体/LOD 的信息。
 
-You can either create a new O3DE project or modify an existing one. What matters is that you **add your new Gem as a dependency to your project**. You can check [this documentation](/docs/user-guide/project-config/add-remove-gems/) for a step-by-step approach to enabling gems. With that in place, next time that you open the project you should be able to browse to your exported materials and open them in the **Material Editor**.
+您可以创建新的 O3DE 项目或修改现有项目。重要的是，您将新 Gem 作为依赖项添加到项目中。您可以查看 [此文档](/docs/user-guide/project-config/add-remove-gems/) 以获取启用 Gem 的分步方法。有了这个功能，下次打开项目时，你应该能够浏览到导出的材质，并在 **材质编辑器** 中打开它们。
 
 ![Material Editor](/images/learning-guide/tutorials/lumberyard-to-o3de/material-editor.png)

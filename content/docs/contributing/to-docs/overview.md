@@ -1,110 +1,110 @@
 ---
-linktitle: Overview
-title: Overview of the Docs Contribution Process
-description: What you need to know before contributing to the Open 3D Engine (O3DE) documentation project.  
+linktitle: 概述
+title: Docs 贡献流程概述
+description: 在参与 Open 3D Engine （O3DE） 文档项目之前，您需要了解的内容。 
 toc: true
 weight: 100
 ---
 
-Anyone can be a contributor to **Open 3D Engine (O3DE)** docs and determine their own level of participation. Here, we'll help you navigate the documentation process so you can decide how you'd like to contribute.
+任何人都可以成为 **Open 3D Engine （O3DE）** 文档的贡献者，并确定自己的参与级别。在这里，我们将帮助您完成文档流程，以便您决定如何做出贡献。
 
-## Before you do anything
+## 在你做任何事情之前
 
-It's important to be familiar with the O3DE documentation and get a feel for its style. Take some time to browse the [O3DE documentation](/docs). The documentation consists of several guides:
+熟悉 O3DE 文档并了解其样式非常重要。花点时间浏览 [O3DE 文档](/docs)。该文档由以下几个指南组成：
 
-* [Welcome](/docs/welcome-guide): A friendly introduction and overview of O3DE. The purpose of this guide is to get new users, particularly those without much prior experience, comfortable with O3DE. If you have a gift for simplifying technical concepts, this is a great area to investigate for contributions.
-* [Tutorials and Examples](/docs/learning-guide): Guided tutorials, samples, and cookbooks to help users learn O3DE. If you are an O3DE user, submitting recipes for the cookbooks is a great way to contribute new documentation without investing much time.
-* [User Guide](/docs/user-guide): Feature and reference documentation for the various editors, tools, components and Gems provided with O3DE. Feature reference is in-depth and we sometimes miss coverage on important features and the finer details of O3DE. Contributions to the User Guide are always needed and greatly appreciated.
-* [Atom Renderer](/docs/atom-guide): Feature and reference documentation for Atom Renderer and its tools and editors.
-* [Tools UI Developer Guide](/docs/tools-ui): The style and implementation guide for the UI used throughout the tools of O3DE and Atom Renderer.
-* [API Reference](/docs/api): Automatically generated API reference for O3DE.
-* [Contribute](/docs/contributing): You are here. Guidelines for contributing to O3DE and its documentation.
-* [Release Notes](/docs/release-notes): Release notes for O3DE including new features, fixes, and known issues.
+* [欢迎](/docs/welcome-guide): O3DE 的友好介绍和概述。本指南的目的是让新用户，特别是那些没有太多经验的用户，熟悉 O3DE。如果你有简化技术概念的天赋，那么这是一个很好的研究贡献的领域。
+* [教程和示例](/docs/learning-guide): 帮助用户学习 O3DE 的指导教程、示例和说明书。如果您是 O3DE 用户，则提交说明书的配方是无需投入太多时间即可贡献新文档的好方法。
+* [用户指南](/docs/user-guide): O3DE 提供的各种编辑器、工具、组件和 Gem 的功能和参考文档。功能参考很深入，我们有时会错过对 O3DE 的重要功能和更精细细节的报道。对用户指南的贡献始终是必需的，并且非常感谢。
+* [Atom Renderer](/docs/atom-guide): Atom Renderer 及其工具和编辑器的功能和参考文档。
+* [工具 UI 开发人员指南](/docs/tools-ui): O3DE 和 Atom Renderer 工具中使用的 UI 的样式和实现指南。
+* [API 参考](/docs/api): 自动生成的 O3DE API 参考。
+* [贡献](/docs/contributing): 您在这里。为 O3DE 及其文档做出贡献的指南。
+* [发布日志](/docs/release-notes): O3DE 的发行说明，包括新功能、修复和已知问题。
 
-Some documentation, such as **API Reference**, is generated automatically. Some documentation, such as **Release Notes**, is maintained and provided by O3DE SIGs and governance.
+一些文档（如 API 参考）是自动生成的。一些文档，例如 **发行说明**，由 O3DE SIG 和治理维护和提供。
 
 {{< note >}}
-Participation as a contributor requires a [GitHub account](https://github.com/signup).
+以贡献者身份参与需要 [GitHub 帐户](https://github.com/signup)。
 {{< /note >}}
 
-Don't want to read tiresome words, and prefer a snappy video to help you get started? Watch this video, instead!
+不想阅读令人厌烦的文字，而更喜欢一个活泼的视频来帮助您入门？请观看此视频！
 
 {{< youtube-width id="DGz9Clo6EKw" title="Contributing to O3DE Documentation" >}}
 
-## Technical information
+## 技术信息
 
-The o3de.org site uses the [Hugo static site generator](https://gohugo.io/). Documentation for O3DE uses [Goldmark](https://www.markdownguide.org/tools/hugo/), a CommonMark compliant Markdown processor. Contributing to O3DE documentation is easy, quick, and requires no prior experience with web development. The documentation source files are easy to read and require very few markdown elements. For information on setting up an environment so that you can contribute to O3DE documentation, see [Setting up a local o3de.org repo](./get-started#setting-up-a-local-o3deorg-repo).
+o3de.org 站点使用 [Hugo 静态站点生成器](https://gohugo.io/)。O3DE 的文档使用 [Goldmark](https://www.markdownguide.org/tools/hugo/),，这是一种符合 CommonMark 标准的 Markdown 处理器。为 O3DE 文档做出贡献简单、快速，并且不需要任何 Web 开发经验。文档源文件易于阅读，并且需要很少的 markdown 元素。有关设置环境以便您可以为 O3DE 文档做出贡献的信息，请参阅 [设置本地 o3de.org 存储库](./get-started#setting-up-a-local-o3deorg-repo)。
 
-## Begin with issues
+## 从问题开始
 
-After you create a GitHub account, your first stop should the current O3DE docs issues. See the [O3DE repository good-first-issues](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3A%22good-first-issue%22). Note the search field at the top of the page is specifying issues labeled **good-first-issue**. These are issues that have been determined to be good entry points for new contributors.
+创建 GitHub 帐户后，您的第一站应该是当前的 O3DE 文档问题。参见 [O3DE repository good-first-issues](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3A%22good-first-issue%22)。请注意，页面顶部的搜索字段指定了标记为 **good-first-issue** 的问题。这些问题已被确定为新贡献者的良好切入点。
 
-Issues aren't just bugs and errors found in the documentation. All contributions, including new feature documentation, tutorials, recipes, site maintenance, and site improvements, are tracked in issues. For more information on issues, see [Work with issues](./work-with-issues).
+问题不仅仅是在文档中发现的 bug 和错误。所有贡献（包括新功能文档、教程、配方、站点维护和站点改进）都在问题中跟踪。有关问题的更多信息，请参阅 [处理问题](./work-with-issues)。
 
-## Move on to pull requests
+## 继续执行拉取请求
 
-After getting familiar with issues, have a look at the current [O3DE repository pull requests (PRs)](https://github.com/o3de/o3de.org/pulls). PRs are contributions that have been submitted to the main repository.
+熟悉问题后，请查看当前的 [O3DE 存储库拉取请求 （PRs）](https://github.com/o3de/o3de.org/pulls)。PR 是已提交到主存储库的贡献。
 
-Open PRs are currently being peer reviewed by contributors for several potential issues:
+开放 PR 目前正由贡献者对几个潜在问题进行同行评审：
 
-* technical accuracy
-* spelling
-* grammar
-* clarity
-* style
+* 技术精度
+* 拼写
+* 语法
+* 清晰
+* 风格
 
-Here are some important guidelines you should keep in mind about PRs in O3DE:
+以下是您应该牢记的有关 O3DE 中的 PR 的一些重要准则：
 
-* Contributors should **not** merge their own PRs.
-* Every PR must have at least **two** approvals by someone other than the contributor before being merged into main.
-* Check the open PR list before creating a new one. Browsing the open PR list gives you an idea what the current active topics are, and shows you how different types of content are reviewed. It's a great idea to take a look at current PRs, even if you have not been requested as a reviewer.
+* 贡献者 **不要** 合并他们自己的 PR。
+* 每个 PR 在合并到 main 之前必须至少得到贡献者以外的其他人的 **两次** 批准。
+* 在创建新的 PR 列表之前，请检查打开的 PR 列表。浏览打开的 PR 列表可以让你了解当前活动的主题是什么，并告诉你如何审查不同类型的内容。查看当前的 PR 是个好主意，即使你没有被要求成为审阅者。
 
-## Documentation process overview
+## 文档流程概述
 
-Now that you are familiar with the O3DE docs, and have had some exposure to issues and PRs, let's have a look at the high-level process for making a contribution to documentation.
+现在你已经熟悉了 O3DE 文档，并且已经对问题和 PR 有了一些了解，让我们看一下为文档做出贡献的高级流程。
 
-1. **Agree to the O3DE Contributor License Agreement (CLA):** Refer to the project's [CONTRIBUTING.md](https://github.com/o3de/o3de.org/blob/main/CONTRIBUTING.md) for details.
+1. **同意 O3DE 贡献者许可协议 （CLA）:** 有关详细信息，请参阅项目的 [CONTRIBUTING.md](https://github.com/o3de/o3de.org/blob/main/CONTRIBUTING.md) 。
 
-1. **Create a new issue or claim an existing issue:** All contributions begin with a GitHub issue. You can file an issue and then assign it to yourself, or you can claim an existing issue. When creating a new issue, search the current issue list to ensure the issue hasn't already been submitted.
+1. 创建新问题或声明现有问题：所有贡献都以 GitHub 问题开头。您可以提交问题，然后将其分配给自己，也可以声明现有问题。创建新问题时，请搜索当前问题列表以确保尚未提交问题。
 
-   During issue triage, other community members might ask you for additional information, and being responsive is the best way to make sure your issue stays relevant. When claiming issues for yourself as a contributor, try to be mindful of the PRs and issues your fellow contributors are working with to ensure your contributions are supportive and collaborative. Be communicative on your issues. Leave comments as your work progresses, and respond to comments on your issues, moving discussions to a pull request when you create one. For more information, see [Work with issues](./work-with-issues).
+   在问题分类期间，其他社区成员可能会要求您提供更多信息，而响应是确保您的问题保持相关性的最佳方式。作为贡献者为自己声明 issue 时，请尽量注意其他贡献者正在处理的 PR 和 issue，以确保您的贡献是支持和协作的。就您的问题进行沟通。随着工作的进展留下评论，并回复对问题的评论，在创建拉取请求时将讨论移至拉取请求。有关详细信息，请参阅 [处理问题](./work-with-issues)。
 
-1. **Create a branch on your fork for the issue:** Contributions can't be submitted directly to the main O3DE documentation repository. You must fork the main repository, and submit pull requests to the main repository from your fork/branch.
+1. **在问题分支上创建分支：**贡献不能直接提交到主 O3DE 文档存储库。您必须复刻主存储库，并从复刻/分支向主存储库提交拉取请求。
 
-   It's good practice, and very helpful to contributors who might review your PRs, to create a new branch on your fork for each new issue. Having small branches containing only the changes required for the issue can expedite the PR review process and lend themselves to collaboration with other contributors. For large issues, consider breaking the work down into smaller issues, creating new branches for each smaller issue. The smaller the number of changes in your branch, the easier it will be to review and merge into main. For more information on creating a fork and branches, refer to [Get Started Contributing to Doc](./get-started).
+   这是一个很好的做法，对于可能审查你的 PR 的贡献者来说，在你的 fork 上为每个新问题创建一个新分支非常有帮助。拥有仅包含问题所需更改的小分支可以加快 PR 审核过程，并有助于与其他贡献者合作。对于大型问题，请考虑将工作分解为较小的问题，并为每个较小的问题创建新的分支。分支中的更改数量越少，就越容易查看和合并到 main 中。有关创建 fork 和分支的更多信息，请参阅 [开始为 Doc 做贡献](./get-started)。
 
-1. **Make changes:** The O3DE documentation is written in [CommonMark Markdown](https://commonmark.org/) and processed with [Goldmark](https://www.markdownguide.org/tools/hugo/). We recommend using an editor with robust Markdown support during your writing, so that you can get live previews and catch any linting errors. During your writing, follow our [Style Guide](./style-guide) to help your review go smoothly and quickly.
+1. **进行更改：** O3DE 文档以[CommonMark Markdown](https://commonmark.org/)编写，并使用 [Goldmark](https://www.markdownguide.org/tools/hugo/)处理。我们建议在写作过程中使用具有强大 Markdown 支持的编辑器，以便您可以获得实时预览并捕获任何 linting 错误。在写作过程中，请遵循我们的 [风格指南](./style-guide) 来帮助您的审阅顺利快速地进行。
 
-1. **Commit your changes:** Before you can submit a PR, you must commit your changes and push them to a branch on your o3de.org fork. Make sure to do the following:
+1. 提交更改：在提交 PR 之前，必须提交更改并将其推送到 o3de.org 分支上的分支。请确保执行以下操作：
 
-   1. Make sure you branch is up-to-date with `o3de.org/main` before committing.
+   1. 在提交之前，请确保你的 branch 是最新的 `o3de.org/main` 。
 
-   1. Sign-off on the changes you commit. The sign-off is a [*Developer Certificate of Origin (DCO)*](https://github.com/apps/dco). The DCO is your certification that your contribution is your own original work, or that you otherwise have the right to submit the work. For more information on committing your changes, see the [Writing process](./get-started#writing-process) section in Get Started Contributing to Docs. 
+   1. 签署您提交的更改。签核是 [*开发者原产地证书 （DCO）*](https://github.com/apps/dco)。DCO 是您的证明，证明您的贡献是您自己的原创作品，或者您有权提交该作品。有关提交更改的更多信息，请参阅开始为 Docs 做贡献中的 [编写过程](./get-started#writing-process) 部分。
    
       {{< important >}}
-   You must sign-off on all commits. When committing changes with `git commit`, use the `-s` option to sign-off. When committing individual suggestions and batch suggestions in the GitHub PR interface, paste your sign-off (`Signed-off-by: Your Name <yourname@yourdomain.com>`) into the comment field before committing the suggestion.
+   您必须注销所有提交。当使用`git commit`提交更改时，使用`-s`选项来注销。在 GitHub PR 界面中提交单个建议和批量建议时，请在提交建议之前将您的签名(`Signed-off-by: Your Name <yourname@yourdomain.com>`)粘贴到评论字段中。
       {{< /important >}}
 
-1. **Submit a pull request:** Once you've committed your changes to your own fork/branch, you can create a pull request to `o3de.org/main`. When submitting a pull request, ensure the following:
+1. 提交拉取请求：将更改提交到自己的分支/分支后，您可以创建对 `o3de.org/main` 的拉取请求。提交拉取请求时，请确保满足以下条件：
 
-   1. The PR only contains commits and changes you want reviewed for the PR.
+   1. PR 仅包含您希望为 PR 审核的提交和更改。
 
-   2. If the PR has a related issue, the issue number must be included in the PR title.
+   2. 如果 PR 有相关问题，则 issue 号必须包含在 PR 标题中。
 
-   3. The PR message briefly and clearly explains the changes you are submitting.
+   3. PR 消息简要而清晰地解释了您提交的更改。
 
-   4. You have requested at least two reviewers. Approval from two reviewers is required to merge a PR - if your contribution is deeply technical, it also requires a third review from an O3DE code contributor for accuracy. The more reviewers on your PR, the sooner you're likely to be signed off on it - but never request more than five reviewers (max 3 editorial, max 2 technical) without prior approval from the D&C SIG.
+   4. 您已请求至少两个审阅者。合并 PR 需要两名审阅者的批准 - 如果您的贡献具有很深的技术性，则还需要 O3DE 代码贡献者的第三次审阅以确保准确性。你的 PR 上的审阅者越多，你就越有可能越早被签字 - 但未经 D&C SIG 事先批准，切勿请求超过五个审阅者（最多 3 名编辑，最多 2 名技术）。
 
-   5. The PR contains the appropriate *Labels*, if required. Labels make it easier to sort through lists of PRs and may specify whether a PR is a work in progress, seeking feedback and review, that should not be merged into `o3de.org/main`. For more information, refer to [Submitting docs](/docs/contributing/to-docs/get-started#submitting-docs).
+   5. 如果需要，PR 包含相应的 *Labels*。标签可以更轻松地对 PR 列表进行排序，并且可以指定 PR 是否正在进行中，寻求反馈和审查，不应合并到`o3de.org/main` 中。有关更多信息，请参阅 [提交文档](/docs/contributing/to-docs/get-started#submitting-docs)。
 
-1. **Respond to PR feedback:** Feedback will come in the form of comments and *suggestions* that can be committed from the GitHub PR interface. It's important to understand that the PR process is a collaborative discussion. Every comment does not need to be addressed, and every suggestion does not need to be integrated. When the contributor and two reviewers approve of the contribution, it can be integrated. Here are a few tips for addressing suggestions and comments:
+1. **回复 PR 反馈：** 反馈将以评论和*建议*的形式出现，可以从 GitHub PR 界面提交。重要的是要了解 PR 过程是一个协作讨论。每条评论都不需要处理，每个建议都不需要整合。当贡献者和两个审阅者批准该贡献时，可以集成该贡献。以下是处理建议和评论的一些提示：
 
-   1. To commit multiple suggestions, use the batch functionality to integrate multiple suggestions in a single commit.
+   1. 要提交多个建议，请使用批处理功能将多个建议集成到单个提交中。
 
-   2. When addressing comments, maintain the relative conversation in the PR, edit the topics as necessary, and commit the changes to your fork/branch. Your new commits will be automatically added to the PR.
+   2. 在处理评论时，在 PR 中保持相对对话，根据需要编辑主题，并将更改提交到你的 fork/分支。你的新提交将自动添加到 PR 中。
 
-   3. Make sure to request a re-review of your new commits if required. 
+   3. 如果需要，请务必请求重新审核您的新提交。
 
-1. **The PR is merged and closed:** When the comments and suggestions have been addressed, and two reviewers have approved the PR, it can be merged into `o3de.org/main`. **Never** merge your own PRs, the final reviewer to sign off is responsible for the merge. The PR is automatically closed when merged.
+1. **PR 被合并并关闭：** 当意见和建议得到处理，并且两名审阅者批准了 PR 时，它可以合并到 `o3de.org/main`。**永远不要** 合并你自己的 PR，最终签字的审阅者负责合并。PR 在合并时自动关闭。
 
-1. **The related issue is closed:** If you have included a related issue number in the title of your PR, the related issue will be automatically closed when the PR is closed. Your contribution is complete. Congrats!
+1. 相关 issue 已关闭：如果你在 PR 的标题中包含了相关 issue 编号，则相关 issue 将在 PR 关闭时自动关闭。您的贡献已完成。恭喜！

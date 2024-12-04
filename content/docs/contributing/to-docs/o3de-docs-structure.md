@@ -1,49 +1,49 @@
 ---
-linkTitle: O3DE Docs Structure
-title: The O3DE Docs Structure 
-description: A guide to the Open 3D Engine (O3DE) documentation repository structure.
+linkTitle: O3DE 文档结构
+title: O3DE 文档结构
+description: Open 3D Engine （O3DE） 文档存储库结构指南。
 weight: 400
 ---
 
-There are many folders and files in the **Open 3D Engine (O3DE)** docs directory structure. If you are a new contributor, it can be a puzzle to sort out where to find or place topics and images that you'd like to contribute. The structure is easier to navigate when you understand two key high-level directories.
+**Open 3D Engine （O3DE）** docs 目录结构中有许多文件夹和文件。如果您是新的贡献者，那么整理在哪里可以找到或放置您想要贡献的主题和图像可能是一个难题。当您了解两个关键的高级目录时，该结构更易于导航。
 
-* `/content/docs/`: The root directory of the Markdown (`.md`) files that make up the documentation for the various O3DE guides.
+* `/content/docs/`: Markdown (`.md`) 文件的根目录，这些文件构成了各种 O3DE 指南的文档。
 
-* `/static/images/`: The root directory of the image (`.png`, `jpg`, and `.svg`) files used in the various O3DE guides.
+* `/static/images/`: 各种 O3DE 指南中使用的图像(`.png`, `jpg`, 和 `.svg`)文件的根目录。
 
-The overwhelming majority of content contributions will reside somewhere in the two directories above. The structure beneath each of these directories is identical and easy to navigate.
+绝大多数内容贡献将位于上述两个目录中的某个位置。每个目录下的结构都是相同的，并且易于导航。
 
 {{< note >}}
-The directory structure below `/static/images/` mirrors the directory structure below `/content/docs/`. When adding images to your topics, make sure to place them in the appropriate directory. In some instances, you might need to create new directories in `/static/images/` to replicate the structure of `/content/docs/`.
+`/static/images/`下的目录结构反映了`/content/docs/`下的目录结构。将图像添加到主题时，请确保将它们放在适当的目录中。在某些情况下，您可能需要在`/static/images/`中创建新目录以复制 `/content/docs/` 的结构。
 {{< /note >}}
 
-In the structure below `/content/docs/` and `/static/images/`, directories map to the various O3DE documentation guides. You will most likely be interested in just a few specific areas. These areas of interest are highlighted in the diagram below:
+在`/content/docs/` 和 `/static/images/`下面的结构中，目录映射到各种 O3DE 文档指南。您很可能只对几个特定领域感兴趣。下图突出显示了这些感兴趣的领域：
 
 ![O3DE directory structure diagram.](/images/contributing/to-docs/o3de-directory-structure.svg "O3DE important directories.")
 
 The highlighted directories in the above diagram are where most contributions will be made:
 
-* `atom-guide`: The [**Atom Render**](/docs/atom-guide/) section in the O3DE docs. The Atom Guide contains feature and reference documentation for Atom that is exclusive to Atom Renderer. Topics that deal with the connection between Atom and O3DE, and using Atom within the context of O3DE, are in the various O3DE guides.
+* `atom-guide`: [**Atom Render**](/docs/atom-guide/) 部分。Atom 指南包含 Atom Renderer 独有的 Atom 功能和参考文档。各种 O3DE 指南中介绍了 Atom 和 O3DE 之间的联系以及在 O3DE 上下文中使用 Atom 的主题。
 
-* `engine-dev`: The [**Engine Developer Guide**](/docs/engine-dev/) section in the O3DE docs. The Engine Developer Guide contains information about O3DE's internal architecture, design principles, and execution flow for developers who are making custom engine modifications and other contributions to the O3DE project. You can find technical information on O3DE frameworks, Gems, and tools in this guide.
+* `engine-dev`: [**引擎开发人员指南**](/docs/engine-dev/)部分。引擎开发人员指南包含有关 O3DE 的内部体系结构、设计原则和执行流程的信息，供对 O3DE 项目进行自定义引擎修改和其他贡献的开发人员使用。您可以在本指南中找到有关 O3DE 框架、Gem 和工具的技术信息。
 
-* `learning-guide`: The [**Tutorials & Examples**](/docs/learning-guide/) section in the O3DE docs. Tutorials and Examples contains user tutorials, a cookbook, and sample documentation. Tutorials should only use assets that are part of the O3DE distribution, are freely available, or can be quickly and easily replicated in open source content creation tools. The Cookbook section contains targeted *recipes* that describe and demonstrate how to perform specific tasks, using snippets of Script Canvas graphs, for example. The Cookbook is a fantastic place for O3DE users to make quick, useful contributions. The Samples section contains documentation for samples that are included with the O3DE distribution.
+* `learning-guide`: [**教程和示例**](/docs/learning-guide/) 部分。教程和示例包含用户教程、说明书和示例文档。教程应仅使用属于 O3DE 发行版的资产，这些资产是免费提供的，或者可以在开源内容创建工具中快速轻松地复制的资产。Cookbook 部分包含目标 *配方*，用于描述和演示如何执行特定任务，例如，使用 Script Canvas 图形的片段。Cookbook 是 O3DE 用户快速、有用贡献的绝佳场所。Samples 部分包含 O3DE 发行版中包含的示例的文档。
 
-* `user-guide`: The [**User Guide**](/docs/user-guide/) section in the O3DE docs. The User Guide contains feature and reference documentation for the tools, Gems, components, and systems that are part of the O3DE distribution.
+* `user-guide`: [**用户指南**](/docs/user-guide/) 部分。用户指南包含属于 O3DE 分发的工具、Gem、组件和系统的功能和参考文档。
 
-* `welcome-guide`: The [**Welcome**](/docs/welcome-guide/) section in the O3DE docs. The Welcome section contains an overview of O3DE, an installation guide, tutorials to help new users get started, and links to various hubs for O3DE users.
+* `welcome-guide`: The [**欢迎**](/docs/welcome-guide/) 部分。欢迎部分包含 O3DE 概述、安装指南、帮助新用户入门的教程以及指向 O3DE 用户的各种中心的链接。
 
 {{< note >}}
-The structure beneath each of the above directories is reflected in the table of contents that appears on the left in each guide. Keep this in mind when planning and adding new topics.
+上述每个目录下的结构都反映在每个指南左侧显示的目录中。在规划和添加新主题时，请记住这一点。
 {{< /note >}}
 
-The remaining directories are less likely to be of interest to individual contributors because their topics are generated through some other process, or because their topics are not directly related to using O3DE. 
+其余目录不太可能引起单个贡献者的兴趣，因为它们的主题是通过其他过程生成的，或者因为它们的主题与使用 O3DE 没有直接关系。
 
 
-* `api`: Maps to the [**API Reference**](/docs/api/) section in the O3DE docs. The API reference for O3DE is generated from Doxygen-formatted comments in the O3DE source code. The generated content is placed in the `/static/docs/api` directory.
+* `api`: 映射[**API 参考**](/docs/api/) 部分。O3DE 的 API 参考是根据 O3DE 源代码中的 Doxygen 格式注释生成的。生成的内容放置在 `/static/docs/api` 目录中。
 
-* `contributing`: Maps to the [**Contribute**](/docs/contributing/) section in the O3DE docs. This is all the information on contributing to O3DE code and documentation. You are here.
+* `contributing`: 映射[**贡献**](/docs/contributing/) 部分。这是有关为 O3DE 代码和文档做出贡献的所有信息。您在这里。
 
-* `release-notes`: The [**Release Notes**](/docs/release-notes/) section in the O3DE docs. The Release Notes contain release-specific information for O3DE that is provided by O3DE Special Interest Groups.
+* `release-notes`: The [**发布日志**](/docs/release-notes/) 部分。发行说明包含由 O3DE 特别兴趣小组提供的 O3DE 版本特定信息。
 
-* `tools-ui`: The [**Tools UI Developer's Guide**](/docs/tools-ui/) section in the O3DE docs. This guide has information on design concepts, framework, and UI widgets that are used to create tools and applications for O3DE.
+* `tools-ui`: [**工具 UI 开发人员指南**](/docs/tools-ui/) 部分。本指南包含有关用于为 O3DE 创建工具和应用程序的设计概念、框架和 UI 小组件的信息。

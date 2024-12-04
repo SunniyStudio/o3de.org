@@ -1,130 +1,131 @@
 ---
-linktitle: Get Started
-title: Get Started Contributing to Docs
-description: Get started contributing to Open 3D Engine (O3DE) docs by setting up your local repo, setting up your writing environment, and submitting docs. 
+linktitle: 入门
+title: 开始为 Docs 做贡献
+description: 通过设置本地存储库、设置编写环境和提交文档，开始为 Open 3D Engine （O3DE） 文档做出贡献。
 toc: true
 weight: 200
 ---
 
-This section will help you get started on contributing to **Open 3D Engine (O3DE)** documentation. You'll learn how to set up your writing environment and about the processes you need to get your documentation from text editor to the official O3DE documentation. 
+本部分将帮助您开始为 Open 3D Engine （O3DE） 文档做出贡献。您将学习如何设置您的写作环境，以及将文档从文本编辑器转换为官方 O3DE 文档所需的过程。
 
-O3DE documentation uses the [fork and pull model](https://en.wikipedia.org/wiki/Fork_and_pull_model) for contributions. As a contributor, you maintain a fork (your own repository of the O3DE documentation) on GitHub, and work locally to edit documentation. You then submit PRs from your fork for review.
+O3DE 文档使用 [fork and pull model](https://en.wikipedia.org/wiki/Fork_and_pull_model) 进行贡献。作为贡献者，您在 GitHub 上维护一个 fork（您自己的 O3DE 文档存储库），并在本地编辑文档。然后，您从 fork 提交 PR 以供审核。
 
 {{< note >}}
-The steps on this page use the terminal to run Git commands. You may complete these steps directly on GitHub and refer to the GitHub's [Repositories](https://docs.github.com/en/repositories) documentation, or through an alternative tool of your choice, such as [GitHub Desktop](https://desktop.github.com/) or another client.
-Whatever method you choose, ensure that you're completing the correct operations that are outlined on this page.
+本页中的步骤使用终端运行 Git 命令。您可以直接在 GitHub 上完成这些步骤，并参考 GitHub 的 [Repositories](https://docs.github.com/en/repositories) 文档，或通过您选择的替代工具完成这些步骤，例如 [GitHub Desktop](https://desktop.github.com/)或其他客户端。
+
+无论您选择哪种方法，请确保您正在完成本页中概述的正确操作。
 {{< /note >}}
 
-## Prerequisites
+## 先决条件
 
-* Sign up for a GitHub account here [Join GitHub](https://github.com/join?ref_cta=Sign+up).
+* 在此处注册 GitHub 帐户 [加入 GitHub](https://github.com/join?ref_cta=Sign+up)。
 
-* Install **Git** version control software. Get Git here [Git Downloads](https://git-scm.com/downloads).
+* 安装 **Git** 版本控制软件。在此处获取 Git [Git 下载](https://git-scm.com/downloads)。
 
-* Install an editor for making changes to Markdown (`.md`) files. You can use any editor, but we do recommend one that supports Markdown linting. VS Code is commonly used by contributors and you can get it here [Microsoft VS Code](https://code.visualstudio.com/download).
-
-
-## Setting up a local o3de.org repo
-
-In this section, you'll learn how to create your own fork of the O3DE documentation. 
+* 安装用于更改 Markdown (`.md`) 文件的编辑器。你可以使用任何编辑器，但我们建议使用支持 Markdown linting 的编辑器。VS Code 通常由贡献者使用，您可以在此处获取它 [Microsoft VS Code](https://code.visualstudio.com/download)。
 
 
-### Create a fork
+## 设置本地 o3de.org 仓库
 
-A *fork* is your own copy of the `o3de.org` source repo on GitHub. You can do anything you like within your fork, though it is recommended that you keep your fork synced with the source repo, and work within branches in your fork. Working this way ensures the integrity of `o3de.org` and makes it easy for you to work at your own pace, experiment with changes, and collaborate with other contributors. 
-
-To create a fork, perform the following steps:
-
-1. Go to the [O3DE documentation repository](https://github.com/o3de/o3de.org).
-
-1. Fork `o3de.org`. Choose the **Fork** button in the upper-right corner of the page. For more information on creating forks, refer to GitHub Docs, [Fork a repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
-
-You can access your fork in your repositories or by going to `https://github.com/<your-username>/o3de.org`.
-For more information on working with forks, refer to GitHub Docs, [Working with forks](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks).
+在本节中，您将学习如何创建自己的 O3DE 文档分支。
 
 
-### Clone your fork
+### 创建一个 fork
 
-*Cloning* is the process of creating a local copy of a repo. To create a clone of your fork, in a terminal, perform the steps below:
+*fork* 是你在 GitHub 上  `o3de.org` 源存储库的自己的副本。您可以在 fork 中执行任何您喜欢的操作，但建议您保持 fork 与源存储库同步，并在 fork 的分支内工作。以这种方式工作可以确保 `o3de.org`的完整性，并使您能够轻松地按照自己的节奏工作、尝试更改并与其他贡献者协作。
 
-1. On the webpage of your fork, choose the green **Code** button and copy the HTTPS URL. 
+要创建分叉，请执行以下步骤：
+
+1. 转到 [O3DE 文档存储库](https://github.com/o3de/o3de.org).
+
+1. 分叉 `o3de.org` 。选择页面右上角的 **Fork** 按钮。有关创建复刻的更多信息，请参阅 GitHub 文档，[复刻存储库](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+
+您可以在仓库中或通过转到 `https://github.com/<your-username>/o3de.org` 来访问您的复刻。
+有关使用复刻的更多信息，请参阅 GitHub 文档，[使用克隆](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks)。
+
+
+### 克隆你的 fork
+
+*克隆* 是创建存储库的本地副本的过程。要创建分叉的克隆，请在终端中执行以下步骤：
+
+1. 在分叉的网页上，选择绿色的 **Code** 按钮并复制 HTTPS URL。
  
     {{< note >}}
-Although an SSH protocol is not required to contribute to docs, you may choose to clone with an SSH URL instead of HTTPS. If so, you must complete additional steps. For more information, refer to GitHub Docs, [Cloning with SSH URLs](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-ssh-urls). 
+虽然不需要 SSH 协议来参与文档，但您可以选择使用 SSH URL 而不是 HTTPS 进行克隆。如果是这样，则必须完成其他步骤。有关更多信息，请参阅 GitHub 文档 [使用 SSH URL 克隆](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-ssh-urls)。
     {{< /note >}}
 
-1. In the terminal, navigate to a root directory where you'd like to place your local repository, and clone it there.
+1. 在终端中，导航到要放置本地存储库的根目录，然后在该目录中克隆它。
 
     ```shell
     cd <root-directory>
     git clone <https://github.com/<your-username>/o3de.org.git> 
     ```
 
-### Set the upstream for your clone
+### 为您的 clone 设置上游
 
-Your clone must point to two remote repositories: your fork (origin) and the source repo (upstream). By default, your clone's `origin` already points to your fork. However, you must set up `upstream` to point to the source repository for O3DE docs, `o3de/o3de.org`. Setting up upstream allows you to pull new changes into your fork and from `o3de.org:main`. Later, you'll also need to submit changes to upstream in the form of a PR. PRs are the only way you can submit changes, you cannot push directly to upstream. 
+您的克隆必须指向两个远程存储库：您的分支 （origin） 和源存储库 （upstream）。默认情况下，克隆的`origin` 已经指向你的 fork。但是，您必须将 `upstream` 设置为指向 O3DE 文档的源存储库 `o3de/o3de.org`。设置 upstream 允许你将新的更改拉取到你的 fork 和 `o3de.org:main` 中。稍后，你还需要以 PR 的形式向上游提交更改。PR 是你提交更改的唯一方式，你不能直接推送到上游。
 
-In a terminal, perform the steps below:
+在终端中，执行以下步骤：
 
-1. Set the upstream for your clone to the source O3DE docs repo.
+1. 将克隆的上游设置为源 O3DE docs 存储库。
 
     ```shell
     git remote add upstream https://github.com/o3de/o3de.org.git
     ```
 
-1. Disallow pushing to the source O3DE docs repo from your clone.
+1. 禁止从克隆推送到源 O3DE docs 存储库。
 
     ```shell
     git remote set-url --push upstream NONE
     ```
-For more information about this step, refer to the GitHub Docs, [Configuring a remote for a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork). 
+有关此步骤的更多信息，请参阅 GitHub 文档 [为 fork 配置远程](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork)。
 
 
-### Branches
+### 分支
 
-There are two important branches in `o3de.org` repo: `main` and `development`. Depending on what docs you're contributing, you can choose to contribute your changes to either branch. 
+`o3de.org` 存储库中有两个重要的分支：`main` 和 `development`。根据你贡献的文档，你可以选择将更改贡献给任一分支。
 
-| Branch | Description |
+| 分支 | 说明 |
 | --- | --- |
-| `main` | If you're contributing docs for a feature that already exists in a stable version of O3DE, or [`o3de:main`](https://github.com/o3de/o3de/tree/main). |
-| `development` | If you're contributing docs for a feature that's still in development, or in [`o3de:development`](https://github.com/o3de/o3de/tree/development). |
+| `main` | 如果您正在为 O3DE 稳定版本中已经存在的功能贡献文档，或者[`o3de:main`](https://github.com/o3de/o3de/tree/main)。 |
+| `development` | 如果您正在为仍在开发中的功能贡献文档，或者在[`o3de:development`](https://github.com/o3de/o3de/tree/development)。 |
 
-Decide ahead of time which branch you want to contribute your docs to. It's important to know because it can help you keep your local changes synced with the correct upstream branch, especially when you're doing one of the following things: 
-- Creating a new branch
-- Syncing your branch
-- Creating a PR
+提前决定要将文档贡献给哪个分支。了解这一点很重要，因为它可以帮助您保持本地更改与正确的上游分支同步，尤其是在您执行以下操作之一时：
+- 创建新分支
+- 同步您的分支
+- 创建 PR
 
 
-### Sync your clone
+### 同步您的克隆
 
-Throughout the writing process, in your clone, you must *sync* whatever branch you're working in with the appropriate upstream branch, `main` or `development`. This ensures that your branch is up-to-date with the latest commits and can help you avoid issues when creating a PR. It's good practice to do this step frequently, such as before creating a new branch, or creating a PR.
+在整个编写过程中，在你的克隆中，你必须将你正在工作的任何分支与适当的上游分支 `main` 或 `development` 同步。这可确保您的分支与最新提交保持同步，并可以帮助您在创建 PR 时避免出现问题。最好经常执行此步骤，例如在创建新分支或创建 PR 之前。
 
-To sync your branch:
+要同步您的分支：
 
-1. Checkout the local branch that you want to sync.
+1. 签出要同步的本地分支。
 
     ```shell
     git checkout <branch-name>
     ```
 
-1. Fetch the latest commits from upstream, which you set to point to the remote source `o3de.org` in the previous section.
+1. 从上游获取最新的提交，您在上一节中将其设置为指向远程源 `o3de.org`。
 
     ```shell
     git fetch upstream
     ```
 
-1. Pull the latest commits from the appropriate upstream branch into your local branch.
+1. 将最新提交从适当的上游分支拉取到本地分支中。
 
     ```shell
     git merge upstream/[main|development]
     ```
 
-Alternatively, the following [`git pull`](https://git-scm.com/docs/git-pull/2.22.0) command fetches and merges: 
+或者，以下 [`git pull`](https://git-scm.com/docs/git-pull/2.22.0)  命令获取并合并：
 ```shell
 git pull upstream [main|development]
 ```
 
-As an example workflow, you may want to keep your fork's `main` branch synced with the source `o3de.org:main` branch. The set of operations to do that look like this: 
+作为工作流程示例，您可能希望使 fork 的 `main` 分支与源 `o3de.org:main` 分支保持同步。执行此操作的操作集如下所示：
 
 ```shell
 git checkout main
@@ -134,114 +135,114 @@ git push origin main
 ```
 
 
-## Writing process
+## 写作过程
 
-This section covers the technical details of the writing process, such as setting up your writing environment. 
+本节介绍写入过程的技术细节，例如设置写入环境。
 
-### Create a branch
+### 创建分支
 
-All your work should be done in branches. You commit from branches in your clone to your fork. Branches help you compartmentalize your contributions, and make it easy for other contributors to collaborate with you. 
+您的所有工作都应该在分支中完成。您可以从 clone 中的分支提交到 fork。分支可帮助您划分您的贡献，并使其他贡献者可以轻松地与您协作。
 
-As discussed earlier, syncing your branch with an upstream branch keeps your branch up-to-date and helps prevent friction when submitting your changes. You either want to sync with `o3de.org:main` or `o3de.org:development`. 
+如前所述，将分支与上游分支同步可使分支保持最新状态，并有助于防止在提交更改时出现摩擦。您想要与 `o3de.org:main` 或 `o3de.org:development` 同步。
 
-To create a branch that's already synced with the latest: 
+要创建已与最新版本同步的分支，请执行以下操作：
 
-1. Fetch from upstream.
+1. 从上游获取。
 
     ```shell
     git fetch upstream
     ```
 
-1. Create a branch that points at the latest `upstream/main` or `upstream/development`, and switch to that branch.
+1. 创建一个指向最新 `upstream/main` 或 `upstream/development` 的分支，然后切换到该分支。
 
     ```shell
     git switch -c <branch-name> upstream/[main|development]
     ```
 
     {{< note >}}
-When naming branches, we recommend a short dash-separated name that clearly denotes the contents of the branch. For example, `camera-follow-tutorial`.
+命名分支时，我们建议使用短短的短划线分隔名称，以清楚地表示分支的内容。例如 `camera-follow-tutorial`。
     {{< /note >}}
 
 
-1. The previous step creates your branch only in your clone. You must push your branch to your fork, so it appears in your fork on GitHub.
+1. 上一步仅在克隆中创建分支。您必须将分支推送到 fork，以便它显示在 GitHub 上的 fork 中。
 
     ```shell
     git push origin <branch-name>
     ```
 
-### Sync, write, add, commit, and push
+### 同步、写入、添加、提交和推送
 
-As you write your docs iteratively and make changes as part of the PR process, you will cycle through the following Git operations: 
+在 PR 过程中迭代编写文档并进行更改时，您将循环执行以下 Git 操作：
 
-1. **`git fetch upstream`** and **`git merge upstream/[main|development]`** -- Keep your branch up-to-date with the latest commits.
-1. Write your docs using a text editor. Ensure that your docs are technically accurate and follow the [O3DE Style Guide](./style-guide/). 
-1. **`git add`** -- Adds your files to local Git staging. Do not add *any* files that are not work you are submitting for review.
-1. **`git commit -s -m "<message>"`** --  Writes your changes to the branch history in preparation for submission. `-s` signs off DCO for your commit. Your initial commit message should reference the corresponding GitHub issue and provide a clear assessment of the work you did.
-1. **`git push origin <branch-name>`** -- Pushes your commit to your remote fork (_origin_). 
+1. **`git fetch upstream`** 和 **`git merge upstream/[main|development]`** -- 使用最新提交使分支保持最新状态。
+1. 使用文本编辑器编写文档。确保您的文档在技术上准确无误，并遵循 [O3DE 风格指南](./style-guide/)。
+1. **`git add`** -- 将文件添加到本地 Git 暂存。不要添加 *任何* 不是您提交以供审核的工作的文件。
+1. **`git commit -s -m "<message>"`** --  将您的更改写入分支历史记录，为提交做准备。`-s` 为您的提交签署 DCO。您的初始提交消息应引用相应的 GitHub 问题，并对您所做的工作进行清晰的评估。
+1. **`git push origin <branch-name>`** -- 将你的提交推送到你的远程 fork(_origin_). 
 
-Repeat these steps as needed. When you're done writing, each of your commits should have a DCO sign-off and contain only the changes that you made. The commits must be pushed to your remote fork. Later, you will submit a PR to merge your changes to the remote source. 
+根据需要重复这些步骤。完成编写后，您的每个提交都应该有一个 DCO 签核，并且仅包含您所做的更改。提交必须推送到您的远程 fork。稍后，您将提交 PR 以将您的更改合并到远程源。 
 
 
-### DCO sign-off your commits
+### DCO 签署您的提交
 
-DCO stands for [*Developer Certificate of Origin (DCO)*](https://github.com/apps/dco). The DCO sign-off is your certification that your contribution is your own original work, or that you otherwise have the right to submit the work. At the time of each of your commits, you must add a DCO sign-off by using `-s` or `--signoff`. A PR that contains a commit that wasn't signed off will not be reviewed or merged. DCO sign-off is easy to do, and just as easy to forget.
+DCO 代表 [*开发者原产地证书 （DCO）*](https://github.com/apps/dco)。DCO 签字是您的证明，证明您的贡献是您自己的原创作品，或者您有权提交该作品。在每次提交时，您必须使用`-s` 或 `--signoff` 添加 DCO sign-off。包含未签署的提交的 PR 将不会被审查或合并。DCO 签核很容易做到，也很容易忘记。
 
-A DCO signature appears in the last part of your commit message in the form `Signed-off-by: user.name <user.email>"`, where _user.name_ and _user.email_ are the `user.name` and `user.email`, respectively, from your `.gitconfig` file.
+DCO 签名以`Signed-off-by: user.name <user.email>"` 的形式出现在提交消息的最后部分，其中 _user.name_ 和 _user.email_ 分别是`.gitconfig`文件中的`user.name` 和 `user.email`。
 
 {{< important >}}
-In some cases, you may need to manually add a `Signed-off-by:` line to your commit message, for example if you're using a GUI tool that doesn't support DCO sign off. 
-For GitHub accounts created prior to July 18, 2017, use `username@users.noreply.github.com` as the email address. For accounts created after that date, use your GitHub-provided no-reply email address. The new no-reply email address is a seven-digit ID number and your username in the form of `ID+username@users.noreply.github.com` which can be found in the email tab of your GitHub account settings. For more information about setting your commit email address, refer to the [Setting your commit email address instructions](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address).
+在某些情况下，你可能需要在你的提交信息中手动添加一行`Signed-off-by:`，例如，如果你使用的 GUI 工具不支持 DCO signoff。
+对于 2017 年 7 月 18 日之前创建的 GitHub 帐户，请使用`username@users.noreply.github.com`作为电子邮件地址。对于在该日期之后创建的帐户，请使用 GitHub 提供的 no-reply 电子邮件地址。新的未回复电子邮件地址是一个七位数的 ID 号和`ID+username@users.noreply.github.com`形式的用户名，可以在 GitHub 帐户设置的电子邮件选项卡中找到。 有关设置提交电子邮件地址的更多信息，请参阅 [设置提交电子邮件地址说明](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address).
 {{< /important >}}
 
-### Preview your docs
+### 预览您的文档
 
-As you write, you should preview of your docs to ensure it's in the correct format. Because the o3de.org website is built on Hugo, the best way to preview your docs is by running Hugo on your local machine. For information on how to set up and use Hugo, refer to the o3de.org [`README.md`](https://github.com/o3de/o3de.org#readme) file. 
+在你写作的时候，你应该预览你的文档，以确保它的格式正确。由于 o3de.org 网站基于 Hugo 构建，因此预览文档的最佳方式是在本地计算机上运行 Hugo。有关如何设置和使用 Hugo 的信息，请参阅 o3de.org [`README.md`](https://github.com/o3de/o3de.org#readme)文件。
 
-Additionally, a quick way to preview your docs is by using VS Code's [Editor and preview synchronization](https://code.visualstudio.com/docs/languages/markdown#_editor-and-preview-synchronization) feature for Markdown. This feature is limited to VS Code's Markdown support, so it won't render any features that are unique to Hugo, such as shortcodes. 
+此外，预览文档的一种快速方法是使用 VS Code 的 Markdown 的 [编辑器和预览同步](https://code.visualstudio.com/docs/languages/markdown#_editor-and-preview-synchronization)功能。此功能仅限于 VS Code 的 Markdown 支持，因此它不会呈现 Hugo 独有的任何功能，例如短代码。
 
-Finally, you can view and share a preview of your docs when they are in a PR. The Netlify web deployment service creates a preview for each PR. This takes a few minutes to deploy after creating the PR, and refreshes every time you push a commit. You can access the deployed preview at the bottom of the PR webpage: Find **netlify/o3deorg/deploy-preview — Deploy Preview ready!** and click **Details**. 
-
-
-## Submitting docs
-
-When you make changes or create new docs, you must create a pull request (PR) for review before the changes can be merged into `o3de.org`. PRs allow peer contributors to review contributions for several potential issues, including technical accuracy, spelling, grammar, clarity, and style. 
-
-The current list of active PRs is here [O3DE repository pull requests (PRs)](https://github.com/o3de/o3de.org/pulls).
+最后，当文档位于 PR 中时，您可以查看和共享文档的预览。Netlify Web 部署服务为每个 PR 创建一个预览。创建 PR 后，这需要几分钟来部署，并且每次推送提交时都会刷新。您可以在 PR 网页底部访问已部署的预览版：找到 **netlify/o3deorg/deploy-preview — Deploy Preview ready！** 并单击 **详细信息**。
 
 
-### Create a PR
+## 提交文档
 
-PRs are created in the GitHub web interface from your branch. Go to your fork on GitHub and perform the steps below.
+当您进行更改或创建新文档时，必须先创建拉取请求 （PR） 以供审核，然后才能将更改合并到 `o3de.org`中。PR 允许同行贡献者审查几个潜在问题的贡献，包括技术准确性、拼写、语法、清晰度和风格。
 
-1. In the **Pull Request** tab, select the green **New pull request** button to create a new PR.
+当前活动 PR 的列表在这里 [O3DE 存储库拉取请求 （PRs）](https://github.com/o3de/o3de.org/pulls)。
 
-1. In the **Comparing changes** page, you will compare your fork's branch against the remote source's branch. Ensure that the **base**, which you're comparing against, points to `o3de/o3de.org:main` or `o3de/o3de.org:development`. The **head repository** should be your fork. Then, in the **compare** dropdown, choose the branch that you want to submit.
 
-1. Verify that the changed files contains only the changes you want to submit. Only the commits you made should be listed. If there are more commits than you expected, stop here and make sure to properly sync your branch using the fetch, merge, and push commands from the [iteration steps](#sync-write-add-commit-and-push) explained earlier.
+### 创建 PR
 
-1. Choose the green **Create pull request** button to open the **Open a pull request** page. 
+PR 是在分支的 GitHub Web 界面中创建的。转到 GitHub 上的分支并执行以下步骤。
 
-1. Add a descriptive title and description. Be sure to include the issue number in the title of the PR if the PR is addressing an existing issue.
+1. 在 **Pull Request** 选项卡中，选择绿色的 **New pull request** 按钮以创建新的 PR。
 
-1. In **Reviewers**, add **o3de/docs-reviewers** so they can review your PR. Add additional reviewers as appropriate. If you are submitting technical docs, add reviewers who can verify the technical accuracy of your docs. 
+1. 在 **Comparing changes** 页面中，您将 fork 的分支与远程源的分支进行比较。确保你正在比较的 **base** 指向 `o3de/o3de.org:main` 或 `o3de/o3de.org:development`。**head repository** 应该是您的复刻。然后，在 **compare** 下拉列表中，选择要提交的分支。
 
-1. Choose the **Create pull request** to submit the PR.
+1. 验证更改的文件是否仅包含要提交的更改。只应列出您所做的提交。如果提交数量超出预期，请在此处停止，并确保使用前面解释的 [迭代步骤](#sync-write-add-commit-and-push) 中的 fetch、merge 和 push 命令正确同步您的分支。
 
-If you go to the main o3de.org repo on GitHub and refer to [O3DE repository pull requests (PRs)](https://github.com/o3de/o3de.org/pulls), your new PR appears at the top of the list.
+1. 选择绿色的 **Create pull request** 按钮以打开 **Open a pull request** 页面。
 
-For more information on creating a pull request, refer to [Creating a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
+1. 添加描述性标题和说明。如果 PR 正在解决现有问题，请务必在 PR 的标题中包含问题号。
 
-### Respond to feedback
+1. 在 **审阅者**中，添加 **o3de/docs-reviewers**，以便他们可以审阅您的 PR。根据需要添加其他审阅者。如果您要提交技术文档，请添加可以验证文档技术准确性的审阅者。
 
-Feedback comes in the form of comments that you can address by editing files in your local branch, and *suggestions* that can be committed from the GitHub PR interface. It's important to understand that the PR process is a collaborative discussion. Every comment does not need to be addressed, and every suggestion does not need to be integrated. When the required number of reviewers approve of your contribution, it can be integrated. Here are a few tips for addressing suggestions and comments:
+1. 选择 **Create pull request** 以提交 PR。
 
-* To commit multiple suggestions, use the batch functionality to integrate multiple suggestions in a single commit.
-* Do try to acknowledge all the feedback you are given. This doesn't mean to integrate every comment and commit every suggestion. It simply means to avoid resolving comments and suggestions without action or a response. Embrace collaboration.
-* When addressing comments, maintain the relative conversation in the PR, edit the topics as necessary, and commit the changes to your fork/branch. Your new commits will be automatically added to the PR.
-* Make sure to request a re-review of your new commits if required.
+如果您转到 GitHub 上的主 o3de.org 存储库并参考 [O3DE 存储库拉取请求 （PR）](https://github.com/o3de/o3de.org/pulls)，您的新 PR 将显示在列表顶部。
 
-For more information on incorporating PR feedback, refer to [Incorporating feedback in your pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request).
+有关创建拉取请求的更多信息，请参阅 [创建拉取请求](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)。
 
-### The PR merge
+### 回复反馈
 
-When you have an approval from at least one docs reviewer and at least one technical reviewer, your PR can be merged. Never merge your own PRs. Docs maintainers are responsible for merging the PR.
+反馈的形式是评论，你可以通过编辑本地分支中的文件来解决这些评论，以及可以从 GitHub PR 界面提交的*建议*。重要的是要了解 PR 过程是一个协作讨论。每条评论都不需要处理，每个建议都不需要整合。当所需数量的审阅者批准您的贡献时，可以对其进行集成。以下是处理建议和评论的一些提示：
+
+* 要提交多个建议，请使用批处理功能将多个建议集成到单个提交中。
+* 请尽量确认您收到的所有反馈。这并不意味着整合每条评论并提交每条建议。它只是意味着避免在没有行动或回应的情况下解决评论和建议。拥抱协作。
+* 在处理评论时，在 PR 中保持相对对话，根据需要编辑主题，并将更改提交到你的 fork/branch。你的新提交将自动添加到 PR 中。
+* 如果需要，请务必请求重新审核您的新提交。
+
+有关合并 PR 反馈的更多信息，请参阅 [在拉取请求中合并反馈](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request)。
+
+### PR 合并
+
+当你获得至少一名文档审核人和至少一名技术审核人的批准时，你的 PR 可以合并。永远不要合并你自己的 PR。Docs 维护者负责合并 PR。

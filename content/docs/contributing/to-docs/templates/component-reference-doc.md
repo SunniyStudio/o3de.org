@@ -1,30 +1,30 @@
 ---
-linkTitle: Component Reference Document
-title: Writing an O3DE Component Reference Document
-description: Guidelines for writing a component reference document for Open 3D Engine (O3DE) using the component reference document template. 
+linkTitle: 组件参考文档
+title: 编写 O3DE 组件参考文档
+description: 使用组件参考文档模板为 Open 3D Engine （O3DE） 编写组件参考文档的准则。
 weight: 200
 toc: true
 ---
 
-This topic guides you through the writing process for an **Open 3D Engine (O3DE)** component reference document.
+本主题将指导您完成 **Open 3D Engine （O3DE）** 组件参考文档的编写过程。
 
-The workflow: 
+工作流程：
 
-1. [Determine if your document belongs in the O3DE Component Reference.](#does-my-document-belong-in-the-o3de-component-reference) 
+1. [确定您的文档是否属于 O3DE Component Reference。](#does-my-document-belong-in-the-o3de-component-reference) 
 
-2. [Set up the repository and download the component reference document template.](#setting-up-repository-and-downloading-component-template)
+2. [设置存储库并下载组件参考文档模板。](#setting-up-repository-and-downloading-component-template)
 
-3. [Follow the writing guidelines to help you fill in the template.](#writing-a-component-reference-document)
+3. [遵循编写指南来帮助您填写模板。](#writing-a-component-reference-document)
 
-4. [Determine where your component reference document belongs in the o3de.org folder.](#where-does-the-component-reference-document-live)
+4. [确定元件参考文档在 o3de.org 文件夹中的所属位置。](#where-does-the-component-reference-document-live)
 
-5. [Store the images that are in your document in the correct folder.](#storing-image-files)
+5. [将文档中的图像存储在正确的文件夹中。](#storing-image-files)
 
-6. [Update the O3DE Component Reference to list your document.](#updating-the-o3de-component-reference)
+6. [更新 O3DE 组件引用以列出您的文档。](#updating-the-o3de-component-reference)
 
-7. [Submit your document to O3DE Documentation.](#submit-your-component-reference-document)
+7. [将您的文档提交到 O3DE 文档。](#submit-your-component-reference-document)
 
-All documentation must adhere to the standards outlined in the O3DE [Style Guide](/docs/contributing/to-docs/style-guide/) and [Terminology](/docs/contributing/to-docs/terminology/). If you need any help, reach out to the Documentation and Community Special Interest Group (#sig-docs-community) on [Discord](https://discord.com/invite/o3de). 
+所有文档必须遵守 O3DE [风格指南](/docs/contributing/to-docs/style-guide/) 和 [术语](/docs/contributing/to-docs/terminology/) 中概述的标准。如果您需要任何帮助，请在 [Discord](https://discord.com/invite/o3de) 上联系文档和社区特别兴趣小组 （#sig-docs-community）。
 
 
 ## Does my document belong in the O3DE Component Reference?
@@ -40,9 +40,9 @@ To contribute to O3DE documentation, you must complete the steps in [Setting up 
 In a new tab, navigate to the file [component reference template](https://raw.githubusercontent.com/o3de/sig-docs-community/main/doc-templates/component-reference.md) in the o3de/sig-docs-community repository and save it to your local machine. Open the template in a text editor and refer to this page as you fill it out.
 
 
-## Writing a component reference document
+## 编写组件参考文档
 
- The following sections walk you through how to fill in each section of the component reference template. Some sections are optional and may not be needed for your component, so you can remove those sections as needed. 
+以下部分将指导您如何填写组件引用模板的每个部分。有些部分是可选的，您的组件可能不需要，因此您可以根据需要删除这些部分。
 
 ### Metadata
 
@@ -64,22 +64,21 @@ toc: true
 ```
 
 
-### Introduction
+### 简介
 
+介绍组件及其功能。
 
-Introduce the component and what it does. 
+**规格**：
 
-**Specifications**:
+* 从用户的角度描述组件，而不是设计实现。
 
-* Describe the component from the user's perspective, not the design implementation. 
+* 您可以总结作为功能核心的技术信息，但不需要包括您做出该设计决策的原因。
 
-* You can summarize technical information that are core to your feature, but you don't need to include why you came to that design decision. 
+* 如果组件是 Level 组件，或者是应用于 Level 实体的组件，请明确提及。
 
-* If the component is a level component, or a component that's applied to the Level entity, explicitly mention that.
+* 简介是页面上的第一段，紧跟在元数据之后。它可以是一到几个段落，具体取决于组件的复杂程度。
 
-* The introduction is the first paragraph on the page, immediately after the metadata. It can be one to a few paragraphs, depending on the component's complexity.
-
-See `component-reference.md`:
+查看 `component-reference.md`:
 ```md
 
 <!-- Introduction - Describe the component and what it does. -->

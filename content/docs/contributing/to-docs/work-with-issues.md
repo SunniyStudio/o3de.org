@@ -1,57 +1,57 @@
 ---
-linkTitle: Work with Issues
-title: Work with O3DE Documentation Issues
-description: Guide to create and work with issues in the Open 3D Engine (O3DE) documentation project.  
+linkTitle: 处理问题
+title: 处理 O3DE 文档问题
+description: 创建和处理 Open 3D Engine （O3DE） 文档项目中的问题的指南。
 toc: true
 weight: 300
 ---
 
-The easiest way to contribute to **Open 3D Engine (O3DE)** documentation is to file an *issue* on GitHub. In O3DE documentation, issues are used to track documentation bugs, requests for new documentation, suggestions, and improvements. You can also search existing O3DE documentation issues for tasks that you would like to address and comment on. To see the current list of O3DE documentation issues, refer to [o3de.org issues](https://github.com/o3de/o3de.org/issues)
+为 Open 3D Engine （O3DE） 文档做出贡献的最简单方法是在 GitHub 上提交 *issue*。在 O3DE 文档中，议题用于跟踪文档错误、新文档请求、建议和改进。您还可以搜索现有的 O3DE 文档问题，以查找要解决和评论的任务。要查看 O3DE 文档问题的当前列表，请参阅 [o3de.org 问题](https://github.com/o3de/o3de.org/issues)
 
-Refer to [GitHub issues](https://guides.github.com/features/issues/) for an overview of GitHub issues.
+请参阅 [GitHub issues](https://guides.github.com/features/issues/) 了解 GitHub 问题的概述。
 
-## Search O3DE documentation issues
+## 搜索 O3DE 文档问题
 
-Always search the existing issues before creating a new issue to avoid duplicating issues. You can search O3DE documentation issues using the search field at the top of the [issues list](https://github.com/o3de/o3de.org/issues). Without any filters, search will return issues and pull requests (PRs). Use `is:issue` and `is:open` to filter the results to show only open issues. You can use the **Filters** list on the left to select some quick filters such as your issues, or every issue mentioning you. You can use `"` enclosed strings to search for specific text in issues. One of the most important filters is `label:`. O3DE documentation issues often have multiple labels to make it easier to find issues of a specific type. Refer to the following example:
+在创建新问题之前，请始终搜索现有问题，以避免重复问题。您可以使用 [问题列表](https://github.com/o3de/o3de.org/issues) 顶部的搜索字段搜索 O3DE 文档问题。如果没有任何筛选条件，搜索将返回议题和拉取请求 （PR）。使用`is:issue` 和 `is:open`筛选结果以仅显示未解决的问题。您可以使用左侧的 **Filters** 列表来选择一些快速过滤器，例如您的问题或提及您的每个问题。您可以使用 `"` 括起来的字符串来搜索期刊中的特定文本。最重要的过滤器之一是 `label:`。O3DE 文档问题通常具有多个标签，以便更轻松地查找特定类型的问题。请参阅以下示例：
 
 [Search results, good first issue](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3Agood-first-issue)
 
-In the search results above, the search string `is:open is:issue label:good-first-issue` returns all open O3DE documentation issues with the `good-first-issue` label. These are issues that have been determined to be good entry points for new contributors.
+在上面的搜索结果中，搜索字符串 `is:open is:issue label:good-first-issue` 返回所有带有 `good-first-issue` 标签的未解决的 O3DE 文档问题。这些问题已被确定为新贡献者的良好切入点。
 
-For complete documentation on searching issues on GitHub, refer to [Searching issues and pull requests](https://docs.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests).
+有关在 GitHub 上搜索问题的完整文档，请参阅 [搜索问题和拉取请求](https://docs.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests)。
 
-## O3DE documentation issue labels
+## O3DE文档问题标签
 
-O3DE documentation uses labels to organize issues and pull requests. For the current list of labels, refer to [O3DE documentation labels](https://github.com/o3de/o3de.org/labels).
+O3DE 文档使用标签来组织问题和拉取请求。有关当前标签列表，请参阅 [O3DE 文档标签](https://github.com/o3de/o3de.org/labels)。
 
-Labels are provided by the O3DE Documentation and Community Special Interest Group (D&C SIG). Not all labels in the list are meant to be applied to issues, and not every issue must have a label. That said, if you find that one or more labels in the list apply to an issue, we encourage you to add them! Labels make it much easier to find and prioritize issues, and can help contributors address bugs and respond to requests much more quickly.
+标签由 O3DE 文档和社区特别兴趣小组 （D&C SIG） 提供。并非列表中的所有标签都适用于议题，也不是每个议题都必须有标签。也就是说，如果您发现列表中的一个或多个标签适用于某个问题，我们鼓励您添加它们！标签使查找问题和确定问题的优先级变得更加容易，并且可以帮助贡献者更快地解决错误和响应请求。
 
-Though there are dozens of labels available, some labels of particular interest are demonstrated in the table below.
+尽管有数十个标签可用，但下表中显示了一些特别感兴趣的标签。
 
-| Label | Usage | Open issues |
+|标签 |用法 |未解决的问题 |
 | - | - | - |
-| `good-first-issue` | Good issues for new contributors. | [Good first issues](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3Agood-first-issue) |
-| `tutorial` | Requests for new tutorials. | [Tutorial issues](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3Atutorial) |
-| `enhancement` | Requests for new documentation and website features. | [Enhancement issues](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement+) |
+| `good-first-issue` | 对新贡献者来说是个好问题。 | [Good first issues](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3Agood-first-issue) |
+| `tutorial` | 请求新教程。 | [Tutorial issues](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3Atutorial) |
+| `enhancement` | 请求新的文档和网站功能。 | [Enhancement issues](https://github.com/o3de/o3de.org/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement+) |
 
-## Create O3DE documentation issues
+## 创建 O3DE 文档问题
 
-In an ideal scenario, every PR that's submitted to the repository will have an associated issue. Working from issues can improve the quality of PR submissions and the speed of PR reviews because issues can be clarified and refined through discussion before any work is done. For information on creating issues on GitHub, refer to [Creating an issue](https://docs.github.com/en/github/managing-your-work-on-github/creating-an-issue).
+在理想情况下，提交到存储库的每个 PR 都将有一个关联的问题。根据问题进行工作可以提高 PR 提交的质量和 PR 审查的速度，因为在完成任何工作之前，可以通过讨论来澄清和完善问题。有关在 GitHub 上创建问题的信息，请参阅 [创建问题](https://docs.github.com/en/github/managing-your-work-on-github/creating-an-issue)。
 
-When creating new issues keep the following in mind:
+创建新问题时，请记住以下几点：
 
-* Give the issue a concise title that clearly identifies the request.
+* 为问题提供一个简洁的标题，以清楚地标识请求。
 
-* Each issue should be for a single request. If the request is large enough, like a major new feature or site section, it may be split in triage.
+* 每个问题都应该针对一个请求。如果请求足够大，例如主要新功能或网站部分，则可以将其拆分为分类。
 
-* Provide as much information as you think is relevant for resolving your issue. Include things like URLs for the site, and browser versions for rendering issues.
+* 提供您认为与解决问题相关的尽可能多的信息。包括站点的 URL 和用于呈现问题的浏览器版本等内容。
 
-* Use appropriate labels. Correct labels help with triage and make it easier for contributors to find something suited to their skills.
+* 使用适当的标签。正确的标签有助于分类，并使贡献者更容易找到适合其技能的内容。
 
-* For technical issues include steps to reproduce the issue along with information that might be relevant, such as your browser version.
+* 对于技术问题，包括重现问题的步骤以及可能相关的信息，例如您的浏览器版本。
 
-* Respond to comments on issues you create. Providing additional information and actively participating with contributors can help address your issues more quickly.
+* 回复对您创建的问题的评论。提供其他信息并积极参与贡献者有助于更快地解决您的问题。
 
-## Assign O3DE documentation issues
+## 分配 O3DE 文档问题
 
-If you see an issue in the list that you would like to address, you can assign it to yourself. To assign an issue to yourself, go to the issue's description and choose **assign yourself** in the **Assignees** group on the right. If the issue already has an assignee but does not have recent activity, request a status update by commenting on the issue before making any changes to the issue assignment.
+如果您在列表中看到要解决的问题，可以将其分配给自己。要将问题分配给自己，请转到问题描述，然后在右侧的 **Assignees** 组中选择 **assign yourself**。如果问题已经有受理人但没有最近的活动，请在对问题分配进行任何更改之前通过评论问题来请求状态更新。

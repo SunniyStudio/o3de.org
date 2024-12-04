@@ -1,12 +1,12 @@
 ---
-linkTitle: Templates
-title: Templates for O3DE Documentation
-description: Download templates and follow supplemental guidelines for writing O3DE documentation.  
+linkTitle: 模板
+title: O3DE 文档模板
+description: 下载模板并遵循编写 O3DE 文档的补充指南。 
 weight: 1000
 ---
 
-Download templates and follow supplemental guidelines for writing O3DE documentation.  
+下载模板并遵循编写 O3DE 文档的补充指南。 
 
-| Topic | Description | Template | 
+|主题 |描述 |模板 |
 | - | - | - |
-| [Writing an O3DE Component Reference Document](component-reference-doc) | Guidelines for writing an O3DE component reference document using the component reference document template.  | [Component reference template](https://raw.githubusercontent.com/o3de/sig-docs-community/main/doc-templates/component-reference.md) |
+| [编写 O3DE 组件参考文档](component-reference-doc) | 使用组件参考文档模板编写 O3DE 组件参考文档的准则。  | [组件参考模板](https://raw.githubusercontent.com/o3de/sig-docs-community/main/doc-templates/component-reference.md) |

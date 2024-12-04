@@ -1,7 +1,7 @@
 ---
-linkTitle: 预制件系统
-title: O3DE 预制件系统开发人员指南
-description: 了解 O3DE 中默认的场景制作系统--预制件系统。
+linkTitle: Prefab系统
+title: O3DE Prefab系统开发人员指南
+description: 了解 O3DE 中默认的场景制作系统--Prefab系统。
 weight: 100
 ---
 
@@ -10,10 +10,10 @@ weight: 100
 |:----------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Entity          | 定义实体属性和行为的组件集合。                                                                                                                                                                                                                                                            |
 | Component       | 有助于定义实体行为的一组属性。                                                                                                                                                                                                                                                            |
-| Prefab Template | 预制件在内存中的表示。它表示加载到内存中的 prefab 的当前状态。这包括从磁盘加载的文件以及在其上应用的任何更改。                                                                                                                                                                                                                |
-| Prefab Instance | 使用预制件模板实例化的实际预制件游戏对象。单个预制件模板可用于实例化任意数量的预制件实例。                                                                                                                                                                                                                              |
+| Prefab Template | Prefab在内存中的表示。它表示加载到内存中的 prefab 的当前状态。这包括从磁盘加载的文件以及在其上应用的任何更改。                                                                                                                                                                                                                |
+| Prefab Instance | 使用Prefab模板实例化的实际Prefab游戏对象。单个Prefab模板可用于实例化任意数量的Prefab实例。                                                                                                                                                                                                                              |
 | Link            | 用于表达源模板和目标模板之间连接的对象。它包含一个补丁列表。                                                                                                                                                                                                                                             |
-| Patch           | 代表应用于嵌套预制件实例顶部的 JSON 补丁，以区别于从同一模板（源模板）实例化的其他嵌套实例。                                                                                                                                                                                                                          |
+| Patch           | 代表应用于嵌套Prefab实例顶部的 JSON 补丁，以区别于从同一模板（源模板）实例化的其他嵌套实例。                                                                                                                                                                                                                          |
 | DOM             | 即文档对象模型。它是一种与语言无关的逻辑模型，以树状分层结构表示任何对象数据，树中的每个节点都包含数据的一些相关信息。在预制系统中，DOM 值由 [RapidJSON](https://rapidjson.org/) 对象表示。预制 DOM 类型在[`PrefabDomTypes`](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabDomTypes.h)中定义。 |
 
 
@@ -22,17 +22,17 @@ weight: 100
 ## 概述
 <!-- <a name="overview"> -->
 
-要了解什么是预制件，我们首先需要了解什么是实体。实体是基础游戏对象，封装了构建游戏世界所需的逻辑。实体由定义其属性的组件组成。有关实体和组件的更多信息，请参阅[组件开发指南](/docs/user-guide/programming/components)。
+要了解什么是Prefab，我们首先需要了解什么是实体。实体是基础游戏对象，封装了构建游戏世界所需的逻辑。实体由定义其属性的组件组成。有关实体和组件的更多信息，请参阅[组件开发指南](/docs/user-guide/programming/components)。
 
-预制件的作用是轻松构建和修改大型复杂的游戏世界。创建大型世界通常需要在世界中复制大量实体。虽然只需创建大量实体并在编辑器中进行复制即可实现这一目的，但要对其进行修改却成了一件麻烦事，因为您必须进入每个实体并进行相同的修改。您还必须建立自定义跟踪机制，以确定在世界的哪些区域修改哪些实体。此外，您可能还希望某些实体保留其原有属性，而不与其他实体一起更改。所有这些问题都可以通过预制件来解决。
+Prefab的作用是轻松构建和修改大型复杂的游戏世界。创建大型世界通常需要在世界中复制大量实体。虽然只需创建大量实体并在编辑器中进行复制即可实现这一目的，但要对其进行修改却成了一件麻烦事，因为您必须进入每个实体并进行相同的修改。您还必须建立自定义跟踪机制，以确定在世界的哪些区域修改哪些实体。此外，您可能还希望某些实体保留其原有属性，而不与其他实体一起更改。所有这些问题都可以通过Prefab来解决。
 
-简单地说，预制件就是实体和嵌套预制件的集合。接下来的章节将介绍如何使用实体和嵌套预制件的集合来解决上述问题以及其他更多问题。
+简单地说，Prefab就是实体和嵌套Prefab的集合。接下来的章节将介绍如何使用实体和嵌套Prefab的集合来解决上述问题以及其他更多问题。
 
 
-### 预制件文件格式
+### Prefab文件格式
 <!-- <a name="prefab-file-format"> -->
 
-预制件文件使用 JSON 格式。预制文件包含以下字段。
+Prefab文件使用 JSON 格式。预制文件包含以下字段。
 
 - **Container Entity**  : 包装实体，是包含在 prefab 中的所有其他实体和嵌套 prefab 的父实体。在<a href="/docs/user-guide/editor/entity-outliner/">Entity Outliner</a>中，这也用于区分 prefab 和普通实体。一个 prefab 必须有一个容器实体。
 
@@ -42,9 +42,9 @@ weight: 100
 
     - **Source** : 嵌套的 prefab 需要加载的 prefab 文件的相对路径。
 
-    - **Patches** : 应用于嵌套预制件顶部的更改列表。
+    - **Patches** : 应用于嵌套Prefab顶部的更改列表。
 
-例如，这是一个包含单个实体和单个嵌套预制件的预制件：
+例如，这是一个包含单个实体和单个嵌套Prefab的Prefab：
 
 <details>
 <summary>Car.prefab</summary>
@@ -192,51 +192,51 @@ weight: 100
 ```
 </details>
 
-要查看预制件和实体在实体大纲视图中的样子，请参阅 [实体和预制件基础知识](/docs/learning-guide/tutorials/entities-and-prefabs/entity-and-prefab-basics/)。
+要查看Prefab和实体在实体大纲视图中的样子，请参阅 [实体和Prefab基础知识](/docs/learning-guide/tutorials/entities-and-prefabs/entity-and-prefab-basics/)。
 
-### 预制件模板
+### Prefab模板
 <!-- <a name="prefab-template"> -->
 
-**预制件模板**是预制件在内存中的表示。它代表加载到内存中的预制件的当前状态。这包括从磁盘加载的文件 DOM 和所需的附加元数据。加载后，您可以继续对模板 DOM 进行更多更改，而无需每次编辑都将模板保存到文件中。此外，模板对象还存储了一个链接对象容器，代表此模板与其他模板之间的连接。
+**Prefab模板**是Prefab在内存中的表示。它代表加载到内存中的Prefab的当前状态。这包括从磁盘加载的文件 DOM 和所需的附加元数据。加载后，您可以继续对模板 DOM 进行更多更改，而无需每次编辑都将模板保存到文件中。此外，模板对象还存储了一个链接对象容器，代表此模板与其他模板之间的连接。
 
-每个模板都有一个唯一的标识符 `TemplateId`，它是一个由 `PrefabSystemComponent`分配的无符号整数。模板 ID 与模板对象的映射关系由系统组件维护。预制件模板与预制件文件之间是一对一的关系。
+每个模板都有一个唯一的标识符 `TemplateId`，它是一个由 `PrefabSystemComponent`分配的无符号整数。模板 ID 与模板对象的映射关系由系统组件维护。Prefab模板与Prefab文件之间是一对一的关系。
 
-例如，如果有一个名为`Bike.prefab`的预制件文件，则只有一个模板与之关联。只有将预制件加载到编辑器中，才会创建模板。
+例如，如果有一个名为`Bike.prefab`的Prefab文件，则只有一个模板与之关联。只有将Prefab加载到编辑器中，才会创建模板。
 
 ![Template-file relationship](images/PrefabTemplate.png)
 
 | 代码                                                                                                                                                     | 说明                       |
 |:-------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------|
-| [Template](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Template/Template.h)                  | 表示加载预制件时创建的模板对象的类。       |
-| [PrefabSystemComponent](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabSystemComponent.h) | 管理模板、链接和实例等预制件对象的单例系统组件。 |
+| [Template](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Template/Template.h)                  | 表示加载Prefab时创建的模板对象的类。       |
+| [PrefabSystemComponent](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabSystemComponent.h) | 管理模板、链接和实例等Prefab对象的单例系统组件。 |
 
 
-### 预制件实例
+### Prefab实例
 <!-- <a name="prefab-instance"> -->
 
-**预制件实例**定义了一个预制件对象，它代表了存储在预制件模板中的 DOM。与模板 DOM 类似，预制件实例也有用于容器实体、实体和嵌套实例的成员变量。预制件模板和预制件实例之间是一对多的关系。
+**Prefab实例**定义了一个Prefab对象，它代表了存储在Prefab模板中的 DOM。与模板 DOM 类似，Prefab实例也有用于容器实体、实体和嵌套实例的成员变量。Prefab模板和Prefab实例之间是一对多的关系。
 
-例如，如果文件中有一个 “Car”预制件，那么就会定义一个 “Car”模板。使用该单一汽车模板可以生成许多实例。可以通过使用 `InstanceSerializer::Load()` 方法将 DOM 反序列化为实例对象来填充预制件实例。预制件实例也可以通过直接添加实体从头开始构建。与模板类似，预制件实例也可以通过使用 `InstanceSerializer::Store()` 方法转换为 DOM 格式。预制件序列化和反序列化将在下一节详细讨论。
+例如，如果文件中有一个 “Car”Prefab，那么就会定义一个 “Car”模板。使用该单一汽车模板可以生成许多实例。可以通过使用 `InstanceSerializer::Load()` 方法将 DOM 反序列化为实例对象来填充Prefab实例。Prefab实例也可以通过直接添加实体从头开始构建。与模板类似，Prefab实例也可以通过使用 `InstanceSerializer::Store()` 方法转换为 DOM 格式。Prefab序列化和反序列化将在下一节详细讨论。
 
 ![Prefab-Instance Relationship](images/PrefabInstance.png)
 
 | 代码                                                                                                                                                          | 说明                                    |
 |:------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------|
-| [Instance](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/Instance.h)                       | 表示从预制件模板实例化的实例对象的类。                   |
-| [InstanceSerializer](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/InstanceSerializer.cpp) | 类，用于将 DOM 加载到预制件实例中，并将预制件实例存储到 DOM 中。 |
+| [Instance](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/Instance.h)                       | 表示从Prefab模板实例化的实例对象的类。                   |
+| [InstanceSerializer](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Instance/InstanceSerializer.cpp) | 类，用于将 DOM 加载到Prefab实例中，并将Prefab实例存储到 DOM 中。 |
 
 
-### 预制件链接
+### Prefab链接
 <!-- <a name="prefab-link"> -->
 
-**预制件链接**定义了两个模板的连接方式。链接存在于两个模板之间，由 `LinkId`（类似于 `TemplateId`的唯一整数）标识，并由源模板 id 和目标模板 id 定义。目标模板中的嵌套实例指向源模板。
+**Prefab链接**定义了两个模板的连接方式。链接存在于两个模板之间，由 `LinkId`（类似于 `TemplateId`的唯一整数）标识，并由源模板 id 和目标模板 id 定义。目标模板中的嵌套实例指向源模板。
 
 ```
 Bike       (Bike.prefab)
 | Wheel    (Wheel.prefab)
 ```
 
-在上述 “Bike”和 “Wheel”模板之间的链接示例中，目标模板是与 “Bike.prefab ”文件相对应的模板，源模板是与 “Wheel.prefab ”文件相对应的模板。加载目标模板时，预制件系统组件会在两个相关模板之间创建一个链接，并维护链接 id 到链接对象的映射。
+在上述 “Bike”和 “Wheel”模板之间的链接示例中，目标模板是与 “Bike.prefab ”文件相对应的模板，源模板是与 “Wheel.prefab ”文件相对应的模板。加载目标模板时，Prefab系统组件会在两个相关模板之间创建一个链接，并维护链接 id 到链接对象的映射。
 
 链接对象的关键成员之一是链接 DOM，它包含源模板的文件路径和要应用到源模板上的补丁列表。链接 DOM 可能包含补丁，也可能不包含补丁。在没有补丁的情况下，目标模板只需获取源模板的模板 DOM。
 
@@ -248,20 +248,20 @@ Bike       (Bike.prefab)
 
 | 代码                                                                                                                        | 说明                  |
 |:--------------------------------------------------------------------------------------------------------------------------|:--------------------|
-| [Link](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Link/Link.h) | 表示连接两个预制件模板的链接对象的类。 |
+| [Link](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/Link/Link.h) | 表示连接两个Prefab模板的链接对象的类。 |
 
 
 
 
 
-## 加载和保持预制件
+## 加载和保持Prefab
 <!-- <a name="loading-and-saving"> -->
 
-加载预制件文件时，我们会创建一个与之相关的预制件模板。同样，当需要将预制件存储到文件中时，我们会提取相应的模板并将其保存到文件中。这一过程由 `PrefabLoader` 实现，它遵循处理模板 DOM 的三个关键步骤：
+加载Prefab文件时，我们会创建一个与之相关的Prefab模板。同样，当需要将Prefab存储到文件中时，我们会提取相应的模板并将其保存到文件中。这一过程由 `PrefabLoader` 实现，它遵循处理模板 DOM 的三个关键步骤：
 
 1. 从JSON字符串创建模板DOM
 1. 展开嵌套实例
-1. 处理预制件模板
+1. 处理Prefab模板
 
 
 ### 从JSON字符串创建模板DOM
@@ -306,7 +306,7 @@ Bike       (Bike.prefab)
 ![Conversion between prefab file and template](images/PrefabNestedInstances.png)
 
 
-### 处理预制件模板
+### 处理Prefab模板
 <!-- <a name="sanitize-prefab-templates"> -->
 
 JSON 序列化器的默认行为是将类型的默认值排除在序列化到 JSON 之外。例如，如果一个组件的属性默认值为零，除非该值不为零，否则在组件序列化生成 JSON 时，该属性将被剔除。这样做的目的是使文件中的序列化 JSON 字符串保持紧凑。遗憾的是，这使得从文件中加载 JSON 字符串变得有点麻烦。如果文件中没有某个值，就根本无法读取。
@@ -317,15 +317,15 @@ JSON 序列化器的默认行为是将类型的默认值排除在序列化到 JS
 
 | 代码                                                                                                                                   | 说明                          |
 |:-------------------------------------------------------------------------------------------------------------------------------------|:----------------------------|
-| [PrefabLoader](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabLoader.h) | 类，用于将预制件文件加载到模板和将模板保存到预制文件。 |
+| [PrefabLoader](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabLoader.h) | 类，用于将Prefab文件加载到模板和将模板保存到预制文件。 |
 
 
 
 
-## 关卡预制件
+## 关卡Prefab
 <!-- <a name="level-as-prefab"> -->
 
-所有实体和预制件都放置在关卡之下。关卡只是另一种预制件。与其他预制件一样，关卡预制件必须有一个容器实体，并且可以包含实体和实例（如果有的话）。
+所有实体和Prefab都放置在关卡之下。关卡只是另一种Prefab。与其他Prefab一样，关卡Prefab必须有一个容器实体，并且可以包含实体和实例（如果有的话）。
 
 ```json
 {
@@ -345,7 +345,7 @@ JSON 序列化器的默认行为是将类型的默认值排除在序列化到 JS
 
 | 代码                                                                                                                                                                               | 说明                |
 |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------|
-| [PrefabEditorEntityOwnershipService](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Entity/PrefabEditorEntityOwnershipService.h) | 拥有并管理关卡预制件实例的单例类。 |
+| [PrefabEditorEntityOwnershipService](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Entity/PrefabEditorEntityOwnershipService.h) | 拥有并管理关卡Prefab实例的单例类。 |
 
 
 
@@ -354,7 +354,7 @@ JSON 序列化器的默认行为是将类型的默认值排除在序列化到 JS
 ## 传播
 <!-- <a name="propagation"> -->
 
-预制件支持的关键机制之一是传播。这意味着修改一个预制件实例后，可以轻松地将相同的更改复制到所有其他预制件实例中。例如，修改一个车轮实例的颜色，并将更改复制到关卡中的所有车轮。我们可能想要传播不同类型的更改，如修改实体、删除组件、添加嵌套预制件等。但无论哪种类型，传播事件的流程都如下所示：
+Prefab支持的关键机制之一是传播。这意味着修改一个Prefab实例后，可以轻松地将相同的更改复制到所有其他Prefab实例中。例如，修改一个车轮实例的颜色，并将更改复制到关卡中的所有车轮。我们可能想要传播不同类型的更改，如修改实体、删除组件、添加嵌套Prefab等。但无论哪种类型，传播事件的流程都如下所示：
 
 ![High-level propagation workflow](images/PrefabPropagation.png)
 
@@ -391,14 +391,14 @@ Level
 
 #### 只序列化相关实体
 
-上述方法可行，但缺点是需要花费大量时间将实例对象转换为 DOM，尤其是当我们进行小改动时，比如修改预制件中 1,000 个实体中的一个实体。要解决这个问题，我们可以按照以下步骤操作：
+上述方法可行，但缺点是需要花费大量时间将实例对象转换为 DOM，尤其是当我们进行小改动时，比如修改Prefab中 1,000 个实体中的一个实体。要解决这个问题，我们可以按照以下步骤操作：
 
 1. 在应用更改之前序列化实体，生成**前状态实体 DOM**。
 1. 应用更改
 1. 在应用更改后序列化实体，生成**后状态实体 DOM**。
 1. 比较两种状态并生成补丁。
 1. 添加所需的路径前缀，使修补程序有效。
-    * 例如，生成的补丁路径为 `ComponentA/...`，但我们还需要在其中添加实体路径前缀，以便知道我们所指的是预制件中的哪个实体。带有前缀的路径将变成 `/Entities/Entity1/Components/ComponentA/...`。
+    * 例如，生成的补丁路径为 `ComponentA/...`，但我们还需要在其中添加实体路径前缀，以便知道我们所指的是Prefab中的哪个实体。带有前缀的路径将变成 `/Entities/Entity1/Components/ComponentA/...`。
 
 {{< note >}}
 不过，要做到这一点，我们需要知道，我们将只修改一个实体或一组实体。因此，这种方法只适用于实体更新等变更。
@@ -430,7 +430,7 @@ Level
 
 #### 尽力修补
 
-我们使用 JSON 序列器的默认修补程序机制在实例或实体 DOM 上打补丁。如果在应用补丁数组时发生错误，补丁应用会立即停止。不过，对于预制件来说，可能会有过期的补丁，或者系统可能由于错误而生成了错误的补丁。在这种情况下，为了防止数据丢失，我们会尽力打补丁，一次只打一个补丁，跳过导致错误的补丁。在补丁应用结束时，我们会发送一条警告信息，说明哪些补丁无法应用。
+我们使用 JSON 序列器的默认修补程序机制在实例或实体 DOM 上打补丁。如果在应用补丁数组时发生错误，补丁应用会立即停止。不过，对于Prefab来说，可能会有过期的补丁，或者系统可能由于错误而生成了错误的补丁。在这种情况下，为了防止数据丢失，我们会尽力打补丁，一次只打一个补丁，跳过导致错误的补丁。在补丁应用结束时，我们会发送一条警告信息，说明哪些补丁无法应用。
 
 | 代码                                                                                                                                                                            | 说明                       |
 |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------|
@@ -466,23 +466,23 @@ Level
 ### 模板-实例传播
 <!-- <a name="template-instance-propagation"> -->
 
-如上所述，当一个模板被更新时，它将触发依赖模板的更新。该过程结束后，我们仍需更新场景中的实际预制件实例。这就是模板实例传播的作用所在。由预制件模板创建的所有预制件实例都将被放入一个队列。下一次系统运行时，队列中的所有实例都将通过有选择地反序列化模板 DOM，更新为已应用补丁的预制件实例对象。
+如上所述，当一个模板被更新时，它将触发依赖模板的更新。该过程结束后，我们仍需更新场景中的实际Prefab实例。这就是模板实例传播的作用所在。由Prefab模板创建的所有Prefab实例都将被放入一个队列。下一次系统运行时，队列中的所有实例都将通过有选择地反序列化模板 DOM，更新为已应用补丁的Prefab实例对象。
 
-在上面的例子中，关卡有两个 Bike 预制件，这就是模板-实例传播的过程：
+在上面的例子中，关卡有两个 Bike Prefab，这就是模板-实例传播的过程：
 
 ![Template-instance propagation](images/PrefabInstancePropagation.png)
 
-用于反序列化的实例 DOM 与从层次结构中最顶层模板（层）看到的实例相对应，因为它考虑到了可能应用于实例的所有可能覆盖。如果被编辑的预制件不是层级，而是层级中的某个嵌套预制件，那么该预制件将成为最顶层的模板，所使用的 DOM 将是从该模板看到的 DOM。
+用于反序列化的实例 DOM 与从层次结构中最顶层模板（层）看到的实例相对应，因为它考虑到了可能应用于实例的所有可能覆盖。如果被编辑的Prefab不是层级，而是层级中的某个嵌套Prefab，那么该Prefab将成为最顶层的模板，所使用的 DOM 将是从该模板看到的 DOM。
 
 #### 选择性反序列化
 
-JSON 反序列化器是累加式的，没有提供开箱即用的解决方案来选择性地只反序列化修改过的值。因此，过去需要清除预制件实例的内容并从头开始反序列化。然而，随着预制构件规模的扩大或预制构件实例数量的增加，这种方法并不能很好地扩展。此外，其他几个系统也会监听和响应实体的变化，从头开始重新创建实体也会增加这些系统的计算成本。为了解决这些问题，我们引入了_选择性反序列化_来完成以下工作：
+JSON 反序列化器是累加式的，没有提供开箱即用的解决方案来选择性地只反序列化修改过的值。因此，过去需要清除Prefab实例的内容并从头开始反序列化。然而，随着预制构件规模的扩大或预制构件实例数量的增加，这种方法并不能很好地扩展。此外，其他几个系统也会监听和响应实体的变化，从头开始重新创建实体也会增加这些系统的计算成本。为了解决这些问题，我们引入了_选择性反序列化_来完成以下工作：
 
 1. 我们会在实例对象中缓存用于反序列化的 DOM。如果实例中没有缓存的实例 DOM，我们就会像以前一样清除并重新加载所有内容。但如果有缓存的实例 DOM，我们就会使用它与当前 DOM 进行比较，并生成 JSON 补丁。
 1. 然后，我们遍历补丁，通过检查补丁路径来确定哪些实体需要重新加载。
 1. 反序列化器只清除这些特定实体的内容，并从提供的 DOM 中反序列化它们。
 1. 在添加和删除实体时，它会利用实例下已存储的实体别名来修改相关实体，而不会影响其他实体。
-1. 对于存储在使用实例别名的预制件实例下的嵌套实例，请重复第 3 和第 4 步。
+1. 对于存储在使用实例别名的Prefab实例下的嵌套实例，请重复第 3 和第 4 步。
 
 
 | Code | Description                                                                                                                 |
@@ -494,23 +494,23 @@ JSON 反序列化器是累加式的，没有提供开箱即用的解决方案来
 
 
 
-## 预制件编辑器工作流程
+## Prefab编辑器工作流程
 <!-- <a name="prefab-editor-workflows"> -->
 
-以上章节涵盖了预制件的核心 API 功能，并介绍了预制件系统的工作原理。本节将介绍如何将预制件集成到 O3DE 编辑器中，以及如何在内部创建、修改和删除实体和预制件。
+以上章节涵盖了Prefab的核心 API 功能，并介绍了Prefab系统的工作原理。本节将介绍如何将Prefab集成到 O3DE 编辑器中，以及如何在内部创建、修改和删除实体和Prefab。
 
 一般来说，以下所有工作流程都遵循这种模式：
 
 ![Prefab editor workflow](images/PrefabGenericEditorWorkflow.png)
 
 {{< note >}}
-唯一的例外是重复工作流，在这种情况下，我们不首先更新预制件实例，而是采用 DOM 授权方式，让传播来创建重复对象。
+唯一的例外是重复工作流，在这种情况下，我们不首先更新Prefab实例，而是采用 DOM 授权方式，让传播来创建重复对象。
 {{< /note >}}
 
 | 代码                                                                                                                                                     | 说明                                                                                                                                           |
 |:-------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------|
-| [PrefabPublicInterface](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicInterface.h) | 公共处理程序实现的接口。PrefabPublicInterface 中公开暴露的函数可通过 Python 脚本调用，并用于编写预制件的自动测试。                                                                     |
-| [PrefabPublicHandler](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicHandler.cpp)   | 实现 prefab 公共接口的类。 `PrefabPublicHandler` 是实现预制件编辑器工作流程的类。在内部，它调用在 `PrefabEditorEntityOwnershipService` 和 `PrefabSystemComponent` 中定义的预制件 API。 |
+| [PrefabPublicInterface](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicInterface.h) | 公共处理程序实现的接口。PrefabPublicInterface 中公开暴露的函数可通过 Python 脚本调用，并用于编写Prefab的自动测试。                                                                     |
+| [PrefabPublicHandler](https://github.com/o3de/o3de/blob/development/Code/Framework/AzToolsFramework/AzToolsFramework/Prefab/PrefabPublicHandler.cpp)   | 实现 prefab 公共接口的类。 `PrefabPublicHandler` 是实现Prefab编辑器工作流程的类。在内部，它调用在 `PrefabEditorEntityOwnershipService` 和 `PrefabSystemComponent` 中定义的Prefab API。 |
 
 
 
@@ -519,15 +519,15 @@ JSON 反序列化器是累加式的，没有提供开箱即用的解决方案来
 
 您可以创建一个由 prefab 拥有的新实体。该 prefab 称为拥有的 prefab 实例。默认情况下，新实体将创建在正在编辑的 prefab 的容器实体下，否则新实体将创建在所选实体下。
 
-下图演示了如何将新的 “Engine  ”实体添加到 “Car  ”预制件实例中：
+下图演示了如何将新的 “Engine  ”实体添加到 “Car  ”Prefab实例中：
 
 ![Editor workflow - Create entity](images/PrefabCreateEntityWorkflow.png)
 
 
-### 创建预制件
+### 创建Prefab
 <!-- <a name="create-prefab"> -->
 
-您可以选择多个实体和预制件，这些实体和预制件共享一个所有的预制件并共享一个根父，然后将它们放在一个新的预制件下。为此，应将所选实体和预制件从所属模板中移除，然后移入新创建的模板中。
+您可以选择多个实体和Prefab，这些实体和Prefab共享一个所有的Prefab并共享一个根父，然后将它们放在一个新的Prefab下。为此，应将所选实体和Prefab从所属模板中移除，然后移入新创建的模板中。
 
 ```
 RaceTrack    (RaceTrack.prefab)
@@ -536,30 +536,30 @@ RaceTrack    (RaceTrack.prefab)
 | Road
 ```
 
-在上面的示例中，如果您想选择 “Wheel  ”预制件和 “Engine  ”实体，并将它们制作成一个预制件，工作流程如下：
+在上面的示例中，如果您想选择 “Wheel  ”Prefab和 “Engine  ”实体，并将它们制作成一个Prefab，工作流程如下：
 
 ![Editor workflow - Create prefab](images/PrefabCreatePrefabWorkflow.png)
 
-当一个模板从另一个模板中删除时，我们也需要删除这两个模板之间的链接。这意味着要删除 `PrefabSystemComponent` 中的 `Link` 对象。在上述示例中，Wheel预制件和 RaceTrack 之间的链接已被删除。
+当一个模板从另一个模板中删除时，我们也需要删除这两个模板之间的链接。这意味着要删除 `PrefabSystemComponent` 中的 `Link` 对象。在上述示例中，WheelPrefab和 RaceTrack 之间的链接已被删除。
 
-同样，必须在新创建的预制件和其所属的预制件之间创建一个新的 `Link` 对象。在上例中，Car prefab 和 RaceTrack prefab 之间创建了一个新链接。传播后，RaceTrack prefab 的所有其他实例也将获得这些更改。如果有十个 RaceTrack 实例，那么在所有这些实例中都会出现一个新的 Car 实例。
+同样，必须在新创建的Prefab和其所属的Prefab之间创建一个新的 `Link` 对象。在上例中，Car prefab 和 RaceTrack prefab 之间创建了一个新链接。传播后，RaceTrack prefab 的所有其他实例也将获得这些更改。如果有十个 RaceTrack 实例，那么在所有这些实例中都会出现一个新的 Car 实例。
 
-### 实例化预制件
+### 实例化Prefab
 <!-- <a name="instantiate-prefab"> -->
 
-您可以从磁盘上的预制件模板创建新的预制件实例。在实例化之前，可以加载或不加载模板；如果不加载，`PrefabLoader` 将首先加载模板。默认情况下，新的预制件实例是在被编辑预制件的容器实体下创建的，否则新实例将在所选实体下创建。
+您可以从磁盘上的Prefab模板创建新的Prefab实例。在实例化之前，可以加载或不加载模板；如果不加载，`PrefabLoader` 将首先加载模板。默认情况下，新的Prefab实例是在被编辑Prefab的容器实体下创建的，否则新实例将在所选实体下创建。
 
-与**创建实体**不同的是，此工作流程包括在模板实例化和所属预制件之间创建链接的额外工作。
+与**创建实体**不同的是，此工作流程包括在模板实例化和所属Prefab之间创建链接的额外工作。
 
-下图演示了如何将Wheel预制件实例化并作为嵌套实例添加到Car预制件中：
+下图演示了如何将WheelPrefab实例化并作为嵌套实例添加到CarPrefab中：
 
 ![Editor workflow - Instantiate prefab](images/PrefabInstantiatePrefabWorkflow.png)
 
 
-### 删除实体和嵌套的预制件
+### 删除实体和嵌套的Prefab
 <!-- <a name="delete-entities-and-nested-prefabs"> -->
 
-您可以选择多个实体和预制件，并将它们从所属模板中移除。被选中的项目需要共享一个共同的自有预制件，否则操作不会成功。删除实体时，工作流程也会删除该实体的所有后代实体和 prefab 实例。
+您可以选择多个实体和Prefab，并将它们从所属模板中移除。被选中的项目需要共享一个共同的自有Prefab，否则操作不会成功。删除实体时，工作流程也会删除该实体的所有后代实体和 prefab 实例。
 
 ```
 Car        (Car.prefab)
@@ -571,7 +571,7 @@ Car        (Car.prefab)
   | Seat   (Seat.prefab)   <-- select this
 ```
 
-在上例中，如果您选择了 Engine 实体和 Seat 预制件，就会生成两个供删除的列表：
+在上例中，如果您选择了 Engine 实体和 Seat Prefab，就会生成两个供删除的列表：
 1. **Entity List:** Engine, Piston, Distributor
 1. **Nested Prefab List:** Seat
 
@@ -580,17 +580,17 @@ Car        (Car.prefab)
 ![Editor workflow - Delete entities and nested prefabs](images/PrefabDeleteWorkflow.png)
 
 
-### 分离预制件
+### 分离Prefab
 <!-- <a name="detach-prefab"> -->
 
-您可以在Entity Outliner中选择一个预制件实例并将其分离。分离的意思是：
+您可以在Entity Outliner中选择一个Prefab实例并将其分离。分离的意思是：
 
-1. 将所选预制件的容器实体转换为常规实体。该实体的父实体与容器实体的父实体相同。
-1. 将所有实体和嵌套预制件实例（由所选预制件拥有）置于该实体之下。
-   它与**创建预制件**的操作相反。.
+1. 将所选Prefab的容器实体转换为常规实体。该实体的父实体与容器实体的父实体相同。
+1. 将所有实体和嵌套Prefab实例（由所选Prefab拥有）置于该实体之下。
+   它与**创建Prefab**的操作相反。.
 
 {{< note >}}
-一次只能分离一个预制件。如果选择了多个预制件，**Detach Prefab...** 选项将不会出现在右键菜单中。
+一次只能分离一个Prefab。如果选择了多个Prefab，**Detach Prefab...** 选项将不会出现在右键菜单中。
 {{< /note >}}
 
 ```
@@ -607,10 +607,10 @@ Wheel     (Wheel.prefab)
 ![Editor workflow - Detach prefab](images/PrefabDetachWorkflow.png)
 
 
-### 复制实体和预制件
+### 复制实体和Prefab
 <!-- <a name="duplicate-entities-and-prefabs"> -->
 
-您可以在Entity Outliner中选择多个实体和预制件并复制它们。所有选中的实体和预制件应为同一预制件实例所有，否则操作不会成功。
+您可以在Entity Outliner中选择多个实体和Prefab并复制它们。所有选中的实体和Prefab应为同一Prefab实例所有，否则操作不会成功。
 
 {{< note >}}
 复制一个实体将复制其所有后代。
@@ -625,10 +625,10 @@ Garage_Large
 | Car         (Car.prefab)   <-- select this
 ```
 
-在上述示例中，如果您选择 “Brooms ”实体和 “Car ”预制件并复制它们，复制将导致实体和预制件实例的创建：
+在上述示例中，如果您选择 “Brooms ”实体和 “Car ”Prefab并复制它们，复制将导致实体和Prefab实例的创建：
 
 1. 将创建一个新实体 Brooms（包含 Broom_1 和 Broom_2）。Brooms 的父实体是 Garage_Small。
-1. 将创建一个新的嵌套 prefab 实例 Car。该预制件的父节点是 Garage_Large。
+1. 将创建一个新的嵌套 prefab 实例 Car。该Prefab的父节点是 Garage_Large。
 
 下图展示了工作流程的样子。
 

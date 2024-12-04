@@ -58,7 +58,7 @@ ${O3DE_HOME}/scripts/o3de.sh create-project --project-path $PROJECT_PATH --templ
 强烈建议使用关节来稳定模拟机械臂和其他关节系统。
 
 #### 添加必要的组件
-如果导入继续没有问题，请打开新创建的预制件的根实体并添加三个新组件：
+如果导入继续没有问题，请打开新创建的Prefab的根实体并添加三个新组件：
 - `JointsArticulationControllerComponent` 来控制机器人的运动。
 - `JointsTrajectoryComponent`以侦听 MoveIt 轨迹消息。
 - `JointsManipulationEditorComponent` 它发布 ```joint_states``` 并设置初始位置。
@@ -70,7 +70,7 @@ ${O3DE_HOME}/scripts/o3de.sh create-project --project-path $PROJECT_PATH --templ
 #### 设置初始位置和主题名称
 
 - 在`JointsManipulationEditorComponent`中，为所有关节添加初始位置。
-关节名称可以在`ROS2FrameComponent`关节名称内的预制件实体中找到。初始位置以弧度为单位。 
+关节名称可以在`ROS2FrameComponent`关节名称内的Prefab实体中找到。初始位置以弧度为单位。 
 - 在`JointsTrajectoryComponent` 中，设置用于控制轨迹的主题。
 通常，此主题名称以 ```joint_trajectory_controller``` 结尾，但应与 MoveIt 配置文件中的名称相同。
 

@@ -1,7 +1,7 @@
 ---
 linkTitle: Procedural Prefab
 title: Procedural Prefab
-description: 有了程序化预制件，您就可以使用 Python 脚本从场景源文件中为 Open 3D Engine (O3DE) 创建预制件资产。
+description: 有了程序化Prefab，您就可以使用 Python 脚本从场景源文件中为 Open 3D Engine (O3DE) 创建Prefab资产。
 weight: 400
 toc: true
 ---
@@ -12,13 +12,13 @@ toc: true
 
 ![High level view of how procedural prefabs work with Python scripts](/images/user-guide/assets/scene-pipeline/proc_prefab_workflow.png)
 
-## 程序预制件的特征
+## 程序Prefab的特征
 
-预制件是对场景实体、组件和属性的预制描述。预制件的作用是轻松构建和修改大型复杂的游戏世界。用户可以在 O3DE 编辑器中创建预制板。
+Prefab是对场景实体、组件和属性的预制描述。Prefab的作用是轻松构建和修改大型复杂的游戏世界。用户可以在 O3DE 编辑器中创建预制板。
 
 关于 [Prefab](docs/user-guide/interactivity/prefabs) 功能的更多信息。
 
-也可以定义一个程序来生成产品预制件资产。Python 脚本是定义程序化预制产品资产的最典型方式。此功能可将预制模板保存在源美术场景文件（如 FBX 或 glTF）中。内容创建者可以自由地在关卡中实例化这些程序化预制件，当源场景更新时，它们也会自动更新。
+也可以定义一个程序来生成产品Prefab资产。Python 脚本是定义程序化预制产品资产的最典型方式。此功能可将预制模板保存在源美术场景文件（如 FBX 或 glTF）中。内容创建者可以自由地在关卡中实例化这些程序化Prefab，当源场景更新时，它们也会自动更新。
 
 这些程序化预制板资产在编辑器中被视为只读预制板，因为它们是根据原始源场景文件的定义和生成预制板的脚本创建的。事实上，程序化预制板被放置在资产缓存中，因此不应直接对其进行更改。
 
@@ -56,17 +56,17 @@ toc: true
 
 ![Asset Browser](/images/user-guide/assets/scene-pipeline/procprefab_ug_ab.png)
 
-#### 在场景中实例化程序预制件
+#### 在场景中实例化程序Prefab
 
-O3DE 编辑器用户可以通过右键单击关卡 3D 场景并选择"Instantiate Procedural Prefab..."选项来实例化程序预制件。
+O3DE 编辑器用户可以通过右键单击关卡 3D 场景并选择"Instantiate Procedural Prefab..."选项来实例化程序Prefab。
 
 ![Procedural Prefab Context Menu](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_context.png)
 
-右键菜单"Pick Procedural Prefab"将打开，允许用户选择要实例化的程序预制件资产。
+右键菜单"Pick Procedural Prefab"将打开，允许用户选择要实例化的程序Prefab资产。
 
 ![Pick Procedural Prefab](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_pick.png)
 
-也可以简单地将程序预制件从 “资产浏览器 ”拖放到关卡 3D 场景中。
+也可以简单地将程序Prefab从 “资产浏览器 ”拖放到关卡 3D 场景中。
 
 ![Procedural Prefab in the Entity Outliner](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_eo.png)
 
@@ -86,7 +86,7 @@ O3DE 编辑器用户可以通过右键单击关卡 3D 场景并选择"Instantiat
 
 ### 程序预制板被用于自动生成的预制板中
 
-在 “实体大纲视图”（Entity Outliner）中，可以将程序预制板添加到已创建的预制板实例中。为此，用户需要进入预制件的焦点模式。
+在 “实体大纲视图”（Entity Outliner）中，可以将程序预制板添加到已创建的预制板实例中。为此，用户需要进入Prefab的焦点模式。
 
 ![Entity Outliner Authored Prefab](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_eo_authored.png)
 
@@ -94,9 +94,9 @@ O3DE 编辑器用户可以通过右键单击关卡 3D 场景并选择"Instantiat
 
 ![Entity Outliner Procedural Prefab Inside](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_eo_inst.png)
 
-用户不能在 “实体大纲视图”（Entity Outliner）中添加实体，也不能在 “实体检查器”（Entity Inspector）中将组件添加到任何程序预制件实例中。资产处理器可能会随时重新导出程序预制模板，这将在编辑器之外重新写入`.procprefab`文件。程序预制模板由源代码场景文件支持。
+用户不能在 “实体大纲视图”（Entity Outliner）中添加实体，也不能在 “实体检查器”（Entity Inspector）中将组件添加到任何程序Prefab实例中。资产处理器可能会随时重新导出程序预制模板，这将在编辑器之外重新写入`.procprefab`文件。程序预制模板由源代码场景文件支持。
 
-### 将程序化预制件保存为自制预制件
+### 将程序化Prefab保存为自制Prefab
 
 编辑器还可以将程序化预制板资产保存为自制预制板源文件。这样编辑器用户就可以对程序预制板资产进行调整。`(Procedural Prefab)`资产的上下文菜单项**Save as Prefab...** 将提示输入文件名，以保存为自制预制板文件。
 
@@ -116,7 +116,7 @@ O3DE 编辑器用户可以通过右键单击关卡 3D 场景并选择"Instantiat
 
 ![Edit Settings](/images/user-guide/assets/scene-pipeline/procprefab_ug_pp_es_toggle.png)
 
-要禁用程序预制件生成，请将**Create default procedural prefab?** 的切换设置为关闭值。
+要禁用程序Prefab生成，请将**Create default procedural prefab?** 的切换设置为关闭值。
 
 ## 默认程序预制的基本准则
 
@@ -129,7 +129,7 @@ O3DE 编辑器用户可以通过右键单击关卡 3D 场景并选择"Instantiat
 - -Y为观察轴
 - 基本测量单位为每世界单位一立方米
 
-程序预制件不支持设置细节级别，也不支持为动画设置Actor或动作。
+程序Prefab不支持设置细节级别，也不支持为动画设置Actor或动作。
 
-用户定义的 `o3de_default_material` 属性，默认程序预制件会使用产品资产路径为 `.azmaterial` 资产分配 AZ 材质。
+用户定义的 `o3de_default_material` 属性，默认程序Prefab会使用产品资产路径为 `.azmaterial` 资产分配 AZ 材质。
 

@@ -1,8 +1,8 @@
 ---
-linkTitle: Release Notes
-menuTitle: Release Notes
-title: Release Notes for Open 3D Engine
-description: Learn about the new features, updates, and bug fixes in the current release of Open 3D Engine.
+linkTitle: 发行说明
+menuTitle: 发行说明
+title: Open 3D Engine 版本说明
+description: 了解当前版本的 Open 3D Engine 中的新功能、更新和错误修复。
 weight: 100
 toc: true
 menu_uuid: releasenotes
@@ -10,26 +10,26 @@ guide_img: "/images/release-notes/guide_img.png"
 primary: true
 ---
 
-## Current version of Open 3D Engine
+## Open 3D Engine 的当前版本
 
-**Latest version**: 24.09, released on May 7, 2024.
+**最新版本**：24.09，发布于 2024 年 5 月 7 日。
 
-**Release Notes**: [O3DE 24.09 Release Notes](./2409-release-notes)
+**发行说明**：[O3DE 24.09 发行说明](./2409-release-notes)
 
 
-### Download the latest version
+### 下载最新版本
 
-| Version                            | Binary download link                             |  Date of Release   |
+|版本 |二进制下载链接 | 发布日期   |
 |------------------------------------|--------------------------------------------------|--------------------|
-| 24.09 \[Windows\] | [Download](https://o3debinaries.org/download/windows.html) | Oct 9, 2024 |
-| 24.09 \[Linux\] | [Download](https://o3debinaries.org/download/linux.html) | Oct 9, 2024 |
+| 24.09 \[Windows\] | [下载](https://o3debinaries.org/download/windows.html) | Oct 9, 2024 |
+| 24.09 \[Linux\] | [下载](https://o3debinaries.org/download/linux.html) | Oct 9, 2024 |
 | 24.09 \[Source code\] | [GitHub repository](https://github.com/o3de/o3de/tree/main) |  Oct 9, 2024 |
 
 
-## Older versions
+## 旧版本
 
-For older versions of O3DE:
+对于旧版本的 O3DE：
 
-- [Source code](https://github.com/o3de/o3de/releases)
+- [源代码](https://github.com/o3de/o3de/releases)
 
-- [Release notes](./archive/)
+- [发行说明](./archive/)

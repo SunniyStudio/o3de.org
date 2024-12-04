@@ -18,7 +18,7 @@ toc: true
 * 在有形状组件的实体上添加一个**Mesh Surface Tag Emitter**组件。
 * 在关卡中添加 [Terrain](/docs/user-guide/components/reference/terrain/layer_spawner)。
 
-您还必须拥有**Vegetation Layer Spawner**可以生成的植被资产。在下面的示例中，我们使用以下步骤创建了一个名为`DryGrassLarge.prefab`的预制件：
+您还必须拥有**Vegetation Layer Spawner**可以生成的植被资产。在下面的示例中，我们使用以下步骤创建了一个名为`DryGrassLarge.prefab`的Prefab：
 
 1. 创建一个新实体。
 2. 添加一个**Mesh**组件。

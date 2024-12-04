@@ -89,6 +89,6 @@ def print_properties(scene):
 
 ### 带有 LOD 和碰撞网格的汽车示例
 
-这是一个 Car.fbx 文件的示例，该文件保存了用于 LOD 的 UDP 元数据和 PhsyX 元数据。资产处理器将请求场景生成器处理 Car.fbx 源场景资产。场景生成器（在资产生成器进程中运行）会导入场景，并用包含 CustomPropertyData 内容的场景图节点构建场景图。随后，默认的程序化预制件生成器将读取自定义属性，以建立 LOD 清单规则和物理清单规则。最后，这些清单规则将转化为 LOD 模型和物理网格产品文件。
+这是一个 Car.fbx 文件的示例，该文件保存了用于 LOD 的 UDP 元数据和 PhsyX 元数据。资产处理器将请求场景生成器处理 Car.fbx 源场景资产。场景生成器（在资产生成器进程中运行）会导入场景，并用包含 CustomPropertyData 内容的场景图节点构建场景图。随后，默认的程序化Prefab生成器将读取自定义属性，以建立 LOD 清单规则和物理清单规则。最后，这些清单规则将转化为 LOD 模型和物理网格产品文件。
 
 ![Car FBX example with UDPs.](/images/user-guide/assets/pipeline/scene_api_udp.jpg)

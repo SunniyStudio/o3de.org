@@ -35,7 +35,7 @@ weight: 200
 
 ### 设置
 
-我们指定`SettingsInterface`作为一个契约，以确保我们实现了适当的方法，并能从一个简洁的接口（[一个示例](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Tools/ProjectManager/Source/ExternalLinkDialog.cpp#L88))对设置进行全局访问。它还是访问项目经理设置的单例接口。
+我们指定`SettingsInterface`作为一个契约，以确保我们实现了适当的方法，并能从一个简洁的接口（[一个示例](https://github.com/o3de/o3de/blob/b79bd3df1fe5d4c2a639d3921a29bd0d95712f6c/Code/Tools/ProjectManager/Source/ExternalLinkDialog.cpp#L88))对设置进行全局访问。它还是访问项目管理器设置的单例接口。
 
 `SettingsInterface` 指定以下功能作为与 O3DE 设置注册表交互的合约：
 

@@ -30,7 +30,7 @@ URDF、XACRO 和 SDFormat 文件包含完整的机器人描述，包括对外部
 - 允许您更改导入的参数，包括资产的搜索路径。
 - 读取 SDFormat、URDF 和 XACRO 文件。
 - 将所有必需的 assets 文件复制到 O3DE 项目的 `Assets` 文件夹中。
-- 使用关节或经典刚体和关节组件创建具有多体结构的预制件。
+- 使用关节或经典刚体和关节组件创建具有多体结构的Prefab。
 
 ## 将机器人导入到你的模拟项目中
 
@@ -91,7 +91,7 @@ URDF、XACRO 和 SDFormat 文件包含完整的机器人描述，包括对外部
 ![Robot Importer](/images/user-guide/gems/ros2/URDF_fixing_result.png)
 
     {{< note >}}
-通过“Fix URDF to be compatible with libsdformat”选项，您可以成功导入与模拟不兼容的 URDF 文件，但请记住调整生成的预制件。
+通过“Fix URDF to be compatible with libsdformat”选项，您可以成功导入与模拟不兼容的 URDF 文件，但请记住调整生成的Prefab。
     {{< /note >}}
  
 ### 处理机器人资产
@@ -126,22 +126,22 @@ URDF、XACRO 和 SDFormat 文件包含完整的机器人描述，包括对外部
 - 要解决此问题，请单击 **Back** 并解决网格文件的问题。然后单击 **Next** 重试导入。
 - 要稍后解决，请单击 **Next** 并完成 URDF 导入。然后在 O3DE 编辑器中添加缺失的网格。
 
-### 创建机器人预制件
+### 创建机器人Prefab
 
-1. 通过执行以下操作创建预制件：
+1. 通过执行以下操作创建Prefab：
 
-- 输入预制件名称。
+- 输入Prefab名称。
    - （可选） 选择生成位置。
     如果场景中添加了生成点，则可以在下拉菜单中选择一个生成点。
    -点击**Create Prefab**.
 
     ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_prefab_creation.png)
 
-2. 创建预制件后，查看生成的实体的摘要。
+2. 创建Prefab后，查看生成的实体的摘要。
 
     ![Robot Importer](/images/user-guide/gems/ros2/URDF_importer_summary.png)
 
-3. 最后，场景中有一个预制件。您可以添加一个或多个 [传感器](/docs/user-guide/interactivity/robotics/concepts-and-components-overview/#sensors) 或使用 [ROS 2 车辆动力学](/docs/user-guide/interactivity/robotics/vehicle-dynamics/)或使用 [关节操作](/docs/user-guide/interactivity/robotics/joints-manipulation/)移动机器人。
+3. 最后，场景中有一个Prefab。您可以添加一个或多个 [传感器](/docs/user-guide/interactivity/robotics/concepts-and-components-overview/#sensors) 或使用 [ROS 2 车辆动力学](/docs/user-guide/interactivity/robotics/vehicle-dynamics/)或使用 [关节操作](/docs/user-guide/interactivity/robotics/joints-manipulation/)移动机器人。
 
 ![Robot Importer](/images/user-guide/gems/ros2/URDF_result.png)
 

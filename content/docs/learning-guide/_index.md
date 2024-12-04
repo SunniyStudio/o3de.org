@@ -1,68 +1,68 @@
 ---
-linkTitle: Tutorials & Examples
-menuTitle: Tutorials
-title: Open 3D Engine (O3DE) Tutorials and Examples
-description: Learn O3DE with the help of guided tutorials, samples, and recipes.
+linkTitle: 教程和示例
+menuTitle: 教程
+title: Open 3D Engine (O3DE) 教程和示例
+description: 在指导教程、示例和配方的帮助下学习 O3DE。
 weight: 200
 menu_uuid: learning
 guide_img: "/images/learning-guide/guide_img.png"
 primary: true
 ---
 
-This guide contains video tutorials, written step-by-step tutorials, and sample documentation that teach you the concepts, features, and tools of **Open 3D Engine (O3DE)**.
+本指南包含视频教程、编写的分步教程和示例文档，这些教程将向您介绍 Open 3D Engine （O3DE） 的概念、功能和工具。
 
-| Section | Description |
+|部分 |描述|
 | - | - |
-| [Video Tutorials](#video-tutorials) | These video tutorials cover all the topics you need to get started, including an overview of O3DE, instructions on installing O3DE, building O3DE from source, and creating projects. It also introduces important features and key systems such as the Editor, the modular Gem system, networking, the visual scripting environment, and O3DE's integrated renderer, Atom. |
-| [Tutorials](tutorials) | These written tutorials are grouped by concept and focus on specific features, tools, and processes. |
-| [Samples](samples) | These topics cover sample projects and sample Gems available for O3DE. |
+| [视频教程](#video-tutorials) | 这些视频教程涵盖了您入门所需的所有主题，包括 O3DE 概述、安装 O3DE、从源代码构建 O3DE 和创建项目的说明。它还介绍了重要的功能和关键系统，例如 Editor、模块化 Gem 系统、网络、可视化脚本环境和 O3DE 的集成渲染器 Atom。 |
+| [教程](tutorials) | 这些书面教程按概念分组，并侧重于特定功能、工具和流程。 |
+| [示例](samples) | 这些主题涵盖可用于 O3DE 的示例项目和示例 Gem。 |
 
-## Video Tutorials
+## 视频教程
 
-### What is O3DE?
+### 什么是 O3DE？
 
 {{< youtube-width id="CQmjAxr7LZs" title="What is O3DE?" >}}
 
-### Installing O3DE for Windows
+### 为 Windows 安装 O3DE
 
 {{< youtube-width id="_BhkXOBDYGA" title="Installing O3DE for Windows" >}}
 
-### Creating Projects Using Project Manager
+### 使用 Project Manager 创建项目
 
 {{< youtube-width id="_BhkXOBDYGA?start=142" title="Installing O3DE for Windows - Create a Project" >}}
 
-### Setting up O3DE from GitHub
+### 从 GitHub 设置 O3DE
 
 {{< youtube-width id="GZF_6SkAXPw" title="Setting up O3DE from GitHub" >}}
 
-### Creating Projects Using the Command Line
+### 使用命令行创建项目
 
 {{< youtube-width id="SZC13S0YZZs" title="Creating Projects Using the Command Line" >}}
 
-### O3DE Developer Overview
+### O3DE 开发人员概述
 
 {{< youtube-width id="lWhPwDYeuhc" title="O3DE Developer Overview" >}}
 
-### Atom Renderer
+### Atom 渲染器
 
 {{< youtube-width id="GTJ_ie7yHdI" title="Atom Renderer" >}}
 
-### O3DE Networking Overview
+### O3DE 网络概述
 
 {{< youtube-width id="FfrkHJJt_X0" title="O3DE Networking Overview" >}}
 
-### AWS Gems in O3DE
+### O3DE 中的 AWS Gem
 
 {{< youtube-width id="EG0C9enezzo" title="AWS Gems in O3DE" >}}
 
-### O3DE Editor Tour
+### O3DE 编辑器导览
 
 {{< youtube-width id="tFfiXhckd7g" title="O3DE Editor Tour" >}}
 
-### O3DE Script Canvas Overview
+### O3DE Script Canvas 概述
 
 {{< youtube-width id="fTNcUV4zAgE" title="O3DE Script Canvas Overview" >}}
 
-## Contributing to O3DE Documentation
+## 为 O3DE 文档做贡献
 
 {{< youtube-width id="DGz9Clo6EKw" title="Contributing to O3DE Documentation" >}}

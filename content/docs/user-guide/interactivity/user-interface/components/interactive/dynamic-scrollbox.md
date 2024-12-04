@@ -15,7 +15,7 @@ weight: 185
 
 **使用动态滚动框组件**
 
-1. 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor) 中，添加 **Scrollbox** 预制件。为此，请单击**New**, **Element from Prefab**, **ScrollBox**.
+1. 在 [**UI Editor**](/docs/user-guide/interactivity/user-interface/editor) 中，添加 **Scrollbox** Prefab。为此，请单击**New**, **Element from Prefab**, **ScrollBox**.
 
    这用作保存动态内容的结构或框架。
 

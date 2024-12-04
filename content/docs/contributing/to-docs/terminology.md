@@ -60,9 +60,9 @@ weight: 550
 | project | *\<none\>* | 所有文件、首选项、资源、级别、脚本、代码等的命名容器和目录层次结构，这些文件将编译为目标平台的运行时可执行文件，或打包为 Gem。请勿将此术语大写。使用术语 “project” 而不是 “game”。|
 | **Python Console** | *\<none\>* | 用于在 O3DE 编辑器中运行 Python 脚本的工具。始终将 “Python” 和 “Console” 都大写，因为这是一个工具名称，也是一个专有名词。对第一个页面引用使用粗体文本。 |
 | **Python Scripts** | *\<none\>* | 用于 Python 脚本文件的浏览器应用程序。在提及工具时，请始终将 “Python” 和 “Scripts” 都大写，因为这是工具名称，也是专有名词。对第一个页面引用使用粗体文本。在一般情况下引用 Python 脚本文件时，请使用 “Python scripts” - 不要将 “Python” 加粗，也不要将 “scripts” 大写或加粗。 |
-| prefab | *\<none\>* | 存储在可重用资产中的已配置实体的集合。预制件使用“.prefab”文件扩展名。请勿将此术语大写。|
+| prefab | *\<none\>* | 存储在可重用资产中的已配置实体的集合。Prefab使用“.prefab”文件扩展名。请勿将此术语大写。|
 | **Script Canvas Editor** | *\<none\>* | 通用的可视化脚本工具。引用该工具时，请始终将 “Script Canvas” 和 “Editor” 都大写，因为这是工具名称和专有名词。对第一个页面引用使用粗体文本。 |
-| spawnable | *\<none\>* | 预制件的运行时表示形式，仅包含运行时组件。可生成对象使用“.spawnable”文件扩展名。请勿将此术语大写。  |
+| spawnable | *\<none\>* | Prefab的运行时表示形式，仅包含运行时组件。可生成对象使用“.spawnable”文件扩展名。请勿将此术语大写。  |
 | target platform | *\<none\>* | 运行已编译项目可执行文件的平台。与特定平台（如 Windows PC 或移动设备）相比，更喜欢使用此术语。例如，如果您的 O3DE 项目是为 Linux 构建的，即使在交叉编译器环境中也是如此，它将使用 Clang 编译器工具生成elf_x64二进制文件。 |
 | **Track View** | *\<none\>* | O3DE 的电影编辑器。始终将 “Track” 和 “View” 都大写，因为这是一个工具名称，也是一个专有名词。对第一个页面引用使用粗体文本。 |
 | viewport | *\<none\>* | O3DE 编辑器中的关卡视图。 |

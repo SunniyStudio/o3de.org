@@ -17,15 +17,15 @@ weight: 700
   * 客户端应用程序开始托管会话，在这种情况下，主机可能需要生成新的玩家实体。
   * 客户端连接到正在进行的托管会话。
 
-`IMultiplayerSpawner`的`OnPlayerJoin`方法提供了一个钩子，用于服务器何时可能希望代表用户生成自主玩家预制件。它采用用户提供的标识符和自定义数据，并且需要实现来确定要生成的预制件及其世界位置。例如，随连接提供的数据可用于选择特定角色或团队。
+`IMultiplayerSpawner`的`OnPlayerJoin`方法提供了一个钩子，用于服务器何时可能希望代表用户生成自主玩家Prefab。它采用用户提供的标识符和自定义数据，并且需要实现来确定要生成的Prefab及其世界位置。例如，随连接提供的数据可用于选择特定角色或团队。
 
-`OnPlayerJoin`应返回`NetworkEntityHandle`，从而使调用方负责为用户实例化联网预制件。然后，多人游戏 Gem 获取返回的`NetworkEntityHandle`，并将其标记为自主，并将其与玩家的连接相关联。
+`OnPlayerJoin`应返回`NetworkEntityHandle`，从而使调用方负责为用户实例化联网Prefab。然后，多人游戏 Gem 获取返回的`NetworkEntityHandle`，并将其标记为自主，并将其与玩家的连接相关联。
 
 ### 玩家离开事件
 
 玩家在客户端与服务器断开连接时定义为 * 离开* 会话。与玩家连接不同，当客户端停止托管自己的会话时，没有特殊情况 - 其中一个步骤应该始终在关闭服务器之前断开 *所有* 客户端的连接。
 
-`IMultiplayerSpawner` 的`OnPlayerLeave`方法提供了一个钩子，这样当客户端断开连接时，服务器可以清理为客户端生成的任何实体。`OnPlayerLeave`将实体句柄用于`OnPlayerJoin` 生成的预制件，以便可以删除玩家实体。它还需要连接的复制集，这也允许服务器删除关联的实体（例如，由离开的玩家部署的对象）。
+`IMultiplayerSpawner` 的`OnPlayerLeave`方法提供了一个钩子，这样当客户端断开连接时，服务器可以清理为客户端生成的任何实体。`OnPlayerLeave`将实体句柄用于`OnPlayerJoin` 生成的Prefab，以便可以删除玩家实体。它还需要连接的复制集，这也允许服务器删除关联的实体（例如，由离开的玩家部署的对象）。
 
 `OnPlayerLeave` 还采用 disconnect reason，它允许响应不同类型的 disconnect。例如，如果玩家可以尝试重新连接到会话，则如果玩家超时，则清理对象可能是不可取的。
 

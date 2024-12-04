@@ -30,7 +30,7 @@ toc: true
       1. 它们可能需要专用化 （特定于特定模型的实现）。
       2. 在每种情况下，您可能希望考虑在性能和真实感之间进行权衡。
    2. 如果要实现新传感器，请使用 `ROS2SensorComponent` 作为基类。
-5. 开发必要的传感器及其预制件。
+5. 开发必要的传感器及其Prefab。
 7. 开发场景和模拟场景，放置 Assets 并配置组件。
 8. 使用 ROS 2 机器人堆栈运行模拟。您可以使用许多 [ROS 2 软件包](https://index.ros.org/packages/#humble) 和 [ROS 2 生态系统](https://project-awesome.org/fkromer/awesome-ros2) 中的一些项目快速构建一个。
 

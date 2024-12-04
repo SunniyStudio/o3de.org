@@ -66,7 +66,7 @@ weight: 100
 
 在本地安装了多个插件时，让您的项目使用具有特定名称或路径的插件，而无需更改与团队共享的`project.json`文件，这可能很有用。 O3DE 将使用项目文件夹中的`user/project.json`覆盖文件中的设置来覆盖项目根目录中的`project.json`文件设置。
 
-要更改 `user/project.json`覆盖文件中的任何属性，您可以使用文本编辑器手动编辑文件，或使用带有`--user` 选项的 `edit-project-properties` [O3DE CLI](./cli-reference)命令编辑单个属性。 当您添加项目时，项目经理将在此文件中设置`engine_path` 。
+要更改 `user/project.json`覆盖文件中的任何属性，您可以使用文本编辑器手动编辑文件，或使用带有`--user` 选项的 `edit-project-properties` [O3DE CLI](./cli-reference)命令编辑单个属性。 当您添加项目时，项目管理器将在此文件中设置`engine_path` 。
 2
 | 字段 | 说明 | 示例 |
 | --- | ---| --- |

@@ -15,7 +15,7 @@ weight: 600
 
 ## 分层组件
 
-为了声明网络层次结构，您必须使用分层组件的组合：`NetworkHierarchyRootComponent`和`NetworkHierarchyChildComponent`。`NetworkHierarchyRootComponent`将实体标记为层次结构的根，并且应将其放置在实体预制件或一组实体的最高父级上。`NetworkHierarchyRootComponent`将实体标记为层次结构的子实体。应将其添加到具有 `NetworkHierarchyRootComponent`的实体下的子实体上。
+为了声明网络层次结构，您必须使用分层组件的组合：`NetworkHierarchyRootComponent`和`NetworkHierarchyChildComponent`。`NetworkHierarchyRootComponent`将实体标记为层次结构的根，并且应将其放置在实体Prefab或一组实体的最高父级上。`NetworkHierarchyRootComponent`将实体标记为层次结构的子实体。应将其添加到具有 `NetworkHierarchyRootComponent`的实体下的子实体上。
 
 可以在 Editor 中创建网络层次结构，也可以通过在运行时为实体设置父子关系来创建。
 
@@ -46,11 +46,11 @@ weight: 600
 
     ![Simple Hierarchy Example](/images/user-guide/networking/multiplayer/simple_hierarchy.png)
 
-    通常，层次结构是您希望在运行时生成的一组实体。在这些情况下，您希望从实体中创建预制件。
+    通常，层次结构是您希望在运行时生成的一组实体。在这些情况下，您希望从实体中创建Prefab。
 
     ![Simple Hierarchy Prefab](/images/user-guide/networking/multiplayer/simple_hierarchy_prefab.png)
 
-    具有 **Network Hierarchy Root** 组件的实体必须位于预制件中的顶部父实体，这一点很重要。所有其他实体上都应具有 **Network Hierarchy Child** 组件。
+    具有 **Network Hierarchy Root** 组件的实体必须位于Prefab中的顶部父实体，这一点很重要。所有其他实体上都应具有 **Network Hierarchy Child** 组件。
 
 
 ### ImGui 层次结构调试器
@@ -103,7 +103,7 @@ O3DE 多人游戏 Gem 附带一个调试器，可帮助您对 O3DE 应用程序�
 
 ### 层次结构的层次结构
 
-通过将一个层次结构的根附加到另一个层次结构中的实体，可以从多个层次结构中创建层次结构。在这种情况下，内部根组件将成为此新父级的分层子级，直到它与层次结构分离。当使用不同的预制件构建车辆、武器和玩家时，这非常有用，这些预制件在运行时根据需要附加和分离。
+通过将一个层次结构的根附加到另一个层次结构中的实体，可以从多个层次结构中创建层次结构。在这种情况下，内部根组件将成为此新父级的分层子级，直到它与层次结构分离。当使用不同的Prefab构建车辆、武器和玩家时，这非常有用，这些Prefab在运行时根据需要附加和分离。
 
 
 {{<note>}}

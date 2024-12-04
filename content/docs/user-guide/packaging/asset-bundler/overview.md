@@ -36,7 +36,7 @@ O3DE Asset Bundler 有助于使用于发布游戏的特定资产的发布更加�
 
 ![The steps used in the general process for bundling assets with O3DE.](/images/user-guide/assetbundler/asset-bundler-overview.png)
 
-在此示例中，种子是资产 Level1.spawnable 和 Level2.spawnable。这些`.spawnable`文件引用 O3DE 预制件产品资产文件，在此上下文中表示游戏关卡，这些关卡引用它们包含的实体网格，而这些网格又引用这些实体的材质和纹理文件。
+在此示例中，种子是资产 Level1.spawnable 和 Level2.spawnable。这些`.spawnable`文件引用 O3DE Prefab产品资产文件，在此上下文中表示游戏关卡，这些关卡引用它们包含的实体网格，而这些网格又引用这些实体的材质和纹理文件。
 
 建立这些产品依赖关系后，Asset Bundler 会检查每个种子的层次结构并生成资源列表。资产列表以及您创建的捆绑包设置文件用于将最终捆绑包组合为包含所有相关资产的`.pak`文件。任何未与种子关联的资源都不会包含在最终版本包中。
 

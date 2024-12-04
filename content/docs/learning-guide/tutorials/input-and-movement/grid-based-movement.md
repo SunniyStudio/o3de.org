@@ -85,139 +85,139 @@ weight: 100
 
 接下来，您将创建一个脚本来处理 `MoveX` 和 `MoveY` 输入事件，并根据收到的事件和事件的值移动 Shader Ball。
 
-1. Select the Shader Ball in Entity Outliner.  In Entity Inspector, add a Script Canvas component to the Shader Ball. On the new Script Canvas component, **left-click** the {{< icon "open-in-internal-app.svg" >}} button to open Script Canvas Editor.
+1. 在 Entity Outliner 中选择 Shader Ball。 在 Entity Inspector 中，将 Script Canvas 组件添加到 Shader Ball。在新的 Script Canvas 组件上，**左键单击** {{< icon "open-in-internal-app.svg" >}} 按钮以打开 Script Canvas 编辑器。
 
-1. Add the **On Graph Start** node to a new graph.  You can search for this node in the **Note Palettte** and **drag** it to the center of the editor to create a new graph.  When you play a level in _Game Mode_, the **On Graph Start** node will execute a single time as soon as the Script Canvas component is active.
+1. 将 **On Graph Start** 节点添加到新图表中。 您可以在 **Note Palettte** 中搜索此节点，并将其 **拖动** 到编辑器的中心以创建新图形。 当您在 _Game Mode_ 中播放关卡时，**On Graph Start** 节点将在 Script Canvas 组件处于活动状态后立即执行一次。
 
-1. There must be one **Input Handler** node for each event that you want a graph to handle.  Add two **Input Handler** nodes to the graph.  In the **Event Name** fields, type the names of your events, `MoveX` and `MoveY`.  Connect the **Out** pin of the **On Graph Start** node to the **Connect Event** pin of the two **Input Handler** nodes.  Now the nodes' **Pressed**, **Held**, and **Released** slots will execute whenever the corresponding keyboard keys are pressed. When a key is pressed, you can capture and use the event's value by connecting the **value** output slot to nodes in your graph.
+1. 对于您希望图形处理的每个事件，必须有一个 **Input Handler** 节点。 将两个 **Input Handler** 节点添加到图表中。 在 **事件名称** 字段中，键入事件的名称 `MoveX` 和 `MoveY`。 将 **On Graph Start** 节点的 **Out** 引脚连接到两个 **Input Handler** 节点的 **Connect Event** 引脚。 现在，每当按下相应的键盘键时，将执行节点的 **Pressed**、**Held** 和 **Released** 插槽。按下某个键时，您可以通过将 **value** 输出槽连接到图形中的节点来捕获和使用事件的值。
 
     连接这些节点后，您的 Script canvas 图形应如下所示。
 
     ![Script Canvas graph with On Graph Start and Input Handler nodes connected](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-input-handlers.png)
     
-1. Add two **From Values** nodes to the graph from the **Math > Vector3** category.  You will use these nodes to create a `Vector3` representing a single movement in one of the four grid directions.  Connect the **Pressed** pin of `MoveY`'s **Input Handler** to the **In** pin of one of the **From Values** nodes.  Then, connect the **value** pin to the **Y** slot of that node.
+1. 将两个 **From Values** 节点添加到 **Math > Vector3** 类别中的图形中。 您将使用这些节点创建一个 `Vector3`，表示在四个网格方向之一上的单个移动。将 `MoveY` 的 **Input Handler** 的 **Pressed** 引脚连接到其中一个 **From Values** 节点的 **In** 引脚。 然后，将 **value** 引脚连接到该节点的 **Y** 插槽。
 
-1. Connect the `MoveX` **Input Handler** to the second **From Values** node in the same way, but this time connect the **value** pin to the **X** slot. When you press the `A` or `D` keyboard keys , this node will output either `(-1, 0, 0)` or `(1, 0, 0)`.
+1. 以相同的方式将 `MoveX` **Input Handler** 连接到第二个 **From Values** 节点，但这次将 **value** 引脚连接到 **X** 插槽。 当你按下`A` 或 `D` 键，此节点将输出 `(-1, 0, 0)` 或 `(1, 0, 0)`。
 
-1. To get the Shader Ball to move, you need to add a `Vector3` to the ball's current world translation and then set the Shader Ball's translation to the result.  Add two **Get World Translation** nodes to the graph and connect the **Out** pins of the **From Values** node to the **In** pins of the **Get World Translation** nodes.
+1. 要使 Shader Ball 移动，您需要将`Vector3`添加到球的当前世界平移中，然后将 Shader Ball 的平移设置为结果。 将两个 **获取世界翻译** 节点添加到图表中，并将 **From Values** 节点的 **Out** 引脚连接到 **Get World Translation **节点的 **In** 引脚。
 
     {{< note >}}
-The **EntityID** fields of these nodes are set to `Self`; this means that when a node executes, it will return the translation of the entity that the Script Canvas graph is on. You simplify all Shader Ball-related references by attaching this graph to the Shader Ball.
+这些节点的 **EntityID** 字段设置为 '`Self`';这意味着，当节点执行时，它将返回 Script Canvas 图形所在的实体的转换。您可以通过将此图形附加到 Shader Ball 来简化所有与 Shader Ball 相关的引用。
 {{< /note >}}
 
-1. Next, you need to add the movement and translation vectors together.  Add two **Add (+)** nodes from the **Math** category to the graph, and connect the **Out** pins of the **Get World Translation** nodes to the **In** pins of the **Add (+)** nodes.  For each event, connect a **Get World Translation** **Translation** slot to **Value 0** and the **From Values** **Vector3** slot to **Value 1**.  Now, when the **Add (+)** node executes, its **Result** slot represents the world translation that the Shader Ball should move to.
+1. 接下来，您需要将移动向量和平移向量相加。 将 **Math** 类别中的两个 **Add (+)** 节点添加到图形中，并将 **Get World Translation** 节点的 **Out** 引脚连接到 **Add (+)** 节点的 **In** 引脚。 对于每个事件，将 **Get World Translation** **Translation** 插槽连接到 **Value 0**，并将 **From Values** **Vector3** 插槽连接到 **Value 1**。 现在，当 **Add (+)** 节点执行时，其 **Result** 插槽表示 Shader Ball 应移动到的世界平移。
 
-1. Add two **Set World Translation** nodes to the graph.  Connect the **Out** pin of the **Add (+)** nodes to the **In** pins of the new nodes.  Connect the **Result** pins to the **World Translation** slots.  The **Source** slots of the **Set World Translation** nodes are set to `Self`.
+1. 将两个 **Set World Translation** 节点添加到图表中。 将 **Add (+)** 节点的 **Out** 引脚连接到新节点的 **In** 引脚。 将 **Result** 引脚连接到 **World Translation** 插槽。 “设置世界转换”节点的“源”插槽设置为`Self`。
 
-    After connecting these nodes, your Script canvas graph should look like the following.
-
+    连接这些节点后，您的 Script canvas 图形应如下所示。
+2. 
     ![Script Canvas graph with movement and translation vectors added and the result set to the Shader Ball's world translation](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-set-world-translation.png)
 
-1. Save the Script Canvas graph in your project's directory.  In the Shader Ball's Script Canvas component, **left-click** the {{< icon "browse-edit-select-files.svg" >}} button and choose the Script Canvas graph you created.
+1. 将 Script Canvas 图形保存在项目的目录中。 在 Shader Ball 的 Script Canvas 组件中，**左键单击** {{< icon "browse-edit-select-files.svg" >}} 按钮，然后选择您创建的 Script Canvas 图形ted.
 
-1. Save the level.  Then, test that you have set up everything correctly by pressing **Ctrl + G** to enter Game Mode.  You should be able to press **W**, **A**, **S**, and **D** to move the Shader Ball around the grid.
+1. 保存关卡。 然后，按 **Ctrl + G** 进入游戏模式，测试您是否已正确设置所有内容。 您应该能够按 F**W**、**A**、**S** 和 **D** 在网格中移动 Shader Ball。
 
-### Simplify the graph with variables
+### 使用变量简化图形
 
-Script Canvas variables simplify the visual complexity of a graph by replacing connections between nodes with references.  Graphs may also require certain variables to execute correctly; the value of an output pin may only be valid for a limited time after a node's execution.  It is best practice to save values as a variable in order to reliably access them later.  In this section, you will improve the Script Canvas graph you created previously in this tutorial by using variables.
+Script Canvas 变量通过将节点之间的连接替换为引用来简化图形的视觉复杂性。 图形可能还需要某些变量才能正确执行;Output Pin（输出引脚）的值可能仅在节点执行后的有限时间内有效。 最佳做法是将值保存为变量，以便以后可靠地访问它们。 在本节中，您将使用变量改进之前在本教程中创建的 Script Canvas 图形。
 
-1. If your Script Canvas graph is not already open in the Script Canvas editor, **left-click** the {{< icon "open-in-internal-app.svg" >}} button on the Shader Ball's Script Canvas component.
+1. 如果您的 Script Canvas 图形尚未在 Script Canvas 编辑器中打开，请 **左键单击** Shader Ball 的 Script Canvas 组件上的 {{< icon "open-in-internal-app.svg" >}} 按钮。
 
-1. In the **Variable Manager** tool of the Script Canvas editor, choose **Create Variable** and select `Vector3` from the dropdown list to create a new `Vector3` variable.  Name the new variable `Start Location`; it will represent the Shader Ball's translation before it moves.
+1. 在 Script Canvas 编辑器的 **Variable manager** 工具中，选择 **Create Variable** 并从下拉列表中选择 `Vector3`以创建新的 `Vector3` 变量。将新变量命名为`Start Location`;它将表示 Shader Ball 在移动之前的平移。
 
-1. Create two more `Vector3` variables named `End Location` and `Move Vector`.
+1. 创建另外两个 `Vector3` 变量，分别命名为 `End Location` 和 `Move Vector`。
 
-    After adding these variables, your Variable Manager should look like the following.
+    添加这些变量后，您的 Variable Manager 应如下所示。
 
    ![The Variable Manager tool with three Vector3 variables in it](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-variable-manager.png)
 
-1. Remove all of the green `Vector3` connections in your graph by selecting each connection and pressing **Delete**.
+1. 通过选择每个连接并按 **Delete** 来删除图形中所有绿色的 `Vector3` 连接。
 
-1. If a slot is unconnected, you can make it a variable reference by **double-clicking** on the pin or **right-clicking** on it and selecting **Convert to Reference**. Convert all the `Vector3` slots to references. 
+1. 如果插槽未连接，您可以通过 **双击** 引脚或 **右键单击** 并选择 **Convert to Reference** 来使其成为变量引用。将所有 `Vector3` 插槽转换为参考。
 
-1. Set the reference by dragging the appropriate variable from Variable Manager and dropping it the slot.  **Drag** the `Move Vector` variable to the **Vector3** slot of both **From Values** nodes.
+1. 通过将 Variable Manager 中的相应变量拖放到插槽中来设置引用。 将 `Move Vector` 变量拖到 **From Values** 节点的 **Vector3** 插槽中。
 
-1. Convert the remaining green `Vector3` pins in the graph to use references and add the appropriate variable to them.
+1. 转换图形中剩余的绿色 `Vector3` 引脚以使用引用并向其添加适当的变量。
 
-    After adding these variable references, your graph should look like the following.
+    添加这些变量引用后，您的图表应如下所示。
 
    ![Graph that is using only variable references in Vector3 input and output slots](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-using-variable-references.png)
    
-1. Create two new variables in Variable Manager of the `Number` type for the input event values. Name them `MoveY Input Value` and `MoveX Input Value`.
+1. 在 Variable Manager 中为输入事件值创建两个`Number`类型的新变量。为他们命名`MoveY Input Value` 和 `MoveX Input Value`。
 
-1. Delete the yellow `Number` connections between the **Input Handler** and **From Values** nodes. Convert the appropriate slots to use variable references and drag your new variables into them. 
+1. 删除 **Input Handler** 和 **From Values** 节点之间的黄色`Number`连接。转换相应的插槽以使用变量引用，并将新变量拖到其中。
 
-    Your graph should look like the following.
+    您的图表应如下所示。
 
     ![Graph that is using two Number-type variables](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-using-variable-references-2.png)
     
-1. Save the graph and test your level.
+1. 保存图表并测试您的关卡。
 
-### Add smooth motion over time with the **Lerp Between** node
+### 使用 **Lerp Between** 节点添加随时间变化的平滑运动
 
-You may have noticed that it is difficult to see the instant movements of the Shader Ball.  Now you will replace instant movement with smooth movement that happens over time using _linear interpolation_, or _Lerp_ for short. 
+您可能已经注意到，很难看到 Shader Ball 的即时移动。 现在，您将使用 _linear interpolation_ 或简称 _Lerp_ 将 instant movement 替换为随时间推移发生的平滑移动。
 
-1. With your Script Canvas graph open, disconnect both of the **Set World Translation** nodes.  To disconnect a node, you can delete its connections or **Hold left-click** on the node and shake it back and forth.
+1. 打开 Script Canvas 图形后，断开两个 **Set World Translation** （设置世界转换） 节点的连接。 要断开节点，您可以删除其连接，或在节点上按住 **单击鼠标左键** 并来回摇动它。
 
-1. Add a single **Lerp Between** node from the **Math** category.  Connect the **Out** pins from both **Add (+)** nodes to the **In** pin of the **Lerp Between** node.
+1. 从 **Math** 类别中添加一个 **Lerp Between** 节点。 将两个 **Add (+)** 节点的 **Out** 引脚连接到 **Lerp Between** 节点的 **In** 引脚。
 
-1. Convert the **Start** and **Stop** slots to use a reference and **drag and drop** the `Start Location` and `End Location` variables to the appropriate slot.
+1. 将 **Start** 和 **Stop** 插槽转换为使用引用，并将`Start Location` 和 `End Location`变量 **拖放** 到适当的插槽。
 
-1. The value in the **Maximum Duration** slot will determine how long the movement between the start and end locations will take.  Rather than hard code a value into the **Maximum Duration** slot, create a variable you can modify from the Script Canvas component.  In Variable Manager, create a variable with the `Number` type named `Move Duration`. In the **Node Inspector** tool, set the **Initial Value Source** parameter to `From Component`.
+1. **Maximum Duration** 插槽中的值将决定在开始位置和结束位置之间移动所需的时间。 不要将值硬编码到 **Maximum Duration** 插槽中，而是创建一个可以从 Script Canvas 组件修改的变量。 在 Variable Manager 中，创建一个名为`Move Duration`的`Number`类型的变量。在 **Node Inspector** 工具中，将 **初始值源** 参数设置为`From Component`。
 
-    Your `Move Duration` variable should be set up like the following.
+    `Move Duration` 变量的设置方式应如下所示。
 
     ![Move Duration node in the Variable Manager and Node Inspector](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-move-duration.png)
 
-1. Convert the **Maximum Duration** slot to use a reference and set it to use the new `Move Duration` variable.
+1. 将 **Maximum Duration** 槽转换为使用引用，并将其设置为使用新的`Move Duration`变量。
 
-1. Connect the **Tick** pin of the **Lerp Between** node to the **In** pin of the **Set World Translation** node.  Then, connect the **Step** slot to **World Translation**; this should automatically remove the reference to `End Location`.  Now, while the **Lerp Between** node is executing, a new value for **Step** will be calculated, and the **Set World Translation** node will execute with this new value.
+1. 将 **Lerp Between** 节点的 **Tick** 引脚连接到 **Set World Translation** 节点的 **In** 引脚。 然后，将 **Step** 插槽连接到 **World Translation**;这应该会自动删除对 `End Location` 的引用。 现在，在执行 **Lerp Between** 节点时，将计算 **Step** 的新值，并且 **Set World Translation** 节点将使用此新值执行。
 
-1. Connect the **Lerp Complete** pin of the **Lerp Between** node to the **In** pin of the second **Set World Translation** node.  The **World Translation** slot should still use the `End Location` variable.  It's unlikely that the game ticks that occur during a Lerp add up perfectly to the **Maximum Duration** time.  If you did not set the world translation of the Shader ball to the desired `End Location` after every Lerp completed, small errors in the Shader Ball's position would accumulate, and the Shader Ball would not perfectly align to the grid.
+1. 将 **Lerp Between** 节点的 **Lerp Complete** 引脚连接到第二个 **Set World Translation** 节点的 **In** 引脚。 **World Translation** 插槽仍应使用 `End Location` 变量。 在 Lerp 期间发生的游戏更新时间不太可能与 **Maximum Duration** 时间完全叠加。 如果在完成每个插值后没有将 Shader Ball 的世界平移设置为所需的 `End Location`，则 Shader Ball 位置中的小错误会累积，并且 Shader Ball 不会完全对齐网格。
 
-    Your graph should look like the following.
+    您的图表应如下所示。
 
     ![Graph that is using two Number-type variables](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-lerp-between.png)
 
-1. Save the graph and locate the Script Canvas component in the Shader Ball's Entity Inspector.
+1. 保存图形并在 Shader Ball 的 Entity Inspector 中找到 Script Canvas 组件。
 
-1. The component's **Variables** property should list `Move Duration` as a variable.  Change it to a positive value like `1.0` to set the duration of the movement Lerp.  Variables set from the component are easy to modify; use them to quickly test and tune new values without the need to open Script Canvas.
+1. 组件的 **Variables** 属性应将`Move Duration`列为变量。 将其更改为正值（如 `1.0` ）以设置移动 Lerp 的持续时间。 从组件设置的变量很容易修改;使用它们可快速测试和调整新值，而无需打开 Script Canvas。
 
-1. Save the level and test the Shader Ball's movement.
+1. 保存关卡并测试 Shader Ball 的移动。
 
-### Block input events
+### 块输入事件
 
-There is a problem with the Shader Ball's movement!  If you press a key to move the Shader ball before the last movement is complete, the Shader Ball will no longer align with the grid.  You need to block new input events when the Shader Ball is moving.
+Shader Ball 的移动有问题！ 如果在最后一次移动完成之前按某个键移动 Shader Ball，则 Shader Ball 将不再与网格对齐。 您需要在 Shader Ball 移动时阻止新的输入事件。
 
-1. In your Script Canvas graph, create a new `Boolean` type variable and name it `Is Moving`.  You'll use this variable to track when the Shader Ball is moving.  The default value for this variable is `False`, which is appropriate; when you enter Game Mode, the Shader Ball _is not_ moving.
+1. 在 Script Canvas 图表中，创建一个新的`Boolean`类型变量，并将其命名为`Is Moving`。 您将使用此变量来跟踪 Shader Ball 何时移动。 此变量的默认值为`False`，这很合适;当您进入 Game Mode（游戏模式）时，Shader Ball _is not_移动。
 
-1. Disconnect the **From Values** nodes from the **Input Handler** nodes.  You need to insert a conditional check after input events are received.
+1. 断开 **From Values** 节点与 **Input Handler** 节点的连接。 您需要在收到输入事件后插入条件检查。
 
-1. Add two **If** nodes from the **Logic** category.  Connect each of the **Input Handler** nodes to an **If** node, the **Pressed** pin should connect to the **In** pin of the **If** node.
+1. 从 **Logic** 类别添加两个 **If** 节点。 将每个 **Input Handler** 节点连接到一个 **If** 节点，**Pressed** 引脚应连接到 **If** 节点的 **In** 引脚。
 
-1. Convert the **Condition** slots to use a reference and **drag and drop** the `Is Moving` variable on them.  The **If** nodes have two output pins, only the pin with the same value as `Is Moving` will execute.  When `Is Moving` is `True`, you want to block additional movement, so the **True** pin should not connect to anything.  When `Is Moving` is `False`, you want the movement logic to execute, so connect the **False** pin to the **In** slot of the **From Values** node.
+1. 将 **Condition** 插槽转换为使用引用，并在其上 **拖放** `Is Moving` 变量。 **If**节点有两个输出引脚，则只会执行与'Is Moving'具有相同值的引脚。 当 `Is Moving`为 `True` 时，您希望阻止其他移动，因此 **True** 引脚不应连接到任何对象。 当 `Is Moving`为 `False` 时，您希望执行移动逻辑，因此将 **False** 引脚连接到 **From Values** 节点的 **In** 插槽。
 
-1. You also need to change the value of the `Is Moving` variable to `True` when the movement logic begins to execute.  Add two **Set Is Moving** nodes to the graph.  You can find the node in the Node Palette tool, alternatively, hold **Alt** and **left-click and drag** the `Is Moving` variable from Variable Manager.  Insert these nodes on the connection between the **If** and **From Values** nodes by **left-clicking and dragging** the node and hovering the mouse over the connection.
+1. 当移动逻辑开始执行时，您还需要将 `Is Moving` 变量的值更改为 `True`。 向图表中添加两个 **Set Is Moving** 节点。 您可以在 Node Palette （节点调色板） 工具中找到该节点，或者，按住 **Alt** 并 **左键单击并拖动** Variable Manager 中的 `Is Moving`变量。 通过左键单击并拖动节点并将鼠标悬停在连接上，将这些节点插入到 **If** 和 **From Values** 节点之间的连接上。
 
-1. **Left-click** on the **Boolean** slot of the two **Set Is Moving** nodes so that the box is checked.  This sets the value of `Is Moving` to `True` when the node executes.
+1. 在两个 **Set Is Moving** 节点的 **Boolean** 插槽上单击鼠标左键，以选中该框。 这会在节点执行时将 'Is Moving' 的值设置为 `True`。
 
-    Your graph should look like the following.
+    您的图表应如下所示。
 
     ![If and Set is Moving nodes are inserted after the Input Handlers to check for movement](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-movement-check.png)
 
-1. When a movement is complete, the `Is Moving` variable should be set to `False` so that the conditional check won't block the next movement.  Add a single **Set Is Moving** node to the graph and connect it to the final **Set World Translation** node that executes when a Lerp completes.  The **Boolean** slot of **Set Is Moving** should be unchecked, which sets the variable to `False`.
+1. 当一个动作完成时，`Is Moving` 变量应该设置为 `False`，这样条件检查就不会阻止下一个动作。 将单个 **Set Is Moving** 节点添加到图表中，并将其连接到在 Lerp 完成时执行的最终 **Set World Translation** 节点。 应取消选中 **Set Is Moving**的 **Boolean** 插槽，这会将变量设置为 `False`。
 
-    Your graph should look like the following.
+    您的图表应如下所示。
 
     ![Set Is Moving node is reset to False after Lerp completes](/images/learning-guide/tutorials/input-and-movement/grid-based-movement/sc-reset-is-moving.png)
     
-1. Save the graph and test your level.  Now the Shader Ball cannot move until the last movement is complete, and it stays aligned with the grid.
+1. 保存图表并测试您的关卡。 现在，Shader Ball 在最后一次移动完成之前无法移动，并且它与网格保持对齐。
 
-## Related resources
+## 相关资源
 
-| Resource | Description |
+|资源 |描述 |
 |-|-|
-| [Using player input in O3DE](/docs/user-guide/interactivity/input/using-player-input/) | User Guide topics related to input. |
-| [Creating gameplay and other behaviors with Script Canvas](/docs/user-guide/scripting/script-canvas/) | User Guide topics related to Script Canvas. |
-| [Input component](/docs/user-guide/components/reference/gameplay/input/) | Reference for the Input component. |
-| [Script Canvas component](/docs/user-guide/components/reference/scripting/script-canvas/) | Reference for the Script Canvas component. |
+| [在 O3DE 中使用玩家输入](/docs/user-guide/interactivity/input/using-player-input/) | 与输入相关的用户指南主题。|
+| [使用 Script Canvas 创建游戏和其他行为](/docs/user-guide/scripting/script-canvas/) | 与 Script Canvas 相关的用户指南主题。 |
+| [Input 组件](/docs/user-guide/components/reference/gameplay/input/) | Input 组件的参考。 |
+| [Script Canvas 组件](/docs/user-guide/components/reference/scripting/script-canvas/) | Script Canvas 组件的参考。 |

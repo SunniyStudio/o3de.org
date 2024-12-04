@@ -1,99 +1,99 @@
 ---
-linktitle: Tutorials
-title: Open 3D Engine (O3DE) Tutorials
-description: Learn Open 3D Engine (O3DE) with the help of step-by-step, guided tutorials.
+linktitle: 教程
+title: Open 3D Engine (O3DE) 教程
+description: 在分步指导教程的帮助下学习 Open 3D Engine （O3DE）。
 weight: 200
 toc: true
 ---
 
-Learn the features, tools, and processes of **Open 3D Engine (O3DE)** with the help of step-by-step, guided tutorials.
+在分步指导教程的帮助下，了解 **Open 3D Engine （O3DE）** 的功能、工具和流程。
 
-## Looking to get started?
+## 想要开始？
 
-Do you have O3DE installed and you aren't sure where to start? Then [try the follow-alongs](/docs/learning-guide/samples/follow-along/). These easy guide videos will walk you through the creation of basic games like Pong to get you familiar with the O3DE interface and tools.
+您是否已安装 O3DE，但不确定从哪里开始？然后 [尝试后续操作](/docs/learning-guide/samples/follow-along/)。这些简单的指南视频将引导您完成 Pong 等基本游戏的创建，让您熟悉 O3DE 界面和工具。
 
-## Animation
+## 动画
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Data Driven Root Motion](animation/data-driven-root-motion) | Learn about data driven root motion and how to apply it to actors. |
+| [数据驱动的根运动](animation/data-driven-root-motion) |了解数据驱动的根运动以及如何将其应用于角色。 |
 
-## Artificial Intelligence
+## 人工智能
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [2D Navigation with Kythera AI](ai/navigation-2d) | Create an artificial intelligence (AI) agent that performs ground-based navigation and follows a visually scripted behavior tree. This tutorial uses the broad toolset that the [Kythera AI Gem](/docs/user-guide/gems/reference/kythera-ai) provides. |
+| [使用 Kythera AI 进行 2D 导航](ai/navigation-2d) | 创建一个人工智能 （AI） 代理，该代理执行基于地面的导航并遵循可视化脚本化的行为树。本教程使用 [Kythera AI Gem](/docs/user-guide/gems/reference/kythera-ai) 提供的广泛工具集。 |
 
-## Assets
+## 资产
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Customize Mesh Asset Processing](assets/mesh-assets) | Use Scene Settings to process mesh assets for O3DE. |
-| [Customize Actor Asset Processing](assets/actor-assets) | Use Scene Settings to process actor assets for O3DE. |
-| [Process PhysX Collider Assets](assets/physx-colliders) | Use Scene Settings to process PhysX collider assets for O3DE. |
+| [自定义网格资产处理](assets/mesh-assets) | 使用 Scene Settings （场景设置） 处理 O3DE 的网格资产。 |
+| [自定义 Actor 资产处理](assets/actor-assets) | 使用 Scene Settings （场景设置） 处理 O3DE 的角色资产。 |
+| [处理 PhysX 碰撞器资产](assets/physx-colliders) | 使用 Scene Settings （场景设置） 处理 O3DE 的 PhysX 碰撞器资产。 |
 
-## Entities and prefabs
+## 实体和Prefab
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Entity and Prefab Basics](entities-and-prefabs/entity-and-prefab-basics) | Learn the basics of creating and modifying entities and prefabs. |
-| [Override a Prefab](entities-and-prefabs/override-a-prefab) | Learn how to make changes to a single prefab instance. |
-| [Spawn and Despawn a Prefab](entities-and-prefabs/spawn-a-prefab.md) | Use **Script Canvas** to create a script that spawns and despawns a prefab. |
+| [实体和Prefab基础知识](entities-and-prefabs/entity-and-prefab-basics) | 了解创建和修改实体和Prefab的基础知识。 |
+| [覆盖Prefab](entities-and-prefabs/override-a-prefab) | 了解如何更改单个Prefab实例。 |
+| [生成和取消生成Prefab](entities-and-prefabs/spawn-a-prefab.md) | 使用 **Script Canvas** 创建生成和取消生成Prefab的脚本。 |
 
-## Environments
+## 环境
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Create a Level](environments/create-a-level) | Create a level for O3DE. |
-| [Create Terrain from Images](environments/create-terrain-from-images) | Learn to create terrain using images. |
+| [创建关卡](environments/create-a-level) | 为 O3DE 创建关卡。|
+| [从图像创建地形](environments/create-terrain-from-images) | 学习使用图像创建地形。 |
 
-## Extend O3DE Editor
+## 扩展 O3DE 编辑器
 
-Extend **O3DE Editor** by creating a custom tool Gem. A tool is a dockable widget or dialog window that implements functionality in the Editor. You can create custom tools in C++ or Python.
+通过创建自定义工具 Gem 来扩展 **O3DE Editor**。工具是在 Editor 中实现功能的可停靠构件或对话框窗口。您可以在 C++ 或 Python 中创建自定义工具。
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Create a Custom Tool Gem in C++](extend-the-editor/shape-example-cpp.md) | Extend the Editor by creating a custom tool Gem that's written in C++. Learn how to use the **CppToolGem** template, and practice C++ development with [Qt](https://wiki.qt.io/Main), the O3DE Tools UI API, and other O3DE APIs. |
-| [Create a Custom Tool Gem in Python](extend-the-editor/shape-example-py.md) | Extend the Editor by creating a custom tool Gem that's written in Python. Learn how to use the **PythonToolGem** template, and practice Python development with [Qt](https://wiki.qt.io/Main), the O3DE Tools UI API, and other O3DE APIs.|
+| [在 C++ 中创建自定义工具 Gem](extend-the-editor/shape-example-cpp.md) | 通过创建用 C++ 编写的自定义工具 Gem 来扩展 Editor。了解如何使用 **CppToolGem** 模板，并使用 [Qt](https://wiki.qt.io/Main)、O3DE 工具 UI API 和其他 O3DE API 练习C++开发。 |
+| [在 Python 中创建自定义工具 Gem](extend-the-editor/shape-example-py.md) | 通过创建用 Python 编写的自定义工具 Gem 来扩展 Editor。了解如何使用 **PythonToolGem** 模板，并使用 [Qt](https://wiki.qt.io/Main)、O3DE 工具 UI API 和其他 O3DE API 练习 Python 开发。|
 
-## Input and movement
+## 输入和移动
 
-Learn how to use the keyboard, mouse, and other input devices to move entities.
+了解如何使用键盘、鼠标和其他输入设备移动实体。
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Grid-based Movement](input-and-movement/grid-based-movement) | Learn how to implement grid-based movement from input device events. |
+| [基于网格的移动](input-and-movement/grid-based-movement) | 了解如何从输入设备事件实现基于网格的移动。 |
 
-## Multiplayer
+## 多人游戏
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Your First Network Component](multiplayer/first-multiplayer-component) | Create multiplayer components with C++ in this introduction to network components. |
+| [您的第一个网络组件](multiplayer/first-multiplayer-component) | 在网络组件简介中使用 C++ 创建多人游戏组件。 |
 
 ## PhysX
 
-Create physics simulations in O3DE with NVIDIA's PhysX system. The tutorials in this section demonstrate how to use PhysX to add dynamic physics simulations in your projects.
+使用 NVIDIA 的 PhysX 系统在 O3DE 中创建物理模拟。本节中的教程演示了如何使用 PhysX 在项目中添加动态物理模拟。
 
-| Topic | Description |
+|主题 |描述 |
 | - | - |
-| [Create Wind Forces](physx/wind-provider) | Simulate a wind force with a **PhysX Force Region** and NVIDIA Cloth. |
+| [创建风力](physx/wind-provider) | 使用 **PhysX Force Region** 和 NVIDIA Cloth 模拟风力。 |
 
 ## PostFX
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [PostFX Shape Weight Modifier](postfx/use-postfx-shape-weight-modifier) | Use a **PostFX Shape Weight Modifier** component to modify exposure control in O3DE. This example demonstrates how to modify post-processing effects (PostFX) at runtime. |
+| [PostFX Shape Weight Modifier](postfx/use-postfx-shape-weight-modifier) | 使用 **PostFX Shape Weight Modifier** 组件修改 O3DE 中的曝光控制。此示例演示如何在运行时修改后处理效果 （PostFX）。 |
 
-## Remote Repositories
+## 远程仓库
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Your First Remote Repository](remote-repositories/create-remote-repository) | Learn how to create an **O3DE remote repository** to share your projects, gems, and templates with the world. |
+| [您的第一个远程仓库](remote-repositories/create-remote-repository) | 了解如何创建 **O3DE 远程存储库** 以与全世界共享您的项目、Gem 和模板。 |
 
-## Rendering
+## 渲染
 
-| Tutorial | Description |
+|教程 |描述 |
 | - | - |
-| [Create a StandardPBR material](rendering/create-standardpbr-material) | This tutorial walks you through creating your first StandardPBR material using the Material Editor. |
-| [Material Types and Shaders](rendering/get-started-materialtypes-and-shaders) | A beginner-level tutorial introducing material types and shaders in Atom. Learn how to create a custom material type with a simple AZSL shader. |
-| [Vertex Deformation for Vegetation Bending Tutorial](rendering/vegetation-bending-tutorial) | Use the **Atom Renderer** to create a custom material type with custom vertex shaders for vegetation bending. |
+| [创建 StandardPBR 材质](rendering/create-standardpbr-material) | 本教程将指导您使用 Material Editor 创建您的第一个 StandardPBR 材质。 |
+| [材质类型和着色器](rendering/get-started-materialtypes-and-shaders) | 介绍 Atom 中的材质类型和着色器的初级教程。了解如何使用简单的 AZSL 着色器创建自定义材质类型。 |
+| [植被弯曲的顶点变形教程](rendering/vegetation-bending-tutorial) | 使用 **Atom Renderer** 创建具有自定义顶点着色器的自定义材质类型，以实现植被弯曲。 |

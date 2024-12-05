@@ -6,7 +6,7 @@ weight: 400
 toc: true
 ---
 
-Each Markdown file in **Open 3D Engine (O3DE)** documentation must begin with Hugo front matter (metadata) that provides information about the content. For all the available variables, refer to [Front Matter](https://gohugo.io/content-management/front-matter/) in the Hugo Content Management Guide. In O3DE docs, there are five commonly used front matter variables, as follows:
+Open 3D Engine （O3DE）** 文档中的每个 Markdown 文件都必须以提供有关内容信息的 Hugo front matter（元数据）开头。有关所有可用变量，请参阅《Hugo Content Management Guide》中的 [Front Matter](https://gohugo.io/content-management/front-matter/)。在 O3DE 文档中，有五个常用的 front matter 变量，如下所示：
 
 ```yaml
 ---
@@ -18,12 +18,12 @@ toc: true
 ---
 ```
 
-Place front matter variables at the top of the Markdown source file and enclose them in three dashes `---`. Each O3DE topic must have at least the `linkTitle`, `title`, and `description` variables, in that order.
+将 front matter 变量放在 Markdown 源文件的顶部，并将它们用三个破折号 `---` 括起来。每个 O3DE 主题必须至少有 `linkTitle`、`title` 和 `description` 变量（按此顺序）。
 
-Variable | Usage
+变量 |用法
 :--| :-----
-`linktitle:` | A short title that appears in links such as a table of contents.
-`title:` | A long title that appears on-page and the H1 heading.
-`description:` | A short description of the topic content.
-`weight:` | A value used to sort the content for lists, such as a table of contents. Lower weight values are sorted higher in lists. It's good practice to use increments of 100 for weight values to ensure additional topics can be inserted and sorted properly in the future.
-`toc:` | When true, a table of contents is generated from the section headings in the right gutter of the page.
+`linktitle:` | 显示在链接（如目录）中的短标题。
+`title:` | 显示在页面上的长标题和 H1 标题。
+`description:` | 主题内容的简短描述。
+`weight:` | 用于对列表内容进行排序的值，例如目录。较低的权重值在列表中排名靠前。最好对权重值使用 100 的增量，以确保将来可以正确插入和排序其他主题。
+`toc:` | 如果为 true，则从页面右侧装订线中的章节标题生成目录。

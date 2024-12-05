@@ -1,231 +1,231 @@
 ---
-title: Submitting Media to O3DE Documentation
-description: Guidelines for submitting media (images, video, audio, or assets) to Open 3D Engine (O3DE) documentation.
+title: 将媒体提交到 O3DE 文档
+description: 将媒体（图像、视频、音频或资源）提交到 Open 3D Engine （O3DE） 文档的指南。
 linktitle: Media
 weight: 700
 toc: true
 ---
 
-There are two available methods to add images to topics in **Open 3D Engine (O3DE)** documentation. You can use markdown syntax, or the `image-width` shortcode. If you are adding multiple images, very large images, or `.svg` diagrams, consider using the `image-width` shortcode to limit the width of images as the image scales to the width of the browser window.
+在 Open 3D Engine （O3DE） 文档中，有两种可用的方法可以将图像添加到主题中。你可以使用 markdown 语法或 `image-width` 短代码。如果要添加多个图像、非常大的图像或`.svg`图表，请考虑使用 `image-width` 短代码来限制图像的宽度，因为图像缩放到浏览器窗口的宽度。
 
-## Adding images with markdown syntax
+## 使用 markdown 语法添加图片
 
-To add an image with markdown syntax, use syntax similar to a link, preceded by an exclamation mark. The text in the brackets is displayed when the image does not load. Inside the parentheses is the link to the image asset, and an optional image title in double quotes.
+要使用 markdown 语法添加图像，请使用类似于链接的语法，前面带有感叹号。当图像未加载时，会显示括号中的文本。括号内是指向图像资产的链接，以及双引号中的可选图像标题。
 
-Image example:
+图片示例：
 
 ```markdown
 ![O3DE Logo](/img/logos/O3DE-Logo-with-WordMark-Black-Mono.svg "The O3DE logo")
 ```
 
-Image output:
+图像输出：
 
 ![O3DE Logo](/img/logos/O3DE-Logo-with-WordMark-Black-Mono.svg "The O3DE logo")
 
-## Adding images with the `image-width` shortcode
+## 使用 `image-width` 短代码添加图像
 
-The `image-width` shortcode adds an image with alternate text and restricts the image's width. The `image-width` shortcode can ensure image sizes are consistent within a topic, and that large images don't scale overly large in wide browser windows. Use this method when adding `.svg` diagrams, very large images, and in topics with multiple images where consistent image widths are desirable.
+`image-width` 短代码添加带有替代文本的图像并限制图像的宽度。`image-width` 短代码可以确保图像大小在主题内保持一致，并且大图像在较宽的浏览器窗口中不会缩放得太大。在添加`.svg`图、非常大的图像以及需要一致图像宽度的多个图像的主题中使用此方法。
 
-`image-width` takes three double-quoted named parameters:
+`image-width` 采用三个双引号命名参数：
 
-1. `src="/images/<image.png>"` - Image file path.
-1. `width="<image width>"` - Scale the image by specifying a width in pixels.
-1. `alt="<image description>"` - A string describing the image.
+1. `src="/images/<image.png>"` - 图像文件路径。
+1. `width="<image width>"` - 通过指定宽度（以像素为单位）来缩放图像。
+1. `alt="<image description>"` - 描述图像的字符串。
 
-`image-width` example:
+`image-width` 示例:
 
 ```markdown
 {{</* image-width src="/images/welcome-guide/guide_img.png" width="700" alt="The O3DE Welcome Guide splash image." */>}}
 ```
 
-`image-width` example output:
+`image-width` 示例输出:
 
 {{< image-width src="/images/welcome-guide/guide_img.png" width="700" alt="The O3DE Welcome Guide splash image." >}}
 
 
-## Alternate text
+## 替换文本
 
-Alternate text for images is very important. It provides a description of the image if the image is not loaded. The alternate text is also used for accessibility and in search engine optimization (SEO). Ensure that the alternate text provided for images clearly describes the contents of the image. 
+图像的替代文本非常重要。如果未加载图像，它会提供图像的描述。替代文本还用于辅助功能和搜索引擎优化 （SEO）。确保为图像提供的替代文本清楚地描述了图像的内容。
 
-## Image file location
+## 图片文件位置
 
-Images are placed subdirectories of the `/static/` directory of the O3DE documentation repository.
+图像放置在 O3DE 文档存储库的 `/static/` 目录的子目录中。
 
-Guide-specific images, such as interface screenshots and diagrams, are located in subdirectories of `/static/images/`. The directory structure of `/static/images/` is a mirror of the directory structure of `/content/docs/`. Shared images like logos are placed in subdirectories of `/static/img/`. When submitting images as part of a PR, ensure the images are placed in the appropriate subdirectories.
+特定于指南的图像（如界面屏幕截图和图表）位于`/static/images/`的子目录中。`/static/images/` 的目录结构是 `/content/docs/` 目录结构的镜像。像 logo 这样的共享图片被放置在 `/static/img/` 的子目录中。在 PR 中提交图像时，请确保将图像放置在适当的子目录中。
 
-## General image guidelines
+## 一般图像指南
 
-In order to standardize presentation, and to keep the O3DE documentation repository below 1 GB, please adhere to the following guidelines when you create images for documentation:
+为了标准化演示并将 O3DE 文档存储库保持在 1 GB 以下，在创建用于文档的图像时，请遵循以下准则：
   
-* Text in images should follow our style guidelines without formatting requirements.
-* Do not include personal identification information (PII) in your screenshots. PII includes, but is not limited to, names, geographic information, project names, IP addresses, DNS names, and directory paths. We recommend you crop out areas of images that might contain PII and that you create projects specifically for documentation contributions that do not expose PII. Using common image filters to blur or disguise PII is not recommended as they can sometimes be reversed. To remove PII from an image:
+* 图片中的文本应遵循我们的样式指南，无格式要求。
+* 请勿在屏幕截图中包含个人身份信息 （PII）。PII 包括但不限于名称、地理信息、项目名称、IP 地址、DNS 名称和目录路径。我们建议您裁剪可能包含 PII 的图像区域，并专门为不暴露 PII 的文档贡献创建项目。不建议使用常见的图像过滤器来模糊或伪装 PII，因为它们有时可以反转。要从图像中删除 PII：
 
-  1. In any image editor, draw a rectangle selection box around the PII.
+  1. 在任何图像编辑器中，在 PII 周围绘制一个矩形选择框。
 
-  1. Use the cut tool or **CTRL+X** to cut the information from the image completely.
+  1. 使用剪切工具或 **CTRL+X** 从图像中完全剪切信息。
 
-  1. Fill the empty selection area with a solid color such as black or white.
+  1. 用纯色填充空白选择区域，例如黑色或白色。
 
-  1. Save the edited image and include it with your PR.
+  1. 保存编辑后的图像并将其包含在您的 PR 中。
 
     {{< important >}}
-  Be sure to thoroughly examine all images for PII before adding them to a pull request!
+  在将图像添加到拉取请求之前，请务必彻底检查所有图像的 PII！
     {{< /important >}}
 
-## Screenshots
+## 截图
 
-Screenshots are images of various O3DE user interfaces, or the interfaces of other applications such  as content creation tools.
+屏幕截图是各种 O3DE 用户界面或其他应用程序（如内容创建工具）的界面的图像。
 
-* Use the PNG format (`.png`) for all screenshots.
-* Take interface screenshots at HD resolution (1920x1080).
-* Ensure the image resolution has an even number of pixels in both width and height.
-* Don't use aggressive compression for interface screenshots. Heavily compressed files may make text and UI elements less legible.
-* Screenshots should not exceed 512 KB in size.
-* Use the default interface scale for screenshots.
-* Use the default interface color theme for screenshots.
-* Use the default interface layout whenever possible.
-* Don't scale screenshots that have interface elements.
-* Crop interface images to contain only the necessary elements whenever possible.
-* Screenshots for tutorial and user guide content should contain model, character, and texture assets freely available to O3DE users:
-  * Assets distributed as part of O3DE.
-  * Assets distributed with permissive and open source licenses such as those found at [The Stanford 3D Scanning Repository](https://graphics.stanford.edu/data/3Dscanrep/).
-  * Assets that can be quickly replicated in open source content applications such as [Blender](https://blender.org) and [Krita](https://krita.org/).
-  * If you use assets distributed by a third party, provide a proper attribution and link for the asset in the documentation.
+* 所有屏幕截图使用 PNG 格式(`.png`)。
+* 以高清分辨率 （1920x1080） 拍摄界面屏幕截图。
+* 确保图像分辨率的宽度和高度像素数为偶数。
+* 不要对界面屏幕截图使用激进的压缩。高度压缩的文件可能会使文本和 UI 元素难以辨认。
+* 屏幕截图的大小不应超过 512 KB。
+* 对屏幕截图使用默认界面比例。
+* 屏幕截图使用默认界面颜色主题。
+* 尽可能使用默认界面布局。
+* 不要缩放具有界面元素的屏幕截图。
+* 尽可能裁剪界面图像以仅包含必要的元素。
+* 教程和用户指南内容的屏幕截图应包含 O3DE 用户免费提供的模型、角色和纹理资产：
+  * 作为 O3DE 的一部分分发的资产。
+  * 使用宽松的开源许可证分发的资产，例如 [斯坦福 3D 扫描存储库](https://graphics.stanford.edu/data/3Dscanrep/) 中的资产。
+  * 可以在 [Blender](https://blender.org) 和 [Krita](https://krita.org/)等开源内容应用程序中快速复制的资源。
+  * 如果您使用第三方分发的资源，请在文档中为该资源提供适当的归属和链接。
 
-## Artful images
+## 艺术图像
 
-Artful images are used for artistic or marketing purposes, such as images that demonstrate output from Atom renderer, or the fidelity of Atom materials.
+巧妙的图像用于艺术或营销目的，例如演示 Atom 渲染器的输出或 Atom 材质的保真度的图像。
 
-* Use the PNG format (`.png`) or the JPEG format (`.jpg`) for artful images.
-* Artful images may be up to UHD resolution (3840x2160).
-* Artful images should not exceed 1 MB in size.
-* Artful images may contain assets that are not freely available or easily replicated.
+* 使用 PNG 格式 （`.png`） 或 JPEG 格式 （`.jpg`） 制作巧妙的图像。
+* 巧妙的图像可能高达 UHD 分辨率 （3840x2160）。
+* 巧妙的图像大小不应超过 1 MB。
+* 巧妙的图像可能包含非免费提供或不易复制的资产。
 
-## Image annotations
+## 图像注释
 
-* We suggest the open source tool [ShareX](https://getsharex.com/) for image annotation.
-* Use as little text as possible in annotations. Add an ordered list below the image for text explanations of image annotations.
-* Use the [Open Sans](https://fonts.google.com/specimen/Open+Sans) bold font in image annotations.
-* Use US English in image annotations.
-* Use solid color fills, not gradient fills.
-* Avoid colors affected by colorblindness. We recommend using white text and Rhodamine Red C (RGB: 225,0,152 HEX: E10098) for image annotations. See the following annotated image example:
+* 我们建议使用开源工具 [ShareX](https://getsharex.com/)进行图像注释。
+* 在注释中使用尽可能少的文本。在图像下方添加有序列表，用于图像注释的文本解释.
+* 在图像注释中使用 [Open Sans](https://fonts.google.com/specimen/Open+Sans) 粗体字体。
+* 在图像注释中使用美式英语。
+* 使用纯色填充，而不是渐变填充。
+* 避免使用受色盲影响的颜色。我们建议使用白色文本和罗丹明红 C（RGB：225,0,152 十六进制：E10098）进行图像注释。请参阅以下带注释的图像示例：
 
 {{< image-width "/images/welcome-guide/ui-editor-labeled.png" "1000" "An annotated image of O3DE Editor's user interface." >}}
 
-## Diagrams
+## 图表
 
-* Use a diagram tool such as [draw io](https://app.diagrams.net) to create diagrams.
-* Use the SVG format (`.svg`) for diagrams.
-* Keep diagrams simple. Break complex diagrams into smaller chunks.
-* Use as little text as possible in diagrams.
-* Use the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font for diagram text.
-* Use solid color fills, not gradient fills.
-* Avoid colors affected by colorblindness. Be selective about tones of red, green, blue, and yellow.
+* 使用 [draw io](https://app.diagrams.net) 等图表工具创建图表。
+* 图表使用 SVG 格式 （`.svg`）。
+* 保持图表简单。将复杂的图表分解成更小的块。
+* 在图表中使用尽可能少的文本。
+* 图表文本使用 [Open Sans](https://fonts.google.com/specimen/Open+Sans) 字体。
+* 使用纯色填充，而不是渐变填充。
+* 避免使用受色盲影响的颜色。对红色、绿色、蓝色和黄色的色调进行选择性选择。
 
-## Animated images
+## 动画图像
 
-Due to limitations on repository size, animated `.gif` images are not accepted in contributions. If you must include an animated image in a topic, you may use an `.mp4` video. However, if the animation demonstrates a sequence of steps, you might alternatively consider an image strip rather than a video.
+由于存储库大小的限制，贡献中不接受动画“`.gif`”图像。如果您必须在主题中包含动画图像，则可以使用“`.mp4`”视频。但是，如果动画演示了一系列步骤，则可以考虑使用图像条而不是视频。
 
-### Image strips
+### 图像条
 
-To demonstrate steps, consider using a horizontal two to four panel annotated image strip that demonstrates the start, action, and result of the process. See the example below:
+为了演示步骤，请考虑使用一个水平的 2 到 4 面板注释图像条，以演示该过程的开始、操作和结果。请参阅以下示例：
 
 {{< image-width "/images/contributing/to-docs/image-strip-example.png" "700" "An image strip example with two panels." >}}
 
-1. **Left-click** on the entity in **Perspective** to select it.
-1. **LMB+Drag** on the transform gizmo's **Z** axis to move the entity on the world **Z** axis.
+1. 在 **Perspective** 中 **左键单击** 实体以将其选中。
+1. 在变换小工具的 **Z** 轴上拖动 **，以在世界 **Z** 轴上移动实体。
 
-### Embedding videos with the `video` shortcode
+### 使用 `video` 短代码嵌入视频
 
-Videos in the `/images/` directory can be embedded in topics with the `video` shortcode. Use this method to include animations in topics rather than animated `.gifs`.
+`/images/` 目录中的视频可以嵌入到带有 `video`短代码的主题中。使用此方法可在主题中包含动画，而不是动画 `.gif`。
 
-Keep the following in mind when submitting videos in docs contributions:
+在 docs 贡献中提交视频时，请记住以下几点：
 
-* `.mp4` is the preferred video format. `.ogg` and `.webm` are also supported by the shortcode, but aren't as well supported by various browsers.
-* Videos must be placed in the `/static/images/` directory structure using the same conventions as images.
-* Videos should be smaller than 512 KB and must not exceed 1 MB in size.
-* Ensure text in the video is legible if required.
-* Ensure the video resolution is no larger than necessary.
-* Ensure the video resolution has an even number of pixels in both width and height.
-* Crop and frame the subject of the video appropriately.
-* Videos shouldn't include audio unless required by the example.
-* Though a poster image is not required, it is recommended.
+* `.mp4`是首选的视频格式。`.ogg` 和 `.webm` 也被短代码支持，但各种浏览器都不支持。
+* 视频必须按照与图像相同的约定放置在 `/static/images/` 目录结构中。
+* 视频大小应小于 512 KB，且大小不得超过 1 MB。
+* 如果需要，请确保视频中的文本清晰易读。
+* 确保视频分辨率不超过所需分辨率。
+* 确保视频分辨率的宽度和高度像素数为偶数。
+* 适当地裁剪和构图视频的主题。
+* 除非示例要求，否则视频不应包含音频。
+* 虽然海报图片不是必需的，但建议使用。
 
-**Parameters**
+**参数**
 
-`video` **requires** the following named parameters:
+`video`**需要** 以下命名参数：
 
-1. `src="/images/<video.mp4>"` - Video file path.
-1. `info="<video description>"` - A string describing the video.
+1. `src="/images/<video.mp4>"` - 视频文件路径。
+1. `info="<video description>"` - 描述视频的字符串。
 
-`video` supports the following **optional** named parameters:
+`video` 支持以下 **可选** 命名参数：
 
-1. `poster="/images/<image.png>"` - A static image that displays while the video loads or if the video fails to load. This image should be the same size and aspect ratio as the video. 
-1. `autoplay="true"` - The video plays as soon as it loads.
-1. `loop="true"` - The video plays in a loop.
-1. `width="<video width>"` - Scale the video by specifying a width in pixels.
-1. `muted="true"` - Video is muted if an audio track exists.
-1. `type="video/<mp4 OR ogg OR webm>"` - Video type. MP4 is default.
+1. `poster="/images/<image.png>"` - 在视频加载或视频加载失败时显示的静态图像。此图像的大小和纵横比应与视频相同。
+1. `autoplay="true"` - 视频加载后立即播放。
+1. `loop="true"` - 视频循环播放。
+1. `width="<video width>"` - 通过指定宽度（以像素为单位）来缩放视频。
+1. `muted="true"` - 如果存在音轨，则视频将静音。
+1. `type="video/<mp4 OR ogg OR webm>"` - 视频类型。MP4 是默认的。
 
-The are two additional options that are always enabled.
+这是两个始终启用的附加选项。
 
-1. `preload="auto"` - Loads the video with the page.
-1. `controls` - Include player controls for the video.
+1. `preload="auto"` - 将视频与页面一起加载。
+1. `controls` - 包括视频的播放器控件。
 
-**Examples**
+**示例**
 
-1. Basic `video` usage with only the required parameters.
+1. 基本 `video` 用法，仅包含必需的参数。
 
     ```markdown
       {{</* video src="/images/contributing/to-docs/TestVideo.mp4" info="This is a test video." */>}}
     ```
-    Output:
+    输出:
 
     {{< video src="/images/contributing/to-docs/TestVideo.mp4" info="This is a test video." >}}
 
 <br>
 
-2. Advanced `video` usage with optional parameters to enable autoplay, loop the video, scale the video to 250 pixels, and include a poster image.
+2. 高级`video`用法和可选参数，用于启用自动播放、循环播放视频、将视频缩放到 250 像素以及包含海报图像。
 
     ```markdown
       {{</* video src="/images/contributing/to-docs/TestVideo.mp4" info="This is a test video." autoplay="true" loop="true" width="250" poster="/images/contributing/to-docs/TestPoster.png" */>}}
     ```
 
-    Output:
+    输出:
 
     {{< video src="/images/contributing/to-docs/TestVideo.mp4" info="This is a test video." autoplay="true" loop="true" width="250" poster="/images/contributing/to-docs/TestPoster.png" >}}
 
 
-## Embedding Youtube videos with the `youtube-width` shortcode
+## 使用 `youtube-width` 短代码嵌入 Youtube 视频
 
-Embed Youtube videos in your page by using the `youtube-width` shortcode. The `youtube-width` shortcode is an extended version of Hugo's built-in [`youtube` shortcode](https://gohugo.io/content-management/shortcodes/#youtube) that allows you to control the size of the embedded video. 
+使用 `youtube-width` 短代码将 Youtube 视频嵌入到您的页面中。`youtube-width` 短代码是 Hugo 内置的 [`youtube` shortcode](https://gohugo.io/content-management/shortcodes/#youtube) 的扩展版本，允许您控制嵌入视频的大小。
 
-`youtube-width` supports the following double-quoted parameters:
+`youtube-width` 支持以下双引号参数：
 
 1. id
 2. title
-3. width (using the default value (50%) is recommended)
+3. width (建议使用默认值 （50%）)
 
-**Examples** 
+**示例** 
 
-1. `youtube-width` example without the `width` parameter uses the default value `width: 50%`:
+1. 没有 `width` 参数的 `youtube-width` 示例使用默认值 `width: 50%`：
 
     ```markdown
     {{</* youtube-width id="CQmjAxr7LZs" title="What is O3DE?" */>}}
     ```
 
-    Output:
+    输出:
 
     {{< youtube-width id="CQmjAxr7LZs" title="What is O3DE?" >}}
 
     <br>
 
-2. `youtube-width` example with the `width` parameter:
+2. 带有 `width` 参数的 `youtube-width` 示例：
 
     ```markdown
     {{</* youtube-width id="CQmjAxr7LZs" title="What is O3DE?" width="100%" */>}}
     ```
 
-    Output:
+    输出:
 
     {{< youtube-width id="CQmjAxr7LZs" title="What is O3DE?" width="100%" >}}

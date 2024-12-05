@@ -10,15 +10,15 @@ toc: true
 
 使用 Markdown，有时有多种方法可以实现相同的结果。例如，您可以将单词括在下划线(`_`)或星号 （`*`） 中以创建斜体。在这些情况下，最好在整个文档中使用一种方法。要使文档 Markdown 源文件和 O3DE 文档页面演示保持一致，请遵循以下基本文档标准。
 
-## Topic headings
+## 主题标题
 
-Use a series of hashes (`#`) to define section headings. The H1 heading is taken from the metadata `title` element, which displays as the on-page title. Use standard capitalization, not sentence capitalization, for both the metadata title (`title`), the table-of-contents title (`linkTitle`).
+使用一系列哈希 (`#`) 来定义章节标题。H1 标题取自元数据 `title` 元素，该元素显示为页面标题。对于元数据标题(`title`) 和目录标题 (`linkTitle`)，请使用标准大写，而不是句子大写。
 
-Section titles should be an H2 (`##`) heading, and use sentence case for the section title.
+章节标题应为 H2 (`##`) 标题，章节标题使用句首字母大写。
 
-Subsection titles should start with an H3 (`###`) heading, and use sentence case for the subsection title.
+小节标题应以 H3 (`###`) 标题开头，小节标题使用句首字母大写。
 
-**Example**:
+**示例**:
 
 ```markdown
 ---
@@ -43,60 +43,60 @@ weight: 100
 ```
 
 
-## Text format
+## 文本格式
 
-There can be multiple methods to achieve the same result in Markdown. Adhere to the following standards to make both the Markdown source files and the on-page documentation much easier for readers to parse at a glance. Consistency in the Markdown source format also aids automation efforts for documentation.
+在 Markdown 中，可以有多种方法实现相同的结果。请遵循以下标准，使 Markdown 源文件和页面文档更易于读者一目了然地解析。Markdown 源格式的一致性也有助于文档的自动化工作。
 
-### Bold text
+### 粗体文本
 
-To bold text, enclose the text in double asterisks (`**`).
+要加粗文本，请将文本括在双星号中 (`**`)。
 
-**Example**:
+**示例**:
 
 ```markdown
 This is **bold** text.
 ```
 
-**Result**:
+**结果**:
 
 This is **bold** text.
 
-### Italic text
+### 斜体文本
 
-To italicize text, enclose the text in a single asterisk (`*`).
+要将文本设为斜体，请将文本括在单星号中(`*`)。
 
-**Example**:
+**示例**:
 
 ```markdown
 This is *italic* text.
 ```
 
-**Result**:
+**结果**:
 
 This is *italic* text.
 
-### Inline code
+### 内联代码
 
-To format text as inline code, enclose the text in a single backtick (`` ` ``).
+要将文本格式设置为内联代码，请将文本括在一个反引号中 (`` ` ``)。
 
-**Example**:
+**示例**:
 
 ```markdown
 This is `code` text.
 ```
 
-**Result**:
+**结果**:
 
 This is `code` text.
 
-### Code block
+### 代码块
 
-Use code blocks for multi-line code. Some languages are supported for syntax highlighting. The language is specified after the opening back-ticks (` ``` `) of the code block.
+对多行代码使用代码块。某些语言支持语法高亮显示。语言在代码块的左反引号(` ``` `)之后指定。
 
-When writing code blocks, make sure to include a language identifier. For C++ code blocks, use the `cpp` identifier. See Hugo's [List of Chroma Highlighting Languages](https://gohugo.io/content-management/syntax-highlighting/#list-of-chroma-highlighting-languages)
- for additional language identifiers.
+编写代码块时，请确保包含语言标识符。对于 C++ 代码块，请使用 `cpp` 标识符。参见 Hugo 的 [色度高亮语言列表](https://gohugo.io/content-management/syntax-highlighting/#list-of-chroma-highlighting-languages)
+ 以获取其他语言标识符。
 
-**Example**:
+**示例**:
 
 ````none
 ```python
@@ -109,7 +109,7 @@ def on_process_job(args):
 ```
 ````
 
-**Result**:
+**结果**:
 
 ```python
 # Use the 'request' find the type of job via 'jobKey' to determine what to do
@@ -121,58 +121,58 @@ def on_process_job(args):
 ```
 
 {{< note >}}
-Syntax highlighting in the code block should conform to the [contrast guidelines.](https://www.w3.org/WAI/WCAG21/quickref/?versions=2.0&showtechniques=141%2C143#contrast-minimum)
+代码块中的语法突出显示应符合 [对比准则](https://www.w3.org/WAI/WCAG21/quickref/?versions=2.0&showtechniques=141%2C143#contrast-minimum)
 {{< /note >}}
 
 
-### Links
+### 链接
 
-#### Relative and absolute links
+#### 相对和绝对链接
 
-Write links without the file extension `.md`.
+写入不带文件扩展名`.md`的链接。
 
-| Relative link | Result |
+|相对链接 |结果 |
 | - | - |
-| `[...](./)` | Returns to the current directory's index page. |
-| `[...](page-linked-from-index)` | Links from the index page to a page in the index's directory. |
-| `[...](./page-linked-from-non-index)` | Links from any page to a page in the same directory. |
-| `[...](forward-directory-linked-from-index/)` | Links from the index page to a subdirectory of the index. |
-| `[...](./forward-directory-linked-from-non-index/)` | Links from any page to a subdirectory of the current page. |
-| `[...](../)` | Returns to the index of the previous directory. |
-| `[...](../link-to-page-in-previous-directory)` | Links from any page to a page in the previous directory. |
-| `[...](link#subheading)` | Link to a subheading within a topic. |
-| **Absolute link** | **Result** |
-| `[...](/docs/guide/link-to-page)` | Link to a page in the documentation. |
+| `[...](./)` |返回到当前目录的索引页。 |
+| `[...](page-linked-from-index)` | 从索引页到索引目录中的页的链接。 |
+| `[...](./page-linked-from-non-index)` | 从任何页面链接到同一目录中的页面。 |
+| `[...](forward-directory-linked-from-index/)` | 从索引页到索引的子目录的链接。 |
+| `[...](./forward-directory-linked-from-non-index/)` | 从任何页面到当前页面的子目录的链接。 |
+| `[...](../)` | 返回到上一个目录的索引。|
+| `[...](../link-to-page-in-previous-directory)` | 从任何页面链接到上一个目录中的页面。 |
+| `[...](link#subheading)` | 链接到主题中的副标题。 |
+| **绝对路径** | **结果** |
+| `[...](/docs/guide/link-to-page)` | 链接到文档中的页面。 |
 
 
-#### External links
+#### 外部链接
 
-Use external links cautiously and sparingly. Only link to sites that are trustworthy and respectable. Avoid adding unnecessary links.
+谨慎和谨慎地使用外部链接。仅链接到值得信赖和受人尊敬的网站。避免添加不必要的链接。
 
-For a third-party product, you must provide an external link to the source. Only do this for the first on-page instance, or when it's most relevant.
+对于第三方产品，您必须提供指向来源的外部链接。仅对第一个 on-page 实例或最相关时执行此操作。
 
-For supplemental information, consider whether an external link is needed at all. Providing a brief explanation may suffice and is preferred because it keeps the user's focus on the current topic.
+有关补充信息，请考虑是否需要外部链接。提供简短的解释可能就足够了，并且是首选，因为它使用户专注于当前主题。
 
 
 
-### Quotes and punctuation placement
+### 引号和标点符号位置
 
-When the quote is contained within a sentence, place the punctuation outside the quote.
+当引用包含在句子中时，请将标点符号放在引用之外。
 
-When the quote is a complete sentence, place the punctuation inside the quote.
+当引用是一个完整的句子时，请将标点符号放在引用内。
 
-Type | Example
+类型 |例
 :--| :-----
-Quote is within a sentence | ... assets that are "game-ready"**.**
-Quote is a complete sentence | _"Focus is a matter of deciding what things you're not going to do **.** "_ <br>- John Carmack
+Quote 在句子中 | ... “游戏就绪”的资源**.**
+Quote 是一个完整的句子 | _"Focus is a matter of deciding what things you're not going to do **.** "_ <br>- John Carmack
 
 
 
-## Information structure
+## 信息结构
 
-### Tables
+### 表格
 
-**Example**:
+**示例**：
 
 ```markdown
 | Default column| Right-aligned column | Center-aligned column | Left-aligned column |
@@ -182,7 +182,7 @@ Quote is a complete sentence | _"Focus is a matter of deciding what things you'r
 | Row with missing entry | entry | | entry |
 ```
 
-**Result**:
+**结果**:
 
 | Default column| Right-aligned column | Center-aligned column | Left-aligned column |
 | - | -: | :-: | :- |
@@ -190,9 +190,9 @@ Quote is a complete sentence | _"Focus is a matter of deciding what things you'r
 | Row | entry | entry | entry |
 | Row with missing entry | entry | | entry |
 
-### Tabs
+### 标签
 
-**Example**:
+**示例**：
 
 
 ```
@@ -211,7 +211,7 @@ Second tab's content.
 ```
 
 
-**Result**:
+**结果**:
 
 {{< tabs name="tabs-example" >}}
 {{% tab name="First tab" %}}
@@ -227,15 +227,15 @@ Second tab's content.
 {{< /tabs >}}
 
 
-### Lists
+### 列表
 
-If the list is longer than four items, or if the list contains call-out shortcode or an image, add newlines between each list element to improve readability.
+如果列表长度超过 4 项，或者列表包含标注短代码或图像，请在每个列表元素之间添加换行符以提高可读性。
 
-#### Ordered lists
+#### 有序列表
 
-Use ordered lists when the order of the items is significant, such as a procedure of sequential steps. For ease, you can use `1.` to delineate all items in ordered lists. Goldmark automatically numbers the items in the list. 
+当项目的顺序很重要时，请使用有序列表，例如顺序步骤的过程。为方便起见，您可以使用 '1.' 来描述有序列表中的所有项目。Goldmark 会自动对列表中的项目进行编号。
 
-**Example**:
+**示例**：
 
 ```markdown
 1. Step one
@@ -251,13 +251,13 @@ Use ordered lists when the order of the items is significant, such as a procedur
 1. Step three
 1. Step four
 
-#### Unordered lists
+#### 无序列表
 
-Use unordered lists if the order of the items is arbitrary, such as a list of assets. 
+如果项目的顺序是任意的，则使用无序列表，例如资产列表。
 
-You can use `*` or `-` to delineate items in unordered lists. Whatever you use, be consistent throughout the whole list.
+您可以使用 `*` 或 `-` 来描述无序列表中的项目。无论您使用什么，请在整个列表中保持一致。
 
-**Example**:
+**例**：
 
 ```markdown
 * Item one
@@ -265,21 +265,21 @@ You can use `*` or `-` to delineate items in unordered lists. Whatever you use, 
 * Item three
 ```
 
-**Result**:
+**结果**:
 
 * Item one
 * Item two
 * Item three
 
-#### Nested lists
+#### 嵌套列表
 
-Nested lists are often used for sub-steps or requirements lists in a procedure. Indent four spaces to nest a list.
+嵌套列表通常用于过程中的子步骤或需求列表。缩进四个空格以嵌套列表。
 
-For code blocks within a step, indent the code block once more past the step's indentation.
+对于步骤中的代码块，请再次缩进代码块，使其越过步骤的缩进。
 
-For shortcodes within a step, similarly indent the opening and closing shortcode brackets once more past the step's indentation. However, be cautious not to indent the enclosed text because it leads to a code block within the shortcode.
+对于步骤中的短代码，同样地将开始和结束短代码括号缩进到步骤的缩进之后。但是，请注意不要缩进包含的文本，因为它会导致短代码中的代码块。
 
-**Example**:
+**示例**：
 
 ````markdown
 1. Step one
@@ -296,7 +296,7 @@ For shortcodes within a step, similarly indent the opening and closing shortcode
   A callout box.
     {{</* /note */>}}
 ````
-**Result**:
+**结果**:
 
 1. Step one
 1. Step two
@@ -312,13 +312,13 @@ For shortcodes within a step, similarly indent the opening and closing shortcode
   A callout box.
     {{< /note >}}
 
-#### Definition lists
+#### 定义列表
 
-Use definition lists for content that lists a pair of terms and their definitions. For example, a glossary.
+对列出一对术语及其定义的内容使用定义列表。例如，词汇表。
 
-Use `:` to delineate each definition in the list.
+使用`:` 来描述列表中的每个定义。
   
-**Example**:
+**示例**：
 
 ```markdown
 First Term  
@@ -329,7 +329,7 @@ Second Term
 : This is another definition of the second term.
 ```
 
-**Result**:
+**结果**:
 
 First Term
 : This is the definition of the first term.
@@ -339,56 +339,56 @@ Second Term
 : This is another definition of the second term.
 
 
-## Terminology
+## 术语
 
-### Italicize new terms
+### 将新术语斜体化
 
-Do | Don't
+执行 |不要
 :--| :-----
 ... to create *image based lighting (IBL)*. | ... to create **image based lighting (IBL)**.
 A *prefab* is a collection of entities ... | A "prefab" is a collection of entities ...
 
-### Trademark
+### 商标
 
-Properly format trademark titles and terminology according to its use from the source. Provide a link to the source's relevant material for the first on-page instance, or when it's most relevant.
+根据商标标题和术语的来源使用情况，正确设置商标标题和术语的格式。在第一个页面实例或最相关时提供指向源相关材料的链接。
 
-## Applications, tools, Gems, and components
+## 应用程序、工具、Gem 和组件
 
-### Bold applications and tools
+### 大胆的应用程序和工具
 
-For the first on-page reference to applications and tools, use **bold** text. Use unformatted text for subsequent references. 
+对于应用程序和工具的第一个页面引用，请使用 **粗体** 文本。使用未格式化的文本进行后续引用。
 
-For tools that are provided as scripts, instead use `code style` for the name of the script, followed by the type of script in unformatted text. Do this for all instances throughout the page.
+对于以脚本形式提供的工具，请使用 `code style` 作为脚本名称，后跟无格式文本的脚本类型。对整个页面中的所有实例执行此操作。
 
-Type | Example
+类型 |例
 :--| :-- 
 Application | **O3DE Editor** is the primary development environment for .... Open O3DE Editor by launching it from...
 Tool | The `o3de` Python script allows you to... To use the `o3de` Python script... | 
 
-### Bold Gems and components
+### 大胆的 Gems 和组件
 
-For the first on-page reference to Gems and components, use **bold** text. Use unformatted text for subsequent references.  
+对于 Gem 和组件的第一个页面引用，请使用 **粗体** 文本。使用未格式化的文本进行后续引用。 
 
-**Additional rules**  
-: - For Gems, capitalize and **bold** both the name of the Gem and the word "Gem". 
-  - For components, capitalize and **bold** the name of the component. Use lowercase and unformatted text for the word "component". 
+**附加规则** 
+： - 对于 Gem，将 Gem 的名称和单词 “Gem” 大写并 **粗体** 。
+  - 对于组件，将组件的名称大写并 **粗体** 。对单词 “component” 使用小写和无格式的文本。
 
-Type | Example
+类型 |例
 :--| :-- 
 Gem | The **Multiplayer Gem** provides... Use the Multiplayer Gem to...
 Components | The **Material** component adds... Also, you can use the Material component to...
 
 
-## User interface, inputs, and hotkeys
+## 用户界面、输入和热键
 
-Users interact with O3DE through various user interface (UI) elements, inputs, and hotkeys. They're often included in tasks and tutorials, instructing users to perform an action.
+用户通过各种用户界面 （UI） 元素、输入和热键与 O3DE 交互。它们通常包含在任务和教程中，指示用户执行操作。
 
-For UI elements, inputs, and hotkeys, use **bold** text. Do this for all instances throughout the page. 
+对于 UI 元素、输入和热键，请使用 **粗体** 文本。对整个页面中的所有实例执行此操作。
 
-**Additional rules**  
-: For formatting keys: abbreviate key names, remove spaces, and use sentence-casing. 
+**附加规则** 
+：对于格式化键：缩写键名称、删除空格并使用句子大小写。
 
-Type | Example | Avoid
+类型 |示例 |避免
 :--| :-- | :--
 UI element | Choose **Edit**. | Click "Edit".
 UI element | .. the **Play** button. | ... the Play button.
@@ -397,44 +397,44 @@ Input | .. **right-click** the asset name ... | ... right-click the asset name .
 Hotkey | Hold **Ctrl+Shift** ... | Hold `Control + Shift` ...
 
 
-## Code, commands, and APIs
+## 代码、命令和 API
 
-### Code style for inline code and commands
+### 内联代码和命令的代码样式
 
-Do | Don't
+执行 |不要
 :--| :-----
 ... set `enable_memory_tracking = True`. | ... set **enable_memory_tracking** = "True".
 ... enter the command `dump_vars`. | ... enter the command dump_vars.
 
-### Code style for programming objects
+### 编程对象的代码样式
 
-Do | Don't
+执行 |不要
 :--| :-----
 ... value of the `sys_maxfps` field. | ... value of the "sys_maxfps" field.
 ... use the `WorldRequestBus`. | ... use the "WorldRequestBus".
 ... in `AZ::Data::AssetData` derived classes. | ... in **AZ::Data::AssetData** derived classes.
 
-### Bold property names, and code style their values
+### 粗体属性名称，并为其值设置代码样式
 
-Do | Don't
+执行 |不要
 :--| :-----
 Set the **Color** property to `255,0,0`. | Set the Color property to "255,0,0".
 For **Intensity Mode**, select `Candela`. | For `Intensity Mode`, select Candela.
 Valid **Mass** values range from `0` to `Infinity`. | Valid Mass values range from `0` to Infinity.
 
-### Don't include the command prompt
+### 不要包含命令提示符
 
-Do | Don't
+执行 |不要
 :--| :-----
 `cmake --build ...` | `C:\> cmake --build ...`
 
-### Separate commands from output
+### 将命令与输出分开
 
 ```shell
 cmake --build <MyProject> --target Editor --config profile -- -m
 ```
 
-The output is similar to this:
+输出类似于：
 
 ```console
 Microsoft (R) Build Engine version 16.9.0+57a23d249 for .NET Framework
@@ -449,23 +449,23 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   unity_23_cxx.cxx
 ```
 
-## Files, directories, and paths
+## 文件、目录和路径
 
-### Code style for filenames, directories, and paths
+### 文件名、目录和路径的代码样式
 
-All paths should be platform agnostic and use `/` path separators. When using relative paths, give the reader context to understand what the path is relative to.
+所有路径都应与平台无关，并使用 '/' 路径分隔符。使用相对路径时，请为读者提供上下文以了解路径的相对内容。
 
-Do | Don't
+执行 |不要
 :--| :-----
 Open the project's `project.json` file. | Open the project's project.json file.
 ... in the `/<project>/levels` directory. | ... in the /\<project\>/levels directory.
 Open the `/<project>/game.cfg` file. | Open the /\<project\>/game.cfg file.
 
-### Mark placeholders with angle brackets
+### 用尖括号标记占位符
 
-Use angle brackets for placeholders. Use the text within the brackets to tell the reader what a placeholder represents.
+对占位符使用尖括号。使用括号内的文本告诉读者占位符代表什么。
 
-**Example**:
+**示例**：
 
 ```shell
 git push origin <your-branch-name>

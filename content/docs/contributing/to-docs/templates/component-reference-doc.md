@@ -27,17 +27,17 @@ toc: true
 所有文档必须遵守 O3DE [风格指南](/docs/contributing/to-docs/style-guide/) 和 [术语](/docs/contributing/to-docs/terminology/) 中概述的标准。如果您需要任何帮助，请在 [Discord](https://discord.com/invite/o3de) 上联系文档和社区特别兴趣小组 （#sig-docs-community）。
 
 
-## Does my document belong in the O3DE Component Reference?
+## 我的文档是否属于 O3DE Component Reference？
 
-First, determine whether or not your document belongs in the [Component Reference](/docs/user-guide/components/reference/) section of the O3DE User Guide. The purpose of the component reference document is exactly that, a page that users can quickly reference when using the component in **O3DE Editor**.
+首先，确定您的文档是否属于 O3DE 用户指南的 [组件参考](/docs/user-guide/components/reference/) 部分。组件参考文档的目的正是，用户在 O3DE Editor 中使用组件时可以快速引用的页面。
 
-Supplemental information, such as using the component across different workflows, belongs in other documentation. That document can be organized in an appropriate section of the User Guide, such as the [Interactivity and Simulation](/docs/user-guide/interactivity/), [Scripting](/docs/user-guide/scripting/), [Networking](/docs/user-guide/networking/), or [Visualization](/docs/user-guide/visualization/) sections.
+补充信息（例如跨不同工作流使用组件）属于其他文档。该文档可以组织在用户指南的适当部分中，例如[交互性和模拟](/docs/user-guide/interactivity/), [脚本编程](/docs/user-guide/scripting/), [网络](/docs/user-guide/networking/), 或 [可视化](/docs/user-guide/visualization/) 章节。
 
-## Setting up repository and downloading component template
+## 设置仓库并下载组件模板
 
-To contribute to O3DE documentation, you must complete the steps in [Setting up a local o3de.org repo](../get-started#setting-up-a-local-o3deorg-repo). You can do this before or after writing your component reference document. However, you must set this up to place your document and images in the right folder.
+要为 O3DE 文档做出贡献，您必须完成 [设置本地 o3de.org 存储库](../get-started#setting-up-a-local-o3deorg-repo)的您可以在编写组件参考文档之前或之后执行此操作。但是，您必须进行此设置以将文档和图像放在正确的文件夹中。
 
-In a new tab, navigate to the file [component reference template](https://raw.githubusercontent.com/o3de/sig-docs-community/main/doc-templates/component-reference.md) in the o3de/sig-docs-community repository and save it to your local machine. Open the template in a text editor and refer to this page as you fill it out.
+在新选项卡中，导航到 o3de/sig-docs-community 存储库中的文件 [组件参考模板](https://raw.githubusercontent.com/o3de/sig-docs-community/main/doc-templates/component-reference.md) 并将其保存到本地计算机。在文本编辑器中打开模板，并在填写模板时参考此页面。
 
 
 ## 编写组件参考文档
@@ -46,10 +46,10 @@ In a new tab, navigate to the file [component reference template](https://raw.gi
 
 ### Metadata
 
-Like all Markdown (`.md`) files in the O3DE Documentation, your component reference document must contain metadata at the beginning of the file. Refer to [Metdata](/docs/contributing/to-docs/style-guide/metadata/) to help you fill in this section. 
+与 O3DE 文档中的所有 Markdown (`.md`) 文件一样，您的组件参考文档必须在文件开头包含元数据。 请参考 [Metdata](/docs/contributing/to-docs/style-guide/metadata/) 来帮助你填写本节。
 
 {{< note >}}
-The `weight` parameter is optional. If omitted, the default behavior is alphabetical sorting of the title.
+`weight` 参数是可选的。如果省略，则默认行为是按字母顺序对标题进行排序。
 {{< /note >}}
 
 See `component-reference.md`:
@@ -88,13 +88,13 @@ toc: true
 
 ### Provider
 
-Write the name of the Gem that provides this component and link to the corresponding [Gem reference document](/docs/user-guide/gems/reference/).
+编写提供此组件的 Gem 的名称，并链接到相应的 [Gem 参考文档](/docs/user-guide/gems/reference/)。
 
-**Specifications**:
+**规格**：
 
-* Capitalize "Gem".
+* 将 “Gem” 大写。
 
-* Follow the [Links](/docs/contributing/to-docs/style-guide/format/#links) guideline for formatting the link.
+* 按照 [链接](/docs/contributing/to-docs/style-guide/format/#links)指南设置链接格式。
 
 
 See `component-reference.md`:
@@ -105,23 +105,23 @@ See `component-reference.md`:
 
 ```
 
-### Dependencies (optional)
+### 依赖项（可选）
 
-If your component depends on other components to work, list the names of the dependent components and link it to the corresponding component reference document.
+如果您的组件依赖于其他组件才能工作，请列出相关组件的名称并将其链接到相应的组件参考文档。
 
-**Specifications**:
+**规格**：
 
-* Explain how this component relates to its dependencies, if necessary.
+* 如有必要，请解释此组件与其依赖项的关系。
 
-* Follow the [Links](/docs/contributing/to-docs/style-guide/format/#links) guideline for formatting the link.
+* 按照 [链接](/docs/contributing/to-docs/style-guide/format/#links) 指南设置链接格式。
 
-**Examples**:
+**示例**：
 
-* [Diffuse component](/docs/user-guide/components/reference/atom/diffuse-probe-grid/): A straightforward example with one dependency.
+* [Diffuse 组件](/docs/user-guide/components/reference/atom/diffuse-probe-grid/): 具有一个依赖项的简单示例。
 
-* [Light component](/docs/user-guide/components/reference/atom/light/#dependencies): The Light component can depend on different Shape components. This example describes the varying dependency and its criteria.
+* [Light 组件](/docs/user-guide/components/reference/atom/light/#dependencies): Light （光源） 组件可以依赖于不同的 Shape （形状） 组件。此示例描述了不同的依赖关系及其条件。
 
-See `component-reference.md`:
+查看 `component-reference.md`:
 ```md
 ## Dependencies
 
@@ -129,23 +129,23 @@ See `component-reference.md`:
 
 ```
 
-### Use cases (optional)
+### 用例（可选）
 
-Write the use cases for which a user may want to use this component. This section can help clarify when to use this component, especially if there's possible confusion. 
+编写用户可能希望使用此组件的用例。本部分有助于阐明何时使用此组件，尤其是在可能存在混淆的情况下。
 
-**Specifications**:
+**规格**：
 
-* If you're providing multiple use cases, make sure they are unique from each other. 
+* 如果您提供多个使用案例，请确保它们彼此唯一。
 
-* An effective use case provides situational context and clearly states the role of the component in the situation. 
+* 一个有效的用例提供了情境背景，并清楚地说明了组件在情境中的角色。
 
-* Write in complete sentences and elaborate on any technical terminology.
+* 写出完整的句子并详细说明任何技术术语。
 
-**Examples**:
+**示例**：
 
-* [PhysX Shape Collider component](/docs/user-guide/components/reference/physx/shape-collider/#use-cases) - Clarifies when to use a PhysX Shape Collider component versus a PhysX Primitive Collider component. 
+* [PhysX Shape Collider 组件](/docs/user-guide/components/reference/physx/shape-collider/#use-cases) - 阐明了何时使用 PhysX Shape Collider （PhysX 形状碰撞器） 组件与 PhysX Primitive Collider （PhysX 基元碰撞器） 组件。
 
-See `component-reference.md`:
+查看 `component-reference.md`:
 ```md
 ## Use cases
 
@@ -154,93 +154,93 @@ See `component-reference.md`:
 ```
 
 
-### Limitations (optional)
+### 限制（可选）
 
-Write about the limitations this component may have. 
+写下这个组件可能具有的限制。
 
-**Specifications**:
+**规格**：
 
-* Explain how users can work around a limitation, if possible. 
+* 如果可能，说明用户如何解决限制。
 
-* Write in complete sentences and elaborate on any technical terminology.
+* 写出完整的句子并详细说明任何技术术语。
 
-* Don't include any "future work". A better place for that is the feature's roadmap, which can be found in the corresponding [SIG repository](https://www.o3de.org/contribute/#join-a-special-interest-group). 
+* 不包括任何“未来工作”。更好的地方是该功能的路线图，可以在相应的 [SIG 存储库](https://www.o3de.org/contribute/#join-a-special-interest-group)。 
 
-**Examples**:
+**示例**:
 
-* [PhysX Shape Collider component](/docs/user-guide/components/reference/physx/shape-collider/#limitations)
-* [HDRi Skybox Component](/docs/user-guide/components/reference/atom/hdri-skybox/)
+* [PhysX Shape Collider 组件](/docs/user-guide/components/reference/physx/shape-collider/#limitations)
+* [HDRi Skybox 组件](/docs/user-guide/components/reference/atom/hdri-skybox/)
 
 
-See `component-reference.md`:
+查看 `component-reference.md`:
 ```md
 
-## Limitations
+## 限制
 
 <!-- (Optional) Write the limitations of this component. Don't include any "future work". -->
 
 ```
 
-### Properties
+### 属性
 
-The properties section contains the following contents in order: 
+属性部分按顺序包含以下内容：
 
-1. An image of the component card
-2. A property table
-3. (optional) Additional property tables
-
-
-#### Image of component card
-
- You must include an image of the component card of this component. In the Editor, when an entity with this component is selected, the component card can be seen in the **Entity Inspector** panel.
-
- **Specifications**:
-
-* Use a screenshot tool to capture the image. 
-
-* The image must show the component card at its default state.
-
-* Crop the image to show only the component card of this component.
-
-* [Store the image files](#storing-image-files) in the correct folder. 
-
-* Follow the guidelines in [Submitting Media to Open 3D Engine Documentation](/docs/contributing/to-docs/style-guide/media/). 
+1. 组件卡的图像
+2. 属性表
+3. （可选）附加属性表
 
 
-#### Creating one or multiple property tables
+#### 组件卡的图片
 
-Depending on how properties are arranged in your component card, you can have one or multiple property tables. 
+您必须包含此组件的组件卡的图像。在 Editor 中，当选择具有此组件的实体时，可以在 **Entity Inspector （实体检查器） 面板中看到组件卡。
 
-A *simple set of properties* refers to a component card that displays all of its properties at the first level in the component card's content hierarchy. In this case, you can view all of the properties without opening a drop down list or configuring a set of properties a specific way. 
+**规格**：
 
-On the other hand, a *complex set of properties* doesn't show all available properties immediately. There may be properties hidden in a property group under a drop down list or conditional properties that only appear when other properties are configured a specific way. 
+* 使用屏幕截图工具捕获图像。
 
-| Example: Simple set of properties | Example: Complex set of properties | 
+* 图像必须以默认状态显示组件卡。
+
+* 裁剪图像以仅显示此组件的组件卡。
+
+* [存储图像文件](#storing-image-files) 添加到正确的文件夹中。 
+
+* 遵循 [将媒体提交到 Open 3D Engine 文档中的准则](/docs/contributing/to-docs/style-guide/media/). 
+
+
+#### 创建一个或多个属性表
+
+根据属性在组件卡中的排列方式，您可以有一个或多个属性表。
+
+*简单属性集* 是指在组件卡的内容层次结构的第一级显示其所有属性的组件卡。在这种情况下，您可以查看所有属性，而无需打开下拉列表或以特定方式配置一组属性。
+
+另一方面，*复杂的属性集* 不会立即显示所有可用的属性。下拉列表下的属性组中可能隐藏了属性，或者仅当以特定方式配置其他属性时才会显示条件属性。
+
+| 示例：简单的属性集 |示例：复杂的属性集| 
 | - | - |
 | ![Box Shape component properties](/images/user-guide/components/reference/shape/box-shape-component-ui-01.png) | ![PhysX Primitive Collider component interface.](/images/user-guide/components/reference/physx/physx-collider-ui-01.png) |
 
 {{< tabs >}} 
 {{% tab name="Simple set of properties" %}}
 
-For a component card with a simple set of properties, you only need one property table. 
+对于具有一组简单属性的组件卡，您只需要一个属性表。
 
-**Examples**:
+**示例**:
 
-* [Box Shape component](/docs/user-guide/components/reference/shape/box-shape/): A straightforward example where all properties are displayed at the first level in the component card's content hierarchy.
+* [Box Shape 组件](/docs/user-guide/components/reference/shape/box-shape/): 一个简单的示例，其中所有属性都显示在组件卡内容层次结构的第一级。
 
-* [Bloom component](/docs/user-guide/components/reference/atom/bloom/): Even though the Bloom component's properties contain dropdown lists, only one property table is needed. This is because the drop down lists are opened by default and are used to contain an array of values. Another exception is the **Overrides** dropdown list, which isn't used in the user's main workflow. So, a description of the **Overrides-Enabled Override** property is sufficient. 
+* [Bloom 组件](/docs/user-guide/components/reference/atom/bloom/): 即使 Bloom 组件的属性包含下拉列表，也只需要一个属性表。这是因为下拉列表默认打开，并用于包含值数组。另一个例外是 **Overrides** 下拉列表，该列表未在用户的主工作流程中使用。因此，对 **Overrides-Enabled Override** 属性的描述就足够了。
 
-See `component-reference.md`:
+查看 `component-reference.md`:
 ```md
 
-## Properties
+## 属性
 
 <!-- This example is for a simple set of properties. 
 If you use this section, then delete the other Properties section. -->
 
 ![[component name] interface](/images/<path-to-image>)
 
-| Property | Description | Value | Default |
+| 属性 | 说明 | 值 | 默认值 |
 | - | - | - | - |
 |   |   |   |   |
 |   |   |   |   |
@@ -251,20 +251,20 @@ If you use this section, then delete the other Properties section. -->
 {{% /tab %}}
 {{% tab name="Complex set of properties" %}}  
 
-For a component card with a complex set of properties, you may need multiple property tables: base properties, and one for each property group or configuration. The first property table is called "Base properties" and contains all of the properties that are displayed at the first level in the component card's content hierarchy. You can name subsequent property tables after the property group name in the component card or the type of configuration. 
+对于具有一组复杂属性的组件卡，您可能需要多个属性表：基本属性，每个属性组或配置一个属性表。第一个属性表称为“基本属性”，包含在组件卡的内容层次结构的第一级显示的所有属性。您可以在组件卡中的属性组名称或配置类型之后命名后续属性表。
 
-Another option is to separate the property tables into [tabs](/docs/contributing/to-docs/style-guide/format/#tabs) on your document. When content is in tabs, only the active tab displays content, while the rest is hidden. Because of this behavior, tabs are recommended if the sets of properties define configurations for different workflows that the user may or may not choose. 
+另一种选择是将属性表分成文档上的 [标签页](/docs/contributing/to-docs/style-guide/format/#tabs) /format/#tabs）。当内容位于选项卡中时，只有活动选项卡显示内容，而其余选项卡则处于隐藏状态。由于此行为，如果属性集为用户可能会选择也可能不会选择的不同工作流定义配置，则建议使用选项卡。
 
-**Examples**:
-* [Light component](/docs/user-guide/components/reference/atom/light/): Contains several configurations that don't have a 1-1 relationship with the **Light type** property. Some property groups are available for more than one light type, so they are documented in different property tables. Each property table specifies which light types support those properties.
+**示例**:
+* [Light 组件](/docs/user-guide/components/reference/atom/light/): 包含多个与 **Light type** 属性没有 1-1 关系的配置。某些属性组可用于多种光源类型，因此它们记录在不同的属性表中。每个属性表都指定了哪些光源类型支持这些属性。
 
-* [PhysX Primitive Collider component](/docs/user-guide/components/reference/physx/collider/): Contains several configurations, which depend on the **Shape** property. Each configuration affect what properties are available, so they are documented in different property tables separated into tabs. 
+* [PhysX Primitive Collider 组件](/docs/user-guide/components/reference/physx/collider/): 包含多个配置，这些配置取决于 **Shape** 属性。每个配置都会影响可用的属性，因此它们记录在不同的属性表中，并分为多个选项卡。
 
-* [Camera Rig component](/docs/user-guide/components/reference/camera/camera-rig/): Contains addable property groups with multiple workflows in each. So, each property group is documented in separate property tables and each workflow is further separated into tabs. 
+* [Camera Rig 组件](/docs/user-guide/components/reference/camera/camera-rig/): 包含可添加的属性组，每个属性组中有多个工作流。因此，每个属性组都记录在单独的属性表中，并且每个工作流都进一步分为选项卡。 
 
-See `component-reference.md`:
+查看 `component-reference.md`:
 ```md
-## Properties
+## 属性
 
 <!-- This example is for a complex set of properties. 
 If you use this section, then delete the other Properties section. -->
@@ -272,7 +272,7 @@ If you use this section, then delete the other Properties section. -->
 ![<component name> interface](/images/<path-to-image>)
 
 
-### Base properties
+### Base 属性
 
 | Property | Description | Value | Default |
 | - | - | - | - |
@@ -281,7 +281,7 @@ If you use this section, then delete the other Properties section. -->
 |   |   |   |   |
 
 
-### <Property group> properties
+### <Property group> 属性
 
 ![[property group] interface](/images/<path-to-image>)
 
@@ -292,7 +292,7 @@ If you use this section, then delete the other Properties section. -->
 |   |   |   |   |
 
 
-### <Configuration> properties
+### <Configuration> 属性
 
 {{</* tabs */>}} 
 {{%/* tab name="[configuration 1] properties" */%}}
@@ -326,57 +326,57 @@ If you use this section, then delete the other Properties section. -->
 
 
 
-#### Contents of the property table
+#### 属性表的内容
 
-In the property table, sort the properties into rows in the order they're shown in the component card. Then, fill in the following columns for each property: 
+在属性表中，按照属性在组件卡中的显示顺序将属性排序到行中。然后，为每个属性填写以下列：
 
-* **Property**: The name of the property. This must be the exact name as shown in the component card, formatted in bold. 
-* **Description**: Describes the purpose of the property and what it configures. Be clear and concise, and explain any technical terminology. 
-* **Value**: The type of value that defines this property. If it's a numerical value, include the range of accepted values. 
+* **Property**: 属性的名称。这必须是组件卡中显示的确切名称，格式为粗体。
+* **Description**: 描述属性的用途及其配置的内容。简洁明了，并解释任何技术术语。 
+* **Value**: 定义此属性的值的类型。如果是数值，请包括接受值的范围。
 * **Default**: The property's default value. 
 
-#### Formatting examples for values and default values
+#### 值和默认值的格式设置
 
-| Value | Default | Note |
+| 值 | 默认值 | 注释 |
 | --- | --- | --- |
 | Int: 0 - 10 | 0 |  |
-| Float: 0.0 to Infinity | `100.0` | If the range of values includes words, such as "-infinity" or "infinity", use "to" between the range. |
-| Float: 0.0 - 10000.0 | `0.5` | If the range of values is only numerical, use a hyphen (-)  between the range. |
-| Float: 0.0 - 1.0 |Kernel Size: <br><ul><li>0: 0.04</li><li>1: 0.08</li><li>2: 0.16</li><li>3: 0.32</li><li>4: 0.64</li></ul> | An array of floats that describes kernel sizes. |
+| Float: 0.0 to Infinity | `100.0` | 如果值范围包含单词，例如 “-infinity” 或 “infinity”，请在范围之间使用 “to”。 |
+| Float: 0.0 - 10000.0 | `0.5` | 如果值的范围只是数值，请在范围之间使用连字符 （-）。 |
+| Float: 0.0 - 1.0 |Kernel Size: <br><ul><li>0: 0.04</li><li>1: 0.08</li><li>2: 0.16</li><li>3: 0.32</li><li>4: 0.64</li></ul> | 描述内核大小的浮点数组。 |
 | String | None |  |
-| Boolean | Enabled | The default value of a boolean can be "Enabled" or "Disabled". |
+| Boolean | Enabled | 布尔值的默认值可以是 “Enabled” 或 “Disabled”。 |
 | Vector3: -Infinity to Infinity |X: 0.0, Y: 0.0, Z: 0.0 |  |
-| Vector3: <br><ul><li> X: 0.0 - 1.0 </li><li>Y: -Infinity to Infinity </li><li>Z: -5.0 - 5.0 </li></ul> | X: 0.0, Y: 0.0, Z: 0.0 | A Vector3 with different default values per parameter. |
-| Entity Id | None | A reference to an entity in the level. |
-| Any collision layer defined in the project's [Collision Layers](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/). | Default | If the value is an object, provide context so users can identify the object. |
-| A `.physmaterial` library product asset. | The global project `.physmaterial` library. | |
-| Product asset `.pxmesh` PhysX mesh. | None |  |
-| `PhysicsAsset`, `Sphere`, `Box`, `Capsule` | `PhysicsAsset` | A set of enumerated values.  |
+| Vector3: <br><ul><li> X: 0.0 - 1.0 </li><li>Y: -Infinity to Infinity </li><li>Z: -5.0 - 5.0 </li></ul> | X: 0.0, Y: 0.0, Z: 0.0 | 每个参数具有不同默认值的 Vector3。 |
+| Entity Id | None | 对关卡中实体的引用。 |
+| 在项目的 [碰撞图层](/docs/user-guide/interactivity/physics/nvidia-physx/configuring/configuration-collision-layers/) 中定义的任何碰撞图层。 | Default | 如果值是对象，请提供上下文，以便用户可以识别对象。 |
+| `.physmaterial` 库产品资源。 | 全局项目`.physmaterial`库。 | |
+| 产品资产 `.pxmesh` PhysX mesh. | None |  |
+| `PhysicsAsset`, `Sphere`, `Box`, `Capsule` | `PhysicsAsset` | 一组枚举值。  |
 
 
-### Component feature sections (optional)
+### 组件功能部分（可选）
 
-You can write additional sections to explain specific features about your component, such as editing them in the viewport or another system editor, their different modes, and other notable specifications or concepts. 
+您可以编写其他部分来解释有关组件的特定功能，例如在视区或其他系统编辑器中编辑它们、它们的不同模式以及其他值得注意的规范或概念。
 
-**Specifications:**
+**规格：**
 
-* Use a concise and appropriate title such that users can know what to expect from this section. 
+* 使用简洁而适当的标题，以便用户可以了解此部分的预期内容。
 
-* Include information that serves the users and helps them use the component.
+* 包含为用户提供服务并帮助他们使用组件的信息。
 
-* Avoid including design decisions or implementation details that aren't useful to the user. 
+* 避免包含对用户无用的设计决策或实现细节。
 
-* Repeat this section for each additional topic as needed. 
+* 根据需要对每个附加主题重复此部分。
 
-**Examples**:
+**示例**：
 
-* [PhysX Primitive Collider component](/docs/user-guide/components/reference/physx/collider#collider-component-mode): Contains sections on editing colliders in the viewport and using colliders as triggers.
+* [PhysX Primitive Collider 组件](/docs/user-guide/components/reference/physx/collider#collider-component-mode): 包含有关在视区中编辑碰撞体和将碰撞体用作触发器的部分。
 
-* [PhysX Shape Collider component](/docs/user-guide/components/reference/physx/shape-collider#complex-polygon-prism-shapes): Contains a section that explains intricacies when working with complex polygon prism shapes.
+* [PhysX Shape Collider 组件](/docs/user-guide/components/reference/physx/shape-collider#complex-polygon-prism-shapes): 包含一个部分，该部分解释了使用复杂多边形棱柱形状时的复杂性。
 
-* [Light component](/docs/user-guide/components/reference/atom/light#light-types): Contains a section that describes the different light types and their features. This section is located near the beginning of the page because it contains information that's necessary to understand the component's properties. 
+* [Light 组件](/docs/user-guide/components/reference/atom/light#light-types): 包含描述不同光源类型及其功能的部分。此部分位于页面的开头附近，因为它包含了解组件属性所需的信息。
 
-See `component-reference.md`:
+查看 `component-reference.md`:
 ```md
 
 ## <Component feature>
@@ -385,34 +385,34 @@ See `component-reference.md`:
 
 ```
 
-### Request Bus / Notification Bus (optional)
+### 请求总线 / 通知总线（可选）
 
-The request and notification bus sections contain the functions that users can call in their project's logic and scripts. 
+request 和 notification bus 部分包含用户可以在其项目的 logic 和 scripts 中调用的函数。
 
-In the request or notification bus table, list the functions in rows and fill in the following columns:
+在 request 或 notification bus 表中，列出行中的函数并填写以下列：
 
-* **Request/Notification Name**: The name of the function, formatted as `code`.
-* **Description**: Describes what the function does. Be clear and concise, and explain any technical terminology. 
-* **Parameter**: What parameters this function accepts, if any. If none, write "None".
-* **Return**: What this function returns. If it returns nothing, write "None". 
-* **Scriptable**: Whether or not this function is scriptable. Write "Yes" or "No". 
+* **Request/Notification Name**: 函数的名称，格式为 'code'。
+* **Description**: 描述函数的作用。简洁明了，并解释任何技术术语。 
+* **Parameter**: 此函数接受的参数（如果有）。如果没有，则写入 “None”。
+* **Return**: 此函数返回的内容。如果它不返回任何内容，则写入 “None”。
+* **Scriptable**: 此函数是否可编写脚本。写下 “Yes” 或 “No”。
 
-**Specifications**:
+**规格**：
 
-* Add a sentence specifying the name of the EBus interface and which components the EBus interface communicates with. (Some groups of components share the same EBus.)
+* 添加一个句子，指定事件总线接口的名称以及事件总线接口与哪些组件通信。（某些组件组共享相同的事件总线。
 
-* Separate request functions into the "Request Bus" section and notification functions into the "Notification Bus" section. 
+* 将请求功能分离到“请求总线”部分，将通知功能分离到“通知总线”部分。
 
-* Place the sections at the end of the page. 
+* 将各部分放在页面末尾。
 
-**Examples**:
+**示例**:
 
-* [Terrain Physics Heightfield Collider component](/docs/user-guide/components/reference/terrain/terrain-physics-collider/)
-* [Vegetation Altitude Filter component](/docs/user-guide/components/reference/vegetation-filters/vegetation-altitude-filter/)
-* [Shape Reference component](/docs/user-guide/components/reference/shape/shape-reference/)
+* [Terrain Physics Heightfield Collider 组件](/docs/user-guide/components/reference/terrain/terrain-physics-collider/)
+* [Vegetation Altitude Filter 组件](/docs/user-guide/components/reference/vegetation-filters/vegetation-altitude-filter/)
+* [Shape Reference 组件](/docs/user-guide/components/reference/shape/shape-reference/)
 
 
-See `component-reference.md`:
+查看 `component-reference.md`:
 ```md
 
 ## [EBus interface name]RequestBus
@@ -438,32 +438,32 @@ See `component-reference.md`:
 ```
 
 
-## Where does the component reference document live?
+## 组件参考文档位于何处？
 
-Component reference documentation live in the folder: `o3de.org/docs/user-guide/components/reference/`. They are organized into subfolders that group the components by type. Your component reference document may belong to an existing group, or a new group completely. 
+组件参考文档位于文件夹`o3de.org/docs/user-guide/components/reference/`中。它们被组织到子文件夹中，这些子文件夹按类型对组件进行分组。您的元器件参考文档可能属于现有组，也可能完全属于新组。 
 
-Feel free to reach out to sig-docs-community on [Discord](https://discord.com/invite/o3de) or [GitHub](https://github.com/o3de/sig-docs-community) for assistance.
-
-
-## Storing image files
-
-The `static/images` directory is structured to reflect the `content/docs/` directory of the O3DE site repository. So, you must store images for your component reference document in the appropriate component group folder: `static/images/user-guide/components/reference/<group>/`.
+请随时联系 [Discord](https://discord.com/invite/o3de) 或 [GitHub](https://github.com/o3de/sig-docs-community)上的 sig-docs-community 寻求帮助。
 
 
-## Updating the O3DE Component Reference
+## 存储图像文件
 
-Remember to update the [Component Reference](/docs/user-guide/components/reference/) section and list your new component reference document. 
-
-1. In a text editor, open the file `content/docs/user-guide/components/reference.md` from your clone of the o3de.org repo.
-
-2. In the appropriate component group table, create a new row and fill in the following columns: 
-
-    * **Component**: The name of your component and a link to your component reference document. Follow the [Links](/docs/contributing/to-docs/style-guide/format/#links) guideline for formatting the link. 
-
-    * **Description:** Briefly describe the component in a single sentence. 
+`static/images`目录的结构反映了 O3DE 站点存储库的`content/docs/`目录。因此，您必须将组件参考文档的图像存储在相应的组件组文件夹中：`static/images/user-guide/components/reference/<group>/`。
 
 
+## 更新 O3DE 组件引用
 
-## Submit your component reference document
+请记得更新 [组件参考](/docs/user-guide/components/reference/) 部分并列出您的新组件参考文档。
 
-Congratulations on writing your component reference document! It's almost ready to publish. The [Get Started Contributing to Docs](/docs/contributing/to-docs/get-started) section can help you through the final steps to deliver your document.
+1. 在文本编辑器中，打开 o3de.org存储库中的`content/docs/user-guide/components/reference.md`。
+
+2. 在相应的组件组表中，创建新行并填写以下列：
+
+    * **Component**: 组件的名称和指向组件参考文档的链接。按照 [链接](/docs/contributing/to-docs/style-guide/format/#links) 指南设置链接格式。
+
+    * **Description:** 用一句话简要描述组件。
+
+
+
+## 提交您的组件参考文档
+
+恭喜你编写了你的组件参考文档！它几乎可以发布了。[开始为 Docs 做贡献](/docs/contributing/to-docs/get-started) 部分可以帮助您完成交付文档的最后步骤。

@@ -1,31 +1,31 @@
 ---
-linktitle: Formatting Tools
-title: Formatting Tools Available in O3DE Documentation
-description: A list of the supported tools that can assist with the formatting of O3DE documentation.
+linktitle: 格式化工具
+title: O3DE 文档中提供的格式化工具
+description: 可帮助格式化 O3DE 文档的受支持工具列表。
 weight: 350
 ---
 
-The **Open 3D Engine (O3DE)** website includes support for the following tools that can assist with the specialized formatting needs of some O3DE documentation.
+**Open 3D Engine （O3DE）** 网站包括对以下工具的支持，这些工具可以帮助满足某些 O3DE 文档的特殊格式需求。
 
-## Mathematical formulas in TeX and MathML {#math-formulas}
+## TeX 和 MathML 中的数学公式 {#math-formulas}
 
-You can embed mathematical formulas using TeX and MathML input formats. Refer to the [MathJax documentation](https://docs.mathjax.org/en/latest/index.html) for more information on how to use the MathJax version 3.0 display engine.
+您可以使用 TeX 和 MathML 输入格式嵌入数学公式。有关如何使用 MathJax 版本 3.0 显示引擎的更多信息，请参阅 [MathJax 文档](https://docs.mathjax.org/en/latest/index.html) 。
 
-**Example Usage**
+**示例用法**
 
 ```markdown
 $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
 ```
 
-**Example Output**
+**示例输出**
 
 $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
 
-## Diagrams using Mermaid {#diagrams}
+## 使用 Mermaid 的图表 {#diagrams}
 
-You can create a variety of diagrams and other visualizations from within Markdown code blocks that will render using the Mermaid diagram tool. Refer to the [Mermaid documentation](https://mermaid-js.github.io/mermaid/) to learn about the various supported diagram types and their usage syntax.
+您可以从 Markdown 代码块中创建各种图表和其他可视化效果，这些代码块将使用 Mermaid 图表工具进行呈现。请参阅 [Mermaid 文档](https://mermaid-js.github.io/mermaid/) 以了解各种支持的图表类型及其使用语法。
 
-### Example: Flowchart
+### 示例：流程图
 
 ````
 ```mermaid
@@ -37,7 +37,7 @@ graph TD;
 ```
 ````
 
-**Output**
+**输出**
 
 ```mermaid
 graph TD;
@@ -47,7 +47,7 @@ graph TD;
     C-->D;
 ```
 
-### Example: UML Class Diagram
+### 示例：UML 类图
 
 ````
 ```mermaid
@@ -75,7 +75,7 @@ classDiagram
 ```
 ````
 
-**Output**
+**输出**
 
 ```mermaid
 classDiagram

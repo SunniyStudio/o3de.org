@@ -1,36 +1,36 @@
 ---
-title: Use PostFX Shape Weight Modifier to Modify Camera Exposure
-linktitle: Use PostFX Shape Weight Modifier
-description: Use PostFX Shape Weight Modifier to modify exposure control in Open 3D Engine (O3DE).
+title: 使用 PostFX Shape Weight Modifier 修改摄像机曝光
+linktitle: 使用 PostFX Shape Weight Modifier
+description: 使用 PostFX Shape Weight Modifier 在 Open 3D Engine （O3DE） 中修改曝光控制。
 toc: true
 ---
 
-In this example, you will set up a spherical post-processing volume that controls the camera's exposure. When the camera moves in and out of the volume, its exposure changes.
+在此示例中，您将设置一个控制摄像机曝光的球形后处理体积。当摄像机移入和移出体积时，其曝光会发生变化。
 
-Post-processing volumes require two entities: one that defines the PostFX and one that defines a PostFX volume. This example uses the following entities:
+后处理卷需要两个实体：一个定义 PostFX，另一个定义 PostFX 卷。此示例使用以下实体：
 
-- **PostFX**: This entity contains an **Exposure Control** component and a **PostFX Layer** component that set the default amount of light that the camera receives from the environment.
+- **PostFX**: 此实体包含一个 **Exposure Control** 组件和一个 **PostFX Layer** 组件，用于设置摄像机从环境中接收的默认光量。
   
-- **PostFX Volume**: This entity contains a **PostFX Shape Weight Modifier** component and a **Sphere Shape** component that define a PostFX volume. It also contains an **Exposure Control** component and a **PostFX Layer** component that adjust the camera exposure when the camera moves through the PostFX Volume.
+- **PostFX Volume**: 此实体包含一个 **PostFX Shape Weight Modifier** 组件和一个 **Sphere Shape** 组件，用于定义 PostFX 体积。它还包含一个 **Exposure Control** 组件和一个 **PostFX Layer** 组件，当摄像机通过 PostFX 体积时，这些组件可以调整摄像机的曝光度。
 
-To use post-processing volumes: 
+要使用后处理体积：
 
-1. In **O3DE Editor**, create a default level.
+1. 在 **O3DE 编辑器 ** 中，创建一个默认关卡。
 
-2. Create an entity for the PostFX. Right click in **Perspective** and select **Create entity**.
+2. 为 PostFX 创建一个实体。右键单击 **Perspective**，然后选择 **Create entity**。
   
-3. In the new PostFX entity, add the following components:
+3. 在新的 PostFX 实体中，添加以下组件：
     
     - PostFX Exposure Control
     
     - PostFX Layer
 
-4. In the Exposure Control component, set the **Manual Compensation** property to `1.0`. This sets a default, bright exposure for the camera.
+4. 在 Exposure Control （曝光控制） 组件中，将 **Manual Compensation** 属性设置为 '`1.0`'。这将为相机设置默认的明亮曝光。
 
 
-5. Create an entity for the PostFX volume. Right click in **Perspective** near the **Shader Ball** entity, and select **Create entity**.  
+5. 为 PostFX Volume创建一个实体。右键单击 **Perspective** 旁边的 **Shader Ball** 实体，并选择 **Create entity**。
 
-6. In the new PostFX Volume entity, add the following four components:
+6. 在新的 PostFX Volume 实体中，添加以下四个组件：
     
     - PostFX Exposure Control
     
@@ -40,16 +40,16 @@ To use post-processing volumes:
     
     - Sphere Shape
 
-7. In the Exposure Control component, set the **Manual Compensation** to `-3.5` to lower the camera exposure inside the PostFX volume.
+7. 在 Exposure Control （曝光控制） 组件中，将**Manual Compensation** 设置为 `-3.5` 以降低 PostFX 体积内的摄像机曝光。
     
-8. In the PostFX Layer component, set the **Layer Category** property to `Volume`. This ensures the Exposure Control component is active inside the volume of the Sphere Shape component.
+8. 在 PostFX Layer组件中，将**Layer Category** 属性设置为 `Volume`。这可确保 Exposure Control （曝光控制） 组件在 Sphere Shape （球体形状） 组件的体积内处于活动状态。
 
-9.  In the PostFX Shape Weight Modifier component, set the Fall-off Distance property to `3.0`. This increases the distance of the transition from the default exposure setting to the exposure setting inside the volume, making the transition gradual.
+9.  在PostFX Shape Weight Modifier组件中，将Fall-off Distance属性设置为`3.0`。这会增加从默认曝光设置到体积内部曝光设置的过渡距离，使过渡逐渐进行。
  
-10. In the Sphere Shape component, increase the size of the sphere by setting the **Radius** value to `3.0`. To see a debug view of the volume, click the {{< icon "helpers.svg" >}} **Toggle viewport helpers** button in the toolbar in the upper right of Perspective.
+10. 在Sphere Shape组件中，将**Radius** 设置为 `3.0`。要查看卷的调试视图，请点击Perspective右上角的 {{< icon "helpers.svg" >}} **Toggle viewport helpers** 按钮。
 
-11. Click the {{< icon "play.svg" >}} **Play Game** button in the toolbar or press **Ctrl+G**, to run the level. Move the camera with the mouse and **W, S, A, D**. The exposure changes as the camera moves through the PostFX Volume. Press **Esc** to exit play mode.
+11. 点击工具栏的 {{< icon "play.svg" >}} **Play Game** 按钮或按下**Ctrl+G**，运行关卡。使用鼠标和 W、S、A、D 移动相机。曝光度会随着摄像机在 PostFX Volume中移动而改变。按 **Esc** 退出播放模式。
 
-The image series below demonstrates how PostFX volumes work in this example. As shown on the left, when the camera is outside of the volume, the scene appears bright. On the right, when the camera enters the volume, the scene darkens.
+下面的图像系列演示了 PostFX 卷在此示例中的工作原理。如左图所示，当摄像机位于体积之外时，场景会显得很亮。在右侧，当摄像机进入体积时，场景会变暗。
 
 ![Using PostFX Volumes](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-example.png)

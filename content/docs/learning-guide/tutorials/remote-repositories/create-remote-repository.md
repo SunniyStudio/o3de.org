@@ -1,45 +1,45 @@
 ---
-linktitle: Remote Repositories
-title: Create Your Remote Repository
-description: Learn how to use Open 3D Engine's (O3DE) remote repository tools to package and share your project remotely with GitHub or other version control platforms.
+linktitle: 远程存储库
+title: 创建远程仓库
+description: 了解如何使用 Open 3D Engine （O3DE） 的远程存储库工具打包项目并与 GitHub 或其他版本控制平台远程共享。
 ---
-In this tutorial you will build upon the foundation of Open 3D Engine (O3DE) and use the remote repository template to manage and distribute projects effortlessly. You will learn how to package and share your projects remotely with GitHub or other version control platforms, promoting collaboration and accelerating project development.
+在本教程中，您将以 Open 3D Engine （O3DE） 为基础，并使用远程存储库模板轻松管理和分发项目。您将学习如何使用 GitHub 或其他版本控制平台远程打包和共享您的项目，从而促进协作并加速项目开发。
 
-In this tutorial you will use the O3DE command-line interface (CLI) tool from a command prompt. You can list all O3DE commands and get help on a specific command using the `--help` option:
+在本教程中，您将从命令提示符使用 O3DE 命令行界面 （CLI） 工具。你可以列出所有 O3DE 命令，并使用 `--help` 选项获得特定命令的帮助：
 ```
 cd <o3de-engine-directory>/scripts
 o3de.bat --help
 o3de.bat create-gem --help
 ```
 {{< note >}}
-All `o3de` command options have abbreviations for convenience. Use the `--help` option with a command for details.
+为方便起见，所有 `o3de` 命令选项都有缩写。使用命令的 `--help` 选项来了解详细信息。
 {{< /note >}}
 
-## Create a repository
-Create a new repository for your remote project and clone this repo to your local machine.
-This version control repository link is where you upload your project `repo-uri`.
+## 创建仓库
+为您的远程项目创建一个新存储库，并将此存储库克隆到您的本地计算机。
+此版本控制存储库链接是您上传项目 `repo-uri` 的位置。
 
-Here is an example of a GitHub repo URI:
+下面是 GitHub 存储库 URI 的示例：
 
 ```
 "https://github.com/<YourGitAccount>/<RemoteProjectName>.git"
 ```
 
-## Create a remote repository `repo.json` configuration file
-Navigate to scripts folder from the root of your **Open 3D Engine (O3DE)**.
+## 创建远程仓库 `repo.json` 配置文件
+从 Open 3D Engine （O3DE） 的根目录导航到 scripts 文件夹。
 ```
 cd <o3de-engine-directory>/scripts
 ```
-To create a remote repository configuration, you will need to provide the following information:
-- `repo-path` - the local path of your remote repository, this is where you cloned your repo.
-- `repo-uri` - the URI of your repo.
+要创建远程存储库配置，您需要提供以下信息：
+- `repo-path` - 远程仓库的本地路径，这是您克隆仓库的位置。
+- `repo-uri` - 存储库的 URI。
 
 {{< tabs name="O3DE CLI command" >}}
 {{% tab name="Windows" %}}
 ```cmd
 o3de.bat create-repo --repo-path "C:\remote-repo" --repo-uri "https://github.com/<YourGitAccount>/<RemoteRepoName>.git"
 ```
-{{< note >}} Use ./o3de.bat if you are using PowerShell.{{< /note >}}
+{{< note >}} 如果您使用的是 PowerShell，请使用 ./o3de.bat。{{< /note >}}
 
 {{% /tab %}}
 {{% tab name="Linux" %}}
@@ -49,96 +49,96 @@ o3de.bat create-repo --repo-path "C:\remote-repo" --repo-uri "https://github.com
 {{% /tab %}}
 {{< /tabs >}}
 
-The `create-repo` command performs the following actions:
-1. Creates a directory with the remote repository name specified in the `repo-path`, and creates a `repo.json` file in the root of that directory.
-2. Creates three folders in your remote repository folder: Gems, Projects, and Templates. Make sure to place all associated objects in their correct folder type to avoid confusion later.
-This is what your remote repository folder will look like after this step:
+`create-repo` 命令执行以下操作：
+1. 使用`repo-path`中指定的远程存储库名称创建一个目录，并在该目录的根目录中创建一个`repo.json`文件。
+2. 在远程存储库文件夹中创建三个文件夹：Gems、Projects 和 Templates。确保将所有关联的对象放在正确的文件夹类型中，以避免以后混淆。
+这是您的远程仓库文件夹在此步骤后的样子：
 
     {{<image-width src="/images/learning-guide/tutorials/remote-repositories/init.png" width="300">}}
 
-- For example: Gems should go inside the Gems folder, projects should be placed into the Projects folder, and templates should go inside the Templates folder.
+- 例如：Gem 应放在 Gems 文件夹中，项目应放在 Projects 文件夹中，模板应放在 Templates 文件夹中。
 
 {{< note >}}
-Remember to push your local changes to your remote version control repository.
+请记住将本地更改推送到远程版本控制存储库。
 {{< /note >}}
 
-## (Optional) Create a gem release archive to add to your remote repository
-To test your remote repo creation, you can create a Gem of your own and make it public to allow other users to download it. Skip this step if you already have a gem in your remote repository.
+##（可选）创建 Gem 发布存档以添加到您的远程存储库
+要测试远程存储库的创建，您可以创建自己的 Gem 并将其设为公开，以允许其他用户下载。如果您的远程存储库中已有 Gem，请跳过此步骤。
 
-To create a Gem, you will need to provide the following information:
+要创建 Gem，您需要提供以下信息：
 
-- `gem-path`: The path to the directory where you would want your Gem to be stored (We recommend you choose a path inside the remote repository's Gems folder)
-- `gem-name`: Optional parameter that specifies a name for your Gem
+- `gem-path`: 您希望存储 Gem 的目录的路径（我们建议您在远程存储库的 Gems 文件夹中选择一个路径）
+- `gem-name`: 指定 Gem 名称的可选参数
    
 ```
 o3de.bat create-gem --gem-path "C:\remote-repo\Gems\MyGem" --gem-name "MyGem"
 ```
 
-The `create-gem` command performs the following actions:
-1. Creates a Gem with the provided name at the specified path. If you didn't specify a name, O3DE will use the trailing directory name from the `gem-path`.
-3. Registers your Gem to the O3DE engine. You can now find your new Gem with the Gem name under the Gems tab in Project Manager.
+`create-gem`命令执行以下操作：
+1. 在指定路径中创建具有提供名称的 Gem。如果未指定名称，O3DE 将使用`gem-path`中的尾随目录名称。
+3. 将您的 Gem 注册到 O3DE 引擎。现在，您可以在 Project Manager 的 Gems 选项卡下找到具有 Gem 名称的新 Gem。
 
-Next, use the `edit-repo-properties` command to add your Gem to your remote repository.
+接下来，使用`edit-repo-properties`命令将 Gem 添加到远程存储库。
 
-**Add your gem to your remote repository**
+**将 Gem 添加到远程存储库**
 
-To add a Gem to your project, you will need to provide the following information:
-- `--repo-path`: The path to your repo.json file
-- `--add-gem`: The path to the directory of your Gem
+要将 Gem 添加到您的项目中，您需要提供以下信息：
+- `--repo-path`: repo.json 文件的路径
+- `--add-gem`: Gem 目录的路径
 
     ```
     o3de.bat edit-repo-properties --repo-path "C:\remote-repo\repo.json" --add-gem "C:\remote-repo\Gems\MyGem"
     ```
-    The `edit-repo-properties` command will register your gem with your remote repository's `repo.json` file under the `gems_data` field.
+    `edit-repo-properties` 命令会将你的 gem 注册到远程仓库的 `repo.json` 文件中的 `gems_data` 字段下。
 
-In the next step, you will create a downloadable release archive for your Gem in order to share it with the world. Make sure you push all your changes before moving to the next step.
+在下一步中，您将为您的 Gem 创建一个可下载的发布存档，以便与全世界共享。确保在进入下一步之前推送所有更改。
 
-### Create a release archive for your gem
-The primary purpose of a _release archive_ is to provide a well-defined and stable version of the software that can be easily shared, installed, and distributed.
+### 为您的 Gem 创建发布存档
+_release archive_ 的主要目的是提供定义明确且稳定的软件版本，该版本可以轻松共享、安装和分发。
 
-In O3DE we provide the option for users to create a release archive with .zip format.
+在 O3DE 中，我们为用户提供了创建.zip格式的发布存档的选项。
 
-For security, O3DE uses `sha-256` to hash files before creating the release archive. Every time you make a change to your Gem, including the `repo.json` file, the `sha-256` hash will change.
+为了安全起见，O3DE 在创建发布存档之前使用“`sha-256`”对文件进行哈希处理。每次您对 Gem（包括“`repo.json`”文件）进行更改时，“`sha-256`”哈希值都会更改。
 
-**Auto upload your release archive to Github**
+**自动将您的发布存档上传到 Github**
 
-Upload your release zip to GitHub by providing a release `tag_name` and your GitHub token.
+通过提供发布 '`tag_name`' 和 GitHub 令牌，将发布 zip 上传到 GitHub。
 
-To allow auto update to GitHub you need to provide the following information:
-- `--repo-path`: the absolute path to your remote repository's `repo.json` file
-- `--add-gem`: the path to the directory to where the actual gem you want to add is located
-- `--release-archive-path`: the save location of generated zip. We recommend placing it outside of the repository so it isn't checked in by accident
-- `--upload-git-release-tag`: the tag_name GitHub uses when creating a release. We recommend a version number; for example "v1.0.0"
+要允许自动更新到 GitHub，您需要提供以下信息：
+- `--repo-path`: 远程仓库的 `repo.json` 文件的绝对路径
+- `--add-gem`: 要添加的实际 Gem 所在的目录的路径
+- `--release-archive-path`: 生成的 ZIP 的保存位置。我们建议将其放在存储库之外，这样就不会意外签入
+- `--upload-git-release-tag`: GitHub 在创建发布时使用的tag_name。建议使用版本号;例如，“v1.0.0”
 
 {{< note >}}
-1. `--release-archive-path` command can only be use after you call the `--add-gem` command. See below example:<br>
-2. Your GitHub Token must allow repo content read and write access. Press right button on mouse to paste your GitHub token. 
+1. `--release-archive-path` 命令只能在您调用 `--add-gem` 命令后使用。请参阅以下示例：<br>
+2. 您的 GitHub 令牌必须允许存储库内容读取和写入访问权限。在鼠标上按右键粘贴您的 GitHub 令牌。
 {{< /note >}}
 
 ```
 o3de.bat edit-repo-properties --repo-path "C:\remote-repo\repo.json" --add-gem "C:\remote-repo\Gems\MyGem" --release-archive-path "C:\remote-repo\Gems" --upload-git-release-tag v1.0.0
 ```
 
-O3DE Engine will prompt you for your GitHub token. GitHub releases need a tag. If the `tag_name` already exists on GitHub, the command will add your zip to the existing release. Otherwise, this command will publish the zip to a new release.
+O3DE Engine 将提示您输入 GitHub 令牌。GitHub 版本需要标签。如果 GitHub 上已存在 `tag_name` ，该命令会将你的 zip 添加到现有版本中。否则，此命令会将 zip 发布到新版本。
 
-After uploading Gem to GitHub, other users should be able to download this Gem. In Project Manager remote sources add remote repository URI to download associated Gems. Otherwise use the O3DE CLI to download associated Gem.
+将 Gem 上传到 GitHub 后，其他用户应该能够下载此 Gem。在 Project Manager 远程源中，添加远程存储库 URI 以下载关联的 Gem。否则，请使用 O3DE CLI 下载关联的 Gem。
 
-**Create a release archive using download prefix.**
+**使用 download 前缀创建发布存档。**
 
-To upload your release to a different version control platform other than GitHub, you can use the `--download-prefix` command.
+要将发行版上传到 GitHub 以外的其他版本控制平台，您可以使用 `--download-prefix` 命令。
 
-- The `o3de.bat` tool expects a `download prefix` which is the URI for the folder your archive will be available in.  For a release in a GitHub repository, the `download prefix` looks like this:
+- “`o3de.bat`”工具需要一个“下载前缀”，这是您的档案所在的文件夹的 URI。 对于 GitHub 存储库中的版本，“下载前缀”如下所示：
 
     `https://github.com/<YourGitAccount>/<RemoteRepoName>/releases/download/<ReleaseTag>`
 
-To create a release archive, you will need to provide the following information:
-- `--repo-path`: the absolute path to your remote repository's `repo.json` file
-- `--add-gem`: the path to the directory to where the actual gem you want to add is located
-- `--release-archive-path`: the save location of generated zip. We recommend placing it outside of the repository so it isn't checked in by accident
-- `--download-prefix`: the URI where your gem archive can be downloaded from. You must know where your zip will be available for download before you actually create the archive zip.
+要创建发布存档，您需要提供以下信息：
+- `--repo-path`: 远程仓库的 `repo.json` 文件的绝对路径
+- `--add-gem`: 要添加的实际 Gem 所在的目录的路径
+- `--release-archive-path`: 生成的 ZIP 的保存位置。我们建议将其放在存储库之外，这样就不会意外签入
+- `--download-prefix`: 可从中下载 Gem 存档的 URI。在实际创建存档 zip 之前，您必须知道 zip 可以在哪里下载。
 
 {{< note >}}
-`--release-archive-path` command can only be used after you call the `--add-gem` command. See below example:
+`--release-archive-path` 命令只能在您调用 `--add-gem` 命令后使用。请参阅以下示例：
 {{< /note >}}
 
 
@@ -146,57 +146,57 @@ To create a release archive, you will need to provide the following information:
 o3de.bat edit-repo-properties --repo-path "C:\remote-repo\repo.json" --add-gem "C:\remote-repo\Gems\MyGem" --release-archive-path "C:\remote-repo\Gems" --download-prefix "https://github.com/<YourGitAccount>/<RemoteRepoName>/releases/download/<ReleaseTag>"
 ```
 
-1. Here is an example of where you should upload your release to GitHub (you can find this on your version control URI):
+1. 以下是您应该将发布上传到 GitHub 的位置示例（您可以在版本控制 URI 上找到）：
 
     {{<image-width src="/images/learning-guide/tutorials/remote-repositories/add_release.png" width="500">}}
 
-2. Here is where you would be setting your release tag (make sure this tag is the same as the last parameter you passed for the `--download-prefix` arg):
+2. 这是您将设置发布标签的地方（确保此标签与您为 `--download-prefix` 参数传递的最后一个参数相同）：
 
     {{<image-width src="/images/learning-guide/tutorials/remote-repositories/release_tag.png" width="500">}}
 
 {{< important >}}
-Make sure you know where your release will be available after uploading it to the version control platform. Once uploaded, you won't be able to change the `download_source_uri` in your `repo.json` file. If you input the wrong download path, you will need to repeat this step and re-zip the file and upload the release to version control platform again.
+确保您知道在将版本上传到版本控制平台后，您的版本将在哪里可用。上传后，您将无法更改“`repo.json`”文件中的“`download_source_uri`”。如果输入的下载路径错误，则需要重复此步骤并重新压缩文件，然后再次将版本上传到版本控制平台。
 {{< /important >}}
 
-After you upload your Gem to the version control platform, other users that have added your remote repository will be able to download it using the Project Manager and `o3de` CLI. Users can navigate to Remote Sources and use your remote project URL to download associated Gems based on the download path you provided in this step.
+将 Gem 上传到版本控制平台后，已添加远程存储库的其他用户将能够使用 Project Manager 和“`o3de`”CLI 下载它。用户可以导航到 Remote Sources（远程源），并使用您的远程项目 URL 根据您在此步骤中提供的下载路径下载关联的 Gem。
 
 
-## Testing your remote repo locally
-You can test your remote repo locally before uploading to your remote repository to make sure your remote repo works as expected by using a local file path.
+## 在本地测试你的远程仓库
+在上传到远程存储库之前，您可以在本地测试远程存储库，以确保使用本地文件路径远程存储库按预期工作。
 
-You can test locally by creating another remote repository and Gem using the steps above and add the Gem to your new remote repository. Next, create a release archive for the new Gem using a local path for the `download prefix`:
+您可以通过使用上述步骤创建另一个远程存储库和 Gem 来本地测试，并将 Gem 添加到新的远程存储库中。接下来，使用“下载前缀”的本地路径为新 Gem 创建发布存档：
 ```cmd
 o3de.bat edit-repo-properties --repo-path "C:\local-repo\repo.json" --add-gem "C:\local-repo\Gems\MyLocalGem" --release-archive-path "C:\local-repo\Gems" --download-prefix "C:\local-repo\Gems"
 ```
 
-After performing the above steps you should be able to add the new remote repository using the local path `file://c/local-repo` and then be able to download `MyLocalGem` from the `Gems` tab in the Project Manager.
+执行上述步骤后，您应该能够使用本地路径 `file://c/local-repo` 添加新的远程存储库，然后能够从项目管理器中的“`Gems`”选项卡下载“`MyLocalGem`”。
 
 
-#### Use Python to host a `local server` for testing
+#### 使用 Python 托管“本地服务器”进行测试
 
-1. Open a command window and change to the local repo folder that contains the `repo.json` file.
+1. 打开命令窗口并切换到包含“`repo.json`”文件的本地 repo 文件夹。
     ```
     cd c:\remote-repo
     ``` 
 
-2. Start a local Python server on port 8080.
+2. 在端口 8080 上启动本地 Python 服务器。
     ```
     python -m http.server 8080
     ```
 
-3. Use this below format for your `--download-prefix`.
+3. 对 `--download-prefix` 使用以下格式。
     ```
     http://localhost:8080/Gems
     ```
 
-    Here is an example of where your download URI will be located:
+    以下是下载 URI 所在的位置示例：
     ```
     http://localhost:8080/Gems/camera-0.1.0-gem.zip
     ```
 
 
-4. Open the Project Manager and add a remote repository from the Engine > Remote Sources page. When prompted, use the URL for your local server which should be "http://localhost:8080/"
+4. 打开 Project Manager，然后从 Engine > Remote Sources 页面添加远程存储库。出现提示时，请使用本地服务器的 URL，该 URL 应为“http://localhost:8080/”
 
 {{< note >}}
-Adding the repo may fail without the trailing slash, and the name should match the `repo-uri` in repo.json
+如果没有尾部斜杠，则添加存储库可能会失败，并且名称应与repo.json中的“`repo-uri`”匹配
 {{< /note >}}

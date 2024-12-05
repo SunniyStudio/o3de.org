@@ -1,60 +1,60 @@
 ---
-linktitle: Material Types and Shaders
-title: "Get Started with Material Types and Shaders"
-description: "Create a new material type and shader in the Atom renderer."
+linktitle: 材质类型和着色器
+title: "材质类型和着色器入门"
+description: "在 Atom 渲染器中创建新的材质类型和着色器。"
 toc: true
 ---
 
-In this tutorial, you'll create a new material type with a simple, unlit color shader. This tutorial covers the following key concepts:
+在本教程中，您将使用简单的无光照颜色着色器创建新的材质类型。本教程涵盖以下关键概念：
 
-- Files needed for creating materials and shaders.
-- Basic shader programming concepts in **AZSL**, including Shader Resource Groups.
-- Creating shader asset files.
-- Creating a material types and attaching shaders.
-- Debugging shaders with **Asset Processor**.
+- 创建材质和着色器所需的文件。
+- AZSL 中的基本着色器编程概念，包括着色器资源组。
+- 创建着色器资源文件。
+- 创建材质类型并附加着色器。
+- 使用 Asset Processor 调试着色器。
 
-## 1. Set up the files
+## 1.设置文件
 
-The process of developing a combination of shaders and materials that create an appearance for a surface is called *look development*. For Atom renderer, this process requires several interdependent files including the following:
+开发着色器和材质的组合以创建表面外观的过程称为 *外观开发*。对于 Atom 渲染器，此过程需要多个相互依赖的文件，包括以下内容：
 
-- `.azsl`: This file contains AZSL shader code. The AZSL shader code includes  Shader Resource Groups, shader inputs and outputs, and shader programs.
-- `.shader`: This file contains data that describes the shader asset and is structured in JSON format. It references the `.azsl` file and configures the **AZSLc** shader compiler.
-- `.materialtype`: This file contains material type data, and is structured in JSON format. A material type references one or more `.shader` files to create an appearance, defines properties for the material type, and links the material type properties to variables in the referenced shaders.
-- `.material`: This file contains material data and is structured in JSON format. Materials must be created from a material type. Materials inherit the material type's properties and shaders. These properties' values are set in the `.material` file, describing the look of the material. Materials can be created using the Material Editor.
+- `.azsl`: 此文件包含 AZSL 着色器代码。AZSL 着色器代码包括着色器资源组、着色器输入和输出以及着色器程序。
+- `.shader`: 此文件包含描述着色器资产的数据，并以 JSON 格式构建。它引用“`.azsl`”文件并配置 **AZSLc** 着色器编译器。
+- `.materialtype`: 此文件包含材质类型数据，并以 JSON 格式构建。材质类型引用一个或多个`.shader`文件来创建外观，定义材质类型的属性，并将材质类型属性链接到引用的着色器中的变量。
+- `.material`: 此文件包含材质数据，并以 JSON 格式构建。材质必须从材质类型创建。材质继承材质类型的属性和着色器。这些属性的值在 `.material` 文件中设置，用于描述材质的外观。可以使用 Material Editor 创建材质。
 
-Asset Processor compiles run-time assets from these files. When a new asset file is saved to disk, or an existing asset file is modified, Asset Processor automatically detects the change and processes the files. For Asset Processor to detect new or updated files, the files must exist in a subdirectory of your project, or in a directory Asset Processor is monitoring. For this tutorial, use a project subdirectory named `Materials`.
+Asset Processor 从这些文件编译运行时资源。将新资源文件保存到磁盘或修改现有资源文件时，Asset Processor 会自动检测更改并处理文件。要使 Asset Processor 检测新文件或更新的文件，这些文件必须位于项目的子目录中，或者位于 Asset Processor 正在监视的目录中。在本教程中，请使用名为 `Materials` 的项目子目录。
 
-In the `Materials` subdirectory of your project, create the following files:
+在项目的 `Materials` 子目录中，创建以下文件：
 
 - `MyUnlitColor.azsl`
 - `MyUnlitColor.shader`
 - `MyUnlitColor.materialtype`
 
 {{< note >}}
-The `.material` file is created using **Material Editor** later in the tutorial.
+`.material` 文件是在本教程后面使用 **Material Editor** 创建的。
 {{< /note >}}
 
-## 2. Author AZSL shader code (.azsl)
+## 2.作者 AZSL 着色器代码 （.azsl）
 
-You write AZSL shader code in the `MyUnlitColor.azsl` file containing the following components:
+您可以在包含以下组件的`MyUnlitColor.azsl`文件中编写 AZSL 着色器代码：
 
-- preprocessor directives
-- Shader Resource Groups (SRGs)
-- Vertex and fragment shader input and output structs
-- Vertex and fragment shader programs
+- 预处理器指令
+- 着色器资源组 （SRG）
+- 顶点和片段着色器输入和输出结构
+- 顶点和片段着色器程序
 
-### Preprocessor directives
+### 预处理器指令
 
-At the very top of the file, are a set of preprocessor directives. A shader program can use shared Shader Resource Groups (SRGs) and reusable AZSL code, which are contained in .srgi and .azsli files.
+在文件的最顶部，是一组预处理器指令。着色器程序可以使用共享的着色器资源组 （SRG） 和可重用的 AZSL 代码，它们包含在 .srgi 和 .azsli 文件中。
 
-For this tutorial, you need the following `#include` preprocessor directives:
+在本教程中，您需要以下 `#include` 预处理器指令：
 
-- `viewsrg.srgi`: Defines a shared view SRG.
-- `DefaultObjectSrg.azsli`: Defines an object SRG.
-- `ForwardPassOutput.azsli`: Defines a ForwardPassOutput struct.
-- `SrgSemantics.azsl`: Defines SRG semantics. Anytime you want to define an SRG, the SRG must inherit from an SRG semantic.
+- `viewsrg.srgi`: 定义共享视图 SRG。
+- `DefaultObjectSrg.azsli`: 定义对象 SRG。
+- `ForwardPassOutput.azsli`: 定义 ForwardPassOutput 结构。
+- `SrgSemantics.azsl`: 定义 SRG 语义。每当您想要定义 SRG 时，SRG 都必须继承自 SRG 语义。
 
-Add the following code in the `MyUnlitColor.azsl` file:
+在 `MyUnlitColor.azsl` 文件中添加以下代码：
 
 ```cpp
 #pragma once
@@ -65,23 +65,23 @@ Add the following code in the `MyUnlitColor.azsl` file:
 #include <Atom/Features/SrgSemantics.azsli>
 ```
 
-Next, you'll learn about these referenced SRGs: what they are, how they are used throughout your shader code, and how to define a new SRG.
+接下来，您将了解这些引用的 SRG：它们是什么，它们在整个着色器代码中如何使用，以及如何定义新的 SRG。
 
-### Shader resource groups
+### 着色器资源组
 
-Throughout a shader program, you need to store, use, and pass constant data. In AZSL, this is handled through Shader Resource Groups (SRGs). SRGs contain shader resources and uniforms that can be shared throughout the system. SRGs are bound to a specific frequency (such as per frame view, per object, per material, and more). They are designed to be shared across multiple shaders, so a single material type can only define one material SRG.
+在整个着色器程序中，您需要存储、使用和传递常量数据。在 AZSL 中，这是通过着色器资源组 （SRG） 处理的。SRG 包含可在整个系统中共享的着色器资源和 uniform。SRG 绑定到特定的频率（例如每帧视图、每个对象、每个素材等）。它们设计为在多个着色器之间共享，因此单个材质类型只能定义一个材质 SRG。
 
-In this tutorial, MyUnlitColor.azsl uses the following SRGs:  
+在本教程中，MyUnlitColor.azsl 使用以下 SRG：
 
-- ViewSrg: This is provided by `viewsrg.srgi`. ViewSrg contains data related to the camera such as view, projection, inverse viewProjection matrices, and culling frustum.
-- ObjectSrg: This is provided by `DefaultObjectSrg.azsli`. ObjectSrg contains data that is specific for the object or geometry being rendered such as the object's position.
-- MaterialSrg: This is defined in this `.azsl` file and contains data that is specific to the material type.
+- ViewSrg: 这是由 `viewsrg.srgi` 提供的。ViewSrg 包含与摄像机相关的数据，例如 view、projection、inverse viewProjection 矩阵和剔除视锥体。
+- ObjectSrg: 这是由 `DefaultObjectSrg.azsli` 提供的。ObjectSrg 包含特定于正在渲染的对象或几何体的数据，例如对象的位置。
+- MaterialSrg: 这是在此 `.azsl` 文件中定义的，并包含特定于材料类型的数据。
 
-### Define a material SRG
+### 定义材质 SRG
 
-Next, you need to define a material SRG to store data that needs to be updated at a per-material frequency. A material SRG must inherit an `SRG_PerMaterial` semantic. `SRG_PerMaterial` contains data specific to the material. In this tutorial, you are creating a simple unlit color material, so the material SRG must contain a variable to hold the color value.
+接下来，您需要定义一个材质 SRG 来存储需要按每个材质频率更新的数据。材质 SRG 必须继承 `SRG_PerMaterial` 语义。`SRG_PerMaterial` 包含特定于该材质的数据。在本教程中，您将创建一个简单的无光照颜色材质，因此材质 SRG 必须包含一个变量来保存颜色值。
 
-As shown in the following code, define an SRG named `UnlitColorSrg` that inherits from `SRG_PerMaterial`. Then, define variable `m_unlitColor` that holds a color value.
+如下面的代码所示，定义一个名为“`UnlitColorSrg`”的 SRG，该 SRG 继承自“`SRG_PerMaterial`”。然后，定义保存颜色值的变量 `m_unlitColor` 。
 
 ```cpp
 ShaderResourceGroup UnlitColorSrg : SRG_PerMaterial
@@ -91,18 +91,18 @@ ShaderResourceGroup UnlitColorSrg : SRG_PerMaterial
 ```
 
 {{< note >}}
-The `MyUnlitColor.materialtype` file must establish a connection between `m_unlitColor` and the color property. You'll do this later in the tutorial.
+`MyUnlitColor.materialtype` 文件必须在 `m_unlitColor` 和 color 属性之间建立连接。您将在本教程的后面部分执行此操作。
 {{< /note >}}
 
-Next, you're going to write the vertex and fragment shaders that use these SRGs.
+接下来，您将编写使用这些 SRG 的顶点和片段着色器。
 
-### Define vertex structs
+### 定义顶点结构体
 
-Shaders must have inputs and outputs to pass constant data and communicate with the rest of the render pipeline. Writing shader programs in AZSL follows similar practices as in HLSL (see [Microsoft DirectX HLSL documentation](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl)).
+着色器必须具有输入和输出，以传递常量数据并与渲染管道的其余部分通信。在 AZSL 中编写着色器程序遵循与 HLSL 中类似的做法（请参阅 [Microsoft DirectX HLSL 文档](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl))。
 
-The vertex shader input and output is defined inside the structs `VertexInput` and `VertexShaderOutput`. The type of input and output is indicated by HLSL semantics (see Microsoft DirectX HLSL - Semantics](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics) documentation).
+顶点着色器输入和输出在结构体 `VertexInput` 和 `VertexShaderOutput` 中定义。输入和输出的类型由 HLSL 语义指示（请参阅[Microsoft DirectX HLSL - 语义](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics) 文档）。
 
-The vertex shader program for this simple shader only needs the geometry's position. You can define the vertex input and output structs using the following code:
+此简单着色器的顶点着色器程序只需要几何体的位置。您可以使用以下代码定义顶点输入和输出结构：
 
 ```cpp
 struct VertexShaderInput
@@ -116,9 +116,9 @@ struct VertexShaderOutput
 };
 ```
 
-### Vertex Shader
+### 顶点着色器
 
-The vertex shader program entry point is defined in the function `MainVS`. The following vertex shader has a basic function that transforms the object's position from model space to clip space by applying a series of matrix transformations:
+顶点着色器程序入口点在函数 `MainVS` 中定义。以下顶点着色器具有一个基本功能，该函数通过应用一系列矩阵转换将对象的位置从模型空间转换为剪辑空间：
 
 ```cpp
 VertexShaderOutput MainVS(VertexInput IN)
@@ -130,13 +130,13 @@ VertexShaderOutput MainVS(VertexInput IN)
 }
 ```
 
-### Fragment Shader
+### 片段着色器
 
-The fragment shader program entry point is defined in the function `MainPS`. It takes `VertexShaderOutput` as input. The resulting fragment shader outputs are stored in the `ForwardPassOutput` struct that is defined in `ForwardPassOutput.azsli`.
+片段着色器程序入口点在函数 `MainPS` 中定义。它采用 `VertexShaderOutput` 作为输入。生成的片段着色器输出存储在`ForwardPassOutput.azsli`中定义的`ForwardPassOutput`结构中。
 
-Since this is an unlit single shader color, you only need to set the value for diffuse color and disable specular lighting.
+由于这是无光照的单个着色器颜色，因此只需设置漫反射颜色的值并禁用镜面反射照明。
 
-The following sample shows the fragment shader program:
+以下示例显示了 fragment shader 程序：
 
 ```cpp
 ForwardPassOutput MainPS(VertexShaderOutput IN)
@@ -151,9 +151,9 @@ ForwardPassOutput MainPS(VertexShaderOutput IN)
 }
 ```
 
-### Complete `MyUnlitColor.azsl`
+### 完整的 `MyUnlitColor.azsl`
 
-The following is the full AZSL code:
+以下是完整的 AZSL 代码：
 
 ```cpp
 #pragma once
@@ -198,38 +198,38 @@ ForwardPassOutput MainPS(VertexShaderOutput IN)
 }
 ```
 
-## 3. Author shader asset data (.shader)
+## 3.创作着色器资源数据 （.shader）
 
-The `.shader` file defines metadata to configure the shader compiler for the referenced `.azsl` source file and specifies how the render pipeline should use the shader. The `.shader` file is responsible for the following:
+“`.shader`”文件定义元数据，以便为引用的“`.azsl`”源文件配置着色器编译器，并指定渲染管道应如何使用着色器。`.shader` 文件负责以下操作：
 
-- Referencing the `.azsl` source file.
-- Configuring depth, stencil, and blend states.
-- Specifying shader compiler hints.
-- Specifying entry points to the vertex and fragment shader programs.
-- Specifying where in the render queue this shader should be drawn.
+- 引用“`.azsl`”源文件。
+- 配置深度、模板和混合状态。
+- 指定着色器编译器提示。
+- 指定顶点和片元着色器程序的入口点。
+- 指定应在渲染队列中绘制此着色器的位置。
 
-### Components of `MyUnlitColor.shader`
+### `MyUnlitColor.shader`的组件
 
-The configuration in the `.shader` file contains the following properties:
+“`.shader`”文件中的配置包含以下属性：
 
 Source
-: This shader references the `.azsl` source file `MyUnlitColor.azsl`.
+: 此着色器引用“`.azsl`”源文件“`MyUnlitColor.azsl`”。
 
 DepthStencilState
-: The `CompareFunc` property sets the comparison operator to `GreaterEqual` in order to discard pixels that have depth values that are lower than the current value in the depth buffer. This is necessary because Atom implements reverse depth buffers and uses a separate depth pre-pass that runs before the lighting pass.
+: `CompareFunc` 属性将比较运算符设置为 `GreaterEqual`，以便丢弃深度值低于深度缓冲区中当前值的像素。这是必需的，因为 Atom 实现了反向深度缓冲区，并使用了在照明通道之前运行的单独深度预通道。
 
 Entry Points
-: By default, any functions that start or end with `VS` or `PS` (corresponding to vertex and fragment shaders) are recognized by the asset builder as shader entry points. To explicitly identify the shader's entry points, specify the function's name and the type of shader program.
+: 默认情况下，资产生成器会将以“`VS`”或“`PS`”开头或结尾的任何函数（对应于顶点和片段着色器）识别为着色器入口点。要显式标识着色器的入口点，请指定函数的名称和着色器程序的类型。
 
-- The vertex shader's entry point is at the MainVS function. 
-- The fragment shader's entry point is at the MainPS function. 
+- 顶点着色器的入口点位于 MainVS 函数处。
+- 片段着色器的入口点位于 MainPS 函数处。
 
 DrawList
-: Specify the name of the draw list where draw items using this shader should be queued for rendering. Generally, the name should match the draw list name in a `.pass`. 
+: 指定绘制列表的名称，使用此着色器的绘制项目应在其中排队等待渲染。通常，名称应与 `.pass` 中的抽奖列表名称匹配。
 
-### Complete `MyUnlitColor.shader`
+### 完整的 `MyUnlitColor.shader`
 
-The following is the full shader description:
+以下是完整的着色器描述：
 
 ```json
 {
@@ -259,29 +259,29 @@ The following is the full shader description:
 }
 ```
 
-## 4. Author material type data (.materialtype)
+## 4.编写材质类型数据 （.materialtype）
 
-The `MyUnlitColor.materialtype` file contains the material type data in JSON format. This materialtype is used to create materials in **Material Editor**. Material types are responsible for the following:
+`MyUnlitColor.materialtype` 文件包含 JSON 格式的材质类型数据。此材质类型用于在 **材质编辑器** 中创建材质。材质类型负责以下因素：
 
-- Linking to shaders.
-- Defining property groups
-- Defining material properties for property groups.
+- 链接到着色器。
+- 定义属性组
+- 定义属性组的材料属性。
 
-### Link to shaders
+### 链接到着色器
 
-Linking to shaders in a `.materialtype` defines which shader(s) the material type uses to compute the appearance of the surface. It also exposes the variables of the shader(s) to the material type, so they can be linked to material properties. In this tutorial, the `color` property is connected to the variable `m_unlitColor`, which is defined inside `MyUnlitColor.azsl` and referenced by the `MyUnlitColor.shader` file.
+链接到 `.materialtype` 中的着色器定义了材质类型用于计算表面外观的着色器。它还将着色器的变量公开给材质类型，以便它们可以链接到材质属性。在本教程中，“`color`”属性连接到变量“`m_unlitColor`”，该变量在 `MyUnlitColor.azsl` 中定义，并由 `MyUnlitColor.shader` 文件引用。
 
-For this tutorial, the MyUnlitColor material type links to a few shaders:
+在本教程中，`MyUnlitColor` 材质类型链接到一些着色器：
 
-- `MyUnlitColor.shader`: This is the shader you created earlier in this tutorial. The color property is connected to the variable `m_unlitColor`, which is defined inside `MyUnlitColor.azsl` and referenced by the `MyUnlitColor.shader` file. 
-- `DepthPass.shader`: This shader is needed to write to the depth buffer.
-- `Shadowmap.shader`: This shader enables the object to cast a shadow.
+- `MyUnlitColor.shader`：这是您在本教程前面创建的着色器。`color` 属性连接到变量 `m_unlitColor`，该变量在 `MyUnlitColor.azsl` 中定义，并由 `MyUnlitColor.shader` 文件引用。
+- `DepthPass.shader`：需要此着色器来写入深度缓冲区。
+- `Shadowmap.shader`：此着色器使对象能够投射阴影。
 
 {{< note >}}
-`DepthPass.shader` and `Shadowmap.shader` are common shaders provided by Atom.
+`DepthPass.shader` 和 `Shadowmap.shader` 是 Atom 提供的常用着色器。
 {{< /note >}}
 
-This results in the following example:
+这将生成以下示例：
 
 ```json
 "shaders": [
@@ -297,17 +297,17 @@ This results in the following example:
 ]	
 ```
 
-### Define material properties
+### 定义材质属性
 
-In a `.materialtype` file, material properties are defined in groups of properties within the `propertyLayout` container. The groups container arranges the properties into collapsible groups displayed in the **Inspector** of Material Editor. Each property has several attributes including an id, name, type, default value, and a link to a variable in one of the shaders referenced by the `.materialtype` file. 
+在 `.materialtype` 文件中，材料属性在 `propertyLayout` 容器内的属性组中定义。组容器将属性排列成可折叠的组，显示在 Material Editor 的 **Inspector** 中。每个属性都有多个属性，包括 id、name、type、default value 以及指向 `.materialtype` 文件引用的着色器之一中的变量的链接。
 
-For this tutorial, there is one material property: color. To define the color property in the propertyLayout container do the following:
+在本教程中，有一个材质属性：color。要在 propertyLayout 容器中定义 color 属性，请执行以下操作：
 
-1. Define a `settings` property group in the `groups` container.
-2. Define a `settings` property group in the `properties` container to hold details about the properties that belong to the settings `property` group.
-3. Define the `color` property within the `settings` property group inside `properties`.
+1. 在`groups`容器中定义 `settings` 属性组。
+2. 在`properties`容器中定义`settings`属性组，以保存属于设置`property`组的属性的详细信息。
+3. 在 `properties` 的 `settings` 属性组中定义 `color` 属性。
 
-This results in the following example:
+这将生成以下示例：
 
 ```json
 
@@ -337,15 +337,15 @@ This results in the following example:
 
 ```
 
-To recap, the above example accomplishes a couple of things:
+概括地说，上面的示例完成了几件事：
 
-- Defines the material properties.
-- Creates a connection to the variables used by the shader source code (`.azsl`).
-- Sets up the metadata that configures how the material properties appear in the Inspector in Material Editor.
+- 定义材料属性。
+- 创建与着色器源代码 （`.azsl`） 使用的变量的连接。
+- 设置元数据，用于配置材质属性在 Material Editor 的 Inspector 中的显示方式。
 
-### Complete `MyUnlitColor.materialtype`
+### 完整的 `MyUnlitColor.materialtype`
 
-The following is the full materialtype definition:
+以下是完整的 materialtype 定义：
 
 ```json
 {
@@ -387,37 +387,37 @@ The following is the full materialtype definition:
 }
 ```
 
-## 5. Compile and debug with Asset Processor
+## 5.使用 Asset Processor 进行编译和调试
 
-With the complete `MyUnlitColor.materialtype`, `MyUnlitColor.shader`, and `MyUnlitColor.azsl` files, you can make sure they compile successfully.
+使用完整的 `MyUnlitColor.materialtype`、`MyUnlitColor.shader` 和 `MyUnlitColor.azsl` 文件，您可以确保它们成功编译。
 
-Asset Processor monitors your project's subdirectories and automatically compiles and debugs assets when it detects new or updated files. Because the files are in the Materials directory of your project, Asset Processor can detect them, compile the shader, and build the materialtype. Asset Processor automatically launches when Material Editor is open and runs in the background in the system tray. You can also launch Asset Processor from the directory for your build config such as `<build>/bin/profile/` or `<install>/bin/<platform>/profile/Default`.  
+Asset Processor 会监控项目的子目录，并在检测到新文件或更新文件时自动编译和调试资源。由于这些文件位于项目的 Materials 目录中，因此 Asset Processor 可以检测它们、编译着色器并构建 materialtype。Asset Processor 在 Material Editor 打开时自动启动，并在系统托盘的后台运行。您还可以从构建配置的目录启动 Asset Processor，例如“`<build>/bin/profile/`”或“`<install>/bin/<platform>/profile/Default`”。 
 
-If Asset Processor encounters an error, it displays a message above the system tray. To view the results of recently processed jobs, open Asset Processor by choosing its icon in the system tray. You can see the results for the most recent jobs by sorting the **Asset Status** list by **Completed** descending.
+如果 Asset Processor 遇到错误，它会在系统托盘上方显示一条消息。要查看最近处理的任务的结果，请在系统托盘中选择 Asset Processor 的图标以打开它。您可以通过按 **已完成** 降序对 **资产状态** 列表进行排序来查看最近作业的结果。
 
-If a job displays an error or warning, select the job in the Asset Status list and view the log in the **Event Log Details** list below. The event log contains verbose information you can use to solve any errors or warnings emitted when specific assets are processed.
+如果作业显示错误或警告，请在 Asset Status 列表中选择该作业，然后在下面的 **Event Log Details** 列表中查看日志。事件日志包含可用于解决处理特定资产时发出的任何错误或警告的详细信息。
 
-## 6. Create a material using the Material Editor
+## 6.使用 Material Editor 创建材质
 
-If all the files build successfully, you can create a material based on the MyUnlitColor material type.
+如果所有文件都成功构建，您可以基于 MyUnlitColor 材质类型创建材质。
 
-To create a new material using Material Editor:
+要使用 Material Editor 创建新材质，请执行以下操作：
 
-1. Launch Material Editor from the directory for your build config such as `<build>/bin/profile/` or `<install>/bin/<platform>/profile/Default`.  
-2. From the **File** menu in Material Editor, select **New**, or press **Ctrl+N** to create a new material.
-3. In the **Create New Material** dialog, select **MyUnlitColor** in the **Material Type** list.
-4. Choose the folder icon below **Select Material Filename**. Ensure the file browser has your project's `Materials` directory selected and name the material `MyUnlitColor.material`. Choose **OK** to close both the file browser and the **Create New Material** dialog.
-5. The new material is automatically selected in Asset Browser and its settings group and color property are available in Material Editor's Inspector.
-6. Change the material color by specifying a comma separated list of RGB values in the **Color** property field, or choose the color swatch to open the color picker.
-7. Save changes to the material by choosing **Save** from the **File** menu or by pressing **Ctrl+S**.
+1. 从构建配置的目录中启动 Material Editor，例如`<build>/bin/profile/` or `<install>/bin/<platform>/profile/Default`.  
+2. 从材质编辑器的 **File** 菜单中，选择 **New**，或按 **Ctrl+N** 创建新材质。
+3. 在**Create New Material**对话框中，在**Material Type**列表中选择**MyUnlitColor**。
+4. 选择 **Select Material Filename**下方的文件夹图标。确保文件浏览器已选中项目的 `Materials` 目录，并将材质命名为 `MyUnlitColor.material`。选择 **确定** 关闭文件浏览器和 **Create New Material** 对话框。
+5. 新材质将在 资源浏览器 中自动选择，并且其设置组和颜色属性可在材质编辑器的 Inspector 中使用。
+6. 通过在 **Color** 属性字段中指定逗号分隔的 RGB 值列表来更改材质颜色，或者选择色板以打开颜色选取器。
+7. 通过从 **File** 菜单中选择 **Save** 或按 **Ctrl+S** 来保存对材质的更改。
 
 ![Creating a material from MyUnlitColor material type](/images/learning-guide/tutorials/rendering/unlit-color-material.jpg)
 
-That's it! You created an AZSL shader, a new material type, and a material.
+就是这样！您创建了一个 AZSL 着色器、一个新的材质类型和一个材质。
 
-## Dive Deeper
+## 深入探索
 
-Check out the following pages to learn more about materials and shaders in Atom.
+查看以下页面，了解有关 Atom 中的材质和着色器的更多信息。
 
-- [Shader System and AZSL Reference](/docs/atom-guide/dev-guide/shaders/): Learn about the Shader System, including the AZSL language.
-- [Material System](/docs/atom-guide/dev-guide/materials/): Learn about the technical details underlying the material system in Atom.
+- [着色器系统和参考](/docs/atom-guide/dev-guide/shaders/): 了解 Shader System，包括 AZSL 语言。
+- [材质系统](/docs/atom-guide/dev-guide/materials/): 了解 Atom 中材质系统的基础技术细节。

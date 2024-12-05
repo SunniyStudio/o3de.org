@@ -1,4 +1,4 @@
-baseURL = "https://www.docs.o3de.org"
+baseURL = "https://o3de.devresource.top"
 title = "Open 3D 引擎"
 disableKinds = ["taxonomyTerm"]
 copyright = "O3DE Open 3D 引擎贡献者 | 文档以 CC-BY 4.0 协议发布"
@@ -36,6 +36,7 @@ sourceRepo = "https://github.com/o3de/o3de"
 # Docs version data format: ["display name", "baseURL"]
 # Note: A version that has "www.o3de.org" in its baseURL will get " (latest)" appended to its display name in the version selector.
 versions = [
+  ["24.09中文文档", "https://o3de.devresource.top"],
   ["24.09", "https://docs.o3de.org"],
   ["development", "https://development--o3deorg.netlify.app"],
   ["23.10", "https://version-2310--o3deorg.netlify.app"],
@@ -91,22 +92,22 @@ sizes = [100, 200, 300, 400, 500, 600, 700]
 type = "heading_font"
 
 [[menu.main]]
-name = "DOWNLOAD"
+name = "下载"
 url = "/download"
 weight = 5
 
 # [[menu.main]]
-# name = "News"
+# name = "新闻"
 # url ="#"
 # weight = 2
 
 [[menu.main]]
-name = "GET STARTED"
+name = "入门"
 url = "/docs/welcome-guide"
 weight = 1
 
 [[menu.main]]
-name = "COMMUNITY"
+name = "社区"
 url = "/community"
 weight = 2
 identifier = "community"
@@ -118,12 +119,12 @@ identifier = "community"
 # parent = "community"
 
 [[menu.main]]
-name = "LEARN"
+name = "学习"
 url = "/docs"
 weight = 3
 identifier = "docs"
 
 [[menu.main]]
-name = "CONTRIBUTE"
+name = "贡献"
 url = "/contribute"
 weight = 4

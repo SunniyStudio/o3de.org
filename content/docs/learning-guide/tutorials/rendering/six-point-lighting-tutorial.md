@@ -1,70 +1,71 @@
 ---
-linkTitle: Custom Lighting
-title: Custom Lighting Tutorial with Flipbook Animation
-description: A tutorial for custom lighting using a flipbook animation with six-point lighting in the Atom renderer of the Open 3D Engine (O3DE).
+linkTitle: 自定义照明
+title: 使用 Flipbook 动画的自定义照明教程
+description: 在 Open 3D Engine （O3DE） 的 Atom 渲染器中使用具有六点照明的翻书动画进行自定义照明的教程。
 toc: true
 ---
-This tutorial covers how to make a six-point lighting material type by writing custom shaders to apply lighting to an animated 2D object, creating a cloud/smoke effect.
+本教程介绍了如何通过编写自定义着色器来制作六点光照材质类型，以将光照应用于动画 2D 对象，从而创建云/烟雾效果。
 
-Volumetric effects such as smoke and clouds can be represented with animated textures. To render these texture effects and approximate a three dimensional volume, you will need a custom material type. The technique in this tutorial approximates how each texture should be lit from any given direction by using six tangent lightmaps that represent the top, bottom, left, right, front, and back of a plume of smoke.
+烟雾和云等体积效果可以用动画纹理表示。要渲染这些纹理效果并近似 3D 体积，您需要自定义材质类型。本教程中的技术通过使用六个切线光照贴图（表示烟雾的顶部、底部、左侧、右侧、正面和背面）来近似如何从任何给定方向照亮每个纹理。
 
-The six-point lighting material type uses textures that color the illuminated parts of the texture if light came from a corresponding direction. For example, the picture below shows a plume of smoke with lighting coming from the left, which corresponds to the green texels in the lightmap. Red texels indicate which texels of the smoke should be lit up by lighting from the right. Thus, yellow (green + red) texels mean that lighting from both the left and right should be applied to those texels. This information can then be used to form the six tangent lightmaps and apply lighting on the material accordingly.
+六点照明材质类型使用纹理，如果光线来自相应的方向，则这些纹理会为纹理的照明部分着色。例如，下图显示了一缕烟雾，光照来自左侧，这与光照贴图中的绿色纹素相对应。红色纹素指示烟雾的哪些纹素应通过右侧的照明来照亮。因此，黄色 （绿色 + 红色） 纹素意味着应将左侧和右侧的照明应用于这些纹素。然后，可以使用此信息形成 6 个切线光照贴图，并相应地在材质上应用光照。
 
 {{< image-width src="/images/learning-guide/tutorials/rendering/six-point-lighting/spl-comparison.png" width="50%" alt="Picture of a frame of a light map on the left with a picture of the cloud on right with lighting coming from the left." >}}
 
-This tutorial covers the following concepts:
-* Edit your own material type
-* Toggle property visibility in the **Material Editor** with Lua
-* Animate materials
-* Edit pixel shaders 
-   * Add custom surface
-   * Add custom lighting
+本教程涵盖以下概念：
+* 编辑您自己的材质类型
+* 使用 Lua 在 **材质编辑器** 中切换属性可见性
+* 为材质制作动画
+* 编辑像素着色器
+   * 添加自定义表面
+   * 添加自定义照明
 
-## Make a material type
-Follow these steps to make the six-point lighting material type.
+## 创建材质类型
+按照以下步骤创建六点照明材质类型。
 
-1. Download or clone the [`o3de/sample-code-gems`](https://github.com/o3de/sample-code-gems) repository from GitHub.
+1. 从 GitHub 下载或克隆 [`o3de/sample-code-gems`](https://github.com/o3de/sample-code-gems)  存储库。
 
-1.  Move all of the files in `atom_gems/AtomTutorials/Templates/SixPointLighting/` to `{your-project-path}/Materials/Types`. Make the folders as needed. These template files have everything set up for you to get started with creating your own custom surface and lighting.
+1.  移动`atom_gems/AtomTutorials/Templates/SixPointLighting/` 中的所有文件到 `{your-project-path}/Materials/Types`。根据需要创建文件夹。这些模板文件为您设置了一切，以便您开始创建自己的自定义表面和照明。
    
-1. Move all the files in `atom_gems/AtomTutorials/Assets/SixPointLighting/Objects/` to `{your-project-path}/Objects`. 
+1. 移动`atom_gems/AtomTutorials/Assets/SixPointLighting/Objects/` 中的所有文件到 `{your-project-path}/Objects`中。 
    
    {{< note >}}
-   These textures are provided by [peeweek/Unity-URP-SmokeLighting](https://github.com/peeweek/Unity-URP-SmokeLighting/tree/main/Assets/VFX/SmokeLighting/Textures/2D) on GitHub and distributed under the MIT license.
+   这些纹理由 GitHub 上的 [peeweek/Unity-URP-SmokeLighting](https://github.com/peeweek/Unity-URP-SmokeLighting/tree/main/Assets/VFX/SmokeLighting/Textures/2D)提供，并根据 MIT 许可证分发。
    {{< /note >}}
 
-1. Open `{your-project-path}\Materials\Types\SixPointLighting.materialtype` in a text editor. 
+1. 在文本编辑器中打开 `{your-project-path}\Materials\Types\SixPointLighting.materialtype` 。
 
-1. Under `propertyLayout` > `propertyGroups`, replace all instances of `{your-path-to-o3de}` with the appropriate path to your engine.
+1. 在 `propertyLayout` > `propertyGroups`下，替换所有`{your-path-to-o3de}` 为引擎的适当路径。
    
-   For example, `C:/o3de/Gems/Atom/Feature/Common/Assets/Materials/Types/MaterialInputs/BaseColorPropertyGroup.json`.
+   例如， `C:/o3de/Gems/Atom/Feature/Common/Assets/Materials/Types/MaterialInputs/BaseColorPropertyGroup.json`。
 
 
-### Six-point lighting material type properties
-The six-point lighting material type contains the following properties. You will use these properties throughout the tutorial. They are defined in the files `SixPointLighting_Common.azsli` and `SixPointLighting_ForwardPass.azsl`. 
-| Property | Description | Type |
+### 六点照明材质类型属性
+六点照明材质类型包含以下属性。您将在整个教程中使用这些属性。它们被定义在`SixPointLighting_Common.azsli` 和 `SixPointLighting_ForwardPass.azsl`中 
+
+| 属性 | 说明 | 类型 |
 | :-- | :-- | :-- |
-| `o_sixPointTexturePackMode` | Indicates which texture pack mode to use. | Shader option |
-| `m_topLeftRightBottomMap` | Defines the top-left-right-bottom light map. | Texture |
-| `m_frontBackMap` | Defines the front-back light map. | Texture |
-| `m_rightLeftTopMap` | Defines the right-left-top light map. | Texture |
-| `m_bottomBackFrontMap` | Defines the bottom-back-front light map. | Texture |
-| `o_enableDepthTexture` | Toggles whether or not to use a depth texture. | Boolean Shader option |
-| `m_depthMap` | A depth texture map. | Texture |
-| `m_depthScale` | Scales the depth texture. | Float |
-| `m_rowCount` | The number of rows in the flipbook animation. | Int |
-| `m_columnCount` | The number of columns in the flipbook animation | Int |
-| `o_enableDebugFrame` | If enabled, activates debugging on a single frame of the animation. | Boolean Shader option |
-| `m_debugFrame` |The frame number to debug, when `o_enabledDebugFrame` is enabled. | Int |
+| `o_sixPointTexturePackMode` | 指示要使用的纹理包模式。 | Shader option |
+| `m_topLeftRightBottomMap` | 定义上-左-右-下光照贴图。 | Texture |
+| `m_frontBackMap` | 定义前后光照贴图。 | Texture |
+| `m_rightLeftTopMap` | 定义右-左-上光照贴图。 | Texture |
+| `m_bottomBackFrontMap` | 定义 bottom-back-front 光照贴图。 | Texture |
+| `o_enableDepthTexture` | 切换是否使用深度纹理。 | Boolean Shader option |
+| `m_depthMap` | 深度纹理贴图。| Texture |
+| `m_depthScale` | 缩放深度纹理。 | Float |
+| `m_rowCount` | 翻书动画中的行数。 | Int |
+| `m_columnCount` | flipbook 动画中的列数 | Int |
+| `o_enableDebugFrame` | 如果启用，则激活对动画的单个帧的调试。 | Boolean Shader option |
+| `m_debugFrame` |启用 `o_enabledDebugFrame` 时要调试的帧编号。 | Int |
 
 {{< note >}}
-Everything involving `depth`, including the depth pass and the three properties, won't be used in this tutorial because we lack a depth map texture. However, `SixPointLighting_DepthPass_WithPS.azsl` in the final files does provide the code for adjusting the depth, so you can take a look at that if you are interested in how we would adjust the depth pixel shader.
+本教程中不会使用涉及 `depth` 的所有内容，包括深度通道和三个属性，因为我们缺少深度贴图纹理。但是，最终文件中的 `SixPointLighting_DepthPass_WithPS.azsl` 确实提供了调整深度的代码，因此如果您对我们如何调整深度像素着色器感兴趣，可以查看一下。
 {{< /note >}}
 
-## Write Lua functor to toggle visibility in the Material Editor
-The six-point lighting material type allows for six tangent lightmaps that correspond to six colors from the textures. However, each texture can only contain up to four channels (red, green, blue, alpha), so the technique requires two textures. The channels used for each texture can be up to the artist, but this material type in this tutorial will provide support for two options for the color-channel-to-direction mapping. The mapping will later be used for determining the appropriate lighting.
+## 编写 Lua 函数以在 Material Editor 中切换可见性
+六点光照材质类型允许使用六个切线光照贴图，这些光照贴图对应于纹理中的六种颜色。但是，每个纹理最多只能包含四个通道（红色、绿色、蓝色、alpha），因此该技术需要两个纹理。用于每个纹理的通道可以由美工人员决定，但本教程中的此材质类型将支持颜色通道到方向映射的两个选项。该映射稍后将用于确定适当的照明。
 
-* TopLeftRightBottom_FrontBack option
+* TopLeftRightBottom_FrontBack 选项
    * First texture:
       * Top : Red 
       * Left : Green
@@ -73,7 +74,7 @@ The six-point lighting material type allows for six tangent lightmaps that corre
    * Second texture:
       * Front : Red
       * Back : Green
-* RightLeftTop_BottomBackFront option
+* RightLeftTop_BottomBackFront 选项
    * First texture:
       * Right : Red 
       * Left : Green
@@ -83,11 +84,11 @@ The six-point lighting material type allows for six tangent lightmaps that corre
       * Back : Green
       * Front : Blue
 
-In `SixPointLightingPropertyGroup.json`, there is already four properties for the set of two textures for both options. They are also already defined in `SixPointLighting_Common.azsli`. However, you will want to provide a `.lua` script to the material type so that if you select one option from the dropdown for *Texture Pack Mode* in the **Material Editor**, only the corresponding properties show up.
+在 `SixPointLightingPropertyGroup.json`中，则两个选项的两个纹理集已经有四个属性。它们也已在 `SixPointLighting_Common.azsli` 中定义。但是，您需要为材质类型提供 `.lua` 脚本，以便从 **材质编辑器** 的 *Texture Pack Mode* 下拉列表中选择一个选项时，仅显示相应的属性。
 
-1. Open `SixPointLighting_TexturePackEnum.lua`. Notice the two functions `GetMaterialPropertyDependencies()` and `ProcessEditor()`. `GetMaterialPropertyDependencies()` gets the value of a property of a material. `ProcessEditor()` can then use the property values to enable and disable visibility of the properties in the Material Editor.
+1. 打开 `SixPointLighting_TexturePackEnum.lua`。请注意两个函数 `GetMaterialPropertyDependencies()` 和 `ProcessEditor()`。 `GetMaterialPropertyDependencies()`获取材质属性的值。然后，`ProcessEditor()`可以使用属性值来启用和禁用材质编辑器中属性的可见性。
 
-1. Following how `sixPointLighting.TLRB`'s visibility is enabled and disabled, enable and disable the other texture options as appropriate:
+1. 按照 `sixPointLighting.TLRB` 的可见性的启用和禁用方式，根据需要启用和禁用其他纹理选项：
 
    ```lua
    if(texturePackMode == TexturePackMode_TpLftRtBt_FrBck) then
@@ -105,18 +106,18 @@ In `SixPointLightingPropertyGroup.json`, there is already four properties for th
    end
    ```
 
-## Make a six-point lighting material
-Now that the six-point lighting material type properties are exposed to the Material Editor, you can make a six-point lighting material.
+## 制作六点照明材质
+现在，六点照明材质类型属性已向 Material Editor 公开，您可以创建六点照明材质。
 
-1. Open the **Material Editor**, and make a new material with the six-point lighting material type.
+1. 打开 **材质编辑器**，并使用 6 点照明材质类型制作新材质。
    
-1. Find the **Six Point Lighting** properties in the **Inspector**.
+1. 在 **Inspector**中找到 **Six Point Lighting** 属性。
    
-1. Notice how the default **Texture Pack Mode** is `TpLftRtBt_FrBck`. The two properties below that correspond to this texture pack mode, and the properties for the other texture pack mode are hidden. 
+1. 请注意，默认的 **Texture Pack Mode** 是 `TpLftRtBt_FrBck`。下面对应于此纹理包模式的两个属性，以及另一个纹理包模式的属性被隐藏。
 
-1. Select `RtLftTp_BtBckFr` for the **Texture Pack Mode** and observe how the properties change.
+1. 为 **Texture Pack Mode** 选择 `RtLftTp_BtBckFr` 并观察属性如何变化。
 
-1. Set the following properties accordingly:
+1. 相应地设置以下属性：
     * **Six Point Lighting**
       * **Texture Pack Mode**: `RtLftTp_BtBckFr`
       * **Right Left Top**: `SmokeBall01_6Way_RLT_8x8.png`
@@ -127,13 +128,13 @@ Now that the six-point lighting material type properties are exposed to the Mate
       * **Texture**: `SmokeBall01_ColorCC_8x8.png`
       * **Use Texture**: Disabled
          {{< note >}}
-         You don't want to use the texture as the base color because it will discolor the material. However, setting the base color texture property is necessary to use the texture's alpha channel for the opacity.
+         您不想将纹理用作基础颜色，因为它会使材质变色。但是，要对不透明度使用纹理的 Alpha 通道，必须设置基色纹理属性。
          {{< /note >}}
     * **Opacity**
       * **Opacity Mode**: `Blended`
       * **Alpha Source**: `Packed`
          {{< note >}}
-         A `Packed` alpha source means the material will use the alpha channel from the base color texture.
+         `Packed` Alpha 源意味着材质将使用来自基础颜色纹理的 Alpha 通道。
          {{< /note >}}
       * **Factor**: `1.0`
       * **Alpha affects specular**: `1.0`
@@ -143,23 +144,23 @@ Now that the six-point lighting material type properties are exposed to the Mate
     * **General Settings**
       * **Double-sided**: Enabled
          {{< note >}}
-         Enabling this setting allows for rendering of the back side of the material.
+         启用此设置将允许渲染材质的背面。
          {{< /note >}}
    
-1.  In the **Editor**, make an entity with **Mesh** and **Material** components. Choose a plane for the **Mesh** (`o3de/Gems/Atom/Tools/MaterialEditor/Assets/MaterialEditor/ViewportModels/Plane_1x1.fbx`) and the material you just created for the material.
+1.  在 **编辑器** 中，创建一个具有 **Mesh** 和 **Material** 组件的实体。为 **Mesh** 选择一个平面 （`o3de/Gems/Atom/Tools/MaterialEditor/Assets/MaterialEditor/ViewportModels/Plane_1x1.fbx`） 和您刚刚为该材质创建的材质。
 
 {{< image-width src="/images/learning-guide/tutorials/rendering/six-point-lighting/material.png" width="100%" alt="Material added." >}}
 
-As of now, the entity should just display the whole alpha texture with all the frames.
+截至目前，实体应该只显示包含所有帧的整个 alpha 纹理。
 
 {{< image-width src="/images/learning-guide/tutorials/rendering/six-point-lighting/all-frames.png" width="100%" alt="All frames of the six-point lighting animation texture." >}}
 
-## Add animation
-The next step is to add animation to the material. The textures contain all the frames of the animation so you will programmatically iterate through the frames.
+## 添加动画
+下一步是向材质添加动画。纹理包含动画的所有帧，因此您将以编程方式迭代这些帧。
 
-1. Open `SixPointLighting_Common.azsli`.
+1. 打开`SixPointLighting_Common.azsli`.
    
-1. At the bottom, add a function to get the position of the correct frame in the texture map according to the time.
+1. 在底部，添加一个函数，根据时间获取正确帧在纹理映射中的位置。
 
    ```glsl
    float2 GetUvForCurrentFrame(float2 baseUv)
@@ -186,16 +187,16 @@ The next step is to add animation to the material. The textures contain all the 
    ```
 
    {{< note >}}
-   The condition, `if(o_enableDebugFrame)`, occurs if you enabled debugging for a specific frame, which can be set via the **Material Editor**. If enabled, this function uses the specified frame instead of the current frame. This functionality can help ensure that lighting is correctly applied in a specific frame.  
+   如果为特定帧启用了调试，则会出现条件`if(o_enableDebugFrame)`，这可以通过 **材质编辑器** 进行设置。如果启用，则此功能使用指定的帧而不是当前帧。此功能有助于确保在特定帧中正确应用光照。
    {{< /note >}}
 
-1. Open `SixPointLighting_ForwardPass.azsl` to make some final edits to see the animation in action.
+1. 打开`SixPointLighting_ForwardPass.azsl`进行一些最终编辑，以查看动画的实际效果。
    
-   1. Find `ForwardPassPS_Common`. 
+   1. 查找 `ForwardPassPS_Common`。
    
-   1. Find where your surface is defined: `Surface surface`.
+   1. 查找定义表面的位置： `Surface surface`。
    
-   1. Right below it, find a section for *Alpha & Clip*. Edit the `alpha` value to use the opacity map and use the current frame's UV:
+   1. 在它的正下方，找到一个用于*Alpha & Clip*的部分。编辑 `alpha` 值以使用不透明度贴图并使用当前帧的 UV：
    
    ```glsl
    float2 baseColorUv = IN.m_uv[MaterialSrg::m_baseColorMapUvIndex];
@@ -204,23 +205,22 @@ The next step is to add animation to the material. The textures contain all the 
    float alpha = GetAlphaInputAndClip(MaterialSrg::m_baseColorMap, MaterialSrg::m_opacityMap, sixPointUv, sixPointUv, MaterialSrg::m_sampler, MaterialSrg::m_opacityFactor, o_opacity_source);
    ``` 
 
-1. Open the **Editor** again and look at the animation! You haven't applied any custom lighting just yet, so you should just see the animation of the base color with the alpha texture.
+1. 再次打开 **编辑器** 并查看动画！您尚未应用任何自定义照明，因此您应该只看到带有 Alpha 纹理的基色动画。
 
 {{< video src="/images/learning-guide/tutorials/rendering/six-point-lighting/animation.mp4" autoplay="true" loop="true" width="100%" muted="true" info="Video of the animation of the cloud." >}}
 
-## Make a custom surface
-For six-point lighting to work, you must add a few material properties to your custom surface.  A *surface* is made of properties that define the look and feel of the material, and how it interacts with lighting. For example, the `metallic` property defines how metallic something looks, and the `albedo` property indicates how much light the material reflects.
+## 制作自定义表面
+要使六点照明正常工作，必须向自定义表面添加一些材质属性。 *表面* 由定义材质的外观和感觉以及它与光照的交互方式的属性组成。例如，`metallic` 属性定义物体的金属感，而 `albedo` 属性表示材质反射的光量。
 
-For this custom surface, you must add properties for six directions, tangent, and bitangent.
+对于此自定义曲面，必须添加 6 个方向、切线和双切线的属性。
 
-The six directional floats define the light intensity that each direction of a texel receives. For example, if a texel should reflect most of the light coming from above, then the top float would be around 255.0 (the max value in the RGB scale). Consequently, for a texel that is mostly occluded from light coming from above, the top float should be closer to 0.0. The texel's directional lighting intensity is an artistic choice, and may be based on a pre-calculated evaluation when baking a texture using a digital content creation (DCC) tool.
+六个定向浮点数定义纹素的每个方向接收的光强度。例如，如果纹素应反射来自上方的大部分光线，则顶部浮点数将约为 255.0（RGB 比例中的最大值）。因此，对于大部分被来自上方的光线遮挡的纹素，顶部浮点数应更接近 0.0。纹素的定向照明强度是一种艺术选择，在使用数字内容创建 （DCC） 工具烘焙纹理时，它可能基于预先计算的评估。
 
-The `tangent` and `bitangent` properties are needed to transform the world space lighting direction into tangent space before looking up the light contribution from the textures.
+在从纹理中查找光线贡献之前，需要 `tangent` 和 `bitangent` 属性将世界空间照明方向转换为切线空间。
    
-1. Open `SixPointSurface.azsli`.
+1. 打开 `SixPointSurface.azsli`。
    
-1. Inside the `Surface` class, under the list of `BasePbrSurfaceData`, define properties for the six directions, `tangent`, and `bitangent`.
-   
+1. 在 `Surface` 类中，在 `BasePbrSurfaceData` 列表下，定义六个方向的属性，即 `tangent` 和 `bitangent`。
 
    ```glsl
    float top;
@@ -233,22 +233,23 @@ The `tangent` and `bitangent` properties are needed to transform the world space
    float3 bitangent;
    ```
 
-You can initalize and use these properties of your surface later to define the lighting. 
+您可以初始化并在以后使用 Surface 的这些属性来定义照明。
 
-## Edit the pixel shader
-Now, in the pixel shader, you will integrate the surface and initalize the values. This prepares the material to allow custom lighting.
+## 编辑像素着色器
+现在，在像素着色器中，您将集成表面并初始化值。这将准备材质以允许自定义照明。
 
-1. Open `EvaluateSixPointSurface.azsli`. In the `EvaluateSixPointSurface` function, you will make two main changes: use the correct UV for the current frame, and initialize the new properties that you added to your six-point surface.
+1. 打开 `EvaluateSixPointSurface.azsli`。在 `EvaluateSixPointSurface` 函数中，您将进行两项主要更改：为当前帧使用正确的 UV，并初始化您添加到六点表面的新属性。
 
-  At runtime, this function is called in `SixPointLighting_ForwardPass.azsl`.
+  在运行时，此函数在 `SixPointLighting_ForwardPass.azsl` 中调用。
    
-1. Get the UV for the current frame of the animation.
+1. 获取动画当前帧的 UV。
    
-   1. Find the *Base Color* section.
+   1. 查找 *Base Color* 部分。
    
-   1. Get the current frame's UV by calling the function you wrote earlier, `GetUvForCurrentFrame()`.
+   1. 通过调用您之前编写的函数 `GetUvForCurrentFrame()` 来获取当前帧的 UV。
    
-   1. Replace the `baseColorUv` parameter with `sixPointUv` in the call to `GetBaseColorInput()`.
+   1. 在调用`GetBaseColorInput()`时，将 `baseColorUv` 参数替换为`sixPointUv`。
+
    ```glsl
    float2 baseColorUv = uv[MaterialSrg::m_baseColorMapUvIndex];
    float2 sixPointUv = GetUvForCurrentFrame(baseColorUv);
@@ -256,11 +257,11 @@ Now, in the pixel shader, you will integrate the surface and initalize the value
    float3 baseColor = BlendBaseColor(sampledColor, MaterialSrg::m_baseColor.rgb, MaterialSrg::m_baseColorFactor, o_baseColorTextureBlendMode, o_baseColor_useTexture);
    ```
 
-1. Initialize the six-point surface properties.
+1. 初始化六点表面属性。
    
-   1. Find the *Specular* section.
+   1. 找到 *Specular* 部分。
    
-   1. Set the six directional surface properties you added with the material inputs, according to the texture pack mode. You will need to handle both texture pack mode options and set the properties accordingly:
+   1. 根据纹理包模式，设置使用材质输入添加的六个定向表面属性。您需要处理两个 texture pack 模式选项并相应地设置属性：
    
    ```glsl
    if(o_sixPointTexturePackMode == SixPointTexturePackMode::TpLftRtBt_FrBck)
@@ -287,35 +288,35 @@ Now, in the pixel shader, you will integrate the surface and initalize the value
    }
    ```
 
-1. Initalize the `tangent` and `bitangent` surface properties right after:
+1. 紧接着初始化 `tangent` 和 `bitangent` 曲面属性：
    ```glsl
    surface.tangent = tangents[0];
    surface.bitangent = bitangents[0];
    ```
 
-## Add custom lighting
-Now that you have set up the six-point surface, you can use the new surface properties to apply custom lighting. You will make two types of lighting: directional lighting and image-based lighting (IBL). _Directional lighting_ is a light source that comes from a single direction. _IBL_ simulates omni-directional reflective, ambient-like, lighting from the environment around the entity.
+## 添加自定义照明
+现在，您已经设置了六点表面，可以使用新的表面属性来应用自定义照明。您将创建两种类型的照明：定向照明和基于图像的照明 （IBL）。_Directional lighting_ 是来自单个方向的光源。_IBL_ 模拟来自实体周围环境的全向反射、类似环境的照明。
 
-### Add custom directional lighting
-As discussed earlier, you will make a light map that uses the lighting direction to determine which combination of the six sides to light up. Then, you will use the brightness with the texel's directional lighting intensity to compute the overall lighting on that particular texel.
+### 添加自定义定向照明
+如前所述，您将制作一个光照贴图，该贴图使用光照方向来确定要照亮六个面的哪个组合。然后，您将使用亮度和纹素的定向照明强度来计算该特定纹素上的整体照明。
 
-1. Open `SixPointLighting.azsli`.
+1. 打开 `SixPointLighting.azsli`。
    
-   1. Notice the `#include <SixPointSurface.azsli>` line at the top. This is how you can reference the surface in the following functions.
+   1. 注意顶部的 `#include <SixPointSurface.azsli>` 行。这就是在以下函数中引用表面的方法。
    
-   1. Notice the `GetSpecularLighting()` function, which returns `float3(0.0f, 0.0f, 0.0f)`. _Specular lighting_ simulates the bright spot on a shiny object that reflects light into the camera. For six-point lighting, you don't need specular lighting because it doesn't effectively apply to 2D textures. Also, smoke and cloud effects are non-shiny objects and don't need specular lighting. 
+   1. 注意 `GetSpecularLighting()` 函数，返回 `float3(0.0f, 0.0f, 0.0f)`。_Specular lighting_ 模拟将光线反射到摄像机中的反光对象上的亮点。对于六点照明，您不需要镜面反射照明，因为它不能有效地应用于 2D 纹理。此外，烟雾和云效果是无光泽的对象，不需要镜面反射照明。
 
-   1. Notice the function `GetDiffuseLighting()`. You will edit this to achieve the desired effects. 
+   1. 请注意函数 `GetDiffuseLighting()`。您将对其进行编辑以获得所需的效果。
 
-      The six-point lighting `ForwardPassPS_Common` shader uses the default `ApplyDirectLighting()` function, which will iterate over the lights that apply to this object and invoke these custom `GetDiffuseLighting()` and `GetSpecularLighting()` functions for each light.
-
-1. Edit `GetDiffuseLighting()` and write a helper function. 
-   
-   Diffuse lighting simulates how light from an incoming direction scatters. Six-point lighting should use diffuse lighting, since the shaders should take light's direction and apply it to figure out the light map.
-
-   1. Write a helper function to compute the light map.
+      六点光照`ForwardPassPS_Common`着色器使用默认的`ApplyDirectLighting()`函数，该函数将迭代应用于此对象的光源，并为每个光源调用这些自定义的`GetDiffuseLighting()` 和 `GetSpecularLighting()`函数。
       
-      First, convert the direction of the light to tangent space. Then, choose the correct horizontal, vertical, and depth side according to the light direction. Finally, find the overall intensity of the light. 
+1. 编辑 `GetDiffuseLighting()` 并编写一个 helper 函数。
+   
+   漫射照明模拟来自入射方向的光线的散射方式。六点光照应使用漫射光照，因为着色器应采用光照的方向并应用它来计算光照贴图。
+
+   1. 编写一个辅助函数来计算光照贴图。
+      
+      首先，将光线的方向转换为切线空间。然后，根据光线方向选择正确的 horizontal， vertical及 depth 侧。最后，找到光线的整体强度。 
 
       ```glsl
       float ComputeLightMap(const float3 dirToLightWS, const Surface surface)
@@ -329,7 +330,7 @@ As discussed earlier, you will make a light map that uses the lighting direction
       }
       ```
 
-   1. In `GetDiffuseLighting()`, call the `ComputeLightMap()` function and apply the results:
+   1. 在 `GetDiffuseLighting()`中，调用`ComputeLightMap()`函数并应用结果：
    
       ```glsl
       float3 GetDiffuseLighting(Surface surface, LightingData lightingData, float3 lightIntensity, float3 dirToLight)
@@ -342,30 +343,30 @@ As discussed earlier, you will make a light map that uses the lighting direction
       }
       ```
 
-Great, the directional lighting is done! Your material should now have lighting in the **Editor**. Try adding more entities with a **Directional Light** component around your material to see the different effects. For example, try moving the light to point to the top of your material and see how the lighting responds accordingly! Also, adjust the **Intensity** of the light in the **Directional Light** component as needed to make your cloud look more realistic. Your material will also respond to other light types and multiple lights at the same time.
+太好了，定向照明完成了！现在，您的材质应该在 **编辑器** 中具有光照。尝试在材质周围添加更多具有 **Directional Light** 组件的实体，以查看不同的效果。例如，尝试移动光线以指向材质的顶部，并查看光照如何做出相应的响应！此外，根据需要调整 **Directional Light** 组件中光源的 **Intensity**，使云看起来更逼真。您的材质还将同时响应其他光源类型和多个光源。
 
 {{< video src="/images/learning-guide/tutorials/rendering/six-point-lighting/directional-lighting.mp4" autoplay="true" loop="true" width="100%" muted="true" info="Video of changing direction of the light applied onto the six-point lighting cloud." >}}
 
-### Add image-based lighting
-You may notice that the shadows in the cloud are mostly grey, which doesn't reflect the environment well. If you turn off all lighting and rotate the material, the six-point lighting material changes colors unnaturally. Therefore, you will also customize IBL in the six-point lighting material type. 
+### 添加基于图像的光照
+您可能会注意到，云中的阴影大多是灰色的，这不能很好地反映环境。如果关闭所有光照并旋转材质，则六点光照材质会不自然地更改颜色。因此，您还将在六点照明材料类型中自定义 IBL。
 
-On 3D objects, IBL works by sending raycasts from the normal at each pixel on the material to the sky box. The raycasts take the color of the sky box and reflect that color on the material. Since the six-point lighting material is a 2D object, you can't use this method; all of the raycasts would send from the normal of the plane. Therefore, instead of using normals, you can use the six directions to approximate the IBL.
+在 3D 对象上，IBL 的工作原理是将光线投射从材质上每个像素的法线发送到天空盒。光线投射采用天空盒的颜色，并将该颜色反射到材质上。由于六点光照材质是 2D 对象，因此不能使用此方法;所有光线投射都将从平面的法线发送。因此，您可以使用六个方向来近似 IBL，而不是使用法线。
 
 {{< note >}}
-Note that a proper depth map would give proper normals so the 3D IBL method may work. However, since this tutorial doesn't cover depth, we provide this approximation method via custom IBL. 
+请注意，适当的深度贴图将提供适当的法线，因此 3D IBL 方法可能有效。但是，由于本教程不涉及深度，因此我们通过自定义 IBL 提供这种近似方法。
 {{< /note >}}
 
- For each pixel, you will perform a raycast in six directions. This gets the colors of the sky box at each direction. Then, you will multiply those colors by the texel's directional lighting intensity, respectively. Finally, add those together to get the overall IBL. 
+对于每个像素，您将在六个方向上执行光线投射。这将获得每个方向的天空盒的颜色。然后，您将这些颜色分别乘以纹素的定向照明强度。最后，将它们相加得到整体 IBL。
 
-1. Open `SixPointLighting.azsli`.
+1. 打开 `SixPointLighting.azsli`。
 
-1. Find `ApplyIBL`. This function is called in the forward pass to apply IBL. There is no need to edit this function.
+1. 查找 `ApplyIBL`。在 forward pass 中调用此函数以应用 IBL。无需编辑此功能。
    
    {{< note >}}
-   Note that there is no specular IBL. Similarly to directional lighting, IBL should not have any specular lighting for the six-point lighting material type.
+   请注意，没有镜面反射 IBL。与定向照明类似，IBL 不应具有六点照明材料类型的任何镜面反射照明。
    {{< /note >}}
    
-1. Above `GetIblDiffuse()`, add a helper function (`GetIblSample()`) that converts a `direction` from tangent space to world space and uses the resulting vector to sample the sky box.
+1. 在 `GetIblDiffuse()` 上方，添加一个辅助函数 （`GetIblSample()`），该函数将 `direction` 从切线空间转换为世界空间，并使用结果向量对天空盒进行采样。
 
    ```glsl
    float3 GetIblSample(Surface surface, float3 direction) 
@@ -378,7 +379,7 @@ Note that a proper depth map would give proper normals so the 3D IBL method may 
    }
    ```
 
-1. Delete the code currently in `GetIblDiffuse()` and make calls to your helper function for each of the six directions in tangent space.
+1. 删除当前在`GetIblDiffuse()`中的代码，并为切线空间中的六个方向中的每个方向调用辅助函数。
    
    ```glsl
    float3 rightSample = GetIblSample(surface, float3(1.0f, 0.0f, 0.0f));
@@ -390,10 +391,10 @@ Note that a proper depth map would give proper normals so the 3D IBL method may 
    ```
 
    {{< note >}}
-   `topSample` uses the vector `{0.0, -1.0, 0.0}` because O3DE uses the DirectX convention where, on a 2D plane, the top left vector is `{0.0, 0.0}` and the bottom left vector is `{0.0, 1.0}`. Therefore, the vector `{0.0, -1.0, 0.0}` points towards the top. 
+   `topSample` 使用向量`{0.0, -1.0, 0.0}`，因为 O3DE 使用 DirectX 约定，其中在 2D 平面上，左上角的向量是`{0.0, 0.0}`，左下角的向量是`{0.0, 1.0}`。因此，向量`{0.0, -1.0, 0.0}`指向顶部。
    {{< /note >}}
 
-1. Calculate the overall color by summing together all the sampled colors and returning the appropriate color.
+1. 通过将所有采样的颜色相加并返回适当的颜色来计算整体颜色。
 
    ```glsl
    float3 GetIblDiffuse(Surface surface, float3 diffuseResponse)
@@ -417,22 +418,22 @@ Note that a proper depth map would give proper normals so the 3D IBL method may 
    ```
 
    {{< tip >}}
-   Multiplying the sampled color by the surface property is the key to making this lighting approximation work. Recall that the surface property gives us the intensity of the light on a texel if light were to come from that respective direction. Therefore, multiplying the sampled color by the intensity scales the color value appropriately.
+   将采样的颜色乘以 surface 属性是实现此光照近似值的关键。回想一下，如果光线来自相应的方向，surface 属性为我们提供了纹素上光线的强度。因此，将采样的颜色乘以强度可以适当地缩放颜色值。
 
-   For example, consider a texture where the `surface.top` is intense (around `255.0`), and the `surface.bottom` is mild (around `0.0`). As a result, at the top of the texture, the `bottomSample` has no effect on the color. 
+   例如，考虑一个纹理，其中 `surface.top` 是强烈的（大约 `255.0`），而 `surface.bottom` 是温和的（大约 `0.0`）。因此，在纹理的顶部，`bottomSample` 对颜色没有影响。
    {{< /tip >}}
 
-1. Open the Editor and turn off any lights. You should see the colors on your material reflect those of the skybox (blue at the top and orange at the bottom).
+1. 打开 Editor 并关闭所有灯光。您应该看到材质上的颜色反映了天空盒的颜色（顶部为蓝色，底部为橙色）。
 
    {{< video src="/images/learning-guide/tutorials/rendering/six-point-lighting/ibl.mp4" autoplay="true" loop="true" width="100%" muted="true" info="Video of rotating the six-point lighting material to see how IBL affects the " >}}
 
-1. Turn on the lights again and observe how IBL works with the directional lighting!
+1. 再次打开灯光，观察 IBL 如何与定向照明配合使用！
 
    {{< video src="/images/learning-guide/tutorials/rendering/six-point-lighting/final.mp4" autoplay="true" loop="true" width="100%" muted="true" info="Video of changing direction of the light applied onto the six-point lighting cloud." >}}
 
-Awesome, you added custom directional lighting and IBL!
+太棒了，您添加了自定义定向照明和 IBL！
 
-## Download the AtomTutorial Gem sample
-Now that you've completed this tutorial, you can compare your results to our working version of six-point lighting in the **AtomTutorials** Gem in the [o3de/sample-code-gems repository](https://github.com/o3de/sample-code-gems). You can either download the final six point lighting files from the repository in [atom_gems/AtomTutorials/Assets/SixPointLighting/](https://github.com/o3de/sample-code-gems/tree/main/atom_gems/AtomTutorials/Assets/SixPointLighting) and place them in your project, or you can download the Gem and add it to the engine (see [Adding and Removing Gems in a Project](/docs/user-guide/project-config/add-remove-gems/)).
+## 下载 AtomTutorial Gem 示例
+现在，您已经完成了本教程，您可以将结果与 [o3de/sample-code-gems 存储库](https://github.com/o3de/sample-code-gems)中 **AtomTutorials** Gem 中的六点照明工作版本进行比较。您可以从 [atom_gems/AtomTutorials/Assets/SixPointLighting/](https://github.com/o3de/sample-code-gems/tree/main/atom_gems/AtomTutorials/Assets/SixPointLighting)中的存储库下载最后的六个点光照文件并将它们放置在您的项目中，也可以下载 Gem 并将其添加到引擎中（参见 [在项目中添加和删除 Gem](/docs/user-guide/project-config/add-remove-gems/)）。
 
-Congratulations, you are now done with this tutorial! 
+恭喜，您现在已经完成了本教程！

@@ -1,105 +1,105 @@
 ---
-linkTitle: 22.05.0 Release Notes
-title: Release Notes for Open 3D Engine 22.05.0
-description: Full release notes for Open 3D Engine (O3DE) version 22.05.0.
+linkTitle: 22.05.0 发行说明
+title: Open 3D Engine 22.05.0 发行说明
+description: Open 3D Engine （O3DE） 版本 22.05.0 的完整发行说明。
 weight: 897
 toc: true
 ---
 
-**Open 3D Engine (O3DE)** version 22.05.0 represents the project's first major release of 2022. This release has seen 1,469 code submissions that contain bug fixes, quality of life improvements, and feature additions. Starting with this release, our release notes will include a [feature grid](./feature-state/) representing the current state of development for each feature in O3DE.
+**Open 3D Engine （O3DE）** 版本 22.05.0 代表了该项目 2022 年的第一个主要版本。此版本已提交 1,469 个代码，其中包含错误修复、生活质量改进和功能添加。从此版本开始，我们的发行说明将包括一个 [功能网格](./feature-state/)，表示 O3DE 中每个功能的当前开发状态。
 
-## Highlights for 22.05.0
+## 22.05.0 的亮点
 
-First of all: Open 3D Engine has a new logo!
+首先：Open 3D Engine 有了新 logo！
 
-This release also sees the introduction of User Defined Properties (UDP), a way to read metadata from source assets into the Asset Processor. UDP can be assigned in content creation tools to store custom properties about hierarchy nodes such as mesh, light, animation nodes, etc., to power asset generation workflows for O3DE. For more information, read our [blog post on UDP](https://o3de.org/blog/posts/blog-udp/).
+此版本还引入了用户定义的属性 （UDP），这是一种将元数据从源资产读取到 Asset Processor 的方法。可以在内容创建工具中分配 UDP，以存储有关层次结构节点（如网格、光照、动画节点等）的自定义属性，从而为 O3DE 的资产生成工作流程提供支持。有关更多信息，请阅读我们的 [关于 UDP 的博客文章](https://o3de.org/blog/posts/blog-udp/)。
 
-We've also included an experimental Gem in this release for motion matching. Motion matching is a data-driven animation technique that synthesizes motions based on existing animation data and the current actor and input contexts. The example Gem includes a character prefab, controllable using a gamepad. Find more details on the supported features and how things work internally in the [Motion Matching Gem code](https://github.com/o3de/o3de/tree/development/Gems/MotionMatching) in our GitHub repository.
+我们还在此版本中包含一个用于运动匹配的实验性 Gem。运动匹配是一种数据驱动的动画技术，它根据现有动画数据以及当前角色和输入上下文合成运动。示例 Gem 包括一个角色预制件，可使用游戏手柄进行控制。有关支持的功能以及内部工作原理的更多详细信息，请参阅我们 GitHub 存储库中的 [Motion Matching Gem code](https://github.com/o3de/o3de/tree/development/Gems/MotionMatching)。
 
-Atom has received some improvements too! Gems now have the capability to inject custom passes to the rendering pipeline at runtime! Previously, it was cumbersome for a Gem to introduce new passes to the render pipeline. Project developers would have to modify existing assets or copy-and-paste an entire rendering pipeline. In 22.05.0, a new set of APIs is now available to facilitate customization of the render pipeline. This technology is already being used in the TressFX, Terrain, and LyShine Gems. For more information on the API, read the [O3DE wiki documentation on developing passes in Gems](https://github.com/o3de/o3de/wiki/Work-With-Passes-In-Gems).
+Atom 也得到了一些改进！Gem 现在可以在运行时将自定义通道注入渲染管道！以前，Gem 将新通道引入渲染管道很麻烦。项目开发人员必须修改现有资源或复制并粘贴整个渲染管道。在 22.05.0 中，现在提供了一组新的 API，以促进渲染管道的自定义。这项技术已经用于 TressFX、Terrain 和 LyShine Gems。有关 API 的更多信息，请阅读 [O3DE Wiki 文档，了解如何在 Gem 中开发通行证](https://github.com/o3de/o3de/wiki/Work-With-Passes-In-Gems)。
 
-And to further reduce copy-and-paste, material types are now more reusable with Atom. Material JSON files can now reference another file to load base properties from, and then override any values that need to be customized for sub-materials. For information on this feature, read the [Remixable Material Types RFC](https://github.com/o3de/sig-graphics-audio/issues/16).
+为了进一步减少复制和粘贴，材质类型现在在 Atom 中可以更好地重用。材质 JSON 文件现在可以引用另一个文件来加载基本属性，然后覆盖需要为子材质自定义的任何值。有关此功能的信息，请阅读 [可混合材质类型 RFC](https://github.com/o3de/sig-graphics-audio/issues/16)。
 
-Our last major feature callout is that the Multiplayer Gem now includes support for player-entity spawners. This gives project developers the ability to set locations where user-controlled entities will appear when joining a session, and changes the ownership of spawned network prefabs to the project code using the Multiplayer Gem. Because this is an important change to memory ownership for any project using the Multiplayer Gem, we recommend that developers refer to the examples of spawner logic used in the [O3DE Multiplayer Sample](https://github.com/o3de/o3de-multiplayersample).
+我们的最后一个主要功能说明是 Multiplayer Gem 现在包括对玩家实体生成器的支持。这使项目开发人员能够设置在加入会话时用户控制的实体的显示位置，并使用 Multiplayer Gem 将生成的网络预制件的所有权更改为项目代码。由于这是对使用 Multiplayer Gem 的任何项目的内存所有权的重要更改，因此我们建议开发人员参考 [O3DE Multiplayer Sample](https://github.com/o3de/o3de-multiplayersample) 中使用的生成器逻辑示例。
 
-## Features and bug fixes
+## 功能和错误修复
 
-The following is a list of other features and fixes of note included in 22.05.0.
+以下是 22.05.0 中包含的其他功能和值得注意的修复的列表。
 
-* **Audio**
-  * Improved Audio Controls Editor: Adds new connection properties for audio engines. ([6480](https://github.com/o3de/o3de/pull/6480), [6303](https://github.com/o3de/o3de/pull/6303))
-* **Asset Pipeline**
-  * Prefabs as product of scene processing: Adds a new way to create prefabs by generating them during the Asset Pipeline's scene builder. 
-  * Default prefab generation for scene files: The Prefab gem will automatically create a default procedural prefab for each source scene asset (such as an STL or FBX file) if no scene manifest is discovered.
-  * O3DE's AssImp integration now matches other 3rd party libraries for O3DE. ([3p-package-source/75](https://github.com/o3de/3p-package-source/pull/75))
-  * Full scan time for Automated Testing is down from ~2.5 minutes to ~40 seconds. ([6619](https://github.com/o3de/o3de/pull/6619))
-  * Job Dependencies on products: Allows Asset Builders to provide a list of products they specifically depend on to better schedule and control CreateJobs flow in Asset Processor. ([RFC](https://github.com/o3de/sig-core/issues/28))
-* **Character**
-  * Atom Render Viewport: Animation Editor now uses Atom. This improves performance significantly, the rendering in Animation Editor is now comparable to what one would expect in-game, and Animation Editor Viewport is now consistent with other O3DE viewports. The legacy OpenGL render viewport for Animation Editor is now deprecated.
-* **Editor**
-  * Generic DOM: Core framework update to support Document Property Editor.
-* **Entities & Prefabs**
-  * Improved Script Canvas support for spawning: Previously, it was only possible to spawn entities using Script Canvas with `SpawnAllEntities`. This feature expands spawnable API functionality for Script Canvas. It provides more fine-grained control over the spawning workflow and spawnable lifecycle as well as better support for handling multiple prefabs.
-  * Slice deprecation in AutomatedTesting: The AutomatedTesting project has been converted to use prefabs for all tests (previously, there were many that used the former system, Slices). ([7006](https://github.com/o3de/o3de/issues/7006))
-* **Physics**
-  * Remove legacy timing/tick system: The legacy tick/timer system has been completely removed, and a new timer for O3DE has been added. All systems have been updated to use the new timer. This serves as the foundation for future tick system updates and improvements. The previous smoothing logic was also removed.
-  * Upgrade Physics automated tests: All physics automated tests have been updated to use Prefabs instead of Slices (including PhysX, Cloth, and Blast). In most cases, tests are using the new test framework. Several are also now running in parallel.
-* **Installer**
-  * Installer validation tests: These tests verify that an installer build is valid. The automated tests verify that: key binaries exist, o3de.exe registers the engine, project creation succeeds, project compilation succeeds, Asset Processor batch processing succeeds, Editor runs, the game launcher runs, uninstall succeeds, and o3de.exe unregisters the engine. Currently run nightly for O3DE, though the tests are designed so anyone can plug them into their quality verification process. ([7834](https://github.com/o3de/o3de/pull/7834))
+* **音频**
+  * 改进的音频控件编辑器：为音频引擎添加新的连接属性。 ([6480](https://github.com/o3de/o3de/pull/6480), [6303](https://github.com/o3de/o3de/pull/6303))
+* **资产管线**
+  * Prefabs 用于场景处理的产品：添加了一种通过在 Asset Pipeline 的场景生成器中生成预制件来创建预制件的新方法。
+  * 场景文件的默认预制件生成：如果未发现场景清单，则预制件 Gem 将自动为每个源场景资源（例如 STL 或 FBX 文件）创建默认程序预制件。
+  * O3DE 的 AssImp 集成现在可与 O3DE 的其他第 3 方库相匹配。([3p-package-source/75](https://github.com/o3de/3p-package-source/pull/75))
+  * 自动化测试的完整扫描时间从约 2.5 分钟缩短至约 40 秒。 ([6619](https://github.com/o3de/o3de/pull/6619))
+  * 作业对产品的依赖性：允许 Asset Builder 提供他们特别依赖的产品列表，以更好地安排和控制 Asset Processor 中的 CreateJobs 流程。 ([RFC](https://github.com/o3de/sig-core/issues/28))
+* **角色**
+  * Atom 渲染视口：动画编辑器现在使用 Atom。这显着提高了性能，动画编辑器中的渲染现在与游戏中的预期相当，并且动画编辑器视口现在与其他 O3DE 视口一致。动画编辑器的旧版 OpenGL 渲染视口现已弃用。
+* **编辑器**
+  * 通用 DOM：核心框架更新以支持文档属性编辑器。
+* **实体 & Prefab**
+  * 改进了 Script Canvas 对生成的支持：以前，只能使用 Script Canvas 和`SpawnAllEntities`来生成实体。此功能扩展了 Script Canvas 的可生成 API 功能。它提供了对生成工作流程和可生成生命周期的更细粒度的控制，以及对处理多个预制件的更好支持。
+  * AutomatedTesting 中的切片弃用：AutomatedTesting 项目已转换为对所有测试使用预制件（以前，有许多项目使用以前的系统 Slices）。 ([7006](https://github.com/o3de/o3de/issues/7006))
+* **物理**
+  * 删除旧的计时/计时器系统：已删除旧的计时/计时器系统，并为 O3DE 添加了新的计时器。所有系统都已更新为使用新计时器。这是未来即时报价系统更新和改进的基础。之前的平滑逻辑也被删除。
+  * 升级物理特性自动测试：所有物理特性自动测试均已更新为使用预制件而不是切片（包括 PhysX、Cloth 和 Blast）。在大多数情况下，测试使用的是新的测试框架。现在，几个项目也在并行运行。
+* **安装程序**
+  * 安装程序验证测试：这些测试验证安装程序内部版本是否有效。自动测试将验证：关键二进制文件是否存在、o3de.exe注册引擎、项目创建成功、项目编译成功、Asset Processor 批处理成功、编辑器运行、游戏启动器运行、卸载成功以及 o3de.exe 取消注册引擎。目前 O3DE 每晚运行一次，但测试旨在让任何人都可以将它们插入到他们的质量验证流程中。 ([7834](https://github.com/o3de/o3de/pull/7834))
 * **Script Canvas**
-  * Script Canvas now has a "mini map" feature that helps visualize and navigate graphs. ([6263](https://github.com/o3de/o3de/pull/6263))
-* **Templates**
-  * Default component template: A new template is available to help you create components. Use the `o3de` CLI script and the `create-from-template` command to create a new runtime component from the **DefaultComponent** template. For detailed instructions refer to [Creating a Component in O3DE](/docs/user-guide/programming/components/create-component/). ([8462](https://github.com/o3de/o3de/pull/8462))
-* **Viewport**
-  * Camera Editor View Bookmarks: *View Bookmarks* add the ability to store local view transforms with level prefabs. They have been designed as a solid foundation to expand on for all prefabs in the scene. The View Bookmark system aims to allow the user to store different view bookmarks for a root (level) prefab. These bookmarks can be stored locally (currently in the Settings Registry). In the future, they will be able to be shared in any prefab. Bookmarks can be set with **Ctrl-&lt;Function Key&gt;** and restored with **Shift-&lt;Function Key&gt;**. Currently, a maximum of 12 can be set per level. ([7855](https://github.com/o3de/o3de/pull/7855), [8400](https://github.com/o3de/o3de/pull/8400))
-  * Experimental Editor Mode Visual Feedback: To make the experience of using the Viewport more intuitive, additional rendering functionality is being investigated to improve feedback and usability. Editor Mode Visual Feedback is at a very early stage and can be toggled on in the Settings Registry (`--regset=/Amazon/Preferences/EnableEditorModeFeedback=true`). ([8235](https://github.com/o3de/o3de/pull/8235), [3458](https://github.com/o3de/o3de/issues/3458))
-  * Prefabs Focus Mode improvements: A number of fixes and quality of life improvements have been added to Focus Mode prefab editing. Now **Ctrl-S** will save the focused prefab, not the entire scene. Focus Mode breadcrumbs now have icons, the right-click context menu grouping has been improved, and it has received several other small fixes and updates.
-  * Cursor wrap mode for manipulators: The cursor can now be set to wrap around the Viewport during Editor navigation. This feature is off by default and can be turned on in the settings registry with `--regset=/Amazon/Preferences/Editor/Manipulator/ManipulatorMouseWrapSetting=true`. ([5155](https://github.com/o3de/o3de/pull/5155))
+  * Script Canvas 现在具有“迷你地图”功能，可帮助可视化和导航图形。 ([6263](https://github.com/o3de/o3de/pull/6263))
+* **模板**
+  * 默认组件模板：新模板可帮助您创建组件。使用 `o3de` CLI 脚本和`create-from-template`命令从 **DefaultComponent** 模板创建新的运行时组件。有关详细说明，请参阅 [在 O3DE 中创建组件](/docs/user-guide/programming/components/create-component/). ([8462](https://github.com/o3de/o3de/pull/8462))
+* **视口**
+  * 摄像机编辑器视图书签：*视图书签* 添加了使用关卡预制件存储本地视图转换的功能。它们被设计为扩展场景中所有预制件的坚实基础。视图书签系统旨在允许用户为根（级别）预制件存储不同的视图书签。这些书签可以存储在本地（当前在 Settings Registry 中）。将来，它们将能够在任何预制件中共享。书签可以使用 **Ctrl-&lt;功能键&gt;** 进行设置，并使用 **Shift-&lt;功能键&gt;** 进行恢复。目前，每个级别最多可以设置 12 个。 ([7855](https://github.com/o3de/o3de/pull/7855), [8400](https://github.com/o3de/o3de/pull/8400))
+  * 实验性编辑器模式视觉反馈：为了使使用视窗的体验更加直观，我们正在研究其他渲染功能，以改善反馈和可用性。编辑器模式视觉反馈处于非常早期的阶段，可以在 Settings Registry 中打开 (`--regset=/Amazon/Preferences/EnableEditorModeFeedback=true`). ([8235](https://github.com/o3de/o3de/pull/8235), [3458](https://github.com/o3de/o3de/issues/3458))
+  * 预制件聚焦模式改进：聚焦模式预制件编辑中添加了大量修复和生活质量改进。现在 **Ctrl-S** 将保存聚焦的预制件，而不是整个场景。焦点模式痕迹导航现在具有图标，右键单击上下文菜单分组已得到改进，并且还收到了其他几个小的修复和更新。
+  * 操纵器的光标环绕模式：现在可以将光标设置为在 Editor 导航期间环绕视区。此功能默认处于关闭状态，可以在设置注册表中使用`--regset=/Amazon/Preferences/Editor/Manipulator/ManipulatorMouseWrapSetting=true`打开。 ([5155](https://github.com/o3de/o3de/pull/5155))
 * **Atom**
-  * New Debug Rendering level component: There's a new level component that allows users to visualize and debug various aspects of the rendering. It can display normals, render only the diffuse or specular lighting, override specific properties for all materials in the scene, and more. 
-  * Pipeline Global Pass attachment reference: Users writing `.pass` files for rendering can now declare and reference attachments in a way that is global to the pipeline.
-  * Usability and performance improvements for DiffuseProbeGrid:
-    * DiffuseProbeGrid visualization: Displays individual probes and their raw irradiance values as spheres in the appropriate position in the level.
-    * Scrolling DiffuseProbeGrid:  Allows a DiffuseProbeGrid to be attached to the camera to apply diffuse GI wherever the camera is located.
-    * DiffuseProbeGrid `NumberOfRaysPerProbe` setting: The number of rays cast by each probe in the grid can now be adjusted in the DiffuseProbeGrid properties.  This value can be set differently per grid.
-    * DiffuseProbeGrid Irradiance query: Query the diffuse GI at any position and direction in the level. Improved DiffuseProbeGrid blending when multiple grids overlap and around the edges of a grid to blend with the global IBL cubemap.
-  * New **CubeMapCapture** component: Captures a diffuse or specular convolved cubemap at any location in the level.
-  * The MSAA state can now be changed in the `MainRenderPipeline.azasset` file by setting the `MultisampleState/samples` parameter.  Setting the samples to `1` will disable MSAA.
-  * Several improvements to Diffuse GI and ReflectionProbe visual quality.
-* **White box**
-  * White box is now supported on Linux! ([5075](https://github.com/o3de/o3de/pull/5075))
+  * 新的 Debug Rendering 关卡组件：有一个新的关卡组件，允许用户可视化和调试渲染的各个方面。它可以显示法线、仅渲染漫反射或镜面反射照明、覆盖场景中所有材质的特定属性等。
+  * 管道全局通道附件引用：编写`.pass`文件进行渲染的用户现在可以以管道的全局方式声明和引用附件。
+  * DiffuseProbeGrid 的可用性和性能改进：
+    * DiffuseProbeGrid 可视化效果：将各个探针及其原始辐照度值显示为关卡中适当位置的球体。
+    * 滚动 DiffuseProbeGrid：允许将 DiffuseProbeGrid 附加到摄像机，以便在摄像机所在的任何位置应用漫反射 GI。
+    * DiffuseProbeGrid `NumberOfRaysPerProbe` 设置：现在可以在 DiffuseProbeGrid 属性中调整网格中每个探针投射的光线数。 每个网格可以设置不同的此值。
+    * DiffuseProbeGrid Irradiance query（漫反射探针网格辐照度查询）：查询关卡中任意位置和方向的漫反射 GI。改进了多个网格重叠时和网格边缘周围的 DiffuseProbeGrid 混合，以便与全局 IBL 立方体贴图混合。
+  * 新的 **CubeMapCapture** 组件：在关卡中的任何位置捕获漫反射或镜面卷积立方体贴图。
+  * 现在，可以通过设置`MultisampleState/samples`参数在`MainRenderPipeline.azasset`文件中更改 MSAA 状态。 将样本设置为 `1`将禁用 MSAA。
+  * 对漫反射 GI 和 ReflectionProbe 视觉质量进行了多项改进。
+* **白盒**
+  * Linux 现在支持白盒！ ([5075](https://github.com/o3de/o3de/pull/5075))
  
-## Deprecations
+## 弃用
  
-* **Physics**
+* **物理**
     * `TransformUniformScale` ([7573](https://github.com/o3de/o3de/issues/7573))
     * `BoxManipulatorRequestBus` ([7572](https://github.com/o3de/o3de/issues/7572))
-* **EMFX (Character)**
-    * OpenGL Render Plugin is now deprecated and replaced by EMFX Atom Viewport.
+* **EMFX (角色)**
+    * OpenGL 渲染插件现已弃用，取而代之的是 EMFX Atom 视口。
  
-## Known issues
+## 已知问题
  
-* **EMFX (Character)**
-    * If you have saved a layout in the old viewport, it will load the old OpenGL viewport. A workaround is to delete the OpenGL widget and add a new Atom viewport widget, then save the layout.  Alternatively, you can recreate the same layout from the default layout.
+* **EMFX (角色)**
+    * 如果您已在旧视区中保存布局，它将加载旧的 OpenGL 视区。解决方法是删除 OpenGL 小组件并添加新的 Atom 视口小组件，然后保存布局。 或者，您也可以从默认布局重新创建相同的布局。
  
-* **Atom (Graphics)**
-    * [Linux] Editor crashes when pressing the **Activate LUT** button right after generating LUT in the HDR Color Grading component. ([9157](https://github.com/o3de/o3de/issues/9157))
+* **Atom (图形)**
+    * [Linux] 在 HDR 颜色分级组件中生成 LUT 后立即按下 **Activate LUT** 按钮时，编辑器崩溃。 ([9157](https://github.com/o3de/o3de/issues/9157))
  
-* **Asset Processor**
-    * [Linux]: Closing Editor while Asset Processor is still running will result in a crash upon relaunching Editor.
+* **资产处理器**
+    * [Linux]: 在 Asset Processor 仍在运行时关闭 Editor 将导致重新启动 Editor 时发生崩溃。
 
 * **Linux Ubuntu 20.04.4 LTS**
 
-    In rare situations, on Linux Ubuntu 20.04.4 LTS, it might not be possible to launch O3DE Editor, Project Manager, Asset Processor, or other executables from the file explorer, and an error is displayed.
+    在极少数情况下，在 Linux Ubuntu 20.04.4 LTS 上，可能无法从文件资源管理器启动 O3DE Editor、Project Manager、Asset Processor 或其他可执行文件，并显示错误。
 
-    Workaround: Use the command line to launch the executable from its directory, for example `sudo ./o3de`. Refer to this [FOSTips article](https://fostips.com/double-click-run-elf-ubuntu/) for other possible solutions.
+    解决方法：使用命令行从其目录启动可执行文件，例如`sudo ./o3de`。请参阅此 [FOSTips 文章](https://fostips.com/double-click-run-elf-ubuntu/)了解其他可能的解决方案。 
     
-    Refer to [issue 9502](https://github.com/o3de/o3de/issues/9502) for more information.
+    请参考 [issue 9502](https://github.com/o3de/o3de/issues/9502) 了解更多信息。
 
-* **Networking**
-    * Network entity hierarchies are limited to hierarchies with a maximum of 16 entities.
-    * GameLift server launchers are manually relocatable. There is currently no automated build or asset layout generation.
-    * Monolithic release server builds are currently not supported.
-    * ImGui keyboard is not working in the server launcher.
-    * If you experience unexpected client disconnect issues with Multiplayer, set `sv_isTransient=False` to check if server auto termination logic is causing an issue. Refer to [User Guide: Network Settings](https://www.o3de.org/docs/user-guide/networking/settings/) for additional settings. ([9328](https://github.com/o3de/o3de/issues/9328))
-    * All CDK samples in the AWS Gems are for CDK v1 (https://docs.aws.amazon.com/cdk/v1/guide/home.html). CDK applications are not currently compatible with CDK v2.
+* **网络**
+    * 网络实体层次结构仅限于最多具有 16 个实体的层次结构。
+    * GameLift 服务器启动器可手动重新定位。目前没有自动生成或资产布局。
+    * 目前不支持整体式发布服务器版本。
+    * ImGui 键盘在服务器启动器中不起作用。
+    * 如果您在使用多人游戏时遇到意外的客户端断开连接问题，请设置`sv_isTransient=False`以检查服务器自动终止逻辑是否导致了问题。有关其他设置，请参阅[用户指南：网络设置](https://www.o3de.org/docs/user-guide/networking/settings/)。 ([9328](https://github.com/o3de/o3de/issues/9328))
+    * AWS Gems 中的所有 CDK 示例均适用于 CDK v1 (https://docs.aws.amazon.com/cdk/v1/guide/home.html)。CDK 应用程序目前与 CDK v2 不兼容。

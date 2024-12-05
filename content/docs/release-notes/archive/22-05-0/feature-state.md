@@ -1,493 +1,493 @@
 ---
-linkTitle: Feature grid
-title: 22.05.0 Feature Grid snapshot
-description: Snapshot of the Open 3D Engine (O3DE) feature status grid for the 22.05.0 release.
+linkTitle: 功能网格
+title: 22.05.0 功能网格快照
+description: 22.05.0 版本的 Open 3D Engine （O3DE） 功能状态网格快照。
 toc: true
 ---
 
-The **Open 3D Engine (O3DE)** feature grid is a record of the state of each feature system within O3DE and its current state of support. The feature grids contained on this page were generated for the 22.05.0 release. For an up-to-date feature grid, see the [o3de/community feature grid](https://o3de.github.io/community/features/form.html).
+**Open 3D Engine （O3DE）** 功能网格是 O3DE 中每个功能系统的状态及其当前支持状态的记录。此页面中包含的功能网格是针对 22.05.0 版本生成的。有关最新的功能网格，请参阅 [o3de/community 功能网格](https://o3de.github.io/community/features/form.html)。
 
-Features are reported via each individual O3DE Special Interest Group (SIG). For more information about each SIG and their responsibilities, see the [o3de/community repository](https://github.com/o3de/community/) on GitHub.
+功能通过每个单独的 O3DE 特别兴趣小组 （SIG） 进行报告。有关每个 SIG 及其职责的更多信息，请参阅 GitHub 上的 [o3de/社区存储库](https://github.com/o3de/community/)。
  
 ## SIG-Build 
 
-### Build Systems 
+### 构建系统
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Github Pipelines | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | All  |
-| Jenkins Pipelines | 🟡 Active | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🔵 In Progress | All  |
-| Installer Builds | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | Windows Linux  |
-| Build Failure Analysis | 🟡 Active | 🟢 Complete | 🟢 Complete | 🔵 In Progress | 🔵 In Progress | All  |
-| Build Scripts | 🟡 Active | 🟢 Complete | 🟢 Complete | 🔵 In Progress | 🔵 In Progress | All  |
-| Build Environments | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | All  |
-| Build Metrics | 🟡 Active | 🟢 Complete | 🟢 Complete | 🔵 In Progress | 🔵 In Progress | All  |
-| 3rd Party System | 🟡 Active | 🟢 Complete | 🟢 Complete | 🔵 In Progress | 🔵 In Progress | All  |
+| Github 管线 | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Jenkins 管线 | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🔵 进行中 | 所有  |
+| 安装包构建 | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | Windows Linux  |
+| 构建失败分析 | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🔵 进行中 | 🔵 进行中 | 所有  |
+| 构建脚本 | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🔵 进行中 | 🔵 进行中 | 所有  |
+| 构建环境 | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | 所有  |
+| 构建矩阵 | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🔵 进行中 | 🔵 进行中 | 所有  |
+| 第3方软件包系统 | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🔵 进行中 | 🔵 进行中 | 所有  |
 
-### Infrastructure 
+### 基础设施 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Jenkins | 🟡 Active | 🟢 Complete | 🟢 Complete | 🔵 In Progress | 🔵 In Progress | All  |
-| Github | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | All  |
-| LFS | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | All  |
-| License Scanning | 🟡 Active | 🟢 Complete | 🟢 Complete | 🔵 In Progress | 🔵 In Progress | All  |
+| Jenkins | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🔵 进行中 | 🔵 进行中 | 所有  |
+| Github | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | 所有  |
+| LFS | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | 所有  |
+| 许可证扫描 | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🔵 进行中 | 🔵 进行中 | 所有  |
 
-## SIG-Content 
+## SIG-内容 
 
-### Frameworks 
+### 框架 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| AzToolsFramework | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All |
-| Lua | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All |
+| AzToolsFramework | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有 |
+| Lua | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有 |
 | Prefabs | || || ||
 | Qt for Python | || || ||
 
-### Editor 
+### 编辑器 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Asset Browser | 🟡 Active | 🔵 In-Design | ⭕ Not Required | 🟢 Stable | 🔵 In Progress | Windows Linux MacOS  |
+| Asset Browser | 🟡 活跃 | 🔵 设计中 | ⭕ 不需要 | 🟢 文档 | 🔵 进行中 | Windows Linux MacOS  |
 | Framework | || || ||
 | Localization | || || ||
 | Undo / Redo | || || ||
-| Asset Editor | 🔵 Backlogged | 🟠 Minimal | ⭕ Not Required | 🟢 Stable | 🔵 In Progress | Windows Linux MacOS  |
+| Asset Editor | 🔵 待办 | 🟠 最小 | ⭕ 不需要 | 🟢 文档 | 🔵 进行中 | Windows Linux MacOS  |
 
 ### Canvas Tools 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Graph Model | 🟡 Active | 🟠 Minimal | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
-| Graph Canvas | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
-| Landscape Canvas | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | Windows Linux MacOS  |
+| Graph Model | 🟡 活跃 | 🟠 最小 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
+| Graph Canvas | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
+| Landscape Canvas | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | Windows Linux MacOS  |
 
 ### Project Manager 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Remote Projects | 🟡 Active | 🔵 In-Design | ⭕ Not Required | 🔵 In Progress | 🔵 In Progress | Windows Linux  |
-| Project versioning | 🟡 Active | 🔵 In-Design | ⭕ Not Required | 🔵 In Progress | 🔵 In Progress | Windows Linux  |
-| Template Management | 🟠 Planned | ❌ None | ⭕ Not Required | ❌ Unproven | ❌ Unsupported | Windows Linux  |
-| Gem Creation Wizard | 🟠 Planned | ❌ None | ⭕ Not Required | ❌ Unproven | ❌ Unsupported | Windows Linux  |
-| Remote Gems Improvements (URI vs. URL) | 🟠 Planned | ❌ None | ⭕ Not Required | ❌ Unproven | ❌ Unsupported | Windows Linux  |
-| Remote Gems (Initial) | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔵 In Progress | Windows Linux  |
+| 远程项目 | 🟡 活跃 | 🔵 设计中 | ⭕ 不需要 | 🔵 进行中 | 🔵 进行中 | Windows Linux  |
+| 项目版本控制 | 🟡 活跃 | 🔵 设计中 | ⭕ 不需要 | 🔵 进行中 | 🔵 进行中 | Windows Linux  |
+| 模板管理 | 🟠 已计划 | ❌ 无 | ⭕ 不需要 | ❌ 未被证实 | ❌ 未支持 | Windows Linux  |
+| Gem 创建向导 | 🟠 已计划 | ❌ 无 | ⭕ 不需要 | ❌ 未被证实 | ❌ 未支持 | Windows Linux  |
+| 远程 Gem 改进 (URI vs. URL) | 🟠 已计划 | ❌ 无 | ⭕ 不需要 | ❌ 未被证实 | ❌ 未支持 | Windows Linux  |
+| 远程 Gem (初版) | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔵 进行中 | Windows Linux  |
 
-### Scripting 
+### 脚本编程 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Expression Evaluation | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All |
-| Script Canvas | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟠 Volatile | 🔴 Needs Testing | Windows Linux MacOS  |
-| Script Canvas Developer | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | Windows Linux MacOS  |
-| Script Events | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All |
-| Script Canvas Testing | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟠 Volatile | 🟢 Optimized | Windows Linux MacOS  |
-| Lua Editor | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
+| Expression Evaluation | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有 |
+| Script Canvas | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟠 易变 | 🔴 需要测试 | Windows Linux MacOS  |
+| Script Canvas Developer | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | Windows Linux MacOS  |
+| Script Events | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有 |
+| Script Canvas Testing | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟠 易变 | 🟢 最优化 | Windows Linux MacOS  |
+| Lua Editor | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
 
 ### User Interface 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| LyShine (2D Render) | 🟡 Active | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
+| LyShine (2D Render) | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
 
 ### Animation 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Animation Playback Control | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Pose Blending | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Animation Syncing | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Motion Events | 🔵 Backlogged | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Bone Masking | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Motion Extraction (Root Motion) | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Motion Matching | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟡 Experimental | 🔵 In Progress | All  |
-| Debug Rendering | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Animation Sharing | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Animation Compression | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Multi-threading | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Retargeting | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Inverse Kinematics (IK) | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| LOD | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Blend Tree/State Machine | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Transition Conditions | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Wildcard Conditions | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Debugging Tools (Anim Graph) | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Visual Tools | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Software Skinning (Linear, Dual-Quat) | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| GPU Skinning (Linear, Dual-Quat) | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Morph Target/Facial Animation | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| GPU Accelerated Morphing | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Simulated Objects/Dynamic Bones | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Ragdoll Runtime | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟡 Experimental | 🔵 In Progress | All  |
-| Cloth Authoring | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Collider Authoring Tools | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🔵 In Progress | 🔵 In Progress | All  |
-| Attachments | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Skinned Attachments | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
+| Animation Playback Control | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Pose Blending | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Animation Syncing | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Motion Events | 🔵 待办 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Bone Masking | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Motion Extraction (Root Motion) | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Motion Matching | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟡 实验 | 🔵 进行中 | 所有  |
+| Debug Rendering | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Animation Sharing | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Animation Compression | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Multi-threading | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Retargeting | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Inverse Kinematics (IK) | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| LOD | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Blend Tree/State Machine | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Transition Conditions | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Wildcard Conditions | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Debugging Tools (Anim Graph) | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Visual Tools | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Software Skinning (Linear, Dual-Quat) | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| GPU Skinning (Linear, Dual-Quat) | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Morph Target/Facial Animation | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| GPU Accelerated Morphing | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Simulated Objects/Dynamic Bones | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Ragdoll Runtime | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟡 实验 | 🔵 进行中 | 所有  |
+| Cloth Authoring | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Collider Authoring Tools | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🔵 进行中 | 🔵 进行中 | 所有  |
+| Attachments | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Skinned Attachments | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
 
 ### World Building 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Terrain | 🟡 Active | 🟠 Minimal | ❌ None | 🟡 Experimental | 🟡 Needs Optimization | Windows |
-| Dynamic Vegetation | 🟢 Complete | 🟢 Complete | 🟠 Partial | 🟢 Stable | 🟡 Needs Optimization | All |
+| Terrain | 🟡 活跃 | 🟠 最小 | ❌ 无 | 🟡 实验 | 🟡 需要优化 | Windows |
+| Dynamic Vegetation | 🟢 完成 | 🟢 完成 | 🟠 部分 | 🟢 文档 | 🟡 需要优化 | 所有 |
 
 ### Viewport 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Manipulators | 🟡 Active | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
-| Component Mode | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🔵 In Progress | 🔴 Needs Testing | Windows Linux MacOS  |
-| Viewport UI | 🟡 Active | 🟠 Minimal | ⭕ Not Required | 🔵 In Progress | 🔴 Needs Testing | Windows Linux MacOS  |
-| Interaction Model | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | Windows Linux MacOS  |
-| Camera | 🟡 Active | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
-| View Bookmarks | 🟡 Active | 🟠 Minimal | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing | Windows Linux MacOS  |
-| Manipulator Test Framework | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
-| Visibility | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | Windows Linux MacOS  |
-| Editor Mode Visual Feedback | 🟡 Active | 🟠 Minimal | ⭕ Not Required | 🟡 Experimental | 🔵 In Progress | Windows Linux MacOS  |
+| Manipulators | 🟡 活跃 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
+| Component Mode | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🔵 进行中 | 🔴 需要测试 | Windows Linux MacOS  |
+| Viewport UI | 🟡 活跃 | 🟠 最小 | ⭕ 不需要 | 🔵 进行中 | 🔴 需要测试 | Windows Linux MacOS  |
+| Interaction Model | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | Windows Linux MacOS  |
+| Camera | 🟡 活跃 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
+| View Bookmarks | 🟡 活跃 | 🟠 最小 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 | Windows Linux MacOS  |
+| Manipulator Test Framework | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
+| Visibility | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | Windows Linux MacOS  |
+| Editor Mode Visual Feedback | 🟡 活跃 | 🟠 最小 | ⭕ 不需要 | 🟡 实验 | 🔵 进行中 | Windows Linux MacOS  |
 
 ### White Box Tool 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Atom Integration | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Viewport Editing | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
-| Triangulation | 🔵 Backlogged | ❌ None | ⭕ Not Required | ❌ Unproven | ❌ Unsupported | Windows Linux MacOS  |
-| Boolean Operations | 🔵 Backlogged | ❌ None | ⭕ Not Required | ❌ Unproven | ❌ Unsupported | Windows Linux MacOS  |
-| Custom UV Mapping | 🔵 Backlogged | ❌ None | ⭕ Not Required | ❌ Unproven | ❌ Unsupported | Windows Linux MacOS  |
+| Atom Integration | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Viewport Editing | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
+| Triangulation | 🔵 待办 | ❌ 无 | ⭕ 不需要 | ❌ 未被证实 | ❌ 未支持 | Windows Linux MacOS  |
+| Boolean Operations | 🔵 待办 | ❌ 无 | ⭕ 不需要 | ❌ 未被证实 | ❌ 未支持 | Windows Linux MacOS  |
+| Custom UV Mapping | 🔵 待办 | ❌ 无 | ⭕ 不需要 | ❌ 未被证实 | ❌ 未支持 | Windows Linux MacOS  |
 
 ## SIG-Core 
 
 ### Core features 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| AzCore | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| AzFramework | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Math libraries | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| SDK Build | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | Windows Linux MacOS  |
-| Reflection frameworks | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Streaming system | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🔵 In Progress | All  |
-| Input system | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Logging and tracing | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Profiling | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟠 Volatile | 🔵 In Progress | Windows  |
-| Optimised standard library | 🟡 Active | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔵 In Progress | All  |
+| AzCore | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| AzFramework | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Math libraries | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| SDK Build | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | Windows Linux MacOS  |
+| Reflection frameworks | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Streaming system | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🔵 进行中 | 所有  |
+| Input system | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Logging and tracing | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Profiling | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟠 易变 | 🔵 进行中 | Windows  |
+| Optimised standard library | 🟡 活跃 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔵 进行中 | 所有  |
 
-### Physics API (minimal, non-backend specific) 
+### Physics API (最小, non-backend specific) 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Collision Filtering | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟠 Volatile | 🔴 Needs Testing ||
-| Collision Filtering - Programmable Reserved Bits | 🔵 Backlogged | ❌ None |||||
-| Joints | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing ||
-| Rigid Bodies | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing ||
-| Multiple Scenes | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing ||
-| Character Controller | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟠 Volatile | 🔴 Needs Testing ||
-| Ragdoll | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟠 Volatile | 🔴 Needs Testing ||
-| Materials | 🟡 Active | 🟢 Complete | ⭕ Not Required | 🟠 Volatile | 🔴 Needs Testing ||
-| Shapes | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing ||
-| Heightfields | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟠 Volatile | 🔴 Needs Testing ||
-| Wind | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing ||
-| Scene Queries | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing ||
+| Collision Filtering | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟠 易变 | 🔴 需要测试 ||
+| Collision Filtering - Programmable Reserved Bits | 🔵 待办 | ❌ 无 |||||
+| Joints | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 ||
+| Rigid Bodies | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 ||
+| Multiple Scenes | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 ||
+| Character Controller | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟠 易变 | 🔴 需要测试 ||
+| Ragdoll | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟠 易变 | 🔴 需要测试 ||
+| Materials | 🟡 活跃 | 🟢 完成 | ⭕ 不需要 | 🟠 易变 | 🔴 需要测试 ||
+| Shapes | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 ||
+| Heightfields | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟠 易变 | 🔴 需要测试 ||
+| Wind | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 ||
+| Scene Queries | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 ||
 
 ### Nvidia PhysX Integration 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Ticking | 🔵 Backlogged | 🟡 Partial | ⭕ Not Required | 🟠 Volatile | 🔴 Needs Testing | All  |
-| Rigid Body Simulation | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Continuous Collision Detection (CCD) | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Collision Asset Pipeline | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Convex Decomposition | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Primitive Fitting | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Primitive Colliders | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Asset Colliders | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Shape Colliders | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Heightfield Colliders | 🟡 Active | 🟠 Minimal | ⭕ Not Required | 🟠 Volatile | 🟡 Needs Optimization | All  |
-| Triggers | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Force Regions | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Wind | 🔵 Backlogged | 🟡 Partial | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing | All  |
-| Materials | 🟡 Active | 🟢 Complete | 🟢 Complete | 🟠 Volatile | 🔴 Needs Testing | All  |
-| Collision Filtering | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Joints | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Articulations | 🟠 Planned | ❌ None | ⭕ Not Required | ❌ Unproven | 🔴 Needs Testing | All  |
-| Character Controller | 🟢 Complete | 🟠 Minimal | ⭕ Not Required | 🟠 Volatile | 🔴 Needs Testing | All  |
-| Ragdoll | 🟡 Active | 🟡 Partial | 🟢 Complete | 🟠 Volatile | 🔴 Needs Testing | All  |
-| Scripting | 🟢 Complete | 🟠 Minimal | ❌ None | 🟠 Volatile | 🔴 Needs Testing | All  |
-| Scene Queries | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Multi-Scene | 🔵 Backlogged | ❌ None | ⭕ Not Required | ❌ Unproven | 🔴 Needs Testing | All  |
-| PhysX Visual Debugger Integration | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows  |
-| Debug Visualization | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | Windows Linux MacOS  |
-| Mesh Simplification | ❌ Unscheduled | || || |
+| Ticking | 🔵 待办 | 🟡 部分 | ⭕ 不需要 | 🟠 易变 | 🔴 需要测试 | 所有  |
+| Rigid Body Simulation | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Continuous Collision Detection (CCD) | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Collision Asset Pipeline | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Convex Decomposition | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Primitive Fitting | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Primitive Colliders | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Asset Colliders | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Shape Colliders | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Heightfield Colliders | 🟡 活跃 | 🟠 最小 | ⭕ 不需要 | 🟠 易变 | 🟡 需要优化 | 所有  |
+| Triggers | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Force Regions | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Wind | 🔵 待办 | 🟡 部分 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 | 所有  |
+| Materials | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🟠 易变 | 🔴 需要测试 | 所有  |
+| Collision Filtering | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Joints | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Articulations | 🟠 已计划 | ❌ 无 | ⭕ 不需要 | ❌ 未被证实 | 🔴 需要测试 | 所有  |
+| Character Controller | 🟢 完成 | 🟠 最小 | ⭕ 不需要 | 🟠 易变 | 🔴 需要测试 | 所有  |
+| Ragdoll | 🟡 活跃 | 🟡 部分 | 🟢 完成 | 🟠 易变 | 🔴 需要测试 | 所有  |
+| Scripting | 🟢 完成 | 🟠 最小 | ❌ 无 | 🟠 易变 | 🔴 需要测试 | 所有  |
+| Scene Queries | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Multi-Scene | 🔵 待办 | ❌ 无 | ⭕ 不需要 | ❌ 未被证实 | 🔴 需要测试 | 所有  |
+| PhysX Visual Debugger Integration | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows  |
+| Debug Visualization | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | Windows Linux MacOS  |
+| Mesh Simplification | ❌ 未安排 | || || |
 
 ### Cloth - NvCloth Integration 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Generic API | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Support for Mesh Components | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔵 In Progress | All  |
-| Support for Actor Components | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔵 In Progress | All  |
-| Mesh Simplification | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Simulation Constraints | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Realtime Editing | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Wind | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Actor Colliders | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| CCD | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Self Collision | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Async Simulation | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Debug Visualization | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🔴 Needs Testing | All  |
-| Environmental Collision | 🔵 Backlogged | ❌ None | || ||
-| Painting Tool | 🔵 Backlogged | ❌ None | || ||
-| LOD | 🔵 Backlogged | ❌ None | || ||
-| Mesh Collision | 🔵 Backlogged | ❌ None | || ||
+| Generic API | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Support for Mesh Components | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔵 进行中 | 所有  |
+| Support for Actor Components | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔵 进行中 | 所有  |
+| Mesh Simplification | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Simulation Constraints | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Realtime Editing | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Wind | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Actor Colliders | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| CCD | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Self Collision | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Async Simulation | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Debug Visualization | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🔴 需要测试 | 所有  |
+| Environmental Collision | 🔵 待办 | ❌ 无 | || ||
+| Painting Tool | 🔵 待办 | ❌ 无 | || ||
+| LOD | 🔵 待办 | ❌ 无 | || ||
+| Mesh Collision | 🔵 待办 | ❌ 无 | || ||
 
 ### Destruction - Nvidia Blast Integration 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Authoring/Pipeline | 🔵 Backlogged | 🔵 In-Design | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing | Windows  |
-| Geometry Destruction Simulation | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing | Windows  |
-| Materials | 🟡 Active | 🟢 Complete | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing | Windows  |
-| Scripting | 🟢 Complete | 🟠 Minimal | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing | Windows  |
-| Atom Integration | 🔵 Backlogged | 🟠 Minimal | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing | Windows  |
-| PhysX Integration | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟡 Experimental | 🔴 Needs Testing | Windows  |
+| Authoring/Pipeline | 🔵 待办 | 🔵 设计中 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 | Windows  |
+| Geometry Destruction Simulation | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 | Windows  |
+| Materials | 🟡 活跃 | 🟢 完成 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 | Windows  |
+| Scripting | 🟢 完成 | 🟠 最小 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 | Windows  |
+| Atom Integration | 🔵 待办 | 🟠 最小 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 | Windows  |
+| PhysX Integration | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟡 实验 | 🔴 需要测试 | Windows  |
 
 ### Vehicles 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Vehicles | ❌ Unscheduled | || || |
+| Vehicles | ❌ 未安排 | || || |
 
 ### Fluids 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Fluids | ❌ Unscheduled | || || |
+| Fluids | ❌ 未安排 | || || |
 
 ### Soft Bodies 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Soft Bodies | ❌ Unscheduled | || || |
+| Soft Bodies | ❌ 未安排 | || || |
 
 ## SIG-Graphics-Audio 
 
 ### Features 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Deferred Fog | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | All  |
-| Tonemapping | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Direct Lighting / Area Lights | 🟢 Complete | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Meshes | 🟡 Active | 🟡 Partial | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Skinned Meshes | 🟡 Active | 🟡 Partial | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Eye Adaptation | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Culling | 🟡 Active | 🟡 Partial | 🟢 Complete | 🔵 In Progress | 🟡 Needs Optimization | All  |
-| HDR Pipeline | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Shadows | 🟡 Active | 🟡 Partial | 🟢 Complete | 🔵 In Progress | 🟡 Needs Optimization | All  |
-| Skybox and Physical Sky | 🟢 Complete | 🟡 Partial | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| SSAO | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | All  |
-| Color Grading | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Depth of Field | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| PBR Materials | 🟡 Active | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Post Processing Volumes | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Decals | 🟡 Active | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Screen Space Reflections | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Subsurface Scattering | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟡 Needs Optimization | All  |
-| Motion Vectors | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | All  |
-| Temporal Anti-aliasing (TAA) | 🟡 Active | 🟡 Partial | 🟢 Complete | 🔵 In Progress | 🟡 Needs Optimization | All  |
+| Deferred Fog | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Tonemapping | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Direct Lighting / Area Lights | 🟢 完成 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Meshes | 🟡 活跃 | 🟡 部分 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Skinned Meshes | 🟡 活跃 | 🟡 部分 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Eye Adaptation | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Culling | 🟡 活跃 | 🟡 部分 | 🟢 完成 | 🔵 进行中 | 🟡 需要优化 | 所有  |
+| HDR Pipeline | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Shadows | 🟡 活跃 | 🟡 部分 | 🟢 完成 | 🔵 进行中 | 🟡 需要优化 | 所有  |
+| Skybox and Physical Sky | 🟢 完成 | 🟡 部分 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| SSAO | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Color Grading | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Depth of Field | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| PBR Materials | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Post Processing Volumes | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Decals | 🟡 活跃 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Screen Space Reflections | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Subsurface Scattering | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟡 需要优化 | 所有  |
+| Motion Vectors | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | 所有  |
+| Temporal Anti-aliasing (TAA) | 🟡 活跃 | 🟡 部分 | 🟢 完成 | 🔵 进行中 | 🟡 需要优化 | 所有  |
 
 ### Render Hardware Interface 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| DirectX 12 | 🟡 Active | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟡 Needs Optimization | |
-| Vulkan | 🟡 Active | 🟢 Complete | ⭕ Not Required | 🟢 Stable | 🟡 Needs Optimization | |
-| Metal | 🟡 Active | 🟡 Partial | ⭕ Not Required | 🟠 Volatile | 🟡 Needs Optimization | |
+| DirectX 12 | 🟡 活跃 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟡 需要优化 | |
+| Vulkan | 🟡 活跃 | 🟢 完成 | ⭕ 不需要 | 🟢 文档 | 🟡 需要优化 | |
+| Metal | 🟡 活跃 | 🟡 部分 | ⭕ 不需要 | 🟠 易变 | 🟡 需要优化 | |
 
 ### Audio 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Wwise Integration | 🟢 Complete | 🟡 Partial | ⭕ Not Required | 🟢 Stable | 🟢 Optimized | |
+| Wwise Integration | 🟢 完成 | 🟡 部分 | ⭕ 不需要 | 🟢 文档 | 🟢 最优化 | |
 
 ## SIG-Network 
 
 ### Core Networking 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Transport API | 🟢 Complete | || || |
-| Multiple network interface support | 🟢 Complete | || || |
-| Compression (TCP/UDP) | 🟢 Complete | || || |
-| Metrics support | 🟢 Complete | || || |
-| UDP Core | 🟢 Complete | || || |
-| UDP: DTLS support | 🟢 Complete | || || |
-| UDP: Reliable queue support | 🟢 Complete | || || |
-| UDP: Fragmentated packet support | 🟢 Complete | || || |
-| TCP | 🟢 Complete | || || |
-| TCP: TLS Support | 🟢 Complete | || || |
-| TCP: Ringbuffer support Pkg Xmit | 🟢 Complete | || || |
+| Transport API | 🟢 完成 | || || |
+| Multiple network interface support | 🟢 完成 | || || |
+| Compression (TCP/UDP) | 🟢 完成 | || || |
+| Metrics support | 🟢 完成 | || || |
+| UDP Core | 🟢 完成 | || || |
+| UDP: DTLS support | 🟢 完成 | || || |
+| UDP: Reliable queue support | 🟢 完成 | || || |
+| UDP: Fragmentated packet support | 🟢 完成 | || || |
+| TCP | 🟢 完成 | || || |
+| TCP: TLS Support | 🟢 完成 | || || |
+| TCP: Ringbuffer support Pkg Xmit | 🟢 完成 | || || |
 
 ### Multiplayer 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Multiplayer component API | 🟢 Complete | || || |
-| Local Prediction | 🟢 Complete | || || |
-| Server Side Rollback | 🟢 Complete | || || |
-| Play in Editor Mode | 🟡 Active | || || |
-| Hosting/Joining a Game | 🟢 Complete | || || |
-| Network property support | 🟢 Complete | || || |
-| RPC support | 🟢 Complete | || || |
-| Network Input support | 🟡 Active | || || |
-| ScriptBind support | 🟡 Active | || || |
-| Netbound entity support [NetBindComponent] | 🟢 Complete | || || |
-| Entity replication support | 🟢 Complete | || || |
-| Network Prefab Spawning | 🟡 Active | || || |:w
-| Networked Animation | ❌ Unscheduled | || || |
-| Network Audio Support | ❌ Unscheduled | || || |
-| Network Simulation (Physics) | 🟢 Complete | || || |
-| Quality of Service | 🟡 Active | || || |
-| Debugging Tools | 🟡 Active | || || |
-| Metrics | 🟡 Active | || || |
+| Multiplayer component API | 🟢 完成 | || || |
+| Local Prediction | 🟢 完成 | || || |
+| Server Side Rollback | 🟢 完成 | || || |
+| Play in Editor Mode | 🟡 活跃 | || || |
+| Hosting/Joining a Game | 🟢 完成 | || || |
+| Network property support | 🟢 完成 | || || |
+| RPC support | 🟢 完成 | || || |
+| Network Input support | 🟡 活跃 | || || |
+| ScriptBind support | 🟡 活跃 | || || |
+| Netbound entity support [NetBindComponent] | 🟢 完成 | || || |
+| Entity replication support | 🟢 完成 | || || |
+| Network Prefab Spawning | 🟡 活跃 | || || |:w
+| Networked Animation | ❌ 未安排 | || || |
+| Network Audio Support | ❌ 未安排 | || || |
+| Network Simulation (Physics) | 🟢 完成 | || || |
+| Quality of Service | 🟡 活跃 | || || |
+| Debugging Tools | 🟡 活跃 | || || |
+| Metrics | 🟡 活跃 | || || |
 
 ### AWS Cloud Services 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| HTTPS Support | 🟢 Complete | || || |
-| Restful API Support | 🟡 Active | || || |
-| AWS C++ SDK Support | 🟢 Complete | || || |
-| Client Side Ident & Auth | 🟡 Active | || || |
-| Runtime Metrics | 🟡 Active | || || |
-| Amazon GameLift Support | 🟡 Active | || || |
+| HTTPS Support | 🟢 完成 | || || |
+| Restful API Support | 🟡 活跃 | || || |
+| AWS C++ SDK Support | 🟢 完成 | || || |
+| Client Side Ident & Auth | 🟡 活跃 | || || |
+| Runtime Metrics | 🟡 活跃 | || || |
+| Amazon GameLift Support | 🟡 活跃 | || || |
 
 ### Microsoft Azure Cloud Services 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Core services | ❌ Unscheduled | || || |
+| Core services | ❌ 未安排 | || || |
 
 ## SIG-Platform 
 
 ### Platform Abstraction Layer 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| PAL CMake | 🟡 Active | 🟡 Partial | || ||
-| PAL Tools/Editor/AP | 🟡 Active | 🟡 Partial | || ||
+| PAL CMake | 🟡 活跃 | 🟡 部分 | || ||
+| PAL Tools/Editor/AP | 🟡 活跃 | 🟡 部分 | || ||
 
 ### Platform Configure (Engine Centric) 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Windows | 🟢 Complete | 🟢 Complete | || ||
-| Mac | 🟢 Complete | 🟢 Complete | || ||
-| Android | 🟢 Complete | 🟢 Complete | || ||
-| Linux | 🟢 Complete | 🟢 Complete | || ||
+| Windows | 🟢 完成 | 🟢 完成 | || ||
+| Mac | 🟢 完成 | 🟢 完成 | || ||
+| Android | 🟢 完成 | 🟢 完成 | || ||
+| Linux | 🟢 完成 | 🟢 完成 | || ||
 
 ### Platform Build (Engine Centric) 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Windows | 🟢 Complete | 🟢 Complete | || ||
-| Mac | 🟢 Complete | 🟢 Complete | || ||
-| Android | 🟢 Complete | 🟢 Complete | || ||
-| Linux | 🟢 Complete | 🟢 Complete | || ||
+| Windows | 🟢 完成 | 🟢 完成 | || ||
+| Mac | 🟢 完成 | 🟢 完成 | || ||
+| Android | 🟢 完成 | 🟢 完成 | || ||
+| Linux | 🟢 完成 | 🟢 完成 | || ||
 
 
 ### Platform Configure (Project Centric) 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Windows | 🟡 Active | 🟡 Partial | || ||
-| Mac | 🟡 Active | 🟡 Partial | || ||
-| Android | 🟡 Active | 🟡 Partial | || ||
-| Linux | 🟡 Active | 🟡 Partial | || ||
+| Windows | 🟡 活跃 | 🟡 部分 | || ||
+| Mac | 🟡 活跃 | 🟡 部分 | || ||
+| Android | 🟡 活跃 | 🟡 部分 | || ||
+| Linux | 🟡 活跃 | 🟡 部分 | || ||
 
 ### Platform Build (Project Centric) 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Windows | 🟡 Active | 🟡 Partial | || ||
-| Mac | 🟡 Active | 🟡 Partial | || ||
-| Android | 🟡 Active | 🟡 Partial | || ||
-| Linux | 🟡 Active | 🟡 Partial | || ||
+| Windows | 🟡 活跃 | 🟡 部分 | || ||
+| Mac | 🟡 活跃 | 🟡 部分 | || ||
+| Android | 🟡 活跃 | 🟡 部分 | || ||
+| Linux | 🟡 活跃 | 🟡 部分 | || ||
 
 ### O3DE Object Externalization 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Project | 🟢 Complete | 🟢 Complete | || ||
-| Gem | 🟢 Complete | 🟢 Complete | || ||
-| Template | 🟢 Complete | 🟢 Complete | || ||
-| Restricted | 🟡 Active | 🟡 Partial | || ||
-| Repo | 🟡 Active | 🔵 In-Design | || ||
+| Project | 🟢 完成 | 🟢 完成 | || ||
+| Gem | 🟢 完成 | 🟢 完成 | || ||
+| Template | 🟢 完成 | 🟢 完成 | || ||
+| Restricted | 🟡 活跃 | 🟡 部分 | || ||
+| Repo | 🟡 活跃 | 🔵 设计中 | || ||
 
 ### Language/Localization 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Editor | 🟢 Complete | 🟢 Complete | || ||
-| Runtime | 🟡 Active | 🟡 Partial | || ||
+| Editor | 🟢 完成 | 🟢 完成 | || ||
+| Runtime | 🟡 活跃 | 🟡 部分 | || ||
 
 ### Packaging 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Windows | 🟢 Complete | 🟢 Complete | || ||
-| Mac | 🟢 Complete | 🟢 Complete | || ||
-| Android | 🟢 Complete | 🟢 Complete | || ||
-| Linux | 🟢 Complete | 🟢 Complete | || ||
+| Windows | 🟢 完成 | 🟢 完成 | || ||
+| Mac | 🟢 完成 | 🟢 完成 | || ||
+| Android | 🟢 完成 | 🟢 完成 | || ||
+| Linux | 🟢 完成 | 🟢 完成 | || ||
 
 ## SIG-Testing 
 
 ### AutomatedReview 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Early Warning | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | |
-| CTest | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | |
-| GoogleTest | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | |
-| GoogleBenchmark | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | |
-| PyTest | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | |
-| O3DE EditorTest | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | |
-| Test Metrics | 🟢 Complete | 🟢 Complete | 🟢 Complete | 🟢 Stable | 🟢 Optimized | |
+| Early Warning | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | |
+| CTest | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | |
+| GoogleTest | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | |
+| GoogleBenchmark | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | |
+| PyTest | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | |
+| O3DE EditorTest | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | |
+| Test Metrics | 🟢 完成 | 🟢 完成 | 🟢 完成 | 🟢 文档 | 🟢 最优化 | |
 
 ## SIG-UI-UX 
 
 ### UI Components 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Breadcrumb navigation | 🟢 Complete | 🟢 Complete | || ||
-| Browse Edit | 🟢 Complete | 🟢 Complete | || ||
-| Button | 🟢 Complete | 🟢 Complete | || ||
-| Card | 🟠 Planned | 🟡 Partial | || ||
-| Checkbox | 🟢 Complete | 🟢 Complete | || ||
-| Combobox | 🟢 Complete | 🟢 Complete | || ||
-| Context menu | 🟢 Complete | 🟢 Complete | || ||
-| Filtered search | 🟠 Planned | 🟡 Partial | || ||
-| Line edit | 🟢 Complete | 🟢 Complete | || ||
-| Progress indicators | 🟢 Complete | 🟢 Complete | || ||
-| Radio button | 🟢 Complete | 🟢 Complete | || ||
-| Reflected property editor | 🟠 Planned | 🟡 Partial | || ||
-| Scrollbar | 🟢 Complete | 🟢 Complete | || ||
-| Slider | 🟢 Complete | 🟢 Complete | || ||
-| Spinbox | 🟢 Complete | 🟢 Complete | || ||
-| Styled dock | 🟢 Complete | 🟢 Complete | || ||
-| Tab | 🟠 Planned | 🟡 Partial | || ||
-| Toggle switch | 🟢 Complete | 🟢 Complete | || ||
-| Tree view | 🟢 Complete | 🟢 Complete | || ||
-| Array | ❌ Unscheduled | ❌ None | || ||
-| Table view | 🟢 Complete | 🟢 Complete | || ||
+| Breadcrumb navigation | 🟢 完成 | 🟢 完成 | || ||
+| Browse Edit | 🟢 完成 | 🟢 完成 | || ||
+| Button | 🟢 完成 | 🟢 完成 | || ||
+| Card | 🟠 已计划 | 🟡 部分 | || ||
+| Checkbox | 🟢 完成 | 🟢 完成 | || ||
+| Combobox | 🟢 完成 | 🟢 完成 | || ||
+| Context menu | 🟢 完成 | 🟢 完成 | || ||
+| Filtered search | 🟠 已计划 | 🟡 部分 | || ||
+| Line edit | 🟢 完成 | 🟢 完成 | || ||
+| Progress indicators | 🟢 完成 | 🟢 完成 | || ||
+| Radio button | 🟢 完成 | 🟢 完成 | || ||
+| Reflected property editor | 🟠 已计划 | 🟡 部分 | || ||
+| Scrollbar | 🟢 完成 | 🟢 完成 | || ||
+| Slider | 🟢 完成 | 🟢 完成 | || ||
+| Spinbox | 🟢 完成 | 🟢 完成 | || ||
+| Styled dock | 🟢 完成 | 🟢 完成 | || ||
+| Tab | 🟠 已计划 | 🟡 部分 | || ||
+| Toggle switch | 🟢 完成 | 🟢 完成 | || ||
+| Tree view | 🟢 完成 | 🟢 完成 | || ||
+| Array | ❌ 未安排 | ❌ 无 | || ||
+| Table view | 🟢 完成 | 🟢 完成 | || ||
 
-### UX Patterns 
+### UX 模式 
 
-| Module | Feature | Functional | Content | Code/API | Performance | Platform |
+| 模块 | 特性 | 正常使用 | 内容 | 代码/API | 性能 | 平台 |
 | :-- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Component Card | 🟡 Active | 🟡 Partial | || ||
-| Error handling | 🟠 Planned | 🟠 Minimal | || ||
-| Hotkey management | 🔵 Backlogged | 🟠 Minimal | || ||
-| UI/UX Responsiveness standard | 🔵 Backlogged | ❌ None | || ||
-| Viewport interaction | 🔵 Backlogged | 🔵 In-Design | || ||
+| Component Card | 🟡 活跃 | 🟡 部分 | || ||
+| Error handling | 🟠 已计划 | 🟠 最小 | || ||
+| Hotkey management | 🔵 待办 | 🟠 最小 | || ||
+| UI/UX Responsiveness standard | 🔵 待办 | ❌ 无 | || ||
+| Viewport interaction | 🔵 待办 | 🔵 设计中 | || ||

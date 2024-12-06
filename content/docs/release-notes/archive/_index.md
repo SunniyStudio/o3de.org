@@ -1,25 +1,25 @@
 ---
-linktitle: Archive
-title: Archived Release Notes for Open 3D Engine (O3DE)
-description: Find out what's in a given version of O3DE.
+linktitle: 存档
+title: Open 3D Engine （O3DE） 的存档发行说明
+description: 了解给定版本的 O3DE 中的内容。
 weight: 1000
 toc: true
 ---
 
-Looking for older versions of release notes for **Open 3D Engine (O3DE)**? Look no further!
+正在寻找 **Open 3D Engine （O3DE）** 的旧版本发行说明？不用再观望了！
 
-| Version     |  Link                                           | Date of Release    |
+| 版本 | 链接 |发布日期    |
 |-------------|-------------------------------------------------|--------------------|
-| 23.10.0     | [23.10.0 Release Notes](./2310-0-release-notes/)| 10/9/2023 |
-| 23.05.0     | [23.05.0 Release Notes](./2305-0-release-notes/)| 5/3/2023 |
-| 22.10.0     | [22.10.0 Release Notes](./22-10-0/)             | 10/17/2022 |
-| 22.05.0     | [22.05.0 Release Notes](./22-05-0/)             | 5/12/2022 |
-| 2111.2      | [2111.2 Release Notes](./2111-2-release-notes)  | 1/27/2022 |
-| 2111.1      | [2111.1 Release Notes](./21-11-release-notes)     | 12/2/2021          |
-| 2107.1      | [2107.1 Release Notes](./2107-1-release-notes)   | 7/6/2021           |
+| 23.10.0     | [23.10.0 发行说明](./2310-0-release-notes/)| 10/9/2023 |
+| 23.05.0     | [23.05.0 发行说明](./2305-0-release-notes/)| 5/3/2023 |
+| 22.10.0     | [22.10.0 发行说明](./22-10-0/)             | 10/17/2022 |
+| 22.05.0     | [22.05.0 发行说明](./22-05-0/)             | 5/12/2022 |
+| 2111.2      | [2111.2 发行说明](./2111-2-release-notes)  | 1/27/2022 |
+| 2111.1      | [2111.1 发行说明](./21-11-release-notes)     | 12/2/2021          |
+| 2107.1      | [2107.1 发行说明](./2107-1-release-notes)   | 7/6/2021           |
 
 {{< note >}}
-With version 22.05.0, the versioning release scheme changed. Binary installers now share a version with source, and the friendly name has been removed.
+在版本 22.05.0 中，版本控制发布方案发生了变化。二进制安装程序现在与 source 共享一个版本，并且友好名称已被删除。
 
-For earlier releases: Source versions use the `XXXX.Y` numbering model. Binary releases use `XX.XX FriendlyName` names, where the decimal place is moved to the left by two values from the original source code version.
+对于早期版本：源版本使用 `XXXX.Y` 编号模型。二进制版本使用`XX.XX FriendlyName`名称，其中小数位从原始源代码版本向左移动两个值。
 {{< /note >}}

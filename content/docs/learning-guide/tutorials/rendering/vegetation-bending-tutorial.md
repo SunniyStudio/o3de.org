@@ -1,7 +1,7 @@
 ---
-linkTitle: Vertex Deformation
-title: Vertex Deformation for Vegetation Bending Tutorial
-description: A tutorial for adding vegetation bending by creating custom a material type and authoring shaders with the Atom Renderer in the Open 3D Engine (O3DE).
+linkTitle: 顶点变形
+title: 植被弯曲的顶点变形教程
+description: 通过创建自定义材质类型并使用 Open 3D Engine （O3DE） 中的 Atom 渲染器编写着色器来添加植被弯曲的教程。
 toc: true
 ---
 

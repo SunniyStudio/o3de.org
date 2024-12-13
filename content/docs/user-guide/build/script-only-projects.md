@@ -17,6 +17,11 @@ O3DE 中的项目可以在一种模式下创建，该模式禁止所有 C++ 编�
 尽管有这些限制，但它仍是一种快速进入编辑器并立即开始创建的方法，无需下载编译器，也无需下载任何额外的 c++ 开发库（如 Qt SDK）。
 
 ## 创建纯脚本项目
+
+{{< note >}}
+虽然纯脚本模式不需要 C++ 编译器，但兼容的编译系统（如 [Ninja](https://ninja-build.org/) 或 [GNU Make](https://www.gnu.org/software/make/)）**是**必需的，因为它负责将所有零碎文件复制到编译文件夹中。
+{{< /note >}}
+
 你可以使用 ScriptOnlyProject [模板](/docs/user-guide/build/templates.md)创建一个新的纯脚本项目，更多信息请参阅 [创建项目](/docs/welcome-guide/create)文档。
 
 您也可以通过修改项目根目录下的 `project.json` 文件，将现有项目转换为纯脚本项目。 决定项目是否为纯脚本项目的标志是`project.json`根目录中的以下标记：

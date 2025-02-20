@@ -6,8 +6,7 @@
 {{ $fonts := site.Params.fonts }}
 
 {{ with $fontAwesomeVersion }}
-{{ $fontAwesomeUrl := printf "https://use.fontawesome.com/releases/v%s/css/all.css" . }}
-@import url("{{ $fontAwesomeUrl }}")
+@import url("fontawesome/all.css")
 {{ end }}
 
 {{ if $fonts }}
@@ -15,10 +14,9 @@
 {{ range $fonts }}
 {{ $fontSlice = $fontSlice | append (printf "%s:%s" (replace .name " " "+") (delimit .sizes ",")) }}
 {{ end }}
-{{ $fontsUrl := printf "https://fonts.googleapis.com/css?family=%s" (delimit $fontSlice "|") }}
-@import url("{{ $fontsUrl }}")
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800;900&display=swap');
+@import "fonts/poppins.css"
+@import "fonts/open-sans.css"
 
 {{ end }}
 
@@ -573,7 +571,7 @@ $width: '59vw';
   position: relative
   
   @include media-breakpoint-down(md)
-    background-image: url('https://dhs-o.s3.us-east-2.amazonaws.com/images/Hero3-1366x636-v2.jpg')
+    background-image: url('/images/hero/Hero3-1366x636-v2.jpg')
     background-position: 80% 100%
     
     &::before
@@ -586,10 +584,10 @@ $width: '59vw';
       bottom: 0
   
   @include media-breakpoint-down(xxl)
-    background-image: url('https://dhs-o.s3.us-east-2.amazonaws.com/images/Hero3-1600x500-v2.jpg')
+    background-image: url('/images/hero/Hero3-1600x500-v2.jpg')
 
   @include media-breakpoint-up(xxl)
-    background-image: url('https://dhs-o.s3.us-east-2.amazonaws.com/images/Hero3-3452x1080-v2-%402x.jpg')
+    background-image: url('/images/hero/Hero3-3452x1080-v2-%402x.jpg')
   
   .home-hero-copyright
     color: #AAA

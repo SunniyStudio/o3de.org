@@ -29,7 +29,7 @@ primary: true
 
 ### 使用 Project Manager 创建项目
 
-{{< bilibili-width id="_BV1fh411i7uQ?start=142" title="Installing O3DE for Windows - Create a Project" >}}
+{{< bilibili-width id="BV1fh411i7uQ" title="Installing O3DE for Windows - Create a Project" >}}
 
 ### 从 GitHub 设置 O3DE
 

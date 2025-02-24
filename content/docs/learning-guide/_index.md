@@ -21,7 +21,7 @@ primary: true
 
 ### 什么是 O3DE？
 
-{{< youtube-width id="CQmjAxr7LZs" title="What is O3DE?" >}}
+{{< bilibili-width id="BV1uo4y1X7c1" title="What is O3DE?" >}}
 
 ### 为 Windows 安装 O3DE
 
@@ -33,35 +33,35 @@ primary: true
 
 ### 从 GitHub 设置 O3DE
 
-{{< youtube-width id="GZF_6SkAXPw" title="Setting up O3DE from GitHub" >}}
+{{< bilibili-width id="BV1X44y1q7aL" title="Setting up O3DE from GitHub" >}}
 
 ### 使用命令行创建项目
 
-{{< youtube-width id="SZC13S0YZZs" title="Creating Projects Using the Command Line" >}}
+{{< bilibili-width id="BV1C44y1q7SD" title="Creating Projects Using the Command Line" >}}
 
 ### O3DE 开发人员概述
 
-{{< youtube-width id="lWhPwDYeuhc" title="O3DE Developer Overview" >}}
+{{< bilibili-width id="BV1gb4y1k7Hr" title="O3DE Developer Overview" >}}
 
 ### Atom 渲染器
 
-{{< youtube-width id="GTJ_ie7yHdI" title="Atom Renderer" >}}
+{{< bilibili-width id="BV13L411W7VK" title="Atom Renderer" >}}
 
 ### O3DE 网络概述
 
-{{< youtube-width id="FfrkHJJt_X0" title="O3DE Networking Overview" >}}
+{{< bilibili-width id="BV1s54y1n7He" title="O3DE Networking Overview" >}}
 
 ### O3DE 中的 AWS Gem
 
-{{< youtube-width id="EG0C9enezzo" title="AWS Gems in O3DE" >}}
+{{< bilibili-width id="BV1sU4y137wj" title="AWS Gems in O3DE" >}}
 
 ### O3DE 编辑器导览
 
-{{< youtube-width id="tFfiXhckd7g" title="O3DE Editor Tour" >}}
+{{< bilibili-width id="BV1mf4y1L74U" title="O3DE Editor Tour" >}}
 
 ### O3DE Script Canvas 概述
 
-{{< youtube-width id="fTNcUV4zAgE" title="O3DE Script Canvas Overview" >}}
+{{< bilibili-width id="BV1u54y1n7Sb" title="O3DE Script Canvas Overview" >}}
 
 ## 为 O3DE 文档做贡献
 

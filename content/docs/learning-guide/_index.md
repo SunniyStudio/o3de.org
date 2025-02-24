@@ -25,11 +25,11 @@ primary: true
 
 ### 为 Windows 安装 O3DE
 
-{{< youtube-width id="_BhkXOBDYGA" title="Installing O3DE for Windows" >}}
+{{< bilibili-width id="BV1MWPWeJE66" title="Installing O3DE for Windows" >}}
 
 ### 使用 Project Manager 创建项目
 
-{{< youtube-width id="_BhkXOBDYGA?start=142" title="Installing O3DE for Windows - Create a Project" >}}
+{{< bilibili-width id="_BV1fh411i7uQ?start=142" title="Installing O3DE for Windows - Create a Project" >}}
 
 ### 从 GitHub 设置 O3DE
 
@@ -65,4 +65,4 @@ primary: true
 
 ## 为 O3DE 文档做贡献
 
-{{< youtube-width id="DGz9Clo6EKw" title="Contributing to O3DE Documentation" >}}
+{{< bilibili-width id="BV1uWPWeJEgX" title="Contributing to O3DE Documentation" >}}

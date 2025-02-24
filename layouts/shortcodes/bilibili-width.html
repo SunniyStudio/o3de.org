@@ -1,0 +1,14 @@
+{{- $id := .Get "id" | default (.Get 0) -}}
+{{- $class := .Get "class" | default (.Get 1) -}}
+{{- $title := .Get "title" | default "Bilibili Video" -}}
+{{- $width := .Get "width" | default "100%" -}}
+<div {{ with $class }}class="{{ . }}"{{ else }}style="position: relative; padding-bottom: calc({{ $width }} * 0.625); width: {{ $width }}; height: 0; overflow: hidden;"{{ end }}>
+  <iframe
+    src="https://player.bilibili.com/player.html?bvid={{ $id }}&autoplay=0&page=1"
+    {{ if not $class }}style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;"{{ end }}
+    scrolling="no"
+    frameborder="no"
+    allowfullscreen="true"
+    title="{{ $title }}">
+  </iframe>
+</div>

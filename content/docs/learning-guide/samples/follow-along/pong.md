@@ -15,36 +15,36 @@ T他的主题包含视频教程，这些教程将指导您在 Open 3D Engine （
 
 正如传统观点所说，游戏始于 Pong。您对 O3DE 的体验也可以从 Pong 开始！让 AWS Game Tech 的技术培训师 Alex Damarjian 通过本系列指导您学习 O3DE 游戏开发的基础知识，同时让您使用现代游戏引擎和工具重温历史。 
 
-[Take me to the full playlist!](https://www.youtube.com/playlist?list=PLCQwFpnHSZQhhsr6iJqyeYqKe6dexnHh9)
+[节目单](https://www.bilibili.com/video/BV137PWeWE21)
 
 ### Pong 项目和关卡创建
 
-{{< youtube-width id="kK0XnYFKw38" title="O3DE - 001: Pong Project and Level Creation" >}}
+{{< bilibili-width id="BV1XFP4eaEHS" title="O3DE - 001: Pong Project and Level Creation" >}}
 
 ### 创建 Game Start 菜单
 
-{{< youtube-width id="ULsTwK-GEt8" title="O3DE - 002: Pong Creating a Start Menu" >}}
+{{< bilibili-width id="BV1GFP4eYEbh" title="O3DE - 002: Pong Creating a Start Menu" >}}
 
 ### 编写 Game Start 菜单的脚本
 
-{{< youtube-width id="6-353OtcTkM" title="O3DE - 003: Pong Scripting the Start Menu" >}}
+{{< bilibili-width id="BV1XFP4eaEnF" title="O3DE - 003: Pong Scripting the Start Menu" >}}
 
 ### 创建 Pong Level 资产
 
-{{< youtube-width id="1z5SOi-McPI" title="O3DE - 004: Pong Creating The Level Assets" >}}
+{{< bilibili-width id="BV19FP4eaEKe" title="O3DE - 004: Pong Creating The Level Assets" >}}
 
 ### 编写玩家 （Paddle） 移动和控制脚本
 
-{{< youtube-width id="4zwZcVQskGg" title="O3DE - 005: Pong Scripting Paddle Movement" >}}
+{{< bilibili-width id="BV1DPP4efE7y" title="O3DE - 005: Pong Scripting Paddle Movement" >}}
 
 ### 实现简单的游戏状态机
 
-{{< youtube-width id="Z7hqAJnj4-g" title="O3DE - 006 Pong Simple State Machine" >}}
+{{< bilibili-width id="BV1QPP4efEFN" title="O3DE - 006 Pong Simple State Machine" >}}
 
 ### 编写球的运动和行为脚本
 
-{{< youtube-width id="Z84zOz0DCMg" title="O3DE - 007: Pong Scripting Our Ball Movement" >}}
+{{< bilibili-width id="BV1DPP4efE8S" title="O3DE - 007: Pong Scripting Our Ball Movement" >}}
 
 ### 创建 “Game Over” 用户界面
 
-{{< youtube-width id="cqQNHGkyo94" title="O3DE - 008 Pong Creating The Game Over UI" >}}
+{{< bilibili-width id="BV137PWeWE21" title="O3DE - 008 Pong Creating The Game Over UI" >}}

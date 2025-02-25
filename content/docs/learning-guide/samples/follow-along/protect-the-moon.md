@@ -13,36 +13,36 @@ toc: true
 
 ## 视频教程系列：使用 O3DE 创建“保护月球”
 
-[Take me to the full playlist!](https://www.youtube.com/playlist?list=PLCQwFpnHSZQgyIu4JeOUDCsNCVgWOz3Mf)
+[节目单](https://www.youtube.com/playlist?list=PLCQwFpnHSZQgyIu4JeOUDCsNCVgWOz3Mf)
 
 ### 项目设置
 
-{{< youtube-width id="rJBAChtWPCs" title="01 Project Setup" >}}
+{{< bilibili-width id="BV1vCPheUEMv" title="01 Project Setup" >}}
 
 ### 创建主菜单
 
-{{< youtube-width id="wMbszzKs3ME" title="02 Creating The Main Menu" >}}
+{{< bilibili-width id="BV1vCPheUEhs" title="02 Creating The Main Menu" >}}
 
 ### 设置项目资源
 
-{{< youtube-width id="r0JNHOtevPA" title="03 Setting Up Project Assets" >}}
+{{< bilibili-width id="BV1iCPheUEKw" title="03 Setting Up Project Assets" >}}
 
 ### 玩家移动
 
-{{< youtube-width id="DtVudWEkmOM" title="04 Player Movement" >}}
+{{< bilibili-width id="BV1dCPheUEA2" title="04 Player Movement" >}}
 
 ### 敌人和生成
 
-{{< youtube-width id="yk3PJ-HdshQ" title="05 Enemies & Spawning" >}}
+{{< bilibili-width id="BV1iCPheUEN5" title="05 Enemies & Spawning" >}}
 
 ### 弹丸和碰撞
 
-{{< youtube-width id="Jqolu6iSQzM" title="06 Enemies & Spawning" >}}
+{{< bilibili-width id="BV1iCPheUE51" title="06 Enemies & Spawning" >}}
 
 ### 评分与生命 第 1 部分
 
-{{< youtube-width id="yKtTlGb7Jbo" title="07 Scoring and Lives Part 1" >}}
+{{< bilibili-width id="BV1vCPheUE4m" title="07 Scoring and Lives Part 1" >}}
 
 ### 评分与生命 第 2 部分
 
-{{< youtube-width id="2_9XsWPM-kM" title="08 Scoring and Lives Part 2" >}}
+{{< bilibili-width id="BV1vCPheUE2T" title="08 Scoring and Lives Part 2" >}}

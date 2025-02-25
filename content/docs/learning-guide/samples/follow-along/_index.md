@@ -1,6 +1,6 @@
 ---
-linktitle: Follow Along
-title: Follow Along
+linktitle: 跟着做
+title: 跟着做
 description: 按照文档逐步制作游戏。
 weight: 100
 ---

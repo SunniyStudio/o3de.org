@@ -211,12 +211,12 @@ toc: true
 1. 没有 `width` 参数的 `youtube-width` 示例使用默认值 `width: 50%`：
 
     ```markdown
-    {{</* youtube-width id="CQmjAxr7LZs" title="What is O3DE?" */>}}
+    {{</* youtube-width id="BV1uo4y1X7c1" title="What is O3DE?" */>}}
     ```
 
     输出:
 
-    {{< youtube-width id="CQmjAxr7LZs" title="What is O3DE?" >}}
+    {{< youtube-width id=BV1uo4y1X7c1s" title="What is O3DE?" >}}
 
     <br>
 

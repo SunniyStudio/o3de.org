@@ -29,7 +29,7 @@ weight: 100
 
 不想阅读令人厌烦的文字，而更喜欢一个活泼的视频来帮助您入门？请观看此视频！
 
-{{< youtube-width id="DGz9Clo6EKw" title="Contributing to O3DE Documentation" >}}
+{{< bilibili-width id="BV1uWPWeJEgX" title="Contributing to O3DE Documentation" >}}
 
 ## 技术信息
 

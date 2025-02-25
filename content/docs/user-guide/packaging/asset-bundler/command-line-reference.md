@@ -124,7 +124,7 @@ build/linux/bin/profile/AssetBundlerBatch seeds --seedFileList MyProject/AssetBu
 
 用于此命令的平台。默认为当前项目支持的所有平台。可以通过修改`AssetProcessorPlatformConfig.ini`来更改支持的平台。
 
-平台名称可以在 `AssetProcessorPlatformConfig.ini` 文件中找到，也可以作为文件夹名称找到`dev/Cache/ProjectName` 。
+平台名称可以在 `Registry/AssetProcessorPlatformConfig.ini` 文件中找到，也可以作为文件夹名称找到`dev/Cache/ProjectName` 。
 
 * *Type:* 多值参数
 * *Required:* No

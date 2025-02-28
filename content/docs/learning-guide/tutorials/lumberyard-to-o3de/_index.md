@@ -10,6 +10,8 @@ description: Learn how to export a project from the legacy Lumberyard engine to 
 
 以下教程将使用 Lumberyard [Starter Game](https://www.youtube.com/watch?v=HakIPkpJta0) 项目作为示例。这是一款以未来主义为背景的第三人称射击游戏。它具有带有植被、脚本事件、人工智能和许多用户界面的大型地形。
 
+**已完成的转换** 到 O3DE [可在此处访问](https://github.com/o3de/startergame-assets)
+
 | 教程 | 描述                                   |
 | - |--------------------------------------|
 | [获取 Starter Game 项目](get-starter-game-project) | 了解如何获取 Lumberyard 并运行 StarterGame 项目 |

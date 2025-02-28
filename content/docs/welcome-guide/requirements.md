@@ -206,6 +206,7 @@ sudo apt install libstdc++-12-dev clang
 O3DE 还需要安装一些额外的库包：
 
 * libglu1-mesa-dev
+* libxcb-randr0-dev
 * libxcb-xinerama0
 * libxcb-xinput0
 * libxcb-xinput-dev
@@ -225,7 +226,7 @@ O3DE 还需要安装一些额外的库包：
 您可以通过`apt`下载并安装这些软件包。
 
 ```shell
-sudo apt install libglu1-mesa-dev libxcb-xinerama0 libxcb-xinput0 libxcb-xinput-dev libxcb-xfixes0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev libfontconfig1-dev libpcre2-16-0 zlib1g-dev mesa-common-dev libunwind-dev libzstd-dev tix
+sudo apt install libglu1-mesa-dev libxcb-randr0-dev libxcb-xinerama0 libxcb-xinput0 libxcb-xinput-dev libxcb-xfixes0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev libfontconfig1-dev libpcre2-16-0 zlib1g-dev mesa-common-dev libunwind-dev libzstd-dev tix
 ```
 
 ### Ninja 构建系统（可选）

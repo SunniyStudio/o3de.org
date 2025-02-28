@@ -19,30 +19,31 @@ Atom 的预建渲染管道可随时使用，并包含**Open 3D Engine (O3DE)** �
 
 本表列出了主渲染管道和低端渲染管道默认支持的功能。
 
-| 特性 | 说明 | 主渲染管道 | 低端渲染管道 |
-| - | - | - | - |
-| Skinning | 基于计算着色器的网格蒙皮，用于骨骼加权动画和变形目标。 | Yes | Yes |
-| Directional shadows | 级联阴影贴图，模拟太阳光。 | Yes | Yes |
-| Punctual shadows | 点光源和聚光灯的阴影。 | Yes | Yes |
-| Area lights | 球形灯、圆盘灯、胶囊灯、四边形灯和多边形灯。 | Yes | Yes |
-| Light culling | 基于瓦片或集群的光线剔除，以便在前向+通路中实现高效的光线迭代。 | Yes | Yes |
-| RTX global illumination | 使用 NVIDIA RTXGI（RTX 全局照明）的实时全局照明。 | Yes | No |
-| Reflection probe | 为镜面反射照明（IBL）生成和使用反射探针。| Yes | Yes |
-| Physically based sky | 使用基于物理的大气建模进行基本的天空渲染。| Yes | No |
-| HDR skybox | 使用 HDR 图像作为天空盒。| Yes | Yes |
-| Screen space ambient occlusion (SSAO) | 在场景中应用 SSAO，在物体交汇处创建接触阴影。 | Yes | No |
-| Subsurface scattering | 利用屏幕空间技术计算皮肤等材质的次表面散射。 | Yes | No |
-| Deferred fog | 在场景中应用基于高度的雾化效果。 | Yes | No |
-| Screen space reflections (SSR) | 通过使用渲染的照明缓冲区来近似实时反射，从而实现 SSR。 | Yes | No |
-| Depth of field | 根据场景的深度和相机对焦参数，为场景应用虚化景深效果。| Yes | No |
-| Bloom | 在渲染的图像上应用绽放效果，使明亮的像素向邻近像素渗出。 | Yes | No |
-| Subpixel morphological anti-aliasing (SMAA) | 应用 SMAA 作为抗锯齿技术。 | Yes | No |
-| Temporal anti-aliasing (TAA) | TAA 使用运动矢量和时间超采样来减少最终图像中的混叠现象。 | Yes | No |
-| Light adaptation | 根据场景的平均亮度调整最终图像的亮度，使图像看起来既不会太暗也不会太亮。 | Yes | Yes |
-| Look modification and color grading | 允许艺术家使用查找表（LUT）调整图像的最终效果。 | Yes | Yes |
-| Display mapping | 根据屏幕期望的色彩范围调整最终图像的色彩值。 | Yes | Yes |
-| User interface (UI) | 渲染二维用户界面组件 | Yes | Yes |
-| Auxilary geometry (AuxGeom) | 为编辑器内工具和调试渲染各种几何图形和文本，例如小工具、网格、调试线和形状。 | Yes | Yes |
+| 特性                                          | 说明                                                                                                                   | 主管线 | 低端管线 |
+|---------------------------------------------|----------------------------------------------------------------------------------------------------------------------|-----|------|
+| Skinning                                    | 基于计算着色器的网格蒙皮，适用于骨骼加权动画和变形目标。                                                                                         | Yes | Yes  |
+| Directional shadows                         | 级联阴影贴图，用于模拟太阳光。                                                                                                      | Yes | Yes  |
+| Punctual shadows                            | 精准光源类型的阴影：点光源和聚光灯。                                                                                                   | Yes | Yes  |
+| Area lights                                 | 球形、圆盘、胶囊、四边形和多边形光。                                                                                                   | Yes | Yes  |
+| Light culling                               | 基于平铺或基于群集的光剔除，可在 Forward+ 通道中实现高效的光迭代。                                                                               | Yes | Yes  |
+| RTX global illumination                     | 使用 NVIDIA RTXGI （RTX 全局照明） 的实时全局照明。                                                                                  | Yes | No   |
+| Reflection probe                            | 生成并使用反射探针进行基于图像的镜面反射照明 （IBL）。                                                                                        | Yes | Yes  |
+| Physically based sky                        | 使用基于物理的大气建模的基本天空渲染。                                                                                                  | Yes | No   |
+| HDR skybox                                  | Uses an HDR image as a skybox.将 HDR 图像用作天空盒。                                                                         | Yes | Yes  |
+| Screen space ambient occlusion (SSAO)       | 将 SSAO 应用于场景，以在对象相交处创建接触阴影。                                                                                          | Yes | No   |
+| Subsurface scattering                       | 使用屏幕空间技术计算材质（如蒙皮）的次表面散射。                                                                                             | Yes | No   |
+| Deferred fog                                | 将基于高度的雾应用于场景。                                                                                                        | Yes | No   |
+| Screen space reflections (SSR)              | 通过使用渲染的光照缓冲区来近似实时反射来实现 SSR。                                                                                          | Yes | No   |
+| Depth of field                              | 将基于场景的深度和摄像机焦点参数的散景形状景深效果应用于场景。                                                                                      | Yes | No   |
+| Bloom                                       | 将泛光效果应用于渲染的图像，使亮像素渗出到相邻像素中。                                                                                          | Yes | No   |
+| Subpixel morphological anti-aliasing (SMAA) | 将 SMAA 应用为抗锯齿技术。                                                                                                     | Yes | No   |
+| Temporal anti-aliasing (TAA)                | TAA 使用运动矢量和时间超级采样来减少最终图像中的锯齿。                                                                                        | Yes | No   |
+| Light adaptation                            | 根据场景的平均明亮度调整最终图像的亮度，使图像看起来既不太暗也不太亮。                                                                                  | Yes | Yes  |
+| Look modification and color grading         | 允许艺术家使用查找表 （LUT） 调整图像的最终外观。                                                                                          | Yes | Yes  |
+| Display mapping                             | 根据屏幕预期的颜色范围调整最终图像的颜色值。                                                                                               | Yes | Yes  |
+| User interface (UI)                         | 渲染 2D UI 组件。                                                                                                         | Yes | Yes  |
+| Auxilary geometry (AuxGeom)                 | 渲染各种几何体和文本，用于编辑器内工具和调试，例如 Gizmo、网格、调试行和形状。 | Yes | Yes  |
+| Terrain system                              | 支持任意大小的关卡的地形创作、模拟和可视化                                                                                                | Yes | No   |
 
 
 

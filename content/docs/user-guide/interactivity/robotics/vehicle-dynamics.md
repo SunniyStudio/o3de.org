@@ -29,7 +29,7 @@ VehicleModelComponent 用于将目标速度、转向或加速度等输入转换�
 
 ### Ackermann Drive Model
 
-**AckermannDriveModel** 的实现使用[control_toolbox](https://github.com/ros-controls/control_toolbox)包中的 [PID 控制器](https://en.wikipedia.org/wiki/PID_controller)。该模型计算车辆接头中的速度或力，并相应地将其应用于命令速度。
+**AckermannDriveModel** 的实现使用 [PID 控制器](https://en.wikipedia.org/wiki/PID_controller)。该模型计算车辆接头中的速度或力，并相应地将其应用于命令速度。
 
 ![AckermannModel](/images/user-guide/gems/ros2/ackermanModel.png)
 

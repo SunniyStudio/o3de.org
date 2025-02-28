@@ -52,7 +52,7 @@ target_depends_on_ros2_packages(<your_target> <ros_package1> <ros_package2>)
 * gazebo_msgs: `ros-${ROS_DISTRO}-gazebo-msgs`
     * gazebo_msgs 用于机器人生成（不依赖于 Gazebo）。
 * Ackermann messages: `ros-${ROS_DISTRO}-ackermann-msgs`
-* Control toolbox `ros-${ROS_DISTRO}-control-toolbox`
+* Control messages `ros-${ROS_DISTRO}-control-msgs`
 * XACRO `ros-${ROS_DISTRO}-xacro`
 * Vision msgs `ros-${ROS_DISTRO}-vision-msgs`
 
@@ -61,7 +61,7 @@ target_depends_on_ros2_packages(<your_target> <ros_package1> <ros_package2>)
 使用这个有用的命令来安装：
 
 ```
-sudo apt install ros-${ROS_DISTRO}-ackermann-msgs ros-${ROS_DISTRO}-control-toolbox ros-${ROS_DISTRO}-nav-msgs ros-${ROS_DISTRO}-gazebo-msgs ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-vision-msgs
+sudo apt install ros-${ROS_DISTRO}-ackermann-msgs ros-${ROS_DISTRO}-control-msgs ros-${ROS_DISTRO}-nav-msgs ros-${ROS_DISTRO}-gazebo-msgs ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-vision-msgs
 ```
 
 ### 克隆 Gem 存储库

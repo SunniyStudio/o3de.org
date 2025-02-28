@@ -32,3 +32,5 @@ description: 用于 Open 3D Engine （O3DE） 中机器人操作系统 （ROS 2�
 
 **ROS 2 Frame** 组件处理与实体关联的命名空间、框架 ID 和关节名称，该实体是机器人的一部分。
 传感器和控制器等许多其他组件都依赖于它。**ROS 2 Frame** 在内部与这些组件一起工作，以确保主题的命名空间、在每条消息中发送适当的`frame_id`以及广播到`/tf` 和 `/tf_static`主题的转换。
+
+如果实体包含 JointComponent（不是固定关节）或 ArticulatedComponent，则转换会持续更新并发布到`/tf`。否则，它将在 `/tf_static` 主题上发布一次，即使实体移动也不会更新。

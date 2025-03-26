@@ -1,9 +1,9 @@
 ---
-linkTitle: 第6章 FindComponent是什么
-title: 第6章 FindComponent是什么
-description: 第6章 FindComponent是什么
+linkTitle: 第5章 FindComponent是什么
+title: 第5章 FindComponent是什么
+description: 第5章 FindComponent是什么
 ---
-# 第6章 FindComponent是什么
+# 第5章 FindComponent是什么
 
 ## 介绍
 组件之间最简单、最直接的通信形式是获取指向另一个组件的指针，然后直接调用其方法。使用指向另一个组件的原始指针，您可以获得最快的通信形式。这种方法有一些缺点，但很多时候是值得的。

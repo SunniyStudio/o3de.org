@@ -8,62 +8,61 @@ description: 第4章 编写自己的组件
 官方参考如何创建 O3DE 游戏项目：
 https://www.o3de.org/docs/user-guide/project-config/project-manage
 
-## Introduction to Game Project Files
-We created a new project in Chapter 2, Creating a New Project. In this chapter we are going to take a look at the files involves and add a new component to the project.
+## 游戏工程文件简介
+我们在第 2 章 创建新项目中创建了一个新项目。在本章中，我们将查看涉及的文件，并向项目添加新组件。
 
 {{<note>}}
-In later chapters, we will re-visit the structure of a game project in O3DE once we go over more concepts, such as EBus, gems, prefabs, etc. For now, I am going to cover just the basics to get us started writing new components.
+在后面的章节中，一旦我们介绍了更多概念，例如 EBus、gem、预制件等，我们将重新审视 O3DE 中游戏项目的结构。现在，我将只介绍基础知识，让我们开始编写新组件。
 {{</note>}}
 
-This chapter covers the following topics:
-* Basic project structure.
-* Adding a new C++ component.
-* Finding the new C++ component in the Editor
+本章包括以下主题：
+* 基本项目结构。
+* 添加新的 C++ 组件。
+* 在 Editor 中查找新的 C++ 组件
 
-## Basic Structure of a New Project
+## 新项目的基本结构
 
 {{<note>}}
-The source code for this project can be found on GitHub at:
+此项目的源代码可以在 GitHub 上找到：
 https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch04_creating_components
 {{</note>}}
 
-Previously we created a new project and placed it at C:\git\book\MyProject. We generated the build folder at C:\git\book\build that contains the Visual Studio solution MyProject.sln.
+之前，我们创建了一个新项目并将其放置在 C:\git\book\MyProject 中。我们在 C:\git\book\build 中生成了包含 Visual Studio 解决方案MyProject.sln的 build 文件夹。
 
-There are a lot of projects and sub-folders in here but we are going to focus on the essentials.
-* ZERO_CHECK is a special CMake target that rebuilds Visual Studio from any changes to CMake build files. When we add a new component we will need to build this project and re-load the solution with the updates.
-* Editor is the target that runs O3DE Editor with our project. It does not actually build any of the Editor
-code. The Editor binary is provided by the O3DE installation in C:\O3DE\21.11.2.
-* MyProject.Static is the static library for adding new components.
+这里有很多项目和子文件夹，但我们将专注于基本内容。
+* ZERO_CHECK是一个特殊的 CMake 目标，它根据对 CMake 构建文件的任何更改重新构建 Visual Studio。当我们添加新组件时，我们需要构建此项目并使用更新重新加载解决方案。
+* Editor 是在我们的项目中运行 O3DE Editor 的目标。它实际上并不构建任何 Editor 代码。编辑器二进制文件由 C:\O3DE\21.11.2 中的 O3DE 安装提供。
+* MyProject.Static是用于添加新组件的静态库。
 
-Figure 4.1. MyProject solution in Visual Studio
+图 4.1.Visual Studio 中的 MyProject 解决方案
 
 ![](/images/learning-guide/tutorials/o3de-book/Part2/o3de_book_2_23.PNG)
 
-MyProject is the dynamic library that links MyProject.Static and provides the component information to the Editor and game launcher. In other words, MyProject.Static defines the components and MyProject registers them for your project.
+MyProject 是链接 MyProject.Static 并向 Editor 和游戏启动器提供组件信息的动态库。换句话说，MyProject.Static 定义组件，而 MyProject 为您的项目注册这些组件。
 
-At the moment the only component we have in the project is the default system component.
+目前，我们在项目中拥有的唯一组件是默认的系统组件。
 * C:\git\book\MyProject\Code\Source\MyProjectSystemComponent.h
 * C:\git\book\MyProject\Code\Source\MyProjectSystemComponent.cpp
 
-What are the elements of MyProject.Static library?
-* Include/MyProject contains various public interfaces. I will cover various options available in O3DE in later chapters when we tackle communication between components, starting with Chapter 5, What is FindComponent?
-* Source contains source and header files of the components and any other classes and objects you might write.
-* CMakeLists.txt is the build script where MyProject.Static is defined.
-* enabled_gems.cmake deals with the gem system that we will tackle in Chapter 12, What is a Gem?
-* myproject_files.cmake defines the list of source and other files to be included in the build and  in Visual Studio solution
+MyProject.Static 库的元素是什么？
+* Include/MyProject包含各种公共接口。在后面的章节中，当我们处理组件之间的通信时，我将介绍 O3DE 中可用的各种选项，从第 5 章 什么是 FindComponent 开始？
+* Source 包含组件的源文件和头文件，以及您可能编写的任何其他类和对象。
+* CMakeLists.txt 是定义 MyProject.Static 的生成脚本。
+* enabled_gems.cmake 处理 Gem 系统，我们将在第 12 章 什么是Gem？
+* myproject_files.cmake 定义要包含在生成和 Visual Studio 解决方案中的源文件和其他文件的列表
 
-Figure 4.2. MyProject.Static library
+图 4.2.MyProject.Static 库
 
 ![](/images/learning-guide/tutorials/o3de-book/Part2/o3de_book_2_24.PNG)
 
-Generally, any new component you would write would be placed under MyProject\Code\Source,  either directly in Source folder or under a sub-folder of your choice.
+通常，您编写的任何新组件都将放在 MyProject\Code\Source 下，直接放在 Source 文件夹中或您选择的子文件夹下。
 
-If you were to search for references to MyProjectSystemComponent under C:\git\book \MyProject, you would find two more files where it is referenced.
+如果要在 C:\git\book \MyProject 下搜索对 MyProjectSystemComponent 的引用，则会在引用它的位置找到另外两个文件。
 
 ### myproject_files.cmake
-*_files.cmake are O3DE project files that list the files to be included and compiled for a project.
+*_files.cmake 是 O3DE 项目文件，其中列出了要为项目包含和编译的文件。
 
-Example 4.1. MyProject\Code\myproject_files.cmake
+例 4.1.我的项目\代码\myproject_files.cmake
 ```shell
 set(FILES
   Include/MyProject/MyProjectBus.h
@@ -74,21 +73,22 @@ set(FILES
 ```
 
 {{<tip>}}
-You can also include files other than the source code, such as various configuration files, shaders files, if you wish to have easier access them inside Visual Studio. The build system will exclude them from compilation.
+如果您希望在 Visual Studio 中更轻松地访问它们，您还可以包含源代码以外的文件，例如各种配置文件、着色器文件。构建系统会将它们从编译中排除。
 {{</tip>}}
 
-You can see references to source and header files of MyProjectSystemComponent. File paths must be local to the project's Code folder: C:\git\book\MyProject\Code.
+你可以看到对 MyProjectSystemComponent 的源文件和头文件的引用。文件路径必须是项目 Code 文件夹的本地路径：C:\git\book\MyProject\Code。
 
 {{<note>}}
-In order to add new files to the build, you must reference them in this file.
+为了将新文件添加到构建中，您必须在此文件中引用它们。
 {{</note>}}
 
 {{<note>}}
-O3DE uses CMake as its build system. This chapter will only cover the essentials of CMake in order to add a new component. Each following chapter will introduce just enough of CMake knowledge to accomplish each task. As you progress through the chapters you will acquire all the necessary basics to feel comfortable with O3DE's use of CMake.
+O3DE 使用 CMake 作为其构建系统。本章将仅介绍 CMake 的基本要素，以便添加新组件。接下来的每一章都将介绍足够的 CMake 知识来完成每项任务。随着您逐步阅读这些章节，您将获得所有必要的基础知识，以便对 O3DE 对 CMake 的使用感到满意。
 {{</note>}}
 
 ### MyProjectModule.cpp
-And the other reference to MyProjectSystemComponent is in the module file. A module source file is the root file of a project that declares the project and, most importantly for this chapter, registers all the components.
+对 MyProjectSystemComponent 的另一个引用在模块文件中。模块源文件是项目的根文件，用于声明项目，对于本章来说，最重要的是，它注册了所有组件。
+
 ```c++
 MyProjectModule()
   : AZ::Module()
@@ -100,9 +100,10 @@ MyProjectModule()
   });
 }
 ```
-Any components added to m_descriptors in the code snippet above would be available for use in your project and, if properly configured, in the Editor. Here is the entire module file for reference.
 
-Example 4.2. A default module file for a new project, MyProjectModule.cpp
+在上面的代码片段中添加到 m_descriptors 的任何组件都可以在您的项目中使用，如果配置正确，还可以在 Editor 中使用。这是供参考的整个模块文件。
+
+例 4.2.新项目的默认模块文件 MyProjectModule.cpp
 
 ```c++
 #include <AzCore/Memory/SystemAllocator.h>
@@ -140,29 +141,29 @@ AZ_DECLARE_MODULE_CLASS(Gem_MyProject, MyProject::MyProjectModule)
 ```
 
 {{<note>}}
-Note that GetRequiredSystemComponents() is a special method to register components that are marked as system components. System components are placed on a special system entity that is activated as soon as the engine starts and persists outside of game levels until shutdown.
+请注意，GetRequiredSystemComponents() 是注册标记为系统组件的组件的特殊方法。系统组件放置在一个特殊的系统实体上，该实体在引擎启动后立即激活，并在游戏关卡之外持续存在，直到关闭。
 {{</note>}}
 
-## Creating Your Own Component
+## 创建您自己的组件
 
 {{<note>}}
-The official reference for creating a C++ components can be found at:
+创建 C++ 组件的官方参考可以在以下位置找到：
 https://www.o3de.org/docs/user-guide/programming/components/create-component/
 {{</note>}}
 
-You cannot create your own custom AZ::Entity in O3DE but you can create your own custom component derived from AZ::Component. This chapter will show how to create a simple component that shows up in the Editor. We will create a dummy component called, MyComponent. In general, whenever you add a new component to a project, you have to do the following steps:
-* Create its header file MyComponent.h at MyProject\Gem\Code\Source.
-* Create its source file MyComponent.cpp in the same folder.
-* Update myproject_files.cmake with references to the above two new files.
-* Register MyComponent in MyProjectModule.cpp in MyProjectModule's constructor.
-* Build the project.
+您无法在 O3DE 中创建自己的自定义 AZ::Entity，但可以创建从 AZ::Component 派生的自定义组件。本章将介绍如何创建显示在 Editor 中的简单组件。我们将创建一个名为 MyComponent 的虚拟组件。通常，每当向项目添加新组件时，都必须执行以下步骤：
+* 在 MyProject\Gem\Code\Source 中创建其头文件 MyComponent.h。
+* 在同一文件夹中创建其源文件MyComponent.cpp。
+* 使用对上述两个新文件的引用更新 myproject_files.cmake。
+* 在 MyProjectModule 的构造函数中MyProjectModule.cpp注册 MyComponent。
+* 构建项目。
 
-I will now go through each step.
+现在，我将介绍每个步骤。
 
 ### MyComponent.h
-The most basic and simplest component that does nothing aside from existing is as follows:
+除了现有的组件之外，最基本和最简单的组件如下所示：
 
-Example 4.3. The simplest component
+例 4.3.最简单的组件
 
 ```c++
 #pragma once
@@ -185,12 +186,12 @@ namespace MyProject
 }
 ```
 
-MyComponent must derive from AZ::Component. All O3DE game components must be derived from AZ::Component either directly or through another class that derives from it.
+MyComponent 必须派生自 AZ::Component。所有 O3DE 游戏组件都必须直接或通过从它派生的另一个类从 AZ::Component 派生。
 
-Macro AZ_COMPONENT. This macro marks the component type with a unique guid string. The first parameter is the class name. The second parameter is a unique identifier for this class in a guid form. You are responsible for creating a unique guid with curly brackets around it.
+宏AZ_COMPONENT。此宏使用唯一的 guid 字符串标记组件类型。第一个参数是类名。第二个参数是 guid 格式的此类的唯一标识符。您负责创建一个带有大括号的唯一 GUID。
 
 {{<note>}}
-Visual Studio IDE has a built-in guid generator in the menu: Tools → Create GUID. You can also generate a guid using Visual Code plugins or even a PowerShell command:
+Visual Studio IDE 在菜单中有一个内置的 guid 生成器：Tools → Create GUID。您还可以使用 Visual Code 插件甚至 PowerShell 命令生成 guid：
 
 ```shell
 PS C:\work\book\MyProject> (New-Guid).ToString("B")
@@ -198,14 +199,14 @@ PS C:\work\book\MyProject> (New-Guid).ToString("B")
 ```
 {{</note>}}
 
-AZ::Component interface implementation. Activate() and Deactivate() are pure virtual methods from AZ::Component. They do not have to perform any work but they must be overridden. AZ::Component is defined in C:\O3DE\21.11.2\Code\Framework\AzCore\AzCore\Component\Component.h. We will discuss these methods later, for now they are not necessary to have MyComponent show up in the Editor.
+AZ::Component 接口实现。Activate() 和 Deactivate() 是 AZ::Component 中的纯虚拟方法。它们不必执行任何工作，但必须被覆盖。AZ::Component 在 C:\O3DE\21.11.2\Code\Framework\AzCore\AzCore\Component\Component.h 中定义。我们稍后将讨论这些方法，因为现在它们不需要在 Editor 中显示 MyComponent。
 
-Reflect() method: provides a runtime serialization of this component to the O3DE engine. In the next section, I will show the minimum work involved in reflecting a component to the Editor.
+Reflect() 方法：将此组件的运行时序列化提供给 O3DE 引擎。在下一节中，我将展示将组件反映到 Editor 所涉及的最少工作。
 
 ### MyComponent.cpp
-This is where the description and the behavior of the component will be. However, for now we are going to only provide a simple stub.
+这是组件的描述和行为的位置。但是，现在我们只提供一个简单的存根。
 
-Example 4.4. The simplest MyComponent.cpp
+例 4.4.最简单的MyComponent.cpp
 
 ```c++
 #include "MyComponent.h"
@@ -219,13 +220,13 @@ void MyComponent::Reflect(AZ::ReflectContext* reflection)
 ```
 
 {{<tip>}}
-AZ_UNUSED is macro that does nothing but pretends to use a parameter in order to silence some compiler warnings. In modern C++ you can also use [[maybe_unused]] on the parameter declaration.
+AZ_UNUSED 是一个宏，它什么都不做，只是假装使用参数来使某些编译器警告静音。在现代 C++ 中，您还可以在参数声明中使用 [[maybe_unused]]。
 {{</tip>}}
 
-This is enough to compile the project. Once we have everything in place, we will return to Reflect method. It will be useful to try different implementation of Reflect and see the consequences. So let us finish the rest of the C++ code changes that we need.
+这足以编译项目。一切就绪后，我们将返回到 Reflect 方法。尝试 Reflect 的不同实现并查看结果会很有用。因此，让我们完成所需的其余 C++ 代码更改。
 
 ### myproject_files.cmake
-The file list for the project is located at C:\git\book\MyProject\Code\myproject_files.cmake. Since we only added one component, the following changes are enough:
+该项目的文件列表位于 C:\git\book\MyProject\Code\myproject_files.cmake。由于我们只添加了一个组件，因此以下更改就足够了：
 
 ```shell
 set(FILES
@@ -239,7 +240,7 @@ set(FILES
 ```
 
 ### MyProjectModule.cpp
-And lastly, the project needs to register the new component by adding its descriptor to the project module.
+最后，项目需要通过将新组件的描述符添加到项目模块来注册新组件。
 
 ```c++
 ...
@@ -255,44 +256,43 @@ MyProjectModule()
 }
 ```
 
-You can find this module file under MyProject build target in Visual Studio.
+您可以在 Visual Studio 中的 MyProject build target 下找到此模块文件。
 
-Figure 4.3. MyProjectModule.cpp in Visual Studio
+图 4.3.Visual Studio 中的 MyProjectModule.cpp
 
 ![](/images/learning-guide/tutorials/o3de-book/Part2/o3de_book_2_25.PNG)
 
+CreateDescriptor 是 AZ::Component 的一种方法。对于简单的任务，此时您无需担心它的作用。请注意，它为引擎提供了组件的描述。
 
-CreateDescriptor is a method of AZ::Component. For simple tasks, you do not need to worry
-about what it does at this point. Just be aware that it provides a description of the component to the engine.
-
-### Re-compile the Project
-Now that we have gone over the basic C++ changes for a new empty component, let us discuss the workflow involved in updating the project.
+### 重新编译项目
+现在我们已经了解了新的空组件的基本 C++ 更改，让我们讨论更新项目所涉及的工作流程。
 
 {{<tip>}}
-Close the Editor and the Asset Processor if they are running. Otherwise, the Asset Processor or the Editor might hold a lock on one of your project binaries. In such a case you will get a build error:
+关闭 Editor 和 Asset Processor（如果它们正在运行）。否则，Asset Processor 或 Editor 可能会锁定您的某个项目二进制文件。在这种情况下，您将收到构建错误：
+
 ```shell
 9>LINK : fatal error LNK1104: cannot open file
 'C:\git\book\build\bin\profile\MyProject.dll'
 ```
 {{</tip>}}
 
-We have two ways of compiling the project on Windows: either Visual Studio solution or through the CMake command line interface.
+我们有两种在 Windows 上编译项目的方法：Visual Studio 解决方案或通过 CMake 命令行界面。
 
-### Building from Command Line
-In some ways, this is the easiest method to compile the project. The benefit of building from a command line is that it allows you to use any editor you wish. Execute:
+### 从命令行构建
+在某些方面，这是编译项目的最简单方法。从命令行构建的好处是，它允许您使用所需的任何编辑器。执行：
 
-Example 4.5. Building the project from command line
+例 4.5.从命令行构建项目
 
 ```shell
 cmake --build C:\git\book\build\ --config profile
 ```
 
 {{<note>}}
-"--build" is a switch that tells CMake where the binary folder is for our project. Early on we created it at C:\git\book\build. --config profile tells CMake to build profile flavor of our project.
+“--build” 是一个开关，它告诉 CMake 我们项目的二进制文件夹在哪里。早期我们在 C:\git\book\build 中创建了它。--config 配置文件告诉 CMake 构建我们项目的配置文件风格。
 {{</note>}}
 
 {{<tip>}}
-If you ever need to debug your components, instead of compiling the project in debug build, you can add the following lines instead and still use profile binaries.
+如果需要调试组件，可以添加以下行，并且仍然使用配置文件二进制文件，而不是在调试版本中编译项目。
 {{</tip>}}
 
 ```cpp
@@ -301,13 +301,13 @@ If you ever need to debug your components, instead of compiling the project in d
 #pragma optimize( "", on )
 ```
 
-For more details see your compiler documentation, for example:
+有关更多详细信息，请参阅您的编译器文档，例如：
 https://docs.microsoft.com/en-us/cpp/preprocessor/optimize?view=msvc-170
 
-### Building from Visual Studio
-A more user-friendly way is to use Visual Studio.
+### 从 Visual Studio 构建
+一种更用户友好的方法是使用 Visual Studio。
 
-Our Visual Studio solution is located the build folder: C:\git\book\build\MyProject.sln. In this chapter we modified one of the build files, myproject_files.cmake, and as you compile the solution, you will see the following build log.
+我们的 Visual Studio 解决方案位于构建文件夹：C:\git\book\build\MyProject.sln。在本章中，我们修改了其中一个构建文件 myproject_files.cmake，在编译解决方案时，您将看到以下构建日志。
 
 ```shell
 Build started...
@@ -319,29 +319,29 @@ Build started...
 ```
 
 {{<tip>}}
-CMake detects changes based on file modification time. ZERO_CHECK should only run when one of the build files have changed in your project. If you are seeing it run on every build, then inspect the build log and see which file CMake thinks has changed since the last build.
+CMake 根据文件修改时间检测更改。仅当项目中的某个构建文件发生更改时，ZERO_CHECK 才应运行。如果您看到它在每个构建上运行，请检查构建日志并查看 CMake 认为自上次构建以来哪个文件已更改。
 {{</tip>}}
 
-Once the build completes, Visual Studio will ask you if you want to reload the solution from disk, select Reload All.
+生成完成后，Visual Studio 将询问您是否要从磁盘重新加载解决方案，然后选择 Reload All。
 
 ![](/images/learning-guide/tutorials/o3de-book/Part2/o3de_book_2_26.PNG)
 
-Reload VS solution
+重新加载 VS 解决方案
 
-Here is how the project now looks like in Visual Studio with MyComponent files.
+下面是项目现在在 Visual Studio 中使用 MyComponent 文件的样子。
 
-Figure 4.4. Visual Studio solution with MyComponent
+图 4.4.使用 MyComponent 的 Visual Studio 解决方案
 
 ![](/images/learning-guide/tutorials/o3de-book/Part2/o3de_book_2_27.PNG)
 
-## Summary
-If you were to re-launch the Editor, you would not find the component in Add Component menu in Entity Inspector. This is because MyComponent::Reflect() was left empty, therefore it did not tell the Editor about MyComponent. Let us change that to finish up this chapter.
+## 小结
+如果要重新启动 Editor，则不会在 Entity Inspector 的 Add Component 菜单中找到该组件。这是因为 MyComponent::Reflect() 是空的，因此它没有告诉编辑器 MyComponent。让我们改变一下，以结束本章。
 
 {{<note>}}
-Reflecting a component to the Editor is a design choice. Not all components need to be visible in the Editor. We will see various reasons for both sides in later chapters.
+将组件反映到 Editor 是一种设计选择。并非所有组件都需要在 Editor 中可见。我们将在后面的章节中看到双方的各种原因。
 {{</note>}}
 
-Example 4.6. MyComponent.cpp with Editor reflection
+例 4.6.使用 Editor 反射MyComponent.cpp
 
 ```c++
 #include "MyComponent.h"
@@ -364,13 +364,14 @@ void MyComponent::Reflect(AZ::ReflectContext* reflection)
 }
 ```
 
-Reflection in O3DE is broken down into several parts. For now, it is enough to know that the above code describes the following:
-* MyComponent is an empty component with no properties and its version is one (1).
+O3DE 中的反射分为几个部分。现在，只需知道上述代码描述了以下内容就足够了：
+* MyComponent 是一个没有属性的空组件，其版本是一 （1）。
 ```c++
 sc->Class<MyComponent, Component>()
   ->Version(1);
 ```
-* MyComponent is a component that is available for use in game (and in the Editor) with name "My Component" under the category "My Project".
+
+* MyComponent 是一个可在游戏（和 Editor）中使用的组件，其名称为 “My Component” ，位于 “My Project” 类别下。
 ```c++
 ec->Class<MyComponent>("My Component", "[my description]")
   ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
@@ -378,17 +379,17 @@ ec->Class<MyComponent>("My Component", "[my description]")
   ->Attribute(Category, "My Project");
 ```
 
-Now Add Component menu in the Editor will list this component.
+现在，Editor 中的 Add Component 菜单将列出此组件。
 
 ![](/images/learning-guide/tutorials/o3de-book/Part2/o3de_book_2_28.PNG)
 
-MyComponent in the Editor
+编辑器中的 MyComponent
 
-And you can add it to any entity, for example to Root Entity of the object we built in Chapter 3, Introduction to Entities and Components.
+你可以将其添加到任何实体中，例如添加到我们在第 3 章 实体和组件简介中构建的对象的根实体。
 
 ![](/images/learning-guide/tutorials/o3de-book/Part2/o3de_book_2_29.PNG)
 
 {{<note>}}
-The source code for this project can be found on GitHub at:
+此项目的源代码可以在 GitHub 上找到：
 https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch04_creating_components
 {{</note>}}

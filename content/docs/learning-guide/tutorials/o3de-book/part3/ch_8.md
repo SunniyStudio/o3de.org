@@ -104,7 +104,7 @@ call_on(42, &DoSomething);
 
 {{<note>}}
 顺便说一句，这使得对 O3DE 组件进行单元测试变得轻而易举。我们将在第 15 章 为组件编写单元测试中了解如何为组件编写单元测试。
-{{<note>}}
+{{</note>}}
 
 ## 事件总线示例：TransformBus
 好吧，现在理论已经足够了。让我们看一下 EBus 的真实示例以及如何调用它。O3DE 中最常见的事件总线之一是 TransformBus，它由 TransformComponent 实现。每当您希望移动 AZ::Entity 时，都必须使用 TransformBus。其定义可在 C:\O3DE\21.11.2\Code\Framework\AzCore\AzCore\Component\TransformBus.h 中找到：

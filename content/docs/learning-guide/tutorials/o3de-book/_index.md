@@ -47,7 +47,7 @@ description: Open 3D Engine游戏开发
 |                                    | [第27章 ScriptCanvas](./part9/ch_27.md)   |
 | [第10部分 介绍组件通信](./part10/_index.md) |                                         |
 |                                    | [第28章 Wwise插件](./part10/ch_28.md)       |
-|                                    | [第29章 导入Wwise对象](./part10/ch_29.md)     |
+|                                    | [第29章 导入Wwise项目](./part10/ch_29.md)     |
 |                                    | [第30章 介绍Audio组件](./part10/ch_30.md)     |
 | [第11部分 介绍组件通信](./part11/_index.md) |                                         |
 |                                    | [第31章 设置多人游戏](./part11/ch_31.md)        |

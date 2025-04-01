@@ -9,12 +9,12 @@ description: 引言
 为了说明如何使用 Open 3D Engine，本书复制了属于 Open 3D 基金会 和 Linux 基金会 并受其版权保护的屏幕截图、图像、模型、纹理和源代码的简短片段。Open 3D Engine （O3DE） 是 Apache 2.0 许可的多平台 3D 引擎。
 
 
-{{< note >}}
+{{< tip >}}
 您应该参考 Open 3D Engine 网站和 Linux 基金会网站，了解有关其许可证的详细信息：
 * https://o3de.org/
 * https://github.com/o3de/o3de/blob/development/LICENSE.txt
 * https://o3d.foundation/
-{{< /note >}}
+{{< /tip >}}
 
 ## 我对这本书的心态
 那些教授他们熟悉的主题的人经常犯一个诚实的错误。他们忘记了为达到对该主题的知识深度而必须采取的所有步骤。任何复杂的主题都涉及相互关联的专业技能和知识。对专家来说显而易见的事情对新手来说却是一个谜。然而，专家应该能够退后一步，考虑给定主题的整个背景，并找到最简单的方法将其呈现给新手。
@@ -94,12 +94,12 @@ https://docs.microsoft.com/en-us/powershell/
 {{< /note >}}
 
 
-{{< note >}}
+{{< tip >}}
 您始终可以通过执行以下命令来恢复对执行策略的更改：
 ```shell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Default
 ```
-{{< /note >}}
+{{< /tip >}}
 
 ## 让 PowerShell 成为您的开发控制台
 我使用 PowerShell 控制台作为我的构建和配置工具。下面介绍如何将 PowerShell 设置为在工作目录中自动启动并加载您选择的帮助程序脚本。

@@ -23,9 +23,9 @@ O3DE 是一个 C++ 游戏引擎，因此它需要一些本机软件开发工具�
 https://www.o3de.org/docs/welcome-guide/requirements/
 {{< /note >}}
 
-{{< note >}}
+{{< important >}}
 截至 21.11，O3DE 支持的 Visual Studio 版本是 2019，但是，我没有发现同时使用 VisualStudio 2022 和 O3DE 21.11 有任何问题。任一 Visual Studio 版本的安装步骤都是相同的。
-{{< /note >}}
+{{< /important >}}
 
 以下是步骤：
 1. 安装 Visual Studio 2019、Community 或其他版本。
@@ -69,9 +69,9 @@ O3DE 独立安装程序
 
 默认安装位置
 
-{{< note >}}
+{{< important >}}
 在启动安装程序之前，您必须先安装 CMake，因为安装程序需要执行许多使用 CMake 的初始步骤，例如下载各种依赖项。
-{{< /note >}}
+{{< /important >}}
 
 安装完成后，确认安装位置包含引擎。默认情况下，位置将为 `C:\O3DE\21.11.2`。在本书的其余部分，我将把这条路径称为引擎路径。如果您选择将其安装在其他位置，请相应地调整说明。
 

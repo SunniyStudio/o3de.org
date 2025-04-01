@@ -16,10 +16,10 @@ https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch02_new_project
 * 什么是 Asset Processor？
 * 在 O3DE 编辑器中打开一个关卡。
 
-{{< note >}}
+{{< tip >}}
 您可以在以下位置找到官方入门指南：
 https://www.o3de.org/docs/welcome-guide/create/creating-projects-using-project-manager/
-{{< /note >}}
+{{< /tip >}}
 
 ## O3DE 命令行界面
 尽管可以使用 O3DE Project Manager 创建新项目，但我将向您展示如何使用命令行工具来完成它，因为我相信它将来会为您提供更多功能。此 CLI 可在`C:\O3DE\21.11.2\scripts\o3de.bat`中找到。
@@ -42,7 +42,7 @@ o3de.bat create-project -pp C:\git\book\MyProject
 
 确认已创建 `C:\git\book\MyProject` 并包含各种项目文件。
 
-{{< note >}}
+{{< tip >}}
 我建议你立即将你的项目置于 Git 源代码控制之下。提醒一下，我在 `c:\git\book` 文件夹下创建项目。如果您正在阅读本书，则可以使用以下命令克隆随附的源代码：
 ```shell
 mkdir c:\git\
@@ -52,7 +52,7 @@ cd book
 git checkout origin/ch02_new_project
 ```
 随着您阅读本书的进度，切换到相应的分支。
-{{< /note >}}
+{{< /tip >}}
 
 ## 链接项目和 O3DE
 如果您从全新的 O3DE 安装开始，并使用上述步骤创建了一个新项目，则该项目将已配置为使用安装在`C:\O3DE\21.11.2`中的 O3DE 引擎。但是，如果您安装了 O3DE 的多个副本，或者您正在不同的 O3DE 版本之间切换，那么了解项目如何声明它们使用的引擎是很有价值的。
@@ -78,9 +78,9 @@ git checkout origin/ch02_new_project
 
 如果您曾经移动引擎安装或希望尝试新引擎，则需要相应地更新这些条目。
 
-{{< note >}}
+{{< tip >}}
 引擎和项目的位置完全取决于您，只要上述两个文件一致即可。
-{{< /note >}}
+{{< /tip >}}
 
 ## 使用CMake和Visual Studio构建
 现在我们有一个新项目，我们可以配置和构建它。第一步是创建一个构建文件夹。位置由您决定，但我建议保持简短，因为如果由于 Windows 上的构建文件夹路径较长而超出最大文件路径，则可能会出现构建错误。
@@ -147,9 +147,9 @@ C:\O3DE\21.11.2\scripts\o3de.bat set-global-project -pp C:\git\book\MyProject
 
 使用此配置，可以从命令行启动 Asset Processor，而无需指定项目路径。
 
-{{<note>}}
+{{<important>}}
 您的项目只能启动一个 Asset Processor。如果您尝试启动另一个实例，它将引发错误“Asset Processor 的另一个实例可能已在端口 45643 上运行”。如果另一个实例已在运行，则无需启动另一个实例。Editor 和游戏启动器将连接到 Asset Processor（如果已在运行）。
-{{</note>}}
+{{</important>}}
 
 {{<tip>}}
 Asset Processor 可能很狡猾。如果它是由编辑器或游戏启动器启动的，它将在后台启动，您必须在 Windows 系统托盘中找到它。但是，如果直接从命令行启动它，它将在前台打开。
@@ -163,8 +163,7 @@ Asset Processor 处理完窗口左上角的所有资源后，它应显示以下�
 #### 示例 2.2. Asset Processor 已完成对游戏资源的处理
 Asset Processor 将处理后的游戏资源放在 C:\git\book\MyProject\Cache 下，以便在运行时使用。
 
-![](/images/learning-guide/tutorials/o3de-book/Part1/o3de_book_1_4.PNG)
-
+![](/images/learning-guide/tutorials/o3de-book/Part1/o3de_book_1_5.PNG)
 
 您可以使用以下命令启动 Editor：
 ```shell
@@ -173,11 +172,11 @@ C:\O3DE\21.11.2\bin\Windows\profile\Default\Editor.exe
 
 或者，通过构建并运行解决方案文件夹中的 Editor 项目，从 Visual Studio O3DE_SDK解决方案中。
 
-![](/images/learning-guide/tutorials/o3de-book/Part1/o3de_book_1_5.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part1/o3de_book_1_4.PNG)
 
-{{<note>}}
+{{<important>}}
 请勿在使用 O3DE 时关闭 Asset Processor。许多 O3DE 工具（包括 Editor）都需要它。相反，请最小化 Asset Processor 并让它在 Windows 系统托盘中闲置。
-{{</note>}}
+{{</important>}}
 
 {{<tip>}}
 最常见的陷阱之一是由于 Asset Processor 锁定您的游戏二进制文件而出现构建错误。解决此问题的方法是在每次重新编译项目之前停止 Asset Processor。然而，这让人厌烦。当您关闭 Editor 时，Asset Processor 仍在后台运行。简化作的一种方法是告诉 Asset Processor 在 Editor 或最后一个游戏启动器退出时自行关闭。您可以通过将此开关添加到 C:\git\book\MyProject\game.cfg 来实现此目的。
@@ -189,7 +188,7 @@ ap_tether_lifetime=1
 ## 创建关卡
 我们创建的新项目没有关卡，但我们可以从现有的 O3DE 模板创建一个新关卡。编辑器启动后，您将看到 Welcome to O3DE 对话框。使用 Create new... 创建新关卡按钮。
 
-![](/images/learning-guide/tutorials/o3de-book/Part1/o3de_book_1_6.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part1/o3de_book_1_7.PNG)
 
 点击 'Create new...'
 
@@ -206,7 +205,7 @@ https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch02_new_project
 
 图 2.1.编辑器：新建关卡
 
-![](/images/learning-guide/tutorials/o3de-book/Part1/o3de_book_1_7.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part1/o3de_book_1_6.PNG)
 
 我们的下一个主题将是实体。您可以在 Entity Outliner 中看到它们。如果不可见，您可以从 Editor 的菜单（Tools）→ Entity Outliner 中调出它。
 

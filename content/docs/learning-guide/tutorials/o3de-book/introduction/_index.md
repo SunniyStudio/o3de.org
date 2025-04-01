@@ -63,7 +63,7 @@ description: 引言
 
 3. 这将带您进入 Open a pull request page。
 
-![](/images/learning-guide/tutorials/o3de-book/Introduction/o3de_book_0_2.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Introduction/o3de_book_0_4.PNG)
 
 4. 选择较早的章节作为基础分支。
 
@@ -71,7 +71,7 @@ description: 引言
 
 5. 这将创建一个拉取请求配置，该配置将显示两个分支之间的所有差异。
 
-![](/images/learning-guide/tutorials/o3de-book/Introduction/o3de_book_0_4.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Introduction/o3de_book_0_2.PNG)
 
 6. 向下滚动一点，您将看到更改。
 

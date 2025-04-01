@@ -78,9 +78,9 @@ set(FILES
 
 你可以看到对 MyProjectSystemComponent 的源文件和头文件的引用。文件路径必须是项目 Code 文件夹的本地路径：C:\git\book\MyProject\Code。
 
-{{<note>}}
+{{<important>}}
 为了将新文件添加到构建中，您必须在此文件中引用它们。
-{{</note>}}
+{{</important>}}
 
 {{<note>}}
 O3DE 使用 CMake 作为其构建系统。本章将仅介绍 CMake 的基本要素，以便添加新组件。接下来的每一章都将介绍足够的 CMake 知识来完成每项任务。随着您逐步阅读这些章节，您将获得所有必要的基础知识，以便对 O3DE 对 CMake 的使用感到满意。

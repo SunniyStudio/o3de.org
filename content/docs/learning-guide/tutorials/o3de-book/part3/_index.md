@@ -4,14 +4,13 @@ title: 第3部分 介绍组件通信
 description: 第3部分 介绍组件通信
 ---
 # 第3部分 介绍组件通信
+现在我们知道了如何创建组件，我们需要学习如何从多个组件构建逻辑。允许您做到这一点的下一个里程碑是某种形式的组件间通信。您需要各种组件与其他组件通信。
 
-Now that we know how to create components, we need to learn how to build logic out of multiple components. The next milestone that will allow you to do that is some form of inter-component communication. You need various components talking to other components.
-
-In O3DE there are several ways for components to communicate:
-* A direct access via FindComponent Entity method.
-* AZ::Interface - a singleton-like communication.
-* AZ::Event - a notification mechanism.
-* AZ::EBus - the most generalized and powerful form of communication in O3DE.
+在 O3DE 中，组件有几种通信方式：
+* 通过 FindComponent 实体方法直接访问。
+* AZ::Interface - 类似单例的通信。
+* AZ::Event - 通知机制。
+* AZ::EBus - O3DE 中最通用、最强大的通信形式。
 
 * [第5章 FindComponent是什么](./ch_5.md)
 * [第6章 AZ::Interface是什么](./ch_6.md) 

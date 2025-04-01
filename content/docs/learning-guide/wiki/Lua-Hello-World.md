@@ -4,9 +4,9 @@ description: ""
 toc: false
 ---
 
-### Simple Print
+### 简单打印
 
-As per tradition, here is a simple Lua component that prints "Hello, world!" to the console when it activates.
+按照传统，这里有一个简单的 Lua 组件，当它激活时，它会将 “Hello， world！” 打印到控制台。
 
 ```lua
 local HelloWorld = {}
@@ -23,9 +23,10 @@ return HelloWorld
 ![simple print](https://i.ibb.co/pW4TkkD/simple-print.png)
 
 ***
-### Color Print
+### 彩色打印
 
-A neat tip you can use with `Debug.Log` is you can prepend `"$[0-9]"` to print to the console in various colors.
+你可以用在`Debug.Log`中的一个巧妙的提示是，你可以在`"$[0-9]"`前面加上各种颜色打印到控制台。
+
 ```lua
 local HelloWorld = {}
 

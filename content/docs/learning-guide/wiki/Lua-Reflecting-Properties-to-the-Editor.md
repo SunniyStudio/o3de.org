@@ -4,11 +4,11 @@ description: ""
 toc: false
 ---
 
-This tutorial is a continuation of _Using Transform Bus_ [here](https://github.com/o3de/o3de/wiki/%5BLua%5D-Using-Transform-Bus). 
+本教程是 _Using Transform Bus_ [此处](https://github.com/o3de/o3de/wiki/%5BLua%5D-Using-Transform-Bus) 的延续. 
 
-### Current Problems
+### 当前问题
 
-As a reminder, here is the full Lua implementation of the `ConstantRotate` script we have so far:
+提醒一下，这是我们目前拥有的`ConstantRotate`脚本的完整 Lua 实现：
 
 ```lua
 local ConstantRotate = {}
@@ -29,17 +29,17 @@ end
 return ConstantRotate
 ```
 
-There are two main usability issues here:
-1. Whenever we want to change the rotation speed, we will have to open the Lua script and change the values
-2. Every entity that is using this Lua component will all have the same values
+这里有两个主要的可用性问题：
+1. 每当我们想更改旋转速度时，我们都必须打开 Lua 脚本并更改值
+2. 使用此 Lua 组件的每个实体都将具有相同的值
 
-Both of these can be fixed by using the `Properties` table in Lua
+这两者都可以通过使用 Lua 中的 `Properties` 表来解决
 
 ***
 
-### Properties Table Simple Example
+### Properties Table 简单示例
 
-The `Properties` table allows us to use per-component-instance values in our Lua scripts. Here is a simple example which allows us print a string of our choosing without changing the Lua script, but just by staying in the O3DE Editor.
+`Properties` 表允许我们在 Lua 脚本中使用每个组件实例的值。这是一个简单的示例，它允许我们打印我们选择的字符串，而无需更改 Lua 脚本，而只需停留在 O3DE 编辑器中即可。
 
 ```lua
 local SimpleReflect = 
@@ -60,15 +60,15 @@ end
 return SimpleReflect
 ```
 
-#### Default settings
+#### 默认设置
 
 ![default component](https://i.ibb.co/DLcG73t/defaultreflect.png)
 
 ![default message](https://i.ibb.co/5r1rYzR/defaultlog.png)
 
-#### Edited settings
+#### 编辑的设置
 
-We can now simply change the value in the Editor, and the Lua script will update accordingly.
+现在，我们只需在 Editor 中更改该值，Lua 脚本就会相应地更新。
 
 ![edited component](https://i.ibb.co/hRyPG2s/edited-Reflect.png)
 
@@ -76,9 +76,9 @@ We can now simply change the value in the Editor, and the Lua script will update
 
 ***
 
-### Using the Properties Table
+### 使用属性表
 
-All you need to do to start reflecting data to the editor is to include a `Properties` table when declaring your (pseudo) Lua component like this:
+要开始将数据反映到编辑器，您需要做的就是在声明（伪）Lua 组件时包含一个 `Properties` 表，如下所示：
 
 ```lua
 local MyLuaComponent =
@@ -90,17 +90,17 @@ local MyLuaComponent =
 }
 ```
 
-Afterwards, you can reflect any of the basic Lua types or reflected classes in O3DE. I will talk more about reflected classes in the advanced topic called _C++ Script Bindings_. You are also free to nest the data however you like. The reflected data can use the following keywords:
+之后，您可以在 O3DE 中反映任何基本的 Lua 类型或反射类。我将在名为 _C++脚本绑定_ 的高级主题中详细讨论反射类。您还可以根据需要自由嵌套数据。反射的数据可以使用以下关键字：
 
 * `default`
 * `description`
-* `suffix` for numbers
-* `prefix` for numbers
-* `min` for numbers
-* `max` for numbers
-* `step` for numbers
+* `suffix` 用于数字
+* `prefix` 用于数字
+* `min` 用于数字
+* `max` 用于数字
+* `step` 用于数字
 
-Lists of data are converted to arrays. It is also possible to omit any keywords and the enclosing braces if they are not required. Here are some examples showing different ways of reflecting data to the editor:
+数据列表将转换为数组。如果不需要，也可以省略任何关键字和封闭大括号。以下是一些示例，显示了将数据反映到编辑器的不同方法：
 
 #### String, Number, Boolean, Array
 
@@ -125,9 +125,9 @@ local SimpleReflect =
 
 ![SimpleReflectExample](https://i.ibb.co/0QJW0Nk/simple.png)
 
-#### Using Keywords and Grouping Properties
+#### 使用关键字和分组属性
 
-Your exposed properties will be automatically organized by name. If you would like to group your properties then you can do so by nesting them.
+您公开的属性将自动按名称进行组织。如果要对属性进行分组，则可以通过嵌套它们来实现。
 
 ```lua
 local SimpleReflect = 
@@ -152,9 +152,9 @@ local SimpleReflect =
 
 ***
 
-### Updating `ConstantRotate` Lua Script
+### 更新 `ConstantRotate` Lua 脚本
 
-Here is an overview of what we are going to do to update the `RotateConstant` Lua script: We want to end up with a general purpose `ConstantRotate` Lua component. This means that we should be able to specify a rotation speed for rotating around the X, Y, or Z axis, or even a combination of them. All we need to do in the properties table is allow the user to specify a rotation speed for each axis:
+以下是我们将要执行的作的概述，以更新`RotateConstant` Lua 脚本：我们希望最终得到一个通用的 `ConstantRotate` Lua 组件。这意味着我们应该能够指定绕 X、Y 或 Z 轴旋转的转速，甚至是它们的组合。我们需要在属性表中做的就是允许用户为每个轴指定旋转速度：
 
 ```lua
 local ConstantRotate = 
@@ -170,7 +170,7 @@ local ConstantRotate =
 
 ![constant rotate reflected](https://i.ibb.co/QCBzLb3/constantrotate.png)
 
-Next we need our Lua script to use those values when rotating the entity. Some maths is done to convert to rotations in degrees.
+接下来，我们需要 Lua 脚本在旋转实体时使用这些值。进行一些数学运算以转换为以度为单位的旋转。
 
 ```lua
 function ConstantRotate:OnTick(deltaTime, timePoint)
@@ -182,7 +182,7 @@ end
 
 ***
 
-### Complete `ConstantRotate` Lua Script
+### 完整的 `ConstantRotate` Lua 脚本
 
 ```lua
 local ConstantRotate = 

@@ -57,18 +57,18 @@ MyProject.Static 库的元素是什么？
 
 通常，您编写的任何新组件都将放在 MyProject\Code\Source 下，直接放在 Source 文件夹中或您选择的子文件夹下。
 
-如果要在 C:\git\book \MyProject 下搜索对 MyProjectSystemComponent 的引用，则会在引用它的位置找到另外两个文件。
+如果要在 C:\git\book\MyProject 下搜索对 MyProjectSystemComponent 的引用，则会在引用它的位置找到另外两个文件。
 
 ### myproject_files.cmake
 *_files.cmake 是 O3DE 项目文件，其中列出了要为项目包含和编译的文件。
 
-例 4.1.我的项目\代码\myproject_files.cmake
+例 4.1. MyProject\Code\myproject_files.cmake
 ```shell
 set(FILES
-  Include/MyProject/MyProjectBus.h
-  Source/MyProjectSystemComponent.cpp
-  Source/MyProjectSystemComponent.h
-  enabled_gems.cmake
+    Include/MyProject/MyProjectBus.h
+    Include/MyProject/MyProjectTypeIds.h
+    Source/MyProjectSystemComponent.cpp
+    Source/MyProjectSystemComponent.h
 )
 ```
 
@@ -90,15 +90,14 @@ O3DE 使用 CMake 作为其构建系统。本章将仅介绍 CMake 的基本要�
 对 MyProjectSystemComponent 的另一个引用在模块文件中。模块源文件是项目的根文件，用于声明项目，对于本章来说，最重要的是，它注册了所有组件。
 
 ```c++
-MyProjectModule()
-  : AZ::Module()
-{
-  // Push results of [MyComponent]::CreateDescriptor()
-  // into m_descriptors here.
-  m_descriptors.insert(m_descriptors.end(), {
-    MyProjectSystemComponent::CreateDescriptor(),
-  });
-}
+        MyProjectModule()
+            : AZ::Module()
+        {
+            // Push results of [MyComponent]::CreateDescriptor() into m_descriptors here.
+            m_descriptors.insert(m_descriptors.end(), {
+                MyProjectSystemComponent::CreateDescriptor(),
+            });
+        }
 ```
 
 在上面的代码片段中添加到 m_descriptors 的任何组件都可以在您的项目中使用，如果配置正确，还可以在 Editor 中使用。这是供参考的整个模块文件。
@@ -108,36 +107,46 @@ MyProjectModule()
 ```c++
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Module/Module.h>
+
 #include "MyProjectSystemComponent.h"
+
+#include <MyProject/MyProjectTypeIds.h>
+
 namespace MyProject
 {
-  class MyProjectModule
-    : public AZ::Module
-  {
-  public:
-    AZ_RTTI(MyProjectModule,
-    "{4b67609b-b22c-4a71-9afe-3f9d10bcf5ac}", AZ::Module);
-    AZ_CLASS_ALLOCATOR(MyProjectModule, AZ::SystemAllocator, 0);
-    MyProjectModule()
-      : AZ::Module()
+    class MyProjectModule
+        : public AZ::Module
     {
-      m_descriptors.insert(m_descriptors.end(), {
-        MyProjectSystemComponent::CreateDescriptor(),
-      });
-    }
-    /**
-    * Add required SystemComponents to the SystemEntity.
-    */
-     AZ::ComponentTypeList
-     GetRequiredSystemComponents() const override
-     {
-       return AZ::ComponentTypeList{
-        azrtti_typeid<MyProjectSystemComponent>(),
-       };
-     }
-   };
+    public:
+        AZ_RTTI(MyProjectModule, MyProjectModuleTypeId, AZ::Module);
+        AZ_CLASS_ALLOCATOR(MyProjectModule, AZ::SystemAllocator);
+
+        MyProjectModule()
+            : AZ::Module()
+        {
+            // Push results of [MyComponent]::CreateDescriptor() into m_descriptors here.
+            m_descriptors.insert(m_descriptors.end(), {
+                MyProjectSystemComponent::CreateDescriptor(),
+            });
+        }
+
+        /**
+         * Add required SystemComponents to the SystemEntity.
+         */
+        AZ::ComponentTypeList GetRequiredSystemComponents() const override
+        {
+            return AZ::ComponentTypeList{
+                azrtti_typeid<MyProjectSystemComponent>(),
+            };
+        }
+    };
 }// namespace MyProject
+
+#if defined(O3DE_GEM_NAME)
+AZ_DECLARE_MODULE_CLASS(AZ_JOIN(Gem_, O3DE_GEM_NAME), MyProject::MyProjectModule)
+#else
 AZ_DECLARE_MODULE_CLASS(Gem_MyProject, MyProject::MyProjectModule)
+#endif
 ```
 
 {{<note>}}
@@ -171,18 +180,20 @@ https://www.o3de.org/docs/user-guide/programming/components/create-component/
 
 namespace MyProject
 {
-   // An example of the simplest O3DE component
-   class MyComponent : public AZ::Component
-   {
-   public:
-     AZ_COMPONENT(MyComponent,
-      "{4b589f6b-79f3-47b6-b730-aad0871d5f8f}");
-     // AZ::Component overrides
-     void Activate() override {}
-     void Deactivate() override {}
-     // Provide runtime reflection, if any
-     static void Reflect(AZ::ReflectContext* reflection);
-   };
+    // An example of the simplest O3DE component
+    class MyComponent : public AZ::Component
+    {
+    public:
+        AZ_COMPONENT(MyComponent,
+            "{4b589f6b-79f3-47b6-b730-aad0871d5f8f}");
+
+        // AZ::Component overrides
+        void Activate() override {}
+        void Deactivate() override {}
+
+        // Provide runtime reflection, if any
+        static void Reflect(AZ::ReflectContext* reflection);
+    };
 }
 ```
 
@@ -211,11 +222,26 @@ Reflect() 方法：将此组件的运行时序列化提供给 O3DE 引擎。在�
 ```c++
 #include "MyComponent.h"
 #include <AzCore/Serialization/EditContext.h>
+
 using namespace MyProject;
 
 void MyComponent::Reflect(AZ::ReflectContext* reflection)
 {
-  AZ_UNUSED(reflection); // TODO provide reflection
+    auto sc = azrtti_cast<AZ::SerializeContext*>(reflection);
+    if (!sc) return;
+
+    sc->Class<MyComponent, Component>()
+        ->Version(1);
+
+    AZ::EditContext* ec = sc->GetEditContext();
+    if (!ec) return;
+
+    using namespace AZ::Edit::Attributes;
+    // reflection of this component for O3DE Editor
+    ec->Class<MyComponent>("My Component", "[my description]")
+      ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+        ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
+        ->Attribute(Category, "My Project");
 }
 ```
 
@@ -230,12 +256,12 @@ AZ_UNUSED 是一个宏，它什么都不做，只是假装使用参数来使某�
 
 ```shell
 set(FILES
-  Include/MyProject/MyProjectBus.h
-  Source/MyProjectSystemComponent.cpp
-  Source/MyProjectSystemComponent.h
-  enabled_gems.cmake
-  Source/MyComponent.cpp # new
-  Source/MyComponent.h # new
+    Include/MyProject/MyProjectBus.h
+    Include/MyProject/MyProjectTypeIds.h
+    Source/MyProjectSystemComponent.cpp
+    Source/MyProjectSystemComponent.h
+    Source/MyComponent.cpp
+    Source/MyComponent.h
 )
 ```
 
@@ -246,14 +272,15 @@ set(FILES
 ...
 #include "MyComponent.h"
 ...
-MyProjectModule()
-  : AZ::Module()
-{
-  m_descriptors.insert(m_descriptors.end(), {
-    ...
-    MyComponent::CreateDescriptor(),
-  });
-}
+        MyProjectModule()
+            : AZ::Module()
+        {
+            // Push results of [MyComponent]::CreateDescriptor() into m_descriptors here.
+            m_descriptors.insert(m_descriptors.end(), {
+                MyProjectSystemComponent::CreateDescriptor(),
+                MyComponent::CreateDescriptor(),
+            });
+        }
 ```
 
 您可以在 Visual Studio 中的 MyProject build target 下找到此模块文件。
@@ -346,37 +373,42 @@ CMake 根据文件修改时间检测更改。仅当项目中的某个构建文�
 ```c++
 #include "MyComponent.h"
 #include <AzCore/Serialization/EditContext.h>
+
 using namespace MyProject;
+
 void MyComponent::Reflect(AZ::ReflectContext* reflection)
 {
-  auto sc = azrtti_cast<AZ::SerializeContext*>(reflection);
-  if (!sc) return;
-  sc->Class<MyComponent, Component>()
-    ->Version(1);
-  AZ::EditContext* ec = sc->GetEditContext();
-  if (!ec) return;
-  using namespace AZ::Edit::Attributes;
-  // reflection of this component for O3DE Editor
-   ec->Class<MyComponent>("My Component", "[my description]")
-     ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-     ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
-     ->Attribute(Category, "My Project");
+    auto sc = azrtti_cast<AZ::SerializeContext*>(reflection);
+    if (!sc) return;
+
+    sc->Class<MyComponent, Component>()
+        ->Version(1);
+
+    AZ::EditContext* ec = sc->GetEditContext();
+    if (!ec) return;
+
+    using namespace AZ::Edit::Attributes;
+    // reflection of this component for O3DE Editor
+    ec->Class<MyComponent>("My Component", "[my description]")
+      ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+        ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
+        ->Attribute(Category, "My Project");
 }
 ```
 
 O3DE 中的反射分为几个部分。现在，只需知道上述代码描述了以下内容就足够了：
 * MyComponent 是一个没有属性的空组件，其版本是一 （1）。
 ```c++
-sc->Class<MyComponent, Component>()
-  ->Version(1);
+    sc->Class<MyComponent, Component>()
+        ->Version(1);
 ```
 
 * MyComponent 是一个可在游戏（和 Editor）中使用的组件，其名称为 “My Component” ，位于 “My Project” 类别下。
 ```c++
-ec->Class<MyComponent>("My Component", "[my description]")
-  ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-  ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
-  ->Attribute(Category, "My Project");
+    ec->Class<MyComponent>("My Component", "[my description]")
+      ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+        ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
+        ->Attribute(Category, "My Project");
 ```
 
 现在，Editor 中的 Add Component 菜单将列出此组件。

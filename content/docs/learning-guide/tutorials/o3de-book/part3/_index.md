@@ -12,6 +12,7 @@ description: 第3部分 介绍组件通信
 * AZ::Event - 通知机制。
 * AZ::EBus - O3DE 中最通用、最强大的通信形式。
 
+目录
 * [第5章 FindComponent是什么](./ch_5.md)
 * [第6章 AZ::Interface是什么](./ch_6.md) 
 * [第7章 AZ::Event是什么](./ch_7.md)

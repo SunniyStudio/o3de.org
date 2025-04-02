@@ -63,34 +63,35 @@ AzFramework 库几乎无处不在，因此这不是问题，但一般思路适�
 
 ![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_1.PNG)
 
-{{<note>}}
+{{<important>}}
 Transform 组件的激活必须在激活 MyFindComponent 之前进行，我们的逻辑才能正常工作。
-{{</note>}}
+{{</important>}}
 
 让我们来看看如何解决这些问题。
 
 ## 添加库引用
-MyProject.Static 库需要对 AzFramework 库的引用。你可以在 C:\git\book\MyProject\Code\CMakeLists.txt 中声明它，这是我们游戏项目的构建文件。在这种情况下，我们只关心 MyProject.Static 库的定义，如下所示：
+MyProject.Private.Object 库需要对 AzFramework 库的引用。你可以在 C:\git\book\MyProject\Code\CMakeLists.txt 中声明它，这是我们游戏项目的构建文件。在这种情况下，我们只关心 MyProject.Private.Object 库的定义，如下所示：
 
 例 5.4.CMake 中 MyProject.Static 的定义
 
 ```c++
 ly_add_target(
-  NAME MyProject.Static STATIC
-  NAMESPACE Gem
-  FILES_CMAKE
-    myproject_files.cmake
-  INCLUDE_DIRECTORIES
-    PUBLIC
-      Include
-  BUILD_DEPENDENCIES
-    PRIVATE
-      AZ::AzGameFramework
-      Gem::Atom_AtomBridge.Static
+    NAME ${gem_name}.Private.Object STATIC
+    NAMESPACE Gem
+    FILES_CMAKE
+        myproject_files.cmake
+        ${pal_dir}/myproject_${PAL_PLATFORM_NAME_LOWERCASE}_files.cmake
+    INCLUDE_DIRECTORIES
+        PUBLIC
+            Include
+    BUILD_DEPENDENCIES
+        PRIVATE
+            AZ::AzGameFramework
+            Gem::Atom_AtomBridge.Static
 )
 ```
 
-MyProject.Static 包含的库列表位于 BUILD_DEPENDENCIES 下。它有两个部分：private和public。Private 部分告知构建系统仅为此构建目标包含哪些库。Public 部分指示生成系统包括生成目标以及包含 MyProject.Static 的任何目标的库。
+MyProject.Private.Object 包含的库列表位于 BUILD_DEPENDENCIES 下。它有两个部分：private和public。Private 部分告知构建系统仅为此构建目标包含哪些库。Public 部分指示生成系统包括生成目标以及包含 MyProject.Private.Object 的任何目标的库。
 
 目前，我们对这种差异不感兴趣，PRIVATE 部分将起作用。
 
@@ -111,8 +112,7 @@ BUILD_DEPENDENCIES
 ```c++
 TransformComponent::Reflect(...)
 {
-  ptrEdit->Class<TransformComponent>("Transform",
-    "Controls the placement of the entity in the world in 3d")
+  ptrEdit->Class<TransformComponent>("Transform", "Controls the placement of the entity in the world in 3d")
 ```
 
 {{<note>}}
@@ -142,7 +142,6 @@ namespace AzToolsFramework
 {{<tip>}}
 实际上，您可以通过查看 BuildGameEntity 方法来了解创建的游戏组件
 的 Transform 组件。
-{{</tip>}}
 
 ```c++
 void TransformComponent::BuildGameEntity(AZ::Entity* gameEntity)
@@ -151,6 +150,7 @@ void TransformComponent::BuildGameEntity(AZ::Entity* gameEntity)
   gameEntity->CreateComponent<AzFramework::TransformComponent>()
 }
 ```
+{{</tip>}}
 
 现在我们知道了在运行时将与哪个组件交互，我们可以找到包含它的库。对 TransformComponent.h 的引用位于 C:\git\o3de\Code\Framework\AzFramework\AzFramework\azframework_files.cmake 中。那么，这个文件列表是什么呢？AzFramework 静态库的生成脚本可以。
 
@@ -168,17 +168,17 @@ ly_add_target(
 
 现在，我们可以使用其名称和命名空间 AZ::AzFramework 来链接此静态库。
 
-例 5.7.针对 AZ::AzFramework 库的 MyProject.Static 链接
+例 5.7.针对 AZ::AzFramework 库的 MyProject.Private.Object 链接
 
 ```c++
 ly_add_target(
-  NAME MyProject.Static STATIC
+    NAME ${gem_name}.Private.Object STATIC
     NAMESPACE Gem
-  ...
-  BUILD_DEPENDENCIES
-    PRIVATE
-      AZ::AzFramework
-  ...
+    ...
+    BUILD_DEPENDENCIES
+        PRIVATE
+            AZ::AzGameFramework
+    ...
 )
 ```
 
@@ -213,9 +213,9 @@ AZ_CRC 宏和 AZ_CRC_CE 宏都提供相同的功能。它们将字符串转换�
 
 当您在 Editor 中构建实体时，组件的保存方式是 TransformComponent 始终位于 MyFindComponent 之前。
 
-{{<note>}}
+{{<important>}}
 这些依赖项和 Editor 存在一个问题，当您为实体上已有的组件添加或更改依赖项规则时，必须修改实体的组件才能重新应用规则。
-{{</note>}}
+{{</important>}}
 
 ## 小结
 
@@ -231,23 +231,29 @@ https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch05_find_component
 ```c++
 #pragma once
 #include <AzCore/Component/Component.h>
+
 namespace MyProject
 {
-  // An example of the simplest O3DE component
-  class MyFindComponent : public AZ::Component
-  {
-  public:
-    AZ_COMPONENT(MyFindComponent, "{FE4F2E82-8E03-48EC-A967-559705597040}");
-    static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+    // An example of the simplest O3DE component
+    class MyFindComponent : public AZ::Component
     {
-      required.push_back(AZ_CRC_CE("TransformService"));
-    }
-    // AZ::Component overrides
-    void Activate() override;
-    void Deactivate() override {}
-    // Provide runtime reflection, if any
-    static void Reflect(AZ::ReflectContext* rc);
-  };
+    public:
+        AZ_COMPONENT(MyFindComponent,
+            "{FE4F2E82-8E03-48EC-A967-559705597040}");
+
+        static void GetRequiredServices(
+            AZ::ComponentDescriptor::DependencyArrayType& required)
+        {
+            required.push_back(AZ_CRC_CE("TransformService"));
+        }
+
+        // AZ::Component overrides
+        void Activate() override;
+        void Deactivate() override {}
+
+        // Provide runtime reflection, if any
+        static void Reflect(AZ::ReflectContext* rc);
+    };
 }
 ```
 
@@ -257,33 +263,41 @@ namespace MyProject
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzFramework/Components/TransformComponent.h>
+
 using namespace MyProject;
+
 void MyFindComponent::Activate()
 {
-  AZ::Entity* e = GetEntity();
-  using namespace AzFramework;
-  TransformComponent* tc = e->FindComponent<TransformComponent>();
-  if (tc)
-  {
-    AZ::Transform t = tc->GetWorldTM();
-    AZ::Vector3 p = t.GetTranslation();
-    AZ_Printf("MyFind", "activated at %f %f %f",
-      p.GetX(), p.GetY(), p.GetZ() );
-   }
+    AZ::Entity* e = GetEntity();
+
+    using namespace AzFramework;
+    TransformComponent* tc = e->FindComponent<TransformComponent>();
+    if (tc)
+    {
+        AZ::Transform t = tc->GetWorldTM();
+        AZ::Vector3 p = t.GetTranslation();
+        AZ_Printf("MyFind", "activated at %f %f %f",
+            p.GetX(), p.GetY(), p.GetZ() );
+    }
 }
+
 void MyFindComponent::Reflect(AZ::ReflectContext* rc)
 {
-   auto sc = azrtti_cast<AZ::SerializeContext*>(rc);
-   if (!sc) return;
-   sc->Class<MyFindComponent, Component>()
-    ->Version(1);
-   AZ::EditContext* ec = sc->GetEditContext();
-   if (!ec) return;
-   using namespace AZ::Edit::Attributes;
-   // reflection of this component for O3DE Editor
-   ec->Class<MyFindComponent>("Find Component Example", "[Communicates using FindComponent]")
-     ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-     ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
-     ->Attribute(Category, "My Project");
+    auto sc = azrtti_cast<AZ::SerializeContext*>(rc);
+    if (!sc) return;
+
+    sc->Class<MyFindComponent, Component>()
+        ->Version(1);
+
+    AZ::EditContext* ec = sc->GetEditContext();
+    if (!ec) return;
+
+    using namespace AZ::Edit::Attributes;
+    // reflection of this component for O3DE Editor
+    ec->Class<MyFindComponent>("Find Component Example",
+        "[Communicates using FindComponent]")
+      ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+        ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
+        ->Attribute(Category, "My Project");
 }
 ```

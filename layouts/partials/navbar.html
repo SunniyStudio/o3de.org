@@ -48,9 +48,5 @@
         <div class="p-2 text-white bg-secondary" id="preview-info">
         {{ partial "preview-info.html" . }}
         </div>
-    {{ else if not $isRelease }}
-        <div class="p-2 text-dark bg-warning" id="version-warning">
-        {{ partial "version-warning.html" . }}
-        </div>
     {{ end }}
 </div>

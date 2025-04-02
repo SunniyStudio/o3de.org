@@ -98,7 +98,7 @@ call_on(42, &DoSomething);
 
 图 8.1.通过事件总线后面的接口调用
 
-![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_8.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_9.PNG)
 
 现在，您可以将 DoSomething 从 Caller 重新路由到另一个目的地，而无需更改 Caller。相反，它将取决于 MyComponent 或其他行为类似的对象，例如 MyMock Component。
 
@@ -170,7 +170,7 @@ https://github.com/o3de/o3de
 
 图 8.2.TransformBus 和 TransformComponent
 
-![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_9.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_10.PNG)
 
 以下是通过 TransformBus 调用 SetWorldTranslation 的方法：
 

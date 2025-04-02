@@ -31,7 +31,7 @@ https://www.o3de.org/docs/user-guide/programming/az-interface/
 
 图 6.2.Entity Inspector 中的 Level 实体
 
-![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_4.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_5.PNG)
 
 只有在其 Reflect 方法中标记为 Level 组件的组件才能添加到 Level 实体中。
 
@@ -42,6 +42,8 @@ ec->Class<MyLevelComponent>("My Level Component", "[Communicates using AZ::Inter
 ```
 
 例 6.1.具有 My Level Component 的 Level 实体
+
+![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_4.PNG)
 
 {{<tip>}}
 每当您发现 Editor 或 Asset Processor 在刚刚添加新组件后无法启动时，请检查您的新组件是否具有唯一的 guid。复制和粘贴新组件文件很容易，而忘记更新 GUID。在这种情况下，Visual Studio 中的调试日志将显示以下错误：
@@ -60,7 +62,7 @@ Change the UUID on one of them.
 
 图 6.3.用 AZ::Interface
 
-![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_5.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_6.PNG)
 
 下面是接口定义。
 

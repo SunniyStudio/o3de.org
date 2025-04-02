@@ -18,7 +18,7 @@ AZ::Event 是在组件之间实现通知系统的绝佳工具，其中一个组�
 
 图 7.1.设置 AZ::Event
 
-![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_6.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_7.PNG)
 
 1. 使用AZ::Event<>定义事件
 ```c++
@@ -86,7 +86,7 @@ MyEventComponent::MyEventComponent()
 
 图 7.2. 使用 AZ::Event的TransformComponent通知
 
-![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_7.PNG)
+![](/images/learning-guide/tutorials/o3de-book/Part3/o3de_book_3_8.PNG)
 
 3. 实现 callback 方法以打印消息。
 ```c++

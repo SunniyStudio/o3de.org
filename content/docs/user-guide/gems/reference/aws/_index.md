@@ -8,7 +8,7 @@ Amazon Web Services （AWS） 是一个云平台，提供广泛而强大的服�
 
 有关 **Open 3D Engine （O3DE）** 中的 AWS Gems 的概述，请观看下面的视频。然后，请继续阅读以了解有关在 O3DE 项目中使用 AWS 的更多信息！
 
-{{< youtube-width id="EG0C9enezzo" title="AWS Gems in O3DE" >}}
+{{< bilibili-width id="BV1sU4y137wj" title="AWS Gems in O3DE" >}}
 
 ## 基于云的资源
 

@@ -10,7 +10,7 @@ toc: true
 
 您可以从下面的快速视频教程中学习导航和自定义 O3DE Editor 的基础知识，并通过阅读本主题了解一些其他提示。
 
-{{< youtube-width id="tFfiXhckd7g" title="O3DE Editor Tour" >}}
+{{< bilibili-width id="BV1mf4y1L74U" title="O3DE Editor Tour" >}}
 
 ## 启动 O3DE 编辑器
 

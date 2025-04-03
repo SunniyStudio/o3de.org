@@ -14,7 +14,7 @@ toc: true
 
 在本教程结束时，您将拥有一个基于默认项目模板的新 O3DE 项目，可以在 **O3DE 编辑器 ** 中打开。
 
-{{< youtube-width id="_BhkXOBDYGA?start=142" title="Installing O3DE for Windows - Create a Project" >}}
+{{< bilibili-width id="BV1fh411i7uQ" title="Installing O3DE for Windows - Create a Project" >}}
 
 ## 先决条件
 

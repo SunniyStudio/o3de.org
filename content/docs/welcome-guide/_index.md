@@ -13,7 +13,7 @@ primary: true
 
 O3DE 是一个开源、跨平台的实时 3D 引擎，可用于创建高性能的交互式体验，包括游戏和模拟。请观看下面的视频，快速了解 O3DE 的一些最大功能。然后，请继续阅读以开始设置并开始使用 O3DE 进行创作！
 
-{{< youtube-width id="CQmjAxr7LZs" title="What is O3DE?" >}}
+{{< bilibili-width id="BV1uo4y1X7c1" title="What is O3DE?" >}}
 
 ## 入门指南内容
 

@@ -14,7 +14,7 @@ toc: true
 * 构建 O3DE 引擎。
 * 注册引擎。
 
-{{< youtube-width id="GZF_6SkAXPw" title="Setting up O3DE from GitHub" >}}
+{{< bilibili-width id="BV1X44y1q7aL" title="Setting up O3DE from GitHub" >}}
 
 ## 先决条件
 

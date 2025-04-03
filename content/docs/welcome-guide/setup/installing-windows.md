@@ -7,7 +7,7 @@ weight: 100
 
 要在 Windows 中快速开始使用 O3DE，请下载并运行安装程序。使用以下视频或书面说明指导您完成安装过程。成功安装后，您将拥有引擎及其 Gem 的稳定预构建版本，并且您将准备好使用 **Project Manager** 工具创建新项目或打开现有项目。
 
-{{< youtube-width id="_BhkXOBDYGA" title="Installing O3DE for Windows" >}}
+{{< bilibili-width id="BV1MWPWeJE66" title="Installing O3DE for Windows" >}}
 
 ## 先决条件
 

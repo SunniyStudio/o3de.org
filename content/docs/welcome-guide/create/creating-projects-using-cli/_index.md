@@ -21,4 +21,4 @@ toc: true
 [在 Windows 上创建项目](creating-windows.md) | 了解如何使用 Windows 上的命令行界面 （CLI） 从默认项目模板创建和构建新的 O3DE 项目。
 [在 Linux 上创建项目](creating-linux.md) | 了解如何在 Linux 上使用命令行界面 （CLI） 从默认项目模板创建和构建新的 O3DE 项目。
 
-{{< youtube-width id="SZC13S0YZZs" title="Creating O3DE Projects Using Command Line" >}}
+{{< bilibili-width id="BV1C44y1q7SD" title="Creating Projects Using the Command Line" >}}

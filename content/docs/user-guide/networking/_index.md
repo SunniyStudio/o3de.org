@@ -44,7 +44,7 @@ Multiplayer Gem 支持 O3DE 中基于实体的异步联网，使用事件驱动�
 
 要快速了解 O3DE 网络层和Multiplayer Gem，请观看以下视频：
 
-{{< youtube-width id="FfrkHJJt_X0" title="O3DE - Networking Overview" >}}
+{{< bilibili-width id="BV1s54y1n7He" title="O3DE Networking Overview" >}}
 
 ## 章节主题
 

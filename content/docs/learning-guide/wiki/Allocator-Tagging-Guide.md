@@ -1,55 +1,57 @@
 ---
-title: "Allocator-Tagging-Guide"
+title: "分配器标记指南"
 description: ""
 toc: false
 ---
 
-O3DE Allocators are setup to allow using a hierarchy structure for tagging memory from specific base allocators.  
+O3DE 分配器设置为允许使用层次结构来标记来自特定基本分配器的内存。 
 
-The main base allocators of O3DE are
+O3DE 的主要碱基分配器是
 1. The [OS Allocator](https://github.com/o3de/o3de/blob/fc7f51a5748612eb069ec4623908311e2af99915/Code/Framework/AzCore/AzCore/Memory/OSAllocator.h#L19-L25) which delegates to the operating System `malloc` call.
 1. The [System Allocator](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/AzCore/Memory/SystemAllocator.h#L17-L25) which uses the memory [High Performance Allocator Schema](https://github.com/o3de/o3de/blob/fc7f51a5748612eb069ec4623908311e2af99915/Code/Framework/AzCore/AzCore/Memory/HphaAllocator.h#L16-L28) under the hood for allocating memory.
 1. The [Pool Allocator](https://github.com/o3de/o3de/blob/fc7f51a5748612eb069ec4623908311e2af99915/Code/Framework/AzCore/AzCore/Memory/PoolAllocator.h#L196-L202) which uses a pool of memory for allocating specific block sizes of memory in O(1)
 1. The [Thread Pool Allocator](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/AzCore/Memory/PoolAllocator.h#L221-L226) which is a thread safe implementation of the pool allocator, where separate pools are allocated on different threads.
 
-This guide provides examples on how to inherit an O3DE Allocator and order to track memory for a specific system(such as Animation or Prefabs)
+本指南提供了有关如何继承 O3DE 分配器并按顺序跟踪特定系统（例如动画或预制件）的内存的示例
 
-#### Neccessary commits
-The guide mentioned here requires the following commits to be integrated into the users branch.
-|commit link | reason it is needed |
+#### 必要提交
+此处提到的指南要求将以下提交集成到 users 分支中。
+| 提交链接 |需要的理由 |
 |----|----|
-|https://github.com/o3de/o3de/commit/eb3887215998f300a9e700b8294db99ac539c135 | adds support for the `sys_DumpAllocators` command.|
-https://github.com/o3de/o3de/commit/60e195e001e4cd40881ac1140ef851bfeb066336 | dependent commit for 903936edc736ef3a0ba8ea1d7668a01c185d3841 |
-|https://github.com/o3de/o3de/commit/903936edc736ef3a0ba8ea1d7668a01c185d3841 | dependent commit for 212d3c4d32cfcca4d960654b82d68de3d3b5f924|
-|https://github.com/o3de/o3de/commit/67763caae64d05b2effa0ec5f7173dc93c98e329 | dependent commit for 212d3c4d32cfcca4d960654b82d68de3d3b5f924|
-|https://github.com/o3de/o3de/commit/212d3c4d32cfcca4d960654b82d68de3d3b5f924 | adds support for the startup configuration file, new `sys_DumpAllocationRecords*` console commands and accurate memory tracking of child allocators.|
+|https://github.com/o3de/o3de/commit/eb3887215998f300a9e700b8294db99ac539c135 | 添加了对 `sys_DumpAllocators` 命令的支持。|
+https://github.com/o3de/o3de/commit/60e195e001e4cd40881ac1140ef851bfeb066336 | 903936edc736ef3a0ba8ea1d7668a01c185d3841的依赖提交 |
+|https://github.com/o3de/o3de/commit/903936edc736ef3a0ba8ea1d7668a01c185d3841 | 212d3c4d32cfcca4d960654b82d68de3d3b5f924的依赖提交|
+|https://github.com/o3de/o3de/commit/67763caae64d05b2effa0ec5f7173dc93c98e329 | 212d3c4d32cfcca4d960654b82d68de3d3b5f924的依赖提交|
+|https://github.com/o3de/o3de/commit/212d3c4d32cfcca4d960654b82d68de3d3b5f924 | 添加了对启动配置文件、新的 `sys_DumpAllocationRecords*` 控制台命令和子分配器的准确内存跟踪的支持。|
 
 
-### Piggybacking off of an Existing allocator
+### 搭载 Existing 分配器
 
-To piggyback off of an existing allocator, The base allocator class can be wrapped in the `AZ::ChildAllocatorSchema` template.  
-An inherited class should then be added that implements the `AZ_RTTI` macro which allows providing a user readable name for the new allocator itself.
-The `AZ_CHILD_ALLOCATOR` macro that encapsulates these steps
+要捎带现有分配器，可以将基分配器类包装在`AZ::ChildAllocatorSchema`模板中。
+然后应该添加一个继承的类，该类实现 `AZ_RTTI` 宏，该宏允许为新的分配器本身提供用户可读的名称。
+封装这些步骤的 `AZ_CHILD_ALLOCATOR` 宏
 
-#### Ex. Create an allocator for the PrefabSystem that uses the SystemAllocator for it's allocation
+#### 例如，为 PrefabSystem 创建一个分配器，该分配器使用 SystemAllocator 进行分配
 ```c++
 AZ_CHILD_ALLOCATOR(PrefabSystemAllocator, "{CD8443AE-BC56-4C46-AF3A-6633C2C0E694}", AZ::SystemAllocator);
 ```
 
-The above macro creates the `PrefabSystemAllocator`, which inherits from the ChildAllocatorSchema class template and standard container allocator alias of `PrefabSystemAllocator_for_std_t`.  
-The `PrefabSystemAllocator` can be used to specify the allocator for class using the `AZ_CLASS_ALLOCATOR` macro.  
-The `PrefabSystemAllocator_for_std_t` is for use with the AZStd container types such as an `AZStd::vector`, `AZStd::basic_string`, `AZStd::unordered_map`, etc... for use as a standard container allocator.
+上述宏创建`PrefabSystemAllocator`，它继承自 ChildAllocatorSchema 类模板和标准容器分配器别名`PrefabSystemAllocator_for_std_t`。
+`PrefabSystemAllocator` 可用于使用 `AZ_CLASS_ALLOCATOR` 宏为类指定分配器。
+`PrefabSystemAllocator_for_std_t`用于 AZStd 容器类型，例如 `AZStd::vector`、`AZStd::basic_string`、`AZStd::unordered_map`等...用作标准容器分配器。
 
-Side Note: A random UUID should be generated for the new allocator.
-This can be done on Windows using the Create GUID tool which is available in the Visual Studio Tools -> Create Guid menu.  
+旁注：应为新分配器生成一个随机 UUID。
+这可以在 Windows 上使用 Visual Studio Tools -> Create Guid 菜单中提供的创建 GUID 工具来完成。
+
 ![image](https://github.com/o3de/o3de/assets/56135373/b02d6a62-535c-46e3-ba17-e6cfc42d25a7)
 
-Alternatively a random UUID can be created using the Python [UUID](https://docs.python.org/3/library/uuid.html#command-line-usage) module using the  following one liner
+或者，可以使用 Python [UUID](https://docs.python.org/3/library/uuid.html#command-line-usage) 模块使用以下一行代码创建随机 UUID
+
 ```bash
 python -c "import uuid; print(f'{{{str(uuid.uuid4()).upper()}}}');"
 ```
 
-### Using the PrefabSystemAllocator for prefab classes/structures
+### 将 PrefabSystemAllocator 用于预制件类/结构
 
 PrefabSystemComponent.h
 ```c++
@@ -82,12 +84,12 @@ AZ_CLASS_ALLOCATOR_IMPL(PrefabLoader, PrefabSystemAllocator)
 AZ_COMPONENT_IMPL_WITH_ALLOCATOR(PrefabSystemComponent, "{27203AE6-A398-4614-881B-4EEB5E9B34E9}", PrefabSystemAllocator);
 ```
 
-### Output the total memory for allocators uses at runtime memory at runtime
+### 输出分配器在运行时使用的总内存
 
-The [sys_DumpAllocator](https://github.com/o3de/o3de/pull/16864) Console Command can be used via the AZ Console system to dump the memory allocations of any active allocations.
+ [sys_DumpAllocator](https://github.com/o3de/o3de/pull/16864)控制台命令可通过 AZ Console 系统用于转储任何活动分配的内存分配。
 
-Sample output for the user of the Console Variable is below.
-It is setup to be able to placed into a CSV file to aid in data analysis.
+控制台变量用户的示例输出如下。
+它被设置为能够放入 CSV 文件中以帮助进行数据分析。
 ```
 [CONSOLE] Executing console command 'sys_DumpAllocators'
 Index,Name,Used KiB,Reserved KiB,Consumed KiB,Parent Allocator
@@ -128,39 +130,39 @@ Index,Name,Used KiB,Reserved KiB,Consumed KiB,Parent Allocator
 33 allocators active
 ```
 
-**NOTE: There is currently a max limit of [100 registered allocators](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/AzCore/Memory/AllocatorManager.h#L155-L156)**.
+**注意：目前最大限制为 [100 个已注册的分配器](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/AzCore/Memory/AllocatorManager.h#L155-L156)**.
 
-## How to add allocation record tracking for allocators
+## 如何为分配器添加分配记录跟踪
 
-In O3DE Allocator have support for recording the address, size and callstack of each allocation that occurs when using a specific allocator.  
-This can be done by turning on allocation record tracking as well as profiling for the allocator itself.  
-By default this is only enabled by default in the C++ Unit Test framework when using the [LeakDectionFixture](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/AzCore/UnitTest/TestTypes.h#L109-L115) for Googletest fixtures.  
+在 O3DE 中，分配器支持记录使用特定分配器时发生的每个分配的地址、大小和调用堆栈。 
+这可以通过打开 allocation record tracking 以及 allocator 本身的分析来完成。
+默认情况下，仅当将 [LeakDectionFixture](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/AzCore/UnitTest/TestTypes.h#L109-L115)  用于 Googletest 装置时，仅在 C++ Unit Test 框架中默认启用此功能。
 
-In order to enable allocator recording in other runtime applications such as the GameLauncher and Editor, support for a startup configuration file has been added to O3DE that can read a Windows-style INI file that specifies the name of allocator that is registered with the Allocation system and a value for level of allocation recording that should occur.
+为了在其他运行时应用程序（如 GameLauncher 和 Editor）中启用分配器记录，O3DE 中添加了对启动配置文件的支持，该文件可以读取 Windows 样式的 INI 文件，该文件指定在 Allocation 系统中注册的分配器的名称以及应该发生的分配记录级别的值。
 
-Support for loading of the startup configuration file can be overridden by the [O3DE_STARTUP_CFG_FILE_CHECK_OVERRIDES](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/CMakeLists.txt#L40-L43) CMake Cache variable when configuring.  
-By default the startup config file would only be loaded in `debug` and `profile` configurations and not in `release` configurations, but can overridden by specifying the `O3DE_STARTUP_CFG_FILE_CHECK_OVERRIDES` CMake cache option above.  
+在配置时，对加载启动配置文件的支持可以被 [O3DE_STARTUP_CFG_FILE_CHECK_OVERRIDES](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/CMakeLists.txt#L40-L43)  CMake Cache 变量覆盖。
+默认情况下，启动配置文件只会在 `debug` 和 `profile` 配置中加载，而不是在  `release` 配置中加载，但可以通过指定上面的 `O3DE_STARTUP_CFG_FILE_CHECK_OVERRIDES` CMake 缓存选项来覆盖。
 
-### Startup config file search locations
+### 启动配置文件搜索位置
 
-The path to the startup config file is searched in the following locations:  
-1. ~/.o3de/Registry/startup.cfg (`~` stands for the user home directory. i.e `/home/<user>` on Linux, `C:/Users/<user>` on Windows, `/Users/<user>` on MacOS.
+在以下位置搜索启动配置文件的路径：
+1. ~/.o3de/Registry/startup.cfg (`~` 代表用户主目录。例如`/home/<user>` 用于 Linux, `C:/Users/<user>` 用于 Windows, `/Users/<user>` 用于 MacOS.
 1. `<executable-directory>/Registry/startup.cfg`.
-1. The value of the `O3DE_STARTUP_CFG_FILE` environment variable if set.
-1. The value of the `--startup-cfg-file` command line argument.
+1. `O3DE_STARTUP_CFG_FILE`环境变量的值，如果已设置。
+1. `--startup-cfg-file`命令行参数的值。
 
-### Allocator record tracking settings
+### 分配器记录跟踪设置
 
-The specifics of enabling allocation tracking for an allocator involves adding a setting to the startup configuration file of the form:  
+为分配器启用分配跟踪的细节包括向以下形式的启动配置文件添加设置：
 `allocator_tracking_<allocator-name> = <AllocationRecordMode>`  
 
-The "\<AllocationRecordMode>" value must be match one of the options of the [AllocationRecordMode](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/AzCore/Memory/AllocationRecords.h#L89-L92) enum.
+“\<AllocationRecordMode>” 值必须与 [AllocationRecordMode](https://github.com/o3de/o3de/blob/212d3c4d32cfcca4d960654b82d68de3d3b5f924/Code/Framework/AzCore/AzCore/Memory/AllocationRecords.h#L89-L92) 枚举的选项之一匹配。
 
-When the value of the `allocator_tracking_<allocator-name>` key is set to a value above the `RECORD_NO_RECORDS` enum, allocation record tracking becomes enabled.
+当 `allocator_tracking_<allocator-name>` 键的值设置为高于 `RECORD_NO_RECORDS` 枚举的值时，分配记录跟踪将启用。
 
-The following is a sample startup.cfg file that illustrates how to turn on Allocation tracking.
+以下是 startup.cfg 文件示例，说明了如何打开 Allocation tracking。
 
-The names of allocators can be found at runtime by using the `sys_DumpAllocators` command in the previous [section](#output-the-total-memory-for-allocators-uses-at-runtime-memory-at-runtime).
+分配器的名称可以在运行时使用[上一节](#output-the-total-memory-for-allocators-uses-at-runtime-memory-at-runtime) 中的 `sys_DumpAllocators` 命令找到.
 
 #### startup.cfg
 ```ini
@@ -175,18 +177,18 @@ allocator_tracking_SystemAllocator = 3 ; // Same as the RECORD_FULL enum
 
 ```
 
-### Dump Allocation records for allocators at runtime
+### 在运行时转储分配器的 Allocation 记录
 
-There are also several Console Commands, that allows users to 
-|Console Command| Usage | Description | Examples |
+还有几个 Console 命令，允许用户
+|控制台命令|用法 |描述 |示例 |
 |---|---|---|---|
-|`sys_DumpAllocationRecordsToStdout`| `sys_DumpAllocationRecordsToStdout [<allocator name> ...]` | dumps allocation records for a set of specified allocators (or all allocators if the no allocator name arguments are provided) to stdout.| `sys_DumpAllocationRecordsToStdout`<br/>`sys_DumpAllocationRecordsToStdout SystemAllocator`|
-|`sys_DumpAllocationRecordsToFile`| `sys_DumpAllocationRecordsToFile <filepath> [<allocator name> ...]` | dumps allocation records for a set of specified allocators (or all allocators if the no allocator name arguments are provided) to the supplied filepath.<br>relative files paths are treated relative to current working directory of the application.| `sys_DumpAllocationRecordsToFile foo.txt`<br/>`sys_DumpAllocationRecordsToFile bar.txt OSAllocator`|
-|`sys_DumpAllocationRecordsToDevWriteStorage`| `sys_DumpAllocationRecordsToDevWriteStorage [<allocator name> ...]` | dumps allocation records for a set of specified allocators (or all allocators if the no allocator name arguments are provided) to the developer writable storage directory.<br/>The developer writable storage directory on the Host platforms of [Windows, Linux and MacOS](https://github.com/o3de/o3de/blob/67bab671e1eb66120f812e1e7b70e57402076c41/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryMergeUtils.cpp#L740-L753) are the `<project-root>/user` directory.<br/>On mobile platforms such as [Android](https://github.com/o3de/o3de/blob/67bab671e1eb66120f812e1e7b70e57402076c41/Code/Framework/AzCore/Platform/Android/AzCore/Android/AndroidEnv.h#L110-L112) and [IOS](https://github.com/o3de/o3de/blob/67bab671e1eb66120f812e1e7b70e57402076c41/Code/Framework/AzCore/Platform/iOS/AzCore/Utils/Utils_iOS.mm#L26) it is the public storage provided by OS when the app is installed on the device.<br/><br/>Specifically the file path for the allocation records are located at:<br/>`<dev-write-storage>/application_records/records.<ISO8601Timestamp>.<process-id>.log`| `sys_DumpAllocationRecordsToDevWriteStorage`<br/>`sys_DumpAllocationRecordsToDevWriteStorage PoolAllocator`|
-|`sys_DumpAllocationRecordsInRange`| `sys_DumpAllocationRecordsInRange <min-inclusive-index> <max-exclusive-index> [<allocator name> ...]` | dumps allocation records in the specified index range using the first two parameters to the console command for a set of specified allocators (or all allocators if the no allocator name arguments are provided).<br/>This command will dump the allocations in the specified range up to the max index to stdout.| `sys_DumpAllocationRecordsToStdout 0 100`<br/>`sys_DumpAllocationRecordsInRange 0 1000 EntityAllocator`|
+|`sys_DumpAllocationRecordsToStdout`| `sys_DumpAllocationRecordsToStdout [<allocator name> ...]` | 将一组指定分配器（或所有分配器，如果提供了 no allocator name 参数）的分配记录转储到 stdout。| `sys_DumpAllocationRecordsToStdout`<br/>`sys_DumpAllocationRecordsToStdout SystemAllocator`|
+|`sys_DumpAllocationRecordsToFile`| `sys_DumpAllocationRecordsToFile <filepath> [<allocator name> ...]` | 将一组指定分配器（或所有分配器，如果提供了 no allocator name 参数，则所有分配器）的分配记录转储到提供的 filepath。<br>相对文件路径是相对于应用程序的当前工作目录进行处理的。| `sys_DumpAllocationRecordsToFile foo.txt`<br/>`sys_DumpAllocationRecordsToFile bar.txt OSAllocator`|
+|`sys_DumpAllocationRecordsToDevWriteStorage`| `sys_DumpAllocationRecordsToDevWriteStorage [<allocator name> ...]` | 将一组指定分配器（或所有分配器，如果提供了 no allocator name 参数）的分配记录转储到开发人员可写存储目录。<br/>在 [Windows， Linux 和 MacOS](https://github.com/o3de/o3de/blob/67bab671e1eb66120f812e1e7b70e57402076c41/Code/Framework/AzCore/AzCore/Settings/SettingsRegistryMergeUtils.cpp#L740-L753) 的主机平台上，开发者的可写存储目录是 `<project-root>/user` 目录。<br/>在 [Android](https://github.com/o3de/o3de/blob/67bab671e1eb66120f812e1e7b70e57402076c41/Code/Framework/AzCore/Platform/Android/AzCore/Android/AndroidEnv.h#L110-L112) 和 [IOS](https://github.com/o3de/o3de/blob/67bab671e1eb66120f812e1e7b70e57402076c41/Code/Framework/AzCore/Platform/iOS/AzCore/Utils/Utils_iOS.mm#L26) 等移动平台上，它是 OS 在设备上安装应用程序时提供的公共存储。<br/><br/>具体而言，分配记录的文件路径位于：<br/>`<dev-write-storage>/application_records/records.<ISO8601Timestamp>.<process-id>.log`| `sys_DumpAllocationRecordsToDevWriteStorage`<br/>`sys_DumpAllocationRecordsToDevWriteStorage PoolAllocator`|
+|`sys_DumpAllocationRecordsInRange`| `sys_DumpAllocationRecordsInRange <min-inclusive-index> <max-exclusive-index> [<allocator name> ...]` | 使用前两个参数将指定索引范围内的分配记录转储到一组指定分配器（如果提供了 no allocator name 参数，则为所有分配器）的控制台命令中。<br/>此命令将转储指定范围内的分配，直到 stdout 的最大索引。| `sys_DumpAllocationRecordsToStdout 0 100`<br/>`sys_DumpAllocationRecordsInRange 0 1000 EntityAllocator`|
 
-#### Running the console command to dump the OSAllocator allocation records
-The console output could looks as follows
+#### 运行 console 命令转储 OSAllocator 分配记录
+控制台输出可能如下所示
 ```
 sys_DumpAllocationRecordsToDevWriteStorage OSAllocator
 [CONSOLE] Executing console command 'sys_DumpAllocationRecordsToDevWriteStorage OSAllocator'
@@ -194,7 +196,8 @@ sys_DumpAllocationRecordsToDevWriteStorage OSAllocator
 (mem) - Printed 142 allocations in 1 seconds for allocator "OSAllocator" (71 records per seconds)
 ```
 
-Running the console command would result in a log file being output to the `<project-root>/user/allocation_records` directory.
+运行 console 命令将导致日志文件输出到`<project-root>/user/allocation_records`目录。
+
 ![image](https://github.com/o3de/o3de/assets/56135373/f11bbfae-4f08-4a38-a68c-745cd41bcf92)
 
-Here is a sample of a dumped record file: [records.2023-11-03T205715Z.51804.log](https://github.com/o3de/o3de/files/13254688/records.2023-11-03T205715Z.51804.log)
+以下是转储的记录文件的示例： [records.2023-11-03T205715Z.51804.log](https://github.com/o3de/o3de/files/13254688/records.2023-11-03T205715Z.51804.log)

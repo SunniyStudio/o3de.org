@@ -5,11 +5,11 @@ toc: false
 ---
 
 # Image Builder
-The O3DE image builder is the asset builder to convert different type of images files to textures used for O3DE runtime. The builder is called by AssetProcessor. 
-The image builder is located in Atom's ImageProcessingAtom gem which is under O3DE engine's \Gems\Atom\Asset\ImageProcessingAtom\ folder.
+O3DE 图像生成器是一种资产生成器，用于将不同类型的图像文件转换为用于 O3DE 运行时的纹理。生成器由 AssetProcessor 调用。
+映像生成器位于 Atom 的 ImageProcessingAtom Gem 中，该 Gem 位于 O3DE 引擎的 \Gems\Atom\Asset\ImageProcessingAtom\ 文件夹下。
 
-# Supported Image File Types
-Here are a list of supported image file types
+# 支持的图像文件类型
+以下是支持的图像文件类型列表
 * "*.tif"
 * "*.tiff"
 * "*.png"
@@ -21,9 +21,9 @@ Here are a list of supported image file types
 * "*.dds"
 * "*.exr"
 
-# Supported Image Pixel Format
-Here are a list of supported image pixel formats:
-(origin: o3de/Gems/Atom/Asset/ImageProcessingAtom/Code/Source/Processing/PixelFormatInfo.cpp)
+# 支持的图像像素格式
+以下是支持的图像像素格式列表：
+(源: o3de/Gems/Atom/Asset/ImageProcessingAtom/Code/Source/Processing/PixelFormatInfo.cpp)
 
 Unsigned
 * "R8G8B8A8"
@@ -69,19 +69,19 @@ Float formats
 * "R16F"
 
 
-# Image Builder Settings
-The default settings used by the image builder is located in O3DE's \Gems\Atom\Asset\ImageProcessingAtom\Assets\Config\ folder which we call it default folder. 
+# Image Builder 设置
+映像生成器使用的默认设置位于 O3DE 的 \Gems\Atom\Asset\ImageProcessingAtom\Assets\Config\ 文件夹中，我们称之为默认文件夹。
 
-There are two types of settings files: one ImageBuilder.settings file and .preset files. Both of these setting files are in json format. 
+有两种类型的设置文件：一个 ImageBuilder.settings 文件和 .preset 文件。这两个设置文件都是 json 格式。
 
-The ImageBuilder.settings defines global settings for the builder. You can find the list of available settings in BuilderSettingManager::Reflect(AZ::ReflectContext* context) function. 
+ImageBuilder.settings 定义生成器的全局设置。您可以在 BuilderSettingManager::Reflect（AZ::ReflectContext* context） 函数中找到可用设置的列表。 
 
-A preset file defines all the conversion which could happen in an image conversion process. The available settings are listed in void PresetSettings::Reflect(AZ::ReflectContext* context) function. 
+预设文件定义图像转换过程中可能发生的所有转换。可用设置列在 void PresetSettings::Reflect（AZ::ReflectContext* context） 函数中。
 
-Each O3DE project can override or modify both the ImageBuilder.settings file or any preset files. It can also add new presets. These files should be placed in %project%\Config\AtomImageBuilder\ folder which we call it project folder. 
+每个 O3DE 项目都可以覆盖或修改 ImageBuilder.settings 文件或任何预设文件。它还可以添加新的预设。这些文件应放在 %project%\Config\AtomImageBuilder\ 文件夹中，我们称之为 project folder。
 
-For modifying ImageBuilder.settings, user may create a json merge patch in the said folder using the same name ImageBuilder.settings. The image builder will merge this file and \Gems\Atom\Asset\ImageProcessingAtom\Assets\Config\ImageBuilder.settings to get the final settings. 
-For example, the ImageBuilder.settings may look like this:
+要修改 ImageBuilder.settings，用户可以使用相同的名称 ImageBuilder.settings 在所述文件夹中创建一个 json 合并补丁。图像生成器将合并此文件和 \Gems\Atom\Asset\ImageProcessingAtom\Assets\Config\ImageBuilder.settings 以获取最终设置。
+例如，ImageBuilder.settings 可能如下所示：
 
 ```
 {
@@ -96,32 +96,32 @@ For example, the ImageBuilder.settings may look like this:
 }
 ```
 
-For preset files, currently the same preset in project folder is overriding the preset in default folder. (We may consider to switch it to use merge in the future). Users may also adding new preset files in project folder to add new customized presets. It's preferred to add file mask mapping for the new presets in ImageBuilder.settings for easy apply new presets to files. The fileMasks in each preset is still supported but it might be deprecated in the future.
+对于预设文件，当前项目文件夹中的相同预设将覆盖默认文件夹中的预设。（我们可能会考虑将来将其切换为使用 merge）。用户还可以在项目文件夹中添加新的预设文件，以添加新的自定义预设。最好在 ImageBuilder.settings 中为新预设添加文件蒙版映射，以便轻松地将新预设应用于文件。每个预设中的 fileMasks 仍受支持，但将来可能会弃用。
 
-# Preset settings
-The settings in a preset file (*.preset) are defined in `PresetSettings `class which is located in `o3de\Gems\Atom\Asset\ImageProcessingAtom\Code\Source\BuilderSettings\PresetSettings.h` file. The names of the settings are mapped in `void PresetSettings::Reflect(AZ::ReflectContext* context)` function. Here some common used settings in a preset file. (There are few settings which are not often used are not listed here. You may find them in the header file)
-|Setting name |Description|
+# 预设设置
+预设文件 （*.preset） 中的设置在`PresetSettings `类中定义，该类位于`o3de\Gems\Atom\Asset\ImageProcessingAtom\Code\Source\BuilderSettings\PresetSettings.h`文件中。设置的名称映射到 `void PresetSettings::Reflect(AZ::ReflectContext* context)` 函数中。以下是预设文件中一些常用的设置。（这里没有列出一些不经常使用的设置。您可以在头文件中找到它们）
+|设置名称 |说明|
 |-------------|-------------------------|
-|Name         |A unique name of the preset|
-|Description  |A short description about what the preset is used for|
-|GenerateIBLOnly|Controls whether this preset only invokes IBL presets and does not generate its own output product|
-|SourceColor  |The color space of the source image. It can be sRGB or Linear|
-|DestColor    |The color space of the output image. It can be sRGB, Linear or Auto|
-|FileMasks    |A list of file suffixes which files with these suffixed are preferred to choose this preset|
-|PixelFormat  |The pixel format of output image. The format will be ignored if the OutputTypeHandling is set to UseInputFormat|
-|DiscardAlpha |Set to true to discard alpha channel data during converting|
-|MaxTextureSize|The maximum texture size for the output image |
-|MinTextureSize|The minimum texture size for the output image|
-|SizeReduceLevel|Reduce the texture size with specified levels (mip)|
-|GlossFromNormal|Set to true to generate glass data from the normal map and save it to alpha channel. The normal map will be normalized.|
-|MipRenormalize|Set to true to re-normalize mipmaps|
-|NumberResidentMips|Defines how many low level mipmaps are resident mipmaps when create the image. The system will decide how many if it's set to 0|
-|Swizzle      |Swizzle color channels|
-|CubemapSettings|Settings for cubemap|
-|MipMapSetting|Settings for generating mipmaps|
-|OutputTypeHandling|Decides if the output pixel format uses the PixelFormat or use the source image pixel format|
+|Name         |预设的唯一名称|
+|Description  |有关预设用途的简短描述|
+|GenerateIBLOnly|控制此预设是否仅调用 IBL 预设，而不生成自己的输出产品|
+|SourceColor  |源图像的色彩空间。它可以是 sRGB 或 Linear|
+|DestColor    |输出图像的色彩空间。它可以是 sRGB、线性或自动|
+|FileMasks    |文件后缀列表，首选选择带有这些后缀的文件|
+|PixelFormat  |输出图像的像素格式。如果 OutputTypeHandling 设置为 UseInputFormat，则将忽略该格式|
+|DiscardAlpha |设置为 true 可在转换过程中丢弃 Alpha 通道数据|
+|MaxTextureSize|输出图像的最大纹理大小 |
+|MinTextureSize|输出图像的最小纹理大小|
+|SizeReduceLevel|使用指定级别 （mip） 减小纹理大小|
+|GlossFromNormal|设置为 true 可从法线贴图生成玻璃数据并将其保存到 Alpha 通道。法线贴图将被规格化。|
+|MipRenormalize|设置为 true 可重新规范化 mipmap|
+|NumberResidentMips|定义在创建图像时有多少个低级 mipmap 是常驻 mipmap。如果设置为 0，系统将决定多少|
+|Swizzle      |重排颜色通道|
+|CubemapSettings|立方体贴图的设置|
+|MipMapSetting|用于生成 mipmap 的设置|
+|OutputTypeHandling|确定输出像素格式是使用 PixelFormat 还是使用源图像像素格式|
 
-Here is an example preset file for processing textures used for skybox
+以下是用于处理用于天空盒的纹理的示例预设文件
 ```
 {
     "Type": "JsonSerialization",
@@ -205,13 +205,13 @@ Here is an example preset file for processing textures used for skybox
 
 ```
 
-# File Mask Mapping
-We are using file masks (suffix) as the primary way to determinate how to choose the right preset for an image file when processing it. This is to avoid user has to create settings for each texture.
+# 文件掩码映射
+我们使用文件掩码（后缀）作为确定在处理图像文件时如何为图像文件选择正确预设的主要方法。这是为了避免用户必须为每个纹理创建设置。
 
-If users don't want to use the system suggested preset for specific image file, they could use Texture Settings Editor to select the preset they want for the texture. The per image setting is saved in an .assetinfo file in the same folder as the image.
+如果用户不想对特定图像文件使用系统建议的预设，则可以使用 Texture Settings Editor 为纹理选择所需的预设。Per image （按图像） 设置保存在与图像位于同一文件夹中的 .assetinfo 文件中。
 
-The Texture Settings Editor can be accessed via Editor->Asset Browser->(right click an image file) Texture Settings Editor. 
+纹理设置编辑器可以通过编辑器->资源浏览器->（右键单击图像文件）纹理设置编辑器来访问。
 
-# Other Information 
-* The asset job log for image assets in AssetProcessor window may show some useful information for the image. It includes the preset used for processing the image, the image's output resolution, pixel format, file size, compressor, compression time and etc. 
-* User can also use right click menu in Asset Browser to save the processed image file (.streamingimage) to a DDS file which can be viewed by some dds viewers. 
+# 其他信息
+* AssetProcessor 窗口中图像资产的资产作业日志可能会显示图像的一些有用信息。它包括用于处理图像的预设、图像的输出分辨率、像素格式、文件大小、压缩器、压缩时间等。
+* 用户还可以使用 Asset Browser 中的右键单击菜单将处理后的图像文件 （.streamingimage） 保存为 DDS 文件，部分 dds 查看者可以查看该文件。

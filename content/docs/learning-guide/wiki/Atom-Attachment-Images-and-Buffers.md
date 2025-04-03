@@ -1,19 +1,19 @@
 ---
-title: "[Atom]-Attachment-Images-and-Buffers"
+title: "[Atom] 附件图像和缓冲区"
 description: ""
 toc: false
 ---
 
-# Overview
-If a gpu resource (image, buffer) can be writable at any point of its lifetime, it needs to be declared (used) as pass attachment for a pass if there are any draw items submitted in this pass may use this resource. These kind of resources are called attachment images or attachment buffers.</p><p>Some resources' lifetime are only needed in the period of one frame, which we call them transient resources. And the other resources which have lifetime longer than one frame we would call them persistent resources. For transient resources, they are already implemented in Pass class which a pass can create them (owned attachment) during the frame and have them be passed around to other connection passes. For persistent resources, there are different ways to create them and attach them to passes.
-In this document, we will explain how to work with both transient and persistent attachment resources.
-# Using An Attachment
-In this section, it explains how an attachment is used in a frame. The details are already implemented via Pass's PassAttachment. But it can be helpful when adding a customized pass or for debugging.
-To use a gpu resource as an attachment, the resource need to be imported to frame's attachment database via `RHI::FrameGraphAttachmentInterface`'s `ImportBuffer()` or `ImportImage()` function before the frame's render starts. And for each Pass (Scope) which uses this attachment, it needs to call `RHI::FrameGraphInterface's UseAttachment()` function with the resource. And for the last thing, any shader resource groups uses this resource need to bind its resource view to the shader resource groups.
-The import attachment step is to tell the frame graph that this resource will be used as attachment in this frame. The use attachment step is to tell the frame graph, how this attachment will be used for this scope. For example, used for read or write.
-# Transient Attachments
-Assume in the rendering pipeline, it needs to render a depth image first and this depth image will used as input for other passes such as light culling pass and forward pass in the same frame. Although, this depth image doesn't need to be preserved after this frame which make it a transient attachment.
-For such an image, we only need to declare it in pass template's ImageAttachments data. The following data block is part of the .pass file for a pass template. The pass created with this pass template will create a transient image and import it into the frame as well as declare using it for the scope.
+# 概述
+如果 GPU 资源（图像、缓冲区）在其生命周期的任何时候都可以写入，则如果此通道中提交的任何绘制项目可以使用此资源，则需要将其声明（使用）为通道的通道附件。这些类型的资源称为附件图像或附件缓冲区。</p><p>有些资源的生命周期只需要在一帧的周期内，我们称之为瞬态资源。对于生命周期长于一帧的其他资源，我们将其称为持久资源。对于瞬态资源，它们已经在 Pass 类中实现，该类可以在帧期间创建它们（拥有的附件），并将它们传递给其他连接通道。对于持久性资源，有多种方法可以创建它们并将其附加到传递。
+在本文档中，我们将介绍如何使用临时和持久附件资源。
+# 使用附件
+在本节中，它说明了如何在框架中使用附件。细节已经通过 Pass 的 PassAttachment 实现。但在添加自定义通道或进行调试时，它可能很有帮助。
+要将 gpu 资源用作附件，需要在帧的渲染开始之前，通过 `RHI::FrameGraphAttachmentInterface`的`ImportBuffer()` 或 `ImportImage()` 函数将资源导入到帧的附件数据库中。对于每个使用此附件的 Pass （Scope），它需要使用资源调用 `RHI::FrameGraphInterface's UseAttachment()` 函数。最后一件事，任何使用此资源的着色器资源组都需要将其资源视图绑定到着色器资源组。
+导入附件步骤是告诉帧图此资源将用作此帧中的附件。使用附件步骤是告诉帧图，此附件将如何用于此范围。例如，用于读取或写入。
+# 瞬态附件
+假设在渲染管道中，它需要首先渲染深度图像，并且此深度图像将用作其他通道的输入，例如同一帧中的光剔除通道和前向通道。虽然，此深度图像不需要在此帧之后保留，这使其成为瞬态附件。
+对于这样的图像，我们只需要在 pass 模板的 ImageAttachments 数据中声明它。以下数据块是通道模板的 .pass 文件的一部分。使用此通道模板创建的通道将创建一个瞬态图像并将其导入到框架中，并声明将其用于范围。
 
 ```JSON
                "ImageAttachments": [
@@ -35,19 +35,19 @@ For such an image, we only need to declare it in pass template's ImageAttachment
                 }
             ],
 ```
-Note: to find more about how pass handles transient resources, you can search Pass::CreateTransientAttachments in Pass.cpp file.
+注意：要了解有关 pass 如何处理瞬态资源的更多信息，你可以在 Pass.cpp 文件中搜索 Pass::CreateTransientAttachments。
 
-# Persistent Attachments
+# 永久附件
 
-Unlike transient attachments, which are created and managed by pass, the resources used as persistent attachments are usually created manually, then attached to pass slots which one exception that an AttachmentImage Asset is used. 
+与通过传递创建和管理的临时附件不同，用作持久附件的资源通常是手动创建的，然后附加到传递槽，其中一个例外是使用 AttachmentImage 资源。
 
-In RPI, the AttachmentImage class (derived class of RPI::Image) is used to represent image used as attachment and the Buffer class is used to represent attachment buffer.  After these resource objects are created, they can be attach to pass by using Pass::AttachBufferToSlot or Pass::AttachImageToSlot functions. 
+在 RPI 中，AttachmentImage 类（RPI::Image 的派生类）用于表示用作附件的图像，而 Buffer 类用于表示附件缓冲区。 创建这些资源对象后，可以使用 Pass::AttachBufferToSlot 或 Pass::AttachImageToSlot 函数将它们附加到通道。
 
-The creation of the resource objects are usually happened in feature's implementation, for example in feature processors' initialization. Attaching these resources to passes has to happen inside pass's BuildAttachmentsInternal virtual function. 
+资源对象的创建通常发生在功能实现中，例如在功能处理器的初始化中。将这些资源附加到通道必须在通道的 BuildAttachmentsInternal 虚拟函数中进行。
 
-For example, a buffer which saves luminance values of history frames is needed for eye adaption feature with both write and read operations. Since the values are calculated and saved on GPU and required to be saved across multiple frames, this buffer needs to be a persistent attachment buffer. 
+例如，对于具有写入和读取作的眼睛适应功能，需要一个保存历史帧亮度值的缓冲区。由于这些值是在 GPU 上计算和保存的，并且需要跨多个帧保存，因此此缓冲区需要是持久附加缓冲区。
 
-The following block shows how the buffer is created and used for pass and related shader. 
+以下块显示了如何创建缓冲区并将其用于通道和相关着色器。
 ```HLSL
 // EyeAdaptaion.azsl, where the buffer is written to
  struct EyeAdaptation
@@ -117,11 +117,11 @@ void EyeAdaptationPass::BuildAttachmentsInternal()
 	AttachBufferToSlot(EyeAdaptationDataInputOutputSlotName, m_buffer);
 }
 ```
-# AttachmentImage Asset
+# AttachmentImage 资产
 
-AttachmentImage can be created via asset (.attimage file) as well, with one asset to one instance relationship. And the asset can be referenced in pass template's image attachment. 
+AttachmentImage 也可以通过资产（.attimage 文件）创建，具有一个资产到一个实例的关系。并且可以在通道模板的图像附件中引用该资产。
 
-One use case in Atom's samples is the usage of brdf lookup image. Similar to transient image's declaration, this persistent attachment image is managed by pass if the pass attachment in pass template is using the following data. 
+Atom 示例中的一个用例是使用 brdf 查找映像。与临时图像的声明类似，如果通道模板中的通道附件使用以下数据，则此持久附件图像由 pass 管理。
 ```JSON
 	  "ImageAttachments": [
                 {

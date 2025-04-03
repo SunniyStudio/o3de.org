@@ -1,6 +1,6 @@
 baseURL = "https://o3de.devresource.top"
 title = "Open 3D 引擎"
-disableKinds = ["taxonomyTerm"]
+disableKinds = ["taxonomy"]
 copyright = "O3DE Open 3D 引擎贡献者 | 文档以 CC-BY 4.0 协议发布"
 languageCode = "en-us"
 

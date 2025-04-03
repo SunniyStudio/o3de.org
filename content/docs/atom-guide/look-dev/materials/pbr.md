@@ -42,7 +42,7 @@ Atom 中包含以下核心材质类型：
 PBR 着色模型由描述材质在物理世界中如何相互作用的属性组成。在基本层面上，PBR 着色模型需要以下属性： **base color**, **metallic**, **roughness**, 和 **specular reflectivity**。这些属性足以定义木材、金属、混凝土和其他原材质等材质。然而，材质的属性会变得复杂得多，如**clear coat**, **subsurface scattering**等等。例如，上过清漆的木材是由一种基本的木质材质制成的，上面还有一层透明涂层。
 
 以下属性列表用于在 Atom 中定义 PBR 材质。[PBR 材质类型中的属性](#properties-in-material-types) 表格中列出了哪些属性包含在哪种材质类型中。
-1
+
 | 属性 | 定义 |
 | - | - |
 | [Base Color](#base-color) | 非金属（电介质）的表面反射颜色或金属（导体）的反射率值。 |

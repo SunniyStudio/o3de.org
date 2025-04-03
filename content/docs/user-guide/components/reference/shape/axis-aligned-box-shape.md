@@ -14,7 +14,7 @@ weight: 100
 ## Axis Aligned Box Shape 属性
 
 ![Axis Aligned Box Shape component properties](/images/user-guide/components/reference/shape/axis-aligned-box-shape-component-ui-01.png)
-1
+
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Visible** | 启用此选项可始终在视区中显示形状，即使未选择实体也是如此。禁用可在未选择实体时隐藏形状。 | Boolean | `Enabled` |

@@ -21,7 +21,7 @@ toc: true
 ## Gradient Sampler 属性
 
 ![PostFX Gradient Weight Modifier base properties](/images/user-guide/components/reference/atom/post-processing-modifiers/postfx-gradient-weight-modifier.png)
-1
+
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Gradient Entity Id** | 对提供梯度的独立实体的引用。 | EntityId | None |

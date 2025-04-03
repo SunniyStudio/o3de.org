@@ -14,7 +14,7 @@ toc: true
 
 ## Material 组件属性
 默认情况下，Material组件只包含**Default Material**属性。材质组件通过 `MaterialConsumerRequestBus` 显示其他属性组，即**Model Materials**和**LOD Materials**。例如，网格组件实现了 `MaterialConsumerRequestBus` 来描述其模型资产所需的材料。每当材料需求发生变化时，网格组件就会通过 `MaterialConsumerNotificationBus` 发送通知。如果模型资产需要五种独特的材料，那么**Model Materials**属性组就会显示五个模型材料插槽。此外，如果模型资产包含三个 LOD，那么**LOD Materials**属性组就会显示三个 LOD 材料组及其各自的材料插槽。
-1
+
 | 说明 | 截图 |
 |-|-|
 | Default | ![material-component-base-properties](/images/user-guide/components/reference/atom/material/material-base-properties-ui.png) |
@@ -29,7 +29,7 @@ toc: true
 | 每个材料槽还有一个上下文菜单。该菜单提供的选项可用于打开专用的 “材质编辑器”、打开Material Instance Inspector窗口以自定义所选实体的材质属性等。 | ![material-component-slot-menu](/images/user-guide/components/reference/atom/material/material-slot-menu-ui.png) |
 | 通过**Generate/Manage Source Material**对话框，您可以从材料组件导出并自动分配`.material`源文件。如果您的工作流程不需要`.material`源文件，那么您可以使用**Material Instance Inspector**直接在实体上自定义材质。<br><br>您可以通过单击上下文菜单中的**Generate/Manage Source Materials...**或 Material 组件顶部的按钮来访问此对话框。该对话框显示与每个材料槽相关联的唯一材料列表。您可以配置将材料保存为目标文件名，也可以使用默认文件名。随后，对话框将生成`.material`源文件，并自动将其分配给每个匹配的材质槽。然后，您可以使用 “材质编辑器 ”打开和编辑“.材质`.material` 并与其他实体共享。 <br><br>尽管您并不需要使用此对话框，但它有助于简化为多个实体共享的材料进行分配的过程。例如，如果您选择了共享同一组材质插槽的多个实体，并从它们的上下文菜单中打开对话框，那么生成的材质就会自动分配到每个实体上。该对话框还可用于根据 FBX 或其他源中嵌入的材质建立材质库。 | ![material-componen-generate](/images/user-guide/components/reference/atom/material/material-generate-ui.png) |
 | **Material Instance Inspector** 提供的功能与材料编辑器中的检查器相同。不过，该工具并不是创建子材质，而是通过覆盖分配给材质槽的资产值来自定义材质属性。您所做的更改会实时应用到实体，并在视口和预览中可见。<br><br>您可以从上下文菜单中选择 **Open Material Instance Editor…** 或 **Open Material Editor...**，打开Material Instance Inspector。 该窗口保持打开并锁定实体和材料槽选择，直到手动关闭为止。如果实体或所选材料槽无效或不可用，该窗口将被禁用。| ![material-componen-inspector](/images/user-guide/components/reference/atom/material/material-inspector-ui.png) |
-1
+
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Generate/Manage Source Materials...** | 这个按钮打开 **Generate/Manage Source Materials** 对话框。 | | |

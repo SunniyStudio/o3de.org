@@ -19,7 +19,7 @@ toc: true
 ## PhysX 标签页属性
 
 ![The Scene Settings PhysX tab properties.](/images/user-guide/assets/scene-settings/physx-tab.png)
-1
+
 | 属性 | 说明 |
 | - | - |
 | **Add another physxmesh** | 从源资产中添加一个 PhysX 网格组，作为 PhysX 碰撞体\(`.pxmesh`\)产品资产进行处理。 |

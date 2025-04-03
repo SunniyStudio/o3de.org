@@ -18,7 +18,7 @@ toc: true
 ## 属性
 
 ![stars-component-base-properties](/images/user-guide/components/reference/atom/stars/stars-base-properties-ui.png)
-1
+
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Exposure** | 指定渲染场景中星星时使用的曝光量，以便控制星星的亮度。 | `0.0` - `32.0` | `1.0` |

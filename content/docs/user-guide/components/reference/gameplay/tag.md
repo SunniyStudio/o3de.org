@@ -46,7 +46,7 @@ description: 使用Tag组件可将标签应用到Open 3D Engine (O3DE)中的实�
 | `RequestTaggedEntities` | 返回第一个响应特定标记的实体。 | Tag: Crc32 | Tagged Entity: EntityId | Yes |
 
 ## TagGlobalNotificationBus
-1
+
 | 请求名称 | 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
 | `OnEntityTagAdded` | 当特定标记被添加到任何实体时通知侦听器。 | Tag: Crc32 | Tagged Entity: EntityId | Yes |

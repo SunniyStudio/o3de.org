@@ -35,7 +35,7 @@ description: ' 在Open 3D Engine (O3DE)中使用Simple Motion组件为Actor添�
 ## SimpleMotionComponentRequestBus ##
 
 将以下请求函数与 `SimpleMotionComponentRequestBus` EBus 接口结合使用，可在游戏中与简单运动组件进行通信。更多信息，请参阅 [使用事件总线（EBus）系统](/docs/user-guide/programming/messaging/ebus/).
-1
+
 | 请求名称| 说明 | 参数 | 返回值 | 可脚本化 |
 |-|-|-|-|-|
 | `BlendInTime` | 设置动作的 **Blend In Time**。 | Time: Float | None | Yes |

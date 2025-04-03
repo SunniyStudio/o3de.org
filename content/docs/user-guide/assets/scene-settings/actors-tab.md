@@ -13,7 +13,7 @@ Actors是至少有一个骨骼的资产（不一定是角色），可以包含�
 ## Actors标签页属性
 
 ![The Scene Settings Actors tab.](/images/user-guide/assets/scene-settings/actors-tab.png)
-1
+
 | 属性 | 说明 |
 | - | - |
 | **Add another actor** | 添加一个actor组进行处理。每个角色组都会生成自己的`.actor` 和 `.skinmeta`产品资产。 |
@@ -96,7 +96,7 @@ Actors是至少有一个骨骼的资产（不一定是角色），可以包含�
 ![The Scene Settings Actors tab Skeleton optimization modifier.](/images/user-guide/assets/scene-settings/skeleton-optimization-modifier.png)
 
 骨架优化为自动生成骨架 LOD 提供了几个选项。
-1
+
 | 属性 | 说明 |
 | - | - |
 | **Auto Skeleton LOD** | 激活时，客户端骨骼 LOD 会根据皮肤权重数据自动生成。在相应的网格 LOD 中没有皮肤权重的叶骨会从骨架中优化出来。 |

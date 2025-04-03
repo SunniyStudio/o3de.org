@@ -19,7 +19,7 @@ toc: true
 ## Motions 标签页属性
 
 ![The Scene Settings Motions tab.](/images/user-guide/assets/scene-settings/motions-tab.png)
-1
+
 | 属性 | 说明 |
 | - | - |
 | **Add another motion** | 添加要处理的动作。每个动作都会生成一个 `.motion` 产品资产。|
@@ -108,7 +108,7 @@ toc: true
 ![The Scene Settings Motions tab Scale motion modifier.](/images/user-guide/assets/scene-settings/scale-motion-modifier.png)
 
 为动作设置统一比例。如果源资产是在使用与 O3DE 不同的基本标准测量单位的 DCC 应用程序中创建的，则此设置非常有用。
-1
+
 | 属性 | 说明 |
 | - | - |
 | **Scale factor** | 动作按此值均匀缩放。 |

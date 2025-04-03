@@ -193,7 +193,7 @@ toc: true
 | [Script Canvas](/docs/user-guide/components/reference/scripting/script-canvas/) | 允许您使用 Lua 代码添加自定义逻辑和功能。 |
 
 ### Shape  
-1
+
 | 组件 | 说明 |
 | - | - |
 | [Axis Aligned Box Shape](/docs/user-guide/components/reference/shape/axis-aligned-box-shape/) | 创建始终与轴线对齐的方框几何体。 |
@@ -249,7 +249,7 @@ toc: true
 | [UI Canvas on Mesh](/docs/user-guide/components/reference/ui/canvas-on-mesh/) | 允许您在 3D 世界中的实体上放置 UI 画布，玩家可以通过光线投射与该实体进行交互。 |
 
 ### Vegetation  
-1
+
 | 组件 | 说明 |
 | - | - |
 | Landscape Canvas | 提供基于节点的编辑器，用于创作动态植被。  |
@@ -275,7 +275,7 @@ toc: true
 | [Vegetation Surface Mask Filter](vegetation-filters/vegetation-surface-mask-filter) | 根据表面掩膜-标签映射，筛选出植被。 |
 
 ### Vegetation Modifiers  
-1
+
 | 组件 | 说明 |
 | - | - |
 | [Vegetation Position Modifier](vegetation-modifiers/vegetation-position-modifier) | 偏移植被的位置。 |

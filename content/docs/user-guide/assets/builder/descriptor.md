@@ -11,7 +11,7 @@ toc: true
 ## Asset Builder Descriptor
 
 `azlmbr.asset.builder.AssetBuilderDesc` 是一个提供四个字段的类，用于描述从 Python 资产生成器到资产处理器的过程。
-1
+
 | 字段 | 类型 | 说明 |
 | - | - | - |
 | `busId` | `azlmbr.math.Uuid` | 资产创建器的通用唯一 ID (UUID)。 |

@@ -33,7 +33,7 @@ toc: true
 
 关于下面的**Inverse Masses**, **Motion Constraints**, 和 **Backstop**属性，请参阅 [布的每个顶点属性](/docs/user-guide/interactivity/physics/nvidia-cloth/vertex-data)。
 {{< /note >}}
-1
+
 | 属性 | 说明 |
 | - | - |
 | **Select Cloth Mesh** | 选择要应用布料数据的网格，并将其模拟为布料对象。 |

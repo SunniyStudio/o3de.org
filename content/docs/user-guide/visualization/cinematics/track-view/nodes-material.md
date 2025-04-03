@@ -41,7 +41,7 @@ title: Material 节点
 
 
 **Material 节点轨道**
-1
+
 | 轨道 | 关键属性 | 说明 |
 | --- | --- | --- |
 | Diffuse  | Color (RGB) |  RGB 值，用于指定材质的基色。  |

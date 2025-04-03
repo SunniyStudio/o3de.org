@@ -17,7 +17,7 @@ weight: 350
 | [快捷键](./concepts/hotkeys) | 为动作上下文指定部件，以便通过快捷键触发动作。 |
 
 ## 概念
-1
+
 | 主题 | 说明 |
 | - | - |
 | [注册](./architecture/registration) | 动作管理器注册 API 机制的最佳实践和具体细节。 |

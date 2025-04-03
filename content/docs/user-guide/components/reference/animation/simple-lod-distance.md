@@ -22,7 +22,7 @@ description: 在Open 3D Engine (O3DE)中，使用Simple LOD Distance组件来设
 ## Simple LOD Distance 属性
 
 ![Add the Simple LOD Distance component to an entity to set display distances for each LOD mesh group.](/images/user-guide/components/reference/animation/simple-lod-distance-component.png)
-1
+
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **LOD distance (Max)** | 设置Actor每个 LOD 的最大显示距离。距离值以米为单位（世界单位）。索引 0 是角色的基本网格组。 | 0 到 无限 | 取决于 LOD 序号。 |

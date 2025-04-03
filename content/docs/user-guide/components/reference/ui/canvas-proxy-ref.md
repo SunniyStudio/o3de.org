@@ -23,7 +23,7 @@ description: 使用 UI Canvas Proxy Ref 组件在 Open 3D Engine （O3DE） 中�
 ## UI Canvas Proxy Ref 属性 
 
 ![UI Canvas Proxy Ref properties](/images/user-guide/components/reference/ui/ui-proxy-ref-component.png)
-1
+
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Canvas Asset Ref entity** | 选择具有 **UI Canvas Asset Ref** 组件的实体。 | EntityId | None |

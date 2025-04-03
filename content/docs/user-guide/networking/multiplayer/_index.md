@@ -19,7 +19,7 @@ Multiplayer Gem 支持以下内容：
 * 网络输入处理程序
 
 ## 章节主题
-1
+
 | 主题 | 说明 |
 |---|---|
 | [概述](overview) | O3DE Multiplayer Gem概述。包括提供网络状态同步的多人游戏组件介绍。 |

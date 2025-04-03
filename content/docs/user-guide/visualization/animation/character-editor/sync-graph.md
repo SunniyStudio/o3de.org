@@ -254,7 +254,7 @@ Lua 脚本通过在 O3DE 的 [Event Bus (EBus)](/docs/user-guide/programming/mes
 
 
 ****
-1
+
 | 按键 | 说明 | Event Value Multiplier |
 | --- | --- | --- |
 | 1 | 开启同步模式 | 1 |

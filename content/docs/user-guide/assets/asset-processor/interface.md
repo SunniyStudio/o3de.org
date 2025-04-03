@@ -240,7 +240,7 @@ Event Log Details 表格还具有一个上下文菜单，可将详细信息复�
 右窗格的标题显示了构建程序的类型、指纹、版本号和通用唯一标识符（UUID）。右窗格底部有三个堆叠标签，分别显示创建器的模式、详细信息和指标。
 
 ![Asset Processor UI builders tab](/images/user-guide/assets/asset-processor/interface-builders-patterns.png)
-1
+
 | 项名称 | 说明 |
 | - | - |
 | **Header** | 资产创建器的类型、（分析）指纹、版本、总线 ID（创建器 UUID）显示在本节中。生成器类型可以是内部生成器或外部生成器。内部生成器在资产处理器中创建和运行，而外部生成器位于 Gems 中，在 AssetBuilder 应用程序中运行。 |

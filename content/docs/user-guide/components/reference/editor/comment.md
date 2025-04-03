@@ -18,7 +18,7 @@ description: ' 使用 Open 3D Engine (O3DE) 中的Comment组件为组件实体�
 ## Comment 属性 
 
 ![The Comment Component](/images/user-guide/components/reference/editor/comment-component.png)
-1
+
 | 属性 | 说明 | 值 | 默认值 |
 |-|-|-|-|
 | **Comment text box** | 存储用户对组件实体的注释。 | Text | None |

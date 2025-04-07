@@ -1,22 +1,22 @@
 ---
-title: "[Atom]-Screen-Capture-Image-Comparison-testing"
+title: "[Atom] Screen Capture Image Comparison 测试"
 description: ""
 toc: false
 ---
 
-O3DE has the ability, via the script automation gem, to script loading a level, capture the rendered output, and then compare the captured image to a previously captured known "good image" to validate rendering is working correctly. This capability has been exposed by a new unit-test in the smoke unit-test suite.
-This article describes how the test works and how to add additional screenshot tests.
+O3DE 能够通过脚本自动化 Gem 编写脚本加载关卡，捕获渲染输出，然后将捕获的图像与之前捕获的已知“良好图像”进行比较，以验证渲染是否正常工作。此功能已由 smoke 单元测试套件中的新单元测试公开。
+本文介绍测试的工作原理以及如何添加其他屏幕截图测试。
 
-### Unit Test Settings
-The unit test functionality is implemented in python in - o3de/AutomatedTesting/Gem/PythonTests/Atom/TestSuite_Periodic_GPU.py.
+### 单元测试设置
+单元测试功能在 python 中实现 - o3de/AutomatedTesting/Gem/PythonTests/Atom/TestSuite_Periodic_GPU.py。
 
-The file declares 2 unit test sets: one for DX12 and one for Vulkan. The DX12 tests are skipped on non-Windows platforms. Additionally, the unit tests for both sets are parametrized on a list of test levels (and associated settings), and a list of Render Pipelines.
+该文件声明了 2 个单元测试集：一个用于 DX12，一个用于 Vulkan。在非 Windows 平台上跳过 DX12 测试。此外，这两组的单元测试在测试级别列表（和相关设置）和渲染管道列表中进行参数化。
 
-Note: each test is a separate launch of the AutomatedTesting.GameLauncher. Given the current cost to launch the GameLauncher (approximately 30 seconds) and each test being run multiple times (number of api's tested * number of render pipelines) the total time for the test can scale rapidly.
+注意：每个测试都是 AutomatedTesting.GameLauncher 的单独启动。考虑到当前启动 GameLauncher 的成本（大约 30 秒）和每个测试多次运行（测试的 API 数量 * 渲染管道数量），测试的总时间可以快速扩展。
 
-The unit tests create a way to describe a set of tests that are going to be executed, and make it easy to do so. Let's look at the DX12 setup as an example. 
+单元测试创建了一种方法来描述将要执行的一组测试，并使其易于执行。让我们以 DX12 设置为例。
 
-Below, the SUITE, project, and launcher_platform marks can be ignored as boilerplate. These tests require a GPU. The mark Requires_gpu is necessary to notify Jenkins a GPU is needed. 
+在下方，SUITE、project 和 launcher_platform 标记可以作为样板忽略。这些测试需要 GPU。标记 Requires_gpu 对于通知 Jenkins 需要 GPU 是必需的。
 ```python
     @pytest.mark.SUITE_smoke
     @pytest.mark.REQUIRES_gpu
@@ -35,8 +35,8 @@ Below, the SUITE, project, and launcher_platform marks can be ignored as boilerp
             run_test(workspace, "dx12", test_name, screenshot_name, test_script, level_path, compare_tolerance, camera_name, render_pipeline)
 ```
 
-**`atom_render_pipeline_list`** contains the list of render pipelines to use for the tests.  
-A new render pipeline can be added by appending it to this list.
+**`atom_render_pipeline_list`** 包含用于测试的渲染管道列表。 
+可以通过将新的渲染管线附加到此列表来添加新的渲染管线。
 ```python
     atom_render_pipeline_list = [
         pytest.param("passes/MainRenderPipeline.azasset"),
@@ -44,15 +44,15 @@ A new render pipeline can be added by appending it to this list.
     ]
 ```
 
-**`atom_feature_test_list`** is the list of tests to run through. It contains several atrtributes per test.
-1. Test name.
-2. Screenshot filename. Comma separated list.
-3. ScriptAutomation script to control the test.
-4. The level to load.
-5. Image comparison sensitivity level. Comma separated list.
-6. Name of the Camera entity for the test. Comma separated list.
+**`atom_feature_test_list`** 是要运行的测试列表。它包含每个测试的多个属性。
+1. 测试名称。
+2. 屏幕截图文件名。逗号分隔列表。
+3. ScriptAutomation 脚本来控制测试。
+4. 要加载的级别。
+5. 图像比较灵敏度级别。逗号分隔列表。
+6. 测试的 Camera 实体的名称。逗号分隔列表。
  
-Here's an example of a test that runs multiple screenshots.
+下面是运行多个屏幕截图的测试示例。
 ```python
     pytest.param(
         "Atom_AreaLights", # test name
@@ -64,36 +64,36 @@ Here's an example of a test that runs multiple screenshots.
     )
 ```
 
-### Adding A New Test
-There are two main ways to add a new test:
-1. Add a new level that contains the test.
-2. Add a new test zone inside an existing level.
+### 添加新测试
+添加新测试有两种主要方法：
+1. 添加包含测试的新级别。
+2. 在现有关卡中添加一个新的测试区。
 
-Which you chose will depend on if you need to use a setting that is incompatible with an existing test. These are usually postprocess or skybox settings.
+选择哪个设置取决于您是否需要使用与现有测试不兼容的设置。这些通常是 Postprocess 或 skybox 设置。
 
-##### Option 1 
-Make a new level with a named camera entity that shows what you want to test. An example of this is the DepthOfField test. The level for that test is here - o3de/AutomatedTesting/Levels/AtomScreenshotTests/Feature/DepthOfField  
-This is what the test captures.  
+##### 选项 1
+使用命名的 camera 实体创建一个新关卡，以显示您要测试的内容。这方面的一个示例是 DepthOfField 测试。该测试的关卡在这里 - o3de/AutomatedTesting/Levels/AtomScreenshotTests/Feature/DepthOfField  
+这是测试捕获的内容。
 <img src=https://user-images.githubusercontent.com/82187279/236353035-5ddb878a-fd96-4e53-8fed-a7fe062fbd6f.png width=480 height=270>
 
 
-This is what the level looks like in the editor.  
+这是关卡在编辑器中的样子。 
 <img src=https://user-images.githubusercontent.com/82187279/236355534-8f3f72ba-9395-4222-852a-6e9a5aa85388.png width=796 height=409>
 
 
-Once the level is created, its settings need to be added to the python unit test file - o3de/AutomatedTesting/Gem/PythonTests/Atom/TestSuite_Periodic_GPU.py.
+创建关卡后，需要将其设置添加到 python 单元测试文件中 - o3de/AutomatedTesting/Gem/PythonTests/Atom/TestSuite_Periodic_GPU.py.
 
-##### Option 2
-Load an existing test level and make a new test zone within the level. An example of this is the AreaLight test, where each zone tests an area light type and the zones are spaced so they don't affect each other. The level for the area light tests is here - o3de/AutomatedTesting/Levels/AtomScreenshotTests/Feature/AreaLight
+##### 选项 2
+加载现有测试级别，并在该级别中创建新的测试区域。这方面的一个例子是 AreaLight 测试，其中每个区域测试一种区域光类型，并且区域是间隔的，因此它们不会相互影响。区域光测试的级别在这里 - o3de/AutomatedTesting/Levels/AtomScreenshotTests/Feature/AreaLight
 
-These are examples of what the AreaLight test captures.  
+以下是 AreaLight 测试捕获的内容示例。  
 <img src=https://user-images.githubusercontent.com/82187279/236353061-52d0205b-5844-4f7f-b4a6-c2ee51bc0d1f.png width=480 height=270>
 <img src=https://user-images.githubusercontent.com/82187279/236353085-6cfd7116-9e89-424f-8284-f8455d14d0d5.png width=480 height=270>
 
-This is what the AreaLight test level looks like.  
+这是 AreaLight 测试关卡的外观。 
 <img src=https://user-images.githubusercontent.com/82187279/236355515-024a1984-0a87-4d86-ac84-0e19187f09ae.png width=634 height=387>
 
-Once the level is updated, add the name of the camera entity, the comparison level, and the screenshot file name to the test info in the python unit test file - o3de/AutomatedTesting/Gem/PythonTests/Atom/TestSuite_Periodic_GPU.py.
+更新关卡后，将摄像机实体的名称、比较关卡和屏幕截图文件名添加到 python 单元测试文件中的测试信息中 - o3de/AutomatedTesting/Gem/PythonTests/Atom/TestSuite_Periodic_GPU.py.
 
-##### Other Approaches
-The ScriptAutomation system is also capable of loading multiple levels within a script. A single python test instantiation can handle multiple tests that way as well. The generic scripts currently used in the system don't support this approach, but it is available to use if needed.
+##### 其他方法
+ScriptAutomation 系统还能够在脚本中加载多个关卡。单个 python 测试实例化也可以以这种方式处理多个测试。系统中当前使用的通用脚本不支持此方法，但如果需要，可以使用此方法。

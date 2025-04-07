@@ -1,28 +1,28 @@
 ---
-title: "[Atom]-Work-With-Passes-In-Gems"
+title: "[Atom]-在 Gem 中使用通道"
 description: ""
 toc: false
 ---
 
-**Gems** and **Game Projects** can have their own Passes and Render Pipelines by providing their own Pass Template Mappings(s) assets. Pass Template Mapping assets must have extension `*.azasset`.  
-  
-There are two mechanisms to load Pass Template Mappings:    
-1- Data-Driven (No C++): By creating asset-cache relative files with the following naming convention:  
-1.1- For Gems: \<GEM ROOT PATH\>/Assets/Passes/\<GemName\>/AutoLoadPassTemplates.azasset  
-1.2- For Game Projects: \<PROJECT ROOT PATH\>/Assets/Passes/\<ProjectName\>/AutoLoadPassTemplates.azasset  
-1.3- For Game Projects: \<PROJECT ROOT PATH\>/Passes/\<ProjectName\>/AutoLoadPassTemplates.azasset  
-  
-2- With C++: By having your own System Component, which creates its own instance of `RPI::PassSystemInterface::OnReadyLoadTemplatesEvent::Handler` and during `SystemComponent::OnActivate()` registers the event handler with `RPI::PassSystemInterface::Get()->ConnectEvent(handler)`.  
-  
-Additionally if your Gem or Game Project wants to inject custom Passes into other Render Pipelines, for example, the Main Render Pipeline, then it most do so with C++. Your `FeatureProcessor` most override the `AddRenderPasses()` method.
+**Gem** 和 **游戏项目** 可以通过提供自己的 Pass Template Mappings（s） 资源来拥有自己的 Pass 和 Render Pipeline。Pass 模板映射资产必须具有扩展名`*.azasset`。
 
-# Details About Loading Pass Template Mappings With C++ (Optional).
+有两种机制可以加载 Pass Template 映射：   
+1- 数据驱动（无 C++）：通过使用以下命名约定创建资产缓存相对文件：
+1.1- 用于 Gems: \<GEM ROOT PATH\>/Assets/Passes/\<GemName\>/AutoLoadPassTemplates.azasset  
+1.2- 用于游戏项目: \<PROJECT ROOT PATH\>/Assets/Passes/\<ProjectName\>/AutoLoadPassTemplates.azasset  
+1.3- 用于游戏项目: \<PROJECT ROOT PATH\>/Passes/\<ProjectName\>/AutoLoadPassTemplates.azasset  
   
-The Pass System needs to have a Pass Template (*.pass asset) for each Pass before being able to instantiate a Pass. All Pass Templates must have a unique name (a string) to avoid name collision. Pass Template Mappings are assets with extension (*.azasset), which connect  the names to Pass Template (*.pass) assets.
+2- 使用 C++：通过拥有自己的系统组件，该组件创建自己的 `RPI::PassSystemInterface::OnReadyLoadTemplatesEvent::Handler` 实例，并在 `SystemComponent::OnActivate()` 期间使用 `RPI::PassSystemInterface::Get()->ConnectEvent(handler)` 注册事件处理程序。 
 
-The Pass Template Mapping(s) files should be loaded before the RenderPipelines. The best way is to have your own SystemComponent::OnActivate() do the registration. The SystemComponent should creates its own instance of `RPI::PassSystemInterface::OnReadyLoadTemplatesEvent::Handler` and during `SystemComponent::OnActivate()` registers the event handler with `RPI::PassSystemInterface::Get()->ConnectEvent(handler)`.
+此外，如果您的 Gem 或游戏项目想要将自定义通道注入其他渲染管道（例如主渲染管道），则大多数情况下使用 C++ 来实现。您的 `FeatureProcessor` 大多数会覆盖 `AddRenderPasses()` 方法。
 
-For example, the Atom Feature Common gem adds a  m_loadTemplatesHandler in its CommonSystemComponent.
+# 有关使用 C++ 加载通道模板映射的详细信息（可选）。
+  
+通道系统需要为每个通道提供一个通道模板（*.pass 资产），然后才能实例化通道。所有 Pass Templates 都必须具有唯一的名称 （字符串） 以避免名称冲突。通道模板映射是扩展名为 （*.azasset） 的资产，用于将名称连接到通道模板 （*.pass） 资产。
+
+Pass Template Mapping（s） 文件应在 RenderPipelines 之前加载。最好的方法是让自己的 SystemComponent::OnActivate（） 进行注册。SystemComponent 应创建自己的 `RPI::PassSystemInterface::OnReadyLoadTemplatesEvent::Handler` 实例，并在 `SystemComponent::OnActivate()` 期间使用 `RPI::PassSystemInterface::Get()->ConnectEvent(handler)` 注册事件处理程序。
+
+例如，Atom Feature Common Gem 在其 CommonSystemComponent 中添加了一个m_loadTemplatesHandler。
 ```Cpp
 // Gems\Atom\Feature\Common\Code\Source\CommonSystemComponent.h
 RPI::PassSystemInterface::OnReadyLoadTemplatesEvent::Handler m_loadTemplatesHandler;
@@ -43,26 +43,26 @@ void CommonSystemComponent::LoadPassTemplateMappings()
 m_loadTemplatesHandler.Disconnect()
 ```
 
-# Naming
+# 命名
 
-There is no restriction with pass template mappings file as long as it's *.azasset file. Gems may want to use unique prefix or sub-folder for the file to avoid it's overridden by the file from other gems. For example, the AtomSampleViewer project has a pass template mappings file at Assets/Passes/ASV/PassTemplates.azasset while the Atom Common Feature gem has a pass template mappings file at Assets/Passes/PassTemplates.azasset. 
+只要是 *.azasset 文件，通道模板映射文件就没有限制。Gem 可能希望为文件使用唯一的前缀或子文件夹，以避免它被其他 Gem 中的文件覆盖。例如，AtomSampleViewer 项目在 Assets/Passes/ASV/PassTemplates.azasset 中有一个通道模板映射文件，而 Atom Common Feature Gem 在 Assets/Passes/PassTemplates.azasset 中有一个通道模板映射文件. 
 
-Another potential naming conflict gems should avoid is the pass template naming conflict. Since the pass system is loading all pass template mappings files to one mapping (for faster search and simpler management) each gem may want to use unique names for their pass templates. Using a prefix might always be a good idea to name those templates. The pass system will report warnings duplicate named templates and only use the first loaded template with same name.
-# Number of Mappings files
+Gem 应避免的另一个潜在命名冲突是通道模板命名冲突。由于通道系统将所有通道模板映射文件加载到一个映射中（以便更快地搜索和简化管理），因此每个 Gem 可能希望为其通道模板使用唯一的名称。使用前缀来命名这些模板可能始终是一个好主意。pass 系统将报告警告、重复命名的模板，并且仅使用第一个加载的同名模板。
+# 映射文件数
 
-There is no limitation on how many pass template mappings files can one gem have since the gem has full control on how to load those mappings.
+一个 Gem 可以具有多少个通道模板映射文件没有限制，因为 Gem 可以完全控制如何加载这些映射。
 
-This means gem may create different pass template mappings for different platform and only load the mappings for current platform if there is some complicated use case.
+这意味着 Gem 可以为不同的平台创建不同的通道模板映射，并且仅在存在一些复杂的用例时才加载当前平台的映射。
 
-# Gems Require Render Pipeline Change
+# Gem 需要更改渲染管线
 
-Some gems may need to modify the main(default) render pipeline which is defined in Atom common feature gem. 
-Atom has a solution to address the most common use case, inject new passes to main render pipeline. 
+某些 Gem 可能需要修改 Atom 通用功能 Gem 中定义的主（默认）渲染管道。
+Atom 有一个解决方案来解决最常见的用例，即向主渲染管道注入新的通道。
 
-The FeatureProcessor provide a virtual function AddRenderPasses() which is called when a RenderPipeline is added to a Scene. Developer can override this function in the gem and make modification there (usually inserts a new pass). 
+FeatureProcessor 提供了一个虚拟函数 AddRenderPasses（），当 RenderPipeline 添加到场景时，将调用该函数。开发人员可以在 Gem 中覆盖此函数，并在其中进行修改（通常插入新的通道）。
 
-In O3DE, this method is used by few gems such as LyShine(UI) Gem, AtomHair Gem and Terrain Gem which all need inject new passes to default render pipeline.
-For example, this is the code in LyShine gem which inserts a LyShineParent pass to main render pipeline. 
+在 O3DE 中，LyShine（UI） Gem、AtomHair Gem 和 Terrain Gem 等少数 Gem 使用此方法，它们都需要向默认渲染管道注入新通道。
+例如，这是 LyShine Gem 中的代码，它将 LyShineParent 传递插入到主渲染管道。
 ```Cpp
     void LyShineFeatureProcessor::AddRenderPasses(AZ::RPI::RenderPipeline* renderPipeline)
     {
@@ -107,7 +107,7 @@ For example, this is the code in LyShine gem which inserts a LyShineParent pass 
         }
     }
 ```
-The pass request which is used to create the LyShineParentPass is also save in a data file LyShinePassRequest.azasset. And this is how it looks
+用于创建 LyShineParentPass 的通行证请求也保存在数据文件 LyShinePassRequest.azasset 中。这就是它的外观
 ```JSON
 {
     "Type": "JsonSerialization",
@@ -136,9 +136,9 @@ The pass request which is used to create the LyShineParentPass is also save in a
 }
 ```
 
-Notes:
+笔记：
 
-There are few recommendation and limitations with this render pipeline modification solution. 
-It's recommended to only insert new passes to the render pipeline in the gem. The gem shouldn't change existing passes in current pipeline since it doesn't have ownership of them. 
-If there are more then one passes you need to insert to the render pipeline, try to group them under one ParentPass so you would need to insert one ParentPass to the render pipeline. Although, you can still insert multiple passes to different location in the render pipeline. And there is no restriction with that. 
-The new injected passes can output existing attachments in the current render pipeline but it can't output new attachments. This is because output new attachments requires update connections for passes after the injected passes which we don't have good support for. And also with majority use cases, there are no need to create new ones other than using existing ones. 
+此渲染管道修改解决方案几乎没有建议和限制。
+建议仅将新通道插入到 Gem 中的渲染管道。Gem 不应更改当前管道中的现有通道，因为它没有这些通道的所有权。
+如果需要将多个通道插入到渲染管道中，请尝试将它们分组在一个 ParentPass 下，以便需要将一个 ParentPass 插入到渲染管道中。不过，您仍然可以将多个通道插入到渲染管道中的不同位置。这没有任何限制。
+新注入的通道可以输出当前渲染管道中的现有附件，但不能输出新附件。这是因为输出新附件需要在注入的通道之后更新通道的连接，而我们没有很好的支持。而且，对于大多数用例，除了使用现有用例外，无需创建新的用例。

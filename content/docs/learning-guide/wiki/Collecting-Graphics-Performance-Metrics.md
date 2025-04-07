@@ -1,25 +1,25 @@
 ---
-title: "Collecting-Graphics-Performance-Metrics"
+title: "收集图形性能指标"
 description: ""
 toc: false
 ---
 
-There are four basic performance metrics (in _microseconds_) that can be collected on behalf of Atom (The O3DE 3D Graphics Renderer):  
-1. **Graphics Simulation Time**: Measures the time spent inside RPISystem::Simulate().
-2. **Graphics Render Time**: Measures the time spent inside RPISystem::RenderTick().
-3. **Engine Cpu Time**: Measures the time spent in between calls to RPISystemComponent::OnSystemTick(). The inverse of this time equates to the "Frames Per Second" for the current scene: FPS=1'000'000/`Engine Cpu Time`.  
-4. **Frame Gpu Time**: Measures the time spent, per frame, in the GPU.
+可以代表 Atom （O3DE 3D Graphics Renderer） 收集四个基本性能指标（以 _μseconds_ 为单位）： 
+1. **图形模拟时间**：测量在 RPISystem：：Simulate（） 中花费的时间。
+2. **图形渲染时间**：测量在 RPISystem：：RenderTick（） 中花费的时间。
+3. **引擎 CPU 时间**：测量调用 RPISystemComponent：：OnSystemTick（） 之间所花费的时间。此时间的倒数等于当前场景的“每秒帧数”：FPS=1'000'000/`Engine Cpu Time`。 
+4. **帧 GPU 时间**：测量 GPU 中每帧花费的时间。
 
-## How To Collect Performance Data
-The type of data, how much data and when to collect the data is user controllable via the following CVARs:  
-1. **r_metricsDataLogType**: Default value `statistical`. This CVAR is a string. If it starts with the letter 'a' or 'A', then the type of performance data will be "All Samples"(Verbose). This means that for each parameter a row of data will produced in the output file for each measured render frame. If data is captured for 10'000 frames, then 10'000 lines, per parameter, will be added to the output JSON file. If this string starts with a different letter then it will collect data in the compact "Statistical" format, which means that regardless of the number of frames only a single line of data will be produced per parameter. Each line of data will be a statistical summary over all the frames: min, max, avg, stdev and number of samples.
-2. **r_metricsFrameCountPerCaptureBatch**= Default value `1200` frames. Number of frames per batch. Data is captured in batches. In this CVAR the user defines how many frames will be measured per batch. In "statistical" mode each batch will be represented as single line of statistical summary per parameter.
-3. **r_metricsWaitTimePerCaptureBatch**: Default value `0` seconds. How many seconds to wait before capturing data on each batch.
-4. **r_metricsNumberOfCaptureBatches**: Default value `0` batches (OFF, no data is collected). When this CVAR is greater than 0, the performance data collection will start for this amount of batches. Once this counter reaches back to 0 then the performance collection stops and a file named `<project>/user/Performance_Graphics_<Date>.json` will be available with the performance data.  
-5. **r_metricsQuitUponCompletion**: Default value `false`. If set to `true`, the application will quit when Number Of Capture Batches reaches 0.  
-6. **r_metricsMeasureGpuTime**: Default value `false`. When enabled, the metric `Frame Gpu Time` is collected. Use judiciously, as this metric, when enabled, can affect performance. For example, if a scene is running at 300fps, the performance may reduce to ~290fps .
+## 如何收集性能数据
+用户可以通过以下 CVAR 控制数据类型、数据量和收集时间：  
+1. **r_metricsDataLogType**: 默认值 `statistical`。此 CVAR 是一个字符串。如果它以字母 'a' 或 'A' 开头，则性能数据类型将为 “All Samples（详细）”。这意味着对于每个参数，输出文件中将为每个测量的渲染帧生成一行数据。如果捕获了 10'000 帧的数据，则每个参数的 10'000 行将添加到输出 JSON 文件中。如果此字符串以不同的字母开头，则它将以紧凑的 “Statistical” 格式收集数据，这意味着无论帧数如何，每个参数只会生成一行数据。每行数据将是所有帧的统计摘要：最小值、最大值、平均值、标准差和样本数。
+2. **r_metricsFrameCountPerCaptureBatch**= 默认值`1200` 帧。每批的帧数。数据是分批捕获的。在此 CVAR 中，用户定义每批将测量多少帧。在 “statistical” 模式下，每个批次将表示为每个参数的单行统计摘要。
+3. **r_metricsWaitTimePerCaptureBatch**: 默认值 `0` 秒。在捕获每个批次的数据之前要等待多少秒。
+4. **r_metricsNumberOfCaptureBatches**: 默认值 `0` 批次（OFF，不收集任何数据）。当此 CVAR 大于 0 时，将开始此数量的批次的性能数据收集。一旦此计数器回到 0，性能收集就会停止，并且名为`<project>/user/Performance_Graphics_<Date>.json`的文件将与性能数据一起提供。  
+5. **r_metricsQuitUponCompletion**: 默认值 `false`。如果设置为 `true`，则应用程序将在 Number Of Capture Batches 达到 0 时退出。 
+6. **r_metricsMeasureGpuTime**: 默认值 `false`。启用后，将收集量度`Frame Gpu Time`。请谨慎使用，因为启用此指标后可能会影响性能。例如，如果场景以 300fps 的速度运行，则性能可能会降低到 ~290fps 。
 
-Here is an example of the content of the output JSON file:  
+以下是输出 JSON 文件内容的示例：
 ```json
 [
 {"name":"Graphics Simulation Time","cat":"Graphics-Win64-vulkan","ph":"X","ts":1667948193877268,"pid":56808,"tid":55956,"args":    {"avg":122.34280000000005,"min":99.0,"max":474.0,"sampleCount":2500,"units":"us","variance":143.1585515806325,"stdev":11.964888281159691,"mostRecentSampleValue":109.0},"dur":122},
@@ -28,28 +28,28 @@ Here is an example of the content of the output JSON file:
 {"name":"Frame Gpu Time","cat":"Graphics-Win64-vulkan","ph":"X","ts":1667948193983204,"pid":56808,"tid":55956,"args": {"avg":2992.4170673076865,"min":2823.0,"max":4775.0,"sampleCount":2496,"units":"us","variance":98729.87688694714,"stdev":314.21310743975516,"mostRecentSampleValue":2841.0},"dur":2992}
 ]
 ```
-The `"dur"` property is the average value of the parameter in microseconds across all frames specified in `"args"."sampleCount"`. In the example above the number of frames was 2500.  
+`"dur"`属性是`"args"."sampleCount"`中指定的所有帧中参数的平均值（以微秒为单位）。在上面的示例中，帧数为 2500。
 
-## Some examples:
-### Example 1:  
-Let's collect performance data on the AutomatedTesting project using the level named `DefaultLevel`:
-In this example we'll wait 30 seconds, capture statistical data for only 1 batch of 2500 frames.
+## 一些例子：
+### 示例 1： 
+让我们使用名为 `DefaultLevel` 的关卡来收集 AutomatedTesting 项目的性能数据：
+在此示例中，我们将等待 30 秒，仅捕获 1 批 2500 帧的统计数据。
 ```
 > D:
 > cd GIT\o3de\build\bin\profile
 > .\AutomatedTesting.GameLauncher.exe --r_metricsWaitTimePerCaptureBatch=30 --r_metricsFrameCountPerCaptureBatch=2500 --r_metricsNumberOfCaptureBatches=1 +LoadLevel=DefaultLevel
 ```
-When completed you should see the following file with the results:
+完成后，您应该会看到以下包含结果的文件：
 `D:\GIT\o3de\AutomatedTesting\user\Performance_Graphics_<date>.json`  
 
-### Example 2:
-Let's collect performance data on the Loft project using the level named `Interior_03.prefab`:
-In this example we'll wait 30 seconds, capture statistical data for only 1 batch of 2500 frames, and quit when done.
+### 示例 2：
+让我们使用名为 `Interior_03.prefab` 的关卡来收集 Loft 项目的性能数据：
+在此示例中，我们将等待 30 秒，仅捕获 1 批 2500 帧的统计数据，并在完成后退出。
 ```
 > D:
 > cd GIT\LoftSample\build\bin\profile
 > .\LoftSample.GameLauncher.exe --r_metricsWaitTimePerCaptureBatch=30 --r_metricsFrameCountPerCaptureBatch=2500 --r_metricsNumberOfCaptureBatches=1 --r_metricsQuitUponCompletion=true +LoadLevel=D:\GIT\LoftSample\Prpject\Levels\ArchVis\Loft\Interior_03.prefab
 ```
-When completed you should see the following file with the results:
+完成后，您应该会看到以下包含结果的文件：
 `D:\GIT\LoftSample\user\Performance_Graphics_<date>.json`  
 

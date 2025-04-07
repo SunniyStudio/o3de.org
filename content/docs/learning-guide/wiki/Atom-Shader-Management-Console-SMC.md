@@ -4,45 +4,45 @@ description: ""
 toc: false
 ---
 
-Open 3D Engine (O3DE) includes a tool called Shader Management Console (SMC) that aims to help the user configure and manage a game project's set of shader variants, to find an optimal balance between runtime performance and developer iteration time. This tool and its design is a work in progress. In this document, we'll try to capture the background for SMC, some history, design ideas, and plans for moving forward. A way for the community to learn what's been done so far and work together to steer toward a solution for the challenging problem of shader variant management.
+Open 3D Engine （O3DE） 包括一个称为着色器管理控制台 （SMC） 的工具，旨在帮助用户配置和管理游戏项目的着色器变体集，从而在运行时性能和开发人员迭代时间之间找到最佳平衡。该工具及其设计正在进行中。在本文档中，我们将尝试捕捉 SMC 的背景、一些历史、设计理念和未来的计划。一种让社区了解迄今为止所做工作并共同努力为着色器变体管理这一具有挑战性的问题寻求解决方案的方法。
 
-# Overview
+# 概述
 
-One challenge that every large-scale game (and game engine) must address is how to manage shader variants or shader permutations. In order for a renderer to run at peak performance, compiled shaders usually need to be reduced to a minimal set of instructions and resources that are required for each use case. This can result in thousands of unique compiled shader programs, taking hours to compile, adding significant friction to developer workflows. For a thorough discussion of this problem, see [The Shader Permutation Problem - Part 1](https://therealmjp.github.io/posts/shader-permutations-part1/) and [Part 2](https://therealmjp.github.io/posts/shader-permutations-part2/).
+每个大型游戏（和游戏引擎）都必须解决的一个挑战是如何管理着色器变体或着色器排列。为了使渲染器以最佳性能运行，通常需要将编译后的着色器减少到每个用例所需的最小指令和资源集。这可能会导致数千个独特的编译着色器程序，需要数小时才能编译，从而给开发人员工作流程增加重大摩擦。有关此问题的深入讨论，请参见 [着色器排列问题 - 第 1 部分](https://therealmjp.github.io/posts/shader-permutations-part1/) 和 [第 2 部分](https://therealmjp.github.io/posts/shader-permutations-part2/)。
 
-One common approach to generating these many compiled shader programs is to use preprocessor flags to disable sections of code at compile time. In this case you either need to compile every possible combination of these flags, or if there are too many flags you need to know ahead of time which permutations will actually be needed at runtime. If there is some mistake and a permutation is missing at runtime, the application will give incorrect results or maybe even crash. The Atom renderer's shader variant system addresses this with a feature called _shader options_. The shader author can use an option like any other variable to control the flow of code, like using regular _if_ or _switch_ statements. If a value for the shader option is provided at compile time, then the options are replaced by constants and the resulting dead code is eliminated during compilation. Otherwise, the value is provided at runtime through a constant buffer. The game project will still have a collection of multiple shader variants, each with a different combinations of shader option values (or some shader options unspecified at compile time). Each shader will always have a _root_ variant that receives all shader option values at runtime. Therefore the list of shader variants does not have to be exhaustive. If the runtime requests a variant with a combination of shader options that does not exist, a fallback will be used. Because the same values are available from a different source, the final visual result should be the same (but with reduced performance).
+生成这些已编译着色器程序的一种常见方法是使用预处理器标志在编译时禁用代码部分。在这种情况下，你要么需要编译这些标志的所有可能组合，要么如果标志太多，你需要提前知道运行时实际需要哪些排列。如果运行时出现一些错误并且缺少排列，应用程序将给出不正确的结果，甚至可能崩溃。Atom 渲染器的着色器变体系统通过一项名为 _shader options_ 的功能解决了这个问题。着色器作者可以像使用任何其他变量一样使用选项来控制代码流，例如使用常规 _if_ 或 _switch_ 语句。如果在编译时为 shader 选项提供了值，则这些选项将替换为常量，并在编译期间消除生成的死代码。否则，该值将在运行时通过 constant buffer 提供。游戏项目仍将具有多个着色器变体的集合，每个变体都有不同的着色器选项值组合（或在编译时未指定一些着色器选项）。每个着色器将始终具有一个 _root_ 变体，该变体在运行时接收所有着色器选项值。因此，着色器变体列表不必详尽无遗。如果运行时请求的变体具有不存在的着色器选项组合，则将使用回退。由于相同的值可从不同的来源获得，因此最终的视觉结果应该是相同的（但性能会降低）。
 
-Note that simple preprocessor flags are still supported and can be used through a feature called shader supervariants, but that topic is outside the scope of Shader Management Console (at least in its currently imagined form).
+请注意，简单的预处理器标志仍然受支持，并且可以通过称为 shader supervariants 的功能使用，但该主题超出了 Shader Management Console 的范围（至少在目前想象的形式中）。
 
-The shader variant system provides a lot of flexibility because of the fallback mechanism. A game could fully enumerate every possible shader permutation, or it could solely rely on root variants, or anything in between. In any case, the system needs some way to define the set of shader variants to be compiled for any given shader file. This is done through a .shadervariantlist file, which lists every shader variant that should be compiled, and which shader option values are predefined for each variant. The Shader Management Console is used to author these shader variant list files.
+由于回退机制，着色器变体系统提供了很大的灵活性。游戏可以完全枚举所有可能的着色器排列，也可以仅依赖于根变体，或者介于两者之间的任何内容。在任何情况下，系统都需要某种方法来定义要为任何给定着色器文件编译的着色器变体集。这是通过 .shadervariantlist 文件完成的，该文件列出了应编译的每个着色器变体，以及为每个变体预定义的着色器选项值。Shader Management Console 用于创作这些着色器变体列表文件。
 
-We took this approach for a few reasons:
+我们采用这种方法有几个原因：
 
-1.  We assume that in many cases, there will need to be a human in the loop to analyze and massage the set of shader variants that are produced. It's just too complicated of a problem to assume that some automated system will be able to generate an appropriate list of variants. So there must be a data file to capture the user's intent.
-2.  The set of shader variants is project-specific, while the shader itself may be located in a common Gem. For example, one project might need 100 variants of StandardPbr's forward pass shader, while another project needs 500 variants.
-3.  The shader build pipeline is part of O3DE's Asset Processor (AP), and this carries some design constraints. The AP cannot write files to the source folders, only other tools (like SMC) are allowed to do that. The AP is not designed to scan a bunch of files and correlate inter-dependencies between them (like materials depend on shaders and variants but shaders depend on materials to know which variants are needed), rather there needs to be one main file. (And if we were to make a placeholder main file that just depends on all .material files, then every time you touch a material it would trigger the full shader variant scan).
-4.  Using a direct list of variants and options is the simplest approach we could take for a first pass at shader management.
+1.  我们假设在许多情况下，需要有人在循环中分析和处理生成的着色器变体集。假设某个自动化系统能够生成适当的变体列表，这是一个太复杂的问题。因此，必须有一个数据文件来捕获用户的意图。
+2.  着色器变体集是特定于项目的，而着色器本身可能位于公共 Gem 中。例如，一个项目可能需要 StandardPbr 的前向通道着色器的 100 个变体，而另一个项目需要 500 个变体。
+3.  着色器构建管道是 O3DE 的 Asset Processor （AP） 的一部分，它带有一些设计约束。AP 无法将文件写入源文件夹，只允许其他工具（如 SMC）执行此作。AP 不是为了扫描一堆文件并关联它们之间的相互依赖关系（就像材质依赖于着色器和变体，但着色器依赖于材质来知道需要哪些变体），而是需要一个主文件。（如果我们要制作一个仅依赖于所有 .material 文件的占位符主文件，那么每次触摸材质时，它都会触发完整的着色器变体扫描）。
+4.  使用变体和选项的直接列表是我们第一次进行着色器管理时可以采用的最简单方法。
 
-We envision several ways that users may want generate a list of shader variants for a shader. None of these approaches can satisfy every use case, and projects are likely to need more than one of these approaches used together. SMC will be the hub through which all of these processes are run. Although material shaders are the most prominent type of shaders that need to be managed, we need a way to manage variants for other kinds of shaders as well, such as full-screen shaders or compute shaders.
+我们设想了用户可能希望为着色器生成着色器变体列表的几种方法。这些方法都不能满足所有用例，项目可能需要同时使用不止一种方法。SMC 将成为运行所有这些流程的枢纽。尽管材质着色器是需要管理的最突出的着色器类型，但我们还需要一种方法来管理其他类型着色器的变体，例如全屏着色器或计算着色器。
 
-## Shader Management Use Cases
+## Shader Management 使用案例
 
-It's important to recognize that the shader management strategy may vary greatly depending on the design of the render pipeline, especially whether the pipeline takes a _deferred_ approach or _forward+_ approach. Permutation management in a forward+ pipeline is more of a challenge because the material code and lighting code coexist in the same shader, so each material's permutation space is much larger. In a deferred pipeline, where material shaders and lighting shaders are separate, all the permutation spaces are smaller and it may be possible to just fully enumerate all possible shader variants. One of the core tenets of the Atom renderer is to be customizable, data driven, and flexible enough to support any kind of render pipeline you design (also a work in progress, see [https://github.com/o3de/sig-graphics-audio/blob/main/rfcs/rfc-prs-20210913-1.md](https://github.com/o3de/sig-graphics-audio/blob/main/rfcs/rfc-prs-20210913-1.md)), so it's important to consider a wide range of possible shader management use cases.
+重要的是要认识到，着色器管理策略可能会因渲染管道的设计而有很大差异，尤其是管道是采用 _deferred_ 方法还是 _forward+_ 方法。forward+ 管道中的排列管理更具挑战性，因为材质代码和光照代码共存于同一个着色器中，因此每种材质的排列空间要大得多。在延迟管道中，材质着色器和光照着色器是分开的，所有排列空间都较小，并且可以完全枚举所有可能的着色器变体。Atom 渲染器的核心原则之一是可定制、数据驱动且足够灵活，以支持您设计的任何类型的渲染管线（也是一项正在进行的工作，请参阅 (也是一个正在进行的工作，请参阅[https://github.com/o3de/sig-graphics-audio/blob/main/rfcs/rfc-prs-20210913-1.md](https://github.com/o3de/sig-graphics-audio/blob/main/rfcs/rfc-prs-20210913-1.md)),，因此考虑各种可能的着色器管理用例非常重要。
 
-1.  For any given shader, manually define a list of each shader variant and its shader option values. (This is especially useful for small numbers of shader options, or for testing and debugging the variant system).
-2.  For any given shader, enumerate the full set of all possible shader option permutations. (Again, this is useful for small numbers of shader options).
-3.  Scan a project to find every material and inspect its property values to determine the combination of shader options it requires. Generate a list of all shader variants used by all materials. (Note that this does not account for system-level shader options that could be set at runtime, like adjusting performance levels).
-4.  Write a script to customize the material-scan above, to skip folders, filter out some options, fully enumerate some options, etc. (This could address those system-level shader options also mentioned above).
-5.  Collect metrics at runtime about what shader variants are requested and how often, and then SMC can use that data to tune the shader variant list, either adding missing variants or pruning less-used variants.
-6.  For any given shader, use a dependency graph to define the relationship between shader options, so the tools can skip impossible or unnecessary permutations.
+1.  对于任何给定的着色器，手动定义每个着色器变体及其着色器选项值的列表。（这对于少量的着色器选项或测试和调试变体系统特别有用）。
+2.  对于任何给定的着色器，枚举所有可能的着色器选项排列的完整集。（同样，这对于少量的着色器选项非常有用）。
+3.  扫描项目以查找每种材质并检查其属性值以确定它所需的着色器选项组合。生成所有材质使用的所有着色器变体的列表。（请注意，这不包括可在运行时设置的系统级着色器选项，例如调整性能级别）。
+4.  编写一个脚本来自定义上面的 material-scan、跳过文件夹、过滤掉一些选项、完全枚举一些选项等（这可以解决上面提到的那些系统级着色器选项）。
+5.  在运行时收集有关请求哪些着色器变体以及请求频率的指标，然后 SMC 可以使用该数据来调整着色器变体列表，添加缺失的变体或修剪较少使用的变体。
+6.  对于任何给定的着色器，请使用依存关系图来定义着色器选项之间的关系，以便工具可以跳过不可能或不必要的排列。
 
-# Shader Variant List File Details
+# Shader Variant List 文件详细信息
 
-Here is an example .shadervariantlist file. After referencing the relevant .shader file, it simply lists the prescribed shader variants. Each variant has a list of shader option values that are defined at compile time, and baked into the compiled shader bytecode. Any shader options that are not assigned a value here, will be set dynamically at runtime through a constant buffer.
+下面是一个示例 .shadervariantlist 文件。在引用相关的 .shader 文件后，它只列出规定的着色器变体。每个变体都有一个着色器选项值列表，这些值在编译时定义，并烘焙到编译的着色器字节码中。此处未分配值的任何着色器选项都将在运行时通过常量缓冲区动态设置。
 
-The StableId is a unique number assigned to each shader variant. This value is necessary for the AP to maintain consistent references to each shader variant. They do not need to be sequential, there may be gaps, and removing a shader variant should not shift the IDs of the other variants.
+StableId 是分配给每个着色器变体的唯一编号。此值对于 AP 保持对每个着色器变体的一致引用是必需的。它们不需要是连续的，可能存在间隙，并且删除着色器变体不应移动其他变体的 ID。
 
-It should be noted that the .shadervariantlist file can only be stored in two specific locations, in order to be found at runtime. Normally an asset dependency would lead the runtime to the right file location, but in this case the .shader file doesn't have a direct reference to the .shadervariantlist file because it could appear in the user's project folder. So in order for the runtime to be able to find the shader variant list, it has to appear in a specific path. It can either be in the same folder as the .shader file, or it can be in a specific path under the user's project folder: if the shader is {SomeGem}/Assets/Ocean/Shaders/ComputeWaves.shader then the shader variant list must be in {MyProject}/ShaderVariants/Ocean/Shaders/ComputeWaves.shadervariantlist.
+应该注意的是，.shadervariantlist 文件只能存储在两个特定位置，以便在运行时找到。通常，资源依赖项会将运行时引导至正确的文件位置，但在这种情况下，.shader 文件没有对 .shadervariantlist 文件的直接引用，因为它可能显示在用户的项目文件夹中。因此，为了使运行时能够找到着色器变体列表，它必须出现在特定路径中。它可以与 .shader 文件位于同一文件夹中，也可以位于用户项目文件夹下的特定路径中：如果着色器为 {SomeGem}/Assets/Ocean/Shaders/ComputeWaves.shader，则着色器变体列表必须位于 {MyProject}/ShaderVariants/Ocean/Shaders/ComputeWaves.shadervariantlist 中。
 
 ```
 {
@@ -67,9 +67,9 @@ It should be noted that the .shadervariantlist file can only be stored in two sp
 ```
   
 
-# Original Prototype
+# 原始原型
 
-The first version of SMC gave the bare minimum of functionality to quickly generate a best-effort .shadervariantlist file. The core functionality was centered around a python script that would scan all the materials in a project and automatically generated a .shadervariantlist based on the results. This covered use cases 3 and 4 above. It would also display the variants and options in a read-only table. This allowed users to quickly get a list that was pretty close to the runtime needs of the project, and since it was a script, the user could duplicate and customize that script if they needed something special.
+SMC 的第一个版本提供了快速生成尽力而为的 .shadervariantlist 文件的最低限度的功能。核心功能以 python 脚本为中心，该脚本将扫描项目中的所有材质，并根据结果自动生成 .shadervariantlist。这涵盖了上面的用例 3 和 4。它还会在只读表中显示变体和选项。这允许用户快速获得一个非常接近项目运行时需求的列表，并且由于它是一个脚本，如果用户需要特殊的东西，他们可以复制和自定义该脚本。
 
 
 <img src="https://user-images.githubusercontent.com/55155825/180095971-1fca3c2a-733f-4961-8463-afdec9588688.png" width="50%">
@@ -79,156 +79,156 @@ The first version of SMC gave the bare minimum of functionality to quickly gener
 <img src="https://user-images.githubusercontent.com/55155825/180096004-670331e5-57ca-4d07-837e-4f548f14300d.png" width="50%">
 
 
-Note there is also a preliminary shader metrics collection system for gathering usage statistics at runtime. This project was put on hold due to time constraints, and it was disabled to avoid performance impact since it was not sufficiently optimized at the time. See [https://github.com/o3de/o3de/blob/development/Gems/Atom/RPI/Code/Include/Atom/RPI.Public/Shader/Metrics/ShaderMetricsSystem.h](https://github.com/o3de/o3de/blob/development/Gems/Atom/RPI/Code/Include/Atom/RPI.Public/Shader/Metrics/ShaderMetricsSystem.h)
+请注意，还有一个初步的着色器指标收集系统，用于在运行时收集使用情况统计信息。由于时间限制，该项目被搁置，并且由于当时没有得到充分优化，因此被禁用以避免性能影响。看[https://github.com/o3de/o3de/blob/development/Gems/Atom/RPI/Code/Include/Atom/RPI.Public/Shader/Metrics/ShaderMetricsSystem.h](https://github.com/o3de/o3de/blob/development/Gems/Atom/RPI/Code/Include/Atom/RPI.Public/Shader/Metrics/ShaderMetricsSystem.h)
 
-# What's implemented now
+# 现在实现的内容
 
-Quite a bit of work has gone into the underlying UI systems to share a common robust framework between Shader Management Console, Material Editor, and the new Material Canvas. This ensures a consistent UI experience, integration with core O3DE systems, and a clear path forward for general tooling improvements.
+为了在 Shader Management Console、Material Editor 和新的 Material Canvas 之间共享一个通用的强大框架，底层 UI 系统已经投入了大量工作。这确保了一致的 UI 体验、与核心 O3DE 系统的集成，以及为一般工具改进提供明确的前进道路。
 
-The table of variants and options can be edited now, with undo/redo, but needs some improvement to be a smooth experience.
+现在可以使用撤消/重做来编辑变体和选项表，但需要一些改进才能获得流畅的体验。
 
-new variant lists can be created from a blank state, or using the material crawl python script that will prepopulate with option values found in the materials.
+可以从空白状态创建新的变体列表，也可以使用 Material Crawl Python 脚本创建，该脚本将预先填充 Materials 中的选项值。
 
 ![image](https://user-images.githubusercontent.com/55155825/180096040-78e86b0b-6421-42d0-a8a4-633eb9be37ec.png)
 
-## Further features from [PR16358 (smc evolutions)](https://github.com/o3de/o3de/pull/16358)
+## 来自 [PR16358 （smc evolutions） 的更多功能](https://github.com/o3de/o3de/pull/16358)
 
-### filtering of assets
+### 筛选资产
 
-Filters have been revamped to let all shader related files display. Also the cache folder now accessible allows to get .shader from pipeline templates.
+过滤器已经过修改，可以显示所有与着色器相关的文件。此外，现在可以访问的缓存文件夹允许从管道模板获取 .shader。
 
 ![image](https://github.com/o3de/o3de/assets/25970839/be2b2c5d-e070-42b9-aed1-c75aa68749c8)
 
-### Create empty
+### 创建空
 
-We now have the choice to create an empty variant list asset at startup, for a .shader. Use the context menu in the asset browser as such:  
+现在，我们可以选择在启动时为 .shader 创建一个空的变体列表资源。使用资源浏览器中的上下文菜单，如下所示：
 ![image](https://github.com/o3de/o3de/assets/25970839/21e93ea7-55be-47cf-b5fd-f217459dbce2)
 
-You can also prepopulate with discovered material property values using Python scripts context submenu, and call `GenerateShaderVariantListForMaterials.py`.
+您还可以使用 Python 脚本上下文子菜单预填充发现的材料属性值，并调用 `GenerateShaderVariantListForMaterials.py`。
 
-### Tabe view context menu
+### Tabe 视图上下文菜单
 
-You can now right click on empty space in a document and get the opportunity to add a new variant, which will present itself as a row.
+现在，您可以右键单击文档中的空白区域，并有机会添加新的变体，该变体将显示为一行。
 
 step 1  
 ![image](https://github.com/o3de/o3de/assets/25970839/b0d7ae90-1a90-4277-ab83-521e0e0a4426)
 result  
 ![image](https://github.com/o3de/o3de/assets/25970839/16a8f2bc-3863-42c3-a2ec-0fcb67938509)
 
-### Partial combinatorial enumeration
+### 部分组合枚举
 
-There is now a script that will expand selected options with a full list of possible values.  
-Access through the context menu of the document too:  
+现在有一个脚本，它将使用可能值的完整列表展开所选选项。 
+也可以通过文档的上下文菜单访问：
 ![image](https://github.com/o3de/o3de/assets/25970839/70882e3e-6484-4725-bd47-659c5d80ca7b)
 
-It presents itself like this:  
+它呈现如下：
 ![image](https://github.com/o3de/o3de/assets/25970839/2eefecc9-a316-4eb8-a5b0-54d7c406ee1e)
 
-On the left you have the available options of the shader file, and on the right, the selected options that will participate to the full enumeration. The preselected number of variants to generate as a target is 32, from that number, you can use the button "generate auto selection" and it will slide options from the left panel to the right panel to prepare them to participate in the expansion. In case of boolean options, it will select 5 options.  
+左侧是着色器文件的可用选项，右侧是将参与完整枚举的选定选项。要作为目标生成的预选变体数量为 32，从该数量中，您可以使用“生成自动选择”按钮，它会将选项从左侧面板滑动到右侧面板，以准备它们参与扩展。如果是布尔选项，它将选择 5 个选项。 
 
-As such:  
+因此：  
 ![image](https://github.com/o3de/o3de/assets/25970839/69b78f01-660a-4df6-b8fd-1b988bd1d96a)
 
-Then click "generate variant list" to send the result to the document that originated the opening of the script.  
-When you exit, the SMC will start to append the result to the current list of variants.
+然后单击 “generate variant list” 将结果发送到引发脚本打开的文档。 
+退出时，SMC 将开始将结果附加到当前变体列表中。
 
-Result:  
+结果： 
 ![image](https://github.com/o3de/o3de/assets/25970839/ce9293f6-3d99-49ad-8532-a958f4a134c7)
 
-### Recompaction
+### 重新压缩
 
-It could add variants that already existed and became redundant, to remediate, there is now a recompaction button.
+它可以添加已经存在并变得多余的变体，为了进行修复，现在有一个重新压缩按钮。
 
-Let's take the example of a starting variant count of 3, as such:  
+让我们以起始变体计数为 3 为例，如下所示： 
 ![image](https://github.com/o3de/o3de/assets/25970839/d40d22b0-1375-4644-9c34-92479a454d07)
 
-Appending an expansion will result in this:  
+附加扩展将导致以下结果： 
 ![image](https://github.com/o3de/o3de/assets/25970839/4f9f22fc-1fae-4d26-8f57-93d333996b9a)
 
-You can call the recompaction, and the result will be unique variants only:  
+您可以调用 recompaction，结果将仅为唯一变体： 
 ![image](https://github.com/o3de/o3de/assets/25970839/83ee515c-3847-4efe-a0b2-eda8af879d13)
 
-Note that the first line with all dynamic options is already present in the base shader asset, it is the root. This might be part of this recompaction button to make sure that variant is not present after recompaction.
+请注意，包含所有动态选项的第一行已经存在于基础着色器资源中，它是根。这可能是此重新压缩按钮的一部分，以确保在重新压缩后不存在变体。
 
-### display ordering:
+### 显示排序：
 
-Using the combo box on top of the document you can also chose a display mode for the columns, the default is the cost impact analysis reflected by azslc.  
+使用文档顶部的组合框，您还可以为列选择显示模式，默认为 azslc 反映的成本影响分析。  
 ![image](https://github.com/o3de/o3de/assets/25970839/23a820e8-aa90-4ec8-8e20-385596807ffc)
 
-# Near-term goals
+# 近期目标
 
 [Dedicated page on historical evolutions and comments toward goals](https://github.com/o3de/o3de/wiki/%5BSMC%5D-development-goals-evolution)
 
-## "left to do" taken from the page
+## “剩余待办” 摘自页面
 
-- [ ] 3.  Do not automatically do this process when a .shader file is opened. Instead, prompt the user with a list of available Shader Actions:  
-         1.  If a corresponding .shadervariantlist already exists, they could opt to open that file.  
-         2.  The user may opt to run one of the available python scripts.
-- [ ] arguments to scripts are not configurable, a way to specify i.e. @documentid@
-- [ ] IV.3.  Undo/redo is slow
-- [ ] save location is still free if using some "create from"
-- [ ] V.2. Remove Save As Child
-- [ ] verify that the recompacting system isn't creating false-negatives to the rebuild-economy system
-- [ ] VII.  Users can inspect which shader variant is being used in the runtime.
+- [ ] 3.  打开 .shader 文件时，不要自动执行此过程。相反，请提示用户提供可用 Shader Actions 的列表： 
+         1.  如果相应的 .shadervariantlist 已存在，则他们可以选择打开该文件。
+         2.  用户可以选择运行可用的 python 脚本之一。
+- [ ] 脚本的参数是不可配置的，一种方法可以指定 i.e. @documentid@
+- [ ] IV.3. 撤消/重做很慢
+- [ ] 如果使用一些 “create from” 保存位置仍然是免费的
+- [ ] V.2. 删除 Save As Child
+- [ ] 验证 recompacting system 是否未对 rebuild-economy 系统产生假阴性
+- [ ] VII.  用户可以检查运行时中使用的着色器变体。
 
-# Variant pickup strategy
+# 变体拾取策略
 
-One aspect of the shader variant fallback mechanism is that the shader variants are logically organized into a tree. At runtime, if a requested shader variant doesn't exist, this tree is used to fall back to a close match that has as many high-priority shader options pre-baked as possible, rather than immediately going to the root variant.
+着色器变体回退机制的一个方面是着色器变体在逻辑上组织成一个树。在运行时，如果请求的着色器变体不存在，则此树用于回退到已预先烘焙尽可能多的高优先级着色器选项的紧密匹配项，而不是立即转到根变体。
 
-## It's a DAG
+## 这是一个 DAG
 
-In reality, it's more a directed acyclic graph because of the diamond relations that are possible between leaf variants and the root variant. Multiple choices are possible and the selection algorithm will walk them.
+实际上，它更像是一个有向无环图，因为叶子变体和根变体之间可能存在菱形关系。可以选择多项，选择算法将对其进行遍历。
 
 ![image](https://github.com/o3de/o3de/assets/25970839/ff3093dd-f21b-4e45-a4c0-9aca8455df8e)
 
-That's an example of a variant tree, with 2 options. greyed options are set on "runtime" (unspecified value).  
-Arrows represent fallbacks, and blocks represent unique bytecode.  
-Not every variant exist, only the one saved as assets. Materialized by lines in the SMC table view.  
-For the sake of the mathematics of selection, inexistent variants can be considered as virtual, but the walk system might start there, and be forced to pick the next candidate, repeat if don't exist, until the root.
+这是一个变体树的示例，有 2 个选项。灰色选项在 “runtime” （未指定值） 上设置。 
+箭头表示回退，块表示唯一的字节码。 
+并非每个变体都存在，只有保存为资产的变体存在。由 SMC 表视图中的线条具体化。 
+为了选择数学的缘故，不存在的变体可以被认为是虚拟的，但 walk 系统可能会从那里开始，并被迫选择下一个候选者，如果不存在，则重复，直到根。
 
-In this image, there is a suggestion of cost per node, but it is based on the option value so it is not robust and must not be considered for implementation. The idea presented above is that unspecified options have half their associated analyzed cost. OFF options have 0 and ON options have full cost. But since shader code may use complex logics and integer values, ON and OFF is not identifiable. The current method for picking is based on rank and number of specified (hard) options.
+在此映像中，有每个节点的成本建议，但它基于选项值，因此它不可靠，不得考虑实施。上面提出的想法是，未指定的选项具有其相关分析成本的一半。OFF 选项为 0，ON 选项为全额费用。但是，由于着色器代码可能使用复杂的逻辑和整数值，因此 ON 和 OFF 是无法识别的。当前的选取方法基于指定 （硬） 选项的等级和数量。
 
-### Example
+### 示例
 
 ![image](https://github.com/o3de/o3de/assets/25970839/e5f056bf-7561-4648-912a-c7627eaf60b2)
-If you query for "fog on" there are 2 candidates that are valid in any case. 3 candidates that will depend on final option value decisions before rendering. If that decision is never made, the `shadow` option MUST be unset so only the hard candidates can be used. Among those 2, the one with the most hard options is selected. Here: the leftmost variant.
+如果查询 “fog on”，则有 2 个候选项在任何情况下都有效。3 个候选者，将取决于渲染前的最终选项值决策。如果从未做出该决定，则必须取消设置 'shadow' 选项，以便只能使用困难的候选者。在这 2 个中，选择了选项最难的那个。这里：最左边的变体。
 
 ***
-Same with off:  
+与 off 相同：  
 ![image](https://github.com/o3de/o3de/assets/25970839/21612f36-c271-40c4-8152-26132a2a23c4)
 
 ***
-Full set of options specified in the query:  
+查询中指定的完整选项集：
 ![image](https://github.com/o3de/o3de/assets/25970839/e0022c90-b392-4d61-8b9f-93b24d5dabc4)
-In that case, the lowermost variant is selected but it isn't without actually walking the DAG before.
+在这种情况下，将选择最底层的变体，但之前并非没有实际遍历 DAG。
 ***
-In the case that a virtual variant is implicated:  
+如果涉及虚拟变体： 
 ![image](https://github.com/o3de/o3de/assets/25970839/19b1d808-21c0-4abe-a385-e51645cf6fb5)
-In this case, we have an ambiguity, two candidates have equal estimated "cost" based on number of hard options.  
-The current system strives at prioritizing based on secondary criterion: rank. (rank can be based on declaration order or static cost impact analysis).
+在这种情况下，我们有一个歧义，两个候选人根据硬选项的数量具有相等的估计“成本”。 
+当前的系统努力根据次要标准确定优先级：等级。（排名可以基于申报顺序或静态成本影响分析）。
 
-This mechanism is in the `ShaderVariantTreeAsset::FindVariantStableId` method.
+此机制位于`ShaderVariantTreeAsset::FindVariantStableId`方法中。
 
-# Long-term goals and ideas
+# 长期目标和想法
 
-## SMC GUI proposition
+## SMC GUI 主张
 
-We could organize the shader variant list display into a tree that corresponds to this fallback tree. Since the tree is organized according to the relative priority of each shader option, this could give a helpful way of visualizing the data. We could then give users a way to prune entire subtrees of low-priority shader options. Imagine they right-click on a node, select Always-Prune, and now that subtree will never show up again in the list, even if some automated process tries to add it again.
+我们可以将着色器变体列表显示组织到与此回退树相对应的树中。由于树是根据每个着色器选项的相对优先级组织的，因此这可能提供一种可视化数据的有用方法。然后，我们可以为用户提供一种方法来修剪低优先级着色器选项的整个子树。想象一下，他们右键单击一个节点，选择 Always-Prune，现在该子树将永远不会再次出现在列表中，即使某些自动化过程尝试再次添加它。
 
-Make the SMC and variant list file record the user's manual edits, so they can permanently exclude/include certain variants and preserve this setting even if they re-run an auto-populate script.
+使 SMC 和变体列表文件记录用户的手动编辑，以便他们可以永久排除/包含某些变体并保留此设置，即使他们重新运行自动填充脚本也是如此。
 
-There is a lot we could explore in the area of collecting shader metrics at runtime. As mentioned above, there is already some beginnings of a metrics system that collects data about which variants are being requested. A lot more thought needs to be put into how we should collect this data, where to store it (so the whole game team can contribute to a single metrics database), how to correlate it with the shader source files, how to clear out old stale data, and how to apply it using Shader Management Console.
+在运行时收集着色器指标方面，我们可以探索很多内容。如上所述，已经有一些指标系统开始收集有关正在请求哪些变体的数据。我们需要进一步考虑如何收集这些数据、存储位置（以便整个游戏团队可以为单个指标数据库做出贡献）、如何将其与着色器源文件相关联、如何清除旧的过时数据，以及如何使用 Shader Management Console 应用这些数据。
 
-Jeremy has presented an idea for a dependency graph to define the relationship between shader options, so the tools can skip impossible or unnecessary permutations. This would be especially helpful for cases where the user is trying to fully-enumerate a permutation space, and would like to reduce that space to only valid combinations of shader options.
+Jeremy 提出了一个关于依赖关系图的想法，用于定义着色器选项之间的关系，因此这些工具可以跳过不可能或不必要的排列。如果用户尝试完全枚举排列空间，并希望将该空间减少到仅着色器选项的有效组合，这将特别有用。
 
-It would be great if we could come up with a more direct solution to the fact that some material shader options are changed at runtime, making the material-scan process ineffective for those options. With the above features, a game team could customize the material-scan to enumerate the relevant system-level options. Or using the shader option dependency graph you might be able to fully enumerate the permutation space. I wonder if there are other solutions to be found here.
+如果我们能想出一个更直接的解决方案来解决这个问题，即某些材质着色器选项在运行时会发生变化，从而使材质扫描过程对这些选项无效，那就太好了。借助上述功能，游戏团队可以自定义 material-scan 以列举相关的系统级选项。或者，使用 shader option dependency graph，您也许能够完全枚举排列空间。我想知道这里是否还有其他解决方案。
 
-The .shadervariantlist file doesn't necessarily need to specify just a literal flat list of shader variants. This file could turn into a generalized configuration file for shader variant generation that does some more complex things through the AP. One example would be defining a shader option dependency graph as described above. Another example: for any given option, instead of specifying the actual value there could be an "$all" value that causes the AP generate variants for every permutation of whichever options that use the _all_ setting.
+.shadervariantlist 文件不一定只需要指定着色器变体的文字平面列表。此文件可能会变成用于着色器变体生成的通用配置文件，该文件通过 AP 执行一些更复杂的作。一个示例是如上所述定义着色器选项依赖关系图。另一个示例：对于任何给定的选项，可能有一个 “$all” 值，而不是指定实际值，这会导致 AP 为使用 _all_ 设置的任何选项的每个排列生成变体。
 
-It would be nice if Shader Management Console would expose statistics about each shader variant's compilation like how long it took to compile, how many dynamic branches are found (something the AP already reports), and static analysis of VGPR pressure (something we've talked about adding in general).
+如果 Shader Management Console 能够公开有关每个着色器变体编译的统计数据，例如编译所花费的时间、找到的动态分支数量（AP 已经报告的内容）以及 VGPR 压力的静态分析（我们已经讨论过添加的内容），那就太好了。
 
-We need to think about what to do with large shader variant lists when a shader adds, removes, or renames a shader option. If a new shader option is added, SMC could prompt to either fill them in with the default value or unspecified value. If a shader option is removed, SMC should notify the user and remove any duplicates. Things like that. Or we could model it after the material type version update system with some update steps in the .shader file.
+我们需要考虑在着色器添加、删除或重命名着色器选项时如何处理大型着色器变体列表。如果添加了新的着色器选项，SMC 可能会提示使用默认值或未指定的值填充它们。如果删除了着色器选项，SMC 应通知用户并删除所有重复项。诸如此类的事情。或者我们可以按照材质类型版本更新系统进行建模，并在 .shader 文件中执行一些更新步骤。
 
-# Alternatives
+# 选择
 
-One major caveat here is that we're working on Material Canvas. On the one hand, this only amplifies the need for shader variant management as users will have new tools to easily add lots more material shaders. On the other hand, it's possible that Material Canvas designs will impact shader and material systems dramatically, so that the above SMC designs end up needing significant revision. For example, suppose that Material Canvas ends up removing the ability for material properties to set shader options, and the only shader options that exist are at the lighting/system level.
+这里需要注意的一个主要问题是，我们正在开发 Material Canvas。一方面，这只会放大对着色器变体管理的需求，因为用户将拥有新工具来轻松添加更多材质着色器。另一方面，Material Canvas 设计可能会对着色器和材质系统产生巨大影响，因此上述 SMC 设计最终需要进行重大修改。例如，假设 Material Canvas 最终删除了材质属性设置着色器选项的功能，并且唯一存在的着色器选项位于照明/系统级别。

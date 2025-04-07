@@ -1,31 +1,31 @@
 ---
-title: "Commit-Sign-Offs"
+title: "提交签字"
 description: ""
 toc: false
 ---
 
-For all O3DE and related code, commits must be signed off before they are mergeable as a codebase requirement from the Linux foundation (see [this SO post for more details](https://stackoverflow.com/questions/1962094/what-is-the-sign-off-feature-in-git-for)). To sign off a commit, simply add the `-s` command-line option to the `git commit` command. This will add a line like:
+对于所有 O3DE 和相关代码，必须先签署提交，然后才能作为 Linux 基金会的代码库要求进行合并（有关详细信息，请参阅 [此 SO 帖子](https://stackoverflow.com/questions/1962094/what-is-the-sign-off-feature-in-git-for))。要签署提交，只需在 `git commit` 命令中添加 `-s` 命令行选项。这将添加一行，如下所示：
 
 ```
 Signed-off-by: Humpty Dumpty <humpty.dumpty@example.com>
 ```
 
-in the commit body. If you forget to do this, you can remedy things by amending the commit message of each commit missing the sign off. There are many mechanisms to do this, but the simplest way is to rebase the range of commits affected and force push your branch to your fork. The failed DCO instructions explain how to do this, and under what conditions the batch sign-off correction using rebase is possible. These instructions are reproduced below:
+在提交正文中。如果你忘记这样做，你可以通过修改每个缺少 sign off 的提交的提交消息来补救。有许多机制可以做到这一点，但最简单的方法是变基受影响的提交范围，并强制将分支推送到 fork。失败的 DCO 说明说明了如何执行此作，以及在什么条件下可以使用 rebase 进行批量签核更正。这些说明转载如下：
 
 ```
-Rebase the branch
-If you have a local git environment and meet the criteria below, one option is to rebase the branch and add your Signed-off-by lines in the new commits.
-Please note that if others have already begun work based upon the commits in this branch, this solution will rewrite history and may cause serious issues
+变基分支
+如果你有一个本地 git 环境并满足以下条件，一个选项是变基分支并在新提交中添加你的 Signed-off-by 行。
+请注意，如果其他人已经根据此分支中的提交开始工作，则此解决方案将重写历史记录并可能导致严重问题
 for collaborators ([described in the git documentation](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) under "The Perils of Rebasing").
 
-You should only do this if:
+只有在以下情况下，您才应执行此作：
 
-You are the only author of the commits in this branch
-You are absolutely certain nobody else is doing any work based upon this branch
-There are no empty commits in the branch (for example, a DCO Remediation Commit which was added using --allow-empty)
-To add your Signed-off-by line to every commit in this branch:
+您是此分支中提交的唯一作者
+您绝对确定没有其他人基于此分支执行任何工作
+分支中没有空提交（例如，使用 --allow-empty 添加的 DCO 补救提交）
+要将 Signed-off-by 行添加到此分支中的每个提交中：
 
-Ensure you have a local copy of your branch by [checking out the pull request locally via command line](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/checking-out-pull-requests-locally).
-In your local branch, run: git rebase HEAD~10 --signoff
-Force push your changes to overwrite the branch: git push --force-with-lease origin class_inheritance
+通过 [通过命令行在本地签出拉取请求](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/checking-out-pull-requests-locally).
+在本地分支中，运行：git rebase HEAD~10 --signoff
+强制推送您的更改以覆盖分支：git push --force-with-lease origin class_inheritance
 ```

@@ -1,15 +1,15 @@
 ---
-title: "[Build]-Build-time-duration-per-target-12-17-2021"
+title: "[构建] 每个目标的构建持续时间 2021-12-17"
 description: ""
 toc: false
 ---
 
 * Windows, profile
-* CPU: AMD Ryzen Threadripper 3970X 32-Core Processor
-* RAM: 64.0 GB Speed: 3600 MHz (8x8Gb Quad-channel)
+* CPU: AMD Ryzen Threadripper 3970X 32-核心处理器
+* RAM: 64.0 GB Speed: 3600 MHz (8x8Gb 四通道)
 * Drive: Viper M.2 VP4100
 
-| Target | Duration (minutes:seconds) |
+|目标 |持续时间 （分钟：秒） |
 | -- | -- |
 | ScriptCanvas.Static | 07:59.1 | 
 | AzToolsFramework | 02:30.1 | 

@@ -28,7 +28,7 @@ AZ::Event 是在组件之间实现通知系统的绝佳工具，其中一个组�
 ```c++
    AZ::Event<int>::Handler myHandler([](int value)
    {
-   /*process*/
+      /*process*/
    });
 ```
 3. 将处理程序连接到事件。
@@ -53,7 +53,7 @@ using TransformChangedEvent = AZ::Event<const Transform&, const Transform&>;
 ```c++
 void TransformComponent::BindTransformChangedEventHandler(AZ::TransformChangedEvent::Handler& handler)
 {
-  handler.Connect(m_transformChangedEvent);
+    handler.Connect(m_transformChangedEvent);
 }
 ```
 
@@ -73,13 +73,13 @@ m_transformChangedEvent.Signal(m_localTM, m_worldTM);
 2. 在组件的构造函数中，定义调用回调方法 OnWorldTransformChanged 的 lambda。
 ```c++
 MyEventComponent::MyEventComponent()
-: m_movementHandler(
-[this](
-  const AZ::Transform& /*local*/,
-  const AZ::Transform& world)
-   {
-      OnWorldTransformChanged(world);
-   })
+    : m_movementHandler(
+        [this](
+            const AZ::Transform& /*local*/,
+            const AZ::Transform& world)
+        {
+            OnWorldTransformChanged(world);
+        })
 {
 }
 ```
@@ -90,14 +90,13 @@ MyEventComponent::MyEventComponent()
 
 3. 实现 callback 方法以打印消息。
 ```c++
-   void MyEventComponent::OnWorldTransformChanged(
-   const AZ::Transform& world)
-   {
-   AZ_Printf("MyEvent", "now at %f %f %f",
-   world.GetTranslation().GetX(),
-   world.GetTranslation().GetY(),
-   world.GetTranslation().GetZ());
-   }
+void MyEventComponent::OnWorldTransformChanged(const AZ::Transform& world)
+{
+    AZ_Printf("MyEvent", "now at %f %f %f",
+        world.GetTranslation().GetX(),
+        world.GetTranslation().GetY(),
+        world.GetTranslation().GetZ());
+}
 ```
 {{<note>}}
    也可以只在 lambda 中完成所有工作。
@@ -107,10 +106,12 @@ MyEventComponent::MyEventComponent()
 ```c++
 void MyEventComponent::Activate()
 {
-  AZ::Entity* e = GetEntity();
-  TransformComponent* tc = e->FindComponent<TransformComponent>();
-  // track the movement of the entity
-  tc->BindTransformChangedEventHandler(m_movementHandler);
+    AZ::Entity* e = GetEntity();
+
+    using namespace AzFramework;
+    TransformComponent* tc = e->FindComponent<TransformComponent>();
+    // track the movement of the entity
+    tc->BindTransformChangedEventHandler(m_movementHandler);
 }
 ```
 
@@ -128,32 +129,40 @@ https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch06_az_interface
 
 例 7.1. MyEventComponent.h
 ```c++
- #pragma once
- #include <AzCore/Component/Component.h>
- #include <AzCore/Component/TransformBus.h>
- namespace MyProject
- {
-   // An example of listening to movement events
-   // of TransformComponent using an AZ::Event
-   class MyEventComponent : public AZ::Component
-   {
-   public:
-          AZ_COMPONENT(MyEventComponent, "{934BF061-204B-4695-944A-23A1BA7433CB}");
-          static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
-          {
-              required.push_back(AZ_CRC_CE("TransformService"));
-          }
-          MyEventComponent();
-         // AZ::Component overrides
-         void Activate() override;
-         void Deactivate() override {}
-         // Provide runtime reflection, if any
-         static void Reflect(AZ::ReflectContext* rc);
-   private:
-         AZ::TransformChangedEvent::Handler m_movementHandler;
-         void OnWorldTransformChanged(const AZ::Transform& world);
-   };
- }
+#pragma once
+#include <AzCore/Component/Component.h>
+#include <AzCore/Component/TransformBus.h>
+
+namespace MyProject
+{
+    // An example of listening to movement events
+    // of TransformComponent using an AZ::Event
+    class MyEventComponent : public AZ::Component
+    {
+    public:
+        AZ_COMPONENT(MyEventComponent,
+            "{934BF061-204B-4695-944A-23A1BA7433CB}");
+
+        static void GetRequiredServices(
+            AZ::ComponentDescriptor::DependencyArrayType& required)
+        {
+            required.push_back(AZ_CRC_CE("TransformService"));
+        }
+
+        MyEventComponent();
+
+        // AZ::Component overrides
+        void Activate() override;
+        void Deactivate() override {}
+
+        // Provide runtime reflection, if any
+        static void Reflect(AZ::ReflectContext* rc);
+
+    private:
+        AZ::TransformChangedEvent::Handler m_movementHandler;
+        void OnWorldTransformChanged(const AZ::Transform& world);
+    };
+}
 ```
 
 例 7.2. MyEventComponent.cpp
@@ -162,44 +171,55 @@ https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch06_az_interface
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzFramework/Components/TransformComponent.h>
+
 using namespace MyProject;
+
 MyEventComponent::MyEventComponent()
-: m_movementHandler(
-  [this](
-  const AZ::Transform& /*local*/,
-  const AZ::Transform& world)
-  {
-  })
+    : m_movementHandler(
+        [this](
+            const AZ::Transform& /*local*/,
+            const AZ::Transform& world)
+        {
+            OnWorldTransformChanged(world);
+        })
 {
 }
-OnWorldTransformChanged(world);
+
 void MyEventComponent::OnWorldTransformChanged(const AZ::Transform& world)
 {
-  AZ_Printf("MyEvent", "now at %f %f %f",
-    world.GetTranslation().GetX(),
-    world.GetTranslation().GetY(),
-    world.GetTranslation().GetZ());
+    AZ_Printf("MyEvent", "now at %f %f %f",
+        world.GetTranslation().GetX(),
+        world.GetTranslation().GetY(),
+        world.GetTranslation().GetZ());
 }
+
 void MyEventComponent::Activate()
 {
-  AZ::Entity* e = GetEntity();
-  using namespace AzFramework;
-  TransformComponent* tc = e->FindComponent<TransformComponent>();
-  // track the movement of the entity
-  tc->BindTransformChangedEventHandler(m_movementHandler);
+    AZ::Entity* e = GetEntity();
+
+    using namespace AzFramework;
+    TransformComponent* tc = e->FindComponent<TransformComponent>();
+    // track the movement of the entity
+    tc->BindTransformChangedEventHandler(m_movementHandler);
 }
+
 void MyEventComponent::Reflect(AZ::ReflectContext* rc)
 {
-  auto sc = azrtti_cast<AZ::SerializeContext*>(rc);
-  if (!sc) return;
-  sc->Class<MyEventComponent, Component>()
-    ->Version(1);
-  AZ::EditContext* ec = sc->GetEditContext();
-  if (!ec) return;
-  using namespace AZ::Edit::Attributes;
-  ec->Class<MyEventComponent>("My Event Component Example", "[Communicates using AZ::Event]")
-    ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-    ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
-    ->Attribute(Category, "My Project");
+    auto sc = azrtti_cast<AZ::SerializeContext*>(rc);
+    if (!sc) return;
+
+    sc->Class<MyEventComponent, Component>()
+        ->Version(1);
+
+    AZ::EditContext* ec = sc->GetEditContext();
+    if (!ec) return;
+
+    using namespace AZ::Edit::Attributes;
+    // reflection of this component for O3DE Editor
+    ec->Class<MyEventComponent>("My Event Component Example",
+        "[Communicates using AZ::Event]")
+      ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+        ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
+        ->Attribute(Category, "My Project");
 }
 ```

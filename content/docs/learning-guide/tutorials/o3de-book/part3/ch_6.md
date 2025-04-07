@@ -36,9 +36,11 @@ https://www.o3de.org/docs/user-guide/programming/az-interface/
 只有在其 Reflect 方法中标记为 Level 组件的组件才能添加到 Level 实体中。
 
 ```c++
-ec->Class<MyLevelComponent>("My Level Component", "[Communicates using AZ::Interface]")
-  ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-  ->Attribute(AppearsInAddComponentMenu, AZ_CRC_CE("Level"))
+ ec->Class<MyLevelComponent>("My Level Component",
+     "[Communicates using AZ::Interface]")
+   ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+     ->Attribute(AppearsInAddComponentMenu, AZ_CRC_CE("Level"))
+     ->Attribute(Category, "My Project");
 ```
 
 例 6.1.具有 My Level Component 的 Level 实体
@@ -71,15 +73,17 @@ Change the UUID on one of them.
 ```c++
 #pragma once
 #include <AzCore/RTTI/RTTI.h>
+
 namespace MyProject
 {
-  class MyInterface
-  {
-  public:
-    AZ_RTTI(MyInterface, "{D477F807-6795-4A1B-A475-AFBCF0584A08}");
-    virtual ~MyInterface() = default;
-    virtual int GetMyInteger() = 0;
-  };
+    class MyInterface
+    {
+    public:
+        AZ_RTTI(MyInterface, "{D477F807-6795-4A1B-A475-AFBCF0584A08}");
+        virtual ~MyInterface() = default;
+
+        virtual int GetMyInteger() = 0;
+    };
 }
 ```
   
@@ -89,9 +93,9 @@ namespace MyProject
 
 ```c++
 // An example of a level component with AZ::Interface
-class MyLevelComponent
-  : public AZ::Component
-  , public AZ::Interface<MyInterface>::Registrar
+    class MyLevelComponent
+        : public AZ::Component
+        , public AZ::Interface<MyInterface>::Registrar
 ```
 
 AZ::Interface<MyInterface>::Registrar 将在构造 MyLevelComponent 时将类注册为接口的处理程序，并在销毁时注销。
@@ -113,10 +117,10 @@ AZ::Interface<MyInterface>::Unregister(this);
 ```c++
 void MyInterfaceComponent::Activate()
 {
-   if (MyInterface* myInterface = AZ::Interface<MyInterface>::Get())
-   {
-      AZ_Printf("Example", "%d", myInterface->GetMyInteger());
-   }
+    if (MyInterface* myInterface = AZ::Interface<MyInterface>::Get())
+    {
+        AZ_Printf("Example", "%d", myInterface->GetMyInteger());
+    }
 }
 ```
 
@@ -132,46 +136,58 @@ void MyInterfaceComponent::Activate()
 #include <AzCore/Component/Component.h>
 #include <AzCore/Interface/Interface.h>
 #include <MyProject/MyInterface.h>
+
 namespace MyProject
 {
- // An example of a level component with AZ::Interface
- class MyLevelComponent
-   : public AZ::Component
-   , public AZ::Interface<MyInterface>::Registrar
- {
- public:
-   AZ_COMPONENT(MyLevelComponent, "{69C64F9C-4C35-4612-9B3B-85FEBCC06FDB}");
-   
-   // AZ::Component overrides
-   void Activate() override {}
-   void Deactivate() override {}
-   // Provide runtime reflection, if any
-   static void Reflect(AZ::ReflectContext* rc);
-   // MyInterface
-   int GetMyInteger() override { return 42; }
- };
+    // An example of a level component with AZ::Interface
+    class MyLevelComponent
+        : public AZ::Component
+        , public AZ::Interface<MyInterface>::Registrar
+    {
+    public:
+        AZ_COMPONENT(MyLevelComponent,
+            "{69C64F9C-4C35-4612-9B3B-85FEBCC06FDB}");
+        
+        // AZ::Component overrides
+        void Activate() override {}
+        void Deactivate() override {}
+
+        // Provide runtime reflection, if any
+        static void Reflect(AZ::ReflectContext* rc);
+
+        // MyInterface
+        int GetMyInteger() override { return 42; }
+    };
 }
 ```
 
 例 6.6. MyLevelComponent.cpp
 ```c++
 #include "MyLevelComponent.h"
+#include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzFramework/Components/TransformComponent.h>
+
 using namespace MyProject;
+
 void MyLevelComponent::Reflect(AZ::ReflectContext* rc)
 {
-  auto sc = azrtti_cast<AZ::SerializeContext*>(rc);
-  if (!sc) return;
-  sc->Class<MyLevelComponent, Component>()
-    ->Version(1);
-  AZ::EditContext* ec = sc->GetEditContext();
-  if (!ec) return;
-  using namespace AZ::Edit::Attributes;
-  // reflection of this component for O3DE Editor
-  ec->Class<MyLevelComponent>("My Level Component", "[Communicates using AZ::Interface]")
-    ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-    ->Attribute(AppearsInAddComponentMenu, AZ_CRC_CE("Level"))
-    ->Attribute(Category, "My Project");
+    auto sc = azrtti_cast<AZ::SerializeContext*>(rc);
+    if (!sc) return;
+
+    sc->Class<MyLevelComponent, Component>()
+        ->Version(1);
+
+    AZ::EditContext* ec = sc->GetEditContext();
+    if (!ec) return;
+
+    using namespace AZ::Edit::Attributes;
+    // reflection of this component for O3DE Editor
+    ec->Class<MyLevelComponent>("My Level Component",
+        "[Communicates using AZ::Interface]")
+      ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+        ->Attribute(AppearsInAddComponentMenu, AZ_CRC_CE("Level"))
+        ->Attribute(Category, "My Project");
 }
 ```
 
@@ -182,49 +198,61 @@ void MyLevelComponent::Reflect(AZ::ReflectContext* rc)
 ```c++
 #pragma once
 #include <AzCore/Component/Component.h>
+
 namespace MyProject
 {
- // An example of using AZ::Interface
- class MyInterfaceComponent : public AZ::Component
- {
- public:
-   AZ_COMPONENT(MyInterfaceComponent, "{F73AB7B7-4F19-42FD-9651-13167FD222A6}");
-   
-   // AZ::Component overrides
-   void Activate() override;
-   void Deactivate() override {}
-   // Provide runtime reflection, if any
-   static void Reflect(AZ::ReflectContext* rc);
- };
+    // An example of using AZ::Interface
+    class MyInterfaceComponent : public AZ::Component
+    {
+    public:
+        AZ_COMPONENT(MyInterfaceComponent,
+            "{F73AB7B7-4F19-42FD-9651-13167FD222A6}");
+        
+        // AZ::Component overrides
+        void Activate() override;
+        void Deactivate() override {}
+
+        // Provide runtime reflection, if any
+        static void Reflect(AZ::ReflectContext* rc);
+    };
 }
 ```
 
 例 6.8. MyInterfaceComponent.cpp
 ```c++
 #include "MyInterfaceComponent.h"
+
+#include <AzCore/Interface/Interface.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <MyProject/MyInterface.h>
+
 using namespace MyProject;
+
 void MyInterfaceComponent::Activate()
 {
-  if (MyInterface* myInterface = AZ::Interface<MyInterface>::Get())
-  {
-    AZ_Printf("Example", "%d", myInterface->GetMyInteger());
-  }
+    if (MyInterface* myInterface = AZ::Interface<MyInterface>::Get())
+    {
+        AZ_Printf("Example", "%d", myInterface->GetMyInteger());
+    }
 }
+
 void MyInterfaceComponent::Reflect(AZ::ReflectContext* rc)
 {
-  auto sc = azrtti_cast<AZ::SerializeContext*>(rc);
-  if (!sc) return;
-  sc->Class<MyInterfaceComponent, Component>()
-    ->Version(1);
-  AZ::EditContext* ec = sc->GetEditContext();
-  if (!ec) return;
-  using namespace AZ::Edit::Attributes;
-  // reflection of this component for O3DE Editor
-  ec->Class<MyInterfaceComponent>("Using Interface Example", "[Communicates using AZ::Interface]")
-    ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-    ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
-    ->Attribute(Category, "My Project");
+    auto sc = azrtti_cast<AZ::SerializeContext*>(rc);
+    if (!sc) return;
+
+    sc->Class<MyInterfaceComponent, Component>()
+        ->Version(1);
+
+    AZ::EditContext* ec = sc->GetEditContext();
+    if (!ec) return;
+
+    using namespace AZ::Edit::Attributes;
+    // reflection of this component for O3DE Editor
+    ec->Class<MyInterfaceComponent>("Using Interface Example",
+        "[Communicates using AZ::Interface]")
+      ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+        ->Attribute(AppearsInAddComponentMenu, AZ_CRC("Game"))
+        ->Attribute(Category, "My Project");
 }
 ```

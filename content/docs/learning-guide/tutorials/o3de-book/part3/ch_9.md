@@ -30,7 +30,7 @@ https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch09_oscillator
 * The EBus for tick notification events.
 * The events are defined in the AZ::TickEvents class.
 */
-typedef AZ::EBus<TickEvents>    TickBus;
+typedef AZ::EBus<TickEvents> TickBus;
 ```
 
 查看上面评论中提到的 AZ::TickEvents：
@@ -57,26 +57,33 @@ OnTick 是我们覆盖以获取 tick 事件的回调。让我们看看如何创�
 {{</note>}}
 
 例 9.1.OscillatorComponent.h 代码段
-```c++
-// An example of singing up to an Ebus, TickBus in this case
- class OscillatorComponent
+```c++   
+    // An example of singing up to an Ebus, TickBus in this case
+    class OscillatorComponent
         : public AZ::Component
         , public AZ::TickBus::Handler // for ticking events
     {
- public:
-   // be sure this guid is unique, avoid copy-paste errors!
-          AZ_COMPONENT(OscillatorComponent,
-   "{302AE5A0-F7C4-4319-8023-B1ADF53E1E72}");
-   protected:
-   // AZ::Component overrides
-   void Activate() override;
-   void Deactivate() override;
-   // AZ::TickBus overrides
-   void OnTick(float dt, AZ::ScriptTimePoint) override;
-   // what other components does this component require?
-   static void GetRequiredServices(
-              AZ::ComponentDescriptor::DependencyArrayType& req);
-   ...
+    public:
+        // be sure this guid is unique, avoid copy-paste errors!
+        AZ_COMPONENT(OscillatorComponent,
+            "{302AE5A0-F7C4-4319-8023-B1ADF53E1E72}");
+
+    protected:
+        // AZ::Component overrides
+        void Activate() override;
+        void Deactivate() override;
+
+        // AZ::TickBus overrides
+        void OnTick(float dt, AZ::ScriptTimePoint) override;
+
+        // Provide runtime reflection, if any
+        static void Reflect(AZ::ReflectContext* reflection);
+
+        // what other components does this component require?
+        static void GetRequiredServices(
+            AZ::ComponentDescriptor::DependencyArrayType& req);
+
+...
     };
 ```
 
@@ -109,10 +116,11 @@ Activate() 的源代码注释指出：“[Activate()] 将组件置于活动状�
 GetRequiredServices 是四 （4） 个静态方法中的一种特殊静态方法，任何组件都可以声明这些方法来定义它与同一实体上其他组件的关系。在这种情况下，Oscillator Component 将表示它需要实体上存在 TransformComponent。其实现如下：
 
 ```c++
-void OscillatorComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& req)
+void OscillatorComponent::GetRequiredServices(
+    AZ::ComponentDescriptor::DependencyArrayType& req)
 {
-  // OscillatorComponent requires TransformComponent
-  req.push_back(AZ_CRC_CE("TransformService"));
+    // OscillatorComponent requires TransformComponent
+    req.push_back(AZ_CRC_CE("TransformService"));
 }
 ```
 
@@ -120,7 +128,7 @@ void OscillatorComponent::GetRequiredServices(AZ::ComponentDescriptor::Dependenc
 ```c++
 void TransformComponent::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
 {
-  provided.push_back(AZ_CRC_CE("TransformService"));
+    provided.push_back(AZ_CRC_CE("TransformService"));
 }
 ```
 
@@ -189,14 +197,15 @@ void TransformComponent::GetProvidedServices(AZ::ComponentDescriptor::Dependency
 ```c++
 void OscillatorComponent::Activate()
 {
-  // We must connect, otherwise OnTick() will never be called.
-  // Forgetting this call is a common error in O3DE!
-  AZ::TickBus::Handler::BusConnect();
+    // We must connect, otherwise OnTick() will never be called.
+    // Forgetting this call is the common error in O3DE!
+    AZ::TickBus::Handler::BusConnect();
 }
+
 void OscillatorComponent::Deactivate()
 {
-  // good practice on cleanup to disconnect
-  AZ::TickBus::Handler::BusDisconnect();
+    // good practice on cleanup to disconnect
+    AZ::TickBus::Handler::BusDisconnect();
 }
 ```
 
@@ -216,34 +225,37 @@ MyComponent 是一个空组件，它什么都不做，所以它在激活时没�
 ```c++
 void OscillatorComponent::OnTick(float dt, AZ::ScriptTimePoint)
 {
-  m_currentTime += dt;
-  // get current position
-  AZ::Vector3 position;
-  AZ::TransformBus::EventResult(position, GetEntityId(),
-          &AZ::TransformBus::Events::GetWorldTranslation);
-   // the amount of change per tick
-   const float change = (dt / m_period) * m_amplitude;
-   // move up during the first half of the period
-   if (m_currentTime < m_period / 2)
-      {
-          position.SetZ(position.GetZ() + change);
-          AZ::TransformBus::Event(GetEntityId(),
-              &AZ::TransformBus::Events::SetWorldTranslation,
-              position);
-      }
-   // move down during the second half of the period
-   else if (m_currentTime < m_period)
-      {
-          position.SetZ(position.GetZ() - change);
-          AZ::TransformBus::Event(GetEntityId(),
-              &AZ::TransformBus::Events::SetWorldTranslation,
-              position);
-      }
-   else // reset the time to start the next cycle
-      {
-          m_currentTime = 0;
-      }
- }
+    m_currentTime += dt;
+
+    // get current position
+    AZ::Vector3 position;
+    AZ::TransformBus::EventResult(position, GetEntityId(),
+        &AZ::TransformBus::Events::GetWorldTranslation);
+
+    // the amount of change per tick
+    const float change = (dt / m_period) * m_amplitude;
+
+    // move up during the first half of the period
+    if (m_currentTime < m_period / 2)
+    {
+        position.SetZ(position.GetZ() + change);
+        AZ::TransformBus::Event(GetEntityId(),
+            &AZ::TransformBus::Events::SetWorldTranslation,
+            position);
+    }
+    // move down during the second half of the period
+    else if (m_currentTime < m_period)
+    {
+        position.SetZ(position.GetZ() - change);
+        AZ::TransformBus::Event(GetEntityId(),
+            &AZ::TransformBus::Events::SetWorldTranslation,
+            position);
+    }
+    else // reset the time to start the next cycle
+    {
+        m_currentTime = 0;
+    }
+}
 ```
 
 我们已经在前面的章节中看到了 SetWorldTranslation 和 GetWorldTranslation 的用法。这就是它们在实际用途中的用途。这是移动实体的常见模式。首先，您获取其当前位置。其次，将 position 设置为所需的值。
@@ -267,35 +279,42 @@ https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch09_oscillator
 
 ```c++
 #pragma once
- #include <AzCore/Component/Component.h>
- #include <AzCore/Component/TickBus.h>
- namespace MyProject
- {
-   // An example of singing up to an Ebus, TickBus in this case
-   class OscillatorComponent
-          : public AZ::Component
-          , public AZ::TickBus::Handler // for ticking events
-      {
-       public:
-       // be sure this guid is unique, avoid copy-paste errors!
-              AZ_COMPONENT(OscillatorComponent, "{302AE5A0-F7C4-4319-8023-B1ADF53E1E72}");
-       protected:
-         // AZ::Component overrides
-         void Activate() override;
-         void Deactivate() override;
-         // AZ::TickBus overrides
-         void OnTick(float dt, AZ::ScriptTimePoint) override;
-         // Provide runtime reflection, if any
-         static void Reflect(AZ::ReflectContext* reflection);
-         // what other components does this component require?
-         static void GetRequiredServices(
-                    AZ::ComponentDescriptor::DependencyArrayType& req);
-       private:
-         float m_period = 3.f;
-         float m_currentTime = 0.f;
-         float m_amplitude = 10.f;
+#include <AzCore/Component/Component.h>
+#include <AzCore/Component/TickBus.h>
+
+namespace MyProject
+{
+    // An example of singing up to an Ebus, TickBus in this case
+    class OscillatorComponent
+        : public AZ::Component
+        , public AZ::TickBus::Handler // for ticking events
+    {
+    public:
+        // be sure this guid is unique, avoid copy-paste errors!
+        AZ_COMPONENT(OscillatorComponent,
+            "{302AE5A0-F7C4-4319-8023-B1ADF53E1E72}");
+
+    protected:
+        // AZ::Component overrides
+        void Activate() override;
+        void Deactivate() override;
+
+        // AZ::TickBus overrides
+        void OnTick(float dt, AZ::ScriptTimePoint) override;
+
+        // Provide runtime reflection, if any
+        static void Reflect(AZ::ReflectContext* reflection);
+
+        // what other components does this component require?
+        static void GetRequiredServices(
+            AZ::ComponentDescriptor::DependencyArrayType& req);
+
+    private:
+        float m_period = 3.f;
+        float m_currentTime = 0.f;
+        float m_amplitude = 10.f;
     };
- }
+}
 ```
 
 例 9.4.OscillatorComponent.cpp完整列表
@@ -303,66 +322,78 @@ https://github.com/AMZN-Olex/O3DEBookCode2111/tree/ch09_oscillator
 #include "OscillatorComponent.h"
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Component/TransformBus.h>
+
 using namespace MyProject;
+
 void OscillatorComponent::Activate()
 {
-  // We must connect, otherwise OnTick() will never be called.
-  // Forgetting this call is the common error in O3DE!
-  AZ::TickBus::Handler::BusConnect();
+    // We must connect, otherwise OnTick() will never be called.
+    // Forgetting this call is the common error in O3DE!
+    AZ::TickBus::Handler::BusConnect();
 }
+
 void OscillatorComponent::Deactivate()
 {
-  // good practice on cleanup to disconnect
-  AZ::TickBus::Handler::BusDisconnect();
+    // good practice on cleanup to disconnect
+    AZ::TickBus::Handler::BusDisconnect();
 }
+
 void OscillatorComponent::OnTick(float dt, AZ::ScriptTimePoint)
 {
-  m_currentTime += dt;
-  // get current position
-  AZ::Vector3 position;
-  AZ::TransformBus::EventResult(position, GetEntityId(),
-    &AZ::TransformBus::Events::GetWorldTranslation);
-  // the amount of change per tick
-  const float change = (dt / m_period) * m_amplitude;
-  // move up during the first half of the period
-  if (m_currentTime < m_period / 2)
-  {
-    position.SetZ(position.GetZ() + change);
-    AZ::TransformBus::Event(GetEntityId(),
-      &AZ::TransformBus::Events::SetWorldTranslation,
-      position);
-  }
-  // move down during the second half of the period
-  else if (m_currentTime < m_period)
-  {
-    position.SetZ(position.GetZ() - change);
-    AZ::TransformBus::Event(GetEntityId(),
-      &AZ::TransformBus::Events::SetWorldTranslation,
-      position);
-  }
-  else // reset the time to start the next cycle
-  {
-    m_currentTime = 0;
-  }
+    m_currentTime += dt;
+
+    // get current position
+    AZ::Vector3 position;
+    AZ::TransformBus::EventResult(position, GetEntityId(),
+        &AZ::TransformBus::Events::GetWorldTranslation);
+
+    // the amount of change per tick
+    const float change = (dt / m_period) * m_amplitude;
+
+    // move up during the first half of the period
+    if (m_currentTime < m_period / 2)
+    {
+        position.SetZ(position.GetZ() + change);
+        AZ::TransformBus::Event(GetEntityId(),
+            &AZ::TransformBus::Events::SetWorldTranslation,
+            position);
+    }
+    // move down during the second half of the period
+    else if (m_currentTime < m_period)
+    {
+        position.SetZ(position.GetZ() - change);
+        AZ::TransformBus::Event(GetEntityId(),
+            &AZ::TransformBus::Events::SetWorldTranslation,
+            position);
+    }
+    else // reset the time to start the next cycle
+    {
+        m_currentTime = 0;
+    }
 }
+
 void OscillatorComponent::Reflect(AZ::ReflectContext* reflection)
 {
-  auto sc = azrtti_cast<AZ::SerializeContext*>(reflection);
-  if (!sc) return;
-  sc->Class<OscillatorComponent, Component>()
-    ->Version(1);
-  AZ::EditContext* ec = sc->GetEditContext();
-  if (!ec) return;
-  using namespace AZ::Edit::Attributes;
-  // reflection of this component for O3DE Editor
-  ec->Class<OscillatorComponent>("Oscillator Component", "[oscillates the entity]")
-    ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
-    ->Attribute(AppearsInAddComponentMenu, AZ_CRC_CE("Game"))
-    ->Attribute(Category, "My Project");
+    auto sc = azrtti_cast<AZ::SerializeContext*>(reflection);
+    if (!sc) return;
+    sc->Class<OscillatorComponent, Component>()
+        ->Version(1);
+
+    AZ::EditContext* ec = sc->GetEditContext();
+    if (!ec) return;
+    using namespace AZ::Edit::Attributes;
+    // reflection of this component for O3DE Editor
+    ec->Class<OscillatorComponent>("Oscillator Component",
+        "[oscillates the entity]")
+        ->ClassElement(AZ::Edit::ClassElements::EditorData, "")
+        ->Attribute(AppearsInAddComponentMenu, AZ_CRC_CE("Game"))
+        ->Attribute(Category, "My Project");
 }
-void OscillatorComponent::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& req)
+
+void OscillatorComponent::GetRequiredServices(
+    AZ::ComponentDescriptor::DependencyArrayType& req)
 {
-  // OscillatorComponent requires TransformComponent
-  req.push_back(AZ_CRC_CE("TransformService"));
+    // OscillatorComponent requires TransformComponent
+    req.push_back(AZ_CRC_CE("TransformService"));
 }
 ```

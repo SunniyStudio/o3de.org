@@ -305,7 +305,7 @@ class TransformInterface {
  for (AZ::EntityId id: children)
     {
         AZ::TransformBus::Event(
- // to a child entity
+            // to a child entity
             id,
             &AZ::TransformBus::Events::SetWorldTranslation,
             position);

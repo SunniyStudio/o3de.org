@@ -1,39 +1,39 @@
 ---
-title: "[DCCsi]-Blender-Scene-Exporter"
+title: "[DCCsi]-Blender-Scene-导出器"
 description: ""
 toc: false
 ---
 
-The Blender O3DE Scene exporter is a convenience tool for one click exporter from Blender to O3DE.
+Blender O3DE 场景导出器是一个方便的工具，用于从 Blender 到 O3DE 的一键导出器。
 
-This DCCsi tool is non-destructive to your scene, as it will export selected copies of your mesh and textures, re-path texture links to your mesh during file export. You can export selected static meshes or rigged animated meshes within the capabilities of the .FBX format and O3DE actor entity.
-You have options to export textures with the mesh, or with the mesh within a sub folder ‘textures’. This will work for Blender Scenes with or without packed textures.
+此 DCCsi 工具对您的场景没有破坏性，因为它将导出网格和纹理的选定副本，并在文件导出期间将纹理链接重新路径化为网格。您可以在 .FBX 格式和 O3DE 执行组件实体。
+您可以选择使用网格或子文件夹 'textures' 中的网格导出纹理。这将适用于带有或不带有打包纹理的 Blender 场景。
 
-Hardware and Software Requirements:
+硬件和软件要求：
 
-Support for Blender 3.+ Windows 10/11 64-bit version /
-O3DE Stable 21.11 Release Windows 10/11 64-bit version
+支持 Blender 3.+ Windows 10/11 64 位版本 /
+O3DE 稳定版 21.11 版本 Windows 10/11 64 位版本
 
 
-INSTALL:
+安装：
 
-The SceneExporter folder is zipped up into the Blender Plugin.
+SceneExporter 文件夹被压缩到 Blender 插件中。
 
-How to install Blender O3DE Scene Exporter Blender add-ons:
-    Locate the in Add-Ons SceneExporter.zip, this should be located in:
+如何安装 Blender O3DE Scene Exporter Blender 插件：
+    找到 in Add-Ons SceneExporter.zip，它应该位于：
     AtomLyIntegration\TechnicalArt\DccScriptingInterface\Tools\DCC\Blender\AddOns\SceneExporter.zip
-    Go to the Add-ons section in the Blender preferences.
-    Click Install button.
-    Pick the add-on using the File Browser.
-    Enable the add-on from the 'Add-ons' section level.
-    You can now see the add on in Import-Export or search for O3DE*.
-    Make sure its Checked to Active.
-    This will add the new O3DE Tab and the new File Export to O3DE option to the Menu.
+    转到 Blender 首选项中的 附加组件 部分。
+    点击 Install 安装 按钮。
+    使用 File Browser 选择附加组件。
+    从 'Add-ons' 部分级别启用附加组件。
+    您现在可以在 Import-Export 中查看该插件或搜索 O3DE*。
+    确保其 Checked to Active（选中激活）。
+    这会将新的 O3DE 选项卡和新的 File Export to O3DE 选项添加到菜单中。
 
-To Do: add Linux and MacOS cross-platform support:
+待办事项：添加 Linux 和 MacOS 跨平台支持：
 - Linux: https://github.com/o3de/o3de/issues/7244
 - MacOS: https://github.com/o3de/o3de/issues/7245
 
-Possible future features:
-- convert/export lights and/or cameras as o3de prefab
-- convert/export PrincipledBRDF materials to atom source .materials
+未来可能的功能：
+- 将光源和/或摄像机转换/导出为 O3de 预制件
+- 将 PrincipledBRDF 材质转换/导出为 Atom 源 .materials

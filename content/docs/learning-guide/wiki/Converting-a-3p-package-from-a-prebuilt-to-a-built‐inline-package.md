@@ -1,33 +1,33 @@
 ---
-title: "Converting-a-3p-package-from-a-prebuilt-to-a-built‐inline-package"
+title: "将第三方软件包从预构建包转换为内置内联包"
 description: ""
 toc: false
 ---
 
-This page is the practical guide for actually doing the work to convert from using a downloaded 3p package to using a built-inline 3p package.
+本页是实际执行从使用下载的第三方包转换为使用内置内联第三方包的实用指南。
 
-For a full overview of whats involved, see the deep dive at [This wiki page](https://github.com/o3de/o3de/wiki/O3DE-3p-Package-System-vs-FetchContent-vs-ExternalProject-investigation)
+有关所涉及的内容的完整概述，请参阅 [此 wiki 页面](https://github.com/o3de/o3de/wiki/O3DE-3p-Package-System-vs-FetchContent-vs-ExternalProject-investigation)
 
-## When is it suitable to do this?
+## 什么时候适合这样做？
 
-Using inline libraries via fetchcontent can bring many benefits (see the above wiki page for pros and cons) but please limit it ones which meet the following criteria
-* The are approved by the 3P approval process (TSC, O3DF).  The existing 3p packages are already approved.
-* They compile very quickly (This is a difficult metric to follow, but an example for me is taking about 2 hours to compile O3DE, adding 30 seconds on, would not be out of the question).  Header-only libraries automatically meet this criteria since they take 0 seconds to compile.
-* They download quickly (Please no repos that contain gigabytes of 'example data')
-* They can be compiled using their existing CMake scripts with no (or low amount) of patching in our engine.  If you have to build a whole new build system for them, they belong in pre-built [3P Package system](http://github.com/o3de/3p-package-source).
-* They don't need much Platform Abstraction Layer stuff to do completely different things on every platform during compile.
-* Nothing in the 3p Package System depends on their binaries.  For example, zlib meets all of the above criteria, but Qt, Python, and several others which don't all depend on it.  So it stays in the 3P Package system so that the compile scripts for the other packages can depend on it, and then the engine can depend on the exact same package.
+通过 fetchcontent 使用内联库可以带来很多好处（请参阅上面的 wiki 页面了解优缺点），但请限制满足以下条件的库
+* 已通过 3P 批准程序（TSC、O3DF）批准。 现有的 3p 套餐已获得批准。
+* 他们编译得非常快（这是一个很难遵循的指标，但对我来说，一个例子是编译 O3DE 大约需要 2 小时，增加 30 秒，这也不是不可能的）。 仅头文件库会自动满足此条件，因为它们的编译时间为 0 秒。
+* 他们下载得很快（请不要使用包含 GB 级“示例数据”的存储库）
+* 它们可以使用现有的 CMake 脚本进行编译，无需（或少量）在我们的引擎中进行修补。 如果你必须为他们构建一个全新的构建系统，他们属于预构建的 [第三方软件包系统](http://github.com/o3de/3p-package-source).
+* 在编译期间，他们不需要太多的平台抽象层内容在每个平台上执行完全不同的作。
+* 3p Package System 中没有任何内容依赖于它们的二进制文件。 例如，zlib 满足上述所有标准，但 Qt、Python 和其他几个并不都依赖于它。 因此，它保留在 3P Package 系统中，以便其他包的编译脚本可以依赖于它，然后引擎可以依赖于完全相同的包。
 
-## When is it mandatory to do this?
-* When the library interface does things which make it extremely sensitive to the compiler or linker flags such that they must match absolutely exactly or else bad things happen.  An example is OpenMesh, which lets some STL objects (vector) leak out of its interface in such a way that causes them to be initialized in the library and destroyed in the user of the library.  This causes problems with memory tools like Address Sanitizer and others.
+## 什么时候必须这样做？
+* 当库接口执行使其对编译器或链接器标志极其敏感的事情时，它们必须绝对完全匹配，否则会发生坏事。 一个例子是 OpenMesh，它允许一些 STL 对象（向量）从其接口中泄漏出来，从而导致它们在库中初始化并在库的用户中销毁。 这会导致 Address Sanitizer 等内存工具出现问题。
 
-## How?
+## 如何？
 
-First, you would remove any existing code that registers the existing 3p, so search for it and eliminate any `ly_associate_package` calls or other `include` calls which try to run scripts.  Leave the dependencies on `3rdParty::xxxx` intact.
+首先，您将删除注册现有 3p 的任何现有代码，因此请搜索它并删除任何尝试运行脚本的 `ly_associate_package` 调用或其他 `include` 调用。 保持对 `3rdParty::xxxx` 的依赖项不变。
 
-See [The Whitebox Gem](https://github.com/o3de/o3de/tree/development/Gems/WhiteBox) which uses OpenMesh 3p as an inline compile, for an example of this
+参见 [Whitebox Gem](https://github.com/o3de/o3de/tree/development/Gems/WhiteBox) 它使用 OpenMesh 3p 作为内联编译，以获得这个示例
 
-The basic folder structure is as such for a 3p called XXXX.
+基本文件夹结构对于名为 XXXX 的 3p 是这样的。
 
 ```
 + CMakeLists.txt (cmake root file)
@@ -38,58 +38,58 @@ The basic folder structure is as such for a 3p called XXXX.
         * FindXXXX.CMake (file)  # this one runs when in a pre-built installer
 ```
 
-**Everything is case sensitive!  If things depend on your library named `3rdParty::XxXxX` then your Find files must be named `FindXxXxX.cmake` and your targets must be named similarly.**
+**所有内容都区分大小写！ 如果事情依赖于名为 `3rdParty::XxXxX` 的库，那么你的 Find 文件必须命名为 `FindXxXxX.cmake`，你的目标也必须以类似的名称命名。**
 
-### The CMakeLists.txt at the root
+### 根CMakeLists.txt
 
-O3DE Automatically invokes `find_package(XXXX)`, a builtin CMake function, when someone declares a dependency on `3rdParty::XXXX` (it subtracts the 3rdParty bit first).   
-CMake automatically searches a list of registered locations (`CMAKE_MODULE_PATH`) for FindXXXX.cmake if someone invokes `find_package(XXXX)`, and executes the file if it is found.  It expects that file to import or declare built targets.   It also expects it to set the variable `XXXX_FOUND`.
-The CMake Root file thus just adds the 3rdParty folder to the `CMAKE_MODULE_PATH`, so that the FindXXXX.cmake file will be run if someone declares a dependency on it.
+当有人声明对 `3rdParty::XXXX` 的依赖关系时，O3DE 会自动调用 `find_package(XXXX)`，这是一个内置的 CMake 函数（它首先减去 3rdParty 位）。  
+如果有人调用 `find_package(XXXX)`，CMake 会自动搜索 FindXXXX.cmake 的注册位置列表（`CMAKE_MODULE_PATH`），如果找到该文件，则执行该文件。 它期望该文件导入或声明构建目标。  它还希望设置变量 `XXXX_FOUND`。
+因此，CMake Root 文件只是将 3rdParty 文件夹添加到`CMAKE_MODULE_PATH`中，以便在有人声明对 FindXXXX.cmake 文件的依赖关系时运行它。
 
 ```cmake
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH})
 ```
 
-### The FindXXXX.cmake in 3rdParty
-This is where most of the action occurs.
-When this is invoked, its job is to declare `3rdParty::XXXX` in any way is necessary and then set `XXXX_FOUND`.
-CMake doesn't really care how it achieves this - `IMPORTED` libraries, or specifying source code to compile.
-See the [OpenMesh FindXXXX.cmake](https://github.com/o3de/o3de/blob/development/Gems/WhiteBox/3rdParty/FindOpenMesh.cmake) for a full example which goes through the process.  You'll have to highly customize this depending on the package.
+### 第三方中的 FindXXXX.cmake
+这是大多数作发生的地方。
+当调用它时，它的工作是以任何必要的方式声明 `3rdParty::XXXX`，然后设置 `XXXX_FOUND`。
+CMake 并不真正关心它是如何实现这一点的 - `IMPORTED`库，或指定要编译的源代码。
+请参阅 [OpenMesh FindXXXX.cmake](https://github.com/o3de/o3de/blob/development/Gems/WhiteBox/3rdParty/FindOpenMesh.cmake)  以获取完整示例。 您必须根据软件包对其进行高度自定义。
 
-The above file gives a pretty clear walkthough, but I'll go thru the phases here
+上面的文件给出了一个非常清晰的演练，但我将在这里介绍各个阶段
 
-#### Phase 0:  Early out if you're already declared
+#### 第 0 阶段：如果您已经申报，则提前退出
 ```
 if (TARGET 3rdParty::XXXX)
     return()
 endif()
 ```
 
-This is like an include guard but it also lets users substitute their own 3rdParty::XXXX if they want to by getting it in there at a higher level earlier.
+这就像一个 include 守卫，但它也允许用户替换自己的 3rdParty::XXXX，如果他们愿意，可以更早地在更高的级别上使用它。
 
-#### Phase 1:  FetchContent_Declare
-Tell it where to get the source, or the zip file, or whatever.  It works with git repos, zip files, etc.
-Always pin it to a specific tag or hash.
+#### 第 1 阶段：FetchContent_Declare
+告诉它从哪里获取源，或者 zip 文件，或者其他什么。 它适用于 git 存储库、zip 文件等。
+始终将其固定到特定的标签或哈希值。
 
-If you need to make a patch, or use a patch, use `PATCH_COMMAND cmake -P "${LY_ROOT_FOLDER}/cmake/PatchIfNotAlreadyPatched.cmake" o3de-XXXX.patch` because CMake tends to try to re-patch already patched things and fail.
+如果您需要制作补丁或使用补丁，请使用 `PATCH_COMMAND cmake -P "${LY_ROOT_FOLDER}/cmake/PatchIfNotAlreadyPatched.cmake" o3de-XXXX.patch`，因为 CMake 倾向于尝试重新修补已经修补的东西并失败。
 
-Do not use CMAKE_ARGS here, they don't work.  FetchContent does not start a new instance of cmake, so command line arguments are not re-parsed.
+请勿在此处使用 CMAKE_ARGS，它们不起作用。 FetchContent 不会启动 cmake 的新实例，因此不会重新解析命令行参数。
 
-#### Phase 2:  FetchContent_MakeAvailable
-The command `FetchContent_MakeAvailable` actually fetches the source (via git or unzips a zip etc), and then runs its CMake file as an inline run (similar to `add_subdirectory` or `include()`.  If it doesn't have a cmake file, it does nothing.  You can also give it a bogus CMake directory in `FetchContent_Declare` to make it do nothing on purpose (`SOURCE_SUBDIR bogus`) or you can point it at a custom CMakeLists.txt file you put in 3rdParty using `SOURCE_SUBDIR` to point it there.
+#### 第 2 阶段:  FetchContent_MakeAvailable
+命令 `FetchContent_MakeAvailable` 实际上获取源代码（通过 git 或解压缩 zip 等），然后以内联运行的方式运行其 CMake 文件（类似于 `add_subdirectory` 或 `include()`。 如果它没有 cmake 文件，则不执行任何作。 你也可以在 `FetchContent_Declare`中给它一个伪造的 CMake 目录，让它故意不做任何事情（`SOURCE_SUBDIR bogus`），或者你可以将它指向你放在 3rdParty 中的自定义 CMakeLists.txt 文件，使用 `SOURCE_SUBDIR` 指向它。
 
-Since it is not starting a new instance of CMake to do a subbuld, setting CMAKE_ARGS doesn't do anything.  You must `set()` variables before invoking `FetchContent_MakeAvailable` for them to apply here.  This is why the `openmesh` example does it inside a function - to limit its scope that these variables are set.  You don't have to do that, if the library doesn't allow it - just consider saving global variables and then setting values back after the `FetchContent_MakeAvailable` call returns.
+由于它不会启动 CMake 的新实例来执行 subbuld，因此设置 CMAKE_ARGS 不会执行任何作。 在调用 `FetchContent_MakeAvailable` 之前，你必须 `set()` 变量才能在这里应用它们。 这就是为什么 `openmesh` 示例在函数中执行此作的原因 - 以限制设置这些变量的范围。 如果库不允许，则不必这样做 - 只需考虑保存全局变量，然后在 `FetchContent_MakeAvailable` 调用返回后重新设置值。
 
-Once `FetchContent_MakeAvailable` returns, the CMakeLists.txt in the downloaded source has run, and it has added any targets it has declared into the O3DE environment.  Those targets will have the same flags as any other O3DE target, such as having debug flags in debug mode, etc. 
+`FetchContent_MakeAvailable`返回后，下载源中的 CMakeLists.txt 将运行，并且已将其声明的所有目标添加到 O3DE 环境中。 这些目标将具有与任何其他 O3DE 目标相同的标志，例如在调试模式下具有调试标志等。
 
-Ideally you disable the auto-installation of targets if possible, since we want to carefully control when/how things get installed.  Most 3p libraries have an option to turn off installation.  Built in installation files often do things like generate cmake stuff or make .pc files, which we don't need.  
+理想情况下，如果可能的话，您可以禁用目标的自动安装，因为我们希望仔细控制何时/如何安装。 大多数 3p 库都有关闭安装的选项。 内置的安装文件通常会做一些事情，比如生成 cmake 东西或制作 .pc 文件，而我们不需要这些。 
 
 If all else fails, you can either patch their code, or write your own simpler CMakeLists.txt using the `SOURCE_SUBDIR` variable.
 
-### Phase 3:  Adapt the targets to O3DE (compiler settings, linker settings, install, etc)
-This is your chance to change any compiler settings on the targets from the 3rd Party.
-Useful tools
+### 第 3 阶段：使目标适应 O3DE（编译器设置、链接器设置、安装等）
+这是您从第三方更改目标上任何编译器设置的机会。
+有用的工具
 ```
 # target_compile_options APPENDS compile options to the target.
  target_compile_options(XXXX ${O3DE_COMPILE_OPTION_DISABLE_WARNINGS})     # XXXX does not pass Warning Level 4
@@ -102,63 +102,62 @@ ly_get_engine_relative_source_dir(${this_gem_root} relative_this_gem_root)
 set_property(TARGET XXXX PROPERTY FOLDER "${relative_this_gem_root}/External")
 ```
 
-#### Phase 4: Alias the targets for O3DE and setup installer.
-O3DE Expects `3rdParty::XXXX` but the CMake script for the target probably made something like `XXXX` or `SomeCompany::XXXXX` or a series of targets.  O3DE's install system also expects there to be a `XXXX` as well as `3rdParty::XXXX`.
+#### 第 4 阶段：为 O3DE 的目标和安装程序设置别名。
+O3DE 需要 `3rdParty::XXXX`，但目标的 CMake 脚本可能生成了类似于 `XXXX` 或 `SomeCompany::XXXXX`的内容或一系列目标。 O3DE 的安装系统还期望有`XXXX`和`3rdParty::XXXX`。
 
-For very simple libraries, this might be as simple as aliasing them to the basic XXXX library generated by the 3p's cmake script:
+对于非常简单的库，这可能就像将它们别名为 3p 的 cmake 脚本生成的基本 XXXX 库一样简单：
 ```
 add_library(3rdParty::XXXX ALIAS XXXX)
 ```
 
-For more complicated ones, you may need to do a bit more work, looping over all their targets, and calling add_library as appropriate.
+对于更复杂的 Target，您可能需要做更多的工作，遍历它们的所有目标，并根据需要调用 add_library。
 
-Avoid calling `ly_create_alias` unless you're confident.  
-`ly_create_alias(NAMESPACE 3rdParty NAME XXXX TARGETS YYYY) This function does 3 things
-1. creates an INTERFACE library called `XXXX` which is O3DE's name, that depends on `YYYY`, the internal 3p's name for itself.
-2. creates an alias called `3rdParty::XXXX` to `XXXX`
-3. Registers `3rdParty::XXXX` with the installer autogeneration system that will generate fake import targets for you.
+除非您有信心，否则请避免称呼`ly_create_alias`。 
+'ly_create_alias（NAMESPACE 3rdParty NAME XXXX TARGETS YYYY） 此函数执行 3 项作
+1. 创建一个名为 `XXXX` 的 INTERFACE 库，它是 O3DE 的名称，它依赖于 `YYYY`，即内部 3p 的名称。
+2. 创建名为 `3rdParty::XXXX` 到 `XXXX` 的别名
+3. 在安装程序自动生成系统中注册 `3rdParty::XXXX`，该系统将为您生成虚假的导入目标。
 
-Point 1 above might fail if XXXX` already exists, ie, if the 3rd party CMake script for package `zlib` already makes a target called `zlib`.  So don't use ly_create_alias in that situation.  O3DE does this because often the build scripts ask for something like `3rdParty::OpenMesh` but the actual 3rd Party library defines something like `openmesh::core`, `openmesh::tools` etc.  This allows the `3rdParty::XXXX` as well as just `XXXX` to be chosen as the primary target (or even a target that links all the other ones).
-  
-3 Is probably not desired.  It *might* work, since the autogeneration looks at what include files and lib files which are generated, and if it does, in your testing, you don't need to make the 3rdParty/Installer/FetchContent.   
+如果 `XXXX` 已经存在，即如果软件包 `zlib` 的第三方 CMake 脚本已经创建了一个名为 `zlib` 的目标，则上述第 1 点可能会失败。 所以在这种情况下不要使用 ly_create_alias。 O3DE 之所以这样做，是因为构建脚本通常要求使用 `3rdParty::OpenMesh` 之类的内容，但实际的第三方库定义了 `openmesh::core`, `openmesh::tools` 等内容。 这允许选择 `3rdParty::XXXX` 以及 `XXXX` 作为主要目标（甚至是链接所有其他目标的目标）。
 
-#### Installation
-If you disabled install on the target, which you may have to do to avoid name collisions, you will have to handle it yourself.
-But even if you didn't, you probably want to tell O3DE to install the misc files like the installer FindXXXX.cmake to the installer image.
-Directories are relative to the root of the install image.
+3 可能不需要。 它*可能*有效，因为自动生成会查看生成的包含文件和 lib 文件，如果有，在您的测试中，您不需要创建 3rdParty/Installer/FetchContent。   
+
+#### 安装
+如果您禁用了 install on the target（为避免名称冲突，您可能必须这样做），则必须自行处理。
+但即使你没有这样做，你可能也想告诉 O3DE 将安装程序 FindXXXX.cmake 等杂项文件安装到安装程序映像中。
+目录是相对于安装映像的根目录的。
  
 ```
 ly_install(FILES ${CMAKE_CURRENT_LIST_DIR}/Installer/FindXXXX.cmake DESTINATION cmake/3rdParty)
 ly_install(FILES ${CMAKE_CURRENT_LIST_DIR}/XXXX-o3de.patch DESTINATION cmake/3rdParty)
 ```
 
-Note that cmake/3rdParty is already part of the CMAKE_MODULE_PATH in an installer, so doesn't need any addition to module paths when running there.
+请注意，cmake/3rdParty 已经是安装程序中CMAKE_MODULE_PATH的一部分，因此在安装程序中运行时不需要对模块路径添加任何添加。
 
-once this is done though, you can invoke
-`set(XXXX_FOUND TRUE PARENT_SCOPE)` in the script to signal success.  if you're not inside a scoped function, remove the `PARENT_SCOPE`
+不过，完成此作后，您可以调用`set(XXXX_FOUND TRUE PARENT_SCOPE)` 来表示成功。 如果你不在作用域函数中，请删除 `PARENT_SCOPE`
 
-### The FetchXXXX.cmake in the 3rdParty/Installer
+### 第三方/安装程序中的 FetchXXXX.cmake
 
-This one is meant to be copied into the installer (see the last part of the above section).
-The original cmake files don't run when in the installer.   Instead, O3DE autogenerates `IMPORTED` (prebuilt) targets.  In our case, what happens here greatly depends on how the library is used.
+这个版本应该被复制到安装程序中（参见上一节的最后一部分）。
+原始 cmake 文件在安装程序中时不会运行。  相反，O3DE 会自动生成 `IMPORTED`（预构建） 目标。 在我们的例子中，这里发生的事情在很大程度上取决于库的使用方式。
 
-In the case of OpenMesh, its not actually needed at all during runtime or installer time, because the entire 3p library is only PRIVATELY used by WhiteBox gem, in only its private library, and no public header which we ship actually includes any part of OpenMesh.  This is a pretty common pattern, and in that case, the targets merely have to exist.
+对于 OpenMesh，在运行时或安装程序时实际上根本不需要它，因为整个 3p 库仅由 WhiteBox gem 私有使用，仅在其私有库中，并且我们发布的公共标头实际上不包含 OpenMesh 的任何部分。 这是一种非常常见的模式，在这种情况下，目标只需要存在。
 
-See (The Open Mesh installer library)[https://github.com/o3de/o3de/blob/development/Gems/WhiteBox/3rdParty/Installer/FindOpenMesh.cmake] for an example, it just makes the XXXX and 3rdParty::XXXX libraries that are expected, and prints out the "using" message so the user understands what 3rd party libraries they are using.
+有关示例，请参阅(Open Mesh 安装程序库)[https://github.com/o3de/o3de/blob/development/Gems/WhiteBox/3rdParty/Installer/FindOpenMesh.cmake]，它只是生成预期的 XXXX 和 3rdParty：：XXXX 库，并打印出“using”消息，以便用户了解他们正在使用的第三方库。
 
-Note that if you did need the libraries here, in the installer (they are publically used), you will need to make a judgement call.
-1. Make sure that you use ly_install(....) in the original Cmake script to ensure that the .lib, .a, .so, .h files are deployed if you turned off the original 3p install machinery.  Consider using a different folder for debug vs release or adding a wart onto the file name (blahblah_d) or something, for debug vs release, and then put them in the same folder.  Check the install folder for layout.
-2. In the "Installer" version of your FindXXXX.cmake you would declare them as imported
+请注意，如果您确实需要此处的库，请在安装程序中（它们被公开使用），您将需要进行判断调用。
+1. 确保在原始 Cmake 脚本中使用 ly_install（....） 以确保在关闭原始 3p 安装机制时部署 .lib、.a、.so、.h 文件。 考虑使用不同的文件夹进行调试与发布，或者在文件名 （blahblah_d） 或其他名称上添加疣，用于调试与发布，然后将它们放在同一个文件夹中。 检查安装文件夹的布局。
+2. 在 FindXXXX.cmake 的“安装程序”版本中，您可以声明它们为已导入
 ```cmake
 set_target_properties(TARGETS XXXX
                         PROPERTIES 
                           IMPORTED_LOCATION ${LY_ROOT_FOLDER}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}xxxx${CMAKE_STATIC_LIBRARY_SUFFIX}
                           IMPORTED_LOCATION_DEBUG ${LY_ROOT_FOLDER}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}xxxx_d${CMAKE_STATIC_LIBRARY_SUFFIX})
 ```
-and you would add the include paths as usual, depending on where you installed.  Use ${LY_ROOT_FOLDER} as the project itself might be running out of a different project folder.
+您将像往常一样添加 include 路径，具体取决于您的安装位置。 请使用 ${LY_ROOT_FOLDER}，因为项目本身可能会用完其他项目文件夹。
 
-## Testing the installer
-Configure O3DE **WITHOUT** a project configured.  For now, turn test modules off, too.
+## 测试安装程序
+配置 O3DE **WITHOUT** 一个已配置的项目。 现在，也请关闭 test modules。
 ```
 windows:
 cmake -S . -B build/windows -ULY_PROJECTS -DBUILD_TESTING=OFF -DLY_DISABLE_TEST_MODULES=ON -DO3DE_INSTALL_ENGINE_NAME=o3de-installer
@@ -170,9 +169,9 @@ cmake -S . -B build/linux -ULY_PROJECTS -DBUILD_TESTING=OFF -DLY_DISABLE_TEST_MO
 cmake --build build/linux --config debug --target install
 cmake --build build/linux --config profile --target install
 ```
-This will make an installer **called** o3de-installer in the `install` subfolder of the current directory and then build debug and profile libraries into it (you can omit one of those if you just want a quick test with just profile or just debug).  Every different permutation you build additively puts those libraries in there.
+这将在当前目录的 `install` 子文件夹中创建一个 **调用** o3de-installer 的安装程序，然后在其中构建调试和配置文件库（如果您只想使用 profile 或 debug 进行快速测试，则可以省略其中一个）。 您构建的每个不同的排列都会以附加方式将这些库放入其中。
 
-Once you have made the installer you can go register it
+一旦你完成了安装程序，你就可以去注册它了
 ```
 windows:
 
@@ -187,22 +186,21 @@ cd install
 ./scripts/o3de.sh register --this-engine
 ```
 
-You can then run o3de from the bin folder of install and make projects to test it with.  Test it with those projects, make sure they build with your library.
+然后，您可以从 install 的 bin 文件夹中运行 o3de，并创建项目来测试它。 使用这些项目对其进行测试，确保它们使用您的库构建。
 
-## Iterating on patch files.
+## 迭代补丁文件。
 
-Sometimes you have to patch a library.  Doing this with fetch content makes it super easy.
-The libraries are downloaded into (buildfolder/_deps/XXXX_src) so after you do your initial fetchcontent (let it run and fail) you can cd into that folder like:
-`cd build\windows\_deps\XXXX_src` and you will be in a git repo for the software.  Use your favorite IDE to make whatever change you want.
+有时您必须修补库。 使用 fetch content 执行此作非常简单。
+库被下载到 （buildfolder/_deps/XXXX_src） 中，因此在你执行初始 fetchcontent 后（让它运行并失败），你可以像这样 cd 到该文件夹中：
+`cd build\windows\_deps\XXXX_src` 位于该软件的 git 存储库中。 使用您最喜欢的 IDE 进行您想要的任何更改。
 
-Once you've made the changes, create/update the patch file.  From the XXXX_src folder:
+进行更改后，创建/更新补丁文件。 从 XXXX_src 文件夹中：
 ```
 git diff > (Full absolute path to your 3rdParty folder in your gem where the FindXXXX.cmake file lives)\o3de-XXXX.patch
 ```
 
-If its the first time, add 
-`PATCH_COMMAND cmake -P "${LY_ROOT_FOLDER}/cmake/PatchIfNotAlreadyPatched.cmake" o3de-XXXX.patch` to the `FetchContent_Declare` block to make it use the patch.
+如果是第一次，请添加`PATCH_COMMAND cmake -P "${LY_ROOT_FOLDER}/cmake/PatchIfNotAlreadyPatched.cmake" o3de-XXXX.patch` to the `FetchContent_Declare`块中，使其使用该补丁。
 
-And then re-run the O3DE configure and build as normal.  Repeat as necessary.  If the patch is new, make sure to include it in the shipped version with `ly_install` to make sure everyone understands what they're getting into, and disclose it in your `message(STATUS "` block like openmesh example does.
+然后照常重新运行 O3DE 配置和构建。 根据需要重复。 如果补丁是新的，请确保将其包含在带有`ly_install`的发布版本中，以确保每个人都了解他们要遇到的内容，并像 openmesh 示例一样在您的`message(STATUS "`块中披露它。
 
 

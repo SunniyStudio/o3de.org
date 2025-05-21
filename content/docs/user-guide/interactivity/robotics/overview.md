@@ -17,7 +17,7 @@ ROS 2 Gem 包含许多用于构建机器人模拟的组件，例如传感器、
 - 提供示例 ROS 2 Prefab（机器人）和场景装饰的资源 Gem，包括`ProteusRobot`, `RosRobotSample`, `WarehouseAssets`, `WarehouseAutomation`, 和 `WarehouseSample`.
 - 3rd party Gems: 
   - [Robotec GPU Lidar (RGL) Gem](https://github.com/RobotecAI/o3de-rgl-gem) - 使用 CUDA 在 O3DE 中加速 LIDAR 仿真。
-  - [Robotec Vehicle Dynamics Gem](https://github.com/RobotecAI/robotec-vehicle-dynamics-gem) - 简单的车辆控制器。
+  - [Robotec Vehicle Dynamics Gem](https://github.com/RobotecAI/o3de-vehicle-dynamics-gem) - 简单的车辆控制器。
 
 ## 模板
 
